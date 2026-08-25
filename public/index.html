@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="DREAMS - perfumería multimarca. Los perfumes de tus sueños.">
+    <title>DREAMS | Los perfumes de tus sueños</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header class="site-header">
+        <a class="brand" href="/">DREAMS</a>
+        <button class="menu-toggle" aria-label="Abrir menú">☰</button>
+        <nav class="main-nav">
+            <a href="/">Inicio</a>
+            <a href="/catalogo.html">Perfumes</a>
+            <a href="/catalogo.html?gender=mujer">Mujer</a>
+            <a href="/catalogo.html?gender=hombre">Hombre</a>
+            <a href="/catalogo.html?gender=unisex">Unisex</a>
+            <a href="/nosotros.html">Nosotros</a>
+        </nav>
+        <div class="header-actions">
+            <a href="/cuenta.html" class="icon-link" aria-label="Mi cuenta"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"></circle><path d="M5 21c.8-4 3.2-6 7-6s6.2 2 7 6"></path></svg></a>
+            <a href="/favoritos.html" class="icon-link" aria-label="Favoritos"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 8.8c0 5.1-8.8 10.2-8.8 10.2S3.2 13.9 3.2 8.8A4.5 4.5 0 0 1 12 6.1a4.5 4.5 0 0 1 8.8 2.7Z"></path></svg></a>
+            <a href="/carrito.html" class="cart-link" aria-label="Carrito"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h2l1.5 10h10L20 8H7"></path><circle cx="9" cy="19" r="1.3"></circle><circle cx="17" cy="19" r="1.3"></circle></svg><span id="cart-count">0</span></a>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-copy">
+                <p class="eyebrow">DREAMS PERFUMES</p>
+                <h1>Los perfumes<br>de tus sueños.</h1>
+                <p>Fragancias de diseñador y algunas joyas de nicho, seleccionadas para encontrar esa esencia que te representa.</p>
+                <a class="button button-dark" href="/catalogo.html">Descubrir perfumes</a>
+            </div>
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=1200&q=85" alt="Perfume en una composición editorial">
+            </div>
+        </section>
+
+        <section class="brand-statement">
+            <p class="eyebrow">UNA SELECCIÓN CON PERSONALIDAD</p>
+            <h2>Una fragancia puede decir mucho antes de que digas una palabra.</h2>
+        </section>
+
+        <section class="section products-section">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">SELECCIÓN DREAMS</p>
+                    <h2>Más buscados</h2>
+                </div>
+                <a href="/catalogo.html" class="text-link">Ver todos</a>
+            </div>
+            <div id="featured-products" class="product-grid"></div>
+        </section>
+
+        <section class="split-banner">
+            <div>
+                <p class="eyebrow">DISEÑADOR + NICHO</p>
+                <h2>Clásicos que conocés. Fragancias que todavía tenés que descubrir.</h2>
+                <a class="button button-light" href="/catalogo.html">Explorar colección</a>
+            </div>
+            <img src="https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=1100&q=85" alt="Botella de perfume en blanco y negro">
+        </section>
+
+        <section class="section about-preview">
+            <div>
+                <p class="eyebrow">SOBRE DREAMS</p>
+                <h2>Elegimos perfumes pensando en personas, no solamente en marcas.</h2>
+            </div>
+            <p>Somos una perfumería multimarca digital. Buscamos combinar los perfumes de diseñador más conocidos con una pequeña selección de nicho para que puedas comparar estilos, notas e intensidades en un mismo lugar.</p>
+        </section>
+
+        <section class="section recent-section"><div class="section-heading"><div><p class="eyebrow">TU RECORRIDO</p><h2>Perfumes que viste recientemente</h2></div></div><div id="recent-products" class="product-grid"></div></section>
+
+        <section class="section reviews-section">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">COMUNIDAD DREAMS</p>
+                    <h2>Opiniones</h2>
+                </div>
+            </div>
+            <div id="reviews" class="review-grid"></div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div>
+            <span class="footer-brand">DREAMS</span>
+            <p>Los perfumes de tus sueños.</p>
+        </div>
+        <div>
+            <p class="footer-title">Explorar</p>
+            <a href="/catalogo.html">Perfumes</a>
+            <a href="/favoritos.html">Favoritos</a>
+            <a href="/carrito.html">Carrito</a>
+        </div>
+        <div>
+            <p class="footer-title">Ayuda</p>
+            <a href="/nosotros.html">Sobre nosotros</a>
+            <a href="/cuenta.html">Mi cuenta</a>
+            <a href="https://wa.me/542944502390" target="_blank" rel="noreferrer">WhatsApp</a>
+        </div>
+        <div>
+            <p class="footer-title">Contacto</p>
+            <p>+54 294 450 2390</p>
+            <p>admin@dreamsperfumes.com</p>
+        </div>
+        <div class="footer-bottom">© 2026 DREAMS. Proyecto académico.</div>
+    </footer>
+
+    <script src="/js/app.js"></script>
+</body>
+</html>

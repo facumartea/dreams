@@ -1,0 +1,28 @@
+DREAMS - INSTALACION LOCAL Y RAILWAY
+
+LOCAL
+1. Abrir PowerShell o CMD en la carpeta que contiene package.json.
+2. Si PowerShell bloquea npm.ps1, usar npm.cmd.
+3. npm.cmd install
+4. npm.cmd run seed
+5. npm.cmd start
+6. Abrir http://localhost:3000
+
+ADMIN LOCAL
+Correo: el valor de ADMIN_EMAIL del .env
+Clave: el valor de ADMIN_PASSWORD del .env
+Panel: http://localhost:3000/admin.html
+
+RAILWAY
+1. Subir la carpeta a GitHub con package.json en la raiz.
+2. Railway -> New Project -> Deploy from GitHub repo.
+3. Variables: NODE_ENV, SESSION_SECRET, ADMIN_EMAIL, ADMIN_PASSWORD, ADMIN_NAME, WHATSAPP_NUMBER y DATABASE_DIR=/data.
+4. Crear Volume conectado al servicio con mount path /data.
+5. Settings -> Networking -> Generate Domain.
+6. Abrir el dominio desde cualquier PC o celular.
+
+IMPORTANTE
+- No subir .env.
+- No subir node_modules.
+- La base dreams.db se crea automaticamente en el volumen de Railway.
+- Si la base esta vacia, el servidor carga los productos iniciales y crea el administrador.
