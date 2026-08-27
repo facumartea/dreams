@@ -1222,6 +1222,28 @@ button:disabled { opacity: .45; cursor: not-allowed; }
 .admin-table { background: #1d1d1d; color: #f3f1ec; }
 .admin-table th, .admin-table td { border-color: var(--line); }
 
+/* Corrección de composición general y estados vacíos */
+.section { padding-top: 48px; padding-bottom: 90px; }
+.page-intro.compact { padding: 34px 0 42px; border-bottom: 1px solid var(--line); margin-bottom: 34px; }
+.page-intro.compact h1 { margin: 10px 0 16px; font-size: clamp(54px, 8vw, 104px); line-height: .95; }
+.page-intro > p:last-child { color: #aaa49b; }
+.empty-state { padding: 76px 34px; background: #1d1d1d; border: 1px solid var(--line); color: #f3f1ec; }
+.empty-state h2 { color: #c8a862; font-size: clamp(38px, 5vw, 60px); }
+.empty-state p { color: #aaa49b; }
+.product-grid-large:empty { min-height: 0; }
+.hero-image { background: #181818; }
+.hero-image img { object-position: center; }
+.hero-copy { padding: clamp(34px, 6vw, 88px); }
+.hero-copy h1 { font-size: clamp(54px, 7vw, 100px); line-height: .91; }
+.main-nav { white-space: nowrap; }
+
+@media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-image { min-height: 420px; }
+    .hero-copy { order: 1; }
+    .hero-image { order: 0; }
+}
+
 /* Carrito y panel: proporciones, aire y acabado de boutique */
 .cart-page { padding-top: 72px; padding-bottom: 96px; }
 .cart-layout { gap: 38px; padding: 34px; border: 1px solid var(--line); border-radius: 2px; }
