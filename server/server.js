@@ -5,7 +5,7 @@ const {createClient}=require('@supabase/supabase-js');
 const {seed_database}=require('./seed');
 const needed=['SUPABASE_URL','SUPABASE_SECRET_KEY'].filter(k=>!process.env[k]);
 if(needed.length)throw new Error(`Faltan variables obligatorias: ${needed.join(', ')}`);
-const app=express(),port=Number(process.env.PORT||3000),production=process.env.NODE_ENV==='production';
+const app=express(),port=Number(process.env.PORT||8080),production=process.env.NODE_ENV==='production';
 const admin_email=(process.env.ADMIN_EMAIL||'admin@dreamsperfumes.com').toLowerCase(),whatsapp_number=process.env.WHATSAPP_NUMBER||'542944502390';
 const db=createClient(process.env.SUPABASE_URL,process.env.SUPABASE_SECRET_KEY,{auth:{autoRefreshToken:false,persistSession:false}});
 app.set('trust proxy',1);app.use(helmet({contentSecurityPolicy:false,crossOriginEmbedderPolicy:false}),morgan(production?'combined':'dev'),express.json({limit:'1mb'}),express.urlencoded({extended:true,limit:'1mb'}));
