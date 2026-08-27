@@ -1,254 +1,48 @@
 require('dotenv').config();
-const path = require('path');
-const express = require('express');
-const session = require('express-session');
-const bcrypt = require('bcryptjs');
-const helmet = require('helmet');
-const morgan = require('morgan');
-const database = require('./db');
-const { seed_database } = require('./seed');
-
-const app = express();
-const port = Number(process.env.PORT || 3000);
-const admin_email = process.env.ADMIN_EMAIL || 'admin@dreamsperfumes.com';
-const whatsapp_number = process.env.WHATSAPP_NUMBER || '542944502390';
-const is_production = process.env.NODE_ENV === 'production';
-
-seed_database();
-
-app.set('trust proxy', 1);
-app.use(helmet({ contentSecurityPolicy: false }));
-app.use(morgan('dev'));
-app.use(express.json({ limit: '1mb' }));
-app.use(express.urlencoded({ extended: true }));
-app.use(session({
-    secret: process.env.SESSION_SECRET || 'dreams_change_this_secret',
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-        httpOnly: true,
-        sameSite: 'lax',
-        secure: is_production,
-        maxAge: 1000 * 60 * 60 * 24 * 7
-    }
-}));
-app.use(express.static(path.join(__dirname, '..', 'public')));
-
-function require_login(request, response, next) {
-    if (!request.session.user) {
-        return response.status(401).json({ error: 'Necesitás iniciar sesión.' });
-    }
-    next();
-}
-
-function require_admin(request, response, next) {
-    if (!request.session.user || !request.session.user.is_admin) {
-        return response.status(403).json({ error: 'Acceso reservado al administrador.' });
-    }
-    next();
-}
-
-function product_from_row(row) {
-    return {
-        ...row,
-        featured: Boolean(row.featured),
-        stock: Number(row.stock || 0),
-        notes: {
-            salida: row.top_notes.split(',').map(note => note.trim()),
-            corazon: row.heart_notes.split(',').map(note => note.trim()),
-            fondo: row.base_notes.split(',').map(note => note.trim())
-        }
-    };
-}
-
-function validate_product(product) {
-    const required_fields = ['brand', 'name', 'gender', 'category', 'size_ml', 'price', 'stock', 'intensity', 'family', 'top_notes', 'heart_notes', 'base_notes', 'description', 'image_url'];
-    if (required_fields.some(field => product[field] === undefined || product[field] === '')) {
-        return 'Completá todos los campos del producto.';
-    }
-    if (!['hombre', 'mujer', 'unisex'].includes(product.gender)) return 'Género inválido.';
-    if (!['diseñador', 'nicho'].includes(product.category)) return 'Categoría inválida.';
-    if (Number(product.price) < 0 || Number(product.stock) < 0 || Number(product.size_ml) <= 0) return 'Precio, stock y tamaño deben ser válidos.';
-    if (Number(product.intensity) < 1 || Number(product.intensity) > 5) return 'La intensidad debe estar entre 1 y 5.';
-    return null;
-}
-
-app.get('/api/config', (request, response) => {
-    response.json({ whatsapp_number, admin_email, app_name: 'DREAMS' });
-});
-
-app.get('/api/products', (request, response) => {
-    const search = String(request.query.search || '').trim();
-    const brand = String(request.query.brand || '').trim();
-    const gender = String(request.query.gender || '').trim();
-    const category = String(request.query.category || '').trim();
-    const sort = String(request.query.sort || 'featured').trim();
-    const max_price = Number(request.query.max_price || 0);
-
-    let sql = 'SELECT * FROM products WHERE 1 = 1';
-    const params = [];
-    if (search) { sql += ' AND (name LIKE ? OR brand LIKE ? OR family LIKE ?)'; const term = `%${search}%`; params.push(term, term, term); }
-    if (brand) { sql += ' AND brand = ?'; params.push(brand); }
-    if (gender) { sql += ' AND gender = ?'; params.push(gender); }
-    if (category) { sql += ' AND category = ?'; params.push(category); }
-    if (max_price > 0) { sql += ' AND price <= ?'; params.push(max_price); }
-    if (sort === 'price_asc') sql += ' ORDER BY price ASC';
-    else if (sort === 'price_desc') sql += ' ORDER BY price DESC';
-    else if (sort === 'name') sql += ' ORDER BY name ASC';
-    else sql += ' ORDER BY featured DESC, id DESC';
-
-    response.json(database.prepare(sql).all(...params).map(product_from_row));
-});
-
-app.get('/api/products/:id', (request, response) => {
-    const product = database.prepare('SELECT * FROM products WHERE id = ?').get(Number(request.params.id));
-    if (!product) return response.status(404).json({ error: 'Perfume no encontrado.' });
-    response.json(product_from_row(product));
-});
-
-app.get('/api/brands', (request, response) => {
-    response.json(database.prepare('SELECT DISTINCT brand FROM products ORDER BY brand').all().map(item => item.brand));
-});
-
-app.post('/api/auth/register', async (request, response) => {
-    const { name, email, password } = request.body;
-    if (!name || !email || !password) return response.status(400).json({ error: 'Completá todos los campos.' });
-    if (password.length < 6) return response.status(400).json({ error: 'La contraseña debe tener al menos 6 caracteres.' });
-    const normalized_email = String(email).trim().toLowerCase();
-    if (database.prepare('SELECT id FROM users WHERE email = ?').get(normalized_email)) return response.status(409).json({ error: 'Ese correo ya está registrado.' });
-    const password_hash = await bcrypt.hash(password, 10);
-    const result = database.prepare('INSERT INTO users (name,email,password_hash,is_admin) VALUES (?,?,?,0)').run(name.trim(), normalized_email, password_hash);
-    const user = { id: result.lastInsertRowid, name: name.trim(), email: normalized_email, is_admin: false };
-    request.session.user = user;
-    response.json({ message: 'Cuenta creada correctamente.', user });
-});
-
-app.post('/api/auth/login', async (request, response) => {
-    const { email, password } = request.body;
-    if (!email || !password) return response.status(400).json({ error: 'Ingresá correo y contraseña.' });
-    const normalized_email = String(email).trim().toLowerCase();
-    const user = database.prepare('SELECT * FROM users WHERE email = ?').get(normalized_email);
-    if (!user || !(await bcrypt.compare(password, user.password_hash))) return response.status(401).json({ error: 'Correo o contraseña incorrectos.' });
-    request.session.user = { id: user.id, name: user.name, email: user.email, is_admin: Boolean(user.is_admin) };
-    response.json({ message: 'Sesión iniciada.', user: request.session.user });
-});
-
-app.post('/api/auth/logout', (request, response) => request.session.destroy(() => response.json({ message: 'Sesión cerrada.' })));
-app.get('/api/auth/me', (request, response) => response.json({ user: request.session.user || null }));
-
-app.get('/api/favorites', require_login, (request, response) => {
-    const rows = database.prepare('SELECT p.* FROM products p INNER JOIN favorites f ON f.product_id = p.id WHERE f.user_id = ? ORDER BY f.created_at DESC').all(request.session.user.id);
-    response.json(rows.map(product_from_row));
-});
-
-app.get('/api/favorites/:product_id/check', require_login, (request, response) => {
-    const favorite = database.prepare('SELECT 1 FROM favorites WHERE user_id = ? AND product_id = ?').get(request.session.user.id, Number(request.params.product_id));
-    response.json({ favorite: Boolean(favorite) });
-});
-
-app.post('/api/favorites/:product_id', require_login, (request, response) => {
-    const product_id = Number(request.params.product_id);
-    const existing = database.prepare('SELECT 1 FROM favorites WHERE user_id = ? AND product_id = ?').get(request.session.user.id, product_id);
-    if (existing) {
-        database.prepare('DELETE FROM favorites WHERE user_id = ? AND product_id = ?').run(request.session.user.id, product_id);
-        return response.json({ favorite: false });
-    }
-    database.prepare('INSERT INTO favorites (user_id, product_id) VALUES (?, ?)').run(request.session.user.id, product_id);
-    response.json({ favorite: true });
-});
-
-app.get('/api/reviews', (request, response) => response.json(database.prepare('SELECT id,user_name,rating,comment,created_at FROM reviews ORDER BY id DESC').all()));
-app.post('/api/reviews', require_login, (request, response) => {
-    const rating = Number(request.body.rating);
-    const comment = String(request.body.comment || '').trim();
-    if (!rating || rating < 1 || rating > 5 || !comment) return response.status(400).json({ error: 'Completá una puntuación y una opinión.' });
-    database.prepare('INSERT INTO reviews (user_name,rating,comment) VALUES (?,?,?)').run(request.session.user.name, rating, comment);
-    response.json({ message: 'Opinión publicada.' });
-});
-
-app.post('/api/inquiries', async (request, response) => {
-    const product_id = Number(request.body.product_id || 0);
-    const product = database.prepare('SELECT id,name FROM products WHERE id = ?').get(product_id);
-    if (!product) return response.status(404).json({ error: 'Producto no encontrado.' });
-    const user = request.session.user || null;
-    database.prepare('INSERT INTO inquiries (user_id,product_id,product_name,user_name,user_email) VALUES (?,?,?,?,?)').run(user?.id || null, product.id, product.name, user?.name || null, user?.email || null);
-    const text = encodeURIComponent(`Hola DREAMS, quiero consultar por ${product.name}. ¿Está disponible?`);
-    response.json({ message: 'Consulta registrada.', whatsapp_url: `https://wa.me/${whatsapp_number}?text=${text}` });
-});
-
-app.get('/api/admin/stats', require_admin, (request, response) => {
-    const stats = {
-        products: database.prepare('SELECT COUNT(*) AS total FROM products').get().total,
-        users: database.prepare('SELECT COUNT(*) AS total FROM users').get().total,
-        favorites: database.prepare('SELECT COUNT(*) AS total FROM favorites').get().total,
-        inquiries: database.prepare('SELECT COUNT(*) AS total FROM inquiries').get().total,
-        reviews: database.prepare('SELECT COUNT(*) AS total FROM reviews').get().total,
-        low_stock: database.prepare('SELECT COUNT(*) AS total FROM products WHERE stock <= 2').get().total
-    };
-    response.json(stats);
-});
-
-app.get('/api/admin/products', require_admin, (request, response) => response.json(database.prepare('SELECT * FROM products ORDER BY id DESC').all().map(product_from_row)));
-
-app.post('/api/admin/products', require_admin, (request, response) => {
-    const product = request.body;
-    const error = validate_product(product);
-    if (error) return response.status(400).json({ error });
-    const result = database.prepare(`INSERT INTO products (brand,name,gender,category,size_ml,price,stock,intensity,family,top_notes,heart_notes,base_notes,description,image_url,featured) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`).run(product.brand,product.name,product.gender,product.category,Number(product.size_ml),Number(product.price),Number(product.stock),Number(product.intensity),product.family,product.top_notes,product.heart_notes,product.base_notes,product.description,product.image_url,product.featured ? 1 : 0);
-    response.status(201).json(product_from_row(database.prepare('SELECT * FROM products WHERE id = ?').get(result.lastInsertRowid)));
-});
-
-app.put('/api/admin/products/:id', require_admin, (request, response) => {
-    const product_id = Number(request.params.id);
-    const product = request.body;
-    if (!database.prepare('SELECT id FROM products WHERE id = ?').get(product_id)) return response.status(404).json({ error: 'Producto no encontrado.' });
-    const error = validate_product(product);
-    if (error) return response.status(400).json({ error });
-    database.prepare(`UPDATE products SET brand=?,name=?,gender=?,category=?,size_ml=?,price=?,stock=?,intensity=?,family=?,top_notes=?,heart_notes=?,base_notes=?,description=?,image_url=?,featured=?,updated_at=CURRENT_TIMESTAMP WHERE id=?`).run(product.brand,product.name,product.gender,product.category,Number(product.size_ml),Number(product.price),Number(product.stock),Number(product.intensity),product.family,product.top_notes,product.heart_notes,product.base_notes,product.description,product.image_url,product.featured ? 1 : 0,product_id);
-    response.json(product_from_row(database.prepare('SELECT * FROM products WHERE id = ?').get(product_id)));
-});
-
-app.delete('/api/admin/products/:id', require_admin, (request, response) => {
-    const result = database.prepare('DELETE FROM products WHERE id = ?').run(Number(request.params.id));
-    if (!result.changes) return response.status(404).json({ error: 'Producto no encontrado.' });
-    response.json({ message: 'Producto eliminado.' });
-});
-
-app.get('/api/admin/users', require_admin, (request, response) => response.json(database.prepare('SELECT id,name,email,is_admin,created_at FROM users ORDER BY id DESC').all().map(user => ({ ...user, is_admin: Boolean(user.is_admin) }))));
-app.get('/api/admin/inquiries', require_admin, (request, response) => response.json(database.prepare('SELECT i.*, p.brand, p.name FROM inquiries i LEFT JOIN products p ON p.id=i.product_id ORDER BY i.id DESC LIMIT 100').all()));
-app.get('/api/admin/reviews', require_admin, (request, response) => response.json(database.prepare('SELECT * FROM reviews ORDER BY id DESC').all()));
-
-app.get('/admin', (request, response) => {
-    if (!request.session.user || !request.session.user.is_admin) return response.redirect('/cuenta.html?admin=1');
-    response.sendFile(path.join(__dirname, '..', 'views', 'admin.html'));
-});
-
-app.get('/admin.html', (request, response) => {
-    if (!request.session.user || !request.session.user.is_admin) return response.redirect('/cuenta.html?admin=1');
-    response.sendFile(path.join(__dirname, '..', 'views', 'admin.html'));
-});
-
-app.get('/api/external/rates', async (request, response) => {
-    try {
-        const external_response = await fetch('https://open.er-api.com/v6/latest/USD');
-        if (!external_response.ok) throw new Error('API externa no disponible');
-        const data = await external_response.json();
-        response.json({ source: 'ExchangeRate API', usd_ars: data.rates?.ARS || null, updated: data.time_last_update_utc || null });
-    } catch (error) {
-        response.status(503).json({ error: 'No se pudo consultar la API externa.' });
-    }
-});
-
-app.get('/api/health', (request, response) => response.json({ status: 'ok', api: true, database: true, environment: process.env.NODE_ENV || 'development', volume: process.env.RAILWAY_VOLUME_MOUNT_PATH || null }));
-
-app.use((request, response) => {
-    if (request.path.startsWith('/api/')) return response.status(404).json({ error: 'Ruta API no encontrada.' });
-    response.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
-});
-
-app.listen(port, '0.0.0.0', () => {
-    console.log(`DREAMS funcionando en el puerto ${port}`);
-    console.log(`Admin: ${admin_email}`);
-    console.log(`WhatsApp: +${whatsapp_number}`);
-    console.log(`Base de datos: ${process.env.DATABASE_DIR || process.env.RAILWAY_VOLUME_MOUNT_PATH || 'data/'}`);
-});
+const path=require('path'),express=require('express'),helmet=require('helmet'),morgan=require('morgan');
+const {rateLimit}=require('express-rate-limit');
+const {createClient}=require('@supabase/supabase-js');
+const {seed_database}=require('./seed');
+const needed=['SUPABASE_URL','SUPABASE_SECRET_KEY'].filter(k=>!process.env[k]);
+if(needed.length)throw new Error(`Faltan variables obligatorias: ${needed.join(', ')}`);
+const app=express(),port=Number(process.env.PORT||3000),production=process.env.NODE_ENV==='production';
+const admin_email=(process.env.ADMIN_EMAIL||'admin@dreamsperfumes.com').toLowerCase(),whatsapp_number=process.env.WHATSAPP_NUMBER||'542944502390';
+const db=createClient(process.env.SUPABASE_URL,process.env.SUPABASE_SECRET_KEY,{auth:{autoRefreshToken:false,persistSession:false}});
+app.set('trust proxy',1);app.use(helmet({contentSecurityPolicy:false,crossOriginEmbedderPolicy:false}),morgan(production?'combined':'dev'),express.json({limit:'1mb'}),express.urlencoded({extended:true,limit:'1mb'}));
+app.use('/api/auth',rateLimit({windowMs:900000,limit:20,standardHeaders:true,legacyHeaders:false,message:{error:'Demasiados intentos. Probá nuevamente en unos minutos.'}}));
+app.use('/api',rateLimit({windowMs:900000,limit:300,standardHeaders:true,legacyHeaders:false}),express.static(path.join(__dirname,'..','public')));
+function cookie(req){return Object.fromEntries((req.headers.cookie||'').split(';').filter(Boolean).map(s=>{const i=s.indexOf('=');return[decodeURIComponent(s.slice(0,i).trim()),decodeURIComponent(s.slice(i+1))]}).filter(x=>x[0]))}
+function session(res,s){const x=`; Path=/; HttpOnly; SameSite=Lax; Max-Age=3600${production?'; Secure':''}`;res.setHeader('Set-Cookie',[`dreams_access_token=${encodeURIComponent(s.access_token)}${x}`,`dreams_refresh_token=${encodeURIComponent(s.refresh_token)}${x}`])}
+function logout(res){const x=`; Path=/; HttpOnly; SameSite=Lax; Max-Age=0${production?'; Secure':''}`;res.setHeader('Set-Cookie',[`dreams_access_token=${x}`,`dreams_refresh_token=${x}`])}
+const error=(res,e,msg='No se pudo completar la operación.')=>{console.error(e);return res.status(500).json({error:msg})};
+const product=r=>({...r,featured:Boolean(r.featured),stock:Number(r.stock||0),notes:{salida:String(r.top_notes).split(',').map(x=>x.trim()),corazon:String(r.heart_notes).split(',').map(x=>x.trim()),fondo:String(r.base_notes).split(',').map(x=>x.trim())}});
+function validate(p){const f=['brand','name','gender','category','size_ml','price','stock','intensity','family','top_notes','heart_notes','base_notes','description','image_url'];if(f.some(k=>p[k]===undefined||String(p[k]).trim()===''))return'Completá todos los campos del producto.';if(!['hombre','mujer','unisex'].includes(p.gender))return'Género inválido.';if(!['diseñador','nicho'].includes(p.category))return'Categoría inválida.';if(+p.price<0||+p.stock<0||+p.size_ml<=0||+p.intensity<1||+p.intensity>5)return'Precio, stock, tamaño e intensidad deben ser válidos.'}
+function payload(p){const e=validate(p);if(e)return{e};const o={};['brand','name','gender','category','size_ml','price','stock','intensity','family','top_notes','heart_notes','base_notes','description','image_url'].forEach(k=>o[k]=p[k]);['size_ml','price','stock','intensity'].forEach(k=>o[k]=Number(o[k]));o.featured=Boolean(p.featured);return{o}}
+app.use(async(req,res,next)=>{try{const token=cookie(req).dreams_access_token;if(!token)return next();const {data:{user}}=await db.auth.getUser(token);if(!user)return next();const {data:p}=await db.from('profiles').select('name,role').eq('id',user.id).maybeSingle();req.user={id:user.id,name:p?.name||user.email,email:user.email,is_admin:p?.role==='admin'};next()}catch(e){next()}});
+const login=(q,r,n)=>q.user?n():r.status(401).json({error:'Necesitás iniciar sesión.'}),admin=(q,r,n)=>q.user?.is_admin?n():r.status(403).json({error:'Acceso reservado al administrador.'});
+app.get('/api/config',(q,r)=>r.json({whatsapp_number,admin_email,app_name:'DREAMS'}));
+app.get('/api/products',async(q,r)=>{let x=db.from('products').select('*');for(const k of ['brand','gender','category'])if(q.query[k])x=x.eq(k,String(q.query[k]).slice(0,60));if(+q.query.max_price>0)x=x.lte('price',+q.query.max_price);const s=String(q.query.search||'').trim().replace(/[^\p{L}\p{N}\s'-]/gu,'').slice(0,80);if(s)x=x.or(`name.ilike.%${s}%,brand.ilike.%${s}%,family.ilike.%${s}%`);const sort=String(q.query.sort||'featured');x=sort==='price_asc'?x.order('price'):sort==='price_desc'?x.order('price',{ascending:false}):sort==='name'?x.order('name'):x.order('featured',{ascending:false}).order('id',{ascending:false});const {data,error:query_error}=await x;if(query_error)return error(r,query_error);r.json(data.map(product))});
+app.get('/api/products/:id',async(q,r)=>{const {data,error:e}=await db.from('products').select('*').eq('id',+q.params.id).maybeSingle();if(e)return error(r,e);data?r.json(product(data)):r.status(404).json({error:'Perfume no encontrado.'})});
+app.get('/api/brands',async(q,r)=>{const {data,error:e}=await db.from('products').select('brand').order('brand');if(e)return error(r,e);r.json([...new Set(data.map(x=>x.brand))])});
+app.post('/api/auth/register',async(q,r)=>{const name=String(q.body.name||'').trim().slice(0,80),email=String(q.body.email||'').trim().toLowerCase(),password=String(q.body.password||'');if(!name||!email||password.length<8)return r.status(400).json({error:'Completá un nombre, correo válido y una contraseña de al menos 8 caracteres.'});const {data,error:e}=await db.auth.signUp({email,password,options:{data:{name}}});if(e)return r.status(400).json({error:e.message});if(data.user)await db.from('profiles').upsert({id:data.user.id,name,role:'customer'},{onConflict:'id',ignoreDuplicates:true});if(data.session){session(r,data.session);return r.json({message:'Cuenta creada correctamente.',user:{id:data.user.id,name,email,is_admin:false}})}r.status(202).json({message:'Revisá tu correo para confirmar la cuenta antes de iniciar sesión.'})});
+app.post('/api/auth/login',async(q,r)=>{const email=String(q.body.email||'').trim().toLowerCase(),password=String(q.body.password||'');const {data,error:e}=await db.auth.signInWithPassword({email,password});if(e||!data.session)return r.status(401).json({error:'Correo o contraseña incorrectos.'});const {data:p}=await db.from('profiles').select('name,role').eq('id',data.user.id).maybeSingle();session(r,data.session);r.json({message:'Sesión iniciada.',user:{id:data.user.id,name:p?.name||email,email,is_admin:p?.role==='admin'}})});
+app.post('/api/auth/logout',(q,r)=>{logout(r);r.json({message:'Sesión cerrada.'})});app.get('/api/auth/me',(q,r)=>r.json({user:q.user||null}));
+app.get('/api/favorites',login,async(q,r)=>{const {data,error:e}=await db.from('favorites').select('created_at,products(*)').eq('user_id',q.user.id).order('created_at',{ascending:false});if(e)return error(r,e);r.json(data.map(x=>product(x.products)))});
+app.get('/api/favorites/:id/check',login,async(q,r)=>{const {data,error:e}=await db.from('favorites').select('product_id').eq('user_id',q.user.id).eq('product_id',+q.params.id).maybeSingle();if(e)return error(r,e);r.json({favorite:Boolean(data)})});
+app.post('/api/favorites/:id',login,async(q,r)=>{const id=+q.params.id,{data:old,error:e}=await db.from('favorites').select('product_id').eq('user_id',q.user.id).eq('product_id',id).maybeSingle();if(e)return error(r,e);const {error:write}=old?await db.from('favorites').delete().eq('user_id',q.user.id).eq('product_id',id):await db.from('favorites').insert({user_id:q.user.id,product_id:id});if(write)return error(r,write);r.json({favorite:!old})});
+app.get('/api/reviews',async(q,r)=>{const {data,error:e}=await db.from('reviews').select('id,user_name,rating,comment,created_at').order('id',{ascending:false});e?error(r,e):r.json(data)});
+app.post('/api/reviews',login,async(q,r)=>{const rating=+q.body.rating,comment=String(q.body.comment||'').trim().slice(0,1000);if(!Number.isInteger(rating)||rating<1||rating>5||!comment)return r.status(400).json({error:'Completá una puntuación y una opinión.'});const {error:e}=await db.from('reviews').insert({user_id:q.user.id,user_name:q.user.name,rating,comment});e?error(r,e):r.json({message:'Opinión publicada.'})});
+app.post('/api/inquiries',async(q,r)=>{const id=+q.body.product_id,{data:p,error:e}=await db.from('products').select('id,name').eq('id',id).maybeSingle();if(e)return error(r,e);if(!p)return r.status(404).json({error:'Producto no encontrado.'});const {error:write}=await db.from('inquiries').insert({user_id:q.user?.id||null,product_id:p.id,product_name:p.name,user_name:q.user?.name||null,user_email:q.user?.email||null});if(write)return error(r,write);r.json({message:'Consulta registrada.',whatsapp_url:`https://wa.me/${whatsapp_number}?text=${encodeURIComponent(`Hola DREAMS, quiero consultar por ${p.name}. ¿Está disponible?`)}`})});
+async function all(q,r){const {data,error:e}=await q;if(e)return error(r,e);r.json(data)}
+app.get('/api/admin/stats',admin,async(q,r)=>{try{const t=['products','profiles','favorites','inquiries','reviews'];const a=await Promise.all(t.map(async x=>{const z=await db.from(x).select('*',{count:'exact',head:true});if(z.error)throw z.error;return z.count||0}));const z=await db.from('products').select('*',{count:'exact',head:true}).lte('stock',2);if(z.error)throw z.error;r.json({products:a[0],users:a[1],favorites:a[2],inquiries:a[3],reviews:a[4],low_stock:z.count||0})}catch(e){error(r,e)}});
+app.get('/api/admin/products',admin,async(q,r)=>{const z=await db.from('products').select('*').order('id',{ascending:false});z.error?error(r,z.error):r.json(z.data.map(product))});
+app.post('/api/admin/products',admin,async(q,r)=>{const x=payload(q.body);if(x.e)return r.status(400).json({error:x.e});const z=await db.from('products').insert(x.o).select().single();z.error?r.status(400).json({error:z.error.message}):r.status(201).json(product(z.data))});
+app.put('/api/admin/products/:id',admin,async(q,r)=>{const x=payload(q.body);if(x.e)return r.status(400).json({error:x.e});const z=await db.from('products').update(x.o).eq('id',+q.params.id).select().maybeSingle();if(z.error)return r.status(400).json({error:z.error.message});z.data?r.json(product(z.data)):r.status(404).json({error:'Producto no encontrado.'})});
+app.delete('/api/admin/products/:id',admin,async(q,r)=>{const z=await db.from('products').delete().eq('id',+q.params.id).select('id').maybeSingle();if(z.error)return error(r,z.error);z.data?r.json({message:'Producto eliminado.'}):r.status(404).json({error:'Producto no encontrado.'})});
+app.get('/api/admin/users',admin,async(q,r)=>{const z=await db.from('profiles').select('id,name,role,created_at').order('created_at',{ascending:false});z.error?error(r,z.error):r.json(z.data.map(x=>({...x,email:null,is_admin:x.role==='admin'})))});
+app.get('/api/admin/inquiries',admin,async(q,r)=>{const z=await db.from('inquiries').select('*,products(brand,name)').order('id',{ascending:false}).limit(100);z.error?error(r,z.error):r.json(z.data.map(x=>({...x,brand:x.products?.brand||null,name:x.products?.name||x.product_name})))});
+app.get('/api/admin/reviews',admin,(q,r)=>all(db.from('reviews').select('*').order('id',{ascending:false}),r));
+app.get(['/admin','/admin.html'],admin,(q,r)=>r.sendFile(path.join(__dirname,'..','views','admin.html')));
+app.get('/api/health',(q,r)=>r.json({status:'ok',api:true,database:'supabase',environment:process.env.NODE_ENV||'development'}));
+app.use((q,r)=>q.path.startsWith('/api/')?r.status(404).json({error:'Ruta API no encontrada.'}):r.sendFile(path.join(__dirname,'..','public','index.html')));
+seed_database(db).then(()=>app.listen(port,'0.0.0.0',()=>console.log(`DREAMS funcionando en el puerto ${port} con Supabase.`))).catch(e=>{console.error('No se pudo inicializar DREAMS:',e);process.exit(1)});

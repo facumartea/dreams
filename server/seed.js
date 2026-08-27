@@ -1,6 +1,4 @@
 require('dotenv').config();
-const bcrypt = require('bcryptjs');
-const database = require('./db');
 
 const image_urls = [
     'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=900&q=85',
@@ -45,41 +43,26 @@ const products = [
     ['Montale', 'Arabians Tonka', 'unisex', 'nicho', 100, 495000, 5, 5, 'ambarado especiado', 'Azafrán, cardamomo', 'Rosa, oud', 'Haba tonka, caña de azúcar, ámbar, almizcle', 'Potente, dulce y de gran duración.', 1]
 ];
 
-function seed_database() {
-    const count = database.prepare('SELECT COUNT(*) AS total FROM products').get().total;
-    if (count === 0) {
-        const insert = database.prepare(`INSERT INTO products (brand,name,gender,category,size_ml,price,stock,intensity,family,top_notes,heart_notes,base_notes,description,image_url,featured) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`);
-        const transaction = database.transaction(() => {
-            products.forEach((product, index) => {
-                const [brand, name, gender, category, size_ml, price, stock, intensity, family, top_notes, heart_notes, base_notes, description, featured] = product;
-                insert.run(brand, name, gender, category, size_ml, price, stock, intensity, family, top_notes, heart_notes, base_notes, description, image_urls[index % image_urls.length], featured);
-            });
-        });
-        transaction();
+async function seed_database(database) {
+    const rows = products.map((product, index) => {
+        const [brand, name, gender, category, size_ml, price, stock, intensity, family, top_notes, heart_notes, base_notes, description, featured] = product;
+        return { brand, name, gender, category, size_ml, price, stock, intensity, family, top_notes, heart_notes, base_notes, description, image_url: image_urls[index % image_urls.length], featured: Boolean(featured) };
+    });
+    const products_result = await database.from('products').upsert(rows, { onConflict: 'brand,name', ignoreDuplicates: true });
+    if (products_result.error) throw products_result.error;
+    const admin_email = (process.env.ADMIN_EMAIL || 'admin@dreamsperfumes.com').toLowerCase();
+    const admin_password = process.env.ADMIN_PASSWORD;
+    if (!admin_password) return;
+    const users_result = await database.auth.admin.listUsers({ page: 1, perPage: 1000 });
+    if (users_result.error) throw users_result.error;
+    let admin = users_result.data.users.find((user) => user.email?.toLowerCase() === admin_email);
+    if (!admin) {
+        const create_result = await database.auth.admin.createUser({ email: admin_email, password: admin_password, email_confirm: true });
+        if (create_result.error) throw create_result.error;
+        admin = create_result.data.user;
     }
-
-    const admin_email = process.env.ADMIN_EMAIL || 'admin@dreamsperfumes.com';
-    const admin_password = process.env.ADMIN_PASSWORD || 'DreamsAdmin2026!';
-    const admin_name = process.env.ADMIN_NAME || 'Administrador DREAMS';
-    const existing_admin = database.prepare('SELECT id FROM users WHERE email = ?').get(admin_email);
-    if (!existing_admin) {
-        const admin_hash = bcrypt.hashSync(admin_password, 10);
-        database.prepare('INSERT INTO users (name,email,password_hash,is_admin) VALUES (?,?,?,1)').run(admin_name, admin_email, admin_hash);
-    }
-
-    const review_count = database.prepare('SELECT COUNT(*) AS total FROM reviews').get().total;
-    if (review_count === 0) {
-        const review_insert = database.prepare('INSERT INTO reviews (user_name,rating,comment) VALUES (?,?,?)');
-        review_insert.run('Martina R.', 5, 'La atención fue excelente y pude encontrar el perfume que buscaba.');
-        review_insert.run('Tomás G.', 5, 'Me gustó mucho la página y la variedad de marcas.');
-        review_insert.run('Sofía M.', 4, 'Muy buena experiencia, especialmente el detalle de las notas.');
-    }
-}
-
-seed_database();
-
-if (require.main === module) {
-    console.log('Base de datos DREAMS lista.');
+    const profile_result = await database.from('profiles').upsert({ id: admin.id, name: process.env.ADMIN_NAME || 'Administrador DREAMS', role: 'admin' }, { onConflict: 'id' });
+    if (profile_result.error) throw profile_result.error;
 }
 
 module.exports = { seed_database };
