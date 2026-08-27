@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600&display=swap');
+
 :root {
     --black: #111111;
     --white: #ffffff;
@@ -1098,6 +1100,89 @@ button {
     }
 }
 
+/* Identidad visual DREAMS — editorial de lujo */
+:root {
+    --black: #111111;
+    --white: #f3f1ec;
+    --cream: #111111;
+    --sand: #c8a862;
+    --blue: #2d2d2d;
+    --gray: #96918a;
+    --line: rgba(200, 168, 98, .28);
+    --soft: #1d1d1d;
+    --muted: #aaa49b;
+    --danger: #c77d72;
+}
+
+body {
+    background: #111111;
+    color: #f3f1ec;
+    font-family: 'Montserrat', 'Inter', sans-serif;
+    letter-spacing: .01em;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: .08;
+    background-image: radial-gradient(rgba(255,255,255,.35) .5px, transparent .5px);
+    background-size: 5px 5px;
+    z-index: -1;
+}
+
+.site-header {
+    background: rgba(17,17,17,.94);
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 8px 30px rgba(0,0,0,.25);
+}
+
+.brand, .footer-brand, h1, h2, h3, .hero-copy h1, .page-intro h1, .about-hero h1, .product-info h1, .account-card h1 {
+    font-family: 'Playfair Display', 'Cormorant Garamond', serif;
+    color: #c8a862;
+    letter-spacing: .14em;
+}
+
+.brand { font-size: 37px; text-shadow: 0 0 20px rgba(200,168,98,.18); }
+.main-nav, .eyebrow, .button, button, .filter-label, .product-brand, .product-price, .stock-badge { font-family: 'Montserrat', sans-serif; }
+.main-nav a, .icon-link, .cart-link { color: #d8d1c6; }
+.main-nav a:hover, .icon-link:hover, .cart-link:hover { color: #c8a862; opacity: 1; }
+
+.hero, .page-intro, .about-hero, .catalog-toolbar, .product-detail, .account-card, .cart-layout, .admin-header, .admin-panel, .reviews-section, .values article {
+    background: linear-gradient(135deg, rgba(29,29,29,.96), rgba(17,17,17,.98));
+    border-color: var(--line);
+}
+
+.hero { min-height: 620px; border: 1px solid var(--line); box-shadow: 0 24px 70px rgba(0,0,0,.35); }
+.hero-copy h1, .page-intro h1, .about-hero h1 { color: #c8a862; text-transform: uppercase; }
+.hero-copy > p:not(.eyebrow), .about-hero > p:not(.eyebrow), .muted { color: #c4beb4; }
+.eyebrow { color: #c8a862; letter-spacing: .22em; }
+.hero-image img, .product-image-wrap img, .detail-image img { filter: saturate(.72) contrast(1.08); }
+
+.button, .button.primary, button.button { background: #c8a862; color: #111; border-color: #c8a862; }
+.button:hover, .button.primary:hover { background: #dfbf7a; border-color: #dfbf7a; }
+.button.secondary, .button.outline { background: transparent; color: #c8a862; border-color: #c8a862; }
+
+.section-heading, .catalog-toolbar, .search-box, .filter-group, .product-card, .review-card, .note-block, .cart-summary, .cart-row, .form-field input, .form-field select, .form-field textarea, .admin-stat, .admin-table, .admin-tabs { border-color: var(--line); }
+.product-card, .review-card, .admin-stat, .cart-summary { background: #1d1d1d; color: #f3f1ec; box-shadow: 0 12px 35px rgba(0,0,0,.2); }
+.product-card:hover { transform: translateY(-5px); box-shadow: 0 18px 45px rgba(0,0,0,.35); }
+.product-card h3, .review-card h3, .product-name, .cart-row strong { color: #e8dfd2; }
+.product-card .product-brand, .product-price, .product-card small { color: #c8a862; }
+.product-image-wrap { background: #252525; }
+.search-box input, input, select, textarea { background: #191919; color: #f3f1ec; border-color: var(--line); }
+input::placeholder, textarea::placeholder { color: #817b72; }
+.site-footer { background: #0b0b0b; border-top: 1px solid var(--line); color: #aaa49b; }
+.site-footer a:hover { color: #c8a862; }
+.admin-tab.active { color: #c8a862; border-bottom-color: #c8a862; }
+.table-scroll th { color: #c8a862; }
+
+@media (max-width: 700px) {
+    .site-header { padding: 18px 5vw; }
+    .brand { font-size: 29px; }
+    .hero { min-height: 540px; }
+}
+
 /* mejoras DREAMS: stock, historial y panel admin */
 .stock-badge { display: inline-block; margin-bottom: 8px; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: #536b58; }
 .stock-badge.low { color: #9a6a2f; }
@@ -1128,3 +1213,11 @@ button:disabled { opacity: .45; cursor: not-allowed; }
     .admin-stat { padding: 16px; }
     .admin-stat strong { font-size: 25px; }
 }
+
+/* Ajustes finales para que el back office conserve la misma identidad */
+.admin-stat { background: #1d1d1d; color: #f3f1ec; border-color: var(--line); }
+.admin-stat span, .admin-stat small { color: #aaa49b; }
+.admin-stat strong { color: #c8a862; }
+.admin-tab.active { border-bottom-color: #c8a862; color: #c8a862; }
+.admin-table { background: #1d1d1d; color: #f3f1ec; }
+.admin-table th, .admin-table td { border-color: var(--line); }
