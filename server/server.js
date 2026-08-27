@@ -11,7 +11,7 @@ const admin_email=(process.env.ADMIN_EMAIL||'admin@dreamsperfumes.com').toLowerC
 const db=createClient(process.env.SUPABASE_URL,process.env.SUPABASE_SECRET_KEY,{auth:{autoRefreshToken:false,persistSession:false}});
 app.set('trust proxy',1);app.use(helmet({contentSecurityPolicy:false,crossOriginEmbedderPolicy:false}),morgan(production?'combined':'dev'),express.json({limit:'1mb'}),express.urlencoded({extended:true,limit:'1mb'}));
 app.use('/api/auth',rateLimit({windowMs:900000,limit:20,standardHeaders:true,legacyHeaders:false,message:{error:'Demasiados intentos. Probá nuevamente en unos minutos.'}}));
-app.use('/api',rateLimit({windowMs:900000,limit:300,standardHeaders:true,legacyHeaders:false}),express.static(path.join(__dirname,'..','public')));
+app.use(express.static(path.join(__dirname,'..','public')));
 function cookie(req){return Object.fromEntries((req.headers.cookie||'').split(';').filter(Boolean).map(s=>{const i=s.indexOf('=');return[decodeURIComponent(s.slice(0,i).trim()),decodeURIComponent(s.slice(i+1))]}).filter(x=>x[0]))}
 function session(res,s){const x=`; Path=/; HttpOnly; SameSite=Lax; Max-Age=3600${production?'; Secure':''}`;res.setHeader('Set-Cookie',[`dreams_access_token=${encodeURIComponent(s.access_token)}${x}`,`dreams_refresh_token=${encodeURIComponent(s.refresh_token)}${x}`])}
 function logout(res){const x=`; Path=/; HttpOnly; SameSite=Lax; Max-Age=0${production?'; Secure':''}`;res.setHeader('Set-Cookie',[`dreams_access_token=${x}`,`dreams_refresh_token=${x}`])}
