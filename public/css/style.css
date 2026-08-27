@@ -1221,3 +1221,42 @@ button:disabled { opacity: .45; cursor: not-allowed; }
 .admin-tab.active { border-bottom-color: #c8a862; color: #c8a862; }
 .admin-table { background: #1d1d1d; color: #f3f1ec; }
 .admin-table th, .admin-table td { border-color: var(--line); }
+
+/* Carrito y panel: proporciones, aire y acabado de boutique */
+.cart-page { padding-top: 72px; padding-bottom: 96px; }
+.cart-layout { gap: 38px; padding: 34px; border: 1px solid var(--line); border-radius: 2px; }
+.cart-items { min-width: 0; }
+.cart-row { grid-template-columns: 120px minmax(0,1fr) auto; gap: 28px; padding: 24px 0; }
+.cart-row:first-child { border-top: 0; }
+.cart-row img { width: 120px; height: 150px; border: 1px solid var(--line); object-fit: cover; }
+.cart-row h3 { color: #e8dfd2; font-family: 'Playfair Display', serif; font-size: 21px; letter-spacing: .04em; }
+.cart-row p { color: #aaa49b; line-height: 1.55; }
+.quantity-controls { border-color: var(--line); background: #151515; }
+.quantity-controls button { background: transparent; color: #c8a862; }
+.quantity-controls span { color: #f3f1ec; }
+.remove-button { color: #c77d72; }
+.cart-summary { position: sticky; top: 115px; border: 1px solid var(--line); padding: 30px; }
+.summary-line { color: #c4beb4; }
+.summary-total { color: #c8a862; }
+.admin-page { max-width: 1600px; margin: 0 auto; padding: 64px 5vw 100px; }
+.admin-header { padding: 28px 32px; border: 1px solid var(--line); }
+.admin-brand-lockup { display: flex; align-items: center; gap: 22px; }
+.admin-isotype { display: grid; width: 62px; height: 62px; place-items: center; border: 1px solid #c8a862; color: #c8a862; font: 500 46px/1 'Playfair Display', serif; }
+.admin-header h1 { font-size: clamp(42px, 5vw, 70px); }
+.admin-layout { gap: 32px; align-items: start; }
+.admin-form, .admin-table-wrap { background: #1d1d1d; border: 1px solid var(--line); padding: 30px; }
+.admin-table-wrap { min-width: 0; }
+.admin-actions .small-button { border-color: var(--line); background: transparent; color: #c8a862; }
+.admin-actions .small-button:hover { background: #c8a862; color: #111; }
+
+@media (max-width: 700px) {
+    .cart-page { padding-top: 38px; }
+    .cart-layout { padding: 20px; gap: 24px; }
+    .cart-row { grid-template-columns: 82px minmax(0,1fr); gap: 16px; }
+    .cart-row img { width: 82px; height: 112px; }
+    .cart-row > strong { grid-column: 2; }
+    .cart-summary { position: static; }
+    .admin-header { padding: 22px; }
+    .admin-brand-lockup { align-items: flex-start; gap: 14px; }
+    .admin-isotype { width: 46px; height: 46px; font-size: 34px; }
+}

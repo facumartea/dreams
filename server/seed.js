@@ -46,9 +46,10 @@ const products = [
 async function seed_database(database) {
     const rows = products.map((product, index) => {
         const [brand, name, gender, category, size_ml, price, stock, intensity, family, top_notes, heart_notes, base_notes, description, featured] = product;
-        return { brand, name, gender, category, size_ml, price, stock, intensity, family, top_notes, heart_notes, base_notes, description, image_url: image_urls[index % image_urls.length], featured: Boolean(featured) };
+        const image_url = brand === 'Chanel' && name.startsWith('Coco') ? '/assets/dreams-bottle.png' : image_urls[index % image_urls.length];
+        return { brand, name, gender, category, size_ml, price, stock, intensity, family, top_notes, heart_notes, base_notes, description, image_url, featured: Boolean(featured) };
     });
-    const products_result = await database.from('products').upsert(rows, { onConflict: 'brand,name', ignoreDuplicates: true });
+    const products_result = await database.from('products').upsert(rows, { onConflict: 'brand,name', ignoreDuplicates: false });
     if (products_result.error) throw products_result.error;
     const admin_email = (process.env.ADMIN_EMAIL || 'admin@dreamsperfumes.com').toLowerCase();
     const admin_password = process.env.ADMIN_PASSWORD;
