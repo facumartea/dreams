@@ -45,4 +45,10 @@ app.get('/api/admin/reviews',admin,(q,r)=>all(db.from('reviews').select('*').ord
 app.get(['/admin','/admin.html'],admin,(q,r)=>r.sendFile(path.join(__dirname,'..','views','admin.html')));
 app.get('/api/health',(q,r)=>r.json({status:'ok',api:true,database:'supabase',environment:process.env.NODE_ENV||'development'}));
 app.use((q,r)=>q.path.startsWith('/api/')?r.status(404).json({error:'Ruta API no encontrada.'}):r.sendFile(path.join(__dirname,'..','public','index.html')));
-seed_database(db).then(()=>app.listen(port,'0.0.0.0',()=>console.log(`DREAMS funcionando en el puerto ${port} con Supabase.`))).catch(e=>{console.error('No se pudo inicializar DREAMS:',e);process.exit(1)});
+// Abrimos el puerto primero para que Railway pueda verificar la aplicación.
+// La carga inicial del catálogo y del administrador se ejecuta en segundo plano;
+// si Supabase tarda o devuelve un error, la API de salud y el frontend siguen disponibles.
+app.listen(port,'0.0.0.0',()=>{
+    console.log(`DREAMS funcionando en el puerto ${port} con Supabase.`);
+    seed_database(db).then(()=>console.log('Catálogo y administrador sincronizados con Supabase.')).catch(e=>console.error('No se pudo sincronizar el catálogo inicial:',e));
+});
