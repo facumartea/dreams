@@ -1,6 +1,7 @@
 require('dotenv').config();
 const path=require('path'),express=require('express'),helmet=require('helmet'),morgan=require('morgan');
 const {rateLimit}=require('express-rate-limit');
+global.WebSocket=require('ws');
 const {createClient}=require('@supabase/supabase-js');
 const {seed_database}=require('./seed');
 const needed=['SUPABASE_URL','SUPABASE_SECRET_KEY'].filter(k=>!process.env[k]);
