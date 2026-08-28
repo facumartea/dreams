@@ -41,7 +41,7 @@ El navegador sólo habla con `/api`. `SUPABASE_SECRET_KEY` es exclusivamente del
 
 ## Entorno y comandos
 
-Requisitos: Node.js 20 o superior y Corepack. El gestor fijado es `pnpm@11.19.0`.
+Requisitos: Node.js 24.x y Corepack. El gestor fijado es `pnpm@11.19.0`.
 
 ```text
 corepack pnpm install --frozen-lockfile
