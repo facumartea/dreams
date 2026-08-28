@@ -10,11 +10,11 @@
 - PR: [#1 — Production audit and critical hardening](https://github.com/facumartea/drams/pull/1), abierto contra `main`.
 - HEAD/SHA FUNCIONAL VERIFICADO: `6b5969470180d96612573ac23867605ae833ac3a` (el commit exclusivo de actualización de estado puede ser posterior; confirmar `git rev-parse HEAD`).
 - FASE ACTUAL: F1 — Seguridad crítica, con críticos de datos de F3 adelantados por riesgo.
-- PROGRESO GENERAL: 48% ponderado.
+- PROGRESO GENERAL: 52% ponderado.
 
 ## Porcentaje de fases
 
-F0 100% · F1 60% · F2 50% · F3 45% · F4 60% · F5 50% · F6 45% · F7 40% · F8 25% · F9 40% · F10 55% · F11 45% · F12 35% · F13 20% · F14 15% · F15 25% · F16 30% · F17 0%.
+F0 100% · F1 70% · F2 55% · F3 55% · F4 60% · F5 50% · F6 60% · F7 40% · F8 30% · F9 40% · F10 55% · F11 45% · F12 35% · F13 20% · F14 15% · F15 30% · F16 30% · F17 0%.
 
 ## Último trabajo
 
@@ -28,6 +28,9 @@ F0 100% · F1 60% · F2 50% · F3 45% · F4 60% · F5 50% · F6 45% · F7 40% ·
 - Readiness comprueba Supabase y Railway apunta a `/api/health`.
 - Edición Admin conserva el ID; validación de productos endurecida; consultas limitadas.
 - Suite inicial y workflow CI creados.
+- Sesiones con refresh server-side, expiraciones separadas y revocación local en Supabase; perfiles faltantes se reparan como `customer` sin confiar roles a metadata.
+- IDs de producto inválidos se rechazan uniformemente con 400.
+- Baseline Supabase versionada creada con trigger de perfil, `updated_at`, RLS idempotente e índices; todavía no aplicada.
 - Overflow de portada corregido y verificado en los seis viewports; foco visible, reduced motion y menú accesible añadidos en portada.
 - No se modificó la base remota ni se desplegó.
 
@@ -38,7 +41,7 @@ F0 100% · F1 60% · F2 50% · F3 45% · F4 60% · F5 50% · F6 45% · F7 40% ·
 - Sintaxis JavaScript: OK.
 - Smoke HTTP local sin DB real: OK para servidor/estáticos; demostró healthcheck falso positivo.
 - Audit producción: OK, sin vulnerabilidades conocidas.
-- Suite Node: 7/7 OK (escape XSS/URL, seed, validación, readiness y CSP).
+- Suite Node: 11/11 OK (baseline SQL, escape XSS/URL, seed, validación/IDs, cookies, readiness y CSP).
 - E2E completo e integración con Supabase real: pendientes.
 
 ## CI
@@ -47,9 +50,9 @@ Workflow `.github/workflows/ci.yml` creado con install frozen, audit, check y te
 
 ## Bugs confirmados prioritarios
 
-1. Refresh token sin uso/revocación; perfil de registro puede fallar silenciosamente.
-2. IDs inválidos y algunos errores/operaciones concurrentes aún requieren hardening.
-3. Falta migración versionada y verificación RLS/advisors contra Supabase real.
+1. Ciclo de refresh/revocación y trigger de perfiles requieren integración contra Supabase real.
+2. Favoritos aún usa toggle read-then-write y requiere resolución atómica/idempotente.
+3. Baseline SQL necesita ejecución local/remota controlada, advisors y verificación RLS.
 4. Carrito/consultas deben reconciliar datos con servidor y eliminar configuración hardcodeada.
 5. Cobertura API/E2E/DB aún insuficiente.
 
@@ -63,7 +66,7 @@ Workflow `.github/workflows/ci.yml` creado con install frozen, audit, check y te
 
 ## DB
 
-Supabase/Postgres declarativo en `supabase/schema.sql`; cinco tablas con RLS. Estado remoto, advisors, datos y políticas efectivas: no verificados. No hay migraciones versionadas. El servidor usa clave secreta y bypass de RLS.
+Supabase/Postgres con baseline `supabase/migrations/20260828144944_production_baseline.sql`; `schema.sql` quedó marcado como snapshot legacy. Cinco tablas con RLS, triggers de perfil/updated_at e índices declarados. La migración no se aplicó: Docker/Postgres local no está disponible y el remoto no está conectado. Advisors, datos y políticas efectivas: no verificados.
 
 ## Deploy
 
@@ -71,10 +74,10 @@ Railway configurado con Railpack y `node server/server.js`; healthcheck actualiz
 
 ## Bloqueos
 
-- Para validar Supabase/RLS/DB y deploy reales harán falta acceso/credenciales o conexión del usuario, sin exponer secretos en chat.
+- Para validar Supabase/RLS/DB y deploy reales harán falta acceso/conexión del usuario o Docker local, sin exponer secretos en chat.
 - GitHub, push y PR funcionan mediante la conexión configurada. No hay bloqueo Git actual.
 - No hay bloqueo para continuar con correcciones locales críticas y tests.
 
 ## Próxima acción exacta
 
-Endurecer IDs/errores y favoritos concurrentes; implementar ciclo correcto de sesión/refresh/revocación y garantía transaccional del perfil; preparar migraciones Supabase versionadas y ampliar pruebas API. Luego conectar Supabase/Railway/GitHub para validar CI y producción sin compartir secretos.
+Convertir favoritos en operación atómica/idempotente; ampliar pruebas de rutas API con DB aislada; alinear README/docs con Supabase y aplicar/verificar la baseline en un entorno controlado. Luego validar advisors, RLS, Railway y producción sin compartir secretos.

@@ -32,3 +32,16 @@ Todos los cambios relevantes de DREAMS se registran aquí. El proyecto aún no u
 - Rama `codex/production-hardening` publicada; PR #1 abierto contra `main`.
 - GitHub Actions CI run #1 completó correctamente sobre `6b596947`.
 - Sin migraciones remotas ni deploy en esta tanda.
+
+### 2026-08-28 — Sesiones, IDs y baseline Supabase
+
+- Añadida renovación server-side mediante refresh token y cookies con expiraciones separadas.
+- Logout revoca la sesión actual en Supabase cuando hay un access token válido.
+- Perfiles faltantes se crean/reparan siempre con rol `customer`; los errores de perfil ya no se ignoran.
+- Mensajes de registro dejaron de filtrar errores internos del proveedor.
+- IDs inválidos de productos, favoritos, consultas y Admin ahora devuelven 400.
+- Creada con Supabase CLI 2.116.0 la migración `20260828144944_production_baseline.sql`.
+- La baseline agrega RLS idempotente, trigger seguro de perfil, trigger `updated_at` e índices de catálogo/orden.
+- `supabase/schema.sql` marcado como snapshot legacy y `supabase/.temp` ignorado.
+- Suite ampliada a 11 pruebas, incluidas invariantes de seguridad/no destrucción de la baseline; audit continúa sin vulnerabilidades conocidas.
+- Migración no aplicada ni declarada verificada: falta Postgres/Docker local o conexión controlada al remoto.

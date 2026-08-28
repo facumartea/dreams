@@ -3,7 +3,7 @@ const assert = require('node:assert/strict');
 
 process.env.SUPABASE_URL = 'https://example.supabase.co';
 process.env.SUPABASE_SECRET_KEY = 'test-only-placeholder';
-const { app, validate, payload, database_health } = require('../server/server');
+const { app, validate, payload, database_health, auth_cookie, session, parse_id } = require('../server/server');
 
 test('validación de producto rechaza números y URLs inseguros', () => {
     const valid = {
@@ -18,9 +18,25 @@ test('validación de producto rechaza números y URLs inseguros', () => {
     assert.equal(payload({ ...valid, brand: '  DREAMS  ' }).o.brand, 'DREAMS');
 });
 
+test('parse_id sólo acepta enteros positivos seguros', () => {
+    assert.equal(parse_id('42'), 42);
+    for (const value of ['', 'abc', '1.5', '-1', '0', Number.MAX_SAFE_INTEGER + 1]) assert.equal(parse_id(value), null);
+});
+
 test('readiness falla cuando Supabase devuelve error', async () => {
     const database = { from: () => ({ select: async () => ({ error: new Error('offline') }) }) };
     await assert.rejects(database_health(database), /offline/);
+});
+
+test('cookies de sesión separan expiración de access y refresh', () => {
+    const headers = {};
+    const response = { setHeader(name, value) { headers[name] = value; } };
+    session(response, { access_token: 'access value', refresh_token: 'refresh value', expires_in: 900 });
+    assert.equal(headers['Set-Cookie'].length, 2);
+    assert.match(headers['Set-Cookie'][0], /dreams_access_token=access%20value/);
+    assert.match(headers['Set-Cookie'][0], /Max-Age=900/);
+    assert.match(headers['Set-Cookie'][1], /Max-Age=2592000/);
+    assert.match(auth_cookie('test', 'a b', 60), /HttpOnly; SameSite=Lax/);
 });
 
 test('la respuesta HTTP incluye CSP sin unsafe-inline', async t => {
