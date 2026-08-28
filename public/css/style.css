@@ -44,6 +44,11 @@ button {
     cursor: pointer;
 }
 
+:focus-visible {
+    outline: 3px solid #dfbf7a;
+    outline-offset: 3px;
+}
+
 .site-header {
     position: sticky;
     top: 0;
@@ -140,6 +145,7 @@ button {
 
 .hero-copy {
     display: flex;
+    min-width: 0;
     flex-direction: column;
     justify-content: center;
     padding: 8vw;
@@ -164,6 +170,7 @@ button {
 }
 
 .hero-image {
+    min-width: 0;
     min-height: 720px;
     overflow: hidden;
 }
@@ -956,7 +963,7 @@ button {
     }
 }
 
-@media (max-width: 760px) {
+@media (max-width: 900px) {
     .site-header {
         grid-template-columns: 1fr auto;
         padding: 17px 5vw;
@@ -1181,6 +1188,16 @@ input::placeholder, textarea::placeholder { color: #817b72; }
     .site-header { padding: 18px 5vw; }
     .brand { font-size: 29px; }
     .hero { min-height: 540px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+    }
 }
 
 /* mejoras DREAMS: stock, historial y panel admin */

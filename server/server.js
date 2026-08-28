@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config({quiet:true});
 const path=require('path'),express=require('express'),helmet=require('helmet'),morgan=require('morgan');
 const {rateLimit}=require('express-rate-limit');
 global.WebSocket=require('ws');
@@ -9,16 +9,18 @@ if(needed.length)throw new Error(`Faltan variables obligatorias: ${needed.join('
 const app=express(),port=Number(process.env.PORT||8080),production=process.env.NODE_ENV==='production';
 const admin_email=(process.env.ADMIN_EMAIL||'admin@dreamsperfumes.com').toLowerCase(),whatsapp_number=process.env.WHATSAPP_NUMBER||'542944502390';
 const db=createClient(process.env.SUPABASE_URL,process.env.SUPABASE_SECRET_KEY,{auth:{autoRefreshToken:false,persistSession:false}});
-app.set('trust proxy',1);app.use(helmet({contentSecurityPolicy:false,crossOriginEmbedderPolicy:false}),morgan(production?'combined':'dev'),express.json({limit:'1mb'}),express.urlencoded({extended:true,limit:'1mb'}));
+const content_security_policy={directives:{defaultSrc:["'self'"],scriptSrc:["'self'"],styleSrc:["'self'",'https://fonts.googleapis.com'],fontSrc:["'self'",'https://fonts.gstatic.com'],imgSrc:["'self'",'data:','https://images.unsplash.com'],connectSrc:["'self'"],objectSrc:["'none'"],baseUri:["'self'"],formAction:["'self'"],frameAncestors:["'none'"],upgradeInsecureRequests:production?[]:null}};
+app.set('trust proxy',1);app.use(helmet({contentSecurityPolicy:content_security_policy,crossOriginEmbedderPolicy:false}),morgan(production?'combined':'dev'),express.json({limit:'1mb'}),express.urlencoded({extended:true,limit:'1mb'}));
 app.use('/api/auth',rateLimit({windowMs:900000,limit:20,standardHeaders:true,legacyHeaders:false,message:{error:'Demasiados intentos. Probá nuevamente en unos minutos.'}}));
+app.use('/api/inquiries',rateLimit({windowMs:900000,limit:10,standardHeaders:true,legacyHeaders:false,message:{error:'Demasiadas consultas. Probá nuevamente en unos minutos.'}}));
 app.use(express.static(path.join(__dirname,'..','public')));
 function cookie(req){return Object.fromEntries((req.headers.cookie||'').split(';').filter(Boolean).map(s=>{const i=s.indexOf('=');return[decodeURIComponent(s.slice(0,i).trim()),decodeURIComponent(s.slice(i+1))]}).filter(x=>x[0]))}
 function session(res,s){const x=`; Path=/; HttpOnly; SameSite=Lax; Max-Age=3600${production?'; Secure':''}`;res.setHeader('Set-Cookie',[`dreams_access_token=${encodeURIComponent(s.access_token)}${x}`,`dreams_refresh_token=${encodeURIComponent(s.refresh_token)}${x}`])}
 function logout(res){const x=`; Path=/; HttpOnly; SameSite=Lax; Max-Age=0${production?'; Secure':''}`;res.setHeader('Set-Cookie',[`dreams_access_token=${x}`,`dreams_refresh_token=${x}`])}
 const error=(res,e,msg='No se pudo completar la operación.')=>{console.error(e);return res.status(500).json({error:msg})};
 const product=r=>({...r,featured:Boolean(r.featured),stock:Number(r.stock||0),notes:{salida:String(r.top_notes).split(',').map(x=>x.trim()),corazon:String(r.heart_notes).split(',').map(x=>x.trim()),fondo:String(r.base_notes).split(',').map(x=>x.trim())}});
-function validate(p){const f=['brand','name','gender','category','size_ml','price','stock','intensity','family','top_notes','heart_notes','base_notes','description','image_url'];if(f.some(k=>p[k]===undefined||String(p[k]).trim()===''))return'Completá todos los campos del producto.';if(!['hombre','mujer','unisex'].includes(p.gender))return'Género inválido.';if(!['diseñador','nicho'].includes(p.category))return'Categoría inválida.';if(+p.price<0||+p.stock<0||+p.size_ml<=0||+p.intensity<1||+p.intensity>5)return'Precio, stock, tamaño e intensidad deben ser válidos.'}
-function payload(p){const e=validate(p);if(e)return{e};const o={};['brand','name','gender','category','size_ml','price','stock','intensity','family','top_notes','heart_notes','base_notes','description','image_url'].forEach(k=>o[k]=p[k]);['size_ml','price','stock','intensity'].forEach(k=>o[k]=Number(o[k]));o.featured=Boolean(p.featured);return{o}}
+function validate(p){const f=['brand','name','gender','category','size_ml','price','stock','intensity','family','top_notes','heart_notes','base_notes','description','image_url'];if(!p||typeof p!=='object'||f.some(k=>p[k]===undefined||String(p[k]).trim()===''))return'Completá todos los campos del producto.';if(!['hombre','mujer','unisex'].includes(p.gender))return'Género inválido.';if(!['diseñador','nicho'].includes(p.category))return'Categoría inválida.';const size=Number(p.size_ml),price=Number(p.price),stock=Number(p.stock),intensity=Number(p.intensity);if(!Number.isSafeInteger(size)||size<=0||!Number.isFinite(price)||price<0||!Number.isSafeInteger(stock)||stock<0||!Number.isSafeInteger(intensity)||intensity<1||intensity>5)return'Precio, stock, tamaño e intensidad deben ser válidos.';const limits={brand:120,name:160,family:200,top_notes:500,heart_notes:500,base_notes:500,description:2000,image_url:2000};if(Object.entries(limits).some(([key,limit])=>String(p[key]).trim().length>limit))return'Uno o más campos superan la longitud permitida.';const image=String(p.image_url).trim();if(!image.startsWith('/')&&!/^https:\/\//i.test(image))return'La imagen debe usar una ruta local o una URL HTTPS.'}
+function payload(p){const e=validate(p);if(e)return{e};const o={};['brand','name','gender','category','family','top_notes','heart_notes','base_notes','description','image_url'].forEach(k=>o[k]=String(p[k]).trim());['size_ml','price','stock','intensity'].forEach(k=>o[k]=Number(p[k]));o.featured=Boolean(p.featured);return{o}}
 app.use(async(req,res,next)=>{try{const token=cookie(req).dreams_access_token;if(!token)return next();const {data:{user}}=await db.auth.getUser(token);if(!user)return next();const {data:p}=await db.from('profiles').select('name,role').eq('id',user.id).maybeSingle();req.user={id:user.id,name:p?.name||user.email,email:user.email,is_admin:p?.role==='admin'};next()}catch(e){next()}});
 const login=(q,r,n)=>q.user?n():r.status(401).json({error:'Necesitás iniciar sesión.'}),admin=(q,r,n)=>q.user?.is_admin?n():r.status(403).json({error:'Acceso reservado al administrador.'});
 app.get('/api/config',(q,r)=>r.json({whatsapp_number,admin_email,app_name:'DREAMS'}));
@@ -44,12 +46,15 @@ app.get('/api/admin/users',admin,async(q,r)=>{const z=await db.from('profiles').
 app.get('/api/admin/inquiries',admin,async(q,r)=>{const z=await db.from('inquiries').select('*,products(brand,name)').order('id',{ascending:false}).limit(100);z.error?error(r,z.error):r.json(z.data.map(x=>({...x,brand:x.products?.brand||null,name:x.products?.name||x.product_name})))});
 app.get('/api/admin/reviews',admin,(q,r)=>all(db.from('reviews').select('*').order('id',{ascending:false}),r));
 app.get(['/admin','/admin.html'],admin,(q,r)=>r.sendFile(path.join(__dirname,'..','views','admin.html')));
-app.get('/api/health',(q,r)=>r.json({status:'ok',api:true,database:'supabase',environment:process.env.NODE_ENV||'development'}));
+async function database_health(database){const result=await database.from('products').select('id',{count:'exact',head:true});if(result.error)throw result.error;return true}
+app.get('/api/health',async(q,r)=>{try{await database_health(db);r.json({status:'ok',api:true,database:'ok'})}catch(e){console.error('Healthcheck de Supabase falló:',e);r.status(503).json({status:'unavailable',api:true,database:'unavailable'})}});
 app.use((q,r)=>q.path.startsWith('/api/')?r.status(404).json({error:'Ruta API no encontrada.'}):r.sendFile(path.join(__dirname,'..','public','index.html')));
 // Abrimos el puerto primero para que Railway pueda verificar la aplicación.
 // La carga inicial del catálogo y del administrador se ejecuta en segundo plano;
 // si Supabase tarda o devuelve un error, la API de salud y el frontend siguen disponibles.
-app.listen(port,'0.0.0.0',()=>{
+function start(){return app.listen(port,'0.0.0.0',()=>{
     console.log(`DREAMS funcionando en el puerto ${port} con Supabase.`);
     seed_database(db).then(()=>console.log('Catálogo y administrador sincronizados con Supabase.')).catch(e=>console.error('No se pudo sincronizar el catálogo inicial:',e));
-});
+})}
+if(require.main===module)start();
+module.exports={app,start,validate,payload,database_health};

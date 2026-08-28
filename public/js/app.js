@@ -10,7 +10,25 @@ function format_price(value) {
 
 function get_cart() {
     try {
-        return JSON.parse(localStorage.getItem('dreams_cart')) || [];
+        const stored = JSON.parse(localStorage.getItem('dreams_cart'));
+        if (!Array.isArray(stored)) return [];
+        return stored.flatMap(item => {
+            const id = Number(item?.id);
+            const price = Number(item?.price);
+            const quantity = Number(item?.quantity);
+            const stock = Number(item?.stock);
+            if (!Number.isSafeInteger(id) || id <= 0 || !Number.isFinite(price) || price < 0 || !Number.isSafeInteger(quantity) || quantity <= 0) return [];
+            return [{
+                id,
+                name: String(item.name ?? '').slice(0, 160),
+                brand: String(item.brand ?? '').slice(0, 120),
+                price,
+                image_url: safe_image_url(item.image_url),
+                quantity: Math.min(quantity, 99),
+                size_ml: Number.isFinite(Number(item.size_ml)) ? Number(item.size_ml) : null,
+                stock: Number.isSafeInteger(stock) && stock >= 0 ? stock : null
+            }];
+        });
     } catch (error) {
         return [];
     }
@@ -40,6 +58,10 @@ function add_to_cart(product) {
     const existing = cart.find(item => item.id === product.id);
 
     if (existing) {
+        if (Number.isSafeInteger(existing.stock) && existing.quantity >= existing.stock) {
+            show_toast('No hay más unidades disponibles.');
+            return;
+        }
         existing.quantity += 1;
     } else {
         cart.push({
@@ -72,6 +94,11 @@ function change_quantity(product_id, change) {
     }
 
     item.quantity += change;
+
+    if (Number.isSafeInteger(item.stock) && item.quantity > item.stock) {
+        item.quantity = item.stock;
+        show_toast('Alcanzaste el stock disponible.');
+    }
 
     if (item.quantity <= 0) {
         remove_from_cart(product_id);
@@ -129,21 +156,23 @@ function create_product_card(product) {
     card.innerHTML = `
         <div class="product-image-wrap">
             <button class="favorite-button" aria-label="Agregar a favoritos">♡</button>
-            <a href="/producto.html?id=${product.id}">
-                <img src="${product.image_url}" alt="${product.brand} ${product.name}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1563170351-be82bc888aa4?auto=format&fit=crop&w=900&q=85'">
+            <a href="/producto.html?id=${encodeURIComponent(Number(product.id))}">
+                <img src="${escape_html(safe_image_url(product.image_url))}" alt="${escape_html(`${product.brand} ${product.name}`)}" loading="lazy">
             </a>
         </div>
         <div class="product-info">
-            <div class="brand-name">${product.brand}</div>
-            <h3><a href="/producto.html?id=${product.id}">${product.name}</a></h3>
-            <div class="product-meta"><span>${product.gender}</span><span>${product.size_ml} ml</span></div>
+            <div class="brand-name">${escape_html(product.brand)}</div>
+            <h3><a href="/producto.html?id=${encodeURIComponent(Number(product.id))}">${escape_html(product.name)}</a></h3>
+            <div class="product-meta"><span>${escape_html(product.gender)}</span><span>${escape_html(product.size_ml)} ml</span></div>
             <div class="product-price">${format_price(product.price)}</div>
             <div class="product-actions">
                 <button class="small-button dark add-cart-button" ${Number(product.stock) === 0 ? 'disabled' : ''}>${Number(product.stock) === 0 ? 'Agotado' : 'Agregar al carrito'}</button>
-                <a class="small-button" href="/producto.html?id=${product.id}">Ver perfume</a>
+                <a class="small-button" href="/producto.html?id=${encodeURIComponent(Number(product.id))}">Ver perfume</a>
             </div>
         </div>
     `;
+
+    attach_image_fallback(card.querySelector('img'));
 
     card.querySelector('.favorite-button').addEventListener('click', event => {
         toggle_favorite(product.id, event.currentTarget);
@@ -178,20 +207,25 @@ async function load_reviews() {
         return;
     }
 
-    const response = await fetch(`${api}/reviews`);
-    const reviews = await response.json();
-    container.innerHTML = '';
+    try {
+        const response = await fetch(`${api}/reviews`);
+        const reviews = await response.json();
+        if (!response.ok || !Array.isArray(reviews)) throw new Error('No se pudieron cargar las opiniones.');
+        container.innerHTML = '';
 
-    reviews.slice(0, 3).forEach(review => {
-        const card = document.createElement('article');
-        card.className = 'review-card';
-        card.innerHTML = `
-            <div class="review-stars">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</div>
-            <p>“${review.comment}”</p>
-            <div class="review-author">${review.user_name}</div>
-        `;
-        container.appendChild(card);
-    });
+        reviews.slice(0, 3).forEach(review => {
+            const card = document.createElement('article');
+            card.className = 'review-card';
+            card.innerHTML = `
+                <div class="review-stars">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</div>
+                <p>“${escape_html(review.comment)}”</p>
+                <div class="review-author">${escape_html(review.user_name)}</div>
+            `;
+            container.appendChild(card);
+        });
+    } catch (error) {
+        container.innerHTML = '<p>No se pudieron cargar las opiniones.</p>';
+    }
 }
 
 function get_recent_products() {
@@ -222,7 +256,17 @@ function setup_menu() {
     }
 
     toggle.addEventListener('click', () => {
-        nav.classList.toggle('open');
+        const open = nav.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', String(open));
+        toggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+    });
+
+    document.addEventListener('keydown', event => {
+        if (event.key !== 'Escape' || !nav.classList.contains('open')) return;
+        nav.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.setAttribute('aria-label', 'Abrir menú');
+        toggle.focus();
     });
 }
 

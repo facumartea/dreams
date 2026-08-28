@@ -106,8 +106,8 @@ function render_logged_user(user) {
     const container = document.getElementById('account-view');
     container.innerHTML = `
         <p class="eyebrow">BIENVENIDO</p>
-        <h1>${user.name}</h1>
-        <p>Sesión iniciada con <strong>${user.email}</strong>.</p>
+        <h1>${escape_html(user.name)}</h1>
+        <p>Sesión iniciada con <strong>${escape_html(user.email)}</strong>.</p>
         <p>Guardá favoritos, consultá tus perfumes y mantené tu selección desde cualquier dispositivo de esta demo.</p>
         ${user.is_admin ? '<a class="admin-link" href="/admin">Entrar al panel de administrador</a>' : ''}
         <br><br>

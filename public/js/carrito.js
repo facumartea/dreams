@@ -18,10 +18,10 @@ function render_cart() {
         const row = document.createElement('article');
         row.className = 'cart-row';
         row.innerHTML = `
-            <img src="${item.image_url}" alt="${item.brand} ${item.name}" onerror="this.src='https://images.unsplash.com/photo-1563170351-be82bc888aa4?auto=format&fit=crop&w=500&q=85'">
+            <img src="${escape_html(safe_image_url(item.image_url))}" alt="${escape_html(`${item.brand} ${item.name}`)}">
             <div>
-                <p>${item.brand}</p>
-                <h3>${item.name}</h3>
+                <p>${escape_html(item.brand)}</p>
+                <h3>${escape_html(item.name)}</h3>
                 <p>${format_price(item.price)} cada uno</p>
                 <div class="quantity-controls">
                     <button data-action="minus">−</button>
@@ -33,6 +33,8 @@ function render_cart() {
             </div>
             <strong>${format_price(subtotal)}</strong>
         `;
+
+        attach_image_fallback(row.querySelector('img'));
 
         row.querySelector('[data-action="minus"]').addEventListener('click', () => {
             change_quantity(item.id, -1);

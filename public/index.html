@@ -13,8 +13,8 @@
 <body>
     <header class="site-header">
         <a class="brand" href="/">DREAMS</a>
-        <button class="menu-toggle" aria-label="Abrir menú">☰</button>
-        <nav class="main-nav">
+        <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="main-navigation">☰</button>
+        <nav id="main-navigation" class="main-nav">
             <a href="/">Inicio</a>
             <a href="/catalogo.html">Perfumes</a>
             <a href="/catalogo.html?gender=mujer">Mujer</a>
@@ -113,6 +113,7 @@
         <div class="footer-bottom">© 2026 DREAMS. Proyecto académico.</div>
     </footer>
 
+    <script src="/js/safe.js"></script>
     <script src="/js/app.js"></script>
 </body>
 </html>
