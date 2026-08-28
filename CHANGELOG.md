@@ -46,3 +46,13 @@ Todos los cambios relevantes de DREAMS se registran aquí. El proyecto aún no u
 - Suite ampliada a 11 pruebas, incluidas invariantes de seguridad/no destrucción de la baseline; audit continúa sin vulnerabilidades conocidas.
 - Migración no aplicada ni declarada verificada: falta Postgres/Docker local o conexión controlada al remoto.
 - GitHub Actions CI run #3 completó correctamente sobre `3a36ba27`.
+
+### 2026-08-28 — Favoritos idempotentes y documentación operativa
+
+- Reemplazado el toggle read-then-write por `PUT`/`DELETE` idempotentes; el alta usa `upsert` sobre la unicidad usuario/producto.
+- Añadido `GET /api/favorites/ids` para sincronizar el estado visual con una sola consulta por página.
+- Botones de favoritos ahora exponen `aria-pressed`, etiqueta contextual y bloqueo durante la escritura.
+- Añadidas pruebas aisladas de la escritura de favoritos y smoke de rutas API para IDs, autenticación y 404.
+- Suite ampliada a 13 pruebas; sintaxis y audit de producción continúan verdes.
+- README, documentación técnica, guías Railway/Supabase y scripts de instalación alineados con el stack real; retiradas instrucciones activas de SQLite, Volume, bcrypt y `express-session`.
+- Baseline Supabase y deploy remoto siguen sin aplicarse: requieren un entorno controlado y credenciales fuera del chat.

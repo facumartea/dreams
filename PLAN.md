@@ -6,24 +6,24 @@ Porcentajes al cierre de F0 (2026-08-28). Son estimaciones basadas en evidencia 
 |---|---|---:|---:|
 | F0 | Auditoría total, baseline y documentación | 8% | 100% |
 | F1 | Seguridad crítica: XSS, dependencias, headers, abuso | 9% | 70% |
-| F2 | Backend/API: validación, errores, health, modularidad mínima | 8% | 55% |
+| F2 | Backend/API: validación, errores, health, modularidad mínima | 8% | 60% |
 | F3 | Datos/Supabase: seed seguro, migraciones, integridad, índices, RLS | 9% | 55% |
 | F4 | Catálogo, detalle, carrito y consultas | 7% | 60% |
-| F5 | Favoritos y opiniones | 4% | 50% |
+| F5 | Favoritos y opiniones | 4% | 70% |
 | F6 | Auth, sesiones y usuarios | 8% | 60% |
 | F7 | Admin completo y seguro | 7% | 40% |
-| F8 | Arquitectura, limpieza y documentación técnica | 5% | 30% |
+| F8 | Arquitectura, limpieza y documentación técnica | 5% | 55% |
 | F9 | UX funcional y estados | 5% | 40% |
 | F10 | Diseño visual y sistema de componentes | 4% | 55% |
 | F11 | Responsive verificado | 4% | 45% |
 | F12 | Accesibilidad | 5% | 35% |
 | F13 | Performance | 4% | 20% |
 | F14 | SEO y descubribilidad | 3% | 15% |
-| F15 | Testing y CI | 8% | 30% |
+| F15 | Testing y CI | 8% | 40% |
 | F16 | Producción, deploy y observabilidad | 4% | 30% |
 | F17 | QA final de punta a punta | 2% | 0% |
 
-**Progreso general ponderado: 52%.**
+**Progreso general ponderado: 55%.**
 
 ## Secuencia y criterios
 
@@ -101,4 +101,4 @@ Happy path, errores, vacío, inválido, reload, concurrencia, auth/roles, mobile
 
 ## Próximo bloque exacto
 
-Continuar F1/F2/F3: (1) endurecer IDs, errores y operaciones concurrentes, (2) corregir ciclo de refresh/revocación y garantía de perfiles, (3) convertir `schema.sql` en migraciones reejecutables y verificables, (4) ampliar integración/API y E2E, y (5) verificar Supabase, Railway y CI reales cuando exista acceso.
+Continuar F2/F3/F4: (1) separar app y dependencias para ampliar integración API con DB aislada, (2) reconciliar carrito/consultas con precio, stock y configuración del servidor, (3) probar la baseline y RLS en un Supabase controlado, (4) ampliar E2E y QA responsive, y (5) verificar Railway/producción cuando exista acceso.

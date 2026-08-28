@@ -108,10 +108,38 @@ function change_quantity(product_id, change) {
     save_cart(cart);
 }
 
+let favorite_ids_promise;
+
+function set_favorite_button(button, favorite) {
+    button.classList.toggle('active', favorite);
+    button.setAttribute('aria-label', favorite ? 'Quitar de favoritos' : 'Agregar a favoritos');
+    button.setAttribute('aria-pressed', String(favorite));
+    button.textContent = button.dataset.favoriteLabel === 'full' ? `${favorite ? '♥' : '♡'} Favorito` : favorite ? '♥' : '♡';
+}
+
+async function get_favorite_ids() {
+    if (!favorite_ids_promise) {
+        favorite_ids_promise = fetch(`${api}/favorites/ids`).then(async response => {
+            if (response.status === 401) return new Set();
+            const data = await response.json();
+            if (!response.ok || !Array.isArray(data)) throw new Error(data.error || 'No se pudieron cargar favoritos.');
+            return new Set(data.map(Number));
+        }).catch(() => new Set());
+    }
+    return favorite_ids_promise;
+}
+
+async function sync_favorite_button(product_id, button) {
+    const favorite_ids = await get_favorite_ids();
+    set_favorite_button(button, favorite_ids.has(Number(product_id)));
+}
+
 async function toggle_favorite(product_id, button) {
+    const desired_state = !button.classList.contains('active');
+    button.disabled = true;
     try {
         const response = await fetch(`${api}/favorites/${product_id}`, {
-            method: 'POST'
+            method: desired_state ? 'PUT' : 'DELETE'
         });
 
         const data = await response.json();
@@ -125,11 +153,15 @@ async function toggle_favorite(product_id, button) {
             throw new Error(data.error || 'No se pudo actualizar favoritos.');
         }
 
-        button.classList.toggle('active', data.favorite);
-        button.textContent = data.favorite ? '♥' : '♡';
+        set_favorite_button(button, data.favorite);
+        const favorite_ids = await get_favorite_ids();
+        if (data.favorite) favorite_ids.add(Number(product_id));
+        else favorite_ids.delete(Number(product_id));
         show_toast(data.favorite ? 'Agregado a favoritos.' : 'Eliminado de favoritos.');
     } catch (error) {
         show_toast(error.message);
+    } finally {
+        button.disabled = false;
     }
 }
 
@@ -174,9 +206,11 @@ function create_product_card(product) {
 
     attach_image_fallback(card.querySelector('img'));
 
-    card.querySelector('.favorite-button').addEventListener('click', event => {
+    const favorite_button = card.querySelector('.favorite-button');
+    favorite_button.addEventListener('click', event => {
         toggle_favorite(product.id, event.currentTarget);
     });
+    sync_favorite_button(product.id, favorite_button);
 
     card.querySelector('.add-cart-button').addEventListener('click', () => {
         add_to_cart(product);

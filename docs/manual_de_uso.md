@@ -2,7 +2,7 @@
 
 ## Usuario
 
-1. Abrir `http://localhost:3000`.
+1. Abrir la URL del entorno (en local, `http://localhost:3000`).
 2. Entrar a `Perfumes`.
 3. Buscar por nombre, marca o familia.
 4. Filtrar por marca, género o tipo.
@@ -23,7 +23,7 @@ En `Mi cuenta`, seleccionar `Registrarme`, completar nombre, correo y contraseñ
 1. Iniciar sesión con el correo administrador.
 2. Desde la cuenta aparecerá `Entrar al panel de administrador`.
 3. El panel permite crear, editar y eliminar productos.
-4. Las modificaciones se guardan en SQLite mediante la API.
+4. Las modificaciones se guardan en Supabase mediante la API del servidor.
 5. Volver a la tienda para comprobar el cambio.
 
 ## WhatsApp

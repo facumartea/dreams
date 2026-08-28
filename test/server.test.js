@@ -3,7 +3,7 @@ const assert = require('node:assert/strict');
 
 process.env.SUPABASE_URL = 'https://example.supabase.co';
 process.env.SUPABASE_SECRET_KEY = 'test-only-placeholder';
-const { app, validate, payload, database_health, auth_cookie, session, parse_id } = require('../server/server');
+const { app, validate, payload, database_health, auth_cookie, session, parse_id, set_favorite } = require('../server/server');
 
 test('validación de producto rechaza números y URLs inseguros', () => {
     const valid = {
@@ -28,6 +28,35 @@ test('readiness falla cuando Supabase devuelve error', async () => {
     await assert.rejects(database_health(database), /offline/);
 });
 
+test('favoritos usa escrituras idempotentes sin lectura previa', async () => {
+    const calls = [];
+    const database = {
+        from(table) {
+            assert.equal(table, 'favorites');
+            return {
+                async upsert(value, options) { calls.push(['upsert', value, options]); return { error: null }; },
+                delete() {
+                    calls.push(['delete']);
+                    return {
+                        eq(column, value) {
+                            calls.push(['eq', column, value]);
+                            return column === 'product_id' ? Promise.resolve({ error: null }) : this;
+                        }
+                    };
+                }
+            };
+        }
+    };
+
+    assert.equal(await set_favorite(database, 'user-1', 7, true), true);
+    assert.equal(await set_favorite(database, 'user-1', 7, true), true);
+    assert.equal(await set_favorite(database, 'user-1', 7, false), false);
+    assert.deepEqual(calls[0], ['upsert', { user_id: 'user-1', product_id: 7 }, { onConflict: 'user_id,product_id', ignoreDuplicates: true }]);
+    assert.equal(calls.filter(call => call[0] === 'upsert').length, 2);
+    assert.equal(calls.filter(call => call[0] === 'delete').length, 1);
+    assert.equal(calls.some(call => call[0] === 'select'), false);
+});
+
 test('cookies de sesión separan expiración de access y refresh', () => {
     const headers = {};
     const response = { setHeader(name, value) { headers[name] = value; } };
@@ -49,4 +78,22 @@ test('la respuesta HTTP incluye CSP sin unsafe-inline', async t => {
     const csp = response.headers.get('content-security-policy');
     assert.match(csp, /script-src 'self'/);
     assert.doesNotMatch(csp, /unsafe-inline/);
+});
+
+test('rutas API rechazan IDs inválidos y protegen favoritos', async t => {
+    const server = app.listen(0, '127.0.0.1');
+    t.after(() => new Promise(resolve => server.close(resolve)));
+    await new Promise(resolve => server.once('listening', resolve));
+    const { port } = server.address();
+    const base = `http://127.0.0.1:${port}`;
+
+    const invalid_product = await fetch(`${base}/api/products/not-an-id`);
+    assert.equal(invalid_product.status, 400);
+    assert.deepEqual(await invalid_product.json(), { error: 'ID de producto inválido.' });
+
+    const protected_favorite = await fetch(`${base}/api/favorites/1`, { method: 'PUT' });
+    assert.equal(protected_favorite.status, 401);
+
+    const missing = await fetch(`${base}/api/not-a-route`);
+    assert.equal(missing.status, 404);
 });

@@ -2,98 +2,60 @@
 
 ## Arquitectura
 
-El proyecto utiliza una arquitectura cliente-servidor simple.
+El frontend multipágina vive en `public/` y consume una API REST Express bajo `/api`. El servidor usa `@supabase/supabase-js` para Postgres y Supabase Auth. Las sesiones se mantienen en cookies HTTP-only de acceso y renovación; el carrito permanece en `localStorage` y no es una orden ni un pago.
 
-El frontend está en `public/` y se comunica con Node.js mediante endpoints REST bajo `/api`.
+La definición versionada de datos está en `supabase/migrations/`. `supabase/schema.sql` es sólo un snapshot legacy y no debe usarse como fuente de despliegue.
 
-Node.js utiliza Express para recibir solicitudes HTTP y better-sqlite3 para leer y escribir la base de datos SQLite.
+## Datos y seguridad
 
-## Base de datos
+Las tablas activas son `profiles`, `products`, `favorites`, `reviews` e `inquiries`. La baseline declara claves foráneas, unicidad de favorito por usuario/producto, índices, triggers y RLS. La aplicación de servidor usa una clave secreta de Supabase; esa clave jamás debe exponerse al navegador.
 
-Tablas:
+Helmet aplica CSP, las escrituras sensibles requieren sesión/rol, auth y consultas tienen rate limit, y los datos dinámicos se escapan antes de insertarse en HTML. Los roles se leen de `profiles.role`, no de metadata controlable por el usuario.
 
-- `users`: usuarios y administradores.
-- `products`: catálogo completo.
-- `favorites`: relación entre usuarios y perfumes favoritos.
-- `reviews`: opiniones publicadas.
+## API
 
-## API propia
+### Catálogo
 
-### Productos
-
-`GET /api/products`
-
-Devuelve todos los perfumes y permite filtros por `search`, `brand`, `gender`, `category` y `sort`.
-
-`GET /api/products/:id`
-
-Devuelve un perfume individual.
-
-`GET /api/brands`
-
-Devuelve las marcas disponibles.
+- `GET /api/products` — filtros `search`, `brand`, `gender`, `category`, `max_price` y `sort`.
+- `GET /api/products/:id`
+- `GET /api/brands`
 
 ### Autenticación
 
-`POST /api/auth/register`
+- `POST /api/auth/register`
+- `POST /api/auth/login`
+- `POST /api/auth/logout`
+- `GET /api/auth/me`
 
-`POST /api/auth/login`
+### Favoritos autenticados
 
-`POST /api/auth/logout`
+- `GET /api/favorites` — productos guardados.
+- `GET /api/favorites/ids` — IDs para sincronizar la interfaz.
+- `GET /api/favorites/:id/check`
+- `PUT /api/favorites/:id` — guarda de forma idempotente.
+- `DELETE /api/favorites/:id` — quita de forma idempotente.
 
-`GET /api/auth/me`
+### Opiniones y consultas
 
-### Favoritos
+- `GET /api/reviews`
+- `POST /api/reviews` — requiere sesión.
+- `POST /api/inquiries`
 
-`GET /api/favorites`
+### Administración
 
-`POST /api/favorites/:product_id`
+- `GET /api/admin/stats`
+- CRUD en `/api/admin/products`
+- `GET /api/admin/users`
+- `GET /api/admin/inquiries`
+- `GET /api/admin/reviews`
 
-El usuario necesita iniciar sesión.
+Estas rutas exigen un perfil con `role = 'admin'`.
 
-### Opiniones
+### Operación
 
-`GET /api/reviews`
+- `GET /api/config` — configuración pública permitida.
+- `GET /api/health` — readiness de API y Supabase.
 
-`POST /api/reviews`
+## Límites actuales
 
-### Administrador
-
-`GET /api/admin/products`
-
-`POST /api/admin/products`
-
-`PUT /api/admin/products/:id`
-
-`DELETE /api/admin/products/:id`
-
-Estos endpoints verifican que el usuario tenga `is_admin = 1`.
-
-## Seguridad básica
-
-- Contraseñas con hash bcrypt.
-- Sesiones mediante `express-session`.
-- Cookies HTTP-only.
-- Validación de permisos para rutas de administrador.
-- Helmet para headers de seguridad.
-- `.env` para secretos y credenciales.
-
-## Carrito
-
-El carrito se guarda en `localStorage` con la clave `dreams_cart`.
-
-Se actualiza al agregar, eliminar o modificar cantidades.
-
-El total se calcula recorriendo los productos y multiplicando precio por cantidad.
-
-## Diseño
-
-La identidad utiliza una estética minimalista y editorial inspirada en perfumería de lujo.
-
-El logotipo visual de la marca es la palabra DREAMS, mientras que el isotipo de nube y estrellas se conserva como recurso de identidad para futuras aplicaciones.
-
-La tipografía principal del sitio usa Cormorant Garamond para títulos y Inter para interfaz.
-
-## Despliegue en la nube
-
-DREAMS está preparado para Railway. El servidor escucha en `0.0.0.0`, usa `process.env.PORT`, tiene healthcheck en `/api/health` y guarda SQLite en `DATABASE_DIR` o `RAILWAY_VOLUME_MOUNT_PATH`. De esta forma el proyecto puede publicarse con un dominio de Railway y ser utilizado desde otros dispositivos.
+No existen pagos, órdenes, recuperación de contraseña, uploads ni observabilidad completa. La baseline debe probarse contra un Supabase controlado antes de considerarla verificada en producción. Consultar `CURRENT_STATE.md` y `AUDIT.md` para el detalle vigente.

@@ -10,11 +10,11 @@
 - PR: [#1 — Production audit and critical hardening](https://github.com/facumartea/drams/pull/1), abierto contra `main`.
 - HEAD/SHA FUNCIONAL VERIFICADO: `3a36ba2704dc9c089ae7ef9ed7fc2b41c521d2b3` (el commit exclusivo de actualización de estado puede ser posterior; confirmar `git rev-parse HEAD`).
 - FASE ACTUAL: F1 — Seguridad crítica, con críticos de datos de F3 adelantados por riesgo.
-- PROGRESO GENERAL: 52% ponderado.
+- PROGRESO GENERAL: 55% ponderado.
 
 ## Porcentaje de fases
 
-F0 100% · F1 70% · F2 55% · F3 55% · F4 60% · F5 50% · F6 60% · F7 40% · F8 30% · F9 40% · F10 55% · F11 45% · F12 35% · F13 20% · F14 15% · F15 30% · F16 30% · F17 0%.
+F0 100% · F1 70% · F2 60% · F3 55% · F4 60% · F5 70% · F6 60% · F7 40% · F8 55% · F9 40% · F10 55% · F11 45% · F12 35% · F13 20% · F14 15% · F15 40% · F16 30% · F17 0%.
 
 ## Último trabajo
 
@@ -31,6 +31,8 @@ F0 100% · F1 70% · F2 55% · F3 55% · F4 60% · F5 50% · F6 60% · F7 40% ·
 - Sesiones con refresh server-side, expiraciones separadas y revocación local en Supabase; perfiles faltantes se reparan como `customer` sin confiar roles a metadata.
 - IDs de producto inválidos se rechazan uniformemente con 400.
 - Baseline Supabase versionada creada con trigger de perfil, `updated_at`, RLS idempotente e índices; todavía no aplicada.
+- Favoritos convertidos a `PUT`/`DELETE` idempotentes, sin lectura previa, con estado visual sincronizado por página.
+- Documentación operativa alineada con Node/Express/Supabase y Railway sin Volume.
 - Overflow de portada corregido y verificado en los seis viewports; foco visible, reduced motion y menú accesible añadidos en portada.
 - No se modificó la base remota ni se desplegó.
 
@@ -41,7 +43,7 @@ F0 100% · F1 70% · F2 55% · F3 55% · F4 60% · F5 50% · F6 60% · F7 40% ·
 - Sintaxis JavaScript: OK.
 - Smoke HTTP local sin DB real: OK para servidor/estáticos; demostró healthcheck falso positivo.
 - Audit producción: OK, sin vulnerabilidades conocidas.
-- Suite Node: 11/11 OK (baseline SQL, escape XSS/URL, seed, validación/IDs, cookies, readiness y CSP).
+- Suite Node: 13/13 OK (baseline SQL, escape XSS/URL, seed, validación/IDs, cookies, readiness, CSP, favoritos idempotentes y rutas API).
 - E2E completo e integración con Supabase real: pendientes.
 
 ## CI
@@ -51,10 +53,9 @@ Workflow `.github/workflows/ci.yml` creado con install frozen, audit, check y te
 ## Bugs confirmados prioritarios
 
 1. Ciclo de refresh/revocación y trigger de perfiles requieren integración contra Supabase real.
-2. Favoritos aún usa toggle read-then-write y requiere resolución atómica/idempotente.
-3. Baseline SQL necesita ejecución local/remota controlada, advisors y verificación RLS.
-4. Carrito/consultas deben reconciliar datos con servidor y eliminar configuración hardcodeada.
-5. Cobertura API/E2E/DB aún insuficiente.
+2. Baseline SQL necesita ejecución local/remota controlada, advisors y verificación RLS.
+3. Carrito/consultas deben reconciliar datos con servidor y eliminar configuración hardcodeada.
+4. Cobertura API/E2E/DB aún insuficiente; la escritura de favoritos ya tiene prueba aislada, no integración Supabase real.
 
 ## Pendientes y riesgos
 
@@ -80,4 +81,4 @@ Railway configurado con Railpack y `node server/server.js`; healthcheck actualiz
 
 ## Próxima acción exacta
 
-Convertir favoritos en operación atómica/idempotente; ampliar pruebas de rutas API con DB aislada; alinear README/docs con Supabase y aplicar/verificar la baseline en un entorno controlado. Luego validar advisors, RLS, Railway y producción sin compartir secretos.
+Separar la API para ampliar integración con DB inyectable; reconciliar carrito/consultas con datos del servidor y eliminar WhatsApp hardcodeado. En paralelo, aplicar/verificar la baseline en un Supabase controlado cuando exista acceso, y luego validar advisors, RLS, Railway y producción sin compartir secretos.
