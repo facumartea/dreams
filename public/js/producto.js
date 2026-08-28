@@ -3,6 +3,8 @@ async function load_product_detail() {
     const product_id = Number(params.get('id'));
     const container = document.getElementById('product-detail');
 
+    container.innerHTML = '<div class="detail-loading" aria-label="Cargando perfume"><div class="skeleton-card" aria-hidden="true"></div><div class="detail-loading-copy" aria-hidden="true"></div></div>';
+
     if (!product_id) {
         container.innerHTML = '<div class="empty-state"><h2>Perfume no encontrado.</h2></div>';
         return;

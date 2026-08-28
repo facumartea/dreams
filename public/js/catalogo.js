@@ -1,13 +1,22 @@
 let catalog_products = [];
 
 async function load_catalog() {
-    await load_brands();
-    await apply_catalog_filters();
+    const container = document.getElementById('catalog-products');
+    container.innerHTML = Array.from({ length: 8 }, () => '<div class="skeleton-card" aria-hidden="true"></div>').join('');
+    try {
+        await load_brands();
+        await apply_catalog_filters();
+    } catch (error) {
+        document.getElementById('results-count').textContent = '0';
+        container.innerHTML = '<div class="empty-state"><h2>No pudimos cargar la colección.</h2><p>Revisá tu conexión e intentá nuevamente.</p><button id="retry-catalog" class="button button-dark" type="button">Reintentar</button></div>';
+        document.getElementById('retry-catalog').addEventListener('click', load_catalog);
+    }
 }
 
 async function load_brands() {
     const response = await fetch('/api/brands');
     const brands = await response.json();
+    if (!response.ok || !Array.isArray(brands)) throw new Error('No se pudieron cargar las marcas.');
     const select = document.getElementById('brand-filter');
     brands.forEach(brand => {
         const option = document.createElement('option');
@@ -35,6 +44,7 @@ async function apply_catalog_filters() {
 
     const response = await fetch(`/api/products?${params.toString()}`);
     catalog_products = await response.json();
+    if (!response.ok || !Array.isArray(catalog_products)) throw new Error('No se pudo cargar el catálogo.');
     render_catalog();
 }
 
