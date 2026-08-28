@@ -7,8 +7,8 @@
 - PROYECTO: DREAMS — tienda catálogo de perfumería con consultas por WhatsApp.
 - REPO: `https://github.com/facumartea/drams.git`
 - RAMA: `codex/production-hardening` (local, creada desde `main`).
-- PR: ninguno creado; estado remoto no verificado.
-- HEAD/SHA BASE AUDITADO: `f3533d7fd0efc653eb39a1cfc8b0f39656068254`.
+- PR: [#1 — Production audit and critical hardening](https://github.com/facumartea/drams/pull/1), abierto contra `main`.
+- HEAD/SHA FUNCIONAL VERIFICADO: `6b5969470180d96612573ac23867605ae833ac3a` (el commit exclusivo de actualización de estado puede ser posterior; confirmar `git rev-parse HEAD`).
 - FASE ACTUAL: F1 — Seguridad crítica, con críticos de datos de F3 adelantados por riesgo.
 - PROGRESO GENERAL: 48% ponderado.
 
@@ -43,7 +43,7 @@ F0 100% · F1 60% · F2 50% · F3 45% · F4 60% · F5 50% · F6 45% · F7 40% ·
 
 ## CI
 
-Workflow `.github/workflows/ci.yml` creado con install frozen, audit, check y tests. Aún no ejecutado en GitHub.
+Workflow `.github/workflows/ci.yml` creado con install frozen, audit, check y tests. GitHub Actions run #1: SUCCESS sobre `6b596947`.
 
 ## Bugs confirmados prioritarios
 
@@ -72,7 +72,7 @@ Railway configurado con Railpack y `node server/server.js`; healthcheck actualiz
 ## Bloqueos
 
 - Para validar Supabase/RLS/DB y deploy reales harán falta acceso/credenciales o conexión del usuario, sin exponer secretos en chat.
-- La API GitHub devolvió 404 sin autenticación; Git remoto sí permitió clonar. Push/PR no probados todavía.
+- GitHub, push y PR funcionan mediante la conexión configurada. No hay bloqueo Git actual.
 - No hay bloqueo para continuar con correcciones locales críticas y tests.
 
 ## Próxima acción exacta

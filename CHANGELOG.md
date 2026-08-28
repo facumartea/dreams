@@ -29,4 +29,6 @@ Todos los cambios relevantes de DREAMS se registran aquí. El proyecto aún no u
 - Corregido overflow de portada en 390, 430, 768, 1024, 1440 y 1920 px.
 - Añadidos foco visible, `prefers-reduced-motion` y estado/escape de menú móvil en portada.
 - Corregido el estado de error de opiniones cuando la API no está disponible.
-- Sin migraciones remotas, push, PR ni deploy en esta tanda hasta el checkpoint Git.
+- Rama `codex/production-hardening` publicada; PR #1 abierto contra `main`.
+- GitHub Actions CI run #1 completó correctamente sobre `6b596947`.
+- Sin migraciones remotas ni deploy en esta tanda.
