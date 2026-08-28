@@ -6,4 +6,4 @@ GitHub ejecuta instalación frozen, audit, sintaxis y pruebas en cada cambio cub
 
 Railway recibe `SUPABASE_URL` y `SUPABASE_SECRET_KEY` como secretos del servidor, además de las variables operativas de `.env.example`. No requiere Volume. El primer arranque inserta el catálogo únicamente si `products` está vacío y crea/actualiza el administrador sólo si `ADMIN_PASSWORD` está configurada.
 
-Validar el dominio con `/api/health`, luego autenticación, favoritos, Admin y persistencia. Nunca copiar claves secretas a GitHub, frontend, capturas o chat.
+Validar el dominio con `/api/health`, luego autenticación, catálogo, Admin y persistencia. Nunca copiar claves secretas a GitHub, frontend, capturas o chat.

@@ -131,63 +131,6 @@ function change_quantity(product_id, change) {
     save_cart(cart);
 }
 
-let favorite_ids_promise;
-
-function set_favorite_button(button, favorite) {
-    button.classList.toggle('active', favorite);
-    button.setAttribute('aria-label', favorite ? 'Quitar de favoritos' : 'Agregar a favoritos');
-    button.setAttribute('aria-pressed', String(favorite));
-    button.textContent = button.dataset.favoriteLabel === 'full' ? `${favorite ? '♥' : '♡'} Favorito` : favorite ? '♥' : '♡';
-}
-
-async function get_favorite_ids() {
-    if (!favorite_ids_promise) {
-        favorite_ids_promise = fetch(`${api}/favorites/ids`).then(async response => {
-            if (response.status === 401) return new Set();
-            const data = await response.json();
-            if (!response.ok || !Array.isArray(data)) throw new Error(data.error || 'No se pudieron cargar favoritos.');
-            return new Set(data.map(Number));
-        }).catch(() => new Set());
-    }
-    return favorite_ids_promise;
-}
-
-async function sync_favorite_button(product_id, button) {
-    const favorite_ids = await get_favorite_ids();
-    set_favorite_button(button, favorite_ids.has(Number(product_id)));
-}
-
-async function toggle_favorite(product_id, button) {
-    const desired_state = !button.classList.contains('active');
-    button.disabled = true;
-    try {
-        const response = await fetch(`${api}/favorites/${product_id}`, {
-            method: desired_state ? 'PUT' : 'DELETE'
-        });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-            if (response.status === 401) {
-                show_toast('Iniciá sesión para guardar favoritos.');
-                setTimeout(() => window.location.href = '/cuenta.html', 600);
-                return;
-            }
-            throw new Error(data.error || 'No se pudo actualizar favoritos.');
-        }
-
-        set_favorite_button(button, data.favorite);
-        const favorite_ids = await get_favorite_ids();
-        if (data.favorite) favorite_ids.add(Number(product_id));
-        else favorite_ids.delete(Number(product_id));
-        show_toast(data.favorite ? 'Agregado a favoritos.' : 'Eliminado de favoritos.');
-    } catch (error) {
-        show_toast(error.message);
-    } finally {
-        button.disabled = false;
-    }
-}
-
 function show_toast(message) {
     const old_toast = document.querySelector('.toast');
     if (old_toast) {
@@ -210,7 +153,6 @@ function create_product_card(product) {
     const stock_label = Number(product.stock) === 0 ? '<span class="stock-badge out">Agotado</span>' : Number(product.stock) <= 2 ? '<span class="stock-badge low">Últimas unidades</span>' : '<span class="stock-badge">Disponible</span>';
     card.innerHTML = `
         <div class="product-image-wrap">
-            <button class="favorite-button" aria-label="Agregar a favoritos">♡</button>
             <a href="/producto.html?id=${encodeURIComponent(Number(product.id))}">
                 <img src="${escape_html(safe_image_url(product.image_url))}" alt="${escape_html(`${product.brand} ${product.name}`)}" loading="lazy">
             </a>
@@ -228,12 +170,6 @@ function create_product_card(product) {
     `;
 
     attach_image_fallback(card.querySelector('img'));
-
-    const favorite_button = card.querySelector('.favorite-button');
-    favorite_button.addEventListener('click', event => {
-        toggle_favorite(product.id, event.currentTarget);
-    });
-    sync_favorite_button(product.id, favorite_button);
 
     card.querySelector('.add-cart-button').addEventListener('click', () => {
         add_to_cart(product);
@@ -312,6 +248,10 @@ function setup_menu() {
         return;
     }
 
+    if (!nav.id) nav.id = 'main-navigation';
+    toggle.setAttribute('aria-controls', nav.id);
+    toggle.setAttribute('aria-expanded', 'false');
+
     toggle.addEventListener('click', () => {
         const open = nav.classList.toggle('open');
         toggle.setAttribute('aria-expanded', String(open));
@@ -327,8 +267,17 @@ function setup_menu() {
     });
 }
 
+function mark_current_navigation() {
+    const current_path = window.location.pathname === '/' ? '/' : window.location.pathname.replace(/\/$/, '');
+    document.querySelectorAll('.main-nav a').forEach(link => {
+        const link_path = new URL(link.href, window.location.origin).pathname.replace(/\/$/, '') || '/';
+        if (link_path === current_path) link.setAttribute('aria-current', 'page');
+    });
+}
+
 update_cart_count();
 setup_menu();
+mark_current_navigation();
 apply_public_config();
 load_featured_products();
 load_reviews();

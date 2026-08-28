@@ -49,7 +49,6 @@ async function render_product_detail(product) {
                 <div class="detail-actions">
                     <button id="detail-add" class="button button-dark" ${Number(product.stock) === 0 ? 'disabled' : ''}>${Number(product.stock) === 0 ? 'Agotado' : 'Agregar al carrito'}</button>
                     <a class="button" href="${whatsapp_url}" target="_blank" rel="noreferrer" data-whatsapp-inquiry>Consultar por WhatsApp</a>
-                    <button id="detail-favorite" class="button" data-favorite-label="full" aria-pressed="false">♡ Favorito</button>
                 </div>
                 <div class="notes-grid">
                     <article class="note-block"><h3>Salida</h3><p>${escape_html(product.notes.salida.join(' · '))}</p></article>
@@ -73,9 +72,6 @@ async function render_product_detail(product) {
             window.open(whatsapp_url, '_blank');
         }
     });
-    const favorite_button = document.getElementById('detail-favorite');
-    favorite_button.addEventListener('click', event => toggle_favorite(product.id, event.currentTarget));
-    sync_favorite_button(product.id, favorite_button);
 }
 
 document.addEventListener('DOMContentLoaded', load_product_detail);

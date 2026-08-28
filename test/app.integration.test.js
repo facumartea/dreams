@@ -104,3 +104,76 @@ test('la CSP se conserva en la app creada por factory', async () => {
         assert.doesNotMatch(csp, /unsafe-inline/);
     });
 });
+
+test('auth no se cachea y valida credenciales antes de consultar Supabase', async () => {
+    const database = database_with(() => ({ data: [], error: null }));
+    const app = create_app({ database, disable_request_log: true });
+    await serve(app, async base => {
+        const response = await fetch(`${base}/api/auth/login`, {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: 'correo-invalido', password: '12345678' })
+        });
+        assert.equal(response.status, 400);
+        assert.equal(response.headers.get('cache-control'), 'no-store');
+        assert.match((await response.json()).error, /correo válido/);
+    });
+});
+
+test('registro pendiente distingue confirmación de correo de una sesión activa', async () => {
+    const database = database_with(() => ({ data: [], error: null }));
+    database.auth.signUp = async () => ({ data: { user: { id: 'new-user' }, session: null }, error: null });
+    const app = create_app({ database, disable_request_log: true });
+    await serve(app, async base => {
+        const response = await fetch(`${base}/api/auth/register`, {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name: 'Ana', email: ' ANA@EXAMPLE.COM ', password: 'password-segura' })
+        });
+        assert.equal(response.status, 202);
+        const body = await response.json();
+        assert.equal(body.authenticated, false);
+        assert.equal(body.requires_email_confirmation, true);
+        assert.match(body.message, /confirmación/);
+    });
+});
+
+test('login válido crea cookies y devuelve una redirección explícita', async () => {
+    let profile_reads = 0;
+    const database = database_with(table => {
+        assert.equal(table, 'profiles');
+        profile_reads += 1;
+        return { data: { name: 'Administración', role: 'admin' }, error: null };
+    });
+    database.auth.signInWithPassword = async ({ email }) => ({
+        data: {
+            user: { id: 'admin-user', email, user_metadata: {} },
+            session: { access_token: 'access', refresh_token: 'refresh', expires_in: 3600 }
+        },
+        error: null
+    });
+    const app = create_app({ database, disable_request_log: true });
+    await serve(app, async base => {
+        const response = await fetch(`${base}/api/auth/login`, {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: ' ADMIN@EXAMPLE.COM ', password: 'password-segura' })
+        });
+        assert.equal(response.status, 200);
+        const body = await response.json();
+        assert.equal(body.authenticated, true);
+        assert.equal(body.redirect, '/admin');
+        assert.equal(body.user.email, 'admin@example.com');
+        assert.match(response.headers.get('set-cookie'), /dreams_access_token=access/);
+        assert.equal(profile_reads, 1);
+    });
+});
+
+test('favoritos retirados devuelve 404 en API y redirige la página histórica', async () => {
+    const database = database_with(() => ({ data: [], error: null }));
+    const app = create_app({ database, disable_request_log: true });
+    await serve(app, async base => {
+        const api = await fetch(`${base}/api/favorites`, { redirect: 'manual' });
+        assert.equal(api.status, 404);
+        const page = await fetch(`${base}/favoritos.html`, { redirect: 'manual' });
+        assert.equal(page.status, 301);
+        assert.equal(page.headers.get('location'), '/catalogo.html');
+    });
+});

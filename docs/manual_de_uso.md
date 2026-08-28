@@ -9,8 +9,8 @@
 5. Abrir cualquier perfume.
 6. Revisar notas de salida, corazón y fondo.
 7. Revisar intensidad.
-8. Agregar al carrito o guardar en favoritos.
-9. Iniciar sesión para utilizar favoritos.
+8. Agregar el producto al carrito.
+9. Iniciar sesión para publicar opiniones o acceder al panel si la cuenta es administradora.
 10. Abrir el carrito para modificar cantidades o eliminar productos.
 11. Consultar el carrito o un perfume por WhatsApp.
 
@@ -28,4 +28,4 @@ En `Mi cuenta`, seleccionar `Registrarme`, completar nombre, correo y contraseñ
 
 ## WhatsApp
 
-Cada perfume tiene un botón de consulta que abre WhatsApp con un mensaje ya preparado para el número +54 294 450 2390.
+Cada perfume tiene un botón de consulta que abre WhatsApp con un mensaje ya preparado. El número se configura de forma privada mediante `WHATSAPP_NUMBER` en Railway y no se versiona.

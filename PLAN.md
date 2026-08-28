@@ -6,24 +6,24 @@ Porcentajes al cierre de F0 (2026-08-28). Son estimaciones basadas en evidencia 
 |---|---|---:|---:|
 | F0 | Auditoría total, baseline y documentación | 8% | 100% |
 | F1 | Seguridad crítica: XSS, dependencias, headers, abuso | 9% | 70% |
-| F2 | Backend/API: validación, errores, health, modularidad mínima | 8% | 65% |
-| F3 | Datos/Supabase: seed seguro, migraciones, integridad, índices, RLS | 9% | 55% |
+| F2 | Backend/API: validación, errores, health, modularidad mínima | 8% | 85% |
+| F3 | Datos/Supabase: seed seguro, migraciones, integridad, índices, RLS | 9% | 80% |
 | F4 | Catálogo, detalle, carrito y consultas | 7% | 75% |
-| F5 | Favoritos y opiniones | 4% | 70% |
-| F6 | Auth, sesiones y usuarios | 8% | 60% |
+| F5 | Opiniones y retiro controlado de favoritos | 4% | 75% |
+| F6 | Auth, sesiones y usuarios | 8% | 80% |
 | F7 | Admin completo y seguro | 7% | 40% |
-| F8 | Arquitectura, limpieza y documentación técnica | 5% | 55% |
-| F9 | UX funcional y estados | 5% | 45% |
-| F10 | Diseño visual y sistema de componentes | 4% | 55% |
-| F11 | Responsive verificado | 4% | 45% |
-| F12 | Accesibilidad | 5% | 35% |
+| F8 | Arquitectura, limpieza y documentación técnica | 5% | 70% |
+| F9 | UX funcional y estados | 5% | 65% |
+| F10 | Diseño visual y sistema de componentes | 4% | 70% |
+| F11 | Responsive verificado | 4% | 50% |
+| F12 | Accesibilidad | 5% | 55% |
 | F13 | Performance | 4% | 20% |
 | F14 | SEO y descubribilidad | 3% | 15% |
-| F15 | Testing y CI | 8% | 45% |
-| F16 | Producción, deploy y observabilidad | 4% | 30% |
+| F15 | Testing y CI | 8% | 65% |
+| F16 | Producción, deploy y observabilidad | 4% | 55% |
 | F17 | QA final de punta a punta | 2% | 0% |
 
-**Progreso general ponderado: 57%.**
+**Progreso general ponderado: 69%** (68,7% calculado con los pesos de la tabla).
 
 ## Secuencia y criterios
 
@@ -47,9 +47,9 @@ Separar seed inicial de arranque; nunca sobrescribir catálogo administrado. Cre
 
 Reconciliar precio/stock con servidor, limitar cantidades, generar consulta de carrito útil y consistente, resolver números/config hardcodeados y fallos de red.
 
-### F5 — Favoritos y opiniones
+### F5 — Opiniones y retiro controlado de favoritos
 
-Operación de favorito idempotente/segura ante concurrencia, estado visual correcto, opinión asociada al alcance de negocio decidido y moderación/eliminación si corresponde.
+Favoritos se retiró por decisión de producto: no hay navegación, interfaz ni API activa; las URLs históricas redirigen al catálogo. La tabla vacía permanece protegida por RLS hasta una migración destructiva autorizada. Las opiniones requieren sesión; falta moderación/eliminación si corresponde.
 
 ### F6 — Auth, sesiones y usuarios
 
@@ -101,4 +101,4 @@ Happy path, errores, vacío, inválido, reload, concurrencia, auth/roles, mobile
 
 ## Próximo bloque exacto
 
-Continuar F2/F3/F5: (1) separar app y dependencias para ampliar integración API con DB aislada, (2) cerrar manejo uniforme de errores y el alcance de consultas/opiniones, (3) probar baseline y RLS en un Supabase controlado, (4) ampliar E2E y QA responsive, y (5) verificar Railway/producción cuando exista acceso.
+Cerrar el deploy y smoke de producción; luego ampliar E2E de cuenta/Admin, QA responsive de páginas internas, recuperación de contraseña y moderación de opiniones. Revisar el aviso de protección de contraseñas filtradas en Supabase cuando el plan/configuración lo permita.

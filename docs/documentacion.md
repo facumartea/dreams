@@ -8,7 +8,7 @@ La definición versionada de datos está en `supabase/migrations/`. `supabase/sc
 
 ## Datos y seguridad
 
-Las tablas activas son `profiles`, `products`, `favorites`, `reviews` e `inquiries`. La baseline declara claves foráneas, unicidad de favorito por usuario/producto, índices, triggers y RLS. La aplicación de servidor usa una clave secreta de Supabase; esa clave jamás debe exponerse al navegador.
+Las tablas activas son `profiles`, `products`, `reviews` e `inquiries`. `favorites` se conserva vacía como estructura histórica protegida por RLS, pero ya no tiene interfaz ni API. La baseline declara claves foráneas, índices, triggers y RLS. La aplicación de servidor usa una clave secreta de Supabase; esa clave jamás debe exponerse al navegador.
 
 Helmet aplica CSP, las escrituras sensibles requieren sesión/rol, auth y consultas tienen rate limit, y los datos dinámicos se escapan antes de insertarse en HTML. Los roles se leen de `profiles.role`, no de metadata controlable por el usuario.
 
@@ -26,14 +26,6 @@ Helmet aplica CSP, las escrituras sensibles requieren sesión/rol, auth y consul
 - `POST /api/auth/login`
 - `POST /api/auth/logout`
 - `GET /api/auth/me`
-
-### Favoritos autenticados
-
-- `GET /api/favorites` — productos guardados.
-- `GET /api/favorites/ids` — IDs para sincronizar la interfaz.
-- `GET /api/favorites/:id/check`
-- `PUT /api/favorites/:id` — guarda de forma idempotente.
-- `DELETE /api/favorites/:id` — quita de forma idempotente.
 
 ### Opiniones y consultas
 
@@ -62,4 +54,4 @@ Estas rutas exigen un perfil con `role = 'admin'`.
 
 ## Límites actuales
 
-No existen pagos, órdenes, recuperación de contraseña, uploads ni observabilidad completa. La baseline debe probarse contra un Supabase controlado antes de considerarla verificada en producción. Consultar `CURRENT_STATE.md` y `AUDIT.md` para el detalle vigente.
+No existen pagos, órdenes, recuperación de contraseña, uploads ni observabilidad completa. La baseline fue aplicada y verificada en el proyecto Supabase el 2026-08-28; persisten avisos no bloqueantes documentados en `CURRENT_STATE.md`. Consultar ese archivo y `AUDIT.md` para el detalle vigente.

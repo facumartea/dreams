@@ -8,7 +8,8 @@ DREAMS es una tienda catálogo de perfumería con consultas por WhatsApp. Tratar
 
 - `public/`: frontend multipágina en HTML, CSS y JavaScript sin framework.
 - `views/admin.html`: panel Admin servido sólo después del middleware de autorización.
-- `server/server.js`: Express 5, API REST, cookies de sesión y cliente Supabase privilegiado.
+- `server/app.js`: factory Express 5, API REST y cookies de sesión; permite pruebas con dependencias inyectadas.
+- `server/server.js`: bootstrap, cliente Supabase privilegiado, seed y escucha HTTP.
 - `server/seed.js`: catálogo inicial y alta opcional del administrador.
 - `supabase/schema.sql`: esquema PostgreSQL, constraints, índices y RLS.
 - `railway.toml`: despliegue Railway.
@@ -58,7 +59,7 @@ Variables obligatorias: `SUPABASE_URL`, `SUPABASE_SECRET_KEY`. Variables operati
 
 Una fase sólo llega a 100% con alcance implementado, pruebas verdes, documentación actualizada y sin bugs conocidos en ese alcance. Para deploy/QA también se necesita smoke test real.
 
-Mínimos futuros: unitarios de validación, integración de API con Supabase aislado, pruebas de autorización, regresión XSS, E2E de catálogo/cuenta/favoritos/Admin y QA visual en los seis viewports definidos en `PLAN.md`.
+Mínimos futuros: integración de API con Supabase aislado, pruebas de autorización, regresión XSS, E2E de catálogo/cuenta/Admin y QA visual en los seis viewports definidos en `PLAN.md`.
 
 ## Deploy
 

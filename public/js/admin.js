@@ -24,7 +24,6 @@ async function load_dashboard() {
     document.getElementById('admin-stats').innerHTML = [
         stat_card('Productos', stats.products, 'en catálogo'),
         stat_card('Usuarios', stats.users, 'cuentas creadas'),
-        stat_card('Favoritos', stats.favorites, 'guardados'),
         stat_card('Consultas', stats.inquiries, 'por WhatsApp'),
         stat_card('Opiniones', stats.reviews, 'publicadas'),
         stat_card('Stock bajo', stats.low_stock, '2 unidades o menos')

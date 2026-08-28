@@ -28,7 +28,7 @@ Antes de habilitar tráfico, comprobar:
 
 - `/api/health` responde 200 con `{"status":"ok","api":true,"database":"ok"}`.
 - Registro, login, renovación y logout.
-- Catálogo, favoritos idempotentes, consulta por WhatsApp y CRUD Admin.
+- Catálogo, cuenta, consulta por WhatsApp y CRUD Admin.
 - Persistencia tras un redeploy y ausencia de errores/secrets en logs.
 - Respuesta 503 del healthcheck cuando Supabase no está accesible.
 

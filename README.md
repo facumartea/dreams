@@ -1,6 +1,6 @@
 # DREAMS — Perfumería multimarca
 
-DREAMS es una tienda catálogo de perfumes construida con Node.js, Express, JavaScript y Supabase. Permite explorar productos, guardar favoritos, publicar opiniones, administrar el catálogo y registrar consultas que continúan por WhatsApp. El carrito es local y no constituye un checkout ni procesa pagos.
+DREAMS es una tienda catálogo de perfumes construida con Node.js, Express, JavaScript y Supabase. Permite explorar productos, publicar opiniones, administrar el catálogo y registrar consultas que continúan por WhatsApp. El carrito es local y no constituye un checkout ni procesa pagos.
 
 ## Requisitos
 

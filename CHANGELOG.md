@@ -4,6 +4,21 @@ Todos los cambios relevantes de DREAMS se registran aquí. El proyecto aún no u
 
 ## Unreleased
 
+### 2026-08-28 — Cuenta estable, retiro de favoritos y deploy preparado
+
+- Retirada la función de favoritos de navegación, tarjetas, detalle, cuenta, Admin y API; `/favoritos` y `/favoritos.html` redirigen permanentemente al catálogo.
+- Eliminados `public/favoritos.html` y `public/js/favoritos.js`; la tabla histórica vacía permanece protegida por RLS para evitar un borrado destructivo no autorizado.
+- Registro y login validan correo/contraseña, diferencian confirmación pendiente de sesión activa y devuelven una redirección explícita.
+- Corregida la pérdida del mensaje de confirmación: un alta `202` ya no recarga la página.
+- La cuenta maneja errores de red, reintento, doble envío, estado ocupado, mensajes live y cierre de sesión fallido.
+- Cookies de auth pasan por respuestas `Cache-Control: no-store`; refresh inválido elimina cookies caducadas.
+- Añadido un único reintento acotado para consultas afectadas por el error transitorio Supabase `PGRST303` (`JWT issued at future`) observado en Railway.
+- Pulida la estética editorial negra/dorada existente: tipografías unificadas, navegación activa, tarjetas, botones, formularios, cuenta, focus y responsive.
+- Baseline `production_baseline` aplicada al Supabase `dreams-project`; triggers, RLS e índices de claves foráneas verificados sin cambiar datos del catálogo.
+- Advisors posteriores: sin claves foráneas sin índice; quedan protección de contraseñas filtradas desactivada (WARN), tabla `inquiries` sin policy pública (INFO, intencional por uso server-only) e índices nuevos aún sin uso (INFO esperable).
+- Suite ampliada de 20 a 24 pruebas con regresiones de auth, confirmación, cookies, retiro de favoritos y retry transitorio.
+- `check` y 24/24 tests locales verdes antes de publicación.
+
 ### 2026-08-28 — Auditoría F0
 
 - Documentada la arquitectura real Node/Express/Supabase y la migración incompleta desde SQLite.
