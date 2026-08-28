@@ -8,7 +8,7 @@
 - REPO: `https://github.com/facumartea/drams.git`
 - RAMA: `codex/production-hardening` (local, creada desde `main`).
 - PR: [#1 — Production audit and critical hardening](https://github.com/facumartea/drams/pull/1), abierto contra `main`.
-- HEAD/SHA FUNCIONAL VERIFICADO: `6b5969470180d96612573ac23867605ae833ac3a` (el commit exclusivo de actualización de estado puede ser posterior; confirmar `git rev-parse HEAD`).
+- HEAD/SHA FUNCIONAL VERIFICADO: `3a36ba2704dc9c089ae7ef9ed7fc2b41c521d2b3` (el commit exclusivo de actualización de estado puede ser posterior; confirmar `git rev-parse HEAD`).
 - FASE ACTUAL: F1 — Seguridad crítica, con críticos de datos de F3 adelantados por riesgo.
 - PROGRESO GENERAL: 52% ponderado.
 
@@ -46,7 +46,7 @@ F0 100% · F1 70% · F2 55% · F3 55% · F4 60% · F5 50% · F6 60% · F7 40% ·
 
 ## CI
 
-Workflow `.github/workflows/ci.yml` creado con install frozen, audit, check y tests. GitHub Actions run #1: SUCCESS sobre `6b596947`.
+Workflow `.github/workflows/ci.yml` creado con install frozen, audit, check y tests. GitHub Actions run #3: SUCCESS sobre `3a36ba27`.
 
 ## Bugs confirmados prioritarios
 

@@ -45,3 +45,4 @@ Todos los cambios relevantes de DREAMS se registran aquí. El proyecto aún no u
 - `supabase/schema.sql` marcado como snapshot legacy y `supabase/.temp` ignorado.
 - Suite ampliada a 11 pruebas, incluidas invariantes de seguridad/no destrucción de la baseline; audit continúa sin vulnerabilidades conocidas.
 - Migración no aplicada ni declarada verificada: falta Postgres/Docker local o conexión controlada al remoto.
+- GitHub Actions CI run #3 completó correctamente sobre `3a36ba27`.
