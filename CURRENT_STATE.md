@@ -8,7 +8,7 @@
 - REPO: `https://github.com/facumartea/drams.git`
 - RAMA: `codex/production-hardening` (local, creada desde `main`).
 - PR: [#1 — Production audit and critical hardening](https://github.com/facumartea/drams/pull/1), abierto contra `main`.
-- HEAD/SHA BASE DE ESTA TANDA: `7e4cbefef364b0e9e3ff4be8d614a3b396f9d23a` (confirmar el HEAD funcional nuevo y CI después del push).
+- HEAD/SHA FUNCIONAL VERIFICADO: `1dece5bb85d3e3f15eaa9f252bd87c217328c5ad` (el commit exclusivo de actualización de estado puede ser posterior; confirmar el HEAD remoto).
 - FASE ACTUAL: F2 — Backend/API, con seguridad y datos críticos todavía en seguimiento.
 - PROGRESO GENERAL: 60% ponderado.
 
@@ -54,7 +54,7 @@ F0 100% · F1 70% · F2 80% · F3 55% · F4 75% · F5 70% · F6 60% · F7 40% ·
 
 ## CI
 
-Workflow `.github/workflows/ci.yml` creado con install frozen, audit, check y tests. GitHub Actions run #7: SUCCESS sobre `7e4cbef`; el CI de esta tanda queda pendiente hasta el push.
+Workflow `.github/workflows/ci.yml` creado con install frozen, audit, check y tests. GitHub Actions run #8: SUCCESS sobre `1dece5b`.
 
 ## Bugs confirmados prioritarios
 
