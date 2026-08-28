@@ -8,13 +8,13 @@
 - REPO: `https://github.com/facumartea/drams.git`
 - RAMA: `codex/production-hardening` (local, creada desde `main`).
 - PR: [#1 — Production audit and critical hardening](https://github.com/facumartea/drams/pull/1), abierto contra `main`.
-- HEAD/SHA FUNCIONAL VERIFICADO: `53a520e710c5376041c7f5d8db7e5d4acbde80d7` (el commit exclusivo de actualización de estado puede ser posterior; confirmar `git rev-parse HEAD`).
-- FASE ACTUAL: F1 — Seguridad crítica, con críticos de datos de F3 adelantados por riesgo.
-- PROGRESO GENERAL: 57% ponderado.
+- HEAD/SHA BASE DE ESTA TANDA: `7e4cbefef364b0e9e3ff4be8d614a3b396f9d23a` (confirmar el HEAD funcional nuevo y CI después del push).
+- FASE ACTUAL: F2 — Backend/API, con seguridad y datos críticos todavía en seguimiento.
+- PROGRESO GENERAL: 60% ponderado.
 
 ## Porcentaje de fases
 
-F0 100% · F1 70% · F2 65% · F3 55% · F4 75% · F5 70% · F6 60% · F7 40% · F8 55% · F9 45% · F10 55% · F11 45% · F12 35% · F13 20% · F14 15% · F15 45% · F16 30% · F17 0%.
+F0 100% · F1 70% · F2 80% · F3 55% · F4 75% · F5 70% · F6 60% · F7 40% · F8 65% · F9 45% · F10 55% · F11 45% · F12 35% · F13 20% · F14 15% · F15 55% · F16 30% · F17 0%.
 
 ## Último trabajo
 
@@ -36,6 +36,10 @@ F0 100% · F1 70% · F2 65% · F3 55% · F4 75% · F5 70% · F6 60% · F7 40% ·
 - Carrito reconciliado contra precio/stock del servidor antes de consultar; el mensaje de WhatsApp incluye el contenido y total actuales.
 - Número de WhatsApp retirado de la lógica y enlaces activos del frontend; ahora proviene de configuración server-side.
 - Overflow de portada corregido y verificado en los seis viewports; foco visible, reduced motion y menú accesible añadidos en portada.
+- API separada en `server/app.js` con factory `create_app`; `server/server.js` quedó limitado al bootstrap real, Supabase y seed.
+- Dependencias de DB y cliente de refresh son inyectables para pruebas aisladas sin tocar Supabase remoto.
+- Rutas async normalizadas y middleware central de errores agregado; respuestas y logs ya no filtran mensajes internos del proveedor.
+- Integración HTTP con DB falsa añadida para catálogo, errores explícitos, rechazos inesperados, readiness y CSP.
 - No se modificó la base remota ni se desplegó.
 
 ## Tests
@@ -45,19 +49,19 @@ F0 100% · F1 70% · F2 65% · F3 55% · F4 75% · F5 70% · F6 60% · F7 40% ·
 - Sintaxis JavaScript: OK.
 - Smoke HTTP local sin DB real: OK para servidor/estáticos; demostró healthcheck falso positivo.
 - Audit producción: OK, sin vulnerabilidades conocidas.
-- Suite Node: 14/14 OK (baseline SQL, escape XSS/URL, seed, validación/IDs, cookies, readiness, CSP, favoritos, carrito autoritativo y rutas API).
+- Suite Node: 20/20 OK (incluye factory de app, DB inyectable y manejo central de errores además de la cobertura previa).
 - E2E completo e integración con Supabase real: pendientes.
 
 ## CI
 
-Workflow `.github/workflows/ci.yml` creado con install frozen, audit, check y tests. GitHub Actions run #6: SUCCESS sobre `53a520e7`.
+Workflow `.github/workflows/ci.yml` creado con install frozen, audit, check y tests. GitHub Actions run #7: SUCCESS sobre `7e4cbef`; el CI de esta tanda queda pendiente hasta el push.
 
 ## Bugs confirmados prioritarios
 
 1. Ciclo de refresh/revocación y trigger de perfiles requieren integración contra Supabase real.
 2. Baseline SQL necesita ejecución local/remota controlada, advisors y verificación RLS.
 3. El carrito ya reconcilia datos; falta decidir/persistir un modelo real de consulta/orden si el negocio lo requiere.
-4. Cobertura API/E2E/DB aún insuficiente; favoritos y carrito tienen pruebas aisladas, no integración Supabase real.
+4. Cobertura API/E2E/DB aún insuficiente; ya hay integración HTTP con DB falsa, pero no integración Supabase real.
 
 ## Pendientes y riesgos
 
@@ -83,4 +87,4 @@ Railway configurado con Railpack y `node server/server.js`; healthcheck actualiz
 
 ## Próxima acción exacta
 
-Separar la API para ampliar integración con DB inyectable y cerrar manejo uniforme de errores. Luego abordar modelo de consultas/opiniones y QA de páginas internas; aplicar/verificar la baseline en un Supabase controlado cuando exista acceso y validar advisors, RLS, Railway y producción sin compartir secretos.
+Definir el alcance real de consultas/opiniones y ampliar pruebas de autorización/sesiones sobre la app inyectable. Luego hacer QA de páginas internas; aplicar/verificar la baseline en un Supabase controlado cuando exista acceso y validar advisors, RLS, Railway y producción sin compartir secretos.

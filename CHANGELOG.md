@@ -59,3 +59,15 @@ Todos los cambios relevantes de DREAMS se registran aquí. El proyecto aún no u
 - La consulta de carrito incluye cantidades, productos y total autoritativo; el frontend deja de confiar en precio/stock de `localStorage` para esa salida.
 - Enlaces y detalle dejaron de fijar el número de WhatsApp en JavaScript/HTML y consumen `/api/config` o la URL emitida por el servidor.
 - Baseline Supabase y deploy remoto siguen sin aplicarse: requieren un entorno controlado y credenciales fuera del chat.
+
+### 2026-08-28 — API inyectable y errores uniformes
+
+- Separada la construcción de Express en `server/app.js`; `server/server.js` conserva únicamente configuración real, Supabase, escucha y seed.
+- Añadida `create_app` con inyección explícita de base de datos, factory de cliente auth, configuración y logger para pruebas aisladas.
+- Todas las rutas async pasan por un adaptador común que deriva rechazos al middleware central de errores.
+- Errores inesperados devuelven `{ "error": "No se pudo completar la operación." }` sin filtrar mensajes internos de Supabase.
+- Logs de error conservan método, ruta y clase/código limitado, sin copiar el mensaje interno del proveedor.
+- Eliminada la filtración del mensaje de Supabase que permanecía en el alta Admin de productos.
+- Añadidas 6 pruebas de integración HTTP con DB falsa: factory obligatoria, catálogo, error explícito, rechazo de promesa, readiness y CSP.
+- Suite completa ampliada a 20 pruebas; check de sintaxis y audit de producción continúan verdes.
+- Sin cambios en Supabase remoto ni deploy.
