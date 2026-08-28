@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config({quiet:true});
 
 const image_urls = [
     'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=900&q=85',
@@ -49,8 +49,12 @@ async function seed_database(database) {
         const image_url = brand === 'Chanel' && name.startsWith('Coco') ? '/assets/dreams-bottle.png' : image_urls[index % image_urls.length];
         return { brand, name, gender, category, size_ml, price, stock, intensity, family, top_notes, heart_notes, base_notes, description, image_url, featured: Boolean(featured) };
     });
-    const products_result = await database.from('products').upsert(rows, { onConflict: 'brand,name', ignoreDuplicates: false });
-    if (products_result.error) throw products_result.error;
+    const products_count = await database.from('products').select('*', { count: 'exact', head: true });
+    if (products_count.error) throw products_count.error;
+    if (products_count.count === 0) {
+        const products_result = await database.from('products').upsert(rows, { onConflict: 'brand,name', ignoreDuplicates: true });
+        if (products_result.error) throw products_result.error;
+    }
     const admin_email = (process.env.ADMIN_EMAIL || 'admin@dreamsperfumes.com').toLowerCase();
     const admin_password = process.env.ADMIN_PASSWORD;
     if (!admin_password) return;

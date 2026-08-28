@@ -65,4 +65,4 @@ ADMIN
 ├── Crear
 ├── Editar
 ├── Eliminar
-└── Guardar en SQLite mediante API
+└── Guardar en Supabase mediante API

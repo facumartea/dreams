@@ -135,6 +135,9 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
+# Supabase CLI local state
+supabase/.temp/
+
 # Ignorar base de datos SQLite y temporales
 data/dreams.db
 data/dreams.db-shm

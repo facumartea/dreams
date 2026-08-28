@@ -68,7 +68,7 @@ INICIAR
 
     SI HAY sesión
 
-        enviar producto a API de favoritos
+        enviar PUT para guardar o DELETE para quitar
 
         actualizar botón
 
@@ -84,13 +84,11 @@ INICIAR
 
     enviar datos a API
 
-    verificar usuario
-
-    comparar contraseña con bcrypt
+    verificar credenciales con Supabase Auth
 
     SI es correcta
 
-        crear sesión
+        crear cookies HTTP-only de acceso y renovación
 
     SI NO
 
@@ -112,7 +110,7 @@ INICIAR
 
         permitir crear, editar y eliminar
 
-        guardar cambios en SQLite
+        guardar cambios en Supabase mediante la API
 
     SI NO
 

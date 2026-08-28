@@ -6,7 +6,10 @@
   "main": "server/server.js",
   "scripts": {
     "start": "node server/server.js",
-    "dev": "nodemon server/server.js"
+    "dev": "nodemon server/server.js",
+    "check": "node scripts/check.js",
+    "test": "node --test",
+    "ci": "pnpm run check && pnpm test"
   },
   "engines": {
     "node": ">=20"
@@ -18,8 +21,7 @@
     "express-rate-limit": "^8.1.0",
     "helmet": "^8.1.0",
     "morgan": "^1.10.0",
-    "nodemailer": "^7.0.5"
-    ,"ws": "^8.18.3"
+    "ws": "^8.18.3"
   },
   "devDependencies": {
     "nodemon": "^3.1.10"

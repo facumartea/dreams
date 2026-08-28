@@ -19,28 +19,29 @@ async function load_product_detail() {
         document.title = `${product.name} | DREAMS`;
         save_recent_product(product);
         render_recent_products();
-        render_product_detail(product);
+        await render_product_detail(product);
     } catch (error) {
-        container.innerHTML = `<div class="empty-state"><h2>${error.message}</h2><a class="button button-dark" href="/catalogo.html">Volver al catálogo</a></div>`;
+        container.innerHTML = `<div class="empty-state"><h2>${escape_html(error.message)}</h2><a class="button button-dark" href="/catalogo.html">Volver al catálogo</a></div>`;
     }
 }
 
-function render_product_detail(product) {
+async function render_product_detail(product) {
     const container = document.getElementById('product-detail');
+    const config = await get_public_config();
     const whatsapp_text = encodeURIComponent(`Hola DREAMS, quiero consultar por ${product.brand} ${product.name} de ${product.size_ml} ml.`);
-    const whatsapp_url = `https://wa.me/542944502390?text=${whatsapp_text}`;
+    const whatsapp_url = `https://wa.me/${encodeURIComponent(config.whatsapp_number)}?text=${whatsapp_text}`;
 
     container.innerHTML = `
         <section class="detail-layout">
             <div class="detail-image">
-                <img src="${product.image_url}" alt="${product.brand} ${product.name}" onerror="this.src='https://images.unsplash.com/photo-1563170351-be82bc888aa4?auto=format&fit=crop&w=1000&q=85'">
+                <img src="${escape_html(safe_image_url(product.image_url))}" alt="${escape_html(`${product.brand} ${product.name}`)}">
             </div>
             <div class="detail-info">
-                <p class="eyebrow">${product.category} · ${product.gender} · ${product.size_ml} ml</p>
-                <h1>${product.name}</h1>
-                <p class="product-meta">${product.brand} · ${product.family}</p>
+                <p class="eyebrow">${escape_html(product.category)} · ${escape_html(product.gender)} · ${escape_html(product.size_ml)} ml</p>
+                <h1>${escape_html(product.name)}</h1>
+                <p class="product-meta">${escape_html(product.brand)} · ${escape_html(product.family)}</p>
                 <div class="detail-price">${format_price(product.price)}</div>
-                <p class="detail-description">${product.description}</p>
+                <p class="detail-description">${escape_html(product.description)}</p>
                 <div class="intensity" title="Intensidad ${product.intensity} de 5">
                     ${[1, 2, 3, 4, 5].map(number => `<span class="${number <= product.intensity ? 'active' : ''}"></span>`).join('')}
                 </div>
@@ -48,16 +49,17 @@ function render_product_detail(product) {
                 <div class="detail-actions">
                     <button id="detail-add" class="button button-dark" ${Number(product.stock) === 0 ? 'disabled' : ''}>${Number(product.stock) === 0 ? 'Agotado' : 'Agregar al carrito'}</button>
                     <a class="button" href="${whatsapp_url}" target="_blank" rel="noreferrer" data-whatsapp-inquiry>Consultar por WhatsApp</a>
-                    <button id="detail-favorite" class="button">♡ Favorito</button>
                 </div>
                 <div class="notes-grid">
-                    <article class="note-block"><h3>Salida</h3><p>${product.notes.salida.join(' · ')}</p></article>
-                    <article class="note-block"><h3>Corazón</h3><p>${product.notes.corazon.join(' · ')}</p></article>
-                    <article class="note-block"><h3>Fondo</h3><p>${product.notes.fondo.join(' · ')}</p></article>
+                    <article class="note-block"><h3>Salida</h3><p>${escape_html(product.notes.salida.join(' · '))}</p></article>
+                    <article class="note-block"><h3>Corazón</h3><p>${escape_html(product.notes.corazon.join(' · '))}</p></article>
+                    <article class="note-block"><h3>Fondo</h3><p>${escape_html(product.notes.fondo.join(' · '))}</p></article>
                 </div>
             </div>
         </section>
     `;
+
+    attach_image_fallback(container.querySelector('.detail-image img'));
 
     document.getElementById('detail-add').addEventListener('click', () => add_to_cart(product));
     document.querySelector('[data-whatsapp-inquiry]').addEventListener('click', async event => {
@@ -70,7 +72,6 @@ function render_product_detail(product) {
             window.open(whatsapp_url, '_blank');
         }
     });
-    document.getElementById('detail-favorite').addEventListener('click', event => toggle_favorite(product.id, event.currentTarget));
 }
 
 document.addEventListener('DOMContentLoaded', load_product_detail);

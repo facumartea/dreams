@@ -1,4 +1,6 @@
--- DREAMS / Supabase. Ejecutar una vez en SQL Editor de dreams-project.
+-- LEGACY SNAPSHOT: no aplicar en entornos nuevos ni usar como fuente de verdad.
+-- Las migraciones versionadas en supabase/migrations/ son la fuente de verdad.
+-- Este archivo se conserva temporalmente para comparar instalaciones académicas previas.
 create table if not exists public.profiles (
   id uuid primary key references auth.users(id) on delete cascade,
   name text not null check (char_length(name) between 1 and 80),

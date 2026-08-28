@@ -17,14 +17,13 @@ async function verify_admin() {
     } catch (error) { window.location.href = '/cuenta.html?admin=1'; return false; }
 }
 
-function stat_card(title, value, note) { return `<article class="admin-stat"><span>${title}</span><strong>${value}</strong><small>${note}</small></article>`; }
+function stat_card(title, value, note) { return `<article class="admin-stat"><span>${escape_html(title)}</span><strong>${escape_html(value)}</strong><small>${escape_html(note)}</small></article>`; }
 
 async function load_dashboard() {
     const stats = await admin_fetch('/api/admin/stats');
     document.getElementById('admin-stats').innerHTML = [
         stat_card('Productos', stats.products, 'en catálogo'),
         stat_card('Usuarios', stats.users, 'cuentas creadas'),
-        stat_card('Favoritos', stats.favorites, 'guardados'),
         stat_card('Consultas', stats.inquiries, 'por WhatsApp'),
         stat_card('Opiniones', stats.reviews, 'publicadas'),
         stat_card('Stock bajo', stats.low_stock, '2 unidades o menos')
@@ -42,7 +41,7 @@ function render_admin_products() {
     tbody.innerHTML = '';
     admin_products.forEach(product => {
         const row = document.createElement('tr');
-        row.innerHTML = `<td>${product.id}</td><td><strong>${product.name}</strong><br><small>${product.size_ml} ml</small></td><td>${product.brand}</td><td>${product.gender}</td><td>${product.stock}</td><td>${format_price(product.price)}</td><td><div class="admin-actions"><button class="small-button edit-button">Editar</button><button class="small-button delete-button">Eliminar</button></div></td>`;
+        row.innerHTML = `<td>${escape_html(product.id)}</td><td><strong>${escape_html(product.name)}</strong><br><small>${escape_html(product.size_ml)} ml</small></td><td>${escape_html(product.brand)}</td><td>${escape_html(product.gender)}</td><td>${escape_html(product.stock)}</td><td>${escape_html(format_price(product.price))}</td><td><div class="admin-actions"><button class="small-button edit-button">Editar</button><button class="small-button delete-button">Eliminar</button></div></td>`;
         row.querySelector('.edit-button').addEventListener('click', () => fill_form(product));
         row.querySelector('.delete-button').addEventListener('click', () => delete_product(product.id));
         tbody.appendChild(row);
@@ -51,6 +50,7 @@ function render_admin_products() {
 
 function fill_form(product) {
     document.getElementById('form-label').textContent = `EDITAR PRODUCTO #${product.id}`;
+    document.getElementById('product-id').value = product.id;
     for (const key of ['brand','name','gender','category','size_ml','price','stock','intensity','family','top_notes','heart_notes','base_notes','description','image_url']) document.getElementById(key).value = product[key];
     document.getElementById('featured').checked = product.featured;
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -85,17 +85,17 @@ function reset_form() { document.getElementById('product-form').reset(); documen
 
 async function load_users() {
     const users = await admin_fetch('/api/admin/users');
-    document.getElementById('admin-users').innerHTML = users.map(user => `<tr><td>${user.id}</td><td>${user.name}</td><td>${user.email}</td><td>${user.is_admin ? 'Administrador' : 'Cliente'}</td><td>${new Date(user.created_at).toLocaleDateString('es-AR')}</td></tr>`).join('');
+    document.getElementById('admin-users').innerHTML = users.map(user => `<tr><td>${escape_html(user.id)}</td><td>${escape_html(user.name)}</td><td>${escape_html(user.email || 'No disponible')}</td><td>${user.is_admin ? 'Administrador' : 'Cliente'}</td><td>${escape_html(new Date(user.created_at).toLocaleDateString('es-AR'))}</td></tr>`).join('');
 }
 
 async function load_inquiries() {
     const inquiries = await admin_fetch('/api/admin/inquiries');
-    document.getElementById('admin-inquiries').innerHTML = inquiries.map(item => `<tr><td>${new Date(item.created_at).toLocaleString('es-AR')}</td><td>${item.brand || ''} ${item.name || item.product_name}</td><td>${item.user_name || 'Visitante'}</td><td>${item.user_email || 'Sin correo'}</td></tr>`).join('');
+    document.getElementById('admin-inquiries').innerHTML = inquiries.map(item => `<tr><td>${escape_html(new Date(item.created_at).toLocaleString('es-AR'))}</td><td>${escape_html(`${item.brand || ''} ${item.name || item.product_name}`.trim())}</td><td>${escape_html(item.user_name || 'Visitante')}</td><td>${escape_html(item.user_email || 'Sin correo')}</td></tr>`).join('');
 }
 
 async function load_admin_reviews() {
     const reviews = await admin_fetch('/api/admin/reviews');
-    document.getElementById('admin-reviews').innerHTML = reviews.map(review => `<article class="review-card"><div class="review-stars">${'★'.repeat(review.rating)}${'☆'.repeat(5-review.rating)}</div><p>“${review.comment}”</p><div class="review-author">${review.user_name}</div></article>`).join('');
+    document.getElementById('admin-reviews').innerHTML = reviews.map(review => `<article class="review-card"><div class="review-stars">${'★'.repeat(review.rating)}${'☆'.repeat(5-review.rating)}</div><p>“${escape_html(review.comment)}”</p><div class="review-author">${escape_html(review.user_name)}</div></article>`).join('');
 }
 
 function setup_tabs() {

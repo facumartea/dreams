@@ -1,65 +1,35 @@
 # Publicar DREAMS en Railway
 
-La aplicación está preparada para que una persona pueda entrar desde celular, otra computadora o cualquier navegador sin tener el proyecto descargado.
+## Precondiciones
 
-## 1. Crear repositorio
+1. Revisar `supabase/migrations/` y aplicar la baseline con Supabase CLI sobre un proyecto controlado.
+2. Verificar tablas, triggers, RLS y advisors antes de apuntar la aplicación a producción.
+3. Mantener una estrategia de rollback y backup acorde al entorno.
 
-Subir toda la carpeta `dreams_node` a un repositorio de GitHub. El `package.json` debe quedar en la raíz del repositorio.
+## Servicio
 
-## 2. Crear proyecto en Railway
+Conectar Railway al repositorio. `railway.toml` usa Railpack, arranca con `node server/server.js` y consulta `/api/health`. No crear un Volume: la persistencia pertenece a Supabase.
 
-En Railway elegir `New Project` → `Deploy from GitHub repo` y seleccionar el repositorio.
-
-Railway detecta una aplicación Node.js y utiliza el `start` de `package.json`.
-
-## 3. Variables
-
-En el servicio abrir `Variables` y crear:
+Configurar como secretos/variables:
 
 - `NODE_ENV=production`
-- `SESSION_SECRET=` una cadena larga y aleatoria
-- `ADMIN_EMAIL=` correo del administrador
-- `ADMIN_PASSWORD=` contraseña del administrador
-- `ADMIN_NAME=Administrador DREAMS`
-- `WHATSAPP_NUMBER=542944502390`
-- `DATABASE_DIR=/data`
+- `SUPABASE_URL`
+- `SUPABASE_SECRET_KEY`
+- `ADMIN_EMAIL`
+- `ADMIN_PASSWORD`
+- `ADMIN_NAME`
+- `WHATSAPP_NUMBER`
 
-No subir el `.env` real a GitHub.
+`PORT` lo entrega Railway. No usar `SESSION_SECRET`, `DATABASE_DIR` ni variables de SQLite. Nunca subir `.env` ni exponer `SUPABASE_SECRET_KEY`.
 
-## 4. Base de datos persistente
+## Validación
 
-Crear un `Volume` en Railway y conectarlo al servicio con mount path `/data`.
+Antes de habilitar tráfico, comprobar:
 
-La aplicación detecta `RAILWAY_VOLUME_MOUNT_PATH` y utiliza ese directorio para `dreams.db`.
+- `/api/health` responde 200 con `{"status":"ok","api":true,"database":"ok"}`.
+- Registro, login, renovación y logout.
+- Catálogo, cuenta, consulta por WhatsApp y CRUD Admin.
+- Persistencia tras un redeploy y ausencia de errores/secrets en logs.
+- Respuesta 503 del healthcheck cuando Supabase no está accesible.
 
-Esto es importante: sin un almacenamiento persistente, una base SQLite dentro del contenedor puede perder cambios al recrearse el servicio.
-
-## 5. Dominio público
-
-En `Settings` → `Networking` elegir `Generate Domain`.
-
-Railway asignará una URL pública tipo:
-
-`https://tu-app.up.railway.app`
-
-Esa URL se puede abrir desde celular y otras computadoras.
-
-## 6. Healthcheck
-
-El archivo `railway.toml` configura:
-
-`/api/health`
-
-como healthcheck.
-
-## 7. Panel admin
-
-Entrar a:
-
-`https://TU-DOMINIO.up.railway.app/admin.html`
-
-Si no hay sesión de administrador, el servidor redirige a `cuenta.html?admin=1`.
-
-## 8. Actualizaciones
-
-Si el servicio está conectado a GitHub, los nuevos commits pueden volver a desplegarse automáticamente.
+El despliegue no está certificado sólo porque Railway finalice el build; registrar la evidencia y el rollback en `CURRENT_STATE.md`.
