@@ -18,6 +18,7 @@ Todos los cambios relevantes de DREAMS se registran aquí. El proyecto aún no u
 - Advisors posteriores: sin claves foráneas sin índice; quedan protección de contraseñas filtradas desactivada (WARN), tabla `inquiries` sin policy pública (INFO, intencional por uso server-only) e índices nuevos aún sin uso (INFO esperable).
 - Suite ampliada de 20 a 24 pruebas con regresiones de auth, confirmación, cookies, retiro de favoritos y retry transitorio.
 - `check` y 24/24 tests locales verdes antes de publicación.
+- Runtime de producción fijado a Node 24 para eliminar la advertencia de deprecación de Node 20 emitida por `@supabase/supabase-js` en Railway y alinear deploy con CI.
 
 ### 2026-08-28 — Auditoría F0
 

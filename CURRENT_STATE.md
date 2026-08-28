@@ -6,9 +6,9 @@
 
 - PROYECTO: DREAMS — tienda catálogo de perfumería con consultas por WhatsApp.
 - REPO: `https://github.com/facumartea/drams.git`
-- RAMA DE TRABAJO: `codex/production-hardening`.
-- PR: [#1 — Production audit and critical hardening](https://github.com/facumartea/drams/pull/1), contra `main`.
-- HEAD/SHA: confirmar el SHA remoto posterior a esta tanda; el último remoto anterior fue `d0bd120f5fa83a067c99e864d0e17505a6597014`.
+- RAMA DE TRABAJO: `codex/runtime-finalization` para el ajuste final; `codex/production-hardening` ya fue fusionada.
+- PR: [#1 — Production audit and critical hardening](https://github.com/facumartea/drams/pull/1), fusionado a `main`.
+- HEAD/SHA DE PRODUCCIÓN VERIFICADO PREVIO AL AJUSTE DE RUNTIME: `8a696191620c90c0353f067aec9fc570e519895e`.
 - FASE ACTUAL: F16 — deploy/observabilidad, continuando en paralelo F6/F9/F10/F15.
 - PROGRESO GENERAL: 69% ponderado (68,7% exacto según `PLAN.md`).
 
@@ -28,6 +28,7 @@ F0 100% · F1 70% · F2 85% · F3 80% · F4 75% · F5 75% · F6 80% · F7 40% ·
 - Baseline Supabase aplicada de forma no destructiva y registrada como `20260828191602 production_baseline`.
 - Índices de FKs añadidos/verificados; no se alteraron las 31 filas de catálogo.
 - `NEXT_CHAT_PROMPT.md` creado con continuidad completa para otro chat/dispositivo.
+- PR #1 fusionado; deployment Railway `aff04ded-323a-4d0c-b8fa-58e3cc1c1c86` sobre `8a696191` terminó SUCCESS y pasó smoke. Los logs detectaron Node 20 obsoleto; se fijó Node 24 y falta publicar/verificar el deployment final de ese ajuste.
 
 ## Tests
 
@@ -42,7 +43,7 @@ F0 100% · F1 70% · F2 85% · F3 80% · F4 75% · F5 75% · F6 80% · F7 40% ·
 
 - Workflow: `.github/workflows/ci.yml` con instalación frozen, audit, check y tests.
 - Último run remoto confirmado antes de esta tanda: GitHub Actions CI #9, verde.
-- El run del nuevo commit debe confirmarse antes del merge/deploy.
+- GitHub Actions CI #10: SUCCESS sobre `069b1ab`; merge PR #1: `8a696191`.
 
 ## Bugs y pendientes
 
@@ -72,7 +73,8 @@ F0 100% · F1 70% · F2 85% · F3 80% · F4 75% · F5 75% · F6 80% · F7 40% ·
 - Entorno: `production` (`39886077-e963-4fec-b3aa-b0e5d38908dd`).
 - Servicio: `drams` (`c5780bbd-4030-4319-a714-1bc0f564e353`).
 - Dominio: `https://drams-production.up.railway.app`.
-- El deployment anterior corre un commit viejo de `main`; publicar sólo después de CI verde y merge del PR.
+- Deployment verificado previo al ajuste Node: `aff04ded-323a-4d0c-b8fa-58e3cc1c1c86`, SUCCESS sobre `8a696191`.
+- Smoke real: `/` 200, `/api/health` 200 con DB ok, `/api/products` 200, `/cuenta.html` 200, login inválido 400, `/favoritos.html` 301 y `/admin` sin sesión 403.
 - Healthcheck esperado: `/api/health` con API y DB `ok`.
 
 ## Bloqueos
@@ -83,4 +85,4 @@ F0 100% · F1 70% · F2 85% · F3 80% · F4 75% · F5 75% · F6 80% · F7 40% ·
 
 ## Próxima acción exacta
 
-Publicar esta tanda en `codex/production-hardening`, esperar CI verde, actualizar y fusionar PR #1 a `main`, esperar el auto-deploy del servicio Railway correcto y ejecutar smoke de `/`, `/api/health`, `/api/products`, `/cuenta.html`, auth inválida, `/favoritos.html` y protección de `/admin`. Después actualizar este archivo con SHA, CI y deployment exactos.
+Publicar el ajuste Node 24 en `codex/runtime-finalization`, abrir/fusionar su PR sólo con CI verde, esperar el deployment Railway final, confirmar por logs que usa Node 24 y repetir `/api/health`. Después registrar SHA/CI/deployment definitivos.
