@@ -41,6 +41,10 @@ Helmet aplica CSP, las escrituras sensibles requieren sesión/rol, auth y consul
 - `POST /api/reviews` — requiere sesión.
 - `POST /api/inquiries`
 
+### Carrito
+
+- `POST /api/cart/quote` — valida IDs/cantidades, reconcilia precio y stock y genera la consulta con datos actuales.
+
 ### Administración
 
 - `GET /api/admin/stats`

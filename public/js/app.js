@@ -1,4 +1,27 @@
 const api = '/api';
+let public_config_promise;
+
+function get_public_config() {
+    if (!public_config_promise) {
+        public_config_promise = fetch(`${api}/config`).then(async response => {
+            const data = await response.json();
+            if (!response.ok) throw new Error('No se pudo cargar la configuración pública.');
+            return data;
+        });
+    }
+    return public_config_promise;
+}
+
+async function apply_public_config() {
+    try {
+        const config = await get_public_config();
+        document.querySelectorAll('[data-whatsapp-link]').forEach(link => {
+            link.href = `https://wa.me/${encodeURIComponent(config.whatsapp_number)}`;
+        });
+    } catch (error) {
+        document.querySelectorAll('[data-whatsapp-link]').forEach(link => link.removeAttribute('href'));
+    }
+}
 
 function format_price(value) {
     return new Intl.NumberFormat('es-AR', {
@@ -306,6 +329,7 @@ function setup_menu() {
 
 update_cart_count();
 setup_menu();
+apply_public_config();
 load_featured_products();
 load_reviews();
 render_recent_products();

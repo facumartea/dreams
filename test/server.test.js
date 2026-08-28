@@ -3,7 +3,7 @@ const assert = require('node:assert/strict');
 
 process.env.SUPABASE_URL = 'https://example.supabase.co';
 process.env.SUPABASE_SECRET_KEY = 'test-only-placeholder';
-const { app, validate, payload, database_health, auth_cookie, session, parse_id, set_favorite } = require('../server/server');
+const { app, validate, payload, database_health, auth_cookie, session, parse_id, set_favorite, normalize_cart_items, quote_cart } = require('../server/server');
 
 test('validación de producto rechaza números y URLs inseguros', () => {
     const valid = {
@@ -55,6 +55,36 @@ test('favoritos usa escrituras idempotentes sin lectura previa', async () => {
     assert.equal(calls.filter(call => call[0] === 'upsert').length, 2);
     assert.equal(calls.filter(call => call[0] === 'delete').length, 1);
     assert.equal(calls.some(call => call[0] === 'select'), false);
+});
+
+test('carrito valida cantidades y se reconcilia con precio y stock del servidor', async () => {
+    assert.match(normalize_cart_items([]).error, /entre 1 y 30/);
+    assert.match(normalize_cart_items([{ id: 1, quantity: 0 }]).error, /cantidad inválida/);
+    const database = {
+        from(table) {
+            assert.equal(table, 'products');
+            return {
+                select(columns) {
+                    assert.match(columns, /price,stock/);
+                    return {
+                        async in(column, ids) {
+                            assert.equal(column, 'id');
+                            assert.deepEqual(ids, [1, 2, 3]);
+                            return { error: null, data: [
+                                { id: 1, brand: 'DREAMS', name: 'Uno', price: 150, stock: 2, image_url: '/one.png', size_ml: 50 },
+                                { id: 2, brand: 'DREAMS', name: 'Dos', price: 200, stock: 0, image_url: '/two.png', size_ml: 100 }
+                            ] };
+                        }
+                    };
+                }
+            };
+        }
+    };
+    const quote = await quote_cart(database, [{ id: 1, quantity: 3 }, { id: 2, quantity: 1 }, { id: 3, quantity: 1 }]);
+    assert.equal(quote.total, 300);
+    assert.equal(quote.items[0].quantity, 2);
+    assert.equal(quote.items[0].price, 150);
+    assert.equal(quote.warnings.length, 3);
 });
 
 test('cookies de sesión separan expiración de access y refresh', () => {

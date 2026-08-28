@@ -19,16 +19,17 @@ async function load_product_detail() {
         document.title = `${product.name} | DREAMS`;
         save_recent_product(product);
         render_recent_products();
-        render_product_detail(product);
+        await render_product_detail(product);
     } catch (error) {
         container.innerHTML = `<div class="empty-state"><h2>${escape_html(error.message)}</h2><a class="button button-dark" href="/catalogo.html">Volver al catálogo</a></div>`;
     }
 }
 
-function render_product_detail(product) {
+async function render_product_detail(product) {
     const container = document.getElementById('product-detail');
+    const config = await get_public_config();
     const whatsapp_text = encodeURIComponent(`Hola DREAMS, quiero consultar por ${product.brand} ${product.name} de ${product.size_ml} ml.`);
-    const whatsapp_url = `https://wa.me/542944502390?text=${whatsapp_text}`;
+    const whatsapp_url = `https://wa.me/${encodeURIComponent(config.whatsapp_number)}?text=${whatsapp_text}`;
 
     container.innerHTML = `
         <section class="detail-layout">
