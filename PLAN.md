@@ -1,29 +1,29 @@
 # Roadmap de producción — DREAMS
 
-Porcentajes al cierre de F0 (2026-08-28). Son estimaciones basadas en evidencia y se actualizan sólo después de validación.
+Porcentajes recalibrados después de la revisión profunda de seguridad y del nuevo alcance solicitado el 2026-08-29. Son estimaciones basadas en evidencia y se actualizan sólo después de validación.
 
 | Fase | Alcance | Peso | Estado |
 |---|---|---:|---:|
 | F0 | Auditoría total, baseline y documentación | 8% | 100% |
-| F1 | Seguridad crítica: XSS, dependencias, headers, abuso | 9% | 70% |
+| F1 | Seguridad crítica: XSS, dependencias, headers, CSRF/origin, abuso | 9% | 62% |
 | F2 | Backend/API: validación, errores, health, modularidad mínima | 8% | 85% |
-| F3 | Datos/Supabase: seed seguro, migraciones, integridad, índices, RLS | 9% | 80% |
+| F3 | Datos/Supabase: grants mínimos, provisioning, migraciones, integridad, RLS | 9% | 72% |
 | F4 | Catálogo, detalle, carrito y consultas | 7% | 75% |
-| F5 | Opiniones y retiro controlado de favoritos | 4% | 75% |
-| F6 | Auth, sesiones y usuarios | 8% | 80% |
-| F7 | Admin completo y seguro | 7% | 40% |
+| F5 | Opiniones persistentes, edición y moderación | 4% | 45% |
+| F6 | Auth, sesiones, recuperación y usuarios | 8% | 72% |
+| F7 | Admin completo, reversible y auditable | 7% | 35% |
 | F8 | Arquitectura, limpieza y documentación técnica | 5% | 72% |
 | F9 | UX funcional y estados | 5% | 75% |
-| F10 | Diseño visual y sistema de componentes | 4% | 90% |
+| F10 | Diseño visual, colección femenina, imagen y sistema de componentes | 4% | 82% |
 | F11 | Responsive verificado | 4% | 65% |
 | F12 | Accesibilidad | 5% | 65% |
 | F13 | Performance | 4% | 25% |
 | F14 | SEO y descubribilidad | 3% | 15% |
 | F15 | Testing y CI | 8% | 68% |
-| F16 | Producción, deploy y observabilidad | 4% | 80% |
+| F16 | Producción, dominio, deploy y observabilidad | 4% | 72% |
 | F17 | QA final de punta a punta | 2% | 0% |
 
-**Progreso general ponderado: 73%** (72,6% calculado con los pesos de la tabla).
+**Progreso general ponderado: 68%** (68,37% calculado con los pesos de la tabla). La baja de 73% a 68% no representa una regresión: incorpora trabajo nuevo y riesgos que antes no estaban medidos, detallados en `SECURITY_REVIEW_2026-08-29.md`.
 
 ## Secuencia y criterios
 
@@ -33,7 +33,7 @@ Inventario, arquitectura, datos, seguridad, UX, responsive, accesibilidad, perfo
 
 ### F1 — Seguridad crítica
 
-Eliminar XSS evitando HTML con datos no confiables; retirar/actualizar dependencias vulnerables; activar una CSP compatible; limitar endpoints de escritura; revisar cookies, CSRF/origin y filtrado de errores. Cierre con pruebas de regresión XSS y audit de dependencias verde.
+Eliminar XSS evitando HTML con datos no confiables; retirar/actualizar dependencias vulnerables; mantener CSP; limitar endpoints de escritura; agregar verificación de Origin/CSRF, rate limits faltantes y filtrado de errores. Cierre con regresiones XSS/CSRF, pruebas de abuso y audit verde.
 
 ### F2 — Backend y API
 
@@ -41,7 +41,7 @@ Extraer app arrancable para tests, normalizar async errors, validar IDs/tipos/ra
 
 ### F3 — Datos y Supabase
 
-Separar seed inicial de arranque; nunca sobrescribir catálogo administrado. Crear migraciones versionadas, trigger de perfil si se adopta, `updated_at`, índices justificados y pruebas de integridad/RLS. Verificar advisors cuando exista acceso.
+Separar provisioning Admin y seed inicial del arranque; nunca sobrescribir catálogo administrado. Revocar grants amplios, conceder privilegios mínimos, mantener migraciones versionadas, índices justificados y pruebas reales de integridad/RLS. Verificar advisors después de cada migración.
 
 ### F4 — Catálogo, detalle, carrito y consultas
 
@@ -49,15 +49,15 @@ Reconciliar precio/stock con servidor, limitar cantidades, generar consulta de c
 
 ### F5 — Opiniones y retiro controlado de favoritos
 
-Favoritos se retiró por decisión de producto: no hay navegación, interfaz ni API activa; las URLs históricas redirigen al catálogo. La tabla vacía permanece protegida por RLS hasta una migración destructiva autorizada. Las opiniones requieren sesión; falta moderación/eliminación si corresponde.
+Favoritos se retiró por decisión de producto. La tabla vacía permanece protegida hasta una migración destructiva autorizada. La API de opiniones ya persiste datos, pero falta formulario público, relación con producto o regla global, edición, límite específico, moderación Admin y pruebas de persistencia tras reload.
 
 ### F6 — Auth, sesiones y usuarios
 
-Definir refresh/revocación, garantizar perfil, recuperación de contraseña/confirmación según negocio, rate limits y pruebas de roles. Requiere decisiones/credenciales Supabase para pruebas remotas.
+Completar refresh/revocación, recuperación de contraseña y redirects/SMTP, MFA Admin, reautenticación sensible, rate limits y pruebas E2E de roles. Separar email público de contacto del identificador Admin.
 
 ### F7 — Admin
 
-Reparar edición; completar CRUD y búsqueda/filtros; email/roles según permisos; confirmaciones, archive/delete seguro, loaders, errores y auditoría básica.
+Completar CRUD, búsqueda/filtros y moderación de opiniones; reemplazar delete normal por archive/restore; exigir confirmaciones seguras y registrar auditoría básica de acciones privilegiadas.
 
 ### F8 — Arquitectura y limpieza
 
@@ -69,7 +69,7 @@ Estados loading/empty/error uniformes, feedback accesible, prevención de doble 
 
 ### F10 — Diseño visual
 
-Conservar dirección editorial DREAMS; formalizar tokens, tipografía, grid, spacing y componentes. No rediseñar antes de cerrar funciones críticas.
+Conservar dirección editorial DREAMS; completar la colección `Perfumes de mujer` con una variante cálida controlada, reemplazar el hero pixelado por un master de alta resolución y unificar el contacto público sin cambiar la identidad global.
 
 ### F11 — Responsive
 
@@ -93,7 +93,7 @@ Node test runner o herramienta justificada; unit, API, DB aislada, regresión, E
 
 ### F16 — Producción y deploy
 
-Verificar Railway, variables, Supabase, dominio, logs, readiness/liveness, rollback y smoke post-deploy. No ejecutar acciones remotas destructivas.
+Verificar Railway, variables, Supabase, logs, readiness/liveness y rollback. Migrar de forma controlada a `dreams-perfumes.up.railway.app` si está disponible, actualizando auth y SEO antes del corte y ejecutando smoke post-deploy.
 
 ### F17 — QA final
 
@@ -101,4 +101,4 @@ Happy path, errores, vacío, inválido, reload, concurrencia, auth/roles, mobile
 
 ## Próximo bloque exacto
 
-Cerrar CI, merge, deploy y QA visual de producción de la rama `codex/dreams-premium-visual`; luego ampliar E2E de cuenta/Admin, medir Lighthouse y completar la matriz responsive pendiente. Recuperación de contraseña y moderación de opiniones siguen requiriendo definición funcional antes de implementarse.
+Ejecutar S0/S1 de `SECURITY_REVIEW_2026-08-29.md`: añadir tests de Origin/CSRF, middleware de origen para mutaciones, separar `CONTACT_EMAIL` de `ADMIN_EMAIL` y retirar el identificador Admin de `/api/config`. Después preparar la migración de grants mínimos sin aplicarla hasta validar tests y rollback.

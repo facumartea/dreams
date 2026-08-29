@@ -9,14 +9,23 @@
 - RAMA ACTUAL: `codex/dreams-premium-visual`.
 - PRS FUSIONADOS: [#1 — Production audit and critical hardening](https://github.com/facumartea/drams/pull/1), [#2 — Align Railway runtime with Node 24](https://github.com/facumartea/drams/pull/2) y [#3 — Refine DREAMS premium visual experience](https://github.com/facumartea/drams/pull/3).
 - HEAD EN `main`: `08e15128ca28fe6742536043a7de8b90c2d82ede` (merge de PR #3). Rama de continuidad documental: `codex/dreams-premium-visual`.
-- FASE ACTUAL: F16 — promoción Railway y smoke del rediseño; F10 visual está implementada al 90%.
-- PROGRESO GENERAL: 73% ponderado (72,6% exacto según `PLAN.md`).
+- FASE ACTUAL: F1/F3 — planificación de hardening HTTP, auth y privilegios mínimos después de auditoría de seguridad.
+- PROGRESO GENERAL: 68% ponderado (68,37% exacto según `PLAN.md`). El valor fue recalibrado desde 73% por alcance nuevo y riesgos descubiertos, no por una regresión.
 
 ## Porcentaje de todas las fases
 
-F0 100% · F1 70% · F2 85% · F3 80% · F4 75% · F5 75% · F6 80% · F7 40% · F8 72% · F9 75% · F10 90% · F11 65% · F12 65% · F13 25% · F14 15% · F15 68% · F16 80% · F17 0%.
+F0 100% · F1 62% · F2 85% · F3 72% · F4 75% · F5 45% · F6 72% · F7 35% · F8 72% · F9 75% · F10 82% · F11 65% · F12 65% · F13 25% · F14 15% · F15 68% · F16 72% · F17 0%.
 
 ## Último trabajo
+
+- Revisión profunda de seguridad y nuevo alcance documentados en `SECURITY_REVIEW_2026-08-29.md`, sin cambiar producción, DB ni dominio.
+- No se confirmó una vulnerabilidad crítica explotable. Hallazgos prioritarios: provisioning Admin en arranque, falta de MFA/reautenticación Admin, falta de verificación explícita de Origin, grants SQL demasiado amplios, exposición pública de `admin_email`, opiniones sin formulario/moderación y delete permanente de productos.
+- Confirmado que opiniones ya tienen persistencia server-side (`GET/POST /api/reviews`) y que el POST anónimo devuelve 401; falta toda la experiencia de publicación y administración.
+- Confirmado que `/api/config` expone `admin_email`; debe dividirse en `CONTACT_EMAIL=facundo.martearena@dantebariloche.edu.ar` y un identificador Admin nunca público.
+- Inspeccionada la imagen aportada: 684×1020; el asset actual `dreams-bottle.png` mide sólo 185×272 y se amplía, causa directa de la baja calidad. Plan: recreación 2048×3072 y derivados responsivos.
+- Definida dirección para `Perfumes de mujer`: misma identidad negra/marfil/champagne, con rosa viejo/taupe cálido limitado a la cabecera editorial.
+- Railway confirma dominio único `drams-production.up.railway.app`; la documentación oficial permite renombrarlo. Se planificó transición a `dreams-perfumes.up.railway.app` si está disponible, con actualización previa de Supabase Auth y SEO.
+- Railway corrigió el estado histórico: deployment `bbc4aa7f-4d71-40d9-aa21-c6829a473f59` figura `SUCCESS`.
 
 - Prompt maestro de continuidad formalizado como regla permanente en `PROJECT_MASTER_RULES.md` y referenciado desde `AGENTS.md`; incluye recuperación de contexto, progreso verificable, reportes, Git/checkpoints, CI, deploy y veracidad.
 - Verificado en GitHub que `public/css/style.css` de `main` y `codex/dreams-premium-visual` comparten el blob `6caf5be3eeb88e95fd59712c04ec7a7d86ae2441` (29.075 bytes) y contienen el sistema visual premium; no fue necesario volver a modificar el CSS.
@@ -45,7 +54,7 @@ F0 100% · F1 70% · F2 85% · F3 80% · F4 75% · F5 75% · F6 80% · F7 40% ·
 - `corepack pnpm run check`: OK, 17 archivos JavaScript.
 - `corepack pnpm test`: 26/26 OK.
 - Regresiones cubiertas: validación auth, no-cache, alta con confirmación, login/cookies/redirección, retiro de favoritos y retry `PGRST303`.
-- CI #14 del PR #3: SUCCESS. El deployment del merge todavía no llegó a SUCCESS, por lo que el smoke del nuevo frontend permanece pendiente.
+- CI #14 del PR #3: SUCCESS. No existe CI nuevo todavía para esta tanda documental.
 - E2E con usuarios Supabase reales y QA visual de todas las páginas: pendientes; no declararlos ejecutados.
 
 ## CI
@@ -58,13 +67,19 @@ F0 100% · F1 70% · F2 85% · F3 80% · F4 75% · F5 75% · F6 80% · F7 40% ·
 
 1. Falta recuperación de contraseña y su configuración de URL/SMTP de producción.
 2. Faltan E2E reales de refresh/logout y roles customer/admin.
-3. Opiniones no tienen moderación/eliminación Admin.
-4. Delete de producto sigue siendo permanente; definir archive/auditoría antes de cerrar F7.
-5. Faltan QA responsive completo, Lighthouse, SEO, accesibilidad automatizada y QA final.
+3. Opiniones no tienen formulario público, edición, rate limit dedicado ni moderación Admin.
+4. Falta decidir si las opiniones serán generales o una por usuario y producto; se recomienda la segunda opción.
+5. `/api/config` expone el identificador Admin y el contacto público aún usa `admin@dreamsperfumes.com`.
+6. Faltan middleware/tests de Origin/CSRF y grants SQL de privilegio mínimo.
+7. Delete de producto sigue siendo permanente; definir archive/auditoría antes de cerrar F7.
+8. Faltan QA responsive completo, Lighthouse, SEO, accesibilidad automatizada y QA final.
 
 ## Riesgos
 
 - Supabase advierte protección contra contraseñas filtradas desactivada (WARN); requiere revisar disponibilidad/configuración de Auth.
+- El provisioning Admin se ejecuta en cada arranque y debe convertirse en comando manual de una sola vez.
+- Cookies `SameSite=Lax` mitigan CSRF, pero falta una verificación explícita de Origin/Referer para mutaciones.
+- Grants amplios quedan contenidos por RLS, pero debilitan defensa en profundidad.
 - Advisor informa `inquiries` con RLS sin policy (INFO). Es intencional: la tabla es server-only mediante secret/service key; no abrir acceso público sin caso real.
 - Índices nuevos figuran sin uso (INFO) por haberse creado recién y por bajo volumen; no borrarlos sólo para silenciar el advisor.
 - No existen pagos, órdenes ni uploads. No presentarlos como funcionalidad.
@@ -82,7 +97,7 @@ F0 100% · F1 70% · F2 85% · F3 80% · F4 75% · F5 75% · F6 80% · F7 40% ·
 - Entorno: `production` (`39886077-e963-4fec-b3aa-b0e5d38908dd`).
 - Servicio: `drams` (`c5780bbd-4030-4319-a714-1bc0f564e353`).
 - Dominio: `https://drams-production.up.railway.app`.
-- Último deployment activo confirmado: `f89bba83-0b45-4ba1-894c-cd7dab060d39`, SUCCESS sobre `87f9e8d2`, Node 24.19.0.
+- Último deployment confirmado: `bbc4aa7f-4d71-40d9-aa21-c6829a473f59`, SUCCESS sobre el commit visual `08e15128ca28fe6742536043a7de8b90c2d82ede`.
 - Deployment correcto del rediseño: `21225f51-7484-4bfd-903d-dbb35d294539`, commit exacto `08e15128ca28fe6742536043a7de8b90c2d82ede`, snapshot `f44a20bc-cb2f-4f5d-aa21-75b2f9d267dc`. El build terminó y publicó la imagen, pero Railway mantiene el estado `BUILDING` sin cambio desde `2026-08-29T01:21:46Z`.
 - Redeploy anterior accidental del commit viejo: `65722afb-b9ba-4a4c-bf26-78e2e6a37197`, atascado en `DEPLOYING` desde `2026-08-29T01:13:31Z`. No volver a ejecutar `redeploy`; hay que cancelar/remover sólo este deployment viejo o esperar a que Railway libere la cola.
 - El deployment viejo `65722...` finalmente llegó a SUCCESS a las `2026-08-29T02:01:11Z` y quedó sirviendo producción.
@@ -96,12 +111,11 @@ F0 100% · F1 70% · F2 85% · F3 80% · F4 75% · F5 75% · F6 80% · F7 40% ·
 
 ## Bloqueos
 
-- BLOQUEO EXTERNO ACTUAL: la cola de Railway quedó congelada entre el redeploy viejo `65722...` y el deployment correcto `21225...`. Dos solicitudes acotadas al Railway Agent expiraron por HTTP 504 y no cambiaron los estados.
-- Railway Agent volvió a expirar al intentar cancelar únicamente `21225...`; la conexión disponible no expone una operación directa de cancelación. Se requiere cancelar manualmente `21225f51-7484-4bfd-903d-dbb35d294539` en el dashboard para liberar `bbc4aa7f-4d71-40d9-aa21-c6829a473f59`.
-- El bloqueo dejó de afectar al tráfico: Railway ya sirve el commit visual correcto en producción. Queda sólo una discrepancia de estado histórica en el dashboard.
+- No hay bloqueo activo de Railway: el deployment correcto ya figura `SUCCESS`.
+- Para cerrar opiniones se necesita una decisión funcional: opinión general o asociada a cada perfume.
 - Recuperación de contraseña completa puede requerir decisión/configuración de URL y SMTP.
 - Acciones destructivas sobre la tabla histórica `favorites` o datos reales requieren autorización explícita.
 
 ## Próxima acción exacta
 
-Esperar a que Railway actualice el estado histórico de `bbc4aa7f-4d71-40d9-aa21-c6829a473f59`; no abortar deployments nuevos. Ejecutar smoke de `/`, `/api/health`, `/api/products`, catálogo, producto 31, carrito, cuenta, favicon, login inválido, favoritos 301 y Admin 403; el HTML/CSS y healthcheck ya fueron verificados en producción. Luego cerrar F16 sólo cuando Railway reporte SUCCESS estable.
+Crear una rama desde `main` e implementar S0/S1 de `SECURITY_REVIEW_2026-08-29.md`: tests de Origin/CSRF, middleware de origen en mutaciones y separación `CONTACT_EMAIL`/`ADMIN_EMAIL`. Verificar check, tests, CI y smoke antes de preparar la migración de grants mínimos.

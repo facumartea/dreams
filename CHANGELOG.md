@@ -4,6 +4,19 @@ Todos los cambios relevantes de DREAMS se registran aquí. El proyecto aún no u
 
 ## Unreleased
 
+### 2026-08-29 — Revisión profunda de seguridad y roadmap ampliado
+
+- Auditados frontend, Express, sesiones, Admin, Supabase/RLS/grants, dependencias, cabeceras HTTP, endpoints públicos y estado Railway sin modificar datos reales.
+- No se confirmó una vulnerabilidad crítica explotable; se priorizaron provisioning Admin en arranque, MFA/reautenticación, Origin/CSRF, grants mínimos, separación de email público/Admin, opiniones moderadas y archive de productos.
+- Confirmado que la API de opiniones ya persiste datos autenticados, pero falta formulario, edición, rate limit dedicado, moderación y pruebas de reload.
+- Documentado el plan para cambiar el contacto a `facundo.martearena@dantebariloche.edu.ar` mediante `CONTACT_EMAIL` sin exponer `ADMIN_EMAIL`.
+- Definida la evolución visual de `Perfumes de mujer` sin romper la identidad DREAMS.
+- Diagnosticada la baja calidad del frasco: asset actual 185×272 ampliado. Planificada recreación 2048×3072 con AVIF/WebP responsivos y lettering nítido separado.
+- Confirmado que Railway permite renombrar un dominio proporcionado; planificada transición segura a `dreams-perfumes.up.railway.app` si está disponible.
+- Recalibrado el progreso ponderado de 73% a 68% por alcance nuevo y deuda descubierta; no es una regresión de código.
+- Añadido `SECURITY_REVIEW_2026-08-29.md` como evidencia y plan operativo.
+- Railway confirmó el deployment visual `bbc4aa7f-4d71-40d9-aa21-c6829a473f59` en estado SUCCESS.
+
 ### 2026-08-29 — Reglas maestras de continuidad
 
 - Formalizado el prompt maestro permanente en `PROJECT_MASTER_RULES.md` y ampliado `AGENTS.md` con recuperación de contexto, fuentes de verdad, progreso verificable, formato de reporte, checkpoints Git, CI y deploy.
