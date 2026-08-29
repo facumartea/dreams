@@ -34,7 +34,7 @@ El endpoint `GET /api/health` devuelve 200 sólo cuando la API puede consultar S
 
 ## Variables
 
-`SUPABASE_URL` y `SUPABASE_SECRET_KEY` son obligatorias. La clave secreta es exclusiva del servidor: nunca debe aparecer en JavaScript público, commits, capturas ni mensajes. `NODE_ENV`, `PORT`, `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `ADMIN_NAME` y `WHATSAPP_NUMBER` son operativas; ver `.env.example`.
+`SUPABASE_URL` y `SUPABASE_SECRET_KEY` son obligatorias. La clave secreta es exclusiva del servidor: nunca debe aparecer en JavaScript público, commits, capturas ni mensajes. `NODE_ENV`, `PORT`, `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `ADMIN_NAME`, `CONTACT_EMAIL`, `WHATSAPP_NUMBER` y `APP_ORIGINS` son operativas; ver `.env.example`. `CONTACT_EMAIL` es público, mientras que `ADMIN_EMAIL` nunca debe enviarse desde `/api/config`.
 
 ## Producción
 

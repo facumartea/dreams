@@ -18,6 +18,10 @@ async function apply_public_config() {
         document.querySelectorAll('[data-whatsapp-link]').forEach(link => {
             link.href = `https://wa.me/${encodeURIComponent(config.whatsapp_number)}`;
         });
+        document.querySelectorAll('[data-contact-email]').forEach(link => {
+            link.textContent = config.contact_email;
+            link.href = `mailto:${config.contact_email}`;
+        });
     } catch (error) {
         document.querySelectorAll('[data-whatsapp-link]').forEach(link => link.removeAttribute('href'));
     }

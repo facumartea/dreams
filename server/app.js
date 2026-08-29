@@ -9,6 +9,45 @@ const error_kind = error => String(error?.code || error?.name || 'unknown').slic
 const normalize_email = value => String(value || '').trim().toLowerCase();
 const valid_email = value => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) && value.length <= 254;
 const delay = milliseconds => new Promise(resolve => setTimeout(resolve, milliseconds));
+const unsafe_methods = new Set(['POST', 'PUT', 'PATCH', 'DELETE']);
+
+function normalize_origin(value) {
+    try {
+        const parsed = new URL(String(value || '').trim());
+        if (!['http:', 'https:'].includes(parsed.protocol) || parsed.username || parsed.password) return null;
+        return parsed.origin;
+    } catch (error) {
+        return null;
+    }
+}
+
+function allowed_origin_set(value) {
+    const entries = Array.isArray(value) ? value : String(value || '').split(',');
+    return new Set(entries.map(normalize_origin).filter(Boolean));
+}
+
+function mutation_origin_guard(configured_origins) {
+    const configured = allowed_origin_set(configured_origins);
+    return (request, response, next) => {
+        if (!unsafe_methods.has(request.method)) return next();
+
+        const origin_header = request.get('origin');
+        const referer_header = request.get('referer');
+        const fetch_site = String(request.get('sec-fetch-site') || '').toLowerCase();
+        if (!origin_header && !referer_header) {
+            return fetch_site === 'cross-site'
+                ? response.status(403).json({ error: 'Origen de solicitud no permitido.' })
+                : next();
+        }
+
+        const supplied_origin = normalize_origin(origin_header || referer_header);
+        const request_origin = normalize_origin(`${request.protocol}://${request.get('host') || ''}`);
+        const trusted = configured.size ? configured : new Set([request_origin].filter(Boolean));
+        return supplied_origin && trusted.has(supplied_origin)
+            ? next()
+            : response.status(403).json({ error: 'Origen de solicitud no permitido.' });
+    };
+}
 
 async function execute_database_query(query_factory, wait = delay) {
     let result = await query_factory();
@@ -126,7 +165,8 @@ function create_app(options = {}) {
     const production = options.production ?? process.env.NODE_ENV === 'production';
     const logger = options.logger || console;
     const create_auth_client = options.create_auth_client || (() => database);
-    const admin_email = String(options.admin_email || 'admin@dreamsperfumes.com').toLowerCase();
+    const configured_contact_email = normalize_email(options.contact_email || 'facundo.martearena@dantebariloche.edu.ar');
+    const contact_email = valid_email(configured_contact_email) ? configured_contact_email : 'facundo.martearena@dantebariloche.edu.ar';
     const whatsapp_number = String(options.whatsapp_number || '').replace(/\D/g, '');
     const public_directory = options.public_directory || path.join(__dirname, '..', 'public');
     const views_directory = options.views_directory || path.join(__dirname, '..', 'views');
@@ -138,6 +178,7 @@ function create_app(options = {}) {
     app.use(helmet({ contentSecurityPolicy: content_security_policy, crossOriginEmbedderPolicy: false }));
     if (!options.disable_request_log) app.use(morgan(production ? 'combined' : 'dev'));
     app.use(express.json({ limit: '1mb' }), express.urlencoded({ extended: true, limit: '1mb' }));
+    app.use(mutation_origin_guard(options.allowed_origins));
     app.use('/api/auth', (request, response, next) => {
         response.setHeader('Cache-Control', 'no-store');
         next();
@@ -194,7 +235,7 @@ function create_app(options = {}) {
     const route = (method, url, ...handlers) => app[method](url, ...handlers.map(handler => handler === login || handler === admin ? handler : async_route(handler)));
     const fail_if = result => { if (result.error) throw result.error; return result.data; };
 
-    route('get', '/api/config', async (request, response) => response.json({ whatsapp_number, admin_email, app_name: 'DREAMS' }));
+    route('get', '/api/config', async (request, response) => response.json({ whatsapp_number, contact_email, app_name: 'DREAMS' }));
     route('get', '/api/products', async (request, response) => {
         const search = String(request.query.search || '').trim().replace(/[^\p{L}\p{N}\s'-]/gu, '').slice(0, 80);
         const sort = String(request.query.sort || 'featured');
@@ -321,4 +362,4 @@ function create_app(options = {}) {
     return app;
 }
 
-module.exports = { create_app, validate, payload, database_health, auth_cookie, session, parse_id, normalize_cart_items, quote_cart, execute_database_query, GENERIC_ERROR };
+module.exports = { create_app, validate, payload, database_health, auth_cookie, session, parse_id, normalize_cart_items, quote_cart, execute_database_query, normalize_origin, allowed_origin_set, mutation_origin_guard, GENERIC_ERROR };
