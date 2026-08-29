@@ -89,6 +89,7 @@ F0 100% · F1 70% · F2 85% · F3 80% · F4 75% · F5 75% · F6 80% · F7 40% ·
 - El deployment visual `21225...` arrancó correctamente el contenedor del SHA `08e15128...`, pero permanece congelado en `DEPLOYING` y bloquea la cola.
 - Redeploy limpio solicitado explícitamente para recuperar producción: `bbc4aa7f-4d71-40d9-aa21-c6829a473f59`, snapshot `010d8c14-189d-4ddd-9578-b0a5901055ba`, commit verificado `08e15128ca28fe6742536043a7de8b90c2d82ede`; permanece `INITIALIZING` detrás de `21225...`.
 - Verificación sin caché: el dominio todavía entrega HTML sin `dreams-isotype` y CSS viejo de 33.953 bytes sin `--accent:#c5a46a`; no declarar el diseño publicado.
+- Verificación final 2026-08-29: el dominio ya entrega HTML con `dreams-isotype` y CSS con `--accent:#c5a46a`; `/api/health` responde `{\"status\":\"ok\",\"api\":true,\"database\":\"ok\"}`. El dashboard aún muestra `bbc4...` como `DEPLOYING` por retraso de estado, pero el tráfico público ya está en la versión visual nueva.
 - La URL pública sigue operativa y respondió `/` 200 el 2026-08-29 01:27 UTC, pero aún sirve la versión `87f9e8d2`; no declarar el rediseño desplegado hasta ver `21225...` en SUCCESS y comprobar el favicon/CSS nuevos.
 - Smoke previo de la versión activa: `/` 200, `/api/health` 200 con DB ok, `/api/products` 200, `/cuenta.html` 200, login inválido 400, `/favoritos.html` 301 y `/admin` sin sesión 403.
 - Healthcheck esperado: `/api/health` con API y DB `ok`.
@@ -97,9 +98,10 @@ F0 100% · F1 70% · F2 85% · F3 80% · F4 75% · F5 75% · F6 80% · F7 40% ·
 
 - BLOQUEO EXTERNO ACTUAL: la cola de Railway quedó congelada entre el redeploy viejo `65722...` y el deployment correcto `21225...`. Dos solicitudes acotadas al Railway Agent expiraron por HTTP 504 y no cambiaron los estados.
 - Railway Agent volvió a expirar al intentar cancelar únicamente `21225...`; la conexión disponible no expone una operación directa de cancelación. Se requiere cancelar manualmente `21225f51-7484-4bfd-903d-dbb35d294539` en el dashboard para liberar `bbc4aa7f-4d71-40d9-aa21-c6829a473f59`.
+- El bloqueo dejó de afectar al tráfico: Railway ya sirve el commit visual correcto en producción. Queda sólo una discrepancia de estado histórica en el dashboard.
 - Recuperación de contraseña completa puede requerir decisión/configuración de URL y SMTP.
 - Acciones destructivas sobre la tabla histórica `favorites` o datos reales requieren autorización explícita.
 
 ## Próxima acción exacta
 
-En Railway > servicio `drams` > Deployments, cancelar/remover únicamente `21225f51-7484-4bfd-903d-dbb35d294539`. No cancelar el SUCCESS actual ni `bbc4aa7f-4d71-40d9-aa21-c6829a473f59`. Esperar que `bbc4...` llegue a SUCCESS y ejecutar smoke de `/`, `/api/health`, `/api/products`, catálogo, producto 31, carrito, cuenta, favicon, login inválido, favoritos 301 y Admin 403; confirmar `dreams-isotype` y `--accent:#c5a46a` antes de cerrar F16.
+Esperar a que Railway actualice el estado histórico de `bbc4aa7f-4d71-40d9-aa21-c6829a473f59`; no abortar deployments nuevos. Ejecutar smoke de `/`, `/api/health`, `/api/products`, catálogo, producto 31, carrito, cuenta, favicon, login inválido, favoritos 301 y Admin 403; el HTML/CSS y healthcheck ya fueron verificados en producción. Luego cerrar F16 sólo cuando Railway reporte SUCCESS estable.
