@@ -12,18 +12,18 @@ Porcentajes al cierre de F0 (2026-08-28). Son estimaciones basadas en evidencia 
 | F5 | Opiniones y retiro controlado de favoritos | 4% | 75% |
 | F6 | Auth, sesiones y usuarios | 8% | 80% |
 | F7 | Admin completo y seguro | 7% | 40% |
-| F8 | Arquitectura, limpieza y documentación técnica | 5% | 70% |
-| F9 | UX funcional y estados | 5% | 65% |
-| F10 | Diseño visual y sistema de componentes | 4% | 70% |
-| F11 | Responsive verificado | 4% | 50% |
-| F12 | Accesibilidad | 5% | 55% |
-| F13 | Performance | 4% | 20% |
+| F8 | Arquitectura, limpieza y documentación técnica | 5% | 72% |
+| F9 | UX funcional y estados | 5% | 75% |
+| F10 | Diseño visual y sistema de componentes | 4% | 90% |
+| F11 | Responsive verificado | 4% | 65% |
+| F12 | Accesibilidad | 5% | 65% |
+| F13 | Performance | 4% | 25% |
 | F14 | SEO y descubribilidad | 3% | 15% |
-| F15 | Testing y CI | 8% | 65% |
-| F16 | Producción, deploy y observabilidad | 4% | 55% |
+| F15 | Testing y CI | 8% | 68% |
+| F16 | Producción, deploy y observabilidad | 4% | 80% |
 | F17 | QA final de punta a punta | 2% | 0% |
 
-**Progreso general ponderado: 69%** (68,7% calculado con los pesos de la tabla).
+**Progreso general ponderado: 73%** (72,6% calculado con los pesos de la tabla).
 
 ## Secuencia y criterios
 
@@ -101,4 +101,4 @@ Happy path, errores, vacío, inválido, reload, concurrencia, auth/roles, mobile
 
 ## Próximo bloque exacto
 
-Cerrar el deploy y smoke de producción; luego ampliar E2E de cuenta/Admin, QA responsive de páginas internas, recuperación de contraseña y moderación de opiniones. Revisar el aviso de protección de contraseñas filtradas en Supabase cuando el plan/configuración lo permita.
+Cerrar CI, merge, deploy y QA visual de producción de la rama `codex/dreams-premium-visual`; luego ampliar E2E de cuenta/Admin, medir Lighthouse y completar la matriz responsive pendiente. Recuperación de contraseña y moderación de opiniones siguen requiriendo definición funcional antes de implementarse.

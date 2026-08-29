@@ -4,6 +4,17 @@ Todos los cambios relevantes de DREAMS se registran aquí. El proyecto aún no u
 
 ## Unreleased
 
+### 2026-08-29 — Refinamiento visual premium DREAMS
+
+- Consolidado el CSS acumulado en un sistema visual único con tokens de color, tipografía, spacing, bordes, transiciones y contenedores.
+- Conservada la identidad negra, marfil y champagne de DREAMS, reduciendo el uso decorativo del dorado y mejorando jerarquía editorial.
+- Refinados header con estado de scroll, hero sin recortes, grillas, cards, catálogo, detalle, carrito, cuenta, Nosotros, opiniones, footer y panel Admin.
+- Añadidos estados de carga tipo skeleton, estados vacíos editoriales y recuperación visible ante fallos del catálogo.
+- Mejorados foco visible, menú móvil, bloqueo de scroll, cierre con Escape, tamaños táctiles y `prefers-reduced-motion`.
+- Integrado el isotipo suministrado como favicon y `apple-touch-icon` en todas las páginas públicas y Admin.
+- Añadidas 2 pruebas de regresión del sistema visual y del favicon; suite local ampliada de 24 a 26 pruebas verdes.
+- No se modificaron APIs, autenticación, lógica de carrito, esquema, datos ni configuración Supabase.
+
 ### 2026-08-28 — Cuenta estable, retiro de favoritos y deploy preparado
 
 - Retirada la función de favoritos de navegación, tarjetas, detalle, cuenta, Admin y API; `/favoritos` y `/favoritos.html` redirigen permanentemente al catálogo.
@@ -19,6 +30,7 @@ Todos los cambios relevantes de DREAMS se registran aquí. El proyecto aún no u
 - Suite ampliada de 20 a 24 pruebas con regresiones de auth, confirmación, cookies, retiro de favoritos y retry transitorio.
 - `check` y 24/24 tests locales verdes antes de publicación.
 - Runtime de producción fijado a Node 24 para eliminar la advertencia de deprecación de Node 20 emitida por `@supabase/supabase-js` en Railway y alinear deploy con CI.
+- PR #1 y PR #2 fusionados con CI #10/#12 verdes. Railway desplegó `87f9e8d2` en `f89bba83-0b45-4ba1-894c-cd7dab060d39` usando Node 24.19.0; healthcheck y smoke de producción pasaron.
 
 ### 2026-08-28 — Auditoría F0
 
