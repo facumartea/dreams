@@ -153,6 +153,7 @@ function create_product_card(product) {
     const stock_label = Number(product.stock) === 0 ? '<span class="stock-badge out">Agotado</span>' : Number(product.stock) <= 2 ? '<span class="stock-badge low">Últimas unidades</span>' : '<span class="stock-badge">Disponible</span>';
     card.innerHTML = `
         <div class="product-image-wrap">
+            ${stock_label}
             <a href="/producto.html?id=${encodeURIComponent(Number(product.id))}">
                 <img src="${escape_html(safe_image_url(product.image_url))}" alt="${escape_html(`${product.brand} ${product.name}`)}" loading="lazy">
             </a>
@@ -184,9 +185,12 @@ async function load_featured_products() {
         return;
     }
 
+    container.innerHTML = Array.from({ length: 4 }, () => '<div class="skeleton-card" aria-hidden="true"></div>').join('');
+
     try {
         const response = await fetch(`${api}/products`);
         const products = await response.json();
+        if (!response.ok || !Array.isArray(products)) throw new Error('No se pudieron cargar los perfumes.');
         container.innerHTML = '';
         products.slice(0, 8).forEach(product => container.appendChild(create_product_card(product)));
     } catch (error) {
@@ -205,6 +209,11 @@ async function load_reviews() {
         const reviews = await response.json();
         if (!response.ok || !Array.isArray(reviews)) throw new Error('No se pudieron cargar las opiniones.');
         container.innerHTML = '';
+
+        if (!reviews.length) {
+            container.innerHTML = '<div class="empty-state"><h2>La comunidad recién empieza.</h2><p>Las primeras opiniones verificadas van a aparecer acá.</p></div>';
+            return;
+        }
 
         reviews.slice(0, 3).forEach(review => {
             const card = document.createElement('article');
@@ -254,6 +263,7 @@ function setup_menu() {
 
     toggle.addEventListener('click', () => {
         const open = nav.classList.toggle('open');
+        document.body.classList.toggle('menu-open', open);
         toggle.setAttribute('aria-expanded', String(open));
         toggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
     });
@@ -261,10 +271,26 @@ function setup_menu() {
     document.addEventListener('keydown', event => {
         if (event.key !== 'Escape' || !nav.classList.contains('open')) return;
         nav.classList.remove('open');
+        document.body.classList.remove('menu-open');
         toggle.setAttribute('aria-expanded', 'false');
         toggle.setAttribute('aria-label', 'Abrir menú');
         toggle.focus();
     });
+
+    nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+        nav.classList.remove('open');
+        document.body.classList.remove('menu-open');
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.setAttribute('aria-label', 'Abrir menú');
+    }));
+}
+
+function setup_header_scroll() {
+    const header = document.querySelector('.site-header');
+    if (!header) return;
+    const update = () => header.classList.toggle('is-scrolled', window.scrollY > 18);
+    update();
+    window.addEventListener('scroll', update, { passive: true });
 }
 
 function mark_current_navigation() {
@@ -277,6 +303,7 @@ function mark_current_navigation() {
 
 update_cart_count();
 setup_menu();
+setup_header_scroll();
 mark_current_navigation();
 apply_public_config();
 load_featured_products();

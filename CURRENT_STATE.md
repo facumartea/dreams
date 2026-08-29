@@ -6,17 +6,24 @@
 
 - PROYECTO: DREAMS — tienda catálogo de perfumería con consultas por WhatsApp.
 - REPO: `https://github.com/facumartea/drams.git`
-- RAMA DE TRABAJO: `codex/runtime-finalization` para el ajuste final; `codex/production-hardening` ya fue fusionada.
-- PR: [#1 — Production audit and critical hardening](https://github.com/facumartea/drams/pull/1), fusionado a `main`.
-- HEAD/SHA DE PRODUCCIÓN VERIFICADO PREVIO AL AJUSTE DE RUNTIME: `8a696191620c90c0353f067aec9fc570e519895e`.
-- FASE ACTUAL: F16 — deploy/observabilidad, continuando en paralelo F6/F9/F10/F15.
-- PROGRESO GENERAL: 69% ponderado (68,7% exacto según `PLAN.md`).
+- RAMA ACTUAL: `codex/dreams-premium-visual`.
+- PRS FUSIONADOS: [#1 — Production audit and critical hardening](https://github.com/facumartea/drams/pull/1) y [#2 — Align Railway runtime with Node 24](https://github.com/facumartea/drams/pull/2). PR visual: crear después del commit documental.
+- HEAD DE CAMBIOS VISUALES PUBLICADO: `581e66d71028646fdc5b6b7673694ede9df4dd8f`; producción todavía permanece en `87f9e8d2ad6492796f0c98512376d018e8012f3c` hasta CI/merge.
+- FASE ACTUAL: F10/F11/F12 — cierre visual, responsive y accesibilidad; luego F16 deploy.
+- PROGRESO GENERAL: 73% ponderado (72,6% exacto según `PLAN.md`).
 
 ## Porcentaje de todas las fases
 
-F0 100% · F1 70% · F2 85% · F3 80% · F4 75% · F5 75% · F6 80% · F7 40% · F8 70% · F9 65% · F10 70% · F11 50% · F12 55% · F13 20% · F14 15% · F15 65% · F16 55% · F17 0%.
+F0 100% · F1 70% · F2 85% · F3 80% · F4 75% · F5 75% · F6 80% · F7 40% · F8 72% · F9 75% · F10 90% · F11 65% · F12 65% · F13 25% · F14 15% · F15 68% · F16 80% · F17 0%.
 
 ## Último trabajo
+
+- Rediseño visual profundo completado sobre la estructura existente: no se cambiaron funcionalidades, rutas, backend, DB ni Supabase.
+- CSS consolidado en un único sistema de diseño negro/marfil/champagne, eliminando las capas contradictorias que causaban recortes y jerarquías inconsistentes.
+- Refinados homepage, navbar, hero, cards, catálogo, producto, carrito, cuenta/login/registro, Nosotros, opiniones, footer y Admin.
+- Añadidos skeletons, estados vacíos/error, header con scroll, menú accesible, foco visible y responsive recompuesto.
+- Isotipo entregado por el usuario integrado como favicon y `apple-touch-icon` en todo el sitio.
+- Commit de código visual `581e66d71028646fdc5b6b7673694ede9df4dd8f` publicado en `codex/dreams-premium-visual`.
 
 - Favoritos retirado de la aplicación activa: navegación, tarjetas, detalle, cuenta, Admin, JS y API. URLs históricas redirigen 301 al catálogo.
 - `public/favoritos.html` y `public/js/favoritos.js` eliminados. La tabla `favorites` queda vacía, con RLS, sólo para preservar historial/esquema sin una acción destructiva.
@@ -28,22 +35,23 @@ F0 100% · F1 70% · F2 85% · F3 80% · F4 75% · F5 75% · F6 80% · F7 40% ·
 - Baseline Supabase aplicada de forma no destructiva y registrada como `20260828191602 production_baseline`.
 - Índices de FKs añadidos/verificados; no se alteraron las 31 filas de catálogo.
 - `NEXT_CHAT_PROMPT.md` creado con continuidad completa para otro chat/dispositivo.
-- PR #1 fusionado; deployment Railway `aff04ded-323a-4d0c-b8fa-58e3cc1c1c86` sobre `8a696191` terminó SUCCESS y pasó smoke. Los logs detectaron Node 20 obsoleto; se fijó Node 24 y falta publicar/verificar el deployment final de ese ajuste.
+- PR #1 y PR #2 fusionados. Railway desplegó `87f9e8d2` con Node 24.19.0; deployment final `f89bba83-0b45-4ba1-894c-cd7dab060d39` terminó SUCCESS, healthcheck pasó en el primer intento y el warning de Node 20 desapareció.
 
 ## Tests
 
 - `corepack pnpm install --frozen-lockfile`: OK.
-- `corepack pnpm run check`: OK, 16 archivos JavaScript.
-- `corepack pnpm test`: 24/24 OK.
+- `corepack pnpm run check`: OK, 17 archivos JavaScript.
+- `corepack pnpm test`: 26/26 OK.
 - Regresiones cubiertas: validación auth, no-cache, alta con confirmación, login/cookies/redirección, retiro de favoritos y retry `PGRST303`.
-- Audit de producción y CI remoto: ejecutar/confirmar después del push final.
+- CI remoto del PR visual: pendiente de crear/confirmar.
 - E2E con usuarios Supabase reales y QA visual de todas las páginas: pendientes; no declararlos ejecutados.
 
 ## CI
 
 - Workflow: `.github/workflows/ci.yml` con instalación frozen, audit, check y tests.
 - Último run remoto confirmado antes de esta tanda: GitHub Actions CI #9, verde.
-- GitHub Actions CI #10: SUCCESS sobre `069b1ab`; merge PR #1: `8a696191`.
+- GitHub Actions CI #10: SUCCESS sobre `069b1ab` (PR #1). CI #12: SUCCESS sobre `855357de` (PR #2). Merge final en `main`: `87f9e8d2`.
+- Rama visual publicada en `581e66d7`; falta commit documental, PR y run de CI correspondiente.
 
 ## Bugs y pendientes
 
@@ -73,7 +81,8 @@ F0 100% · F1 70% · F2 85% · F3 80% · F4 75% · F5 75% · F6 80% · F7 40% ·
 - Entorno: `production` (`39886077-e963-4fec-b3aa-b0e5d38908dd`).
 - Servicio: `drams` (`c5780bbd-4030-4319-a714-1bc0f564e353`).
 - Dominio: `https://drams-production.up.railway.app`.
-- Deployment verificado previo al ajuste Node: `aff04ded-323a-4d0c-b8fa-58e3cc1c1c86`, SUCCESS sobre `8a696191`.
+- Deployment final: `f89bba83-0b45-4ba1-894c-cd7dab060d39`, SUCCESS sobre `87f9e8d2`, Node 24.19.0.
+- El rediseño todavía no está en Railway: se desplegará automáticamente únicamente después de CI verde y merge del PR visual.
 - Smoke real: `/` 200, `/api/health` 200 con DB ok, `/api/products` 200, `/cuenta.html` 200, login inválido 400, `/favoritos.html` 301 y `/admin` sin sesión 403.
 - Healthcheck esperado: `/api/health` con API y DB `ok`.
 
@@ -85,4 +94,4 @@ F0 100% · F1 70% · F2 85% · F3 80% · F4 75% · F5 75% · F6 80% · F7 40% ·
 
 ## Próxima acción exacta
 
-Publicar el ajuste Node 24 en `codex/runtime-finalization`, abrir/fusionar su PR sólo con CI verde, esperar el deployment Railway final, confirmar por logs que usa Node 24 y repetir `/api/health`. Después registrar SHA/CI/deployment definitivos.
+Publicar este checkpoint documental en `codex/dreams-premium-visual`, abrir el PR visual contra `main`, esperar CI verde, fusionar sin force-push, esperar Railway SUCCESS y ejecutar smoke/QA visual real en producción. Después registrar PR, SHA de merge, CI, deployment, páginas verificadas y próxima acción exacta.
