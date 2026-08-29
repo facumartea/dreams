@@ -14,6 +14,8 @@ Todos los cambios relevantes de DREAMS se registran aquí. El proyecto aún no u
 - Integrado el isotipo suministrado como favicon y `apple-touch-icon` en todas las páginas públicas y Admin.
 - Añadidas 2 pruebas de regresión del sistema visual y del favicon; suite local ampliada de 24 a 26 pruebas verdes.
 - No se modificaron APIs, autenticación, lógica de carrito, esquema, datos ni configuración Supabase.
+- PR #3 fusionado con GitHub Actions CI #14 verde; `main` quedó en `08e15128ca28fe6742536043a7de8b90c2d82ede`.
+- Railway construyó la imagen del commit correcto en el deployment `21225f51-7484-4bfd-903d-dbb35d294539`, pero su promoción quedó bloqueada detrás del redeploy viejo `65722afb-b9ba-4a4c-bf26-78e2e6a37197`; producción continúa disponible con la versión anterior y el smoke del nuevo frontend queda pendiente hasta SUCCESS real.
 
 ### 2026-08-28 — Cuenta estable, retiro de favoritos y deploy preparado
 
