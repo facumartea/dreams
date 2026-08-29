@@ -14,6 +14,10 @@ Todos los cambios relevantes de DREAMS se registran aquí. El proyecto aún no u
 - Añadida regresión del formulario accesible; check verde y 31/31 tests verdes.
 - S2 de grants mínimos no fue iniciado porque el entorno bloqueó la descarga de Supabase CLI; no se inventó una migración ni se cambió la DB remota.
 - Progreso ponderado actualizado de 69% a 70%.
+- PR #5 fusionado en `main` como `928cc9990f3ceb8dfdcf208e5db0e89191fb6ade` después de CI #18 verde.
+- Railway deployment `b094ed98-46e3-4178-9542-3de9a9320bf3` terminó SUCCESS sobre el merge exacto.
+- Smoke público verificó formulario y assets nuevos, health/DB, lectura de opiniones y rechazo 401 sin sesión; no se creó ninguna opinión falsa.
+- Validación de producción elevó el progreso exacto de 70,32% a 70,44%; el porcentaje general redondeado permanece en 70%.
 
 ### 2026-08-29 — Protección de origen y separación del contacto público
 

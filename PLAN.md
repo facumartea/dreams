@@ -9,7 +9,7 @@ Porcentajes recalibrados después de la revisión profunda de seguridad y del nu
 | F2 | Backend/API: validación, errores, health, modularidad mínima | 8% | 85% |
 | F3 | Datos/Supabase: grants mínimos, provisioning, migraciones, integridad, RLS | 9% | 72% |
 | F4 | Catálogo, detalle, carrito y consultas | 7% | 75% |
-| F5 | Opiniones persistentes, edición y moderación | 4% | 60% |
+| F5 | Opiniones persistentes, edición y moderación | 4% | 62% |
 | F6 | Auth, sesiones, recuperación y usuarios | 8% | 74% |
 | F7 | Admin completo, reversible y auditable | 7% | 35% |
 | F8 | Arquitectura, limpieza y documentación técnica | 5% | 72% |
@@ -20,10 +20,10 @@ Porcentajes recalibrados después de la revisión profunda de seguridad y del nu
 | F13 | Performance | 4% | 25% |
 | F14 | SEO y descubribilidad | 3% | 15% |
 | F15 | Testing y CI | 8% | 70% |
-| F16 | Producción, dominio, deploy y observabilidad | 4% | 74% |
+| F16 | Producción, dominio, deploy y observabilidad | 4% | 75% |
 | F17 | QA final de punta a punta | 2% | 0% |
 
-**Progreso general ponderado: 70%** (70,32% calculado con los pesos de la tabla). El avance suma el formulario de opiniones, persistencia verificada, estados de sesión/envío y cobertura de regresión.
+**Progreso general ponderado: 70%** (70,44% calculado con los pesos de la tabla). El bloque de opiniones quedó verificado en CI y producción; el redondeo permanece en 70%.
 
 ## Secuencia y criterios
 
@@ -49,7 +49,7 @@ Reconciliar precio/stock con servidor, limitar cantidades, generar consulta de c
 
 ### F5 — Opiniones y retiro controlado de favoritos
 
-Favoritos se retiró por decisión de producto. La tabla vacía permanece protegida hasta una migración destructiva autorizada. La API de opiniones ya persiste datos, pero falta formulario público, relación con producto o regla global, edición, límite específico, moderación Admin y pruebas de persistencia tras reload.
+Favoritos se retiró por decisión de producto. La tabla vacía permanece protegida hasta una migración destructiva autorizada. Opiniones generales ya tiene formulario autenticado, rate limit específico, persistencia tras reload y cobertura API/UI; faltan edición propia, regla de duplicados y moderación Admin. Asociarlas a productos queda fuera del modelo general actual hasta una decisión funcional.
 
 ### F6 — Auth, sesiones y usuarios
 
@@ -101,4 +101,4 @@ Happy path, errores, vacío, inválido, reload, concurrencia, auth/roles, mobile
 
 ## Próximo bloque exacto
 
-Publicar y validar el bloque de opiniones generales persistentes. S2 queda pendiente hasta disponer de Supabase CLI: no inventar el nombre de migración ni aplicar SQL remoto. Después del CI/QA de opiniones, continuar con la colección `Perfumes de mujer` y la nueva imagen en una rama visual separada.
+Crear desde `main` una rama visual aislada para la colección `Perfumes de mujer` y la nueva imagen editorial de alta resolución. Mantener S2 pendiente hasta disponer de Supabase CLI: no inventar el nombre de migración ni aplicar SQL remoto.

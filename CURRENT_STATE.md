@@ -7,14 +7,17 @@
 - PROYECTO: DREAMS — tienda catálogo de perfumería con consultas por WhatsApp.
 - REPO: `https://github.com/facumartea/drams.git`
 - RAMA ACTUAL: `codex/persistent-reviews-ui`.
-- PRS FUSIONADOS: [#1 — Production audit and critical hardening](https://github.com/facumartea/drams/pull/1), [#2 — Align Railway runtime with Node 24](https://github.com/facumartea/drams/pull/2), [#3 — Refine DREAMS premium visual experience](https://github.com/facumartea/drams/pull/3) y [#4 — Harden mutation origins and separate public contact](https://github.com/facumartea/drams/pull/4).
-- HEAD EN `main`: `203e17b2e535df8df05e799f7b6ba0d91083434e` (merge de PR #4). Rama de continuidad: `codex/security-origin-contact`.
-- FASE ACTUAL: F5 — opiniones generales persistentes y UX de publicación.
-- PROGRESO GENERAL: 70% ponderado (70,32% exacto según `PLAN.md`).
+- PRS FUSIONADOS: [#1 — Production audit and critical hardening](https://github.com/facumartea/drams/pull/1), [#2 — Align Railway runtime with Node 24](https://github.com/facumartea/drams/pull/2), [#3 — Refine DREAMS premium visual experience](https://github.com/facumartea/drams/pull/3), [#4 — Harden mutation origins and separate public contact](https://github.com/facumartea/drams/pull/4) y [#5 — Add persistent customer review publishing](https://github.com/facumartea/drams/pull/5).
+- HEAD EN `main`: `928cc9990f3ceb8dfdcf208e5db0e89191fb6ade` (merge de PR #5). Rama de continuidad: `codex/persistent-reviews-ui`.
+- ÚLTIMO PUSH: `1893e4f1b755ba87253dc1c6ff395f8817060135` en `codex/persistent-reviews-ui`; PR #5 fusionado.
+- ÚLTIMO CI VERIFICADO: GitHub Actions CI #18, SUCCESS sobre `1893e4f1b755ba87253dc1c6ff395f8817060135`.
+- ÚLTIMO DEPLOY: Railway `b094ed98-46e3-4178-9542-3de9a9320bf3`, SUCCESS sobre `928cc9990f3ceb8dfdcf208e5db0e89191fb6ade`.
+- FASE ACTUAL: F10 — colección `Perfumes de mujer` e imagen editorial de alta resolución.
+- PROGRESO GENERAL: 70% ponderado (70,44% exacto según `PLAN.md`).
 
 ## Porcentaje de todas las fases
 
-F0 100% · F1 70% · F2 85% · F3 72% · F4 75% · F5 60% · F6 74% · F7 35% · F8 72% · F9 78% · F10 84% · F11 65% · F12 65% · F13 25% · F14 15% · F15 70% · F16 74% · F17 0%.
+F0 100% · F1 70% · F2 85% · F3 72% · F4 75% · F5 62% · F6 74% · F7 35% · F8 72% · F9 78% · F10 84% · F11 65% · F12 65% · F13 25% · F14 15% · F15 70% · F16 75% · F17 0%.
 
 ## Último trabajo
 
@@ -24,6 +27,9 @@ F0 100% · F1 70% · F2 85% · F3 72% · F4 75% · F5 60% · F6 74% · F7 35% ·
 - Añadido rate limit exclusivo de 5 publicaciones por hora para opiniones sin limitar sus lecturas.
 - El API responde 201 al crear. Agregada integración que publica con sesión y confirma que la opinión persiste en la recarga de la lista.
 - Agregada regresión estática del formulario accesible y su recarga posterior.
+- Commit `1893e4f1b755ba87253dc1c6ff395f8817060135` publicado; PR #5 validado por CI #18 y fusionado en `main` como `928cc9990f3ceb8dfdcf208e5db0e89191fb6ade`.
+- Railway desplegó `b094ed98-46e3-4178-9542-3de9a9320bf3` con estado SUCCESS y el SHA correcto.
+- Smoke de producción: homepage, script y CSS nuevos responden 200; formulario presente; `/api/health` 200 con DB ok; `/api/reviews` 200 y array; `/api/auth/me` 200 sin sesión; POST sin autenticar 401 y sin crear datos.
 
 - Creada desde `main` la rama `codex/security-origin-contact` para implementar el primer bloque S1.
 - Añadido `mutation_origin_guard`: todas las mutaciones `POST`, `PUT`, `PATCH` y `DELETE` validan `Origin`/`Referer`; también se rechaza `Sec-Fetch-Site: cross-site` sin origen.
@@ -72,6 +78,7 @@ F0 100% · F1 70% · F2 85% · F3 72% · F4 75% · F5 60% · F6 74% · F7 35% ·
 - `corepack pnpm test`: 31/31 OK.
 - Regresiones cubiertas: validación auth, no-cache, alta con confirmación, login/cookies/redirección, retiro de favoritos y retry `PGRST303`.
 - CI #16 del PR #4: SUCCESS sobre `64ff9c76a79eb568f48e76dae073f2e1eeb7efb0`.
+- CI #18 del PR #5: SUCCESS sobre `1893e4f1b755ba87253dc1c6ff395f8817060135`.
 - E2E con usuarios Supabase reales y QA visual de todas las páginas: pendientes; no declararlos ejecutados.
 
 ## CI
@@ -79,6 +86,7 @@ F0 100% · F1 70% · F2 85% · F3 72% · F4 75% · F5 60% · F6 74% · F7 35% ·
 - Workflow: `.github/workflows/ci.yml` con instalación frozen, audit, check y tests.
 - GitHub Actions CI #10: SUCCESS sobre `069b1ab` (PR #1). CI #12: SUCCESS sobre `855357de` (PR #2). Merge final en `main`: `87f9e8d2`.
 - GitHub Actions CI #14: SUCCESS sobre PR #3. PR #3 fusionado; `main` quedó en `08e15128ca28fe6742536043a7de8b90c2d82ede`.
+- GitHub Actions CI #16: SUCCESS sobre PR #4. CI #18: SUCCESS sobre PR #5; `main` quedó en `928cc9990f3ceb8dfdcf208e5db0e89191fb6ade`.
 
 ## Bugs y pendientes
 
@@ -113,27 +121,21 @@ F0 100% · F1 70% · F2 85% · F3 72% · F4 75% · F5 60% · F6 74% · F7 35% ·
 - Entorno: `production` (`39886077-e963-4fec-b3aa-b0e5d38908dd`).
 - Servicio: `drams` (`c5780bbd-4030-4319-a714-1bc0f564e353`).
 - Dominio: `https://drams-production.up.railway.app`.
-- Último deployment confirmado: `5269e263-0f88-4ebc-be3a-0992445c8047`, SUCCESS sobre `203e17b2e535df8df05e799f7b6ba0d91083434e`.
+- Último deployment confirmado: `b094ed98-46e3-4178-9542-3de9a9320bf3`, SUCCESS sobre `928cc9990f3ceb8dfdcf208e5db0e89191fb6ade`.
 - Variables nuevas verificadas por comportamiento: `CONTACT_EMAIL` y `APP_ORIGINS`.
-- Deployment correcto del rediseño: `21225f51-7484-4bfd-903d-dbb35d294539`, commit exacto `08e15128ca28fe6742536043a7de8b90c2d82ede`, snapshot `f44a20bc-cb2f-4f5d-aa21-75b2f9d267dc`. El build terminó y publicó la imagen, pero Railway mantiene el estado `BUILDING` sin cambio desde `2026-08-29T01:21:46Z`.
-- Redeploy anterior accidental del commit viejo: `65722afb-b9ba-4a4c-bf26-78e2e6a37197`, atascado en `DEPLOYING` desde `2026-08-29T01:13:31Z`. No volver a ejecutar `redeploy`; hay que cancelar/remover sólo este deployment viejo o esperar a que Railway libere la cola.
-- El deployment viejo `65722...` finalmente llegó a SUCCESS a las `2026-08-29T02:01:11Z` y quedó sirviendo producción.
-- El deployment visual `21225...` arrancó correctamente el contenedor del SHA `08e15128...`, pero permanece congelado en `DEPLOYING` y bloquea la cola.
-- Redeploy limpio solicitado explícitamente para recuperar producción: `bbc4aa7f-4d71-40d9-aa21-c6829a473f59`, snapshot `010d8c14-189d-4ddd-9578-b0a5901055ba`, commit verificado `08e15128ca28fe6742536043a7de8b90c2d82ede`; permanece `INITIALIZING` detrás de `21225...`.
-- Verificación sin caché: el dominio todavía entrega HTML sin `dreams-isotype` y CSS viejo de 33.953 bytes sin `--accent:#c5a46a`; no declarar el diseño publicado.
-- Verificación final 2026-08-29: el dominio ya entrega HTML con `dreams-isotype` y CSS con `--accent:#c5a46a`; `/api/health` responde `{\"status\":\"ok\",\"api\":true,\"database\":\"ok\"}`. El dashboard aún muestra `bbc4...` como `DEPLOYING` por retraso de estado, pero el tráfico público ya está en la versión visual nueva.
-- La URL pública sigue operativa y respondió `/` 200 el 2026-08-29 01:27 UTC, pero aún sirve la versión `87f9e8d2`; no declarar el rediseño desplegado hasta ver `21225...` en SUCCESS y comprobar el favicon/CSS nuevos.
+- El incidente histórico de cola congelada quedó resuelto; los deployments antiguos figuran removidos y no bloquean producción.
+- Smoke 2026-08-29 sobre PR #5: `/` 200 con `#review-form`; assets de opiniones 200; `/api/health` 200 con DB ok; `/api/reviews` 200; publicación anónima 401, sin datos falsos.
 - Smoke previo de la versión activa: `/` 200, `/api/health` 200 con DB ok, `/api/products` 200, `/cuenta.html` 200, login inválido 400, `/favoritos.html` 301 y `/admin` sin sesión 403.
 - Healthcheck esperado: `/api/health` con API y DB `ok`.
 
 ## Bloqueos
 
-- No hay bloqueo activo de Railway: el deployment `5269e263-0f88-4ebc-be3a-0992445c8047` figura `SUCCESS`.
-- Para cerrar opiniones se necesita una decisión funcional: opinión general o asociada a cada perfume.
+- No hay bloqueo activo de Railway: el deployment `b094ed98-46e3-4178-9542-3de9a9320bf3` figura `SUCCESS`.
+- Opiniones queda como modelo general por ahora; asociarlas a cada perfume es una decisión funcional futura, no un bloqueo para la versión actual.
 - Recuperación de contraseña completa puede requerir decisión/configuración de URL y SMTP.
 - Acciones destructivas sobre la tabla histórica `favorites` o datos reales requieren autorización explícita.
 - S2 requiere Supabase CLI; el entorno actual bloqueó su descarga. No usar `apply_migration` remoto como atajo.
 
 ## Próxima acción exacta
 
-Publicar `codex/persistent-reviews-ui`, abrir PR, verificar CI y revisar el formulario en desktop/móvil. Si queda verde, fusionar, esperar Railway SUCCESS y ejecutar smoke público sin crear una opinión falsa en producción.
+Crear desde `main` una rama visual aislada para `Perfumes de mujer`, implementar la cabecera editorial femenina sin alterar la identidad global y reemplazar el asset pixelado por un master de alta resolución con derivados responsivos. Después ejecutar check, tests y QA visual en los breakpoints requeridos.
