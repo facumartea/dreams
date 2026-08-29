@@ -9,6 +9,7 @@ Todos los cambios relevantes de DREAMS se registran aquí. El proyecto aún no u
 - Formalizado el prompt maestro permanente en `PROJECT_MASTER_RULES.md` y ampliado `AGENTS.md` con recuperación de contexto, fuentes de verdad, progreso verificable, formato de reporte, checkpoints Git, CI y deploy.
 - Confirmado que el CSS premium completo ya está publicado en `main` y coincide exactamente con la rama de continuidad; no se realizaron cambios visuales adicionales ni se tocó Supabase.
 - El progreso general permanece en 73% porque esta tanda documenta el proceso y no cierra alcance funcional nuevo.
+- Confirmado que producción sigue sirviendo el CSS anterior: no es caché del cliente. Railway dejó `21225...` congelado en `DEPLOYING`; se creó un único redeploy limpio `bbc4...` del SHA visual correcto, que queda en cola hasta cancelar manualmente el deployment bloqueado.
 
 ### 2026-08-29 — Refinamiento visual premium DREAMS
 
