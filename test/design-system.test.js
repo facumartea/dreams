@@ -24,3 +24,14 @@ test('el sistema visual conserva los tokens y la reducción de movimiento', () =
     assert.match(css, /@media\(prefers-reduced-motion:reduce\)/);
     assert.match(css, /:focus-visible/);
 });
+
+test('la portada incluye un formulario accesible de opiniones persistentes', () => {
+    const html = fs.readFileSync(path.join(root, 'public/index.html'), 'utf8');
+    const script = fs.readFileSync(path.join(root, 'public/js/app.js'), 'utf8');
+    assert.match(html, /<form id="review-form"[^>]*hidden>/);
+    assert.match(html, /<label for="review-rating">/);
+    assert.match(html, /<label for="review-comment">/);
+    assert.match(html, /id="review-status" role="status" aria-live="polite"/);
+    assert.match(script, /method: 'POST'/);
+    assert.match(script, /await load_reviews\(\)/);
+});

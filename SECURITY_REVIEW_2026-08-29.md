@@ -175,6 +175,8 @@ No se debe habilitar una policy pública amplia de `INSERT`: las escrituras debe
 - 2026-08-29: separado `CONTACT_EMAIL` de `ADMIN_EMAIL`; `/api/config` dejó de exponer el identificador Admin y los footers usan el contacto solicitado.
 - 2026-08-29: añadidas regresiones de origen, allowlist y configuración pública; suite local 29/29 verde.
 - Pendiente dentro de S1: recuperación de contraseña, redirects de Auth y MFA/reautenticación Admin.
+- 2026-08-29: añadido formulario de opiniones generales, persistencia confirmada por integración y límite de 5 altas por hora. Edición, duplicados y moderación siguen pendientes.
+- S2 bloqueado temporalmente: Supabase CLI no está disponible y el entorno rechazó su descarga. No se creó una migración manual ni se aplicó SQL remoto.
 
 ## Decisión funcional pendiente
 
