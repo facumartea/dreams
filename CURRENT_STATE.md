@@ -85,6 +85,10 @@ F0 100% · F1 70% · F2 85% · F3 80% · F4 75% · F5 75% · F6 80% · F7 40% ·
 - Último deployment activo confirmado: `f89bba83-0b45-4ba1-894c-cd7dab060d39`, SUCCESS sobre `87f9e8d2`, Node 24.19.0.
 - Deployment correcto del rediseño: `21225f51-7484-4bfd-903d-dbb35d294539`, commit exacto `08e15128ca28fe6742536043a7de8b90c2d82ede`, snapshot `f44a20bc-cb2f-4f5d-aa21-75b2f9d267dc`. El build terminó y publicó la imagen, pero Railway mantiene el estado `BUILDING` sin cambio desde `2026-08-29T01:21:46Z`.
 - Redeploy anterior accidental del commit viejo: `65722afb-b9ba-4a4c-bf26-78e2e6a37197`, atascado en `DEPLOYING` desde `2026-08-29T01:13:31Z`. No volver a ejecutar `redeploy`; hay que cancelar/remover sólo este deployment viejo o esperar a que Railway libere la cola.
+- El deployment viejo `65722...` finalmente llegó a SUCCESS a las `2026-08-29T02:01:11Z` y quedó sirviendo producción.
+- El deployment visual `21225...` arrancó correctamente el contenedor del SHA `08e15128...`, pero permanece congelado en `DEPLOYING` y bloquea la cola.
+- Redeploy limpio solicitado explícitamente para recuperar producción: `bbc4aa7f-4d71-40d9-aa21-c6829a473f59`, snapshot `010d8c14-189d-4ddd-9578-b0a5901055ba`, commit verificado `08e15128ca28fe6742536043a7de8b90c2d82ede`; permanece `INITIALIZING` detrás de `21225...`.
+- Verificación sin caché: el dominio todavía entrega HTML sin `dreams-isotype` y CSS viejo de 33.953 bytes sin `--accent:#c5a46a`; no declarar el diseño publicado.
 - La URL pública sigue operativa y respondió `/` 200 el 2026-08-29 01:27 UTC, pero aún sirve la versión `87f9e8d2`; no declarar el rediseño desplegado hasta ver `21225...` en SUCCESS y comprobar el favicon/CSS nuevos.
 - Smoke previo de la versión activa: `/` 200, `/api/health` 200 con DB ok, `/api/products` 200, `/cuenta.html` 200, login inválido 400, `/favoritos.html` 301 y `/admin` sin sesión 403.
 - Healthcheck esperado: `/api/health` con API y DB `ok`.
@@ -92,9 +96,10 @@ F0 100% · F1 70% · F2 85% · F3 80% · F4 75% · F5 75% · F6 80% · F7 40% ·
 ## Bloqueos
 
 - BLOQUEO EXTERNO ACTUAL: la cola de Railway quedó congelada entre el redeploy viejo `65722...` y el deployment correcto `21225...`. Dos solicitudes acotadas al Railway Agent expiraron por HTTP 504 y no cambiaron los estados.
+- Railway Agent volvió a expirar al intentar cancelar únicamente `21225...`; la conexión disponible no expone una operación directa de cancelación. Se requiere cancelar manualmente `21225f51-7484-4bfd-903d-dbb35d294539` en el dashboard para liberar `bbc4aa7f-4d71-40d9-aa21-c6829a473f59`.
 - Recuperación de contraseña completa puede requerir decisión/configuración de URL y SMTP.
 - Acciones destructivas sobre la tabla histórica `favorites` o datos reales requieren autorización explícita.
 
 ## Próxima acción exacta
 
-Consultar Railway para `21225f51-7484-4bfd-903d-dbb35d294539`. Si sigue bloqueado, cancelar/remover únicamente `65722afb-b9ba-4a4c-bf26-78e2e6a37197` desde Railway sin tocar variables ni Supabase; no crear otro redeploy. Cuando `21225...` quede SUCCESS, ejecutar smoke de `/`, `/api/health`, `/api/products`, catálogo, producto 31, carrito, cuenta, favicon, login inválido, favoritos 301 y Admin 403; confirmar que HTML contiene `dreams-isotype` y CSS `--accent:#c5a46a`, y recién entonces cerrar F16.
+En Railway > servicio `drams` > Deployments, cancelar/remover únicamente `21225f51-7484-4bfd-903d-dbb35d294539`. No cancelar el SUCCESS actual ni `bbc4aa7f-4d71-40d9-aa21-c6829a473f59`. Esperar que `bbc4...` llegue a SUCCESS y ejecutar smoke de `/`, `/api/health`, `/api/products`, catálogo, producto 31, carrito, cuenta, favicon, login inválido, favoritos 301 y Admin 403; confirmar `dreams-isotype` y `--accent:#c5a46a` antes de cerrar F16.
