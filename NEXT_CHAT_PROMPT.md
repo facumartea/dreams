@@ -7,8 +7,8 @@ Tomá DREAMS como un proyecto real de producción. Antes de modificar nada, leé
 Contexto obligatorio:
 
 - Repositorio: `https://github.com/facumartea/drams`
-- PRs ya fusionados: `#1 — Production audit and critical hardening` y `#2 — Align Railway runtime with Node 24`
-- Rama de la tanda visual: `codex/dreams-premium-visual`; confirmar en `CURRENT_STATE.md` si su PR ya fue fusionado y cuál es el SHA productivo exacto
+- PRs ya fusionados: `#1 — Production audit and critical hardening`, `#2 — Align Railway runtime with Node 24` y `#3 — Refine DREAMS premium visual experience`
+- `main`: `08e15128ca28fe6742536043a7de8b90c2d82ede`; rama de continuidad documental: `codex/dreams-premium-visual`
 - Producción Railway correcta: proyecto `empowering-rebirth`, servicio `drams`, dominio `https://drams-production.up.railway.app`
 - Supabase correcto: proyecto `dreams-project`, ref `nwsmbemwtexmrtpkgxrz`
 - La identidad visual debe seguir siendo editorial de lujo, negra y dorada. Mejorarla con criterio, sin rediseñarla ni reemplazarla por una estética SaaS genérica.
@@ -30,9 +30,9 @@ Estado funcional esperado al tomar el proyecto:
 
 Próximo bloque recomendado:
 
-1. Confirmar rama visual, PR, CI, `main` y deployment Railway contra los identificadores exactos de `CURRENT_STATE.md`.
-2. Si el PR visual todavía no fue fusionado, esperar CI verde y fusionarlo; si ya fue fusionado, no repetir el deploy.
-3. Ejecutar smoke real de portada, favicon, catálogo, una ficha de producto, carrito, cuenta/login, `/api/health`, login inválido, redirección histórica de favoritos y acceso Admin protegido.
+1. Confirmar primero el bloqueo Railway: `21225f51-7484-4bfd-903d-dbb35d294539` es el deployment correcto del SHA `08e15128...`; `65722afb-b9ba-4a4c-bf26-78e2e6a37197` es un redeploy viejo atascado. No crear otro redeploy.
+2. Si siguen congelados, cancelar/remover sólo `65722...` desde Railway sin tocar variables, fuente ni Supabase; esperar que `21225...` llegue a SUCCESS.
+3. Ejecutar smoke real de portada, favicon, catálogo, producto 31, carrito, cuenta/login, `/api/health`, login inválido, redirección histórica de favoritos y acceso Admin protegido. Confirmar `dreams-isotype` en HTML y `--accent:#c5a46a` en CSS.
 4. Completar QA visual real en 390x844, 430x932, 768x1024, 1024x768, 1440x900 y 1920x1080. Revisar especialmente overflow, título del hero, menú móvil, cards, filtros, botones táctiles y formularios.
 5. Añadir E2E de cuenta/sesión/Admin con un entorno Supabase controlado; probar refresh, logout, rol customer y rol admin.
 6. Medir Lighthouse/performance y cerrar SEO, accesibilidad y QA final sin declarar 100% antes de ejecutar las matrices correspondientes.
