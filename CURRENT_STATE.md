@@ -7,9 +7,9 @@
 - PROYECTO: DREAMS — tienda catálogo de perfumería con consultas por WhatsApp.
 - REPO: `https://github.com/facumartea/drams.git`
 - RAMA ACTUAL: `codex/dreams-premium-visual`.
-- PRS FUSIONADOS: [#1 — Production audit and critical hardening](https://github.com/facumartea/drams/pull/1) y [#2 — Align Railway runtime with Node 24](https://github.com/facumartea/drams/pull/2). PR visual: crear después del commit documental.
-- HEAD DE CAMBIOS VISUALES PUBLICADO: `581e66d71028646fdc5b6b7673694ede9df4dd8f`; producción todavía permanece en `87f9e8d2ad6492796f0c98512376d018e8012f3c` hasta CI/merge.
-- FASE ACTUAL: F10/F11/F12 — cierre visual, responsive y accesibilidad; luego F16 deploy.
+- PRS FUSIONADOS: [#1 — Production audit and critical hardening](https://github.com/facumartea/drams/pull/1), [#2 — Align Railway runtime with Node 24](https://github.com/facumartea/drams/pull/2) y [#3 — Refine DREAMS premium visual experience](https://github.com/facumartea/drams/pull/3).
+- HEAD EN `main`: `08e15128ca28fe6742536043a7de8b90c2d82ede` (merge de PR #3). Rama de continuidad documental: `codex/dreams-premium-visual`.
+- FASE ACTUAL: F16 — promoción Railway y smoke del rediseño; F10 visual está implementada al 90%.
 - PROGRESO GENERAL: 73% ponderado (72,6% exacto según `PLAN.md`).
 
 ## Porcentaje de todas las fases
@@ -23,7 +23,7 @@ F0 100% · F1 70% · F2 85% · F3 80% · F4 75% · F5 75% · F6 80% · F7 40% ·
 - Refinados homepage, navbar, hero, cards, catálogo, producto, carrito, cuenta/login/registro, Nosotros, opiniones, footer y Admin.
 - Añadidos skeletons, estados vacíos/error, header con scroll, menú accesible, foco visible y responsive recompuesto.
 - Isotipo entregado por el usuario integrado como favicon y `apple-touch-icon` en todo el sitio.
-- Commit de código visual `581e66d71028646fdc5b6b7673694ede9df4dd8f` publicado en `codex/dreams-premium-visual`.
+- Commits visuales `581e66d71028646fdc5b6b7673694ede9df4dd8f` y documental `a2bf701b2bd23ee0e484d4cea55b37d903105c58` publicados; PR #3 fusionado en `main` como `08e15128ca28fe6742536043a7de8b90c2d82ede`.
 
 - Favoritos retirado de la aplicación activa: navegación, tarjetas, detalle, cuenta, Admin, JS y API. URLs históricas redirigen 301 al catálogo.
 - `public/favoritos.html` y `public/js/favoritos.js` eliminados. La tabla `favorites` queda vacía, con RLS, sólo para preservar historial/esquema sin una acción destructiva.
@@ -43,15 +43,14 @@ F0 100% · F1 70% · F2 85% · F3 80% · F4 75% · F5 75% · F6 80% · F7 40% ·
 - `corepack pnpm run check`: OK, 17 archivos JavaScript.
 - `corepack pnpm test`: 26/26 OK.
 - Regresiones cubiertas: validación auth, no-cache, alta con confirmación, login/cookies/redirección, retiro de favoritos y retry `PGRST303`.
-- CI remoto del PR visual: pendiente de crear/confirmar.
+- CI #14 del PR #3: SUCCESS. El deployment del merge todavía no llegó a SUCCESS, por lo que el smoke del nuevo frontend permanece pendiente.
 - E2E con usuarios Supabase reales y QA visual de todas las páginas: pendientes; no declararlos ejecutados.
 
 ## CI
 
 - Workflow: `.github/workflows/ci.yml` con instalación frozen, audit, check y tests.
-- Último run remoto confirmado antes de esta tanda: GitHub Actions CI #9, verde.
 - GitHub Actions CI #10: SUCCESS sobre `069b1ab` (PR #1). CI #12: SUCCESS sobre `855357de` (PR #2). Merge final en `main`: `87f9e8d2`.
-- Rama visual publicada en `581e66d7`; falta commit documental, PR y run de CI correspondiente.
+- GitHub Actions CI #14: SUCCESS sobre PR #3. PR #3 fusionado; `main` quedó en `08e15128ca28fe6742536043a7de8b90c2d82ede`.
 
 ## Bugs y pendientes
 
@@ -81,17 +80,19 @@ F0 100% · F1 70% · F2 85% · F3 80% · F4 75% · F5 75% · F6 80% · F7 40% ·
 - Entorno: `production` (`39886077-e963-4fec-b3aa-b0e5d38908dd`).
 - Servicio: `drams` (`c5780bbd-4030-4319-a714-1bc0f564e353`).
 - Dominio: `https://drams-production.up.railway.app`.
-- Deployment final: `f89bba83-0b45-4ba1-894c-cd7dab060d39`, SUCCESS sobre `87f9e8d2`, Node 24.19.0.
-- El rediseño todavía no está en Railway: se desplegará automáticamente únicamente después de CI verde y merge del PR visual.
-- Smoke real: `/` 200, `/api/health` 200 con DB ok, `/api/products` 200, `/cuenta.html` 200, login inválido 400, `/favoritos.html` 301 y `/admin` sin sesión 403.
+- Último deployment activo confirmado: `f89bba83-0b45-4ba1-894c-cd7dab060d39`, SUCCESS sobre `87f9e8d2`, Node 24.19.0.
+- Deployment correcto del rediseño: `21225f51-7484-4bfd-903d-dbb35d294539`, commit exacto `08e15128ca28fe6742536043a7de8b90c2d82ede`, snapshot `f44a20bc-cb2f-4f5d-aa21-75b2f9d267dc`. El build terminó y publicó la imagen, pero Railway mantiene el estado `BUILDING` sin cambio desde `2026-08-29T01:21:46Z`.
+- Redeploy anterior accidental del commit viejo: `65722afb-b9ba-4a4c-bf26-78e2e6a37197`, atascado en `DEPLOYING` desde `2026-08-29T01:13:31Z`. No volver a ejecutar `redeploy`; hay que cancelar/remover sólo este deployment viejo o esperar a que Railway libere la cola.
+- La URL pública sigue operativa y respondió `/` 200 el 2026-08-29 01:27 UTC, pero aún sirve la versión `87f9e8d2`; no declarar el rediseño desplegado hasta ver `21225...` en SUCCESS y comprobar el favicon/CSS nuevos.
+- Smoke previo de la versión activa: `/` 200, `/api/health` 200 con DB ok, `/api/products` 200, `/cuenta.html` 200, login inválido 400, `/favoritos.html` 301 y `/admin` sin sesión 403.
 - Healthcheck esperado: `/api/health` con API y DB `ok`.
 
 ## Bloqueos
 
-- No hay bloqueo para GitHub/Railway/Supabase mediante las conexiones actuales.
+- BLOQUEO EXTERNO ACTUAL: la cola de Railway quedó congelada entre el redeploy viejo `65722...` y el deployment correcto `21225...`. Dos solicitudes acotadas al Railway Agent expiraron por HTTP 504 y no cambiaron los estados.
 - Recuperación de contraseña completa puede requerir decisión/configuración de URL y SMTP.
 - Acciones destructivas sobre la tabla histórica `favorites` o datos reales requieren autorización explícita.
 
 ## Próxima acción exacta
 
-Publicar este checkpoint documental en `codex/dreams-premium-visual`, abrir el PR visual contra `main`, esperar CI verde, fusionar sin force-push, esperar Railway SUCCESS y ejecutar smoke/QA visual real en producción. Después registrar PR, SHA de merge, CI, deployment, páginas verificadas y próxima acción exacta.
+Consultar Railway para `21225f51-7484-4bfd-903d-dbb35d294539`. Si sigue bloqueado, cancelar/remover únicamente `65722afb-b9ba-4a4c-bf26-78e2e6a37197` desde Railway sin tocar variables ni Supabase; no crear otro redeploy. Cuando `21225...` quede SUCCESS, ejecutar smoke de `/`, `/api/health`, `/api/products`, catálogo, producto 31, carrito, cuenta, favicon, login inválido, favoritos 301 y Admin 403; confirmar que HTML contiene `dreams-isotype` y CSS `--accent:#c5a46a`, y recién entonces cerrar F16.
