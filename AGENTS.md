@@ -19,7 +19,7 @@ El navegador sólo habla con `/api`. `SUPABASE_SECRET_KEY` es exclusivamente del
 
 ## Reglas obligatorias
 
-1. Leer `CURRENT_STATE.md`, `PLAN.md`, `AUDIT.md` y este archivo antes de modificar el proyecto.
+1. Al iniciar cualquier sesión o recuperar contexto, leer completos y en este orden: `AGENTS.md`, `CURRENT_STATE.md`, `PLAN.md` y `CHANGELOG.md`; consultar `AUDIT.md` cuando el alcance requiera hallazgos de auditoría.
 2. Analizar antes de cambiar. Corregir primero seguridad, integridad de datos y funciones rotas; diseño visual después.
 3. No editar `main` directamente, no hacer force-push y no borrar trabajo ajeno.
 4. No cambiar el esquema remoto sin una migración versionada, revisión de RLS y verificación posterior.
@@ -28,6 +28,28 @@ El navegador sólo habla con `/api`. `SUPABASE_SECRET_KEY` es exclusivamente del
 7. No borrar tests para obtener verde. Toda regresión corregida necesita una prueba cuando sea razonable.
 8. No afirmar que CI, deploy, responsive, accesibilidad o QA están verificados si no se ejecutaron.
 9. Actualizar `CURRENT_STATE.md` y `CHANGELOG.md` en cada tanda significativa.
+10. Aplicar permanentemente `PROJECT_MASTER_RULES.md`; estas reglas no son una tarea de una sola vez.
+
+## Fuente de verdad y recuperación
+
+- El estado real del repositorio y `CURRENT_STATE.md` prevalecen sobre el historial del chat.
+- Nunca reiniciar la auditoría ni improvisar cuando falte contexto: recuperar rama, HEAD, cambios, fase, tests, CI, deploy, riesgos y próxima acción desde `CURRENT_STATE.md`, y contrastarlos con Git/GitHub.
+- Mantener siempre la frase `SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.` dentro de `CURRENT_STATE.md`.
+- `PLAN.md` define fases, pesos y progreso; sólo actualizarlo ante avance verificado, cambios de alcance, riesgos o dependencias.
+- `CHANGELOG.md` registra únicamente trabajo realizado. `AGENTS.md` cambia sólo cuando aparece una regla duradera.
+
+## Flujo Git y checkpoints
+
+- Antes de cambios importantes verificar repositorio, rama, HEAD, remoto, árbol de trabajo y commits recientes.
+- Flujo preferido: rama → commit lógico → push → CI → PR → revisión → `main`. Nunca force-push ni reescribir `main`.
+- El usuario autoriza checkpoints seguros en GitHub. Si pide explícitamente subir, ejecutar tests razonables, commit, push y verificar el SHA remoto; detenerse sólo ante tests críticos fallando, secretos, cambios ajenos, migraciones destructivas o riesgo real.
+- No confundir push con deploy. Informar ambos por separado y ejecutar smoke test después de deploys relevantes.
+
+## Reporte obligatorio
+
+Después de cada tarea informar, con datos comprobados: resultado, progreso general anterior/actual/variación, fase actual, todas las fases, implementado, bugs, pendientes, tests realmente ejecutados, CI, DB, responsive, accesibilidad, performance, diseño, GitHub, deploy, `CURRENT_STATE`, bloqueos y próxima acción exacta. Indicar siempre `PUSH REALIZADO: SÍ/NO` y `DEPLOY REALIZADO: SÍ/NO`. Si algo no aplica o no fue verificado, decirlo explícitamente.
+
+No aumentar porcentajes por tiempo transcurrido. Avance significa trabajo implementado, probado, documentado y validado. Distinguir siempre entre implementado, probado localmente, verificado en CI y verificado en producción.
 
 ## Convenciones
 
