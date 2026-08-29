@@ -14,16 +14,16 @@ Porcentajes recalibrados después de la revisión profunda de seguridad y del nu
 | F7 | Admin completo, reversible y auditable | 7% | 35% |
 | F8 | Arquitectura, limpieza y documentación técnica | 5% | 72% |
 | F9 | UX funcional y estados | 5% | 75% |
-| F10 | Diseño visual, colección femenina, imagen y sistema de componentes | 4% | 83% |
+| F10 | Diseño visual, colección femenina, imagen y sistema de componentes | 4% | 84% |
 | F11 | Responsive verificado | 4% | 65% |
 | F12 | Accesibilidad | 5% | 65% |
 | F13 | Performance | 4% | 25% |
 | F14 | SEO y descubribilidad | 3% | 15% |
 | F15 | Testing y CI | 8% | 68% |
-| F16 | Producción, dominio, deploy y observabilidad | 4% | 72% |
+| F16 | Producción, dominio, deploy y observabilidad | 4% | 74% |
 | F17 | QA final de punta a punta | 2% | 0% |
 
-**Progreso general ponderado: 69%** (69,29% calculado con los pesos de la tabla). El baseline recalibrado fue 68%; esta tanda suma protección de origen, separación de contactos y regresiones verificadas.
+**Progreso general ponderado: 69%** (69,41% calculado con los pesos de la tabla). El baseline recalibrado fue 68%; esta tanda suma protección de origen, separación de contactos, CI y producción verificados.
 
 ## Secuencia y criterios
 
@@ -101,4 +101,4 @@ Happy path, errores, vacío, inválido, reload, concurrencia, auth/roles, mobile
 
 ## Próximo bloque exacto
 
-Cerrar CI, PR, variables Railway y smoke del bloque S1 implementado. Después preparar la migración versionada de grants mínimos de S2, validarla sin aplicarla a producción y diseñar su rollback.
+Preparar S2 en una rama nueva desde `main`: crear con Supabase CLI una migración versionada y no destructiva de grants mínimos, añadir pruebas estáticas/integración y documentar rollback. No aplicarla al remoto hasta revisar el diff, advisors y matriz anon/auth/server.

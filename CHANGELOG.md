@@ -13,6 +13,9 @@ Todos los cambios relevantes de DREAMS se registran aquí. El proyecto aún no u
 - Actualizados `.env.example`, README, AGENTS y guía Railway para separar `CONTACT_EMAIL` de `ADMIN_EMAIL`.
 - Añadidas 3 pruebas de integración; check verde, 29/29 tests verdes y sin cambios de DB.
 - Progreso ponderado actualizado de 68% a 69% por trabajo implementado y verificado.
+- PR #4 fusionado en `main` como `203e17b2e535df8df05e799f7b6ba0d91083434e` después de CI #16 verde.
+- Railway recibió `CONTACT_EMAIL` y `APP_ORIGINS`; deployment `5269e263-0f88-4ebc-be3a-0992445c8047` terminó SUCCESS.
+- Smoke de producción confirmó health/DB, configuración pública sin email Admin, contacto visible, same-origin operativo y bloqueo cross-site.
 
 ### 2026-08-29 — Revisión profunda de seguridad y roadmap ampliado
 
