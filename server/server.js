@@ -15,8 +15,9 @@ const app = app_module.create_app({
     database,
     create_auth_client: create_database,
     production: process.env.NODE_ENV === 'production',
-    admin_email: process.env.ADMIN_EMAIL,
-    whatsapp_number: process.env.WHATSAPP_NUMBER
+    contact_email: process.env.CONTACT_EMAIL,
+    whatsapp_number: process.env.WHATSAPP_NUMBER,
+    allowed_origins: process.env.APP_ORIGINS
 });
 
 function start() {

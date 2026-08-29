@@ -18,9 +18,13 @@ Configurar como secretos/variables:
 - `ADMIN_EMAIL`
 - `ADMIN_PASSWORD`
 - `ADMIN_NAME`
+- `CONTACT_EMAIL`
 - `WHATSAPP_NUMBER`
+- `APP_ORIGINS` con los orígenes HTTPS exactos separados por coma
 
 `PORT` lo entrega Railway. No usar `SESSION_SECRET`, `DATABASE_DIR` ni variables de SQLite. Nunca subir `.env` ni exponer `SUPABASE_SECRET_KEY`.
+
+`CONTACT_EMAIL` es el correo público del footer. No reutilizar `ADMIN_EMAIL` como contacto. Antes de renombrar el dominio, agregar temporalmente el dominio actual y el nuevo a `APP_ORIGINS`; retirar el anterior sólo después del smoke y la transición de enlaces.
 
 ## Validación
 

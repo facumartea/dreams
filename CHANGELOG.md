@@ -4,6 +4,37 @@ Todos los cambios relevantes de DREAMS se registran aquí. El proyecto aún no u
 
 ## Unreleased
 
+### 2026-08-29 — Protección de origen y separación del contacto público
+
+- Añadida verificación central de `Origin`/`Referer` para mutaciones y rechazo de metadata `cross-site` cuando no hay origen.
+- Incorporada allowlist exacta mediante `APP_ORIGINS`, preparada para la futura transición de dominio sin comodines.
+- `/api/config` dejó de devolver `admin_email` y ahora expone únicamente `contact_email` como dato público.
+- Contacto de homepage y catálogo cambiado a `facundo.martearena@dantebariloche.edu.ar` con enlace `mailto:` y configuración dinámica segura.
+- Actualizados `.env.example`, README, AGENTS y guía Railway para separar `CONTACT_EMAIL` de `ADMIN_EMAIL`.
+- Añadidas 3 pruebas de integración; check verde, 29/29 tests verdes y sin cambios de DB.
+- Progreso ponderado actualizado de 68% a 69% por trabajo implementado y verificado.
+
+### 2026-08-29 — Revisión profunda de seguridad y roadmap ampliado
+
+- Auditados frontend, Express, sesiones, Admin, Supabase/RLS/grants, dependencias, cabeceras HTTP, endpoints públicos y estado Railway sin modificar datos reales.
+- No se confirmó una vulnerabilidad crítica explotable; se priorizaron provisioning Admin en arranque, MFA/reautenticación, Origin/CSRF, grants mínimos, separación de email público/Admin, opiniones moderadas y archive de productos.
+- Confirmado que la API de opiniones ya persiste datos autenticados, pero falta formulario, edición, rate limit dedicado, moderación y pruebas de reload.
+- Documentado el plan para cambiar el contacto a `facundo.martearena@dantebariloche.edu.ar` mediante `CONTACT_EMAIL` sin exponer `ADMIN_EMAIL`.
+- Definida la evolución visual de `Perfumes de mujer` sin romper la identidad DREAMS.
+- Diagnosticada la baja calidad del frasco: asset actual 185×272 ampliado. Planificada recreación 2048×3072 con AVIF/WebP responsivos y lettering nítido separado.
+- Confirmado que Railway permite renombrar un dominio proporcionado; planificada transición segura a `dreams-perfumes.up.railway.app` si está disponible.
+- Recalibrado el progreso ponderado de 73% a 68% por alcance nuevo y deuda descubierta; no es una regresión de código.
+- Añadido `SECURITY_REVIEW_2026-08-29.md` como evidencia y plan operativo.
+- Railway confirmó el deployment visual `bbc4aa7f-4d71-40d9-aa21-c6829a473f59` en estado SUCCESS.
+
+### 2026-08-29 — Reglas maestras de continuidad
+
+- Formalizado el prompt maestro permanente en `PROJECT_MASTER_RULES.md` y ampliado `AGENTS.md` con recuperación de contexto, fuentes de verdad, progreso verificable, formato de reporte, checkpoints Git, CI y deploy.
+- Confirmado que el CSS premium completo ya está publicado en `main` y coincide exactamente con la rama de continuidad; no se realizaron cambios visuales adicionales ni se tocó Supabase.
+- El progreso general permanece en 73% porque esta tanda documenta el proceso y no cierra alcance funcional nuevo.
+- Confirmado que producción sigue sirviendo el CSS anterior: no es caché del cliente. Railway dejó `21225...` congelado en `DEPLOYING`; se creó un único redeploy limpio `bbc4...` del SHA visual correcto, que queda en cola hasta cancelar manualmente el deployment bloqueado.
+- Smoke final: producción ya entrega el HTML/CSS premium del commit `08e15128...` y `/api/health` responde con API y base de datos OK. Railway aún refleja `bbc4...` como `DEPLOYING` por retraso de dashboard, pero el tráfico público fue actualizado.
+
 ### 2026-08-29 — Refinamiento visual premium DREAMS
 
 - Consolidado el CSS acumulado en un sistema visual único con tokens de color, tipografía, spacing, bordes, transiciones y contenedores.
@@ -14,6 +45,8 @@ Todos los cambios relevantes de DREAMS se registran aquí. El proyecto aún no u
 - Integrado el isotipo suministrado como favicon y `apple-touch-icon` en todas las páginas públicas y Admin.
 - Añadidas 2 pruebas de regresión del sistema visual y del favicon; suite local ampliada de 24 a 26 pruebas verdes.
 - No se modificaron APIs, autenticación, lógica de carrito, esquema, datos ni configuración Supabase.
+- PR #3 fusionado con GitHub Actions CI #14 verde; `main` quedó en `08e15128ca28fe6742536043a7de8b90c2d82ede`.
+- Railway construyó la imagen del commit correcto en el deployment `21225f51-7484-4bfd-903d-dbb35d294539`, pero su promoción quedó bloqueada detrás del redeploy viejo `65722afb-b9ba-4a4c-bf26-78e2e6a37197`; producción continúa disponible con la versión anterior y el smoke del nuevo frontend queda pendiente hasta SUCCESS real.
 
 ### 2026-08-28 — Cuenta estable, retiro de favoritos y deploy preparado
 

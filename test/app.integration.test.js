@@ -119,6 +119,72 @@ test('auth no se cachea y valida credenciales antes de consultar Supabase', asyn
     });
 });
 
+test('config pública expone contacto pero nunca el identificador Admin', async () => {
+    const database = database_with(() => ({ data: [], error: null }));
+    const app = create_app({
+        database,
+        disable_request_log: true,
+        admin_email: 'private-admin@example.com',
+        contact_email: ' CONTACT@EXAMPLE.COM '
+    });
+    await serve(app, async base => {
+        const response = await fetch(`${base}/api/config`);
+        assert.equal(response.status, 200);
+        const body = await response.json();
+        assert.equal(body.contact_email, 'contact@example.com');
+        assert.equal('admin_email' in body, false);
+        assert.doesNotMatch(JSON.stringify(body), /private-admin/);
+    });
+});
+
+test('mutaciones rechazan orígenes cruzados y aceptan el mismo origen', async () => {
+    const database = database_with(() => ({ data: [], error: null }));
+    const app = create_app({ database, disable_request_log: true });
+    await serve(app, async base => {
+        const cross_site = await fetch(`${base}/api/auth/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Origin: 'https://evil.example' },
+            body: JSON.stringify({ email: 'ana@example.com', password: 'password-segura' })
+        });
+        assert.equal(cross_site.status, 403);
+        assert.match((await cross_site.json()).error, /Origen/);
+
+        const same_site = await fetch(`${base}/api/auth/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Origin: base },
+            body: JSON.stringify({ email: 'correo-invalido', password: 'password-segura' })
+        });
+        assert.equal(same_site.status, 400);
+
+        const fetch_metadata = await fetch(`${base}/api/reviews`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Sec-Fetch-Site': 'cross-site' },
+            body: JSON.stringify({ rating: 5, comment: 'No debe llegar a la ruta.' })
+        });
+        assert.equal(fetch_metadata.status, 403);
+    });
+});
+
+test('una allowlist configurada no confía en un Host dinámico', async () => {
+    const database = database_with(() => ({ data: [], error: null }));
+    const app = create_app({ database, disable_request_log: true, allowed_origins: 'https://dreams.example' });
+    await serve(app, async base => {
+        const dynamic_host = await fetch(`${base}/api/auth/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Origin: base },
+            body: JSON.stringify({ email: 'correo-invalido', password: 'password-segura' })
+        });
+        assert.equal(dynamic_host.status, 403);
+
+        const configured = await fetch(`${base}/api/auth/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Origin: 'https://dreams.example' },
+            body: JSON.stringify({ email: 'correo-invalido', password: 'password-segura' })
+        });
+        assert.equal(configured.status, 400);
+    });
+});
+
 test('registro pendiente distingue confirmación de correo de una sesión activa', async () => {
     const database = database_with(() => ({ data: [], error: null }));
     database.auth.signUp = async () => ({ data: { user: { id: 'new-user' }, session: null }, error: null });
