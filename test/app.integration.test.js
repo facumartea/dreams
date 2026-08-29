@@ -185,6 +185,48 @@ test('una allowlist configurada no confía en un Host dinámico', async () => {
     });
 });
 
+test('una opinión autenticada se persiste y reaparece al recargar la lista', async () => {
+    const reviews = [];
+    const database = database_with(table => {
+        if (table === 'profiles') return { data: { name: 'Ana', role: 'customer' }, error: null };
+        if (table === 'reviews') return { data: reviews, error: null };
+        return { data: [], error: null };
+    });
+    database.auth.getUser = async token => ({
+        data: { user: token === 'valid-token' ? { id: 'user-1', email: 'ana@example.com', user_metadata: {} } : null }
+    });
+    database.from = table => {
+        if (table === 'profiles') return query({ data: { name: 'Ana', role: 'customer' }, error: null });
+        if (table === 'reviews') {
+            return {
+                select() { return { order: async () => ({ data: reviews, error: null }) }; },
+                async insert(value) {
+                    reviews.unshift({ id: 1, ...value, created_at: '2026-08-29T00:00:00Z' });
+                    return { error: null };
+                }
+            };
+        }
+        return query({ data: [], error: null });
+    };
+
+    const app = create_app({ database, disable_request_log: true });
+    await serve(app, async base => {
+        const created = await fetch(`${base}/api/reviews`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Origin: base, Cookie: 'dreams_access_token=valid-token' },
+            body: JSON.stringify({ rating: 5, comment: 'Una experiencia muy cuidada.' })
+        });
+        assert.equal(created.status, 201);
+
+        const reloaded = await fetch(`${base}/api/reviews`);
+        assert.equal(reloaded.status, 200);
+        const [review] = await reloaded.json();
+        assert.equal(review.comment, 'Una experiencia muy cuidada.');
+        assert.equal(review.user_name, 'Ana');
+        assert.equal(review.user_id, 'user-1');
+    });
+});
+
 test('registro pendiente distingue confirmación de correo de una sesión activa', async () => {
     const database = database_with(() => ({ data: [], error: null }));
     database.auth.signUp = async () => ({ data: { user: { id: 'new-user' }, session: null }, error: null });

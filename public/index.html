@@ -85,6 +85,31 @@
                     <h2>Opiniones</h2>
                 </div>
             </div>
+            <div class="review-compose">
+                <div>
+                    <p class="eyebrow">TU EXPERIENCIA</p>
+                    <h3>Contanos qué te pareció DREAMS</h3>
+                    <p>Tu opinión queda guardada en tu cuenta y ayuda a mejorar la experiencia.</p>
+                </div>
+                <div id="review-access" class="review-access" aria-live="polite">Comprobando tu sesión…</div>
+                <form id="review-form" class="review-form" hidden>
+                    <label for="review-rating">Puntuación</label>
+                    <select id="review-rating" name="rating" required>
+                        <option value="">Elegí una puntuación</option>
+                        <option value="5">5 — Excelente</option>
+                        <option value="4">4 — Muy buena</option>
+                        <option value="3">3 — Buena</option>
+                        <option value="2">2 — Regular</option>
+                        <option value="1">1 — Mala</option>
+                    </select>
+                    <label for="review-comment">Opinión</label>
+                    <textarea id="review-comment" name="comment" rows="5" maxlength="1000" required placeholder="Escribí tu experiencia"></textarea>
+                    <div class="review-form-footer">
+                        <span id="review-status" role="status" aria-live="polite"></span>
+                        <button class="button button-primary" type="submit">Publicar opinión</button>
+                    </div>
+                </form>
+            </div>
             <div id="reviews" class="review-grid"></div>
         </section>
     </main>

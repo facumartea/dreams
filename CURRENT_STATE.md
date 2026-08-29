@@ -6,17 +6,24 @@
 
 - PROYECTO: DREAMS — tienda catálogo de perfumería con consultas por WhatsApp.
 - REPO: `https://github.com/facumartea/drams.git`
-- RAMA ACTUAL: `codex/security-origin-contact`.
-- PRS FUSIONADOS: [#1 — Production audit and critical hardening](https://github.com/facumartea/drams/pull/1), [#2 — Align Railway runtime with Node 24](https://github.com/facumartea/drams/pull/2) y [#3 — Refine DREAMS premium visual experience](https://github.com/facumartea/drams/pull/3).
-- HEAD EN `main`: `08e15128ca28fe6742536043a7de8b90c2d82ede` (merge de PR #3). Rama de continuidad documental: `codex/dreams-premium-visual`.
-- FASE ACTUAL: F1 — hardening HTTP y exposición mínima de configuración pública.
-- PROGRESO GENERAL: 69% ponderado (69,29% exacto según `PLAN.md`).
+- RAMA ACTUAL: `codex/persistent-reviews-ui`.
+- PRS FUSIONADOS: [#1 — Production audit and critical hardening](https://github.com/facumartea/drams/pull/1), [#2 — Align Railway runtime with Node 24](https://github.com/facumartea/drams/pull/2), [#3 — Refine DREAMS premium visual experience](https://github.com/facumartea/drams/pull/3) y [#4 — Harden mutation origins and separate public contact](https://github.com/facumartea/drams/pull/4).
+- HEAD EN `main`: `203e17b2e535df8df05e799f7b6ba0d91083434e` (merge de PR #4). Rama de continuidad: `codex/security-origin-contact`.
+- FASE ACTUAL: F5 — opiniones generales persistentes y UX de publicación.
+- PROGRESO GENERAL: 70% ponderado (70,32% exacto según `PLAN.md`).
 
 ## Porcentaje de todas las fases
 
-F0 100% · F1 70% · F2 85% · F3 72% · F4 75% · F5 45% · F6 74% · F7 35% · F8 72% · F9 75% · F10 83% · F11 65% · F12 65% · F13 25% · F14 15% · F15 68% · F16 72% · F17 0%.
+F0 100% · F1 70% · F2 85% · F3 72% · F4 75% · F5 60% · F6 74% · F7 35% · F8 72% · F9 78% · F10 84% · F11 65% · F12 65% · F13 25% · F14 15% · F15 70% · F16 74% · F17 0%.
 
 ## Último trabajo
+
+- S2 no fue iniciado: la CLI de Supabase no está instalada y su descarga fue rechazada por el entorno. La regla del proyecto impide inventar una migración o aplicar SQL remoto sin CLI; no hubo cambios DB.
+- Implementado en homepage un formulario editorial de opiniones generales con puntuación, comentario, labels, estado live y CTA de sesión para visitantes.
+- El formulario detecta sesión, bloquea doble envío, publica por `POST /api/reviews`, informa errores y vuelve a leer `GET /api/reviews` después del alta, por lo que lo guardado reaparece al recargar.
+- Añadido rate limit exclusivo de 5 publicaciones por hora para opiniones sin limitar sus lecturas.
+- El API responde 201 al crear. Agregada integración que publica con sesión y confirma que la opinión persiste en la recarga de la lista.
+- Agregada regresión estática del formulario accesible y su recarga posterior.
 
 - Creada desde `main` la rama `codex/security-origin-contact` para implementar el primer bloque S1.
 - Añadido `mutation_origin_guard`: todas las mutaciones `POST`, `PUT`, `PATCH` y `DELETE` validan `Origin`/`Referer`; también se rechaza `Sec-Fetch-Site: cross-site` sin origen.
@@ -24,6 +31,9 @@ F0 100% · F1 70% · F2 85% · F3 72% · F4 75% · F5 45% · F6 74% · F7 35% ·
 - `/api/config` ahora devuelve `contact_email` y nunca `admin_email`.
 - `CONTACT_EMAIL` se fijó en `facundo.martearena@dantebariloche.edu.ar`; homepage y catálogo lo muestran como enlace `mailto:`.
 - Agregadas tres regresiones de integración: configuración pública sin identificador Admin, rechazo/aceptación de orígenes y comprobación de que una allowlist configurada no confía en un Host dinámico.
+- Commit `64ff9c76a79eb568f48e76dae073f2e1eeb7efb0` publicado; PR #4 validado por CI #16 y fusionado en `main` como `203e17b2e535df8df05e799f7b6ba0d91083434e`.
+- Railway configurado con `CONTACT_EMAIL` y `APP_ORIGINS` sin tocar otros valores; deployment `5269e263-0f88-4ebc-be3a-0992445c8047` terminó SUCCESS.
+- Smoke de producción: `/api/health` 200 con DB ok; `/api/config` 200 sin `admin_email`; login same-origin conserva 400 de validación; Origin externo y `Sec-Fetch-Site: cross-site` devuelven 403; homepage y catálogo contienen el `mailto:` solicitado.
 
 - Revisión profunda de seguridad y nuevo alcance documentados en `SECURITY_REVIEW_2026-08-29.md`, sin cambiar producción, DB ni dominio.
 - No se confirmó una vulnerabilidad crítica explotable. Hallazgos prioritarios: provisioning Admin en arranque, falta de MFA/reautenticación Admin, falta de verificación explícita de Origin, grants SQL demasiado amplios, exposición pública de `admin_email`, opiniones sin formulario/moderación y delete permanente de productos.
@@ -59,9 +69,9 @@ F0 100% · F1 70% · F2 85% · F3 72% · F4 75% · F5 45% · F6 74% · F7 35% ·
 
 - `corepack pnpm install --frozen-lockfile`: OK.
 - `corepack pnpm run check`: OK, 17 archivos JavaScript.
-- `corepack pnpm test`: 29/29 OK.
+- `corepack pnpm test`: 31/31 OK.
 - Regresiones cubiertas: validación auth, no-cache, alta con confirmación, login/cookies/redirección, retiro de favoritos y retry `PGRST303`.
-- CI #14 del PR #3: SUCCESS. No existe CI nuevo todavía para esta tanda documental.
+- CI #16 del PR #4: SUCCESS sobre `64ff9c76a79eb568f48e76dae073f2e1eeb7efb0`.
 - E2E con usuarios Supabase reales y QA visual de todas las páginas: pendientes; no declararlos ejecutados.
 
 ## CI
@@ -74,10 +84,9 @@ F0 100% · F1 70% · F2 85% · F3 72% · F4 75% · F5 45% · F6 74% · F7 35% ·
 
 1. Falta recuperación de contraseña y su configuración de URL/SMTP de producción.
 2. Faltan E2E reales de refresh/logout y roles customer/admin.
-3. Opiniones no tienen formulario público, edición, rate limit dedicado ni moderación Admin.
-4. Falta decidir si las opiniones serán generales o una por usuario y producto; se recomienda la segunda opción.
-5. Falta configurar `CONTACT_EMAIL` y `APP_ORIGINS` en Railway antes del deploy de esta rama.
-6. Faltan grants SQL de privilegio mínimo.
+3. Opiniones generales ya tienen formulario, persistencia y rate limit; faltan edición propia, regla de duplicados y moderación Admin.
+4. La implementación actual conserva el modelo general existente. Asociarlas a productos requerirá una decisión y migración posterior.
+5. Faltan grants SQL de privilegio mínimo.
 7. Delete de producto sigue siendo permanente; definir archive/auditoría antes de cerrar F7.
 8. Faltan QA responsive completo, Lighthouse, SEO, accesibilidad automatizada y QA final.
 
@@ -85,7 +94,7 @@ F0 100% · F1 70% · F2 85% · F3 72% · F4 75% · F5 45% · F6 74% · F7 35% ·
 
 - Supabase advierte protección contra contraseñas filtradas desactivada (WARN); requiere revisar disponibilidad/configuración de Auth.
 - El provisioning Admin se ejecuta en cada arranque y debe convertirse en comando manual de una sola vez.
-- Cookies `SameSite=Lax` mitigan CSRF, pero falta una verificación explícita de Origin/Referer para mutaciones.
+- Cookies `SameSite=Lax` y verificación explícita de Origin/Referer protegen mutaciones; falta mantener `APP_ORIGINS` sincronizado durante futuros cambios de dominio.
 - Grants amplios quedan contenidos por RLS, pero debilitan defensa en profundidad.
 - Advisor informa `inquiries` con RLS sin policy (INFO). Es intencional: la tabla es server-only mediante secret/service key; no abrir acceso público sin caso real.
 - Índices nuevos figuran sin uso (INFO) por haberse creado recién y por bajo volumen; no borrarlos sólo para silenciar el advisor.
@@ -104,7 +113,8 @@ F0 100% · F1 70% · F2 85% · F3 72% · F4 75% · F5 45% · F6 74% · F7 35% ·
 - Entorno: `production` (`39886077-e963-4fec-b3aa-b0e5d38908dd`).
 - Servicio: `drams` (`c5780bbd-4030-4319-a714-1bc0f564e353`).
 - Dominio: `https://drams-production.up.railway.app`.
-- Último deployment confirmado: `bbc4aa7f-4d71-40d9-aa21-c6829a473f59`, SUCCESS sobre el commit visual `08e15128ca28fe6742536043a7de8b90c2d82ede`.
+- Último deployment confirmado: `5269e263-0f88-4ebc-be3a-0992445c8047`, SUCCESS sobre `203e17b2e535df8df05e799f7b6ba0d91083434e`.
+- Variables nuevas verificadas por comportamiento: `CONTACT_EMAIL` y `APP_ORIGINS`.
 - Deployment correcto del rediseño: `21225f51-7484-4bfd-903d-dbb35d294539`, commit exacto `08e15128ca28fe6742536043a7de8b90c2d82ede`, snapshot `f44a20bc-cb2f-4f5d-aa21-75b2f9d267dc`. El build terminó y publicó la imagen, pero Railway mantiene el estado `BUILDING` sin cambio desde `2026-08-29T01:21:46Z`.
 - Redeploy anterior accidental del commit viejo: `65722afb-b9ba-4a4c-bf26-78e2e6a37197`, atascado en `DEPLOYING` desde `2026-08-29T01:13:31Z`. No volver a ejecutar `redeploy`; hay que cancelar/remover sólo este deployment viejo o esperar a que Railway libere la cola.
 - El deployment viejo `65722...` finalmente llegó a SUCCESS a las `2026-08-29T02:01:11Z` y quedó sirviendo producción.
@@ -118,11 +128,12 @@ F0 100% · F1 70% · F2 85% · F3 72% · F4 75% · F5 45% · F6 74% · F7 35% ·
 
 ## Bloqueos
 
-- No hay bloqueo activo de Railway: el deployment correcto ya figura `SUCCESS`.
+- No hay bloqueo activo de Railway: el deployment `5269e263-0f88-4ebc-be3a-0992445c8047` figura `SUCCESS`.
 - Para cerrar opiniones se necesita una decisión funcional: opinión general o asociada a cada perfume.
 - Recuperación de contraseña completa puede requerir decisión/configuración de URL y SMTP.
 - Acciones destructivas sobre la tabla histórica `favorites` o datos reales requieren autorización explícita.
+- S2 requiere Supabase CLI; el entorno actual bloqueó su descarga. No usar `apply_migration` remoto como atajo.
 
 ## Próxima acción exacta
 
-Publicar `codex/security-origin-contact`, abrir PR contra `main`, verificar CI y revisar el diff. Si queda verde, fusionar; luego configurar `CONTACT_EMAIL` y `APP_ORIGINS` en Railway, esperar deployment SUCCESS y ejecutar smoke de config, login same-origin, rechazo cross-origin y contacto visible.
+Publicar `codex/persistent-reviews-ui`, abrir PR, verificar CI y revisar el formulario en desktop/móvil. Si queda verde, fusionar, esperar Railway SUCCESS y ejecutar smoke público sin crear una opinión falsa en producción.

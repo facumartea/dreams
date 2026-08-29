@@ -234,6 +234,60 @@ async function load_reviews() {
     }
 }
 
+async function setup_review_form() {
+    const form = document.getElementById('review-form');
+    const access = document.getElementById('review-access');
+    const status = document.getElementById('review-status');
+    if (!form || !access || !status) return;
+
+    try {
+        const response = await fetch(`${api}/auth/me`);
+        const data = await response.json();
+        if (!response.ok) throw new Error('No se pudo comprobar la sesión.');
+        if (!data.user) {
+            access.innerHTML = 'Para publicar necesitás <a href="/cuenta.html">iniciar sesión o crear una cuenta</a>.';
+            return;
+        }
+        access.textContent = `Publicás como ${data.user.name}.`;
+        form.hidden = false;
+    } catch (error) {
+        access.textContent = 'No se pudo comprobar tu sesión. Recargá la página para volver a intentar.';
+        return;
+    }
+
+    form.addEventListener('submit', async event => {
+        event.preventDefault();
+        const button = form.querySelector('button[type="submit"]');
+        const rating = Number(form.elements.rating.value);
+        const comment = String(form.elements.comment.value || '').trim();
+        if (!Number.isInteger(rating) || rating < 1 || rating > 5 || !comment) {
+            status.textContent = 'Elegí una puntuación y escribí tu opinión.';
+            return;
+        }
+
+        button.disabled = true;
+        button.setAttribute('aria-busy', 'true');
+        status.textContent = 'Publicando…';
+        try {
+            const response = await fetch(`${api}/reviews`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ rating, comment })
+            });
+            const data = await response.json();
+            if (!response.ok) throw new Error(data.error || 'No se pudo publicar la opinión.');
+            form.reset();
+            status.textContent = 'Tu opinión fue publicada y guardada.';
+            await load_reviews();
+        } catch (error) {
+            status.textContent = error.message || 'No se pudo publicar la opinión.';
+        } finally {
+            button.disabled = false;
+            button.removeAttribute('aria-busy');
+        }
+    });
+}
+
 function get_recent_products() {
     try { return JSON.parse(localStorage.getItem('dreams_recent')) || []; } catch (error) { return []; }
 }
@@ -312,4 +366,5 @@ mark_current_navigation();
 apply_public_config();
 load_featured_products();
 load_reviews();
+setup_review_form();
 render_recent_products();

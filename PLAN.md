@@ -9,21 +9,21 @@ Porcentajes recalibrados después de la revisión profunda de seguridad y del nu
 | F2 | Backend/API: validación, errores, health, modularidad mínima | 8% | 85% |
 | F3 | Datos/Supabase: grants mínimos, provisioning, migraciones, integridad, RLS | 9% | 72% |
 | F4 | Catálogo, detalle, carrito y consultas | 7% | 75% |
-| F5 | Opiniones persistentes, edición y moderación | 4% | 45% |
+| F5 | Opiniones persistentes, edición y moderación | 4% | 60% |
 | F6 | Auth, sesiones, recuperación y usuarios | 8% | 74% |
 | F7 | Admin completo, reversible y auditable | 7% | 35% |
 | F8 | Arquitectura, limpieza y documentación técnica | 5% | 72% |
-| F9 | UX funcional y estados | 5% | 75% |
-| F10 | Diseño visual, colección femenina, imagen y sistema de componentes | 4% | 83% |
+| F9 | UX funcional y estados | 5% | 78% |
+| F10 | Diseño visual, colección femenina, imagen y sistema de componentes | 4% | 84% |
 | F11 | Responsive verificado | 4% | 65% |
 | F12 | Accesibilidad | 5% | 65% |
 | F13 | Performance | 4% | 25% |
 | F14 | SEO y descubribilidad | 3% | 15% |
-| F15 | Testing y CI | 8% | 68% |
-| F16 | Producción, dominio, deploy y observabilidad | 4% | 72% |
+| F15 | Testing y CI | 8% | 70% |
+| F16 | Producción, dominio, deploy y observabilidad | 4% | 74% |
 | F17 | QA final de punta a punta | 2% | 0% |
 
-**Progreso general ponderado: 69%** (69,29% calculado con los pesos de la tabla). El baseline recalibrado fue 68%; esta tanda suma protección de origen, separación de contactos y regresiones verificadas.
+**Progreso general ponderado: 70%** (70,32% calculado con los pesos de la tabla). El avance suma el formulario de opiniones, persistencia verificada, estados de sesión/envío y cobertura de regresión.
 
 ## Secuencia y criterios
 
@@ -101,4 +101,4 @@ Happy path, errores, vacío, inválido, reload, concurrencia, auth/roles, mobile
 
 ## Próximo bloque exacto
 
-Cerrar CI, PR, variables Railway y smoke del bloque S1 implementado. Después preparar la migración versionada de grants mínimos de S2, validarla sin aplicarla a producción y diseñar su rollback.
+Publicar y validar el bloque de opiniones generales persistentes. S2 queda pendiente hasta disponer de Supabase CLI: no inventar el nombre de migración ni aplicar SQL remoto. Después del CI/QA de opiniones, continuar con la colección `Perfumes de mujer` y la nueva imagen en una rama visual separada.

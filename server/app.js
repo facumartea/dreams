@@ -186,6 +186,8 @@ function create_app(options = {}) {
     app.use('/api/auth', rateLimit({ windowMs: 900000, limit: 20, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiados intentos. Probá nuevamente en unos minutos.' } }));
     app.use('/api/inquiries', rateLimit({ windowMs: 900000, limit: 10, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiadas consultas. Probá nuevamente en unos minutos.' } }));
     app.use('/api/cart', rateLimit({ windowMs: 900000, limit: 30, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiadas verificaciones del carrito. Probá nuevamente en unos minutos.' } }));
+    const review_limiter = rateLimit({ windowMs: 3600000, limit: 5, standardHeaders: true, legacyHeaders: false, message: { error: 'Publicaste varias opiniones. Probá nuevamente más tarde.' } });
+    app.use('/api/reviews', (request, response, next) => request.method === 'POST' ? review_limiter(request, response, next) : next());
     app.use(express.static(public_directory));
 
     async function profile_for(user) {
@@ -294,7 +296,7 @@ function create_app(options = {}) {
         const rating = +request.body.rating, comment = String(request.body.comment || '').trim().slice(0, 1000);
         if (!Number.isInteger(rating) || rating < 1 || rating > 5 || !comment) return response.status(400).json({ error: 'Completá una puntuación y una opinión.' });
         fail_if(await database.from('reviews').insert({ user_id: request.user.id, user_name: request.user.name, rating, comment }));
-        response.json({ message: 'Opinión publicada.' });
+        response.status(201).json({ message: 'Opinión publicada.' });
     });
     route('post', '/api/cart/quote', async (request, response) => {
         const quote = await quote_cart(database, request.body.items);

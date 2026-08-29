@@ -4,6 +4,17 @@ Todos los cambios relevantes de DREAMS se registran aquí. El proyecto aún no u
 
 ## Unreleased
 
+### 2026-08-29 — Opiniones generales persistentes
+
+- Añadido formulario de opinión en homepage con puntuación, comentario, sesión requerida, labels y estado live.
+- La publicación usa la API server-side existente, bloquea doble envío y recarga la lista desde Supabase después del alta para confirmar persistencia.
+- Visitantes reciben un acceso claro a login/registro; usuarios autenticados ven el nombre con el que publican.
+- Añadido rate limit de 5 publicaciones por hora exclusivamente sobre `POST /api/reviews`.
+- Alta de opinión devuelve HTTP 201; integración confirma que una opinión autenticada reaparece al volver a consultar la lista.
+- Añadida regresión del formulario accesible; check verde y 31/31 tests verdes.
+- S2 de grants mínimos no fue iniciado porque el entorno bloqueó la descarga de Supabase CLI; no se inventó una migración ni se cambió la DB remota.
+- Progreso ponderado actualizado de 69% a 70%.
+
 ### 2026-08-29 — Protección de origen y separación del contacto público
 
 - Añadida verificación central de `Origin`/`Referer` para mutaciones y rechazo de metadata `cross-site` cuando no hay origen.
@@ -13,6 +24,9 @@ Todos los cambios relevantes de DREAMS se registran aquí. El proyecto aún no u
 - Actualizados `.env.example`, README, AGENTS y guía Railway para separar `CONTACT_EMAIL` de `ADMIN_EMAIL`.
 - Añadidas 3 pruebas de integración; check verde, 29/29 tests verdes y sin cambios de DB.
 - Progreso ponderado actualizado de 68% a 69% por trabajo implementado y verificado.
+- PR #4 fusionado en `main` como `203e17b2e535df8df05e799f7b6ba0d91083434e` después de CI #16 verde.
+- Railway recibió `CONTACT_EMAIL` y `APP_ORIGINS`; deployment `5269e263-0f88-4ebc-be3a-0992445c8047` terminó SUCCESS.
+- Smoke de producción confirmó health/DB, configuración pública sin email Admin, contacto visible, same-origin operativo y bloqueo cross-site.
 
 ### 2026-08-29 — Revisión profunda de seguridad y roadmap ampliado
 
