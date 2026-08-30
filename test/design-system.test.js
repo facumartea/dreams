@@ -35,3 +35,21 @@ test('la portada incluye un formulario accesible de opiniones persistentes', () 
     assert.match(script, /method: 'POST'/);
     assert.match(script, /await load_reviews\(\)/);
 });
+
+test('el hero usa una imagen responsive de alta resolución y lettering HTML', () => {
+    const html = fs.readFileSync(path.join(root, 'public/index.html'), 'utf8');
+    assert.match(html, /dreams-hero-640\.webp 640w/);
+    assert.match(html, /dreams-hero-1024\.webp 1024w/);
+    assert.match(html, /<img src="\/assets\/dreams-hero-1024\.webp" width="1024" height="1536"/);
+    assert.match(html, /class="hero-bottle-mark" aria-hidden="true"/);
+});
+
+test('el catálogo presenta una cabecera específica para Perfumes de Mujer', () => {
+    const html = fs.readFileSync(path.join(root, 'public/catalogo.html'), 'utf8');
+    const script = fs.readFileSync(path.join(root, 'public/js/catalogo.js'), 'utf8');
+    const css = fs.readFileSync(path.join(root, 'public/css/style.css'), 'utf8');
+    assert.match(html, /id="catalog-title"/);
+    assert.match(script, /Perfumes de Mujer/);
+    assert.match(script, /classList\.toggle\('is-women', is_women\)/);
+    assert.match(css, /\.catalog-page\.is-women \.page-intro/);
+});
