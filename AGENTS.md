@@ -38,6 +38,14 @@ El navegador sólo habla con `/api`. `SUPABASE_SECRET_KEY` es exclusivamente del
 - `PLAN.md` define fases, pesos y progreso; sólo actualizarlo ante avance verificado, cambios de alcance, riesgos o dependencias.
 - `CHANGELOG.md` registra únicamente trabajo realizado. `AGENTS.md` cambia sólo cuando aparece una regla duradera.
 
+## Herramientas y responsabilidades
+
+- GitHub es la fuente del código, ramas, PR y CI; Railway es el estado de deploy y producción; Supabase es Auth/DB/RLS y sólo se modifica mediante migraciones seguras.
+- Figma se usa para cambios de interfaz complejos cuando un diseño previo reduzca ambigüedad; no duplicar allí ajustes pequeños ya definidos por el sistema visual en código.
+- Canva se limita a campañas y composiciones gráficas; no reemplaza el frontend ni el sistema de diseño.
+- Notion puede ampliar documentación y Linear puede ordenar tareas reales, pero no reemplazan `CURRENT_STATE.md`, `PLAN.md` ni `CHANGELOG.md`.
+- No usar herramientas para aparentar proceso. Cada integración debe aportar al cambio actual y toda acción externa debe informarse con evidencia.
+
 ## Flujo Git y checkpoints
 
 - Antes de cambios importantes verificar repositorio, rama, HEAD, remoto, árbol de trabajo y commits recientes.

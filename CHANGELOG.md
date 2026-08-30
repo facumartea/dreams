@@ -4,6 +4,19 @@ Todos los cambios relevantes de DREAMS se registran aquí. El proyecto aún no u
 
 ## Unreleased
 
+### 2026-08-30 — Colección femenina y hero de alta resolución
+
+- Reemplazado en portada el asset de 185×272 ampliado por un producto editorial original de 1024×1536, conservando frasco negro, metal champagne, piedra y fondo oscuro.
+- Generados derivados WebP responsive de 640 px (18.840 bytes) y 1024 px (41.844 bytes) con `picture/srcset` y dimensiones explícitas.
+- Separado el lettering DREAMS de la imagen: ahora es HTML/CSS nítido y no se degrada al escalar.
+- `?gender=mujer` activa `Perfumes de Mujer`, copy editorial y una variante rosa viejo/taupe sobria limitada al catálogo femenino.
+- Figma no fue necesario porque la composición y los tokens ya estaban definidos; Canva, Notion, Linear y Supabase no se modificaron.
+- Añadidas dos pruebas de regresión; check PASS, audit sin vulnerabilidades y 33/33 tests PASS.
+- PR #6 fusionado en `main` como `19a50120d4eddb2b93faa0bb37a7c86ec426d5a9` después de CI #20 verde.
+- Railway deployment `d85de2c7-c35e-4089-a4a9-4e7f77880096` terminó SUCCESS sobre el merge exacto.
+- Smoke y QA visual público verificaron health/DB, assets, 11 productos de mujer, filtros, imagen y ausencia de overflow en 1363×936; los seis breakpoints obligatorios siguen pendientes.
+- Progreso ponderado actualizado de 70% (70,44% exacto) a 71% (71,16% exacto).
+
 ### 2026-08-29 — Opiniones generales persistentes
 
 - Añadido formulario de opinión en homepage con puntuación, comentario, sesión requerida, labels y estado live.
@@ -14,6 +27,10 @@ Todos los cambios relevantes de DREAMS se registran aquí. El proyecto aún no u
 - Añadida regresión del formulario accesible; check verde y 31/31 tests verdes.
 - S2 de grants mínimos no fue iniciado porque el entorno bloqueó la descarga de Supabase CLI; no se inventó una migración ni se cambió la DB remota.
 - Progreso ponderado actualizado de 69% a 70%.
+- PR #5 fusionado en `main` como `928cc9990f3ceb8dfdcf208e5db0e89191fb6ade` después de CI #18 verde.
+- Railway deployment `b094ed98-46e3-4178-9542-3de9a9320bf3` terminó SUCCESS sobre el merge exacto.
+- Smoke público verificó formulario y assets nuevos, health/DB, lectura de opiniones y rechazo 401 sin sesión; no se creó ninguna opinión falsa.
+- Validación de producción elevó el progreso exacto de 70,32% a 70,44%; el porcentaje general redondeado permanece en 70%.
 
 ### 2026-08-29 — Protección de origen y separación del contacto público
 
