@@ -1,5 +1,21 @@
 let catalog_products = [];
 
+function update_catalog_context(gender) {
+    const page = document.querySelector('.catalog-page');
+    const eyebrow = document.getElementById('catalog-eyebrow');
+    const title = document.getElementById('catalog-title');
+    const description = document.getElementById('catalog-description');
+    const is_women = gender === 'mujer';
+
+    page.classList.toggle('is-women', is_women);
+    eyebrow.textContent = is_women ? 'CURADURÍA FEMENINA · DREAMS' : 'DREAMS COLLECTION';
+    title.textContent = is_women ? 'Perfumes de Mujer' : 'Perfumes';
+    description.textContent = is_women
+        ? 'Una selección floral, luminosa y envolvente, elegida con la misma mirada editorial de DREAMS.'
+        : 'Diseñador, algunos nichos seleccionados y una sola idea: encontrar tu firma.';
+    document.title = is_women ? 'Perfumes de Mujer | DREAMS' : 'Perfumes | DREAMS';
+}
+
 async function load_catalog() {
     const container = document.getElementById('catalog-products');
     container.innerHTML = Array.from({ length: 8 }, () => '<div class="skeleton-card" aria-hidden="true"></div>').join('');
@@ -68,10 +84,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (initial_gender) {
         document.getElementById('gender-filter').value = initial_gender;
     }
+    update_catalog_context(initial_gender);
 
     document.getElementById('search').addEventListener('input', debounce(apply_catalog_filters, 300));
     document.getElementById('brand-filter').addEventListener('change', apply_catalog_filters);
-    document.getElementById('gender-filter').addEventListener('change', apply_catalog_filters);
+    document.getElementById('gender-filter').addEventListener('change', event => {
+        update_catalog_context(event.target.value);
+        apply_catalog_filters();
+    });
     document.getElementById('category-filter').addEventListener('change', apply_catalog_filters);
     document.getElementById('sort-filter').addEventListener('change', apply_catalog_filters);
     document.getElementById('max-price').addEventListener('input', debounce(apply_catalog_filters, 350));
@@ -82,6 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('category-filter').value = '';
         document.getElementById('sort-filter').value = 'featured';
         document.getElementById('max-price').value = '';
+        update_catalog_context('');
         apply_catalog_filters();
     });
 
