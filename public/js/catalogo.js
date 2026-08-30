@@ -8,6 +8,7 @@ function update_catalog_context(gender) {
     const is_women = gender === 'mujer';
 
     page.classList.toggle('is-women', is_women);
+    document.body.classList.toggle('women-collection', is_women);
     eyebrow.textContent = is_women ? 'CURADURÍA FEMENINA · DREAMS' : 'DREAMS COLLECTION';
     title.textContent = is_women ? 'Perfumes de Mujer' : 'Perfumes';
     description.textContent = is_women

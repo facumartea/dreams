@@ -1,29 +1,30 @@
 # Roadmap de producción — DREAMS
 
-Porcentajes recalibrados después de la revisión profunda de seguridad y del nuevo alcance solicitado el 2026-08-29. Son estimaciones basadas en evidencia y se actualizan sólo después de validación.
+Porcentajes recalibrados el 2026-08-30 al sumar el checkout Sandbox y corregir los pesos para que totalicen exactamente 100%. Son estimaciones basadas en evidencia y se actualizan sólo después de validación.
 
 | Fase | Alcance | Peso | Estado |
 |---|---|---:|---:|
-| F0 | Auditoría total, baseline y documentación | 8% | 100% |
-| F1 | Seguridad crítica: XSS, dependencias, headers, CSRF/origin, abuso | 9% | 70% |
-| F2 | Backend/API: validación, errores, health, modularidad mínima | 8% | 85% |
-| F3 | Datos/Supabase: grants mínimos, provisioning, migraciones, integridad, RLS | 9% | 72% |
-| F4 | Catálogo, detalle, carrito y consultas | 7% | 75% |
-| F5 | Opiniones persistentes, edición y moderación | 4% | 60% |
-| F6 | Auth, sesiones, recuperación y usuarios | 8% | 74% |
-| F7 | Admin completo, reversible y auditable | 7% | 35% |
-| F8 | Arquitectura, limpieza y documentación técnica | 5% | 72% |
+| F0 | Auditoría total, baseline y documentación | 7% | 100% |
+| F1 | Seguridad crítica: XSS, dependencias, headers, CSRF/origin, abuso | 8% | 70% |
+| F2 | Backend/API: validación, errores, health, modularidad mínima | 7% | 85% |
+| F3 | Datos/Supabase: grants mínimos, provisioning, migraciones, integridad, RLS | 8% | 72% |
+| F4 | Catálogo, detalle, carrito y consultas | 6% | 75% |
+| F5 | Opiniones persistentes, edición y moderación | 4% | 62% |
+| F6 | Auth, sesiones, recuperación y usuarios | 7% | 74% |
+| F7 | Admin completo, reversible y auditable | 6% | 35% |
+| F8 | Arquitectura, limpieza y documentación técnica | 4% | 72% |
 | F9 | UX funcional y estados | 5% | 78% |
-| F10 | Diseño visual, colección femenina, imagen y sistema de componentes | 4% | 84% |
-| F11 | Responsive verificado | 4% | 65% |
-| F12 | Accesibilidad | 5% | 65% |
-| F13 | Performance | 4% | 25% |
+| F10 | Diseño visual, colección femenina, imagen y sistema de componentes | 4% | 94% |
+| F11 | Responsive verificado | 4% | 72% |
+| F12 | Accesibilidad | 4% | 65% |
+| F13 | Performance | 4% | 30% |
 | F14 | SEO y descubribilidad | 3% | 15% |
-| F15 | Testing y CI | 8% | 70% |
-| F16 | Producción, dominio, deploy y observabilidad | 4% | 74% |
-| F17 | QA final de punta a punta | 2% | 0% |
+| F15 | Testing y CI | 7% | 76% |
+| F16 | Producción, dominio, deploy y observabilidad | 4% | 76% |
+| F17 | QA final de punta a punta | 3% | 0% |
+| F18 | Checkout Sandbox, pedidos y pagos | 5% | 42% |
 
-**Progreso general ponderado: 70%** (70,32% calculado con los pesos de la tabla). El avance suma el formulario de opiniones, persistencia verificada, estados de sesión/envío y cobertura de regresión.
+**Progreso general ponderado: 67%** (66,70% exacto). El porcentaje baja por el alcance importante de pagos agregado y por corregir la tabla histórica, cuyos pesos sumaban 104% en vez de 100%; no representa una regresión del código existente.
 
 ## Secuencia y criterios
 
@@ -49,7 +50,7 @@ Reconciliar precio/stock con servidor, limitar cantidades, generar consulta de c
 
 ### F5 — Opiniones y retiro controlado de favoritos
 
-Favoritos se retiró por decisión de producto. La tabla vacía permanece protegida hasta una migración destructiva autorizada. La API de opiniones ya persiste datos, pero falta formulario público, relación con producto o regla global, edición, límite específico, moderación Admin y pruebas de persistencia tras reload.
+Favoritos se retiró por decisión de producto. La tabla vacía permanece protegida hasta una migración destructiva autorizada. Opiniones generales ya tiene formulario autenticado, rate limit específico, persistencia tras reload y cobertura API/UI; faltan edición propia, regla de duplicados y moderación Admin. Asociarlas a productos queda fuera del modelo general actual hasta una decisión funcional.
 
 ### F6 — Auth, sesiones y usuarios
 
@@ -99,6 +100,10 @@ Verificar Railway, variables, Supabase, logs, readiness/liveness y rollback. Mig
 
 Happy path, errores, vacío, inválido, reload, concurrencia, auth/roles, mobile/desktop y producción. Sólo 100% con matriz ejecutada y evidencias.
 
+### F18 — Checkout Sandbox, pedidos y pagos
+
+Capa de proveedor desacoplada, Checkout Pro oficial, recálculo server-side, pedidos persistentes, verificación HMAC, confirmación autoritativa, estados completos, UI/UX responsive y pruebas. Para superar 42% faltan migración CLI, credenciales de prueba, Webhook configurado, compras Sandbox reales y QA en producción. Producción queda cerrada por feature flag hasta completar esas dependencias.
+
 ## Próximo bloque exacto
 
-Publicar y validar el bloque de opiniones generales persistentes. S2 queda pendiente hasta disponer de Supabase CLI: no inventar el nombre de migración ni aplicar SQL remoto. Después del CI/QA de opiniones, continuar con la colección `Perfumes de mujer` y la nueva imagen en una rama visual separada.
+Publicar el checkpoint visual/checkout cerrado, verificar CI y Railway; después obtener Supabase CLI y credenciales oficiales de prueba para crear/aplicar la migración `checkout_orders`, activar Sandbox y ejecutar compras aprobada/rechazada/pendiente. La matriz F11 completa sigue pendiente hasta disponer de un runner con viewport configurable.

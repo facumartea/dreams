@@ -1,4 +1,5 @@
 const path = require('node:path');
+const { randomUUID } = require('node:crypto');
 const express = require('express');
 const helmet = require('helmet');
 const morgan = require('morgan');
@@ -168,6 +169,11 @@ function create_app(options = {}) {
     const configured_contact_email = normalize_email(options.contact_email || 'facundo.martearena@dantebariloche.edu.ar');
     const contact_email = valid_email(configured_contact_email) ? configured_contact_email : 'facundo.martearena@dantebariloche.edu.ar';
     const whatsapp_number = String(options.whatsapp_number || '').replace(/\D/g, '');
+    const payment_provider = options.payment_provider || null;
+    const checkout_mode = payment_provider?.mode === 'production' ? 'production' : 'sandbox';
+    const app_base_url = normalize_origin(options.app_base_url);
+    const checkout_enabled = Boolean(payment_provider?.configured && app_base_url && options.checkout_schema_ready);
+    const show_test_data = checkout_mode === 'sandbox' && Boolean(options.show_checkout_test_data);
     const public_directory = options.public_directory || path.join(__dirname, '..', 'public');
     const views_directory = options.views_directory || path.join(__dirname, '..', 'views');
     const app = express();
@@ -186,6 +192,8 @@ function create_app(options = {}) {
     app.use('/api/auth', rateLimit({ windowMs: 900000, limit: 20, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiados intentos. Probá nuevamente en unos minutos.' } }));
     app.use('/api/inquiries', rateLimit({ windowMs: 900000, limit: 10, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiadas consultas. Probá nuevamente en unos minutos.' } }));
     app.use('/api/cart', rateLimit({ windowMs: 900000, limit: 30, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiadas verificaciones del carrito. Probá nuevamente en unos minutos.' } }));
+    app.use('/api/checkout', rateLimit({ windowMs: 900000, limit: 15, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiados intentos de checkout. Probá nuevamente en unos minutos.' } }));
+    app.use('/api/payments/webhook', rateLimit({ windowMs: 60000, limit: 120, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiadas notificaciones.' } }));
     const review_limiter = rateLimit({ windowMs: 3600000, limit: 5, standardHeaders: true, legacyHeaders: false, message: { error: 'Publicaste varias opiniones. Probá nuevamente más tarde.' } });
     app.use('/api/reviews', (request, response, next) => request.method === 'POST' ? review_limiter(request, response, next) : next());
     app.use(express.static(public_directory));
@@ -238,6 +246,7 @@ function create_app(options = {}) {
     const fail_if = result => { if (result.error) throw result.error; return result.data; };
 
     route('get', '/api/config', async (request, response) => response.json({ whatsapp_number, contact_email, app_name: 'DREAMS' }));
+    route('get', '/api/checkout/config', async (request, response) => response.json({ enabled: checkout_enabled, provider: checkout_enabled ? payment_provider.name : null, mode: checkout_mode, show_test_data }));
     route('get', '/api/products', async (request, response) => {
         const search = String(request.query.search || '').trim().replace(/[^\p{L}\p{N}\s'-]/gu, '').slice(0, 80);
         const sort = String(request.query.sort || 'featured');
@@ -304,6 +313,68 @@ function create_app(options = {}) {
         const lines = quote.items.map(item => `${item.quantity} × ${item.brand} ${item.name} — ${item.price * item.quantity} ARS`);
         const text = ['Hola DREAMS, quiero consultar por este carrito:', ...lines, `Total de referencia: ${quote.total} ARS`].join('\n');
         response.json({ ...quote, whatsapp_url: quote.items.length ? `https://wa.me/${whatsapp_number}?text=${encodeURIComponent(text)}` : null });
+    });
+    route('post', '/api/checkout/session', login, async (request, response) => {
+        if (!checkout_enabled || !app_base_url) return response.status(503).json({ error: 'El checkout Sandbox todavía no está configurado.' });
+        const quote = await quote_cart(database, request.body.items);
+        if (quote.error) return response.status(400).json({ error: quote.error });
+        if (!quote.items.length || quote.total <= 0) return response.status(409).json({ error: 'No hay productos disponibles para pagar.' });
+
+        const order_id = randomUUID();
+        const order = {
+            id: order_id,
+            user_id: request.user.id,
+            provider: payment_provider.name,
+            provider_preference_id: null,
+            provider_payment_id: null,
+            status: 'created',
+            status_detail: null,
+            currency: 'ARS',
+            total: quote.total,
+            items: quote.items.map(item => ({ id: item.id, brand: item.brand, name: item.name, size_ml: item.size_ml, price: item.price, quantity: item.quantity })),
+            paid_at: null
+        };
+        fail_if(await database.from('orders').insert(order));
+        try {
+            const checkout = await payment_provider.create_checkout({ order_id, items: quote.items, payer_email: request.user.email, app_base_url });
+            fail_if(await database.from('orders').update({ provider_preference_id: checkout.preference_id }).eq('id', order_id));
+            response.status(201).json({ order_id, checkout_url: checkout.checkout_url, mode: checkout_mode, warnings: quote.warnings });
+        } catch (error) {
+            const failed = await database.from('orders').update({ status: 'error', status_detail: 'preference_creation_failed' }).eq('id', order_id);
+            if (failed.error) logger.error?.('No se pudo marcar la orden fallida.', { kind: error_kind(failed.error) });
+            throw error;
+        }
+    });
+    route('post', '/api/checkout/confirm', login, async (request, response) => {
+        if (!checkout_enabled) return response.status(503).json({ error: 'El checkout Sandbox todavía no está configurado.' });
+        const order_id = String(request.body.order_id || '');
+        const payment_id = String(request.body.payment_id || '');
+        if (!/^[0-9a-f-]{36}$/i.test(order_id) || !/^\d{1,30}$/.test(payment_id)) return response.status(400).json({ error: 'Datos de pago inválidos.' });
+        const order = fail_if(await database.from('orders').select('*').eq('id', order_id).eq('user_id', request.user.id).maybeSingle());
+        if (!order) return response.status(404).json({ error: 'Pedido no encontrado.' });
+        const payment = await payment_provider.get_payment(payment_id);
+        if (payment.order_id !== order.id || payment.currency !== order.currency || payment.amount !== Number(order.total) || (checkout_mode === 'sandbox' && payment.live_mode)) {
+            return response.status(409).json({ error: 'El pago recibido no coincide con el pedido.' });
+        }
+        fail_if(await database.from('orders').update({ provider_payment_id: payment.id, status: payment.status, status_detail: payment.status_detail, paid_at: payment.status === 'approved' ? payment.paid_at : null }).eq('id', order.id));
+        response.json({ order_id: order.id, status: payment.status, status_detail: payment.status_detail });
+    });
+    route('get', '/api/orders/:id', login, async (request, response) => {
+        const order_id = String(request.params.id || '');
+        if (!/^[0-9a-f-]{36}$/i.test(order_id)) return response.status(400).json({ error: 'ID de pedido inválido.' });
+        const order = fail_if(await database.from('orders').select('id,status,status_detail,currency,total,items,created_at,paid_at').eq('id', order_id).eq('user_id', request.user.id).maybeSingle());
+        return order ? response.json(order) : response.status(404).json({ error: 'Pedido no encontrado.' });
+    });
+    route('post', '/api/payments/webhook', async (request, response) => {
+        if (!checkout_enabled || request.body?.type !== 'payment') return response.status(200).json({ received: true });
+        const payment_id = String(request.body?.data?.id || request.query['data.id'] || '');
+        if (!/^\d{1,30}$/.test(payment_id) || !payment_provider.verify_webhook(request.headers, payment_id)) return response.status(401).json({ error: 'Notificación no válida.' });
+        const payment = await payment_provider.get_payment(payment_id);
+        if (!/^[0-9a-f-]{36}$/i.test(payment.order_id)) return response.status(200).json({ received: true });
+        const order = fail_if(await database.from('orders').select('id,total,currency').eq('id', payment.order_id).maybeSingle());
+        if (!order || payment.currency !== order.currency || payment.amount !== Number(order.total) || (checkout_mode === 'sandbox' && payment.live_mode)) return response.status(200).json({ received: true });
+        fail_if(await database.from('orders').update({ provider_payment_id: payment.id, status: payment.status, status_detail: payment.status_detail, paid_at: payment.status === 'approved' ? payment.paid_at : null }).eq('id', order.id));
+        response.json({ received: true });
     });
     route('post', '/api/inquiries', async (request, response) => {
         const id = parse_id(request.body.product_id);
