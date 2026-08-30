@@ -6,13 +6,13 @@
 
 - PROYECTO: DREAMS — tienda catálogo de perfumería con consultas por WhatsApp.
 - REPO: `https://github.com/facumartea/drams.git`
-- RAMA ACTUAL: `codex/checkout-sandbox-foundation` (checkpoint preparado desde `main` `19a50120d4eddb2b93faa0bb37a7c86ec426d5a9`).
-- PRS FUSIONADOS: [#1 — Production audit and critical hardening](https://github.com/facumartea/drams/pull/1), [#2 — Align Railway runtime with Node 24](https://github.com/facumartea/drams/pull/2), [#3 — Refine DREAMS premium visual experience](https://github.com/facumartea/drams/pull/3), [#4 — Harden mutation origins and separate public contact](https://github.com/facumartea/drams/pull/4), [#5 — Add persistent customer review publishing](https://github.com/facumartea/drams/pull/5) y [#6 — Refine women collection and high-resolution hero](https://github.com/facumartea/drams/pull/6).
-- HEAD EN `main`: `19a50120d4eddb2b93faa0bb37a7c86ec426d5a9` (merge de PR #6). HEAD funcional de la rama: `5891d24c7693bb127e35e4cb33c565deb59a8021`.
-- PR ABIERTO: [#7 — Add safe Mercado Pago Sandbox checkout foundation](https://github.com/facumartea/drams/pull/7), mergeable y con CI verde; no fusionado porque el merge a `main`/producción requiere autorización explícita.
-- ÚLTIMO PUSH: rama `codex/checkout-sandbox-foundation`; commit `5891d24c7693bb127e35e4cb33c565deb59a8021` (`Add safe Mercado Pago Sandbox checkout foundation`).
-- ÚLTIMO CI VERIFICADO: GitHub Actions CI #22, SUCCESS sobre `5891d24c7693bb127e35e4cb33c565deb59a8021`.
-- ÚLTIMO DEPLOY: Railway `d85de2c7-c35e-4089-a4a9-4e7f77880096`, SUCCESS sobre `19a50120d4eddb2b93faa0bb37a7c86ec426d5a9`.
+- RAMA DE CONTINUIDAD: `codex/checkout-sandbox-foundation`; cambios funcionales fusionados a `main`.
+- PRS FUSIONADOS: [#1 — Production audit and critical hardening](https://github.com/facumartea/drams/pull/1), [#2 — Align Railway runtime with Node 24](https://github.com/facumartea/drams/pull/2), [#3 — Refine DREAMS premium visual experience](https://github.com/facumartea/drams/pull/3), [#4 — Harden mutation origins and separate public contact](https://github.com/facumartea/drams/pull/4), [#5 — Add persistent customer review publishing](https://github.com/facumartea/drams/pull/5), [#6 — Refine women collection and high-resolution hero](https://github.com/facumartea/drams/pull/6) y [#7 — Add safe Mercado Pago Sandbox checkout foundation](https://github.com/facumartea/drams/pull/7).
+- HEAD EN `main`: `5f63bcd4ad3597f1b0f4ef30c73b85ba2ec88929` (merge de PR #7). Último commit funcional del PR: `5891d24c7693bb127e35e4cb33c565deb59a8021`.
+- PR ABIERTO: ninguno para esta tanda; PR #7 fusionado.
+- ÚLTIMO PUSH FUNCIONAL: rama `codex/checkout-sandbox-foundation`; commit `5891d24c7693bb127e35e4cb33c565deb59a8021` (`Add safe Mercado Pago Sandbox checkout foundation`).
+- ÚLTIMO CI VERIFICADO: GitHub Actions CI #23, SUCCESS sobre `6851e038c297a5acfe8a392193fd2e806d308ce5`.
+- ÚLTIMO DEPLOY: Railway `f2ae64db-aef1-431b-8e2c-e820a8da2408`, SUCCESS sobre `5f63bcd4ad3597f1b0f4ef30c73b85ba2ec88929`.
 - FASE ACTUAL: F18 — Checkout Sandbox, bloqueado de forma segura hasta migración/credenciales.
 - PROGRESO GENERAL: 67% ponderado (66,70% exacto según `PLAN.md`).
 
@@ -30,7 +30,8 @@ F0 100% · F1 70% · F2 85% · F3 72% · F4 75% · F5 62% · F6 74% · F7 35% ·
 - Suite local 39/39, check de 21 archivos y audit de producción sin vulnerabilidades conocidas.
 - Supabase CLI volvió a ser bloqueada al descargar; no se creó ni aplicó migración. Railway no tiene variables Mercado Pago. No hubo compra Sandbox real.
 - `PLAN.md` suma F18 y corrige pesos históricos de 104% a 100%; progreso recalibrado a 66,70% exacto.
-- PR #7 abierto y CI #22 verde. El merge fue bloqueado por requerir autorización explícita; `main` y Railway siguen sin cambios en esta tanda.
+- PR #7 fusionado con autorización explícita como `5f63bcd4ad3597f1b0f4ef30c73b85ba2ec88929`; Railway desplegó exactamente ese merge y terminó SUCCESS.
+- Smoke público posterior: `/api/health` 200 con API/DB `ok`, `/api/checkout/config` 200 con checkout cerrado (`enabled:false`) y `/checkout.html` 200. La segunda comprobación de assets/catálogo fue bloqueada por el entorno de red; no declararla ejecutada.
 
 - Generado un hero editorial original de 1024×1536 basado en la composición DREAMS existente, sin texto rasterizado ni referencias de marca ajena.
 - Integrados `/assets/dreams-hero-640.webp` (18.840 bytes) y `/assets/dreams-hero-1024.webp` (41.844 bytes) mediante `picture/srcset`; el frasco anterior de 185×272 dejó de ampliarse en portada.
@@ -95,13 +96,14 @@ F0 100% · F1 70% · F2 85% · F3 72% · F4 75% · F5 62% · F6 74% · F7 35% ·
 ## Tests
 
 - `corepack pnpm install --frozen-lockfile`: OK.
-- `corepack pnpm run check`: OK, 17 archivos JavaScript.
-- `corepack pnpm test`: 33/33 OK.
+- `corepack pnpm run check`: OK, 21 archivos JavaScript.
+- `corepack pnpm test`: 39/39 OK.
 - Regresiones cubiertas: validación auth, no-cache, alta con confirmación, login/cookies/redirección, retiro de favoritos y retry `PGRST303`.
 - CI #16 del PR #4: SUCCESS sobre `64ff9c76a79eb568f48e76dae073f2e1eeb7efb0`.
 - CI #18 del PR #5: SUCCESS sobre `1893e4f1b755ba87253dc1c6ff395f8817060135`.
 - CI #20 del PR #6: SUCCESS sobre `7a548f653d092f6000daa83c58fdbac06ca83881`.
 - CI #22 del PR #7: SUCCESS sobre `5891d24c7693bb127e35e4cb33c565deb59a8021`.
+- CI #23 del PR #7: SUCCESS sobre el HEAD documental `6851e038c297a5acfe8a392193fd2e806d308ce5`.
 - E2E con usuarios Supabase reales y QA visual de todas las páginas: pendientes; no declararlos ejecutados.
 
 ## CI
@@ -111,6 +113,7 @@ F0 100% · F1 70% · F2 85% · F3 72% · F4 75% · F5 62% · F6 74% · F7 35% ·
 - GitHub Actions CI #14: SUCCESS sobre PR #3. PR #3 fusionado; `main` quedó en `08e15128ca28fe6742536043a7de8b90c2d82ede`.
 - GitHub Actions CI #16: SUCCESS sobre PR #4. CI #18: SUCCESS sobre PR #5; `main` quedó en `928cc9990f3ceb8dfdcf208e5db0e89191fb6ade`.
 - GitHub Actions CI #20: SUCCESS sobre PR #6; `main` quedó en `19a50120d4eddb2b93faa0bb37a7c86ec426d5a9`.
+- GitHub Actions CI #23: SUCCESS sobre PR #7; `main` quedó en `5f63bcd4ad3597f1b0f4ef30c73b85ba2ec88929`.
 
 ## Bugs y pendientes
 
@@ -146,17 +149,18 @@ F0 100% · F1 70% · F2 85% · F3 72% · F4 75% · F5 62% · F6 74% · F7 35% ·
 - Entorno: `production` (`39886077-e963-4fec-b3aa-b0e5d38908dd`).
 - Servicio: `drams` (`c5780bbd-4030-4319-a714-1bc0f564e353`).
 - Dominio: `https://drams-production.up.railway.app`.
-- Último deployment confirmado: `d85de2c7-c35e-4089-a4a9-4e7f77880096`, SUCCESS sobre `19a50120d4eddb2b93faa0bb37a7c86ec426d5a9`.
+- Último deployment confirmado: `f2ae64db-aef1-431b-8e2c-e820a8da2408`, SUCCESS sobre `5f63bcd4ad3597f1b0f4ef30c73b85ba2ec88929`.
 - Variables nuevas verificadas por comportamiento: `CONTACT_EMAIL` y `APP_ORIGINS`.
 - El incidente histórico de cola congelada quedó resuelto; los deployments antiguos figuran removidos y no bloquean producción.
 - Smoke 2026-08-29 sobre PR #5: `/` 200 con `#review-form`; assets de opiniones 200; `/api/health` 200 con DB ok; `/api/reviews` 200; publicación anónima 401, sin datos falsos.
 - Smoke 2026-08-30 sobre PR #6: `/` y catálogo 200; WebP responsive 200; health/DB ok; 11 productos de mujer; QA visual 1363×936 sin overflow.
+- Smoke 2026-08-30 sobre PR #7: `/api/health` 200 con DB ok; `/api/checkout/config` 200 y `enabled:false`; `/checkout.html` 200. El cierre fail-closed es el comportamiento correcto sin schema ni credenciales Sandbox.
 - Smoke previo de la versión activa: `/` 200, `/api/health` 200 con DB ok, `/api/products` 200, `/cuenta.html` 200, login inválido 400, `/favoritos.html` 301 y `/admin` sin sesión 403.
 - Healthcheck esperado: `/api/health` con API y DB `ok`.
 
 ## Bloqueos
 
-- No hay bloqueo activo de Railway: el deployment `d85de2c7-c35e-4089-a4a9-4e7f77880096` figura `SUCCESS`.
+- No hay bloqueo activo de Railway: el deployment `f2ae64db-aef1-431b-8e2c-e820a8da2408` figura `SUCCESS`.
 - Opiniones queda como modelo general por ahora; asociarlas a cada perfume es una decisión funcional futura, no un bloqueo para la versión actual.
 - Recuperación de contraseña completa puede requerir decisión/configuración de URL y SMTP.
 - Acciones destructivas sobre la tabla histórica `favorites` o datos reales requieren autorización explícita.
@@ -165,4 +169,4 @@ F0 100% · F1 70% · F2 85% · F3 72% · F4 75% · F5 62% · F6 74% · F7 35% ·
 
 ## Próxima acción exacta
 
-Publicar el checkpoint seguro, verificar CI/Railway y smoke. Luego, en un entorno con Supabase CLI, crear/aplicar `checkout_orders`, configurar credenciales oficiales Sandbox/Webhook y ejecutar pagos aprobado, rechazado y pendiente; mantener F11 pendiente hasta disponer de viewport configurable.
+En un entorno con Supabase CLI, crear y aplicar `checkout_orders`; luego un adulto responsable o titular habilitado debe cargar credenciales oficiales Mercado Pago Sandbox/Webhook en Railway y ejecutar pagos aprobado, rechazado y pendiente. Mantener F11 pendiente hasta disponer de viewport configurable.

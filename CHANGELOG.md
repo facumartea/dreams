@@ -16,7 +16,9 @@ Todos los cambios relevantes de DREAMS se registran aquí. El proyecto aún no u
 - Railway no contiene variables Mercado Pago; sin credenciales Sandbox no se afirmó ni simuló una compra real.
 - Suite ampliada a 39 pruebas: estados, firma, preferencia sin secreto en payload, error HTTP/red, feature flag y regresión UI; check y audit verdes.
 - Roadmap extendido con F18 y pesos corregidos a un total real de 100%; progreso recalibrado de 71% informado históricamente a 67% (66,70% exacto) por alcance nuevo y corrección aritmética.
-- Commit `5891d24c7693bb127e35e4cb33c565deb59a8021` publicado en `codex/checkout-sandbox-foundation`; PR #7 abierto y CI #22 SUCCESS. No se fusionó ni desplegó porque el merge a producción requiere autorización explícita.
+- Commit `5891d24c7693bb127e35e4cb33c565deb59a8021` publicado en `codex/checkout-sandbox-foundation`; PR #7 validado por CI #23 y fusionado con autorización como `5f63bcd4ad3597f1b0f4ef30c73b85ba2ec88929`.
+- Railway deployment `f2ae64db-aef1-431b-8e2c-e820a8da2408` terminó SUCCESS sobre el merge exacto.
+- Smoke posterior: health/API/DB 200, configuración checkout 200 con cierre seguro `enabled:false` y pantalla `/checkout.html` 200. No se activó ni simuló Mercado Pago sin schema y credenciales oficiales Sandbox.
 
 ### 2026-08-30 — Colección femenina y hero de alta resolución
 
