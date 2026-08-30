@@ -4,7 +4,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const root = path.resolve(__dirname, '..');
-const public_pages = ['index.html', 'catalogo.html', 'producto.html', 'carrito.html', 'cuenta.html', 'nosotros.html'];
+const public_pages = ['index.html', 'catalogo.html', 'producto.html', 'carrito.html', 'cuenta.html', 'nosotros.html', 'checkout.html', 'checkout-resultado.html'];
 
 test('todas las páginas públicas usan el isotipo como favicon', () => {
     for (const page of public_pages) {
@@ -51,5 +51,17 @@ test('el catálogo presenta una cabecera específica para Perfumes de Mujer', ()
     assert.match(html, /id="catalog-title"/);
     assert.match(script, /Perfumes de Mujer/);
     assert.match(script, /classList\.toggle\('is-women', is_women\)/);
+    assert.match(script, /classList\.toggle\('women-collection', is_women\)/);
     assert.match(css, /\.catalog-page\.is-women \.page-intro/);
+    assert.match(css, /\.women-collection \.site-header/);
+});
+
+test('el checkout declara Sandbox, estados y diseño responsive', () => {
+    const html = fs.readFileSync(path.join(root, 'public/checkout.html'), 'utf8');
+    const result = fs.readFileSync(path.join(root, 'public/js/checkout-result.js'), 'utf8');
+    const cart = fs.readFileSync(path.join(root, 'public/js/carrito.js'), 'utf8');
+    assert.match(html, /MODO SANDBOX — No se realizarán cobros reales/);
+    assert.match(html, /id="sandbox-help"[^>]*hidden/);
+    for (const state of ['approved', 'rejected', 'pending', 'cancelled', 'error']) assert.match(result, new RegExp(`${state}:`));
+    assert.match(cart, /checkout_config\.enabled/);
 });

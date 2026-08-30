@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Checkout Sandbox | DREAMS</title>
+    <link rel="icon" type="image/png" href="/assets/dreams-isotype.png">
+    <link rel="apple-touch-icon" href="/assets/dreams-isotype.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header class="site-header"><a class="brand" href="/">DREAMS</a><button class="menu-toggle" aria-label="Abrir menú">☰</button><nav class="main-nav"><a href="/">Inicio</a><a href="/catalogo.html">Perfumes</a><a href="/catalogo.html?gender=mujer">Mujer</a><a href="/catalogo.html?gender=hombre">Hombre</a><a href="/catalogo.html?gender=unisex">Unisex</a><a href="/nosotros.html">Nosotros</a></nav><div class="header-actions"><a href="/cuenta.html" class="icon-link" aria-label="Mi cuenta"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"></circle><path d="M5 21c.8-4 3.2-6 7-6s6.2 2 7 6"></path></svg></a><a href="/carrito.html" class="cart-link" aria-label="Carrito"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h2l1.5 10h10L20 8H7"></path><circle cx="9" cy="19" r="1.3"></circle><circle cx="17" cy="19" r="1.3"></circle></svg><span id="cart-count">0</span></a></div></header>
+    <main class="section checkout-page">
+        <div class="page-intro compact"><p class="eyebrow">PAGO SEGURO · PRUEBA</p><h1>Checkout</h1><p>Revisá el pedido. El pago se completa en el entorno oficial de Mercado Pago.</p></div>
+        <div id="sandbox-banner" class="sandbox-banner" role="status">MODO SANDBOX — No se realizarán cobros reales.</div>
+        <div class="checkout-layout">
+            <section aria-labelledby="checkout-summary-title"><p class="eyebrow">TU PEDIDO</p><h2 id="checkout-summary-title">Resumen</h2><div id="checkout-items" class="checkout-items" aria-live="polite"></div></section>
+            <aside class="checkout-payment" aria-labelledby="payment-title">
+                <p class="eyebrow">MÉTODO DE PAGO</p><h2 id="payment-title">Mercado Pago</h2>
+                <p>Al continuar vas a elegir el medio de pago dentro del checkout protegido de Mercado Pago.</p>
+                <div id="checkout-total" class="summary-line summary-total"><span>Total</span><strong>—</strong></div>
+                <p id="checkout-status" class="form-message" role="status" aria-live="polite"></p>
+                <button id="checkout-submit" class="button button-primary" type="button" disabled>Continuar a Mercado Pago</button>
+                <a class="text-button" href="/carrito.html">Volver al carrito</a>
+            </aside>
+        </div>
+        <details id="sandbox-help" class="sandbox-help" hidden>
+            <summary>Datos para probar pagos</summary>
+            <p>Usá únicamente estos datos dentro del entorno Sandbox. No ingreses una tarjeta real.</p>
+            <div class="sandbox-test-grid">
+                <div><span>Visa de prueba</span><code id="test-card-number">4509 9535 6623 3704</code><button class="small-button copy-test-data" data-copy="4509953566233704" type="button">Copiar</button></div>
+                <div><span>Vencimiento / seguridad</span><code>11/30 · 123</code><button class="small-button copy-test-data" data-copy="11/30 · 123" type="button">Copiar</button></div>
+                <div><span>Resultado</span><code>APRO</code><button class="small-button copy-test-data" data-copy="APRO" type="button">Copiar</button></div>
+            </div>
+        </details>
+    </main>
+    <footer class="site-footer"><div><span class="footer-brand">DREAMS</span><p>Los perfumes de tus sueños.</p></div><div class="footer-bottom">© 2026 DREAMS. Proyecto académico.</div></footer>
+    <script src="/js/safe.js"></script><script src="/js/app.js"></script><script src="/js/checkout.js"></script>
+</body>
+</html>

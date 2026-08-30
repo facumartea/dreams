@@ -137,6 +137,16 @@ test('config pública expone contacto pero nunca el identificador Admin', async 
     });
 });
 
+test('checkout permanece cerrado si faltan esquema o credenciales Sandbox', async () => {
+    const database = database_with(() => ({ data: [], error: null }));
+    const app = create_app({ database, disable_request_log: true });
+    await serve(app, async base => {
+        const response = await fetch(`${base}/api/checkout/config`);
+        assert.equal(response.status, 200);
+        assert.deepEqual(await response.json(), { enabled: false, provider: null, mode: 'sandbox', show_test_data: false });
+    });
+});
+
 test('mutaciones rechazan orígenes cruzados y aceptan el mismo origen', async () => {
     const database = database_with(() => ({ data: [], error: null }));
     const app = create_app({ database, disable_request_log: true });

@@ -3,6 +3,7 @@ const { createClient } = require('@supabase/supabase-js');
 global.WebSocket = require('ws');
 const { seed_database } = require('./seed');
 const app_module = require('./app');
+const { MercadoPagoProvider } = require('./payments/mercado-pago');
 
 const needed = ['SUPABASE_URL', 'SUPABASE_SECRET_KEY'].filter(key => !process.env[key]);
 if (needed.length) throw new Error(`Faltan variables obligatorias: ${needed.join(', ')}`);
@@ -10,6 +11,11 @@ if (needed.length) throw new Error(`Faltan variables obligatorias: ${needed.join
 const client_options = { auth: { autoRefreshToken: false, persistSession: false } };
 const create_database = () => createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SECRET_KEY, client_options);
 const database = create_database();
+const payment_provider = new MercadoPagoProvider({
+    access_token: process.env.MERCADO_PAGO_ACCESS_TOKEN,
+    webhook_secret: process.env.MERCADO_PAGO_WEBHOOK_SECRET,
+    mode: process.env.MERCADO_PAGO_MODE
+});
 const port = Number(process.env.PORT || 8080);
 const app = app_module.create_app({
     database,
@@ -17,7 +23,11 @@ const app = app_module.create_app({
     production: process.env.NODE_ENV === 'production',
     contact_email: process.env.CONTACT_EMAIL,
     whatsapp_number: process.env.WHATSAPP_NUMBER,
-    allowed_origins: process.env.APP_ORIGINS
+    allowed_origins: process.env.APP_ORIGINS,
+    payment_provider,
+    app_base_url: process.env.APP_BASE_URL,
+    checkout_schema_ready: process.env.CHECKOUT_SCHEMA_READY === 'true',
+    show_checkout_test_data: process.env.CHECKOUT_SHOW_TEST_DATA === 'true'
 });
 
 function start() {

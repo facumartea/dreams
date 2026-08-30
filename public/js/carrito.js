@@ -1,4 +1,4 @@
-function render_cart(cart = get_cart(), whatsapp_url = null) {
+function render_cart(cart = get_cart(), whatsapp_url = null, checkout_enabled = false) {
     const container = document.getElementById('cart-items');
     const summary = document.getElementById('cart-summary');
 
@@ -47,11 +47,15 @@ function render_cart(cart = get_cart(), whatsapp_url = null) {
     const consultation = whatsapp_url
         ? `<a class="button button-dark" href="${escape_html(whatsapp_url)}" target="_blank" rel="noreferrer">Consultar carrito por WhatsApp</a>`
         : '<button class="button button-dark" disabled>Verificando precio y stock…</button>';
+    const checkout = checkout_enabled
+        ? '<a class="button button-primary checkout-link" href="/checkout.html">Continuar al pago de prueba</a>'
+        : '';
     summary.innerHTML = `
         <p class="eyebrow">RESUMEN</p>
         <div class="summary-line"><span>Productos</span><strong>${format_price(total)}</strong></div>
         <div class="summary-line"><span>Envío</span><span>A consultar</span></div>
         <div class="summary-line summary-total"><span>Total</span><strong>${format_price(total)}</strong></div>
+        ${checkout}
         ${consultation}
         <button id="clear-cart" class="remove-button">Vaciar carrito</button>
     `;
@@ -74,15 +78,16 @@ async function load_cart() {
     if (!cart.length) return;
 
     try {
-        const response = await fetch('/api/cart/quote', {
+        const [response, checkout_response] = await Promise.all([fetch('/api/cart/quote', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ items: cart.map(item => ({ id: item.id, quantity: item.quantity })) })
-        });
+        }), fetch('/api/checkout/config')]);
         const data = await response.json();
+        const checkout_config = await checkout_response.json();
         if (!response.ok) throw new Error(data.error || 'No se pudo verificar el carrito.');
         save_cart(data.items);
-        render_cart(data.items, data.whatsapp_url);
+        render_cart(data.items, data.whatsapp_url, checkout_response.ok && checkout_config.enabled === true);
         if (data.warnings.length) show_toast(data.warnings.join(' '));
     } catch (error) {
         show_toast(`${error.message} La consulta queda deshabilitada hasta reintentar.`);

@@ -38,6 +38,14 @@ El navegador sólo habla con `/api`. `SUPABASE_SECRET_KEY` es exclusivamente del
 - `PLAN.md` define fases, pesos y progreso; sólo actualizarlo ante avance verificado, cambios de alcance, riesgos o dependencias.
 - `CHANGELOG.md` registra únicamente trabajo realizado. `AGENTS.md` cambia sólo cuando aparece una regla duradera.
 
+## Herramientas y responsabilidades
+
+- GitHub es la fuente del código, ramas, PR y CI; Railway es el estado de deploy y producción; Supabase es Auth/DB/RLS y sólo se modifica mediante migraciones seguras.
+- Figma se usa para cambios de interfaz complejos cuando un diseño previo reduzca ambigüedad; no duplicar allí ajustes pequeños ya definidos por el sistema visual en código.
+- Canva se limita a campañas y composiciones gráficas; no reemplaza el frontend ni el sistema de diseño.
+- Notion puede ampliar documentación y Linear puede ordenar tareas reales, pero no reemplazan `CURRENT_STATE.md`, `PLAN.md` ni `CHANGELOG.md`.
+- No usar herramientas para aparentar proceso. Cada integración debe aportar al cambio actual y toda acción externa debe informarse con evidencia.
+
 ## Flujo Git y checkpoints
 
 - Antes de cambios importantes verificar repositorio, rama, HEAD, remoto, árbol de trabajo y commits recientes.
@@ -75,7 +83,7 @@ corepack pnpm test
 
 `pnpm run check` valida la sintaxis de servidor, frontend, scripts y tests. `pnpm test` usa el test runner nativo de Node. La cobertura debe ampliarse en F15; no confundir la suite inicial con cobertura completa.
 
-Variables obligatorias: `SUPABASE_URL`, `SUPABASE_SECRET_KEY`. Variables operativas: `NODE_ENV`, `PORT`, `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `ADMIN_NAME`, `CONTACT_EMAIL`, `WHATSAPP_NUMBER`, `APP_ORIGINS`. `CONTACT_EMAIL` puede exponerse en la UI; `ADMIN_EMAIL` no. `APP_ORIGINS` contiene los orígenes HTTPS exactos separados por coma y debe actualizarse antes de una migración de dominio. Nunca versionar `.env` real.
+Variables obligatorias: `SUPABASE_URL`, `SUPABASE_SECRET_KEY`. Variables operativas: `NODE_ENV`, `PORT`, `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `ADMIN_NAME`, `CONTACT_EMAIL`, `WHATSAPP_NUMBER`, `APP_ORIGINS`. Checkout: `APP_BASE_URL`, `MERCADO_PAGO_MODE`, `MERCADO_PAGO_ACCESS_TOKEN`, `MERCADO_PAGO_WEBHOOK_SECRET`, `CHECKOUT_SCHEMA_READY` y `CHECKOUT_SHOW_TEST_DATA`. Tokens/secrets son sólo servidor. No activar `CHECKOUT_SCHEMA_READY` antes de aplicar y verificar la migración indicada en `docs/checkout_sandbox.md`. `CONTACT_EMAIL` puede exponerse en la UI; `ADMIN_EMAIL` no. `APP_ORIGINS` contiene los orígenes HTTPS exactos separados por coma y debe actualizarse antes de una migración de dominio. Nunca versionar `.env` real.
 
 ## Tests y cierre de fase
 
