@@ -8,9 +8,10 @@
 - REPO: `https://github.com/facumartea/drams.git`
 - RAMA ACTUAL: `codex/checkout-sandbox-foundation` (checkpoint preparado desde `main` `19a50120d4eddb2b93faa0bb37a7c86ec426d5a9`).
 - PRS FUSIONADOS: [#1 — Production audit and critical hardening](https://github.com/facumartea/drams/pull/1), [#2 — Align Railway runtime with Node 24](https://github.com/facumartea/drams/pull/2), [#3 — Refine DREAMS premium visual experience](https://github.com/facumartea/drams/pull/3), [#4 — Harden mutation origins and separate public contact](https://github.com/facumartea/drams/pull/4), [#5 — Add persistent customer review publishing](https://github.com/facumartea/drams/pull/5) y [#6 — Refine women collection and high-resolution hero](https://github.com/facumartea/drams/pull/6).
-- HEAD EN `main`: `19a50120d4eddb2b93faa0bb37a7c86ec426d5a9` (merge de PR #6). Rama de continuidad: `codex/women-editorial-hero`.
-- ÚLTIMO PUSH: rama `codex/women-editorial-hero`; commit funcional `7a548f653d092f6000daa83c58fdbac06ca83881` fusionado por PR #6. El HEAD posterior de la rama es el checkpoint documental de cierre y no dispara deploy.
-- ÚLTIMO CI VERIFICADO: GitHub Actions CI #20, SUCCESS sobre `7a548f653d092f6000daa83c58fdbac06ca83881`.
+- HEAD EN `main`: `19a50120d4eddb2b93faa0bb37a7c86ec426d5a9` (merge de PR #6). HEAD funcional de la rama: `5891d24c7693bb127e35e4cb33c565deb59a8021`.
+- PR ABIERTO: [#7 — Add safe Mercado Pago Sandbox checkout foundation](https://github.com/facumartea/drams/pull/7), mergeable y con CI verde; no fusionado porque el merge a `main`/producción requiere autorización explícita.
+- ÚLTIMO PUSH: rama `codex/checkout-sandbox-foundation`; commit `5891d24c7693bb127e35e4cb33c565deb59a8021` (`Add safe Mercado Pago Sandbox checkout foundation`).
+- ÚLTIMO CI VERIFICADO: GitHub Actions CI #22, SUCCESS sobre `5891d24c7693bb127e35e4cb33c565deb59a8021`.
 - ÚLTIMO DEPLOY: Railway `d85de2c7-c35e-4089-a4a9-4e7f77880096`, SUCCESS sobre `19a50120d4eddb2b93faa0bb37a7c86ec426d5a9`.
 - FASE ACTUAL: F18 — Checkout Sandbox, bloqueado de forma segura hasta migración/credenciales.
 - PROGRESO GENERAL: 67% ponderado (66,70% exacto según `PLAN.md`).
@@ -29,6 +30,7 @@ F0 100% · F1 70% · F2 85% · F3 72% · F4 75% · F5 62% · F6 74% · F7 35% ·
 - Suite local 39/39, check de 21 archivos y audit de producción sin vulnerabilidades conocidas.
 - Supabase CLI volvió a ser bloqueada al descargar; no se creó ni aplicó migración. Railway no tiene variables Mercado Pago. No hubo compra Sandbox real.
 - `PLAN.md` suma F18 y corrige pesos históricos de 104% a 100%; progreso recalibrado a 66,70% exacto.
+- PR #7 abierto y CI #22 verde. El merge fue bloqueado por requerir autorización explícita; `main` y Railway siguen sin cambios en esta tanda.
 
 - Generado un hero editorial original de 1024×1536 basado en la composición DREAMS existente, sin texto rasterizado ni referencias de marca ajena.
 - Integrados `/assets/dreams-hero-640.webp` (18.840 bytes) y `/assets/dreams-hero-1024.webp` (41.844 bytes) mediante `picture/srcset`; el frasco anterior de 185×272 dejó de ampliarse en portada.
@@ -99,6 +101,7 @@ F0 100% · F1 70% · F2 85% · F3 72% · F4 75% · F5 62% · F6 74% · F7 35% ·
 - CI #16 del PR #4: SUCCESS sobre `64ff9c76a79eb568f48e76dae073f2e1eeb7efb0`.
 - CI #18 del PR #5: SUCCESS sobre `1893e4f1b755ba87253dc1c6ff395f8817060135`.
 - CI #20 del PR #6: SUCCESS sobre `7a548f653d092f6000daa83c58fdbac06ca83881`.
+- CI #22 del PR #7: SUCCESS sobre `5891d24c7693bb127e35e4cb33c565deb59a8021`.
 - E2E con usuarios Supabase reales y QA visual de todas las páginas: pendientes; no declararlos ejecutados.
 
 ## CI

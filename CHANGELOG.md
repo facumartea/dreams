@@ -16,6 +16,7 @@ Todos los cambios relevantes de DREAMS se registran aquí. El proyecto aún no u
 - Railway no contiene variables Mercado Pago; sin credenciales Sandbox no se afirmó ni simuló una compra real.
 - Suite ampliada a 39 pruebas: estados, firma, preferencia sin secreto en payload, error HTTP/red, feature flag y regresión UI; check y audit verdes.
 - Roadmap extendido con F18 y pesos corregidos a un total real de 100%; progreso recalibrado de 71% informado históricamente a 67% (66,70% exacto) por alcance nuevo y corrección aritmética.
+- Commit `5891d24c7693bb127e35e4cb33c565deb59a8021` publicado en `codex/checkout-sandbox-foundation`; PR #7 abierto y CI #22 SUCCESS. No se fusionó ni desplegó porque el merge a producción requiere autorización explícita.
 
 ### 2026-08-30 — Colección femenina y hero de alta resolución
 
