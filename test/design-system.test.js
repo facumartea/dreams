@@ -71,14 +71,14 @@ test('el checkout declara modo demo, estados y diseño responsive', () => {
 test('motion premium usa JS liviano, fallback y reducción de movimiento', () => {
     const motion = fs.readFileSync(path.join(root, 'public/js/motion.js'), 'utf8');
     const css = fs.readFileSync(path.join(root, 'public/css/style.css'), 'utf8');
-    const home = fs.readFileSync(path.join(root, 'public/index.html'), 'utf8');
+    const app = fs.readFileSync(path.join(root, 'public/js/app.js'), 'utf8');
     assert.match(motion, /IntersectionObserver/);
     assert.match(motion, /requestAnimationFrame/);
     assert.match(motion, /prefers-reduced-motion: reduce/);
     assert.doesNotMatch(motion, /three|webgl|gsap/i);
     assert.match(css, /--depth-x/);
     assert.match(css, /\.motion-spotlight/);
-    assert.match(home, /\/js\/motion\.js/);
+    assert.match(app, /motion_script\.src = '\/js\/motion\.js'/);
 });
 
 test('carrito usa Comprar y checkout integra cupones persistentes en mayúsculas', () => {
