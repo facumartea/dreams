@@ -14,6 +14,9 @@ Todos los cambios relevantes de DREAMS se registran aquí. El proyecto aún no u
 - Admin incorpora sección Cupones con crear, editar, activar/desactivar, eliminar y listado completo.
 - Railway recibió `APP_BASE_URL`, modo Sandbox, schema ready y datos de prueba con redeploy diferido. Siguen ausentes el access token y secreto Webhook, por lo que el checkout permanece cerrado de forma segura.
 - Check de 22 archivos, 48 pruebas y audit de producción verdes antes de publicar.
+- Commit funcional `292fc13e33855f8387c90ffb4bf32f7e9d1a53d0`; PR #8 validado por CI #25 y fusionado como `ac66917edae49b1e272d51e07b09fe55fe075c32`.
+- Railway desplegó `31c062ae-ea05-4cdb-a53b-06f28b543e38` con estado SUCCESS; healthcheck, carrito, assets y checkout respondieron correctamente.
+- El checkout continúa cerrado de forma segura hasta configurar el access token y secreto Webhook oficiales Sandbox; no se afirmó ninguna compra real.
 
 ### 2026-08-30 — F11 parcial y base segura de Checkout Sandbox
 

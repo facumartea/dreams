@@ -4,15 +4,15 @@
 
 ## Identidad
 
-- PROYECTO: DREAMS — tienda catálogo de perfumería con consultas por WhatsApp.
+- PROYECTO: DREAMS — ecommerce de perfumería con checkout preparado y consulta secundaria por WhatsApp.
 - REPO: `https://github.com/facumartea/drams.git`
-- RAMA DE TRABAJO: `codex/checkout-coupons` desde `main` `5f63bcd4ad3597f1b0f4ef30c73b85ba2ec88929`.
+- RAMA DE TRABAJO: `codex/checkout-coupons`, fusionada en `main` como `ac66917edae49b1e272d51e07b09fe55fe075c32`.
 - PRS FUSIONADOS: [#1 — Production audit and critical hardening](https://github.com/facumartea/drams/pull/1), [#2 — Align Railway runtime with Node 24](https://github.com/facumartea/drams/pull/2), [#3 — Refine DREAMS premium visual experience](https://github.com/facumartea/drams/pull/3), [#4 — Harden mutation origins and separate public contact](https://github.com/facumartea/drams/pull/4), [#5 — Add persistent customer review publishing](https://github.com/facumartea/drams/pull/5), [#6 — Refine women collection and high-resolution hero](https://github.com/facumartea/drams/pull/6) y [#7 — Add safe Mercado Pago Sandbox checkout foundation](https://github.com/facumartea/drams/pull/7).
-- HEAD EN `main`: `5f63bcd4ad3597f1b0f4ef30c73b85ba2ec88929` (merge de PR #7). Último commit funcional del PR: `5891d24c7693bb127e35e4cb33c565deb59a8021`.
-- PR ABIERTO: ninguno para esta tanda; PR #7 fusionado.
-- ÚLTIMO PUSH FUNCIONAL: rama `codex/checkout-sandbox-foundation`; commit `5891d24c7693bb127e35e4cb33c565deb59a8021` (`Add safe Mercado Pago Sandbox checkout foundation`).
-- ÚLTIMO CI VERIFICADO: GitHub Actions CI #23, SUCCESS sobre `6851e038c297a5acfe8a392193fd2e806d308ce5`.
-- ÚLTIMO DEPLOY: Railway `f2ae64db-aef1-431b-8e2c-e820a8da2408`, SUCCESS sobre `5f63bcd4ad3597f1b0f4ef30c73b85ba2ec88929`.
+- HEAD EN `main`: `ac66917edae49b1e272d51e07b09fe55fe075c32` (merge de PR #8). Último commit funcional del PR: `292fc13e33855f8387c90ffb4bf32f7e9d1a53d0`.
+- PR ABIERTO: ninguno; PR #8 fusionado.
+- ÚLTIMO PUSH FUNCIONAL: rama `codex/checkout-coupons`; commit `292fc13e33855f8387c90ffb4bf32f7e9d1a53d0` (`Add persistent coupons and checkout ordering`).
+- ÚLTIMO CI VERIFICADO: GitHub Actions CI #25, SUCCESS sobre `292fc13e33855f8387c90ffb4bf32f7e9d1a53d0`.
+- ÚLTIMO DEPLOY: Railway `31c062ae-ea05-4cdb-a53b-06f28b543e38`, SUCCESS sobre `ac66917edae49b1e272d51e07b09fe55fe075c32`.
 - FASE ACTUAL: F18/F19 — Checkout Sandbox y cupones; bloqueado de forma segura sólo por credenciales Mercado Pago.
 - PROGRESO GENERAL: 70% ponderado (70,31% exacto según `PLAN.md`).
 
@@ -27,7 +27,7 @@ F0 100% · F1 70% · F2 85% · F3 82% · F4 78% · F5 62% · F6 74% · F7 50% ·
 - Implementado CTA `Comprar`, cupón persistente en mayúsculas, desglose Subtotal/Descuento/Total y envío del total final a Mercado Pago.
 - Implementado CRUD Admin de cupones, activar/desactivar y validaciones de código/porcentaje tanto en API como DB.
 - Railway tiene `APP_BASE_URL`, `MERCADO_PAGO_MODE=sandbox`, `CHECKOUT_SCHEMA_READY=true` y `CHECKOUT_SHOW_TEST_DATA=true`, configurados sin redeploy. Faltan `MERCADO_PAGO_ACCESS_TOKEN` y `MERCADO_PAGO_WEBHOOK_SECRET`.
-- Check 22 archivos, tests 48/48 y audit sin vulnerabilidades. Falta publicar esta tanda y verificar CI/deploy.
+- Check 22 archivos, tests 48/48 y audit sin vulnerabilidades; PR #8, CI #25, merge, deploy y smoke público completados.
 
 - Preparado F11 parcial: cabecera femenina clara marfil/rosa viejo, navegación oscura, acentos cálidos en filtros/cards, corrección del `picture` móvil, touch targets de 44 px y ajustes 390/430/1440+.
 - El navegador disponible no permite fijar la matriz de seis viewports; no declarar F11 cerrada ni esos tamaños visualmente ejecutados.
@@ -103,14 +103,15 @@ F0 100% · F1 70% · F2 85% · F3 82% · F4 78% · F5 62% · F6 74% · F7 50% ·
 ## Tests
 
 - `corepack pnpm install --frozen-lockfile`: OK.
-- `corepack pnpm run check`: OK, 21 archivos JavaScript.
-- `corepack pnpm test`: 39/39 OK.
+- `corepack pnpm run check`: OK, 22 archivos JavaScript.
+- `corepack pnpm test`: 48/48 OK.
 - Regresiones cubiertas: validación auth, no-cache, alta con confirmación, login/cookies/redirección, retiro de favoritos y retry `PGRST303`.
 - CI #16 del PR #4: SUCCESS sobre `64ff9c76a79eb568f48e76dae073f2e1eeb7efb0`.
 - CI #18 del PR #5: SUCCESS sobre `1893e4f1b755ba87253dc1c6ff395f8817060135`.
 - CI #20 del PR #6: SUCCESS sobre `7a548f653d092f6000daa83c58fdbac06ca83881`.
 - CI #22 del PR #7: SUCCESS sobre `5891d24c7693bb127e35e4cb33c565deb59a8021`.
 - CI #23 del PR #7: SUCCESS sobre el HEAD documental `6851e038c297a5acfe8a392193fd2e806d308ce5`.
+- CI #25 del PR #8: SUCCESS sobre `292fc13e33855f8387c90ffb4bf32f7e9d1a53d0`.
 - E2E con usuarios Supabase reales y QA visual de todas las páginas: pendientes; no declararlos ejecutados.
 
 ## CI
@@ -121,6 +122,7 @@ F0 100% · F1 70% · F2 85% · F3 82% · F4 78% · F5 62% · F6 74% · F7 50% ·
 - GitHub Actions CI #16: SUCCESS sobre PR #4. CI #18: SUCCESS sobre PR #5; `main` quedó en `928cc9990f3ceb8dfdcf208e5db0e89191fb6ade`.
 - GitHub Actions CI #20: SUCCESS sobre PR #6; `main` quedó en `19a50120d4eddb2b93faa0bb37a7c86ec426d5a9`.
 - GitHub Actions CI #23: SUCCESS sobre PR #7; `main` quedó en `5f63bcd4ad3597f1b0f4ef30c73b85ba2ec88929`.
+- GitHub Actions CI #25: SUCCESS sobre PR #8; `main` quedó en `ac66917edae49b1e272d51e07b09fe55fe075c32`.
 
 ## Bugs y pendientes
 
@@ -132,7 +134,7 @@ F0 100% · F1 70% · F2 85% · F3 82% · F4 78% · F5 62% · F6 74% · F7 50% ·
 7. Delete de producto sigue siendo permanente; definir archive/auditoría antes de cerrar F7.
 8. Faltan QA responsive completo, Lighthouse, SEO, accesibilidad automatizada y QA final.
 9. Checkout ya tiene schema remoto y configuración no secreta. Requiere access token y secreto Webhook oficiales Sandbox, más compras de prueba reales antes de considerarse verificado.
-10. Cupones están implementados y probados local/DB; faltan CI, deploy y smoke autenticado en producción.
+10. Cupones están implementados, migrados, validados por CI y desplegados; falta smoke autenticado de CRUD Admin y compra Sandbox real.
 
 ## Riesgos
 
@@ -142,7 +144,7 @@ F0 100% · F1 70% · F2 85% · F3 82% · F4 78% · F5 62% · F6 74% · F7 50% ·
 - Grants amplios quedan contenidos por RLS, pero debilitan defensa en profundidad.
 - Advisor informa `inquiries` con RLS sin policy (INFO). Es intencional: la tabla es server-only mediante secret/service key; no abrir acceso público sin caso real.
 - Índices nuevos figuran sin uso (INFO) por haberse creado recién y por bajo volumen; no borrarlos sólo para silenciar el advisor.
-- Existe código de checkout/pedidos en modo cerrado; no existen todavía tabla remota, credenciales ni pagos verificados. No presentarlo como checkout operativo.
+- Checkout/pedidos y tablas remotas existen, pero faltan credenciales oficiales Sandbox y pagos reales verificados. No presentarlo como checkout de pago operativo todavía.
 
 ## DB
 
@@ -157,18 +159,19 @@ F0 100% · F1 70% · F2 85% · F3 82% · F4 78% · F5 62% · F6 74% · F7 50% ·
 - Entorno: `production` (`39886077-e963-4fec-b3aa-b0e5d38908dd`).
 - Servicio: `drams` (`c5780bbd-4030-4319-a714-1bc0f564e353`).
 - Dominio: `https://drams-production.up.railway.app`.
-- Último deployment confirmado: `f2ae64db-aef1-431b-8e2c-e820a8da2408`, SUCCESS sobre `5f63bcd4ad3597f1b0f4ef30c73b85ba2ec88929`.
+- Último deployment confirmado: `31c062ae-ea05-4cdb-a53b-06f28b543e38`, SUCCESS sobre `ac66917edae49b1e272d51e07b09fe55fe075c32`.
 - Variables nuevas verificadas por comportamiento: `CONTACT_EMAIL` y `APP_ORIGINS`.
 - El incidente histórico de cola congelada quedó resuelto; los deployments antiguos figuran removidos y no bloquean producción.
 - Smoke 2026-08-29 sobre PR #5: `/` 200 con `#review-form`; assets de opiniones 200; `/api/health` 200 con DB ok; `/api/reviews` 200; publicación anónima 401, sin datos falsos.
 - Smoke 2026-08-30 sobre PR #6: `/` y catálogo 200; WebP responsive 200; health/DB ok; 11 productos de mujer; QA visual 1363×936 sin overflow.
 - Smoke 2026-08-30 sobre PR #7: `/api/health` 200 con DB ok; `/api/checkout/config` 200 y `enabled:false`; `/checkout.html` 200. El cierre fail-closed es el comportamiento correcto sin schema ni credenciales Sandbox.
+- Smoke 2026-08-31 sobre PR #8: healthcheck Railway 200; carrito, CSS, JS y checkout 200; checkout muestra cupón y modo Sandbox; `/api/checkout/config` 200 y el CTA permanece desactivado correctamente sin credenciales.
 - Smoke previo de la versión activa: `/` 200, `/api/health` 200 con DB ok, `/api/products` 200, `/cuenta.html` 200, login inválido 400, `/favoritos.html` 301 y `/admin` sin sesión 403.
 - Healthcheck esperado: `/api/health` con API y DB `ok`.
 
 ## Bloqueos
 
-- No hay bloqueo activo de Railway: el deployment `f2ae64db-aef1-431b-8e2c-e820a8da2408` figura `SUCCESS`.
+- No hay bloqueo activo de Railway: el deployment `31c062ae-ea05-4cdb-a53b-06f28b543e38` figura `SUCCESS`.
 - Opiniones queda como modelo general por ahora; asociarlas a cada perfume es una decisión funcional futura, no un bloqueo para la versión actual.
 - Recuperación de contraseña completa puede requerir decisión/configuración de URL y SMTP.
 - Acciones destructivas sobre la tabla histórica `favorites` o datos reales requieren autorización explícita.
@@ -177,4 +180,4 @@ F0 100% · F1 70% · F2 85% · F3 82% · F4 78% · F5 62% · F6 74% · F7 50% ·
 
 ## Próxima acción exacta
 
-Publicar `codex/checkout-coupons`, verificar CI/Railway y smoke. Luego el titular habilitado debe cargar `MERCADO_PAGO_ACCESS_TOKEN` y `MERCADO_PAGO_WEBHOOK_SECRET` Sandbox directamente en Railway para ejecutar pagos aprobado, rechazado y pendiente. Mantener F11 pendiente hasta disponer de viewport configurable.
+El titular habilitado debe cargar `MERCADO_PAGO_ACCESS_TOKEN` y `MERCADO_PAGO_WEBHOOK_SECRET` Sandbox directamente en Railway, sin compartirlos por chat. Después, redeploy y ejecutar pagos reales de prueba aprobado, rechazado y pendiente más Webhook. Mantener F11 pendiente hasta disponer de viewport configurable.
