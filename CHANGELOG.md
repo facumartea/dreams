@@ -4,6 +4,18 @@ Todos los cambios relevantes de DREAMS se registran aquí. El proyecto aún no u
 
 ## Unreleased
 
+### 2026-08-31 — Checkout demo, motion premium y auditoría de expansión
+
+- Añadido proveedor interno `demo` desacoplado de Mercado Pago con estados aprobado, rechazado, pendiente y error; no realiza cobros ni requiere secretos.
+- El formulario usa únicamente datos ficticios, valida la tarjeta en el navegador y envía al servidor sólo el pedido y escenario; PAN, vencimiento y CVV no se transmiten ni persisten.
+- Añadido endpoint autenticado para procesar un pedido demo una sola vez y persistir el resultado en `orders`.
+- Aplicada en Supabase la migración `enable_demo_checkout_provider`, que amplía el constraint de proveedor sin eliminar Mercado Pago; RLS y grants server-only fueron verificados.
+- Incorporados reveals, profundidad leve en hero, spotlight editorial, botones magnéticos mínimos, hover de cards y feedback del carrito mediante CSS/JS liviano, sin dependencias nuevas y con fallbacks touch/reduced-motion.
+- Sanitizado `.env.example`: se retiraron valores reales y quedaron únicamente placeholders. La rotación de cualquier credencial que haya estado en historial sigue siendo obligatoria.
+- Auditadas las diez expansiones premium en `PREMIUM_EXPANSION_AUDIT.md`; hero/cards se reutilizan, quiz/configurador compartirán motor, y no se implementará 360° real sin assets adecuados.
+- Revisado `public-apis/public-apis`; no se integró una API sin un caso real de logística, moneda o validación.
+- Verificación local: sintaxis de 25 archivos, 53/53 tests y audit de producción sin vulnerabilidades conocidas.
+
 ### 2026-08-31 — Pedidos persistentes, botón Comprar y cupones
 
 - Aplicada en Supabase la migración `20260831024826 checkout_orders_and_coupons`: tablas `orders` y `coupons`, RLS, grants exclusivos de servidor, constraints, triggers e índices; ambas quedaron vacías después de una prueba transaccional con rollback.

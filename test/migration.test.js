@@ -5,6 +5,7 @@ const { join } = require('node:path');
 
 const migration = readFileSync(join(__dirname, '..', 'supabase', 'migrations', '20260828144944_production_baseline.sql'), 'utf8');
 const checkout_migration = readFileSync(join(__dirname, '..', 'supabase', 'migrations', '20260831024826_checkout_orders_and_coupons.sql'), 'utf8');
+const demo_checkout_migration = readFileSync(join(__dirname, '..', 'supabase', 'migrations', '20260831040000_enable_demo_checkout_provider.sql'), 'utf8');
 
 test('baseline mantiene RLS y restringe funciones privilegiadas', () => {
     for (const table of ['profiles', 'products', 'favorites', 'reviews', 'inquiries']) {
@@ -34,4 +35,9 @@ test('migración checkout no borra tablas ni datos existentes', () => {
     assert.doesNotMatch(checkout_migration, /\bdrop\s+table\b/i);
     assert.doesNotMatch(checkout_migration, /\btruncate\b/i);
     assert.doesNotMatch(checkout_migration, /\bdelete\s+from\b/i);
+});
+
+test('migración demo conserva Mercado Pago y sólo amplía proveedores permitidos', () => {
+    assert.match(demo_checkout_migration, /provider in \('mercado_pago', 'demo'\)/i);
+    assert.doesNotMatch(demo_checkout_migration, /\bdrop\s+table\b|\btruncate\b|\bdelete\s+from\b/i);
 });

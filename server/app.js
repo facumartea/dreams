@@ -202,14 +202,14 @@ function create_app(options = {}) {
     const production = options.production ?? process.env.NODE_ENV === 'production';
     const logger = options.logger || console;
     const create_auth_client = options.create_auth_client || (() => database);
-    const configured_contact_email = normalize_email(options.contact_email || 'facundo.martearena@dantebariloche.edu.ar');
-    const contact_email = valid_email(configured_contact_email) ? configured_contact_email : 'facundo.martearena@dantebariloche.edu.ar';
+    const configured_contact_email = normalize_email(options.contact_email || 'contacto@example.com');
+    const contact_email = valid_email(configured_contact_email) ? configured_contact_email : 'contacto@example.com';
     const whatsapp_number = String(options.whatsapp_number || '').replace(/\D/g, '');
     const payment_provider = options.payment_provider || null;
-    const checkout_mode = payment_provider?.mode === 'production' ? 'production' : 'sandbox';
+    const checkout_mode = ['production', 'sandbox', 'demo'].includes(payment_provider?.mode) ? payment_provider.mode : 'sandbox';
     const app_base_url = normalize_origin(options.app_base_url);
     const checkout_enabled = Boolean(payment_provider?.configured && app_base_url && options.checkout_schema_ready);
-    const show_test_data = checkout_mode === 'sandbox' && Boolean(options.show_checkout_test_data);
+    const show_test_data = checkout_mode === 'demo' || (checkout_mode === 'sandbox' && Boolean(options.show_checkout_test_data));
     const public_directory = options.public_directory || path.join(__dirname, '..', 'public');
     const views_directory = options.views_directory || path.join(__dirname, '..', 'views');
     const app = express();
@@ -358,7 +358,7 @@ function create_app(options = {}) {
         response.json({ coupon: quote.coupon, subtotal: quote.subtotal, discount: quote.discount, total: quote.total });
     });
     route('post', '/api/checkout/session', login, async (request, response) => {
-        if (!checkout_enabled || !app_base_url) return response.status(503).json({ error: 'El checkout Sandbox todavía no está configurado.' });
+        if (!checkout_enabled || !app_base_url) return response.status(503).json({ error: 'El checkout todavía no está configurado.' });
         const quote = await quote_cart(database, request.body.items, request.body.coupon_code);
         if (quote.error) return response.status(400).json({ error: quote.error });
         if (request.body.coupon_code && !quote.coupon) return response.status(409).json({ error: 'Cupón inválido.' });
@@ -387,15 +387,50 @@ function create_app(options = {}) {
         try {
             const checkout = await payment_provider.create_checkout({ order_id, items: quote.items, total: quote.total, discount: quote.discount, payer_email: request.user.email, app_base_url });
             fail_if(await database.from('orders').update({ provider_preference_id: checkout.preference_id }).eq('id', order_id));
-            response.status(201).json({ order_id, checkout_url: checkout.checkout_url, mode: checkout_mode, warnings: quote.warnings });
+            response.status(201).json({
+                order_id,
+                provider: payment_provider.name,
+                checkout_url: checkout.checkout_url || null,
+                requires_demo_payment: checkout.requires_demo_payment === true,
+                mode: checkout_mode,
+                warnings: quote.warnings
+            });
         } catch (error) {
             const failed = await database.from('orders').update({ status: 'error', status_detail: 'preference_creation_failed' }).eq('id', order_id);
             if (failed.error) logger.error?.('No se pudo marcar la orden fallida.', { kind: error_kind(failed.error) });
             throw error;
         }
     });
+    route('post', '/api/checkout/demo-payment', login, async (request, response) => {
+        if (!checkout_enabled || payment_provider?.name !== 'demo' || typeof payment_provider.process_payment !== 'function') {
+            return response.status(404).json({ error: 'El checkout demo no está disponible.' });
+        }
+        if (request.body.card_number || request.body.cvv || request.body.expiry) {
+            return response.status(400).json({ error: 'Los datos ficticios de tarjeta no deben enviarse al servidor.' });
+        }
+        const order_id = String(request.body.order_id || '');
+        if (!/^[0-9a-f-]{36}$/i.test(order_id)) return response.status(400).json({ error: 'ID de pedido inválido.' });
+        const order = fail_if(await database.from('orders').select('id,user_id,provider,status,total,currency').eq('id', order_id).eq('user_id', request.user.id).maybeSingle());
+        if (!order || order.provider !== 'demo') return response.status(404).json({ error: 'Pedido demo no encontrado.' });
+        if (order.status !== 'created') return response.status(409).json({ error: 'Este pedido demo ya fue procesado.' });
+
+        let payment;
+        try {
+            payment = await payment_provider.process_payment({ order_id, scenario: request.body.scenario });
+        } catch (error) {
+            if (error?.code === 'DEMO_SCENARIO_INVALID') return response.status(400).json({ error: 'Resultado demo inválido.' });
+            throw error;
+        }
+        fail_if(await database.from('orders').update({
+            provider_payment_id: payment.id,
+            status: payment.status,
+            status_detail: payment.status_detail,
+            paid_at: payment.paid_at
+        }).eq('id', order.id));
+        response.json({ order_id: order.id, status: payment.status, status_detail: payment.status_detail });
+    });
     route('post', '/api/checkout/confirm', login, async (request, response) => {
-        if (!checkout_enabled) return response.status(503).json({ error: 'El checkout Sandbox todavía no está configurado.' });
+        if (!checkout_enabled || payment_provider?.name !== 'mercado_pago') return response.status(503).json({ error: 'La confirmación de Mercado Pago no está disponible.' });
         const order_id = String(request.body.order_id || '');
         const payment_id = String(request.body.payment_id || '');
         if (!/^[0-9a-f-]{36}$/i.test(order_id) || !/^\d{1,30}$/.test(payment_id)) return response.status(400).json({ error: 'Datos de pago inválidos.' });
@@ -415,7 +450,7 @@ function create_app(options = {}) {
         return order ? response.json(order) : response.status(404).json({ error: 'Pedido no encontrado.' });
     });
     route('post', '/api/payments/webhook', async (request, response) => {
-        if (!checkout_enabled || request.body?.type !== 'payment') return response.status(200).json({ received: true });
+        if (!checkout_enabled || payment_provider?.name !== 'mercado_pago' || request.body?.type !== 'payment') return response.status(200).json({ received: true });
         const payment_id = String(request.body?.data?.id || request.query['data.id'] || '');
         if (!/^\d{1,30}$/.test(payment_id) || !payment_provider.verify_webhook(request.headers, payment_id)) return response.status(401).json({ error: 'Notificación no válida.' });
         const payment = await payment_provider.get_payment(payment_id);

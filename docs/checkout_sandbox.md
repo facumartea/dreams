@@ -4,9 +4,13 @@
 
 La aplicación incluye una integración desacoplada de Checkout Pro mediante `server/payments/mercado-pago.js`, pantallas de checkout/resultado, verificación HMAC de Webhooks, consulta server-side del pago y estados `approved`, `rejected`, `pending`, `cancelled` y `error`.
 
+También incluye `server/payments/demo.js`, un proveedor interno sin cobros ni credenciales. El formulario demo valida datos ficticios únicamente en el navegador y envía al servidor sólo `order_id` y un escenario permitido. Nunca transmite ni persiste número de tarjeta, vencimiento o CVV.
+
+Seleccionar proveedor con `CHECKOUT_PROVIDER=demo` o `CHECKOUT_PROVIDER=mercado_pago`. El modo demo sirve para validar UX, estados y persistencia de pedidos, pero no verifica la integración real de Mercado Pago.
+
 El feature flag es cerrado por defecto. `/api/checkout/config` sólo devuelve `enabled: true` cuando coinciden las tres condiciones:
 
-1. `MERCADO_PAGO_ACCESS_TOKEN` y `MERCADO_PAGO_WEBHOOK_SECRET` están configurados en el servidor;
+1. para Mercado Pago, `MERCADO_PAGO_ACCESS_TOKEN` y `MERCADO_PAGO_WEBHOOK_SECRET` están configurados en el servidor; el proveedor demo no los usa;
 2. `APP_BASE_URL` es un origen HTTPS válido;
 3. `CHECKOUT_SCHEMA_READY=true` después de aplicar y verificar la migración.
 
@@ -20,7 +24,7 @@ La migración `20260831024826_checkout_orders_and_coupons.sql` fue aplicada el 2
 
 - `id uuid primary key`;
 - `user_id uuid not null references public.profiles(id)`;
-- `provider text not null check (provider in ('mercado_pago'))`;
+- `provider text not null check (provider in ('mercado_pago','demo'))` después de aplicar `20260831040000_enable_demo_checkout_provider.sql`;
 - `provider_preference_id text unique` nullable;
 - `provider_payment_id text unique` nullable;
 - `status text not null check (status in ('created','approved','rejected','pending','cancelled','error'))`;
@@ -40,9 +44,18 @@ La migración `20260831024826_checkout_orders_and_coupons.sql` fue aplicada el 2
 
 ```text
 APP_BASE_URL=https://drams-production.up.railway.app
+CHECKOUT_PROVIDER=mercado_pago
 MERCADO_PAGO_MODE=sandbox
 MERCADO_PAGO_ACCESS_TOKEN=<credencial de prueba, sólo servidor>
 MERCADO_PAGO_WEBHOOK_SECRET=<secreto de Webhooks de prueba>
+CHECKOUT_SCHEMA_READY=true
+CHECKOUT_SHOW_TEST_DATA=true
+```
+
+Para una demostración interna sin cobro:
+
+```text
+CHECKOUT_PROVIDER=demo
 CHECKOUT_SCHEMA_READY=true
 CHECKOUT_SHOW_TEST_DATA=true
 ```
