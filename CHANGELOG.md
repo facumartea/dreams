@@ -15,6 +15,9 @@ Todos los cambios relevantes de DREAMS se registran aquí. El proyecto aún no u
 - Auditadas las diez expansiones premium en `PREMIUM_EXPANSION_AUDIT.md`; hero/cards se reutilizan, quiz/configurador compartirán motor, y no se implementará 360° real sin assets adecuados.
 - Revisado `public-apis/public-apis`; no se integró una API sin un caso real de logística, moneda o validación.
 - Verificación local: sintaxis de 25 archivos, 53/53 tests y audit de producción sin vulnerabilidades conocidas.
+- Commit funcional `efc2c4eca3f07862b7302f892f5e3c751613c74e` y corrección CI `0dede4bcae63924fca031526041ac3d5a8f9bff9`; PR #10 pasó CI #30 y se fusionó como `773fd8fa6269ceb02b4655c6f7956b19790991b6`.
+- Railway configuró `CHECKOUT_PROVIDER=demo` y desplegó `bfabd1dc-fdd6-4b75-a781-f1a496535df2` con estado SUCCESS.
+- Smoke público confirmó checkout demo, aviso sin cobros, tarjeta ficticia, cupón y acceso obligatorio; no se enviaron datos de pago ni se creó un pedido falso.
 
 ### 2026-08-31 — Pedidos persistentes, botón Comprar y cupones
 
