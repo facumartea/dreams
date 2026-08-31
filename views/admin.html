@@ -14,7 +14,7 @@
 <main class="admin-page">
 <div class="admin-header"><div class="admin-brand-lockup"><span class="admin-isotype">D</span><div><p class="eyebrow">DREAMS BACK OFFICE</p><h1>Panel de administración</h1><p class="muted">Gestioná la tienda sin tocar la base de datos manualmente.</p></div></div><button id="logout-admin" class="button">Cerrar sesión</button></div>
 <section id="admin-stats" class="admin-stats"></section>
-<div class="admin-tabs"><button class="admin-tab active" data-tab="productos">Productos</button><button class="admin-tab" data-tab="usuarios">Usuarios</button><button class="admin-tab" data-tab="consultas">Consultas</button><button class="admin-tab" data-tab="opiniones">Opiniones</button></div>
+<div class="admin-tabs"><button class="admin-tab active" data-tab="productos">Productos</button><button class="admin-tab" data-tab="cupones">Cupones</button><button class="admin-tab" data-tab="usuarios">Usuarios</button><button class="admin-tab" data-tab="consultas">Consultas</button><button class="admin-tab" data-tab="opiniones">Opiniones</button></div>
 <section id="tab-productos" class="admin-tab-content active">
 <div class="admin-layout">
 <section class="admin-form"><p class="eyebrow" id="form-label">NUEVO PRODUCTO</p><form id="product-form">
@@ -26,6 +26,17 @@
 <div class="form-message" id="admin-message"></div><div class="admin-actions"><button class="button button-dark" type="submit">Guardar producto</button><button class="button" type="button" id="cancel-edit">Limpiar</button></div>
 </form></section>
 <section class="admin-table-wrap"><div class="section-heading"><div><p class="eyebrow">BASE DE DATOS</p><h2>Productos</h2></div><span id="product-total"></span></div><div class="table-scroll"><table class="admin-table"><thead><tr><th>ID</th><th>Producto</th><th>Marca</th><th>Género</th><th>Stock</th><th>Precio</th><th>Acciones</th></tr></thead><tbody id="admin-products"></tbody></table></div></section>
+</div></section>
+<section id="tab-cupones" class="admin-tab-content">
+<div class="admin-layout">
+<section class="admin-form"><p class="eyebrow" id="coupon-form-label">NUEVO CUPÓN</p><form id="coupon-form">
+<input type="hidden" id="coupon-id">
+<div class="form-field"><label for="admin-coupon-code">Código</label><input id="admin-coupon-code" minlength="3" maxlength="40" autocomplete="off" spellcheck="false" placeholder="DREAMS10" required><small>Se guarda siempre en mayúsculas.</small></div>
+<div class="form-field"><label for="coupon-percent">Porcentaje de descuento</label><input id="coupon-percent" type="number" min="0.01" max="100" step="0.01" required></div>
+<div class="form-field"><label><input id="coupon-active" type="checkbox" checked> Cupón activo</label></div>
+<div class="form-message" id="coupon-message" role="status" aria-live="polite"></div><div class="admin-actions"><button class="button button-dark" type="submit">Guardar cupón</button><button class="button" type="button" id="cancel-coupon-edit">Limpiar</button></div>
+</form></section>
+<section class="admin-table-wrap"><div class="section-heading"><div><p class="eyebrow">DESCUENTOS</p><h2>Cupones</h2></div><span id="coupon-total"></span></div><div class="table-scroll"><table class="admin-table"><thead><tr><th>Código</th><th>Descuento</th><th>Estado</th><th>Actualización</th><th>Acciones</th></tr></thead><tbody id="admin-coupons"></tbody></table></div></section>
 </div></section>
 <section id="tab-usuarios" class="admin-tab-content"><div class="section-heading"><div><p class="eyebrow">CUENTAS</p><h2>Usuarios registrados</h2></div></div><div class="table-scroll"><table class="admin-table"><thead><tr><th>ID</th><th>Nombre</th><th>Correo</th><th>Rol</th><th>Alta</th></tr></thead><tbody id="admin-users"></tbody></table></div></section>
 <section id="tab-consultas" class="admin-tab-content"><div class="section-heading"><div><p class="eyebrow">WHATSAPP</p><h2>Consultas recientes</h2></div></div><div class="table-scroll"><table class="admin-table"><thead><tr><th>Fecha</th><th>Producto</th><th>Usuario</th><th>Correo</th></tr></thead><tbody id="admin-inquiries"></tbody></table></div></section>

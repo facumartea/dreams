@@ -4,6 +4,17 @@ Todos los cambios relevantes de DREAMS se registran aquí. El proyecto aún no u
 
 ## Unreleased
 
+### 2026-08-31 — Pedidos persistentes, botón Comprar y cupones
+
+- Aplicada en Supabase la migración `20260831024826 checkout_orders_and_coupons`: tablas `orders` y `coupons`, RLS, grants exclusivos de servidor, constraints, triggers e índices; ambas quedaron vacías después de una prueba transaccional con rollback.
+- El carrito reemplaza el CTA principal de WhatsApp por `Comprar`; WhatsApp queda como alternativa secundaria y el botón sólo se habilita con checkout realmente configurado.
+- Checkout incorpora cupón en mayúsculas, aplicar/quitar, estados accesibles, persistencia en `sessionStorage` y desglose Subtotal/Descuento/Total.
+- El servidor valida existencia/estado, recalcula el descuento y vuelve a verificarlo al crear el pedido; el cliente nunca envía porcentajes confiables.
+- Los pedidos guardan snapshot del cupón y Mercado Pago recibe exactamente el total final descontado.
+- Admin incorpora sección Cupones con crear, editar, activar/desactivar, eliminar y listado completo.
+- Railway recibió `APP_BASE_URL`, modo Sandbox, schema ready y datos de prueba con redeploy diferido. Siguen ausentes el access token y secreto Webhook, por lo que el checkout permanece cerrado de forma segura.
+- Check de 22 archivos, 48 pruebas y audit de producción verdes antes de publicar.
+
 ### 2026-08-30 — F11 parcial y base segura de Checkout Sandbox
 
 - La colección femenina ahora aplica una cabecera marfil/rosa viejo más clara, navegación oscura y acentos cálidos en filtros/cards sin salir de la identidad DREAMS.
@@ -16,7 +27,9 @@ Todos los cambios relevantes de DREAMS se registran aquí. El proyecto aún no u
 - Railway no contiene variables Mercado Pago; sin credenciales Sandbox no se afirmó ni simuló una compra real.
 - Suite ampliada a 39 pruebas: estados, firma, preferencia sin secreto en payload, error HTTP/red, feature flag y regresión UI; check y audit verdes.
 - Roadmap extendido con F18 y pesos corregidos a un total real de 100%; progreso recalibrado de 71% informado históricamente a 67% (66,70% exacto) por alcance nuevo y corrección aritmética.
-- Commit `5891d24c7693bb127e35e4cb33c565deb59a8021` publicado en `codex/checkout-sandbox-foundation`; PR #7 abierto y CI #22 SUCCESS. No se fusionó ni desplegó porque el merge a producción requiere autorización explícita.
+- Commit `5891d24c7693bb127e35e4cb33c565deb59a8021` publicado en `codex/checkout-sandbox-foundation`; PR #7 validado por CI #23 y fusionado con autorización como `5f63bcd4ad3597f1b0f4ef30c73b85ba2ec88929`.
+- Railway deployment `f2ae64db-aef1-431b-8e2c-e820a8da2408` terminó SUCCESS sobre el merge exacto.
+- Smoke posterior: health/API/DB 200, configuración checkout 200 con cierre seguro `enabled:false` y pantalla `/checkout.html` 200. No se activó ni simuló Mercado Pago sin schema y credenciales oficiales Sandbox.
 
 ### 2026-08-30 — Colección femenina y hero de alta resolución
 

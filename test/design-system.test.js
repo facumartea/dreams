@@ -65,3 +65,17 @@ test('el checkout declara Sandbox, estados y diseño responsive', () => {
     for (const state of ['approved', 'rejected', 'pending', 'cancelled', 'error']) assert.match(result, new RegExp(`${state}:`));
     assert.match(cart, /checkout_config\.enabled/);
 });
+
+test('carrito usa Comprar y checkout integra cupones persistentes en mayúsculas', () => {
+    const cart = fs.readFileSync(path.join(root, 'public/js/carrito.js'), 'utf8');
+    const html = fs.readFileSync(path.join(root, 'public/checkout.html'), 'utf8');
+    const checkout = fs.readFileSync(path.join(root, 'public/js/checkout.js'), 'utf8');
+    const admin = fs.readFileSync(path.join(root, 'views/admin.html'), 'utf8');
+    assert.match(cart, />Comprar</);
+    assert.doesNotMatch(cart, /Continuar al pago de prueba/);
+    assert.match(html, /Cupón de descuento/);
+    assert.match(checkout, /toUpperCase\(\)/);
+    assert.match(checkout, /sessionStorage\.setItem\('dreams_coupon'/);
+    assert.match(checkout, /\/api\/coupons\/validate/);
+    assert.match(admin, /data-tab="cupones"/);
+});

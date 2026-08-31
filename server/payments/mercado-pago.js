@@ -42,7 +42,7 @@ class MercadoPagoProvider {
     }
 
     get configured() {
-        return Boolean(this.access_token);
+        return Boolean(this.access_token && this.webhook_secret);
     }
 
     async request(path, options = {}) {
@@ -63,10 +63,11 @@ class MercadoPagoProvider {
         return data;
     }
 
-    async create_checkout({ order_id, items, payer_email, app_base_url }) {
+    async create_checkout({ order_id, items, total, discount = 0, payer_email, app_base_url }) {
         const result_path = `${app_base_url}/checkout-resultado.html`;
-        const body = {
-            items: items.map(item => ({
+        const checkout_items = discount > 0
+            ? [{ id: order_id, title: 'Pedido DREAMS con descuento', description: `${items.length} producto(s)`, category_id: 'beauty', currency_id: 'ARS', quantity: 1, unit_price: total }]
+            : items.map(item => ({
                 id: String(item.id),
                 title: `${item.brand} ${item.name}`.slice(0, 256),
                 description: `${item.size_ml || ''} ml`.trim(),
@@ -74,7 +75,9 @@ class MercadoPagoProvider {
                 currency_id: 'ARS',
                 quantity: item.quantity,
                 unit_price: item.price
-            })),
+            }));
+        const body = {
+            items: checkout_items,
             external_reference: order_id,
             metadata: { order_id },
             payer: payer_email ? { email: payer_email } : undefined,
