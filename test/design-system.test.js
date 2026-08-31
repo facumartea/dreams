@@ -56,14 +56,29 @@ test('el catálogo presenta una cabecera específica para Perfumes de Mujer', ()
     assert.match(css, /\.women-collection \.site-header/);
 });
 
-test('el checkout declara Sandbox, estados y diseño responsive', () => {
+test('el checkout declara modo demo, estados y diseño responsive', () => {
     const html = fs.readFileSync(path.join(root, 'public/checkout.html'), 'utf8');
     const result = fs.readFileSync(path.join(root, 'public/js/checkout-result.js'), 'utf8');
     const cart = fs.readFileSync(path.join(root, 'public/js/carrito.js'), 'utf8');
-    assert.match(html, /MODO SANDBOX — No se realizarán cobros reales/);
+    assert.match(html, /MODO DEMO — No se realizarán cobros reales/);
+    assert.match(html, /id="demo-card-form"[^>]*hidden/);
+    assert.match(html, /DREAMS no envía ni guarda números o códigos de tarjeta/);
     assert.match(html, /id="sandbox-help"[^>]*hidden/);
     for (const state of ['approved', 'rejected', 'pending', 'cancelled', 'error']) assert.match(result, new RegExp(`${state}:`));
     assert.match(cart, /checkout_config\.enabled/);
+});
+
+test('motion premium usa JS liviano, fallback y reducción de movimiento', () => {
+    const motion = fs.readFileSync(path.join(root, 'public/js/motion.js'), 'utf8');
+    const css = fs.readFileSync(path.join(root, 'public/css/style.css'), 'utf8');
+    const home = fs.readFileSync(path.join(root, 'public/index.html'), 'utf8');
+    assert.match(motion, /IntersectionObserver/);
+    assert.match(motion, /requestAnimationFrame/);
+    assert.match(motion, /prefers-reduced-motion: reduce/);
+    assert.doesNotMatch(motion, /three|webgl|gsap/i);
+    assert.match(css, /--depth-x/);
+    assert.match(css, /\.motion-spotlight/);
+    assert.match(home, /\/js\/motion\.js/);
 });
 
 test('carrito usa Comprar y checkout integra cupones persistentes en mayúsculas', () => {

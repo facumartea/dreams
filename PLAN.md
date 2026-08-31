@@ -7,25 +7,25 @@ Porcentajes recalibrados el 2026-08-31 al sumar cupones y mantener los pesos en 
 | F0 | Auditoría total, baseline y documentación | 6% | 100% |
 | F1 | Seguridad crítica: XSS, dependencias, headers, CSRF/origin, abuso | 7% | 70% |
 | F2 | Backend/API: validación, errores, health, modularidad mínima | 6% | 85% |
-| F3 | Datos/Supabase: grants mínimos, provisioning, migraciones, integridad, RLS | 8% | 82% |
+| F3 | Datos/Supabase: grants mínimos, provisioning, migraciones, integridad, RLS | 8% | 84% |
 | F4 | Catálogo, detalle, carrito y consultas | 6% | 78% |
 | F5 | Opiniones persistentes, edición y moderación | 4% | 62% |
 | F6 | Auth, sesiones, recuperación y usuarios | 7% | 74% |
 | F7 | Admin completo, reversible y auditable | 6% | 50% |
 | F8 | Arquitectura, limpieza y documentación técnica | 4% | 75% |
-| F9 | UX funcional y estados | 5% | 82% |
-| F10 | Diseño visual, colección femenina, imagen y sistema de componentes | 4% | 94% |
+| F9 | UX funcional y estados | 5% | 84% |
+| F10 | Diseño visual, colección femenina, imagen y sistema de componentes | 4% | 95% |
 | F11 | Responsive verificado | 4% | 72% |
-| F12 | Accesibilidad | 4% | 68% |
-| F13 | Performance | 4% | 30% |
+| F12 | Accesibilidad | 4% | 72% |
+| F13 | Performance | 4% | 38% |
 | F14 | SEO y descubribilidad | 3% | 15% |
-| F15 | Testing y CI | 7% | 82% |
+| F15 | Testing y CI | 7% | 84% |
 | F16 | Producción, dominio, deploy y observabilidad | 4% | 76% |
 | F17 | QA final de punta a punta | 3% | 0% |
-| F18 | Checkout Sandbox, pedidos y pagos | 4% | 68% |
+| F18 | Checkout Sandbox, pedidos y pagos | 4% | 76% |
 | F19 | Cupones: datos, API, Admin, checkout y seguridad | 4% | 70% |
 
-**Progreso general ponderado: 70%** (70,31% exacto). El avance se basa en migración remota verificada, implementación server-side y pruebas locales; no incluye pagos Sandbox reales ni QA responsive completo.
+**Progreso general ponderado: 72%** (71,55% exacto). El avance incluye migración demo remota verificada, 53 pruebas locales y motion accesible; no incluye pagos Sandbox reales, CI/deploy de esta tanda ni QA responsive completo.
 
 ## Secuencia y criterios
 
@@ -103,7 +103,7 @@ Happy path, errores, vacío, inválido, reload, concurrencia, auth/roles, mobile
 
 ### F18 — Checkout Sandbox, pedidos y pagos
 
-Capa de proveedor desacoplada, Checkout Pro oficial, recálculo server-side, pedidos persistentes, verificación HMAC, confirmación autoritativa, estados completos, UI/UX responsive y pruebas. La migración de pedidos ya está aplicada y verificada. Para superar 68% faltan credenciales oficiales de prueba, Webhook configurado, compras Sandbox reales y QA en producción. Producción queda cerrada por feature flag hasta completar esas dependencias.
+Capa de proveedor desacoplada, Checkout Pro oficial, recálculo server-side, pedidos persistentes, verificación HMAC, confirmación autoritativa, estados completos, UI/UX responsive y pruebas. El proveedor demo permite probar el recorrido y persistir pedidos sin cobros ni secretos. Para cerrar F18 todavía faltan credenciales oficiales, Webhook, compras Sandbox reales y QA en producción; el modo demo no sustituye esa validación.
 
 ### F19 — Cupones
 
@@ -111,4 +111,8 @@ Cupones persistentes server-only, código mayúsculo, constraints, CRUD Admin, a
 
 ## Próximo bloque exacto
 
-Publicar la tanda checkout/cupones, verificar CI, Railway y smoke. Después, el titular habilitado de Mercado Pago debe cargar el access token y secreto Webhook Sandbox para ejecutar compras aprobada, rechazada y pendiente. La matriz F11 completa sigue pendiente hasta disponer de un runner con viewport configurable.
+Publicar checkout demo + motion, activar `CHECKOUT_PROVIDER=demo` en Railway y ejecutar smoke sin datos reales de tarjeta. Después implementar un único motor determinístico de recomendaciones que compartan productos relacionados, quiz y configurador, según `PREMIUM_EXPANSION_AUDIT.md`.
+
+## Expansión premium mapeada al roadmap
+
+Las diez funcionalidades nuevas no crean fases paralelas: hero/cards/tema/360 pertenecen a F10-F13; quiz/configurador/recomendaciones a F4/F9/F15; dashboard/fidelidad/timeline a F3/F7/F18. `PREMIUM_EXPANSION_AUDIT.md` registra estado, reutilización, faltantes, riesgos y orden. Fidelidad no avanza hasta definir beneficios reales; el 360° real no avanza sin assets adecuados y autorizados.

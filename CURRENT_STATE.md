@@ -6,21 +6,29 @@
 
 - PROYECTO: DREAMS — ecommerce de perfumería con checkout preparado y consulta secundaria por WhatsApp.
 - REPO: `https://github.com/facumartea/drams.git`
-- RAMA DE TRABAJO: `codex/checkout-coupons`, fusionada en `main` como `ac66917edae49b1e272d51e07b09fe55fe075c32`.
-- PRS FUSIONADOS: [#1 — Production audit and critical hardening](https://github.com/facumartea/drams/pull/1), [#2 — Align Railway runtime with Node 24](https://github.com/facumartea/drams/pull/2), [#3 — Refine DREAMS premium visual experience](https://github.com/facumartea/drams/pull/3), [#4 — Harden mutation origins and separate public contact](https://github.com/facumartea/drams/pull/4), [#5 — Add persistent customer review publishing](https://github.com/facumartea/drams/pull/5), [#6 — Refine women collection and high-resolution hero](https://github.com/facumartea/drams/pull/6) y [#7 — Add safe Mercado Pago Sandbox checkout foundation](https://github.com/facumartea/drams/pull/7).
-- HEAD EN `main`: `ac66917edae49b1e272d51e07b09fe55fe075c32` (merge de PR #8). Último commit funcional del PR: `292fc13e33855f8387c90ffb4bf32f7e9d1a53d0`.
-- PR ABIERTO: ninguno; PR #8 fusionado.
+- RAMA DE TRABAJO: `codex/demo-checkout-premium-motion`, creada en GitHub desde `main` `24273eeb304516177737a1440b60e04453cd2bd7`; todavía sin commit remoto de esta tanda.
+- PRS FUSIONADOS: [#1](https://github.com/facumartea/drams/pull/1), [#2](https://github.com/facumartea/drams/pull/2), [#3](https://github.com/facumartea/drams/pull/3), [#4](https://github.com/facumartea/drams/pull/4), [#5](https://github.com/facumartea/drams/pull/5), [#6](https://github.com/facumartea/drams/pull/6), [#7](https://github.com/facumartea/drams/pull/7) y [#8 — Add persistent checkout coupons and Comprar flow](https://github.com/facumartea/drams/pull/8).
+- HEAD EN `main`: `24273eeb304516177737a1440b60e04453cd2bd7` (`Merge checkout production continuity checkpoint`).
+- PR ABIERTO: ninguno para esta tanda; la rama existe, pero el árbol no fue publicado todavía.
 - ÚLTIMO PUSH FUNCIONAL: rama `codex/checkout-coupons`; commit `292fc13e33855f8387c90ffb4bf32f7e9d1a53d0` (`Add persistent coupons and checkout ordering`).
 - ÚLTIMO CI VERIFICADO: GitHub Actions CI #25, SUCCESS sobre `292fc13e33855f8387c90ffb4bf32f7e9d1a53d0`.
-- ÚLTIMO DEPLOY: Railway `31c062ae-ea05-4cdb-a53b-06f28b543e38`, SUCCESS sobre `ac66917edae49b1e272d51e07b09fe55fe075c32`.
-- FASE ACTUAL: F18/F19 — Checkout Sandbox y cupones; bloqueado de forma segura sólo por credenciales Mercado Pago.
-- PROGRESO GENERAL: 70% ponderado (70,31% exacto según `PLAN.md`).
+- ÚLTIMO DEPLOY VERIFICADO: Railway `3e2ce2bd-7e64-4d59-b077-d9f243563561`, SUCCESS sobre `24273eeb304516177737a1440b60e04453cd2bd7`.
+- FASE ACTUAL: F18/F10/F13 — Checkout demo y motion premium; expansión específica auditada.
+- PROGRESO GENERAL: 72% ponderado (71,55% exacto según `PLAN.md`).
 
 ## Porcentaje de todas las fases
 
-F0 100% · F1 70% · F2 85% · F3 82% · F4 78% · F5 62% · F6 74% · F7 50% · F8 75% · F9 82% · F10 94% · F11 72% · F12 68% · F13 30% · F14 15% · F15 82% · F16 76% · F17 0% · F18 68% · F19 70%.
+F0 100% · F1 70% · F2 85% · F3 84% · F4 78% · F5 62% · F6 74% · F7 50% · F8 75% · F9 84% · F10 95% · F11 72% · F12 72% · F13 38% · F14 15% · F15 84% · F16 76% · F17 0% · F18 76% · F19 70%.
 
 ## Último trabajo
+
+- Implementado proveedor `demo` sin cobros ni credenciales, con estados aprobado/rechazado/pendiente/error y persistencia en `orders`.
+- Los campos ficticios de tarjeta se validan sólo en navegador; el servidor rechaza payloads con PAN/CVV/vencimiento y recibe únicamente `order_id` + escenario.
+- Aplicada y verificada en Supabase la migración `enable_demo_checkout_provider`; conserva Mercado Pago y habilita `demo`, con RLS y grants server-only.
+- Incorporado motion liviano: hero con profundidad sutil, reveals, spotlight, botones magnéticos mínimos, hover de cards y feedback del carrito; touch y `prefers-reduced-motion` desactivan lo no esencial.
+- Auditadas hero, cards, quiz, recomendaciones, Dashboard, fidelidad, timeline, 360°, configurador y temas en `PREMIUM_EXPANSION_AUDIT.md`. No se duplicaron componentes ni tablas.
+- `.env.example` contenía valores no ficticios y fue sanitizado antes de cualquier publicación. No se expusieron en esta tanda; cualquier credencial que haya quedado en historial debe rotarse.
+- Check 25 archivos, tests 53/53 y audit sin vulnerabilidades conocidas. La rama GitHub existe, pero el commit/push fue bloqueado antes de publicar el árbol.
 
 - Corregido el bloqueo real de checkout: la migración anterior nunca había sido versionada ni aplicada. Supabase registra ahora `20260831024826 checkout_orders_and_coupons`.
 - Creadas `orders` y `coupons`, ambas server-only, con RLS, privilegios mínimos y cero filas reales; la prueba de insert se revirtió en transacción.
@@ -103,8 +111,9 @@ F0 100% · F1 70% · F2 85% · F3 82% · F4 78% · F5 62% · F6 74% · F7 50% ·
 ## Tests
 
 - `corepack pnpm install --frozen-lockfile`: OK.
-- `corepack pnpm run check`: OK, 22 archivos JavaScript.
-- `corepack pnpm test`: 48/48 OK.
+- `corepack pnpm run check`: OK, 25 archivos JavaScript.
+- `corepack pnpm test`: 53/53 OK.
+- `corepack pnpm audit --prod`: OK, sin vulnerabilidades conocidas.
 - Regresiones cubiertas: validación auth, no-cache, alta con confirmación, login/cookies/redirección, retiro de favoritos y retry `PGRST303`.
 - CI #16 del PR #4: SUCCESS sobre `64ff9c76a79eb568f48e76dae073f2e1eeb7efb0`.
 - CI #18 del PR #5: SUCCESS sobre `1893e4f1b755ba87253dc1c6ff395f8817060135`.
@@ -145,12 +154,14 @@ F0 100% · F1 70% · F2 85% · F3 82% · F4 78% · F5 62% · F6 74% · F7 50% ·
 - Advisor informa `inquiries` con RLS sin policy (INFO). Es intencional: la tabla es server-only mediante secret/service key; no abrir acceso público sin caso real.
 - Índices nuevos figuran sin uso (INFO) por haberse creado recién y por bajo volumen; no borrarlos sólo para silenciar el advisor.
 - Checkout/pedidos y tablas remotas existen, pero faltan credenciales oficiales Sandbox y pagos reales verificados. No presentarlo como checkout de pago operativo todavía.
+- Una clave Supabase y contraseña Admin aparecían como valores no ficticios en `.env.example`; el archivo local ya está sanitizado. Deben rotarse si alguna vez fueron válidos o quedaron en historial.
+- El proveedor demo es una simulación interna explícita: no valida tarjetas reales, no cobra y no sustituye Mercado Pago Sandbox.
 
 ## DB
 
 - Supabase: `dreams-project`, ref `nwsmbemwtexmrtpkgxrz`, estado `ACTIVE_HEALTHY`, Postgres 17.
 - Tablas: `profiles` (1), `products` (31), `favorites` (0), `reviews` (0), `inquiries` (0), `orders` (0), `coupons` (0); todas con RLS.
-- Migraciones aplicadas: `20260828191602 production_baseline` y `20260831024826 checkout_orders_and_coupons`.
+- Migraciones aplicadas: `20260828191602 production_baseline`, `20260831024826 checkout_orders_and_coupons` y `enable_demo_checkout_provider`.
 - Triggers de perfil/`updated_at`, políticas e índices versionados. Advisors ejecutados después de aplicar.
 
 ## Deploy
@@ -159,7 +170,7 @@ F0 100% · F1 70% · F2 85% · F3 82% · F4 78% · F5 62% · F6 74% · F7 50% ·
 - Entorno: `production` (`39886077-e963-4fec-b3aa-b0e5d38908dd`).
 - Servicio: `drams` (`c5780bbd-4030-4319-a714-1bc0f564e353`).
 - Dominio: `https://drams-production.up.railway.app`.
-- Último deployment confirmado: `31c062ae-ea05-4cdb-a53b-06f28b543e38`, SUCCESS sobre `ac66917edae49b1e272d51e07b09fe55fe075c32`.
+- Último deployment confirmado: `3e2ce2bd-7e64-4d59-b077-d9f243563561`, SUCCESS sobre `24273eeb304516177737a1440b60e04453cd2bd7`.
 - Variables nuevas verificadas por comportamiento: `CONTACT_EMAIL` y `APP_ORIGINS`.
 - El incidente histórico de cola congelada quedó resuelto; los deployments antiguos figuran removidos y no bloquean producción.
 - Smoke 2026-08-29 sobre PR #5: `/` 200 con `#review-form`; assets de opiniones 200; `/api/health` 200 con DB ok; `/api/reviews` 200; publicación anónima 401, sin datos falsos.
@@ -171,7 +182,8 @@ F0 100% · F1 70% · F2 85% · F3 82% · F4 78% · F5 62% · F6 74% · F7 50% ·
 
 ## Bloqueos
 
-- No hay bloqueo activo de Railway: el deployment `31c062ae-ea05-4cdb-a53b-06f28b543e38` figura `SUCCESS`.
+- No hay bloqueo activo de Railway: el deployment `3e2ce2bd-7e64-4d59-b077-d9f243563561` figura `SUCCESS`.
+- El push de esta tanda requiere una confirmación explícita registrada por la interfaz después del hallazgo de secretos; la rama remota existe, pero no recibió el árbol.
 - Opiniones queda como modelo general por ahora; asociarlas a cada perfume es una decisión funcional futura, no un bloqueo para la versión actual.
 - Recuperación de contraseña completa puede requerir decisión/configuración de URL y SMTP.
 - Acciones destructivas sobre la tabla histórica `favorites` o datos reales requieren autorización explícita.
@@ -180,4 +192,4 @@ F0 100% · F1 70% · F2 85% · F3 82% · F4 78% · F5 62% · F6 74% · F7 50% ·
 
 ## Próxima acción exacta
 
-El titular habilitado debe cargar `MERCADO_PAGO_ACCESS_TOKEN` y `MERCADO_PAGO_WEBHOOK_SECRET` Sandbox directamente en Railway, sin compartirlos por chat. Después, redeploy y ejecutar pagos reales de prueba aprobado, rechazado y pendiente más Webhook. Mantener F11 pendiente hasta disponer de viewport configurable.
+Publicar de forma segura `codex/demo-checkout-premium-motion`, verificar CI y activar `CHECKOUT_PROVIDER=demo` en Railway. Ejecutar smoke del flujo demo sin usar datos reales. Después crear el motor determinístico compartido para recomendaciones, quiz y configurador. Rotar la clave Supabase y contraseña Admin potencialmente expuestas antes de considerarlas seguras.

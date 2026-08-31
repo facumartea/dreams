@@ -1,6 +1,13 @@
 const api = '/api';
 let public_config_promise;
 
+if (!document.querySelector('script[src="/js/motion.js"]')) {
+    const motion_script = document.createElement('script');
+    motion_script.src = '/js/motion.js';
+    motion_script.defer = true;
+    document.head.appendChild(motion_script);
+}
+
 function get_public_config() {
     if (!public_config_promise) {
         public_config_promise = fetch(`${api}/config`).then(async response => {
@@ -104,6 +111,13 @@ function add_to_cart(product) {
     }
 
     save_cart(cart);
+    const cart_link = document.querySelector('.cart-link');
+    if (cart_link) {
+        cart_link.classList.remove('is-updated');
+        void cart_link.offsetWidth;
+        cart_link.classList.add('is-updated');
+        setTimeout(() => cart_link.classList.remove('is-updated'), 560);
+    }
     show_toast(`${product.name} fue agregado al carrito.`);
 }
 

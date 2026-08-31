@@ -1,7 +1,7 @@
 const RESULT_COPY = {
     approved: ['Pago aprobado', 'Tu pedido quedó registrado correctamente.'],
     rejected: ['Pago rechazado', 'No se realizó ningún cobro. Podés volver a intentarlo.'],
-    pending: ['Pago pendiente', 'Mercado Pago todavía está procesando la operación.'],
+    pending: ['Pago pendiente', 'La operación quedó pendiente dentro de la demostración.'],
     cancelled: ['Pago cancelado', 'La operación fue cancelada y no se completó el pedido.'],
     error: ['No pudimos confirmar el pago', 'El pedido queda registrado para poder revisarlo de forma segura.']
 };
