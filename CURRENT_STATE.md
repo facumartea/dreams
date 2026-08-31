@@ -6,13 +6,13 @@
 
 - PROYECTO: DREAMS — ecommerce de perfumería con checkout preparado y consulta secundaria por WhatsApp.
 - REPO: `https://github.com/facumartea/drams.git`
-- RAMA DE TRABAJO: `codex/demo-checkout-premium-motion`, creada en GitHub desde `main` `24273eeb304516177737a1440b60e04453cd2bd7`; todavía sin commit remoto de esta tanda.
+- RAMA DE TRABAJO: `codex/demo-checkout-premium-motion`, fusionada en `main` como `773fd8fa6269ceb02b4655c6f7956b19790991b6`.
 - PRS FUSIONADOS: [#1](https://github.com/facumartea/drams/pull/1), [#2](https://github.com/facumartea/drams/pull/2), [#3](https://github.com/facumartea/drams/pull/3), [#4](https://github.com/facumartea/drams/pull/4), [#5](https://github.com/facumartea/drams/pull/5), [#6](https://github.com/facumartea/drams/pull/6), [#7](https://github.com/facumartea/drams/pull/7) y [#8 — Add persistent checkout coupons and Comprar flow](https://github.com/facumartea/drams/pull/8).
-- HEAD EN `main`: `24273eeb304516177737a1440b60e04453cd2bd7` (`Merge checkout production continuity checkpoint`).
-- PR ABIERTO: ninguno para esta tanda; la rama existe, pero el árbol no fue publicado todavía.
-- ÚLTIMO PUSH FUNCIONAL: rama `codex/checkout-coupons`; commit `292fc13e33855f8387c90ffb4bf32f7e9d1a53d0` (`Add persistent coupons and checkout ordering`).
-- ÚLTIMO CI VERIFICADO: GitHub Actions CI #25, SUCCESS sobre `292fc13e33855f8387c90ffb4bf32f7e9d1a53d0`.
-- ÚLTIMO DEPLOY VERIFICADO: Railway `3e2ce2bd-7e64-4d59-b077-d9f243563561`, SUCCESS sobre `24273eeb304516177737a1440b60e04453cd2bd7`.
+- HEAD EN `main`: `773fd8fa6269ceb02b4655c6f7956b19790991b6` (`Merge secure demo checkout and premium motion`).
+- PR: [#10 — Add secure demo checkout and premium motion](https://github.com/facumartea/drams/pull/10), fusionado.
+- ÚLTIMO PUSH FUNCIONAL: `0dede4bcae63924fca031526041ac3d5a8f9bff9` en `codex/demo-checkout-premium-motion`.
+- ÚLTIMO CI VERIFICADO: GitHub Actions CI #30, SUCCESS sobre `0dede4bcae63924fca031526041ac3d5a8f9bff9`.
+- ÚLTIMO DEPLOY VERIFICADO: Railway `bfabd1dc-fdd6-4b75-a781-f1a496535df2`, SUCCESS sobre `773fd8fa6269ceb02b4655c6f7956b19790991b6`.
 - FASE ACTUAL: F18/F10/F13 — Checkout demo y motion premium; expansión específica auditada.
 - PROGRESO GENERAL: 72% ponderado (71,55% exacto según `PLAN.md`).
 
@@ -28,7 +28,8 @@ F0 100% · F1 70% · F2 85% · F3 84% · F4 78% · F5 62% · F6 74% · F7 50% ·
 - Incorporado motion liviano: hero con profundidad sutil, reveals, spotlight, botones magnéticos mínimos, hover de cards y feedback del carrito; touch y `prefers-reduced-motion` desactivan lo no esencial.
 - Auditadas hero, cards, quiz, recomendaciones, Dashboard, fidelidad, timeline, 360°, configurador y temas en `PREMIUM_EXPANSION_AUDIT.md`. No se duplicaron componentes ni tablas.
 - `.env.example` contenía valores no ficticios y fue sanitizado antes de cualquier publicación. No se expusieron en esta tanda; cualquier credencial que haya quedado en historial debe rotarse.
-- Check 25 archivos, tests 53/53 y audit sin vulnerabilidades conocidas. La rama GitHub existe, pero el commit/push fue bloqueado antes de publicar el árbol.
+- Check 25 archivos, tests 53/53 y audit sin vulnerabilidades conocidas. PR #10 pasó CI #30, fue fusionado y Railway desplegó el merge exacto.
+- Smoke visual público confirmó checkout demo, aviso sin cobros, formulario ficticio, cupón y bloqueo correcto para visitantes. El navegador bloqueó la navegación directa a JSON; no se afirma ese segundo smoke.
 
 - Corregido el bloqueo real de checkout: la migración anterior nunca había sido versionada ni aplicada. Supabase registra ahora `20260831024826 checkout_orders_and_coupons`.
 - Creadas `orders` y `coupons`, ambas server-only, con RLS, privilegios mínimos y cero filas reales; la prueba de insert se revirtió en transacción.
@@ -170,7 +171,7 @@ F0 100% · F1 70% · F2 85% · F3 84% · F4 78% · F5 62% · F6 74% · F7 50% ·
 - Entorno: `production` (`39886077-e963-4fec-b3aa-b0e5d38908dd`).
 - Servicio: `drams` (`c5780bbd-4030-4319-a714-1bc0f564e353`).
 - Dominio: `https://drams-production.up.railway.app`.
-- Último deployment confirmado: `3e2ce2bd-7e64-4d59-b077-d9f243563561`, SUCCESS sobre `24273eeb304516177737a1440b60e04453cd2bd7`.
+- Último deployment confirmado: `bfabd1dc-fdd6-4b75-a781-f1a496535df2`, SUCCESS sobre `773fd8fa6269ceb02b4655c6f7956b19790991b6`.
 - Variables nuevas verificadas por comportamiento: `CONTACT_EMAIL` y `APP_ORIGINS`.
 - El incidente histórico de cola congelada quedó resuelto; los deployments antiguos figuran removidos y no bloquean producción.
 - Smoke 2026-08-29 sobre PR #5: `/` 200 con `#review-form`; assets de opiniones 200; `/api/health` 200 con DB ok; `/api/reviews` 200; publicación anónima 401, sin datos falsos.
@@ -182,8 +183,7 @@ F0 100% · F1 70% · F2 85% · F3 84% · F4 78% · F5 62% · F6 74% · F7 50% ·
 
 ## Bloqueos
 
-- No hay bloqueo activo de Railway: el deployment `3e2ce2bd-7e64-4d59-b077-d9f243563561` figura `SUCCESS`.
-- El push de esta tanda requiere una confirmación explícita registrada por la interfaz después del hallazgo de secretos; la rama remota existe, pero no recibió el árbol.
+- No hay bloqueo activo de Railway: el deployment `bfabd1dc-fdd6-4b75-a781-f1a496535df2` figura `SUCCESS`.
 - Opiniones queda como modelo general por ahora; asociarlas a cada perfume es una decisión funcional futura, no un bloqueo para la versión actual.
 - Recuperación de contraseña completa puede requerir decisión/configuración de URL y SMTP.
 - Acciones destructivas sobre la tabla histórica `favorites` o datos reales requieren autorización explícita.
