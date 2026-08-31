@@ -1,6 +1,7 @@
 function format_price(value) { return new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 }).format(value); }
 
 let admin_products = [];
+let admin_coupons = [];
 
 async function admin_fetch(url, options = {}) {
     const response = await fetch(url, options);
@@ -98,6 +99,64 @@ async function load_admin_reviews() {
     document.getElementById('admin-reviews').innerHTML = reviews.map(review => `<article class="review-card"><div class="review-stars">${'★'.repeat(review.rating)}${'☆'.repeat(5-review.rating)}</div><p>“${escape_html(review.comment)}”</p><div class="review-author">${escape_html(review.user_name)}</div></article>`).join('');
 }
 
+async function load_admin_coupons() {
+    admin_coupons = await admin_fetch('/api/admin/coupons');
+    const tbody = document.getElementById('admin-coupons');
+    document.getElementById('coupon-total').textContent = `${admin_coupons.length} cupones`;
+    tbody.innerHTML = '';
+    admin_coupons.forEach(coupon => {
+        const row = document.createElement('tr');
+        row.innerHTML = `<td><strong>${escape_html(coupon.code)}</strong></td><td>${escape_html(coupon.discount_percent)}%</td><td><span class="status-pill ${coupon.active ? 'is-active' : 'is-inactive'}">${coupon.active ? 'Activo' : 'Inactivo'}</span></td><td>${escape_html(new Date(coupon.updated_at).toLocaleDateString('es-AR'))}</td><td><div class="admin-actions"><button class="small-button coupon-toggle">${coupon.active ? 'Desactivar' : 'Activar'}</button><button class="small-button coupon-edit">Editar</button><button class="small-button coupon-delete">Eliminar</button></div></td>`;
+        row.querySelector('.coupon-toggle').addEventListener('click', () => save_coupon_value(coupon, { ...coupon, active: !coupon.active }));
+        row.querySelector('.coupon-edit').addEventListener('click', () => fill_coupon_form(coupon));
+        row.querySelector('.coupon-delete').addEventListener('click', () => delete_coupon(coupon.id));
+        tbody.appendChild(row);
+    });
+}
+
+function fill_coupon_form(coupon) {
+    document.getElementById('coupon-form-label').textContent = `EDITAR CUPÓN ${coupon.code}`;
+    document.getElementById('coupon-id').value = coupon.id;
+    document.getElementById('admin-coupon-code').value = coupon.code;
+    document.getElementById('coupon-percent').value = coupon.discount_percent;
+    document.getElementById('coupon-active').checked = coupon.active;
+    document.getElementById('admin-coupon-code').focus();
+}
+
+function reset_coupon_form() {
+    document.getElementById('coupon-form').reset();
+    document.getElementById('coupon-id').value = '';
+    document.getElementById('coupon-active').checked = true;
+    document.getElementById('coupon-form-label').textContent = 'NUEVO CUPÓN';
+    document.getElementById('coupon-message').textContent = '';
+}
+
+async function save_coupon_value(current, value) {
+    try {
+        await admin_fetch(`/api/admin/coupons/${current.id}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ code: value.code, discount_percent: value.discount_percent, active: value.active }) });
+        show_toast(value.active ? 'Cupón activado.' : 'Cupón desactivado.');
+        await load_admin_coupons();
+    } catch (error) { show_toast(error.message); }
+}
+
+async function save_coupon(event) {
+    event.preventDefault();
+    const id = document.getElementById('coupon-id').value;
+    const data = { code: document.getElementById('admin-coupon-code').value.toUpperCase(), discount_percent: document.getElementById('coupon-percent').value, active: document.getElementById('coupon-active').checked };
+    try {
+        await admin_fetch(id ? `/api/admin/coupons/${id}` : '/api/admin/coupons', { method: id ? 'PUT' : 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+        const message = id ? 'Cupón actualizado.' : 'Cupón creado.';
+        reset_coupon_form();
+        document.getElementById('coupon-message').textContent = message;
+        await load_admin_coupons();
+    } catch (error) { document.getElementById('coupon-message').textContent = error.message; }
+}
+
+async function delete_coupon(id) {
+    if (!confirm('¿Seguro que querés eliminar este cupón? Los pedidos anteriores conservarán el código y descuento aplicado.')) return;
+    try { await admin_fetch(`/api/admin/coupons/${id}`, { method: 'DELETE' }); show_toast('Cupón eliminado.'); reset_coupon_form(); await load_admin_coupons(); } catch (error) { show_toast(error.message); }
+}
+
 function setup_tabs() {
     document.querySelectorAll('.admin-tab').forEach(button => button.addEventListener('click', async () => {
         document.querySelectorAll('.admin-tab').forEach(item => item.classList.remove('active'));
@@ -105,6 +164,7 @@ function setup_tabs() {
         button.classList.add('active');
         document.getElementById(`tab-${button.dataset.tab}`).classList.add('active');
         if (button.dataset.tab === 'usuarios') await load_users();
+        if (button.dataset.tab === 'cupones') await load_admin_coupons();
         if (button.dataset.tab === 'consultas') await load_inquiries();
         if (button.dataset.tab === 'opiniones') await load_admin_reviews();
     }));
@@ -114,6 +174,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (!(await verify_admin())) return;
     document.getElementById('product-form').addEventListener('submit', save_product);
     document.getElementById('cancel-edit').addEventListener('click', reset_form);
+    document.getElementById('coupon-form').addEventListener('submit', save_coupon);
+    document.getElementById('cancel-coupon-edit').addEventListener('click', reset_coupon_form);
+    const coupon_code = document.getElementById('admin-coupon-code');
+    coupon_code.addEventListener('input', () => { coupon_code.value = coupon_code.value.toUpperCase(); });
     document.getElementById('logout-admin').addEventListener('click', async () => { await fetch('/api/auth/logout', { method: 'POST' }); window.location.href = '/'; });
     setup_tabs();
     try { await Promise.all([load_dashboard(), load_admin_products()]); } catch (error) { show_toast(error.message); }

@@ -21,6 +21,14 @@
             <aside class="checkout-payment" aria-labelledby="payment-title">
                 <p class="eyebrow">MÉTODO DE PAGO</p><h2 id="payment-title">Mercado Pago</h2>
                 <p>Al continuar vas a elegir el medio de pago dentro del checkout protegido de Mercado Pago.</p>
+                <div class="coupon-box" aria-labelledby="coupon-title">
+                    <label id="coupon-title" for="coupon-code">Cupón de descuento</label>
+                    <div class="coupon-control"><input id="coupon-code" type="text" maxlength="40" autocomplete="off" spellcheck="false" placeholder="DREAMS10"><button id="coupon-apply" class="small-button" type="button">Aplicar</button></div>
+                    <p id="coupon-status" class="coupon-status" role="status" aria-live="polite"></p>
+                    <button id="coupon-remove" class="text-button" type="button" hidden>Quitar cupón</button>
+                </div>
+                <div id="checkout-subtotal" class="summary-line"><span>Subtotal</span><strong>—</strong></div>
+                <div id="checkout-discount" class="summary-line checkout-discount" hidden><span>Descuento</span><strong>—</strong></div>
                 <div id="checkout-total" class="summary-line summary-total"><span>Total</span><strong>—</strong></div>
                 <p id="checkout-status" class="form-message" role="status" aria-live="polite"></p>
                 <button id="checkout-submit" class="button button-primary" type="button" disabled>Continuar a Mercado Pago</button>

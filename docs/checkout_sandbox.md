@@ -6,21 +6,17 @@ La aplicación incluye una integración desacoplada de Checkout Pro mediante `se
 
 El feature flag es cerrado por defecto. `/api/checkout/config` sólo devuelve `enabled: true` cuando coinciden las tres condiciones:
 
-1. `MERCADO_PAGO_ACCESS_TOKEN` está configurado en el servidor;
+1. `MERCADO_PAGO_ACCESS_TOKEN` y `MERCADO_PAGO_WEBHOOK_SECRET` están configurados en el servidor;
 2. `APP_BASE_URL` es un origen HTTPS válido;
 3. `CHECKOUT_SCHEMA_READY=true` después de aplicar y verificar la migración.
 
 Nunca activar el flag sólo para mostrar la interfaz. Hasta completar la activación, el carrito conserva el flujo de consulta por WhatsApp.
 
-## Esquema requerido
+## Esquema aplicado
 
-Crear primero el archivo con la CLI fijada por el proyecto:
+La migración `20260831024826_checkout_orders_and_coupons.sql` fue aplicada el 2026-08-31. Crea `public.orders` y `public.coupons` como tablas server-only con RLS, grants exclusivos para `service_role`, constraints e índices.
 
-```text
-supabase migration new checkout_orders
-```
-
-Incorporar en ese archivo una tabla `public.orders` server-only con:
+`orders` conserva:
 
 - `id uuid primary key`;
 - `user_id uuid not null references public.profiles(id)`;
@@ -30,14 +26,15 @@ Incorporar en ese archivo una tabla `public.orders` server-only con:
 - `status text not null check (status in ('created','approved','rejected','pending','cancelled','error'))`;
 - `status_detail text` nullable;
 - `currency text not null default 'ARS' check (currency = 'ARS')`;
-- `total numeric(12,2) not null check (total > 0)`;
+- `subtotal`, `discount` y `total` con consistencia obligatoria;
+- snapshot del código y porcentaje del cupón;
 - `items jsonb not null check (jsonb_typeof(items) = 'array')`;
 - `paid_at timestamptz` nullable;
 - `created_at timestamptz not null default now()`;
 - `updated_at timestamptz not null default now()` y trigger existente `set_updated_at` si corresponde;
 - índices sobre `user_id, created_at desc`, `provider_payment_id` y `status`.
 
-Habilitar RLS. Como el navegador nunca consulta Supabase directamente y el servidor usa la secret key, revocar privilegios de `anon` y `authenticated` sobre `orders`; no crear policies públicas. Verificar advisors y el acceso server-side después de aplicar.
+`coupons` incluye código mayúsculo único, porcentaje mayor que 0 y hasta 100, estado y campos futuros opcionales para vencimiento, límites, mínimo y condiciones. El navegador nunca consulta Supabase directamente.
 
 ## Variables Sandbox
 
@@ -60,7 +57,7 @@ Nunca colocar token o secreto en `public/`, GitHub, capturas o documentación ve
 
 ## QA de activación
 
-1. aplicar migración y ejecutar advisors;
+1. confirmar migración y advisors;
 2. configurar credenciales de prueba y secreto Webhook;
 3. crear comprador de prueba en Mercado Pago;
 4. probar aprobado, rechazado y pendiente con datos oficiales de prueba;

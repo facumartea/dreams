@@ -2,7 +2,7 @@
 
 ## Objetivo
 
-DREAMS es una tienda catálogo de perfumería con consultas por WhatsApp. Tratar este repositorio como software de producción: no inventar funciones, resultados de QA, estados de deploy ni porcentajes.
+DREAMS es una tienda de perfumería con catálogo, carrito, consultas por WhatsApp y checkout de Mercado Pago preparado para Sandbox. Tratar este repositorio como software de producción: no inventar funciones, resultados de QA, estados de deploy ni porcentajes.
 
 ## Arquitectura actual
 
@@ -12,6 +12,7 @@ DREAMS es una tienda catálogo de perfumería con consultas por WhatsApp. Tratar
 - `server/server.js`: bootstrap, cliente Supabase privilegiado, seed y escucha HTTP.
 - `server/seed.js`: catálogo inicial y alta opcional del administrador.
 - `supabase/schema.sql`: esquema PostgreSQL, constraints, índices y RLS.
+- `supabase/migrations/20260831024826_checkout_orders_and_coupons.sql`: pedidos y cupones server-only; no exponerlos directamente al navegador.
 - `railway.toml`: despliegue Railway.
 - `docs/`: documentación histórica; puede estar desactualizada y no prevalece sobre el código.
 
@@ -84,6 +85,8 @@ corepack pnpm test
 `pnpm run check` valida la sintaxis de servidor, frontend, scripts y tests. `pnpm test` usa el test runner nativo de Node. La cobertura debe ampliarse en F15; no confundir la suite inicial con cobertura completa.
 
 Variables obligatorias: `SUPABASE_URL`, `SUPABASE_SECRET_KEY`. Variables operativas: `NODE_ENV`, `PORT`, `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `ADMIN_NAME`, `CONTACT_EMAIL`, `WHATSAPP_NUMBER`, `APP_ORIGINS`. Checkout: `APP_BASE_URL`, `MERCADO_PAGO_MODE`, `MERCADO_PAGO_ACCESS_TOKEN`, `MERCADO_PAGO_WEBHOOK_SECRET`, `CHECKOUT_SCHEMA_READY` y `CHECKOUT_SHOW_TEST_DATA`. Tokens/secrets son sólo servidor. No activar `CHECKOUT_SCHEMA_READY` antes de aplicar y verificar la migración indicada en `docs/checkout_sandbox.md`. `CONTACT_EMAIL` puede exponerse en la UI; `ADMIN_EMAIL` no. `APP_ORIGINS` contiene los orígenes HTTPS exactos separados por coma y debe actualizarse antes de una migración de dominio. Nunca versionar `.env` real.
+
+Cupones: el código se normaliza en mayúsculas y el porcentaje se valida/calcula siempre en servidor. El frontend nunca decide el descuento. `orders` conserva snapshots de subtotal, descuento, total y cupón para no alterar el historial cuando un cupón se edita o elimina.
 
 ## Tests y cierre de fase
 

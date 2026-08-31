@@ -45,11 +45,11 @@ function render_cart(cart = get_cart(), whatsapp_url = null, checkout_enabled = 
     });
 
     const consultation = whatsapp_url
-        ? `<a class="button button-dark" href="${escape_html(whatsapp_url)}" target="_blank" rel="noreferrer">Consultar carrito por WhatsApp</a>`
-        : '<button class="button button-dark" disabled>Verificando precio y stock…</button>';
-    const checkout = checkout_enabled
-        ? '<a class="button button-primary checkout-link" href="/checkout.html">Continuar al pago de prueba</a>'
+        ? `<a class="text-button cart-whatsapp-link" href="${escape_html(whatsapp_url)}" target="_blank" rel="noreferrer">Consultar por WhatsApp</a>`
         : '';
+    const checkout = checkout_enabled
+        ? '<a class="button button-primary checkout-link" href="/checkout.html">Comprar</a>'
+        : '<button class="button button-primary" type="button" disabled>Comprar</button><p class="cart-payment-note">Pago online temporalmente no disponible.</p>';
     summary.innerHTML = `
         <p class="eyebrow">RESUMEN</p>
         <div class="summary-line"><span>Productos</span><strong>${format_price(total)}</strong></div>

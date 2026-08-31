@@ -90,6 +90,41 @@ const parse_id = value => {
     return Number.isSafeInteger(id) && id > 0 ? id : null;
 };
 
+const normalize_coupon_code = value => String(value || '').trim().toUpperCase();
+
+function coupon_payload(value) {
+    const code = normalize_coupon_code(value?.code);
+    const discount_percent = Number(value?.discount_percent);
+    if (!/^[A-Z0-9_-]{3,40}$/.test(code)) return { error: 'El código debe tener entre 3 y 40 caracteres: letras, números, guion o guion bajo.' };
+    if (!Number.isFinite(discount_percent) || discount_percent <= 0 || discount_percent > 100) return { error: 'El porcentaje debe ser mayor que 0 y menor o igual a 100.' };
+    return { data: { code, discount_percent, active: value?.active !== false } };
+}
+
+function discounted_totals(subtotal, discount_percent = 0) {
+    const safe_subtotal = Math.max(0, Number(subtotal) || 0);
+    const safe_percent = Math.min(100, Math.max(0, Number(discount_percent) || 0));
+    const discount = Math.round((safe_subtotal * safe_percent / 100) * 100) / 100;
+    return { subtotal: safe_subtotal, discount, total: Math.max(0, Math.round((safe_subtotal - discount) * 100) / 100) };
+}
+
+async function resolve_coupon(database, code, subtotal) {
+    const normalized = normalize_coupon_code(code);
+    if (!normalized) return { ...discounted_totals(subtotal), coupon: null, coupon_error: null };
+    if (!/^[A-Z0-9_-]{3,40}$/.test(normalized)) return { ...discounted_totals(subtotal), coupon: null, coupon_error: 'Cupón inválido.' };
+    const result = await database.from('coupons').select('id,code,discount_percent,active,expires_at,minimum_purchase').eq('code', normalized).eq('active', true).maybeSingle();
+    if (result.error) throw result.error;
+    const coupon = result.data;
+    const expired = coupon?.expires_at && new Date(coupon.expires_at).getTime() <= Date.now();
+    const below_minimum = coupon?.minimum_purchase !== null && Number(subtotal) < Number(coupon?.minimum_purchase);
+    if (!coupon || coupon.active !== true || expired || below_minimum) return { ...discounted_totals(subtotal), coupon: null, coupon_error: 'Cupón inválido.' };
+    const totals = discounted_totals(subtotal, coupon.discount_percent);
+    return {
+        ...totals,
+        coupon: { id: coupon.id, code: coupon.code, discount_percent: Number(coupon.discount_percent) },
+        coupon_error: null
+    };
+}
+
 const product = row => ({
     ...row,
     featured: Boolean(row.featured),
@@ -135,7 +170,7 @@ function normalize_cart_items(items) {
     return { quantities };
 }
 
-async function quote_cart(database, items) {
+async function quote_cart(database, items, coupon_code = '') {
     const normalized = normalize_cart_items(items);
     if (normalized.error) return normalized;
     const ids = [...normalized.quantities.keys()];
@@ -151,7 +186,8 @@ async function quote_cart(database, items) {
         if (quantity < requested) warnings.push(`La cantidad de ${item.brand} ${item.name} se ajustó al stock disponible (${stock}).`);
         quoted.push({ ...item, id, price: Number(item.price), stock, quantity });
     }
-    return { items: quoted, total: quoted.reduce((sum, item) => sum + item.price * item.quantity, 0), warnings };
+    const subtotal = quoted.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    return { items: quoted, warnings, ...(await resolve_coupon(database, coupon_code, subtotal)) };
 }
 
 async function database_health(database) {
@@ -193,6 +229,7 @@ function create_app(options = {}) {
     app.use('/api/inquiries', rateLimit({ windowMs: 900000, limit: 10, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiadas consultas. Probá nuevamente en unos minutos.' } }));
     app.use('/api/cart', rateLimit({ windowMs: 900000, limit: 30, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiadas verificaciones del carrito. Probá nuevamente en unos minutos.' } }));
     app.use('/api/checkout', rateLimit({ windowMs: 900000, limit: 15, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiados intentos de checkout. Probá nuevamente en unos minutos.' } }));
+    app.use('/api/coupons', rateLimit({ windowMs: 900000, limit: 30, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiados intentos. Probá nuevamente en unos minutos.' } }));
     app.use('/api/payments/webhook', rateLimit({ windowMs: 60000, limit: 120, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiadas notificaciones.' } }));
     const review_limiter = rateLimit({ windowMs: 3600000, limit: 5, standardHeaders: true, legacyHeaders: false, message: { error: 'Publicaste varias opiniones. Probá nuevamente más tarde.' } });
     app.use('/api/reviews', (request, response, next) => request.method === 'POST' ? review_limiter(request, response, next) : next());
@@ -308,16 +345,23 @@ function create_app(options = {}) {
         response.status(201).json({ message: 'Opinión publicada.' });
     });
     route('post', '/api/cart/quote', async (request, response) => {
-        const quote = await quote_cart(database, request.body.items);
+        const quote = await quote_cart(database, request.body.items, request.body.coupon_code);
         if (quote.error) return response.status(400).json({ error: quote.error });
         const lines = quote.items.map(item => `${item.quantity} × ${item.brand} ${item.name} — ${item.price * item.quantity} ARS`);
         const text = ['Hola DREAMS, quiero consultar por este carrito:', ...lines, `Total de referencia: ${quote.total} ARS`].join('\n');
         response.json({ ...quote, whatsapp_url: quote.items.length ? `https://wa.me/${whatsapp_number}?text=${encodeURIComponent(text)}` : null });
     });
+    route('post', '/api/coupons/validate', async (request, response) => {
+        const quote = await quote_cart(database, request.body.items, request.body.code);
+        if (quote.error) return response.status(400).json({ error: quote.error });
+        if (!quote.coupon) return response.status(404).json({ error: 'Cupón inválido.', subtotal: quote.subtotal, discount: 0, total: quote.total });
+        response.json({ coupon: quote.coupon, subtotal: quote.subtotal, discount: quote.discount, total: quote.total });
+    });
     route('post', '/api/checkout/session', login, async (request, response) => {
         if (!checkout_enabled || !app_base_url) return response.status(503).json({ error: 'El checkout Sandbox todavía no está configurado.' });
-        const quote = await quote_cart(database, request.body.items);
+        const quote = await quote_cart(database, request.body.items, request.body.coupon_code);
         if (quote.error) return response.status(400).json({ error: quote.error });
+        if (request.body.coupon_code && !quote.coupon) return response.status(409).json({ error: 'Cupón inválido.' });
         if (!quote.items.length || quote.total <= 0) return response.status(409).json({ error: 'No hay productos disponibles para pagar.' });
 
         const order_id = randomUUID();
@@ -330,13 +374,18 @@ function create_app(options = {}) {
             status: 'created',
             status_detail: null,
             currency: 'ARS',
+            subtotal: quote.subtotal,
+            discount: quote.discount,
             total: quote.total,
+            coupon_id: quote.coupon?.id || null,
+            coupon_code: quote.coupon?.code || null,
+            coupon_percent: quote.coupon?.discount_percent || null,
             items: quote.items.map(item => ({ id: item.id, brand: item.brand, name: item.name, size_ml: item.size_ml, price: item.price, quantity: item.quantity })),
             paid_at: null
         };
         fail_if(await database.from('orders').insert(order));
         try {
-            const checkout = await payment_provider.create_checkout({ order_id, items: quote.items, payer_email: request.user.email, app_base_url });
+            const checkout = await payment_provider.create_checkout({ order_id, items: quote.items, total: quote.total, discount: quote.discount, payer_email: request.user.email, app_base_url });
             fail_if(await database.from('orders').update({ provider_preference_id: checkout.preference_id }).eq('id', order_id));
             response.status(201).json({ order_id, checkout_url: checkout.checkout_url, mode: checkout_mode, warnings: quote.warnings });
         } catch (error) {
@@ -414,6 +463,31 @@ function create_app(options = {}) {
     route('get', '/api/admin/users', admin, async (request, response) => response.json(fail_if(await database.from('profiles').select('id,name,role,created_at').order('created_at', { ascending: false })).map(value => ({ ...value, email: null, is_admin: value.role === 'admin' }))));
     route('get', '/api/admin/inquiries', admin, async (request, response) => response.json(fail_if(await database.from('inquiries').select('*,products(brand,name)').order('id', { ascending: false }).limit(100)).map(value => ({ ...value, brand: value.products?.brand || null, name: value.products?.name || value.product_name }))));
     route('get', '/api/admin/reviews', admin, async (request, response) => response.json(fail_if(await database.from('reviews').select('*').order('id', { ascending: false }))));
+    route('get', '/api/admin/coupons', admin, async (request, response) => response.json(fail_if(await database.from('coupons').select('id,code,discount_percent,active,created_at,updated_at').order('created_at', { ascending: false }))));
+    route('post', '/api/admin/coupons', admin, async (request, response) => {
+        const parsed = coupon_payload(request.body);
+        if (parsed.error) return response.status(400).json({ error: parsed.error });
+        const existing = fail_if(await database.from('coupons').select('id').eq('code', parsed.data.code).maybeSingle());
+        if (existing) return response.status(409).json({ error: 'Ya existe un cupón con ese código.' });
+        const created = fail_if(await database.from('coupons').insert(parsed.data).select('id,code,discount_percent,active,created_at,updated_at').single());
+        response.status(201).json(created);
+    });
+    route('put', '/api/admin/coupons/:id', admin, async (request, response) => {
+        const id = parse_id(request.params.id);
+        if (!id) return response.status(400).json({ error: 'ID de cupón inválido.' });
+        const parsed = coupon_payload(request.body);
+        if (parsed.error) return response.status(400).json({ error: parsed.error });
+        const existing = fail_if(await database.from('coupons').select('id').eq('code', parsed.data.code).neq('id', id).maybeSingle());
+        if (existing) return response.status(409).json({ error: 'Ya existe un cupón con ese código.' });
+        const updated = fail_if(await database.from('coupons').update(parsed.data).eq('id', id).select('id,code,discount_percent,active,created_at,updated_at').maybeSingle());
+        return updated ? response.json(updated) : response.status(404).json({ error: 'Cupón no encontrado.' });
+    });
+    route('delete', '/api/admin/coupons/:id', admin, async (request, response) => {
+        const id = parse_id(request.params.id);
+        if (!id) return response.status(400).json({ error: 'ID de cupón inválido.' });
+        const deleted = fail_if(await database.from('coupons').delete().eq('id', id).select('id').maybeSingle());
+        return deleted ? response.json({ message: 'Cupón eliminado.' }) : response.status(404).json({ error: 'Cupón no encontrado.' });
+    });
     route('get', ['/admin', '/admin.html'], admin, async (request, response) => response.sendFile(path.join(views_directory, 'admin.html')));
     route('get', ['/favoritos', '/favoritos.html'], async (request, response) => response.redirect(301, '/catalogo.html'));
     route('get', '/api/health', async (request, response) => {
@@ -435,4 +509,4 @@ function create_app(options = {}) {
     return app;
 }
 
-module.exports = { create_app, validate, payload, database_health, auth_cookie, session, parse_id, normalize_cart_items, quote_cart, execute_database_query, normalize_origin, allowed_origin_set, mutation_origin_guard, GENERIC_ERROR };
+module.exports = { create_app, validate, payload, coupon_payload, normalize_coupon_code, discounted_totals, resolve_coupon, database_health, auth_cookie, session, parse_id, normalize_cart_items, quote_cart, execute_database_query, normalize_origin, allowed_origin_set, mutation_origin_guard, GENERIC_ERROR };

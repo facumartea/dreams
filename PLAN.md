@@ -1,30 +1,31 @@
 # Roadmap de producción — DREAMS
 
-Porcentajes recalibrados el 2026-08-30 al sumar el checkout Sandbox y corregir los pesos para que totalicen exactamente 100%. Son estimaciones basadas en evidencia y se actualizan sólo después de validación.
+Porcentajes recalibrados el 2026-08-31 al sumar cupones y mantener los pesos en exactamente 100%. Son estimaciones basadas en evidencia y se actualizan sólo después de validación.
 
 | Fase | Alcance | Peso | Estado |
 |---|---|---:|---:|
-| F0 | Auditoría total, baseline y documentación | 7% | 100% |
-| F1 | Seguridad crítica: XSS, dependencias, headers, CSRF/origin, abuso | 8% | 70% |
-| F2 | Backend/API: validación, errores, health, modularidad mínima | 7% | 85% |
-| F3 | Datos/Supabase: grants mínimos, provisioning, migraciones, integridad, RLS | 8% | 72% |
-| F4 | Catálogo, detalle, carrito y consultas | 6% | 75% |
+| F0 | Auditoría total, baseline y documentación | 6% | 100% |
+| F1 | Seguridad crítica: XSS, dependencias, headers, CSRF/origin, abuso | 7% | 70% |
+| F2 | Backend/API: validación, errores, health, modularidad mínima | 6% | 85% |
+| F3 | Datos/Supabase: grants mínimos, provisioning, migraciones, integridad, RLS | 8% | 82% |
+| F4 | Catálogo, detalle, carrito y consultas | 6% | 78% |
 | F5 | Opiniones persistentes, edición y moderación | 4% | 62% |
 | F6 | Auth, sesiones, recuperación y usuarios | 7% | 74% |
-| F7 | Admin completo, reversible y auditable | 6% | 35% |
-| F8 | Arquitectura, limpieza y documentación técnica | 4% | 72% |
-| F9 | UX funcional y estados | 5% | 78% |
+| F7 | Admin completo, reversible y auditable | 6% | 50% |
+| F8 | Arquitectura, limpieza y documentación técnica | 4% | 75% |
+| F9 | UX funcional y estados | 5% | 82% |
 | F10 | Diseño visual, colección femenina, imagen y sistema de componentes | 4% | 94% |
 | F11 | Responsive verificado | 4% | 72% |
-| F12 | Accesibilidad | 4% | 65% |
+| F12 | Accesibilidad | 4% | 68% |
 | F13 | Performance | 4% | 30% |
 | F14 | SEO y descubribilidad | 3% | 15% |
-| F15 | Testing y CI | 7% | 76% |
+| F15 | Testing y CI | 7% | 82% |
 | F16 | Producción, dominio, deploy y observabilidad | 4% | 76% |
 | F17 | QA final de punta a punta | 3% | 0% |
-| F18 | Checkout Sandbox, pedidos y pagos | 5% | 42% |
+| F18 | Checkout Sandbox, pedidos y pagos | 4% | 68% |
+| F19 | Cupones: datos, API, Admin, checkout y seguridad | 4% | 70% |
 
-**Progreso general ponderado: 67%** (66,70% exacto). El porcentaje baja por el alcance importante de pagos agregado y por corregir la tabla histórica, cuyos pesos sumaban 104% en vez de 100%; no representa una regresión del código existente.
+**Progreso general ponderado: 70%** (70,31% exacto). El avance se basa en migración remota verificada, implementación server-side y pruebas locales; no incluye pagos Sandbox reales ni QA responsive completo.
 
 ## Secuencia y criterios
 
@@ -102,8 +103,12 @@ Happy path, errores, vacío, inválido, reload, concurrencia, auth/roles, mobile
 
 ### F18 — Checkout Sandbox, pedidos y pagos
 
-Capa de proveedor desacoplada, Checkout Pro oficial, recálculo server-side, pedidos persistentes, verificación HMAC, confirmación autoritativa, estados completos, UI/UX responsive y pruebas. Para superar 42% faltan migración CLI, credenciales de prueba, Webhook configurado, compras Sandbox reales y QA en producción. Producción queda cerrada por feature flag hasta completar esas dependencias.
+Capa de proveedor desacoplada, Checkout Pro oficial, recálculo server-side, pedidos persistentes, verificación HMAC, confirmación autoritativa, estados completos, UI/UX responsive y pruebas. La migración de pedidos ya está aplicada y verificada. Para superar 68% faltan credenciales oficiales de prueba, Webhook configurado, compras Sandbox reales y QA en producción. Producción queda cerrada por feature flag hasta completar esas dependencias.
+
+### F19 — Cupones
+
+Cupones persistentes server-only, código mayúsculo, constraints, CRUD Admin, activar/desactivar/eliminar, validación pública mediada por API, cálculo autoritativo en servidor, snapshot en pedido, UI premium y persistencia durante checkout. Para cerrar faltan CI/deploy, smoke autenticado en producción y prueba con un cupón real creado por Admin.
 
 ## Próximo bloque exacto
 
-Publicar el checkpoint visual/checkout cerrado, verificar CI y Railway; después obtener Supabase CLI y credenciales oficiales de prueba para crear/aplicar la migración `checkout_orders`, activar Sandbox y ejecutar compras aprobada/rechazada/pendiente. La matriz F11 completa sigue pendiente hasta disponer de un runner con viewport configurable.
+Publicar la tanda checkout/cupones, verificar CI, Railway y smoke. Después, el titular habilitado de Mercado Pago debe cargar el access token y secreto Webhook Sandbox para ejecutar compras aprobada, rechazada y pendiente. La matriz F11 completa sigue pendiente hasta disponer de un runner con viewport configurable.

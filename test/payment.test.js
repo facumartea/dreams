@@ -12,6 +12,12 @@ test('normaliza todos los estados relevantes de Mercado Pago', () => {
     assert.equal(normalize_payment_status('unknown'), 'error');
 });
 
+test('no activa checkout si falta token o secreto de Webhook', () => {
+    assert.equal(new MercadoPagoProvider({ access_token: 'TEST-token', webhook_secret: '', mode: 'sandbox' }).configured, false);
+    assert.equal(new MercadoPagoProvider({ access_token: '', webhook_secret: 'secret', mode: 'sandbox' }).configured, false);
+    assert.equal(new MercadoPagoProvider({ access_token: 'TEST-token', webhook_secret: 'secret', mode: 'sandbox' }).configured, true);
+});
+
 test('valida firmas webhook con HMAC y rechaza alteraciones', () => {
     const data_id = '123456';
     const request_id = 'request-1';
@@ -58,4 +64,22 @@ test('diferencia error HTTP del proveedor y error de red', async () => {
         fetch_impl: async () => { throw new TypeError('network down'); }
     });
     await assert.rejects(() => network_error.get_payment('1'), /network down/);
+});
+
+test('una preferencia con cupón cobra exactamente el total recalculado', async () => {
+    let body;
+    const provider = new MercadoPagoProvider({
+        access_token: 'TEST-token', mode: 'sandbox',
+        fetch_impl: async (url, options) => { body = JSON.parse(options.body); return { ok: true, json: async () => ({ id: 'pref-discount', sandbox_init_point: 'https://sandbox.mercadopago.test/discount' }) }; }
+    });
+    await provider.create_checkout({
+        order_id: '22222222-2222-4222-8222-222222222222',
+        items: [{ id: 1, brand: 'DREAMS', name: 'Noche', size_ml: 100, price: 100000, quantity: 1 }],
+        total: 90000,
+        discount: 10000,
+        app_base_url: 'https://dreams.example'
+    });
+    assert.equal(body.items.length, 1);
+    assert.equal(body.items[0].unit_price, 90000);
+    assert.equal(body.items[0].quantity, 1);
 });
