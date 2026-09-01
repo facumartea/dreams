@@ -36,7 +36,8 @@ function mutation_origin_guard(configured_origins) {
         const referer_header = request.get('referer');
         const fetch_site = String(request.get('sec-fetch-site') || '').toLowerCase();
         if (!origin_header && !referer_header) {
-            return fetch_site === 'cross-site'
+            const has_session_cookie = /(?:^|;\s*)dreams_(?:access|refresh)_token=/.test(String(request.headers.cookie || ''));
+            return fetch_site === 'cross-site' || has_session_cookie
                 ? response.status(403).json({ error: 'Origen de solicitud no permitido.' })
                 : next();
         }
@@ -206,6 +207,7 @@ function create_app(options = {}) {
     const contact_email = valid_email(configured_contact_email) ? configured_contact_email : 'contacto@example.com';
     const whatsapp_number = String(options.whatsapp_number || '').replace(/\D/g, '');
     const payment_provider = options.payment_provider || null;
+    const demo_auto_confirm_email = options.demo_auto_confirm_email === true;
     const checkout_mode = ['production', 'sandbox', 'demo'].includes(payment_provider?.mode) ? payment_provider.mode : 'sandbox';
     const app_base_url = normalize_origin(options.app_base_url);
     const checkout_enabled = Boolean(payment_provider?.configured && app_base_url && options.checkout_schema_ready);
@@ -306,6 +308,19 @@ function create_app(options = {}) {
     route('post', '/api/auth/register', async (request, response) => {
         const name = String(request.body.name || '').trim().slice(0, 80), email = normalize_email(request.body.email), password = String(request.body.password || '');
         if (!name || !valid_email(email) || password.length < 8 || password.length > 128) return response.status(400).json({ error: 'Completá un nombre, correo válido y una contraseña de 8 a 128 caracteres.' });
+        if (demo_auto_confirm_email) {
+            const created = await database.auth.admin.createUser({ email, password, email_confirm: true, user_metadata: { name } });
+            if (created.error || !created.data?.user) return response.status(400).json({ error: 'No se pudo crear la cuenta con esos datos.' });
+            fail_if(await database.from('profiles').upsert({ id: created.data.user.id, name, role: 'customer' }, { onConflict: 'id', ignoreDuplicates: true }));
+            const auth = create_auth_client();
+            const signed_in = await auth.auth.signInWithPassword({ email, password });
+            if (signed_in.error || !signed_in.data?.session || !signed_in.data?.user) {
+                logger.error?.('La cuenta demo se creó pero no pudo iniciar sesión.', { kind: error_kind(signed_in.error) });
+                return response.status(503).json({ error: 'La cuenta se creó, pero no pudimos iniciar la sesión. Probá ingresar nuevamente.' });
+            }
+            session(response, signed_in.data.session, production);
+            return response.status(201).json({ message: 'Cuenta demo creada. Ya podés usar DREAMS.', authenticated: true, demo: true, user: { id: created.data.user.id, name, email, is_admin: false } });
+        }
         const result = await database.auth.signUp({ email, password, options: { data: { name } } });
         if (result.error) return response.status(400).json({ error: 'No se pudo crear la cuenta con esos datos.' });
         if (result.data.user) fail_if(await database.from('profiles').upsert({ id: result.data.user.id, name, role: 'customer' }, { onConflict: 'id', ignoreDuplicates: true }));
@@ -320,7 +335,7 @@ function create_app(options = {}) {
         if (!valid_email(email) || !password || password.length > 128) return response.status(400).json({ error: 'Ingresá un correo válido y tu contraseña.' });
         const result = await database.auth.signInWithPassword({ email, password });
         if (result.error || !result.data.session || !result.data.user) {
-            const confirmation_required = result.error?.code === 'email_not_confirmed';
+            const confirmation_required = !demo_auto_confirm_email && result.error?.code === 'email_not_confirmed';
             return response.status(401).json({ error: confirmation_required ? 'Primero confirmá tu cuenta desde el correo que te enviamos.' : 'Correo o contraseña incorrectos.' });
         }
         const profile = await profile_for(result.data.user);
@@ -421,12 +436,13 @@ function create_app(options = {}) {
             if (error?.code === 'DEMO_SCENARIO_INVALID') return response.status(400).json({ error: 'Resultado demo inválido.' });
             throw error;
         }
-        fail_if(await database.from('orders').update({
+        const updated = fail_if(await database.from('orders').update({
             provider_payment_id: payment.id,
             status: payment.status,
             status_detail: payment.status_detail,
             paid_at: payment.paid_at
-        }).eq('id', order.id));
+        }).eq('id', order.id).eq('status', 'created').select('id').maybeSingle());
+        if (!updated) return response.status(409).json({ error: 'Este pedido demo ya fue procesado.' });
         response.json({ order_id: order.id, status: payment.status, status_detail: payment.status_detail });
     });
     route('post', '/api/checkout/confirm', login, async (request, response) => {

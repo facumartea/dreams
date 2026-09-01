@@ -28,6 +28,7 @@ const app = app_module.create_app({
     contact_email: process.env.CONTACT_EMAIL,
     whatsapp_number: process.env.WHATSAPP_NUMBER,
     allowed_origins: process.env.APP_ORIGINS,
+    demo_auto_confirm_email: process.env.DEMO_AUTO_CONFIRM_EMAIL === 'true',
     payment_provider,
     app_base_url: process.env.APP_BASE_URL,
     checkout_schema_ready: process.env.CHECKOUT_SCHEMA_READY === 'true',

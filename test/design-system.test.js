@@ -74,11 +74,23 @@ test('motion premium usa JS liviano, fallback y reducción de movimiento', () =>
     const app = fs.readFileSync(path.join(root, 'public/js/app.js'), 'utf8');
     assert.match(motion, /IntersectionObserver/);
     assert.match(motion, /requestAnimationFrame/);
+    assert.match(motion, /setup_scroll_depth/);
+    assert.match(motion, /setup_entry_sequence/);
     assert.match(motion, /prefers-reduced-motion: reduce/);
     assert.doesNotMatch(motion, /three|webgl|gsap/i);
     assert.match(css, /--depth-x/);
     assert.match(css, /\.motion-spotlight/);
     assert.match(app, /motion_script\.src = '\/js\/motion\.js'/);
+    assert.match(css, /\.motion-ready \.hero-entry/);
+    assert.match(css, /\.motion-ready \.motion-heading/);
+});
+
+test('registro comunica claramente el modo demo sin confirmación de correo', () => {
+    const account = fs.readFileSync(path.join(root, 'public', 'js', 'cuenta.js'), 'utf8');
+    const server = fs.readFileSync(path.join(root, 'server', 'server.js'), 'utf8');
+    assert.match(account, /Modo demo:/);
+    assert.match(account, /no necesitás confirmar el correo/);
+    assert.match(server, /DEMO_AUTO_CONFIRM_EMAIL/);
 });
 
 test('carrito usa Comprar y checkout integra cupones persistentes en mayúsculas', () => {
