@@ -1,18 +1,23 @@
 const RESULT_COPY = {
-    approved: ['Pago aprobado', 'Tu pedido quedó registrado correctamente.'],
+    approved: ['Pago realizado con éxito', 'Tu compra fue registrada correctamente.'],
     rejected: ['Pago rechazado', 'No se realizó ningún cobro. Podés volver a intentarlo.'],
     pending: ['Pago pendiente', 'La operación quedó pendiente dentro de la demostración.'],
     cancelled: ['Pago cancelado', 'La operación fue cancelada y no se completó el pedido.'],
     error: ['No pudimos confirmar el pago', 'El pedido queda registrado para poder revisarlo de forma segura.']
 };
 
-function render_payment_result(status, order_id) {
+function render_payment_result(status, order_number) {
     const result = document.getElementById('payment-result');
     const copy = RESULT_COPY[status] || RESULT_COPY.error;
+    const icon = status === 'approved'
+        ? '<span class="payment-result-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="m13 25 7 7 15-17"/></svg></span>'
+        : '';
     result.className = `payment-result status-${status}`;
-    result.innerHTML = `<p class="eyebrow">DREAMS · CHECKOUT</p><h1>${escape_html(copy[0])}</h1><p>${escape_html(copy[1])}</p><p class="order-reference">Pedido ${escape_html(order_id)}</p><div class="result-actions"><a class="button button-primary" href="/catalogo.html">Seguir explorando</a><a class="button" href="/cuenta.html">Ir a mi cuenta</a></div>`;
+    result.innerHTML = `${icon}<p class="eyebrow">DREAMS · CHECKOUT DEMO</p><h1>${escape_html(copy[0])}</h1><p>${escape_html(copy[1])}</p><div class="order-reference"><span>N° de compra</span><strong>${escape_html(order_number)}</strong></div><div class="result-actions"><a class="button button-primary" href="/catalogo.html">Seguir comprando</a><a class="button" href="/cuenta.html">Ir a mi cuenta</a></div>`;
     if (status === 'approved') {
         localStorage.removeItem('dreams_cart');
+        sessionStorage.removeItem('dreams_coupon');
+        sessionStorage.removeItem('dreams_demo_order_id');
         update_cart_count();
     }
 }
@@ -30,7 +35,7 @@ async function load_payment_result() {
         }
         const data = await response.json();
         if (!response.ok) throw new Error(data.error || 'No se pudo verificar el pago.');
-        render_payment_result(data.status, order_id);
+        render_payment_result(data.status, data.order_number || `DRM-${order_id.replace(/-/g, '').slice(0, 12).toUpperCase()}`);
     } catch (error) {
         render_payment_result('error', order_id || 'sin referencia');
     }

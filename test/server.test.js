@@ -3,7 +3,7 @@ const assert = require('node:assert/strict');
 
 process.env.SUPABASE_URL = 'https://example.supabase.co';
 process.env.SUPABASE_SECRET_KEY = 'test-only-placeholder';
-const { app, validate, payload, database_health, auth_cookie, session, parse_id, normalize_cart_items, quote_cart, execute_database_query } = require('../server/server');
+const { app, validate, payload, order_number, database_health, auth_cookie, session, parse_id, normalize_cart_items, quote_cart, execute_database_query } = require('../server/server');
 
 test('validación de producto rechaza números y URLs inseguros', () => {
     const valid = {
@@ -16,6 +16,12 @@ test('validación de producto rechaza números y URLs inseguros', () => {
     assert.match(validate({ ...valid, price: 'NaN' }), /válidos/);
     assert.match(validate({ ...valid, image_url: 'javascript:alert(1)' }), /HTTPS/);
     assert.equal(payload({ ...valid, brand: '  DREAMS  ' }).o.brand, 'DREAMS');
+});
+
+test('número de compra es estable y deriva del pedido persistido', () => {
+    const order = { id: '12345678-1234-4234-8234-123456789abc', created_at: '2026-09-01T12:00:00.000Z' };
+    assert.equal(order_number(order), 'DRM-2026-123456781234');
+    assert.equal(order_number(order), order_number({ ...order }));
 });
 
 test('parse_id sólo acepta enteros positivos seguros', () => {

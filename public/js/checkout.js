@@ -1,6 +1,7 @@
 let checkout_quote = null;
 let applied_coupon = null;
 let checkout_config = null;
+const DEMO_ORDER_STORAGE_KEY = 'dreams_demo_order_id';
 
 const DEMO_CARD_SCENARIOS = {
     '4242424242424242': 'approved',
@@ -42,6 +43,26 @@ function configure_payment_ui(config) {
 
 function checkout_items_payload() {
     return get_cart().map(item => ({ id: item.id, quantity: item.quantity }));
+}
+
+async function process_demo_order(order_id, scenario) {
+    const payment_response = await fetch('/api/checkout/demo-payment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ order_id, scenario })
+    });
+    const payment = await payment_response.json();
+    if (payment_response.status === 409) {
+        window.location.assign(`/checkout-resultado.html?order_id=${encodeURIComponent(order_id)}`);
+        return true;
+    }
+    if (!payment_response.ok) {
+        if ([400, 404].includes(payment_response.status)) sessionStorage.removeItem(DEMO_ORDER_STORAGE_KEY);
+        throw new Error(payment.error || 'No se pudo procesar la demostración.');
+    }
+    sessionStorage.removeItem(DEMO_ORDER_STORAGE_KEY);
+    window.location.assign(`/checkout-resultado.html?order_id=${encodeURIComponent(payment.order_id)}`);
+    return true;
 }
 
 function render_checkout(items, subtotal, discount, total) {
@@ -160,20 +181,21 @@ async function setup_checkout() {
         }
         button.disabled = true;
         button.textContent = is_demo ? 'Procesando demo…' : 'Creando checkout seguro…';
-        status.textContent = '';
+        status.textContent = is_demo ? 'Registrando tu pedido de demostración…' : '';
         try {
+            const pending_demo_order = is_demo ? sessionStorage.getItem(DEMO_ORDER_STORAGE_KEY) : null;
+            if (pending_demo_order) {
+                status.textContent = 'Retomando el pedido sin duplicarlo…';
+                await process_demo_order(pending_demo_order, scenario);
+                return;
+            }
             const response = await fetch('/api/checkout/session', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ items: checkout_items_payload(), coupon_code: applied_coupon?.code || '' }) });
             const data = await response.json();
             if (!response.ok) throw new Error(data.error || 'No se pudo iniciar el pago.');
             if (is_demo && data.requires_demo_payment === true) {
-                const payment_response = await fetch('/api/checkout/demo-payment', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ order_id: data.order_id, scenario })
-                });
-                const payment = await payment_response.json();
-                if (!payment_response.ok) throw new Error(payment.error || 'No se pudo procesar la demostración.');
-                window.location.assign(`/checkout-resultado.html?order_id=${encodeURIComponent(payment.order_id)}`);
+                sessionStorage.setItem(DEMO_ORDER_STORAGE_KEY, data.order_id);
+                status.textContent = 'Procesando el resultado demo…';
+                await process_demo_order(data.order_id, scenario);
                 return;
             }
             if (!/^https:\/\//.test(data.checkout_url || '')) throw new Error('No se pudo iniciar el pago.');

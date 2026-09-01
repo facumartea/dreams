@@ -44,16 +44,19 @@ test('el hero usa una imagen responsive de alta resolución y lettering HTML', (
     assert.match(html, /class="hero-bottle-mark" aria-hidden="true"/);
 });
 
-test('el catálogo presenta una cabecera específica para Perfumes de Mujer', () => {
+test('el catálogo comparte una arquitectura de variantes para Mujer, Hombre y Unisex', () => {
     const html = fs.readFileSync(path.join(root, 'public/catalogo.html'), 'utf8');
     const script = fs.readFileSync(path.join(root, 'public/js/catalogo.js'), 'utf8');
     const css = fs.readFileSync(path.join(root, 'public/css/style.css'), 'utf8');
     assert.match(html, /id="catalog-title"/);
     assert.match(script, /Perfumes de Mujer/);
-    assert.match(script, /classList\.toggle\('is-women', is_women\)/);
-    assert.match(script, /classList\.toggle\('women-collection', is_women\)/);
-    assert.match(css, /\.catalog-page\.is-women \.page-intro/);
-    assert.match(css, /\.women-collection \.site-header/);
+    assert.match(script, /const COLLECTION_VARIANTS/);
+    for (const variant of ['mujer', 'hombre', 'unisex']) assert.match(script, new RegExp(`${variant}: \\{`));
+    assert.match(script, /Perfumes de Hombre/);
+    assert.match(script, /Perfumes Unisex/);
+    assert.match(script, /page\.classList\.remove\(\.\.\.page_classes\)/);
+    assert.match(css, /\.catalog-page:is\(\.is-women,\.is-men,\.is-unisex\) \.page-intro/);
+    for (const class_name of ['collection-women', 'collection-men', 'collection-unisex']) assert.match(css, new RegExp(`\\.${class_name}\\{`));
 });
 
 test('el checkout declara modo demo, estados y diseño responsive', () => {
@@ -65,7 +68,25 @@ test('el checkout declara modo demo, estados y diseño responsive', () => {
     assert.match(html, /DREAMS no envía ni guarda números o códigos de tarjeta/);
     assert.match(html, /id="sandbox-help"[^>]*hidden/);
     for (const state of ['approved', 'rejected', 'pending', 'cancelled', 'error']) assert.match(result, new RegExp(`${state}:`));
+    assert.match(result, /Pago realizado con éxito/);
+    assert.match(result, /data\.order_number/);
+    assert.match(result, /N° de compra/);
+    assert.match(result, /payment-result-icon/);
     assert.match(cart, /checkout_config\.enabled/);
+});
+
+test('checkout demo retoma un pedido interrumpido sin crear otro', () => {
+    const checkout = fs.readFileSync(path.join(root, 'public/js/checkout.js'), 'utf8');
+    assert.match(checkout, /DEMO_ORDER_STORAGE_KEY/);
+    assert.match(checkout, /Retomando el pedido sin duplicarlo/);
+    assert.match(checkout, /payment_response\.status === 409/);
+    assert.match(checkout, /sessionStorage\.setItem\(DEMO_ORDER_STORAGE_KEY, data\.order_id\)/);
+});
+
+test('el lettering del frasco mantiene jerarquía responsive', () => {
+    const css = fs.readFileSync(path.join(root, 'public/css/style.css'), 'utf8');
+    assert.match(css, /\.hero-bottle-mark strong\{font:500 clamp\(1\.14rem,1\.9vw,1\.88rem\)/);
+    assert.match(css, /\.hero-bottle-mark small\{margin-top:\.46rem;font-size:clamp\(\.32rem,\.49vw,\.47rem\)/);
 });
 
 test('motion premium usa JS liviano, fallback y reducción de movimiento', () => {

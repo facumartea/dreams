@@ -93,6 +93,12 @@ const parse_id = value => {
 
 const normalize_coupon_code = value => String(value || '').trim().toUpperCase();
 
+function order_number(order) {
+    const id = String(order?.id || '').replace(/-/g, '').toUpperCase();
+    const year = new Date(order?.created_at || Date.now()).getUTCFullYear();
+    return `DRM-${Number.isSafeInteger(year) ? year : new Date().getUTCFullYear()}-${id.slice(0, 12)}`;
+}
+
 function coupon_payload(value) {
     const code = normalize_coupon_code(value?.code);
     const discount_percent = Number(value?.discount_percent);
@@ -425,7 +431,7 @@ function create_app(options = {}) {
         }
         const order_id = String(request.body.order_id || '');
         if (!/^[0-9a-f-]{36}$/i.test(order_id)) return response.status(400).json({ error: 'ID de pedido inválido.' });
-        const order = fail_if(await database.from('orders').select('id,user_id,provider,status,total,currency').eq('id', order_id).eq('user_id', request.user.id).maybeSingle());
+        const order = fail_if(await database.from('orders').select('id,user_id,provider,status,total,currency,created_at').eq('id', order_id).eq('user_id', request.user.id).maybeSingle());
         if (!order || order.provider !== 'demo') return response.status(404).json({ error: 'Pedido demo no encontrado.' });
         if (order.status !== 'created') return response.status(409).json({ error: 'Este pedido demo ya fue procesado.' });
 
@@ -443,7 +449,7 @@ function create_app(options = {}) {
             paid_at: payment.paid_at
         }).eq('id', order.id).eq('status', 'created').select('id').maybeSingle());
         if (!updated) return response.status(409).json({ error: 'Este pedido demo ya fue procesado.' });
-        response.json({ order_id: order.id, status: payment.status, status_detail: payment.status_detail });
+        response.json({ order_id: order.id, order_number: order_number(order), status: payment.status, status_detail: payment.status_detail });
     });
     route('post', '/api/checkout/confirm', login, async (request, response) => {
         if (!checkout_enabled || payment_provider?.name !== 'mercado_pago') return response.status(503).json({ error: 'La confirmación de Mercado Pago no está disponible.' });
@@ -457,13 +463,13 @@ function create_app(options = {}) {
             return response.status(409).json({ error: 'El pago recibido no coincide con el pedido.' });
         }
         fail_if(await database.from('orders').update({ provider_payment_id: payment.id, status: payment.status, status_detail: payment.status_detail, paid_at: payment.status === 'approved' ? payment.paid_at : null }).eq('id', order.id));
-        response.json({ order_id: order.id, status: payment.status, status_detail: payment.status_detail });
+        response.json({ order_id: order.id, order_number: order_number(order), status: payment.status, status_detail: payment.status_detail });
     });
     route('get', '/api/orders/:id', login, async (request, response) => {
         const order_id = String(request.params.id || '');
         if (!/^[0-9a-f-]{36}$/i.test(order_id)) return response.status(400).json({ error: 'ID de pedido inválido.' });
         const order = fail_if(await database.from('orders').select('id,status,status_detail,currency,total,items,created_at,paid_at').eq('id', order_id).eq('user_id', request.user.id).maybeSingle());
-        return order ? response.json(order) : response.status(404).json({ error: 'Pedido no encontrado.' });
+        return order ? response.json({ ...order, order_number: order_number(order) }) : response.status(404).json({ error: 'Pedido no encontrado.' });
     });
     route('post', '/api/payments/webhook', async (request, response) => {
         if (!checkout_enabled || payment_provider?.name !== 'mercado_pago' || request.body?.type !== 'payment') return response.status(200).json({ received: true });
@@ -560,4 +566,4 @@ function create_app(options = {}) {
     return app;
 }
 
-module.exports = { create_app, validate, payload, coupon_payload, normalize_coupon_code, discounted_totals, resolve_coupon, database_health, auth_cookie, session, parse_id, normalize_cart_items, quote_cart, execute_database_query, normalize_origin, allowed_origin_set, mutation_origin_guard, GENERIC_ERROR };
+module.exports = { create_app, validate, payload, coupon_payload, normalize_coupon_code, discounted_totals, resolve_coupon, order_number, database_health, auth_cookie, session, parse_id, normalize_cart_items, quote_cart, execute_database_query, normalize_origin, allowed_origin_set, mutation_origin_guard, GENERIC_ERROR };

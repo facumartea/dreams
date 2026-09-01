@@ -1,20 +1,54 @@
 let catalog_products = [];
 
+const COLLECTION_VARIANTS = {
+    mujer: {
+        body_class: 'collection-women',
+        page_class: 'is-women',
+        eyebrow: 'COLECCIÓN · DREAMS 01',
+        title: 'Perfumes de Mujer',
+        description: 'Fragancias luminosas y envolventes, seleccionadas con una mirada cálida y editorial.',
+        document_title: 'Perfumes de Mujer | DREAMS'
+    },
+    hombre: {
+        body_class: 'collection-men',
+        page_class: 'is-men',
+        eyebrow: 'COLECCIÓN · DREAMS 02',
+        title: 'Perfumes de Hombre',
+        description: 'Una selección sobria y profunda, con carácter, precisión y presencia.',
+        document_title: 'Perfumes de Hombre | DREAMS'
+    },
+    unisex: {
+        body_class: 'collection-unisex',
+        page_class: 'is-unisex',
+        eyebrow: 'COLECCIÓN · DREAMS 03',
+        title: 'Perfumes Unisex',
+        description: 'Composiciones contemporáneas que priorizan la esencia por encima de las etiquetas.',
+        document_title: 'Perfumes Unisex | DREAMS'
+    }
+};
+
 function update_catalog_context(gender) {
     const page = document.querySelector('.catalog-page');
     const eyebrow = document.getElementById('catalog-eyebrow');
     const title = document.getElementById('catalog-title');
     const description = document.getElementById('catalog-description');
-    const is_women = gender === 'mujer';
+    const variant = COLLECTION_VARIANTS[gender] || null;
+    const page_classes = Object.values(COLLECTION_VARIANTS).map(item => item.page_class);
+    const body_classes = Object.values(COLLECTION_VARIANTS).map(item => item.body_class);
 
-    page.classList.toggle('is-women', is_women);
-    document.body.classList.toggle('women-collection', is_women);
-    eyebrow.textContent = is_women ? 'CURADURÍA FEMENINA · DREAMS' : 'DREAMS COLLECTION';
-    title.textContent = is_women ? 'Perfumes de Mujer' : 'Perfumes';
-    description.textContent = is_women
-        ? 'Una selección floral, luminosa y envolvente, elegida con la misma mirada editorial de DREAMS.'
-        : 'Diseñador, algunos nichos seleccionados y una sola idea: encontrar tu firma.';
-    document.title = is_women ? 'Perfumes de Mujer | DREAMS' : 'Perfumes | DREAMS';
+    page.classList.remove(...page_classes);
+    document.body.classList.remove(...body_classes);
+    if (variant) {
+        page.classList.add(variant.page_class);
+        document.body.classList.add('collection-themed', variant.body_class);
+    } else {
+        document.body.classList.remove('collection-themed');
+    }
+
+    eyebrow.textContent = variant?.eyebrow || 'DREAMS COLLECTION';
+    title.textContent = variant?.title || 'Perfumes';
+    description.textContent = variant?.description || 'Diseñador, algunos nichos seleccionados y una sola idea: encontrar tu firma.';
+    document.title = variant?.document_title || 'Perfumes | DREAMS';
 }
 
 async function load_catalog() {
