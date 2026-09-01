@@ -2,12 +2,27 @@ function format_price(value) { return new Intl.NumberFormat('es-AR', { style: 'c
 
 let admin_products = [];
 let admin_coupons = [];
+let admin_reviews = [];
 
 async function admin_fetch(url, options = {}) {
     const response = await fetch(url, options);
     const data = await response.json();
     if (!response.ok) throw new Error(data.error || 'Ocurrió un error.');
     return data;
+}
+
+async function with_pending(button, pending_label, action) {
+    if (!button || button.disabled) return;
+    const label = button.textContent;
+    button.disabled = true;
+    button.setAttribute('aria-busy', 'true');
+    button.textContent = pending_label;
+    try { return await action(); }
+    finally {
+        button.disabled = false;
+        button.removeAttribute('aria-busy');
+        button.textContent = label;
+    }
 }
 
 async function verify_admin() {
@@ -27,6 +42,7 @@ async function load_dashboard() {
         stat_card('Usuarios', stats.users, 'cuentas creadas'),
         stat_card('Consultas', stats.inquiries, 'por WhatsApp'),
         stat_card('Opiniones', stats.reviews, 'publicadas'),
+        stat_card('Pedidos', stats.orders, 'registrados'),
         stat_card('Stock bajo', stats.low_stock, '2 unidades o menos')
     ].join('');
 }
@@ -44,7 +60,7 @@ function render_admin_products() {
         const row = document.createElement('tr');
         row.innerHTML = `<td>${escape_html(product.id)}</td><td><strong>${escape_html(product.name)}</strong><br><small>${escape_html(product.size_ml)} ml</small></td><td>${escape_html(product.brand)}</td><td>${escape_html(product.gender)}</td><td>${escape_html(product.stock)}</td><td>${escape_html(format_price(product.price))}</td><td><div class="admin-actions"><button class="small-button edit-button">Editar</button><button class="small-button delete-button">Eliminar</button></div></td>`;
         row.querySelector('.edit-button').addEventListener('click', () => fill_form(product));
-        row.querySelector('.delete-button').addEventListener('click', () => delete_product(product.id));
+        row.querySelector('.delete-button').addEventListener('click', event => delete_product(product.id, event.currentTarget));
         tbody.appendChild(row);
     });
 }
@@ -66,20 +82,25 @@ function get_form_data() {
 
 async function save_product(event) {
     event.preventDefault();
+    const submit = event.submitter || event.currentTarget.querySelector('[type="submit"]');
     const id = document.getElementById('product-id').value;
     const url = id ? `/api/admin/products/${id}` : '/api/admin/products';
     const method = id ? 'PUT' : 'POST';
-    try {
-        await admin_fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(get_form_data()) });
-        document.getElementById('admin-message').textContent = id ? 'Producto actualizado correctamente.' : 'Producto creado correctamente.';
-        reset_form();
-        await Promise.all([load_dashboard(), load_admin_products()]);
-    } catch (error) { document.getElementById('admin-message').textContent = error.message; }
+    await with_pending(submit, 'Guardando…', async () => {
+        try {
+            await admin_fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(get_form_data()) });
+            document.getElementById('admin-message').textContent = id ? 'Producto actualizado correctamente.' : 'Producto creado correctamente.';
+            reset_form();
+            await Promise.all([load_dashboard(), load_admin_products()]);
+        } catch (error) { document.getElementById('admin-message').textContent = error.message; }
+    });
 }
 
-async function delete_product(id) {
-    if (!confirm('¿Seguro que querés eliminar este perfume?')) return;
-    try { await admin_fetch(`/api/admin/products/${id}`, { method: 'DELETE' }); show_toast('Producto eliminado.'); await Promise.all([load_dashboard(), load_admin_products()]); } catch (error) { show_toast(error.message); }
+async function delete_product(id, button) {
+    if (!confirm('¿Seguro que querés eliminar este perfume? Esta acción es permanente.')) return;
+    await with_pending(button, 'Eliminando…', async () => {
+        try { await admin_fetch(`/api/admin/products/${id}`, { method: 'DELETE' }); show_toast('Producto eliminado.'); await Promise.all([load_dashboard(), load_admin_products()]); } catch (error) { show_toast(error.message); }
+    });
 }
 
 function reset_form() { document.getElementById('product-form').reset(); document.getElementById('product-id').value = ''; document.getElementById('form-label').textContent = 'NUEVO PRODUCTO'; }
@@ -95,8 +116,54 @@ async function load_inquiries() {
 }
 
 async function load_admin_reviews() {
-    const reviews = await admin_fetch('/api/admin/reviews');
-    document.getElementById('admin-reviews').innerHTML = reviews.map(review => `<article class="review-card"><div class="review-stars">${'★'.repeat(review.rating)}${'☆'.repeat(5-review.rating)}</div><p>“${escape_html(review.comment)}”</p><div class="review-author">${escape_html(review.user_name)}</div></article>`).join('');
+    admin_reviews = await admin_fetch('/api/admin/reviews');
+    render_admin_reviews();
+}
+
+function render_admin_reviews() {
+    const search = document.getElementById('review-search').value.trim().toLowerCase();
+    const reviews = admin_reviews.filter(review => `${review.user_name} ${review.comment}`.toLowerCase().includes(search));
+    const container = document.getElementById('admin-reviews');
+    if (!reviews.length) {
+        container.innerHTML = '<div class="empty-state"><h3>No hay opiniones para mostrar.</h3></div>';
+        return;
+    }
+    container.innerHTML = reviews.map(review => `<article class="review-card admin-review-card" data-review-id="${escape_html(review.id)}"><div class="review-author">${escape_html(review.user_name)}</div><small>${escape_html(new Date(review.created_at).toLocaleString('es-AR'))}</small><label>Puntuación<select class="review-rating" aria-label="Puntuación de ${escape_html(review.user_name)}">${[1,2,3,4,5].map(value => `<option value="${value}" ${value === Number(review.rating) ? 'selected' : ''}>${value} / 5</option>`).join('')}</select></label><label>Comentario<textarea class="review-comment" maxlength="1000">${escape_html(review.comment)}</textarea></label><div class="admin-actions"><button class="small-button review-save" type="button">Guardar</button><button class="small-button review-delete" type="button">Eliminar</button></div><p class="form-message review-message" role="status" aria-live="polite"></p></article>`).join('');
+    container.querySelectorAll('.admin-review-card').forEach(card => {
+        const id = card.dataset.reviewId;
+        card.querySelector('.review-save').addEventListener('click', event => save_review(id, card, event.currentTarget));
+        card.querySelector('.review-delete').addEventListener('click', event => delete_review(id, event.currentTarget));
+    });
+}
+
+async function save_review(id, card, button) {
+    await with_pending(button, 'Guardando…', async () => {
+        const message = card.querySelector('.review-message');
+        try {
+            const updated = await admin_fetch(`/api/admin/reviews/${id}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ rating: card.querySelector('.review-rating').value, comment: card.querySelector('.review-comment').value }) });
+            admin_reviews = admin_reviews.map(review => String(review.id) === String(id) ? updated : review);
+            message.textContent = 'Opinión actualizada.';
+        } catch (error) { message.textContent = error.message; }
+    });
+}
+
+async function delete_review(id, button) {
+    if (!confirm('¿Seguro que querés eliminar esta opinión? Esta acción es permanente.')) return;
+    await with_pending(button, 'Eliminando…', async () => {
+        try {
+            await admin_fetch(`/api/admin/reviews/${id}`, { method: 'DELETE' });
+            admin_reviews = admin_reviews.filter(review => String(review.id) !== String(id));
+            render_admin_reviews();
+            show_toast('Opinión eliminada.');
+            await load_dashboard();
+        } catch (error) { show_toast(error.message); }
+    });
+}
+
+async function load_orders() {
+    const orders = await admin_fetch('/api/admin/orders');
+    document.getElementById('order-total').textContent = `${orders.length} pedidos`;
+    document.getElementById('admin-orders').innerHTML = orders.map(order => `<tr><td><strong>${escape_html(order.order_number)}</strong></td><td>${escape_html(new Date(order.created_at).toLocaleString('es-AR'))}</td><td><span class="status-pill">${escape_html(order.status)}</span></td><td>${escape_html(order.provider)}</td><td>${escape_html(order.coupon_code || '—')}</td><td>${escape_html(format_price(order.total))}</td><td>${escape_html(Array.isArray(order.items) ? order.items.reduce((sum, item) => sum + Number(item.quantity || 0), 0) : 0)}</td></tr>`).join('');
 }
 
 async function load_admin_coupons() {
@@ -164,6 +231,7 @@ function setup_tabs() {
         button.classList.add('active');
         document.getElementById(`tab-${button.dataset.tab}`).classList.add('active');
         if (button.dataset.tab === 'usuarios') await load_users();
+        if (button.dataset.tab === 'pedidos') await load_orders();
         if (button.dataset.tab === 'cupones') await load_admin_coupons();
         if (button.dataset.tab === 'consultas') await load_inquiries();
         if (button.dataset.tab === 'opiniones') await load_admin_reviews();
@@ -178,6 +246,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('cancel-coupon-edit').addEventListener('click', reset_coupon_form);
     const coupon_code = document.getElementById('admin-coupon-code');
     coupon_code.addEventListener('input', () => { coupon_code.value = coupon_code.value.toUpperCase(); });
+    document.getElementById('review-search').addEventListener('input', render_admin_reviews);
     document.getElementById('logout-admin').addEventListener('click', async () => { await fetch('/api/auth/logout', { method: 'POST' }); window.location.href = '/'; });
     setup_tabs();
     try { await Promise.all([load_dashboard(), load_admin_products()]); } catch (error) { show_toast(error.message); }

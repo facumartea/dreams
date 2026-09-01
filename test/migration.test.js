@@ -6,6 +6,7 @@ const { join } = require('node:path');
 const migration = readFileSync(join(__dirname, '..', 'supabase', 'migrations', '20260828144944_production_baseline.sql'), 'utf8');
 const checkout_migration = readFileSync(join(__dirname, '..', 'supabase', 'migrations', '20260831024826_checkout_orders_and_coupons.sql'), 'utf8');
 const demo_checkout_migration = readFileSync(join(__dirname, '..', 'supabase', 'migrations', '20260831040000_enable_demo_checkout_provider.sql'), 'utf8');
+const admin_rls_migration = readFileSync(join(__dirname, '..', 'supabase', 'migrations', '20260901090000_admin_authenticated_policies.sql'), 'utf8');
 
 test('baseline mantiene RLS y restringe funciones privilegiadas', () => {
     for (const table of ['profiles', 'products', 'favorites', 'reviews', 'inquiries']) {
@@ -40,4 +41,13 @@ test('migración checkout no borra tablas ni datos existentes', () => {
 test('migración demo conserva Mercado Pago y sólo amplía proveedores permitidos', () => {
     assert.match(demo_checkout_migration, /provider in \('mercado_pago', 'demo'\)/i);
     assert.doesNotMatch(demo_checkout_migration, /\bdrop\s+table\b|\btruncate\b|\bdelete\s+from\b/i);
+});
+
+test('Admin usa RLS autenticado sin abrir permisos a anon', () => {
+    assert.match(admin_rls_migration, /security definer[\s\S]*set search_path = ''/i);
+    assert.match(admin_rls_migration, /where id = auth\.uid\(\) and role = 'admin'/i);
+    assert.match(admin_rls_migration, /revoke all on function public\.is_dreams_admin\(\) from public, anon/i);
+    for (const table of ['products', 'reviews', 'coupons']) assert.match(admin_rls_migration, new RegExp(`${table}_admin_`, 'i'));
+    assert.doesNotMatch(admin_rls_migration, /disable row level security|grant all .* anon/i);
+    assert.doesNotMatch(admin_rls_migration, /\bdrop\s+table\b|\btruncate\b|\bdelete\s+from\b/i);
 });

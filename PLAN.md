@@ -5,27 +5,27 @@ Porcentajes recalibrados el 2026-08-31 al sumar cupones y mantener los pesos en 
 | Fase | Alcance | Peso | Estado |
 |---|---|---:|---:|
 | F0 | Auditoría total, baseline y documentación | 6% | 100% |
-| F1 | Seguridad crítica: XSS, dependencias, headers, CSRF/origin, abuso | 7% | 78% |
-| F2 | Backend/API: validación, errores, health, modularidad mínima | 6% | 85% |
-| F3 | Datos/Supabase: grants mínimos, provisioning, migraciones, integridad, RLS | 8% | 84% |
+| F1 | Seguridad crítica: XSS, dependencias, headers, CSRF/origin, abuso | 7% | 80% |
+| F2 | Backend/API: validación, errores, health, modularidad mínima | 6% | 87% |
+| F3 | Datos/Supabase: grants mínimos, provisioning, migraciones, integridad, RLS | 8% | 88% |
 | F4 | Catálogo, detalle, carrito y consultas | 6% | 78% |
-| F5 | Opiniones persistentes, edición y moderación | 4% | 62% |
+| F5 | Opiniones persistentes, edición y moderación | 4% | 78% |
 | F6 | Auth, sesiones, recuperación y usuarios | 7% | 82% |
-| F7 | Admin completo, reversible y auditable | 6% | 50% |
+| F7 | Admin completo, reversible y auditable | 6% | 72% |
 | F8 | Arquitectura, limpieza y documentación técnica | 4% | 75% |
-| F9 | UX funcional y estados | 5% | 86% |
-| F10 | Diseño visual, colección femenina, imagen y sistema de componentes | 4% | 98% |
-| F11 | Responsive verificado | 4% | 74% |
-| F12 | Accesibilidad | 4% | 76% |
+| F9 | UX funcional y estados | 5% | 90% |
+| F10 | Diseño visual, colección femenina, imagen y sistema de componentes | 4% | 99% |
+| F11 | Responsive verificado | 4% | 75% |
+| F12 | Accesibilidad | 4% | 78% |
 | F13 | Performance | 4% | 47% |
 | F14 | SEO y descubribilidad | 3% | 15% |
-| F15 | Testing y CI | 7% | 88% |
-| F16 | Producción, dominio, deploy y observabilidad | 4% | 78% |
+| F15 | Testing y CI | 7% | 92% |
+| F16 | Producción, dominio, deploy y observabilidad | 4% | 79% |
 | F17 | QA final de punta a punta | 3% | 0% |
-| F18 | Checkout Sandbox, pedidos y pagos | 4% | 78% |
+| F18 | Checkout Sandbox, pedidos y pagos | 4% | 82% |
 | F19 | Cupones: datos, API, Admin, checkout y seguridad | 4% | 70% |
 
-**Progreso general ponderado: 74%** (73,93% exacto). El avance incluye registro demo inmediato, motion cinematográfico liviano, Scent Trail con datos reales, limpieza del home, auditoría adversarial, tres correcciones y 60 pruebas locales; no incluye pagos Sandbox reales ni QA responsive completo.
+**Progreso general ponderado: 77%** (77,31% exacto). El avance suma reparación probada del CRUD Admin de productos, gestión persistente de opiniones, pedidos de solo lectura, RLS Admin autenticado, variantes editoriales compartidas para Mujer/Hombre/Unisex y 69 pruebas; no incluye QA Admin autenticado sobre producción, archive/restore, auditoría de acciones ni QA responsive completo en los seis tamaños obligatorios.
 
 ## Secuencia y criterios
 
@@ -59,7 +59,7 @@ Completar refresh/revocación, recuperación de contraseña y redirects/SMTP, MF
 
 ### F7 — Admin
 
-Completar CRUD, búsqueda/filtros y moderación de opiniones; reemplazar delete normal por archive/restore; exigir confirmaciones seguras y registrar auditoría básica de acciones privilegiadas.
+CRUD de productos y cupones, pedidos de solo lectura y edición/eliminación de opiniones están implementados con autorización server-side, JWT Admin y RLS. Faltan archive/restore en lugar de hard delete, búsqueda/filtros amplios, historial de cambios y QA autenticado en producción.
 
 ### F8 — Arquitectura y limpieza
 
@@ -111,7 +111,7 @@ Cupones persistentes server-only, código mayúsculo, constraints, CRUD Admin, a
 
 ## Próximo bloque exacto
 
-Publicar y validar en CI la base de dirección de arte y el Scent Trail. Luego ejecutar QA visual de producción y la matriz responsive antes de extender motion a más secciones; después implementar un único motor determinístico de recomendaciones compartido por relacionados, quiz y configurador, según PREMIUM_EXPANSION_AUDIT.md.
+Publicar el checkpoint Admin/categorías, esperar CI y Railway, y ejecutar QA autenticado no destructivo sobre listado, edición controlada con rollback, pedidos, cupones y opiniones. Después completar la matriz visual de Hombre/Mujer/Unisex en los seis viewports obligatorios.
 
 ## Expansión premium mapeada al roadmap
 

@@ -153,3 +153,21 @@ test('carrito usa Comprar y checkout integra cupones persistentes en mayúsculas
     assert.match(checkout, /\/api\/coupons\/validate/);
     assert.match(admin, /data-tab="cupones"/);
 });
+
+test('Admin expone pedidos y gestión persistente de opiniones', () => {
+    const admin = fs.readFileSync(path.join(root, 'views/admin.html'), 'utf8');
+    const script = fs.readFileSync(path.join(root, 'public/js/admin.js'), 'utf8');
+    assert.match(admin, /data-tab="pedidos"/);
+    assert.match(admin, /id="review-search"/);
+    assert.match(script, /\/api\/admin\/reviews\/\$\{id\}/);
+    assert.match(script, /with_pending/);
+});
+
+test('Hombre, Mujer y Unisex reutilizan tokens de card con paletas propias', () => {
+    const css = fs.readFileSync(path.join(root, 'public/css/style.css'), 'utf8');
+    assert.match(css, /\.collection-themed \.product-card\{border:1px solid/);
+    assert.match(css, /\.collection-men\{[^}]*--collection-card:#f4f1e9/);
+    assert.match(css, /\.collection-women\{[^}]*--collection-page:#e8ddcf[^}]*--collection-accent:#a8874e/);
+    assert.match(css, /\.collection-unisex\{[^}]*--collection-page:#24221f[^}]*--collection-card:#d8d0c4/);
+    assert.match(css, /\.collection-men \.page-intro h1\{font-weight:600/);
+});

@@ -6,24 +6,41 @@
 
 - PROYECTO: DREAMS — ecommerce de perfumería con checkout preparado y consulta secundaria por WhatsApp.
 - REPO: `https://github.com/facumartea/dreams.git`
-- RAMA DE TRABAJO: `codex/home-hero-spacing-cleanup`, fusionada en `main` mediante PR #16.
+- RAMA DE TRABAJO: `codex/admin-category-repair`.
 - PRS FUSIONADOS: [#1](https://github.com/facumartea/dreams/pull/1), [#2](https://github.com/facumartea/dreams/pull/2), [#3](https://github.com/facumartea/dreams/pull/3), [#4](https://github.com/facumartea/dreams/pull/4), [#5](https://github.com/facumartea/dreams/pull/5), [#6](https://github.com/facumartea/dreams/pull/6), [#7](https://github.com/facumartea/dreams/pull/7) y [#8 — Add persistent checkout coupons and Comprar flow](https://github.com/facumartea/dreams/pull/8).
-- HEAD EN `main`: `a42849163837b4389efef42dc15273cf93ab474e` (`Merge DREAMS home hero cleanup`).
-- HEAD FUNCIONAL DE TRABAJO: `d3d12eec5da7d3649bc81f4189b1d94946235200` (`Refine cinematic motion and add product scent trail`).
-- PR: [#14 — Refine cinematic motion and product scent trail](https://github.com/facumartea/dreams/pull/14), fusionado.
-- ÚLTIMO PUSH: `d3d12eec5da7d3649bc81f4189b1d94946235200` en `codex/art-direction-motion-foundation`.
-- ÚLTIMO CI VERIFICADO: GitHub Actions CI #39, SUCCESS sobre `d3d12eec5da7d3649bc81f4189b1d94946235200`.
+- HEAD EN `main`: `f79080cc78c5fd3487bff73a0d237063749054e9` (`Merge PR #18: refine collections and demo checkout`).
+- HEAD FUNCIONAL DE TRABAJO: `1a0a1c8eb126b913776220d7650af6f7dfd34eee` (`Repair Admin workflows and refine category themes`).
+- PR: pendiente de apertura para `codex/admin-category-repair` → `main`.
+- ÚLTIMO PUSH: `1a0a1c8eb126b913776220d7650af6f7dfd34eee` en `codex/admin-category-repair`.
+- ÚLTIMO CI VERIFICADO: pendiente para el nuevo checkpoint; último verde anterior CI #48 sobre PR #18.
 - ÚLTIMO PUSH FUNCIONAL: `70dafe332ca2fafd70d7201a5f1952583000b4cc` en `codex/demo-auth-cinematic-security`.
 - ÚLTIMO CI VERIFICADO: GitHub Actions CI #35, SUCCESS sobre `70dafe332ca2fafd70d7201a5f1952583000b4cc`.
-- ÚLTIMO DEPLOY VERIFICADO: Railway `21a27946-ae56-43f6-840d-92641608e572`, SUCCESS sobre `fbb376c024916b1e288f0da179ef2ffaa34bef47`.
-- FASE ACTUAL: F9/F10/F11 — Limpieza del home, hero y responsive.
-- PROGRESO GENERAL: 74% ponderado (73,93% exacto según `PLAN.md`).
+- ÚLTIMO DEPLOY VERIFICADO: Railway `d091a7ac-1208-40a9-a224-24a83bfb8f5a`, SUCCESS sobre `f79080cc78c5fd3487bff73a0d237063749054e9`.
+- FASE ACTUAL: F7/F11 — QA Admin autenticado y matriz responsive de las tres colecciones.
+- PROGRESO GENERAL: 77% ponderado (77,31% exacto según `PLAN.md`).
 
 ## Porcentaje de todas las fases
 
-F0 100% · F1 78% · F2 85% · F3 84% · F4 78% · F5 62% · F6 82% · F7 50% · F8 75% · F9 86% · F10 98% · F11 74% · F12 76% · F13 47% · F14 15% · F15 88% · F16 78% · F17 0% · F18 78% · F19 70%.
+F0 100% · F1 80% · F2 87% · F3 88% · F4 78% · F5 78% · F6 82% · F7 72% · F8 75% · F9 90% · F10 99% · F11 75% · F12 78% · F13 47% · F14 15% · F15 92% · F16 79% · F17 0% · F18 82% · F19 70%.
 
 ## Último trabajo
+
+- Causa real del falso `Producto no encontrado`: producción recibía IDs válidos y listaba las filas, pero las mutaciones se ejecutaban sin el JWT Admin contra RLS y afectaban cero filas. No era un bug del botón, del parámetro ni del tipo de ID.
+- Productos y opiniones Admin ahora usan un cliente Supabase vinculado al access token del usuario y policies que verifican `auth.uid()` + rol `admin`; usuarios normales continúan en 403 y no se desactivó RLS.
+- Editar y eliminar productos validan existencia, distinguen 404 real de configuración de permisos, bloquean doble envío y refrescan dashboard/listado. La imagen admite ruta local o HTTPS.
+- Opiniones Admin permite buscar, editar rating/texto y eliminar con confirmación. El schema no incluye visibilidad, por lo que ocultar/moderar no se simula.
+- Pedidos se muestran con datos reales en modo de solo lectura; cupones y pedidos continúan exclusivamente detrás del servidor y no recibieron nuevos grants públicos/autenticados.
+- Migración `admin_authenticated_policies` aplicada y verificada en Supabase. Intento adicional de ampliar grants fue rechazado y descartado; no quedó archivo ni cambio remoto de esa propuesta.
+- Hombre: card blanco cálido `#f4f1e9`, texto oscuro y título 600. Mujer: base crema `#e8ddcf`, card `#f3eadf`, champagne `#a8874e`. Unisex: carbón `#24221f` y piedra `#d8d0c4`. Todas reutilizan el mismo `ProductCard` y tokens.
+- Verificación local: check de 26 JavaScript y 69/69 tests PASS. Falta CI del commit, deploy y QA Admin autenticado/visual real.
+
+- Las colecciones Mujer, Hombre y Unisex reutilizan una sola arquitectura de variante y aplican direcciones editoriales propias: crema cálida, carbón sobrio y grafito neutro respectivamente.
+- El checkout demo conserva el ID del pedido antes de procesarlo, reanuda el mismo pedido tras interrupciones y evita crear duplicados; la confirmación muestra un número de compra determinístico derivado del pedido persistido.
+- La pantalla aprobada comunica `Pago realizado con éxito`, limpia carrito/cupón sólo después de verificar el pedido aprobado y ofrece rutas reales para seguir comprando o ir a la cuenta.
+- La rotulación HTML/CSS `DREAMS / EAU DE PARFUM` del hero aumentó discretamente sin alterar la imagen ni la composición.
+- Verificación local final: check de 25 JavaScript, 63/63 tests y audit de producción sin vulnerabilidades conocidas. El proyecto no define un script `build`; `check` es la verificación sintáctica equivalente para este frontend estático servido por Express.
+- PR #18 pasó CI #48, se fusionó como `f79080cc78c5fd3487bff73a0d237063749054e9` y Railway desplegó exactamente ese SHA en `d091a7ac-1208-40a9-a224-24a83bfb8f5a` con estado SUCCESS.
+- Smoke público en 1363×936: portada, checkout y las tres colecciones cargan sin overflow; Mujer muestra 11 productos, Hombre 18 y Unisex 2. No se ejecutó una compra autenticada ni la matriz completa de seis viewports.
 
 - Retirado el bloque claro con perfume rosa del home según la referencia visual aportada.
 - El hero desktop ahora usa el alto real del viewport; la imagen vertical deja de agrandar toda la fila y generar una extensión negra innecesaria.
@@ -150,7 +167,7 @@ F0 100% · F1 78% · F2 85% · F3 84% · F4 78% · F5 62% · F6 82% · F7 50% ·
 
 - `corepack pnpm install --frozen-lockfile`: OK.
 - `corepack pnpm run check`: OK, 25 archivos JavaScript.
-- `corepack pnpm test`: 59/59 OK.
+- `corepack pnpm test`: 63/63 OK.
 - `corepack pnpm audit --prod`: OK, sin vulnerabilidades conocidas.
 - Regresiones cubiertas: validación auth, no-cache, alta con confirmación, login/cookies/redirección, retiro de favoritos y retry `PGRST303`.
 - CI #16 del PR #4: SUCCESS sobre `64ff9c76a79eb568f48e76dae073f2e1eeb7efb0`.
@@ -159,6 +176,7 @@ F0 100% · F1 78% · F2 85% · F3 84% · F4 78% · F5 62% · F6 82% · F7 50% ·
 - CI #22 del PR #7: SUCCESS sobre `5891d24c7693bb127e35e4cb33c565deb59a8021`.
 - CI #23 del PR #7: SUCCESS sobre el HEAD documental `6851e038c297a5acfe8a392193fd2e806d308ce5`.
 - CI #25 del PR #8: SUCCESS sobre `292fc13e33855f8387c90ffb4bf32f7e9d1a53d0`.
+- CI #48 del PR #18: SUCCESS sobre `771aae40f2ac049eec7085c6eb0e792837697bb6`.
 - E2E con usuarios Supabase reales y QA visual de todas las páginas: pendientes; no declararlos ejecutados.
 
 ## CI
@@ -170,6 +188,7 @@ F0 100% · F1 78% · F2 85% · F3 84% · F4 78% · F5 62% · F6 82% · F7 50% ·
 - GitHub Actions CI #20: SUCCESS sobre PR #6; `main` quedó en `19a50120d4eddb2b93faa0bb37a7c86ec426d5a9`.
 - GitHub Actions CI #23: SUCCESS sobre PR #7; `main` quedó en `5f63bcd4ad3597f1b0f4ef30c73b85ba2ec88929`.
 - GitHub Actions CI #25: SUCCESS sobre PR #8; `main` quedó en `ac66917edae49b1e272d51e07b09fe55fe075c32`.
+- GitHub Actions CI #48: SUCCESS sobre PR #18; `main` quedó en `f79080cc78c5fd3487bff73a0d237063749054e9`.
 
 ## Bugs y pendientes
 
@@ -199,16 +218,16 @@ F0 100% · F1 78% · F2 85% · F3 84% · F4 78% · F5 62% · F6 82% · F7 50% ·
 
 - Supabase: `dreams-project`, ref `nwsmbemwtexmrtpkgxrz`, estado `ACTIVE_HEALTHY`, Postgres 17.
 - Tablas: `profiles` (1), `products` (31), `favorites` (0), `reviews` (0), `inquiries` (0), `orders` (0), `coupons` (0); todas con RLS.
-- Migraciones aplicadas: `20260828191602 production_baseline`, `20260831024826 checkout_orders_and_coupons` y `enable_demo_checkout_provider`.
+- Migraciones aplicadas: `20260828191602 production_baseline`, `20260831024826 checkout_orders_and_coupons`, `enable_demo_checkout_provider` y `admin_authenticated_policies`.
 - Triggers de perfil/`updated_at`, políticas e índices versionados. Advisors ejecutados después de aplicar.
 
 ## Deploy
 
 - Railway correcto: proyecto `empowering-rebirth` (`f375bb47-59c8-4cc1-b0d1-4d83ecae5780`).
 - Entorno: `production` (`39886077-e963-4fec-b3aa-b0e5d38908dd`).
-- Servicio: `drams` (`c5780bbd-4030-4319-a714-1bc0f564e353`).
+- Servicio: `dreams` (`c5780bbd-4030-4319-a714-1bc0f564e353`).
 - Dominio: `https://dreams-perfumes.up.railway.app`.
-- Último deployment confirmado: `8282f8d9-c4bf-4d64-8ab4-304fde1b77e1`, SUCCESS sobre `a42849163837b4389efef42dc15273cf93ab474e`.
+- Último deployment confirmado: `d091a7ac-1208-40a9-a224-24a83bfb8f5a`, SUCCESS sobre `f79080cc78c5fd3487bff73a0d237063749054e9`.
 - Variables verificadas/configuradas: `DEMO_AUTO_CONFIRM_EMAIL=true`, `APP_BASE_URL=https://dreams-perfumes.up.railway.app` y `APP_ORIGINS=https://dreams-perfumes.up.railway.app`.
 - El incidente histórico de cola congelada quedó resuelto; los deployments antiguos figuran removidos y no bloquean producción.
 - Smoke 2026-08-29 sobre PR #5: `/` 200 con `#review-form`; assets de opiniones 200; `/api/health` 200 con DB ok; `/api/reviews` 200; publicación anónima 401, sin datos falsos.
@@ -216,11 +235,12 @@ F0 100% · F1 78% · F2 85% · F3 84% · F4 78% · F5 62% · F6 82% · F7 50% ·
 - Smoke 2026-08-30 sobre PR #7: `/api/health` 200 con DB ok; `/api/checkout/config` 200 y `enabled:false`; `/checkout.html` 200. El cierre fail-closed es el comportamiento correcto sin schema ni credenciales Sandbox.
 - Smoke 2026-08-31 sobre PR #8: healthcheck Railway 200; carrito, CSS, JS y checkout 200; checkout muestra cupón y modo Sandbox; `/api/checkout/config` 200 y el CTA permanece desactivado correctamente sin credenciales.
 - Smoke previo de la versión activa: `/` 200, `/api/health` 200 con DB ok, `/api/products` 200, `/cuenta.html` 200, login inválido 400, `/favoritos.html` 301 y `/admin` sin sesión 403.
+- Smoke 2026-09-01 sobre PR #18 en 1363×936: homepage y checkout cargan sin overflow ni errores de aplicación; Mujer/Hombre/Unisex aplican sus clases y títulos, con 11/18/2 cards respectivamente. La compra demo autenticada y los seis viewports permanecen pendientes.
 - Healthcheck esperado: `/api/health` con API y DB `ok`.
 
 ## Bloqueos
 
-- No hay bloqueo activo de Railway: el deployment `21a27946-ae56-43f6-840d-92641608e572` figura `SUCCESS`.
+- No hay bloqueo activo de Railway: el deployment `d091a7ac-1208-40a9-a224-24a83bfb8f5a` figura `SUCCESS` sobre el merge actual.
 - Opiniones queda como modelo general por ahora; asociarlas a cada perfume es una decisión funcional futura, no un bloqueo para la versión actual.
 - Recuperación de contraseña completa puede requerir decisión/configuración de URL y SMTP.
 - Acciones destructivas sobre la tabla histórica `favorites` o datos reales requieren autorización explícita.
@@ -229,4 +249,4 @@ F0 100% · F1 78% · F2 85% · F3 84% · F4 78% · F5 62% · F6 82% · F7 50% ·
 
 ## Próxima acción exacta
 
-Completar QA visual en 390×844, 430×932, 768×1024, 1024×768, 1440×900 y 1920×1080 cuando exista control de viewport. Luego continuar con el siguiente bloque visual priorizado sin reintroducir el banner retirado ni otro motor de motion.
+Abrir el PR de `codex/admin-category-repair`, esperar CI y fusionar sólo si pasa. Verificar Railway y ejecutar smoke público de las tres colecciones; luego realizar QA Admin autenticado no destructivo con una edición controlada y rollback, sin borrar productos ni opiniones reales.
