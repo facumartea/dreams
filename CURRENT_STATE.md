@@ -6,11 +6,11 @@
 
 - PROYECTO: DREAMS — ecommerce de perfumería con checkout preparado y consulta secundaria por WhatsApp.
 - REPO: `https://github.com/facumartea/dreams.git`
-- RAMA DE TRABAJO: `codex/art-direction-motion-foundation`, preparada desde `main`.
+- RAMA DE TRABAJO: `codex/art-direction-motion-foundation`, fusionada en `main` mediante PR #14.
 - PRS FUSIONADOS: [#1](https://github.com/facumartea/dreams/pull/1), [#2](https://github.com/facumartea/dreams/pull/2), [#3](https://github.com/facumartea/dreams/pull/3), [#4](https://github.com/facumartea/dreams/pull/4), [#5](https://github.com/facumartea/dreams/pull/5), [#6](https://github.com/facumartea/dreams/pull/6), [#7](https://github.com/facumartea/dreams/pull/7) y [#8 — Add persistent checkout coupons and Comprar flow](https://github.com/facumartea/dreams/pull/8).
-- HEAD EN `main`: `61bffcd415dfea5170af6b24e3f485b1dbbf58f0` (continuidad documental posterior al hardening).
+- HEAD EN `main`: `fe67828d775f485d58fbd2e6eba5d6e8f96106d5` (`Merge DREAMS art direction motion foundation`).
 - HEAD FUNCIONAL DE TRABAJO: `d3d12eec5da7d3649bc81f4189b1d94946235200` (`Refine cinematic motion and add product scent trail`).
-- PR: [#14 — Refine cinematic motion and product scent trail](https://github.com/facumartea/dreams/pull/14), abierto.
+- PR: [#14 — Refine cinematic motion and product scent trail](https://github.com/facumartea/dreams/pull/14), fusionado.
 - ÚLTIMO PUSH: `d3d12eec5da7d3649bc81f4189b1d94946235200` en `codex/art-direction-motion-foundation`.
 - ÚLTIMO CI VERIFICADO: GitHub Actions CI #39, SUCCESS sobre `d3d12eec5da7d3649bc81f4189b1d94946235200`.
 - ÚLTIMO PUSH FUNCIONAL: `70dafe332ca2fafd70d7201a5f1952583000b4cc` en `codex/demo-auth-cinematic-security`.
@@ -31,6 +31,10 @@ F0 100% · F1 78% · F2 85% · F3 84% · F4 78% · F5 62% · F6 82% · F7 50% ·
 - La ficha de producto transforma las notas reales en DREAMS Scent Trail, semántico y responsive, sin cambiar API, schema o datos.
 - Verificación local: check de 25 JS, 59/59 tests y audit de producción sin vulnerabilidades conocidas.
 - PR #14 abierto con ocho archivos; CI #39 completó SUCCESS. No se fusionó ni desplegó porque falta autorización específica y QA visual del cambio.
+- Con autorización explícita, PR #14 fue fusionado como `fe67828d775f485d58fbd2e6eba5d6e8f96106d5`; CI #40 permaneció verde y Railway desplegó exactamente ese SHA.
+- Railway deployment `a661581e-e804-4390-9355-0ec7d8673e50`: SUCCESS.
+- Smoke público: portada con motion y luz del hero cargados, imagen válida y sin overflow; producto #31 muestra DREAMS Scent Trail semántico con Salida, Corazón y Fondo reales, imagen válida y sin overflow.
+- La navegación directa del navegador a `/api/health` fue bloqueada por el cliente; Railway sí confirmó health/deploy SUCCESS. No se declara ese endpoint probado directamente en esta tanda.
 - Medición posterior: CSS 46.509 bytes brutos / 9.882 gzip; motion 7.750 bytes brutos / 1.881 gzip. Variación aproximada: +538 bytes gzip combinados.
 - El servidor completo local no inició porque este snapshot no contiene `SUPABASE_URL` ni `SUPABASE_SECRET_KEY`; no se copiaron ni solicitaron secretos. La verificación visual de esta implementación queda para el deploy/preview seguro.
 
@@ -193,7 +197,7 @@ F0 100% · F1 78% · F2 85% · F3 84% · F4 78% · F5 62% · F6 82% · F7 50% ·
 - Entorno: `production` (`39886077-e963-4fec-b3aa-b0e5d38908dd`).
 - Servicio: `drams` (`c5780bbd-4030-4319-a714-1bc0f564e353`).
 - Dominio: `https://dreams-perfumes.up.railway.app`.
-- Último deployment confirmado: `21a27946-ae56-43f6-840d-92641608e572`, SUCCESS sobre `fbb376c024916b1e288f0da179ef2ffaa34bef47`.
+- Último deployment confirmado: `a661581e-e804-4390-9355-0ec7d8673e50`, SUCCESS sobre `fe67828d775f485d58fbd2e6eba5d6e8f96106d5`.
 - Variables verificadas/configuradas: `DEMO_AUTO_CONFIRM_EMAIL=true`, `APP_BASE_URL=https://dreams-perfumes.up.railway.app` y `APP_ORIGINS=https://dreams-perfumes.up.railway.app`.
 - El incidente histórico de cola congelada quedó resuelto; los deployments antiguos figuran removidos y no bloquean producción.
 - Smoke 2026-08-29 sobre PR #5: `/` 200 con `#review-form`; assets de opiniones 200; `/api/health` 200 con DB ok; `/api/reviews` 200; publicación anónima 401, sin datos falsos.
@@ -214,4 +218,4 @@ F0 100% · F1 78% · F2 85% · F3 84% · F4 78% · F5 62% · F6 82% · F7 50% ·
 
 ## Próxima acción exacta
 
-Publicar `codex/art-direction-motion-foundation`, abrir PR, verificar CI y ejecutar QA visual del hero y Scent Trail en un preview/deploy seguro. No fusionar a `main` sin autorización explícita. Después completar la matriz responsive y recién entonces extender el mismo sistema a nuevas secciones.
+Completar la matriz responsive del hero y Scent Trail en 390×844, 430×932, 768×1024, 1024×768, 1440×900 y 1920×1080. Después extender el mismo sistema visual a las siguientes secciones priorizadas, sin crear un motor paralelo.

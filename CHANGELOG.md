@@ -12,7 +12,9 @@ Todos los cambios relevantes de DREAMS se registran aquí. El proyecto aún no u
 - Las notas reales del producto ahora forman un DREAMS Scent Trail semántico: salida, corazón y fondo en timeline horizontal/vertical, con contenido siempre accesible.
 - Verificación local: 25 archivos JavaScript, 59/59 tests y audit de producción sin vulnerabilidades conocidas.
 - Impacto medido: CSS 9.882 bytes gzip y motion 1.881 bytes gzip; aproximadamente +538 bytes gzip combinados frente al checkpoint anterior, sin nuevas dependencias ni listeners de scroll.
-- Commit funcional `d3d12eec5da7d3649bc81f4189b1d94946235200`; PR #14 abierto y GitHub Actions CI #39 completó SUCCESS. Sin merge ni deploy en esta tanda.
+- Commit funcional `d3d12eec5da7d3649bc81f4189b1d94946235200`; PR #14 validado por CI #39/#40 y fusionado como `fe67828d775f485d58fbd2e6eba5d6e8f96106d5`.
+- Railway deployment `a661581e-e804-4390-9355-0ec7d8673e50` terminó SUCCESS sobre el merge exacto.
+- Smoke público confirmó motion y hero nuevos, imagen cargada, Scent Trail real en producto #31 y ausencia de overflow en portada/detalle. El endpoint JSON de health quedó bloqueado por el navegador y no se declara comprobado directamente.
 
 ### 2026-09-01 — Auth demo inmediato, motion cinematográfico y hardening adversarial
 
