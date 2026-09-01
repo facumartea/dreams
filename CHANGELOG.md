@@ -11,6 +11,9 @@
 - Agregada vista Admin de pedidos existentes, estrictamente de solo lectura y basada en datos reales.
 - Hombre, Mujer y Unisex continúan usando un único `ProductCard` y tokens compartidos: Hombre usa card `#f4f1e9` y título 600; Mujer base crema `#e8ddcf` y champagne `#a8874e`; Unisex piedra/carbón `#24221f` + `#d8d0c4`.
 - Verificación local: check de 26 JavaScript y 69/69 tests PASS, incluidos CRUD de productos, 404 real, rechazo de usuario normal, persistencia de opiniones, RLS y variantes visuales.
+- Commits `1a0a1c8eb126b913776220d7650af6f7dfd34eee` y `030172930baea7540681b3ebf8604ce39c79d6ed`; PR #19 validado por CI #50 y fusionado como `edba64d8d4641c91e68e7b0d94165adc040e4482`.
+- Railway deployment `fd40779b-1ad1-402d-9c60-9aba64a886f3` terminó SUCCESS sobre el merge exacto.
+- Smoke público: health/API/DB 200, catálogos Hombre/Mujer/Unisex 200 y acceso anónimo a Admin correctamente rechazado con 403. No se realizaron mutaciones sobre datos reales.
 
 Todos los cambios relevantes de DREAMS se registran aquí. El proyecto aún no usa releases semánticos.
 
