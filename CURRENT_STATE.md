@@ -9,8 +9,10 @@
 - RAMA DE TRABAJO: `codex/art-direction-motion-foundation`, preparada desde `main`.
 - PRS FUSIONADOS: [#1](https://github.com/facumartea/dreams/pull/1), [#2](https://github.com/facumartea/dreams/pull/2), [#3](https://github.com/facumartea/dreams/pull/3), [#4](https://github.com/facumartea/dreams/pull/4), [#5](https://github.com/facumartea/dreams/pull/5), [#6](https://github.com/facumartea/dreams/pull/6), [#7](https://github.com/facumartea/dreams/pull/7) y [#8 — Add persistent checkout coupons and Comprar flow](https://github.com/facumartea/dreams/pull/8).
 - HEAD EN `main`: `61bffcd415dfea5170af6b24e3f485b1dbbf58f0` (continuidad documental posterior al hardening).
-- HEAD DE TRABAJO: pendiente de publicación del checkpoint de dirección de arte.
-- PR: pendiente para `codex/art-direction-motion-foundation`.
+- HEAD FUNCIONAL DE TRABAJO: `d3d12eec5da7d3649bc81f4189b1d94946235200` (`Refine cinematic motion and add product scent trail`).
+- PR: [#14 — Refine cinematic motion and product scent trail](https://github.com/facumartea/dreams/pull/14), abierto.
+- ÚLTIMO PUSH: `d3d12eec5da7d3649bc81f4189b1d94946235200` en `codex/art-direction-motion-foundation`.
+- ÚLTIMO CI VERIFICADO: GitHub Actions CI #39, SUCCESS sobre `d3d12eec5da7d3649bc81f4189b1d94946235200`.
 - ÚLTIMO PUSH FUNCIONAL: `70dafe332ca2fafd70d7201a5f1952583000b4cc` en `codex/demo-auth-cinematic-security`.
 - ÚLTIMO CI VERIFICADO: GitHub Actions CI #35, SUCCESS sobre `70dafe332ca2fafd70d7201a5f1952583000b4cc`.
 - ÚLTIMO DEPLOY VERIFICADO: Railway `21a27946-ae56-43f6-840d-92641608e572`, SUCCESS sobre `fbb376c024916b1e288f0da179ef2ffaa34bef47`.
@@ -28,6 +30,7 @@ F0 100% · F1 78% · F2 85% · F3 84% · F4 78% · F5 62% · F6 82% · F7 50% ·
 - El hero suma una luz champagne sutil que reutiliza el frame del pointer depth actual; touch y reduced-motion conservan fallbacks completos.
 - La ficha de producto transforma las notas reales en DREAMS Scent Trail, semántico y responsive, sin cambiar API, schema o datos.
 - Verificación local: check de 25 JS, 59/59 tests y audit de producción sin vulnerabilidades conocidas.
+- PR #14 abierto con ocho archivos; CI #39 completó SUCCESS. No se fusionó ni desplegó porque falta autorización específica y QA visual del cambio.
 - Medición posterior: CSS 46.509 bytes brutos / 9.882 gzip; motion 7.750 bytes brutos / 1.881 gzip. Variación aproximada: +538 bytes gzip combinados.
 - El servidor completo local no inició porque este snapshot no contiene `SUPABASE_URL` ni `SUPABASE_SECRET_KEY`; no se copiaron ni solicitaron secretos. La verificación visual de esta implementación queda para el deploy/preview seguro.
 
