@@ -52,11 +52,20 @@ async function render_product_detail(product) {
                     <button id="detail-add" class="button button-dark" ${Number(product.stock) === 0 ? 'disabled' : ''}>${Number(product.stock) === 0 ? 'Agotado' : 'Agregar al carrito'}</button>
                     <a class="button" href="${whatsapp_url}" target="_blank" rel="noreferrer" data-whatsapp-inquiry>Consultar por WhatsApp</a>
                 </div>
-                <div class="notes-grid">
-                    <article class="note-block"><h3>Salida</h3><p>${escape_html(product.notes.salida.join(' · '))}</p></article>
-                    <article class="note-block"><h3>Corazón</h3><p>${escape_html(product.notes.corazon.join(' · '))}</p></article>
-                    <article class="note-block"><h3>Fondo</h3><p>${escape_html(product.notes.fondo.join(' · '))}</p></article>
-                </div>
+                <section class="scent-trail" aria-labelledby="scent-trail-title">
+                    <div class="scent-trail-header">
+                        <div>
+                            <p class="eyebrow">DREAMS Scent Trail</p>
+                            <h2 id="scent-trail-title">La evolución de la fragancia</h2>
+                        </div>
+                        <p>De la primera impresión a la estela final, descubrí cómo se despliegan sus notas.</p>
+                    </div>
+                    <ol class="notes-grid" aria-label="Etapas olfativas">
+                        <li class="note-block scent-step"><span class="scent-step-index" aria-hidden="true">01</span><h3>Salida</h3><p>${escape_html(product.notes.salida.join(' · '))}</p></li>
+                        <li class="note-block scent-step"><span class="scent-step-index" aria-hidden="true">02</span><h3>Corazón</h3><p>${escape_html(product.notes.corazon.join(' · '))}</p></li>
+                        <li class="note-block scent-step"><span class="scent-step-index" aria-hidden="true">03</span><h3>Fondo</h3><p>${escape_html(product.notes.fondo.join(' · '))}</p></li>
+                    </ol>
+                </section>
             </div>
         </section>
     `;

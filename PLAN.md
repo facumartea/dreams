@@ -13,11 +13,11 @@ Porcentajes recalibrados el 2026-08-31 al sumar cupones y mantener los pesos en 
 | F6 | Auth, sesiones, recuperación y usuarios | 7% | 82% |
 | F7 | Admin completo, reversible y auditable | 6% | 50% |
 | F8 | Arquitectura, limpieza y documentación técnica | 4% | 75% |
-| F9 | UX funcional y estados | 5% | 84% |
-| F10 | Diseño visual, colección femenina, imagen y sistema de componentes | 4% | 97% |
+| F9 | UX funcional y estados | 5% | 85% |
+| F10 | Diseño visual, colección femenina, imagen y sistema de componentes | 4% | 98% |
 | F11 | Responsive verificado | 4% | 72% |
-| F12 | Accesibilidad | 4% | 74% |
-| F13 | Performance | 4% | 45% |
+| F12 | Accesibilidad | 4% | 76% |
+| F13 | Performance | 4% | 47% |
 | F14 | SEO y descubribilidad | 3% | 15% |
 | F15 | Testing y CI | 7% | 88% |
 | F16 | Producción, dominio, deploy y observabilidad | 4% | 78% |
@@ -25,7 +25,7 @@ Porcentajes recalibrados el 2026-08-31 al sumar cupones y mantener los pesos en 
 | F18 | Checkout Sandbox, pedidos y pagos | 4% | 78% |
 | F19 | Cupones: datos, API, Admin, checkout y seguridad | 4% | 70% |
 
-**Progreso general ponderado: 74%** (73,55% exacto). El avance incluye registro demo inmediato, motion cinematográfico liviano, auditoría adversarial, tres correcciones y 58 pruebas locales; no incluye pagos Sandbox reales ni QA responsive completo.
+**Progreso general ponderado: 74%** (73,80% exacto). El avance incluye registro demo inmediato, motion cinematográfico liviano, Scent Trail con datos reales, auditoría adversarial, tres correcciones y 59 pruebas locales; no incluye pagos Sandbox reales ni QA responsive completo.
 
 ## Secuencia y criterios
 
@@ -111,7 +111,7 @@ Cupones persistentes server-only, código mayúsculo, constraints, CRUD Admin, a
 
 ## Próximo bloque exacto
 
-Publicar el registro demo sin email, motion cinematográfico y hardening adversarial; activar `DEMO_AUTO_CONFIRM_EMAIL=true` y ejecutar smoke de cuenta, homepage, API y reduced-motion. Después implementar un único motor determinístico de recomendaciones que compartan productos relacionados, quiz y configurador, según `PREMIUM_EXPANSION_AUDIT.md`.
+Publicar y validar en CI la base de dirección de arte y el Scent Trail. Luego ejecutar QA visual de producción y la matriz responsive antes de extender motion a más secciones; después implementar un único motor determinístico de recomendaciones compartido por relacionados, quiz y configurador, según PREMIUM_EXPANSION_AUDIT.md.
 
 ## Expansión premium mapeada al roadmap
 

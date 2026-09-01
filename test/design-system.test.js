@@ -83,6 +83,23 @@ test('motion premium usa JS liviano, fallback y reducción de movimiento', () =>
     assert.match(app, /motion_script\.src = '\/js\/motion\.js'/);
     assert.match(css, /\.motion-ready \.hero-entry/);
     assert.match(css, /\.motion-ready \.motion-heading/);
+    for (const token of ['--motion-instant:', '--motion-fast:', '--motion-standard:', '--motion-editorial:', '--ease-out:', '--ease-editorial:']) {
+        assert.ok(css.includes(token), `Falta el token de motion ${token}`);
+    }
+    assert.match(motion, /--hero-light-x/);
+    assert.match(css, /\.hero-image::before/);
+});
+
+test('el detalle presenta las notas reales como un Scent Trail accesible', () => {
+    const product = fs.readFileSync(path.join(root, 'public/js/producto.js'), 'utf8');
+    const css = fs.readFileSync(path.join(root, 'public/css/style.css'), 'utf8');
+    assert.match(product, /class="scent-trail" aria-labelledby="scent-trail-title"/);
+    assert.match(product, /<ol class="notes-grid" aria-label="Etapas olfativas">/);
+    assert.match(product, /product\.notes\.salida\.join/);
+    assert.match(product, /product\.notes\.corazon\.join/);
+    assert.match(product, /product\.notes\.fondo\.join/);
+    assert.match(css, /\.scent-trail-header/);
+    assert.match(css, /@media\(max-width:720px\).*\.notes-grid\{grid-template-columns:1fr/s);
 });
 
 test('registro comunica claramente el modo demo sin confirmación de correo', () => {

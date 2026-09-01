@@ -6,21 +6,30 @@
 
 - PROYECTO: DREAMS — ecommerce de perfumería con checkout preparado y consulta secundaria por WhatsApp.
 - REPO: `https://github.com/facumartea/dreams.git`
-- RAMA DE TRABAJO: `codex/demo-auth-cinematic-security`, fusionada en `main` mediante PR #12.
+- RAMA DE TRABAJO: `codex/art-direction-motion-foundation`, preparada desde `main`.
 - PRS FUSIONADOS: [#1](https://github.com/facumartea/dreams/pull/1), [#2](https://github.com/facumartea/dreams/pull/2), [#3](https://github.com/facumartea/dreams/pull/3), [#4](https://github.com/facumartea/dreams/pull/4), [#5](https://github.com/facumartea/dreams/pull/5), [#6](https://github.com/facumartea/dreams/pull/6), [#7](https://github.com/facumartea/dreams/pull/7) y [#8 — Add persistent checkout coupons and Comprar flow](https://github.com/facumartea/dreams/pull/8).
-- HEAD EN `main`: `fbb376c024916b1e288f0da179ef2ffaa34bef47` (`Add instant demo auth, cinematic motion, and security hardening`).
-- PR: [#12 — Add instant demo auth, cinematic motion, and security hardening](https://github.com/facumartea/dreams/pull/12), fusionado.
+- HEAD EN `main`: `61bffcd415dfea5170af6b24e3f485b1dbbf58f0` (continuidad documental posterior al hardening).
+- HEAD DE TRABAJO: pendiente de publicación del checkpoint de dirección de arte.
+- PR: pendiente para `codex/art-direction-motion-foundation`.
 - ÚLTIMO PUSH FUNCIONAL: `70dafe332ca2fafd70d7201a5f1952583000b4cc` en `codex/demo-auth-cinematic-security`.
 - ÚLTIMO CI VERIFICADO: GitHub Actions CI #35, SUCCESS sobre `70dafe332ca2fafd70d7201a5f1952583000b4cc`.
 - ÚLTIMO DEPLOY VERIFICADO: Railway `21a27946-ae56-43f6-840d-92641608e572`, SUCCESS sobre `fbb376c024916b1e288f0da179ef2ffaa34bef47`.
-- FASE ACTUAL: F1/F6/F10/F13 — Auth demo, motion cinematográfico y hardening adversarial.
-- PROGRESO GENERAL: 74% ponderado (73,55% exacto según `PLAN.md`).
+- FASE ACTUAL: F9/F10/F12/F13 — Dirección de arte, motion foundation y Scent Trail.
+- PROGRESO GENERAL: 74% ponderado (73,80% exacto según `PLAN.md`).
 
 ## Porcentaje de todas las fases
 
-F0 100% · F1 78% · F2 85% · F3 84% · F4 78% · F5 62% · F6 82% · F7 50% · F8 75% · F9 84% · F10 97% · F11 72% · F12 74% · F13 45% · F14 15% · F15 88% · F16 78% · F17 0% · F18 78% · F19 70%.
+F0 100% · F1 78% · F2 85% · F3 84% · F4 78% · F5 62% · F6 82% · F7 50% · F8 75% · F9 85% · F10 98% · F11 72% · F12 76% · F13 47% · F14 15% · F15 88% · F16 78% · F17 0% · F18 78% · F19 70%.
 
 ## Último trabajo
+
+- Auditada la dirección de arte actual sin reiniciar la auditoría general; decisiones y descartes documentados en `ART_DIRECTION_AUDIT_2026-09-01.md`.
+- Centralizados tokens de motion y easing sin dependencias nuevas ni un motor paralelo.
+- El hero suma una luz champagne sutil que reutiliza el frame del pointer depth actual; touch y reduced-motion conservan fallbacks completos.
+- La ficha de producto transforma las notas reales en DREAMS Scent Trail, semántico y responsive, sin cambiar API, schema o datos.
+- Verificación local: check de 25 JS, 59/59 tests y audit de producción sin vulnerabilidades conocidas.
+- Medición posterior: CSS 46.509 bytes brutos / 9.882 gzip; motion 7.750 bytes brutos / 1.881 gzip. Variación aproximada: +538 bytes gzip combinados.
+- El servidor completo local no inició porque este snapshot no contiene `SUPABASE_URL` ni `SUPABASE_SECRET_KEY`; no se copiaron ni solicitaron secretos. La verificación visual de esta implementación queda para el deploy/preview seguro.
 
 - Implementado registro demo inmediato mediante `DEMO_AUTO_CONFIRM_EMAIL=true`: alta server-side confirmada, rol `customer` forzado y sesión inmediata; no se cambian passwords, cookies, RLS ni permisos Admin.
 - Documentado rollback: variable en `false` y `Confirm email` habilitado en Supabase Auth antes de una tienda real.
@@ -123,7 +132,7 @@ F0 100% · F1 78% · F2 85% · F3 84% · F4 78% · F5 62% · F6 82% · F7 50% ·
 
 - `corepack pnpm install --frozen-lockfile`: OK.
 - `corepack pnpm run check`: OK, 25 archivos JavaScript.
-- `corepack pnpm test`: 53/53 OK.
+- `corepack pnpm test`: 59/59 OK.
 - `corepack pnpm audit --prod`: OK, sin vulnerabilidades conocidas.
 - Regresiones cubiertas: validación auth, no-cache, alta con confirmación, login/cookies/redirección, retiro de favoritos y retry `PGRST303`.
 - CI #16 del PR #4: SUCCESS sobre `64ff9c76a79eb568f48e76dae073f2e1eeb7efb0`.
@@ -202,4 +211,4 @@ F0 100% · F1 78% · F2 85% · F3 84% · F4 78% · F5 62% · F6 82% · F7 50% ·
 
 ## Próxima acción exacta
 
-Crear el motor determinístico compartido para recomendaciones, quiz y configurador, reutilizando el catálogo real. Antes de tratar DREAMS como tienda real, rotar cualquier clave Supabase o contraseña Admin potencialmente expuesta y volver a habilitar la confirmación de email.
+Publicar `codex/art-direction-motion-foundation`, abrir PR, verificar CI y ejecutar QA visual del hero y Scent Trail en un preview/deploy seguro. No fusionar a `main` sin autorización explícita. Después completar la matriz responsive y recién entonces extender el mismo sistema a nuevas secciones.

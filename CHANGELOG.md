@@ -4,6 +4,15 @@ Todos los cambios relevantes de DREAMS se registran aquí. El proyecto aún no u
 
 ## Unreleased
 
+### 2026-09-01 — Dirección de arte: motion foundation y Scent Trail
+
+- Auditadas portada, catálogo, producto y flujos globales en ART_DIRECTION_AUDIT_2026-09-01.md; se preserva el sistema visual existente y se descartan WebGL/Three.js, 360° y transiciones que retrasen la compra por falta de un caso o assets adecuados.
+- Centralizados tokens de duración y easing sin instalar dependencias ni crear un segundo motor de animación.
+- El hero incorpora una iluminación champagne tenue que comparte el requestAnimationFrame del pointer depth existente; touch y prefers-reduced-motion la simplifican o eliminan.
+- Las notas reales del producto ahora forman un DREAMS Scent Trail semántico: salida, corazón y fondo en timeline horizontal/vertical, con contenido siempre accesible.
+- Verificación local: 25 archivos JavaScript, 59/59 tests y audit de producción sin vulnerabilidades conocidas.
+- Impacto medido: CSS 9.882 bytes gzip y motion 1.881 bytes gzip; aproximadamente +538 bytes gzip combinados frente al checkpoint anterior, sin nuevas dependencias ni listeners de scroll.
+
 ### 2026-09-01 — Auth demo inmediato, motion cinematográfico y hardening adversarial
 
 - Añadido `DEMO_AUTO_CONFIRM_EMAIL`: el registro demo crea una cuenta confirmada server-side, fuerza rol `customer`, inicia sesión y elimina el paso de correo; el flujo tradicional queda disponible al desactivar la variable.
