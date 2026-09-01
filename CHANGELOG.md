@@ -11,6 +11,9 @@ Todos los cambios relevantes de DREAMS se registran aquí. El proyecto aún no u
 - La declaración editorial posterior al hero permanece visible de forma inmediata en vez de ocultar todo el contenedor hasta que IntersectionObserver lo active.
 - Eliminados estilos y listeners exclusivos del bloque retirado; no se agregaron dependencias ni contenido de relleno.
 - Agregada regresión específica. Verificación local: sintaxis de 25 JavaScript, 60/60 tests y audit sin vulnerabilidades conocidas.
+- Commit `a2cd43e9cf46aa8fc2f10da5e343647b093f4622`; PR #16 pasó CI #44 y fue fusionado como `a42849163837b4389efef42dc15273cf93ab474e`.
+- Railway deployment `8282f8d9-c4bf-4d64-8ab4-304fde1b77e1` terminó SUCCESS.
+- Smoke 1363×936 confirmó hero ajustado exactamente al viewport útil, columnas alineadas, texto editorial visible, sección retirada y cero overflow horizontal. La matriz de seis viewports no se declara ejecutada porque el navegador actual no permite redimensionar.
 
 ### 2026-09-01 — Dirección de arte: motion foundation y Scent Trail
 

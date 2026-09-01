@@ -6,9 +6,9 @@
 
 - PROYECTO: DREAMS — ecommerce de perfumería con checkout preparado y consulta secundaria por WhatsApp.
 - REPO: `https://github.com/facumartea/dreams.git`
-- RAMA DE TRABAJO: `codex/art-direction-motion-foundation`, fusionada en `main` mediante PR #14.
+- RAMA DE TRABAJO: `codex/home-hero-spacing-cleanup`, fusionada en `main` mediante PR #16.
 - PRS FUSIONADOS: [#1](https://github.com/facumartea/dreams/pull/1), [#2](https://github.com/facumartea/dreams/pull/2), [#3](https://github.com/facumartea/dreams/pull/3), [#4](https://github.com/facumartea/dreams/pull/4), [#5](https://github.com/facumartea/dreams/pull/5), [#6](https://github.com/facumartea/dreams/pull/6), [#7](https://github.com/facumartea/dreams/pull/7) y [#8 — Add persistent checkout coupons and Comprar flow](https://github.com/facumartea/dreams/pull/8).
-- HEAD EN `main`: `bb559a5b28bee7edf5c185d90202115663f963fd` (`Merge verified art direction deployment state`).
+- HEAD EN `main`: `a42849163837b4389efef42dc15273cf93ab474e` (`Merge DREAMS home hero cleanup`).
 - HEAD FUNCIONAL DE TRABAJO: `d3d12eec5da7d3649bc81f4189b1d94946235200` (`Refine cinematic motion and add product scent trail`).
 - PR: [#14 — Refine cinematic motion and product scent trail](https://github.com/facumartea/dreams/pull/14), fusionado.
 - ÚLTIMO PUSH: `d3d12eec5da7d3649bc81f4189b1d94946235200` en `codex/art-direction-motion-foundation`.
@@ -31,6 +31,10 @@ F0 100% · F1 78% · F2 85% · F3 84% · F4 78% · F5 62% · F6 82% · F7 50% ·
 - Eliminados únicamente el HTML, CSS y JavaScript exclusivos de la sección retirada; catálogo, producto, carrito, checkout y datos no cambiaron.
 - Verificación local: check de 25 JS, 60/60 tests y audit de producción sin vulnerabilidades conocidas.
 - La vista local completa no pudo abrirse en el navegador controlado porque bloquea loopback; la comprobación visual final queda para el deploy seguro.
+- PR #16 pasó GitHub Actions CI #44 y fue fusionado con un único commit funcional.
+- Railway deployment `8282f8d9-c4bf-4d64-8ab4-304fde1b77e1`: SUCCESS sobre el merge exacto.
+- Smoke visual 1363×936: hero 858 px para un viewport útil de 858 px, texto e imagen con la misma altura, declaración editorial visible, cero bloques `split-banner` y sin overflow horizontal.
+- La herramienta de navegador disponible mantiene un viewport fijo; 390/430/768/1024/1440/1920 no se declaran visualmente ejecutados. Los breakpoints y la regresión sí fueron comprobados en código.
 
 - Auditada la dirección de arte actual sin reiniciar la auditoría general; decisiones y descartes documentados en `ART_DIRECTION_AUDIT_2026-09-01.md`.
 - Centralizados tokens de motion y easing sin dependencias nuevas ni un motor paralelo.
@@ -204,7 +208,7 @@ F0 100% · F1 78% · F2 85% · F3 84% · F4 78% · F5 62% · F6 82% · F7 50% ·
 - Entorno: `production` (`39886077-e963-4fec-b3aa-b0e5d38908dd`).
 - Servicio: `drams` (`c5780bbd-4030-4319-a714-1bc0f564e353`).
 - Dominio: `https://dreams-perfumes.up.railway.app`.
-- Último deployment confirmado: `a661581e-e804-4390-9355-0ec7d8673e50`, SUCCESS sobre `fe67828d775f485d58fbd2e6eba5d6e8f96106d5`.
+- Último deployment confirmado: `8282f8d9-c4bf-4d64-8ab4-304fde1b77e1`, SUCCESS sobre `a42849163837b4389efef42dc15273cf93ab474e`.
 - Variables verificadas/configuradas: `DEMO_AUTO_CONFIRM_EMAIL=true`, `APP_BASE_URL=https://dreams-perfumes.up.railway.app` y `APP_ORIGINS=https://dreams-perfumes.up.railway.app`.
 - El incidente histórico de cola congelada quedó resuelto; los deployments antiguos figuran removidos y no bloquean producción.
 - Smoke 2026-08-29 sobre PR #5: `/` 200 con `#review-form`; assets de opiniones 200; `/api/health` 200 con DB ok; `/api/reviews` 200; publicación anónima 401, sin datos falsos.
@@ -225,4 +229,4 @@ F0 100% · F1 78% · F2 85% · F3 84% · F4 78% · F5 62% · F6 82% · F7 50% ·
 
 ## Próxima acción exacta
 
-Publicar la limpieza del home, validar CI y Railway, y ejecutar smoke visual del hero sin espacio extra y de la ausencia del bloque claro. Después completar los tamaños responsive que el navegador disponible permita verificar sin inventar resultados.
+Completar QA visual en 390×844, 430×932, 768×1024, 1024×768, 1440×900 y 1920×1080 cuando exista control de viewport. Luego continuar con el siguiente bloque visual priorizado sin reintroducir el banner retirado ni otro motor de motion.
