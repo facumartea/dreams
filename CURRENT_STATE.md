@@ -6,13 +6,13 @@
 
 - PROYECTO: DREAMS — ecommerce de perfumería con checkout preparado y consulta secundaria por WhatsApp.
 - REPO: `https://github.com/facumartea/dreams.git`
-- RAMA DE TRABAJO: `codex/demo-auth-cinematic-security`, preparada desde `main` `1b617d0f6a29fedb5c254f59887c53596cbccdd7`.
+- RAMA DE TRABAJO: `codex/demo-auth-cinematic-security`, fusionada en `main` mediante PR #12.
 - PRS FUSIONADOS: [#1](https://github.com/facumartea/dreams/pull/1), [#2](https://github.com/facumartea/dreams/pull/2), [#3](https://github.com/facumartea/dreams/pull/3), [#4](https://github.com/facumartea/dreams/pull/4), [#5](https://github.com/facumartea/dreams/pull/5), [#6](https://github.com/facumartea/dreams/pull/6), [#7](https://github.com/facumartea/dreams/pull/7) y [#8 — Add persistent checkout coupons and Comprar flow](https://github.com/facumartea/dreams/pull/8).
-- HEAD BASE EN `main`: `1b617d0f6a29fedb5c254f59887c53596cbccdd7` (`Merge demo checkout production checkpoint`).
-- PR: [#10 — Add secure demo checkout and premium motion](https://github.com/facumartea/dreams/pull/10), fusionado.
-- ÚLTIMO PUSH FUNCIONAL: `0dede4bcae63924fca031526041ac3d5a8f9bff9` en `codex/demo-checkout-premium-motion`.
-- ÚLTIMO CI VERIFICADO: GitHub Actions CI #30, SUCCESS sobre `0dede4bcae63924fca031526041ac3d5a8f9bff9`.
-- ÚLTIMO DEPLOY VERIFICADO: Railway `bfabd1dc-fdd6-4b75-a781-f1a496535df2`, SUCCESS sobre `773fd8fa6269ceb02b4655c6f7956b19790991b6`.
+- HEAD EN `main`: `fbb376c024916b1e288f0da179ef2ffaa34bef47` (`Add instant demo auth, cinematic motion, and security hardening`).
+- PR: [#12 — Add instant demo auth, cinematic motion, and security hardening](https://github.com/facumartea/dreams/pull/12), fusionado.
+- ÚLTIMO PUSH FUNCIONAL: `70dafe332ca2fafd70d7201a5f1952583000b4cc` en `codex/demo-auth-cinematic-security`.
+- ÚLTIMO CI VERIFICADO: GitHub Actions CI #35, SUCCESS sobre `70dafe332ca2fafd70d7201a5f1952583000b4cc`.
+- ÚLTIMO DEPLOY VERIFICADO: Railway `21a27946-ae56-43f6-840d-92641608e572`, SUCCESS sobre `fbb376c024916b1e288f0da179ef2ffaa34bef47`.
 - FASE ACTUAL: F1/F6/F10/F13 — Auth demo, motion cinematográfico y hardening adversarial.
 - PROGRESO GENERAL: 74% ponderado (73,55% exacto según `PLAN.md`).
 
@@ -29,7 +29,8 @@ F0 100% · F1 78% · F2 85% · F3 84% · F4 78% · F5 62% · F6 82% · F7 50% ·
 - Auditoría adversarial: 0 críticos, 0 altos, 2 medios, 1 bajo y 2 informativos. Corregidos los tres hallazgos accionables; detalles en `SECURITY_ADVERSARIAL_2026-09-01.md`.
 - Supabase verificado `ACTIVE_HEALTHY`, siete tablas con RLS. Advisor: protección contra contraseñas filtradas desactivada (WARN); `orders`, `coupons` e `inquiries` server-only sin policies públicas (INFO intencional).
 - Verificación local: check de 25 JS, 58/58 tests y audit de producción sin vulnerabilidades conocidas.
-- PENDIENTE EN ESTE CHECKPOINT: push, CI, activar variable Railway, deploy y smoke público.
+- PR #12 pasó CI #35, fue fusionado y Railway desplegó el merge exacto. `DEMO_AUTO_CONFIRM_EMAIL`, `APP_BASE_URL` y `APP_ORIGINS` quedaron alineadas con el dominio nuevo.
+- Smoke visual público: portada y cuenta cargan, motion está presente, no se observó overflow y el registro comunica activación inmediata sin correo. La navegación JSON directa a `/api/health` fue bloqueada por el navegador; no se declara ese endpoint probado en esta tanda.
 
 - Implementado proveedor `demo` sin cobros ni credenciales, con estados aprobado/rechazado/pendiente/error y persistencia en `orders`.
 - Los campos ficticios de tarjeta se validan sólo en navegador; el servidor rechaza payloads con PAN/CVV/vencimiento y recibe únicamente `order_id` + escenario.
@@ -180,8 +181,8 @@ F0 100% · F1 78% · F2 85% · F3 84% · F4 78% · F5 62% · F6 82% · F7 50% ·
 - Entorno: `production` (`39886077-e963-4fec-b3aa-b0e5d38908dd`).
 - Servicio: `drams` (`c5780bbd-4030-4319-a714-1bc0f564e353`).
 - Dominio: `https://dreams-perfumes.up.railway.app`.
-- Último deployment confirmado: `bfabd1dc-fdd6-4b75-a781-f1a496535df2`, SUCCESS sobre `773fd8fa6269ceb02b4655c6f7956b19790991b6`.
-- Variables nuevas verificadas por comportamiento: `CONTACT_EMAIL` y `APP_ORIGINS`.
+- Último deployment confirmado: `21a27946-ae56-43f6-840d-92641608e572`, SUCCESS sobre `fbb376c024916b1e288f0da179ef2ffaa34bef47`.
+- Variables verificadas/configuradas: `DEMO_AUTO_CONFIRM_EMAIL=true`, `APP_BASE_URL=https://dreams-perfumes.up.railway.app` y `APP_ORIGINS=https://dreams-perfumes.up.railway.app`.
 - El incidente histórico de cola congelada quedó resuelto; los deployments antiguos figuran removidos y no bloquean producción.
 - Smoke 2026-08-29 sobre PR #5: `/` 200 con `#review-form`; assets de opiniones 200; `/api/health` 200 con DB ok; `/api/reviews` 200; publicación anónima 401, sin datos falsos.
 - Smoke 2026-08-30 sobre PR #6: `/` y catálogo 200; WebP responsive 200; health/DB ok; 11 productos de mujer; QA visual 1363×936 sin overflow.
@@ -192,7 +193,7 @@ F0 100% · F1 78% · F2 85% · F3 84% · F4 78% · F5 62% · F6 82% · F7 50% ·
 
 ## Bloqueos
 
-- No hay bloqueo activo de Railway: el deployment `bfabd1dc-fdd6-4b75-a781-f1a496535df2` figura `SUCCESS`.
+- No hay bloqueo activo de Railway: el deployment `21a27946-ae56-43f6-840d-92641608e572` figura `SUCCESS`.
 - Opiniones queda como modelo general por ahora; asociarlas a cada perfume es una decisión funcional futura, no un bloqueo para la versión actual.
 - Recuperación de contraseña completa puede requerir decisión/configuración de URL y SMTP.
 - Acciones destructivas sobre la tabla histórica `favorites` o datos reales requieren autorización explícita.
@@ -201,4 +202,4 @@ F0 100% · F1 78% · F2 85% · F3 84% · F4 78% · F5 62% · F6 82% · F7 50% ·
 
 ## Próxima acción exacta
 
-Publicar de forma segura `codex/demo-checkout-premium-motion`, verificar CI y activar `CHECKOUT_PROVIDER=demo` en Railway. Ejecutar smoke del flujo demo sin usar datos reales. Después crear el motor determinístico compartido para recomendaciones, quiz y configurador. Rotar la clave Supabase y contraseña Admin potencialmente expuestas antes de considerarlas seguras.
+Crear el motor determinístico compartido para recomendaciones, quiz y configurador, reutilizando el catálogo real. Antes de tratar DREAMS como tienda real, rotar cualquier clave Supabase o contraseña Admin potencialmente expuesta y volver a habilitar la confirmación de email.
