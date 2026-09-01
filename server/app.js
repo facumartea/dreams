@@ -107,6 +107,14 @@ function coupon_payload(value) {
     return { data: { code, discount_percent, active: value?.active !== false } };
 }
 
+function review_payload(value) {
+    const rating = Number(value?.rating);
+    const comment = String(value?.comment || '').trim();
+    if (!Number.isInteger(rating) || rating < 1 || rating > 5) return { error: 'La puntuación debe estar entre 1 y 5.' };
+    if (!comment || comment.length > 1000) return { error: 'La opinión debe tener entre 1 y 1000 caracteres.' };
+    return { data: { rating, comment } };
+}
+
 function discounted_totals(subtotal, discount_percent = 0) {
     const safe_subtotal = Math.max(0, Number(subtotal) || 0);
     const safe_percent = Math.min(100, Math.max(0, Number(discount_percent) || 0));
@@ -287,6 +295,7 @@ function create_app(options = {}) {
 
     const login = (request, response, next) => request.user ? next() : response.status(401).json({ error: 'Necesitás iniciar sesión.' });
     const admin = (request, response, next) => request.user?.is_admin ? next() : response.status(403).json({ error: 'Acceso reservado al administrador.' });
+    const admin_database = request => create_auth_client(request.access_token);
     const route = (method, url, ...handlers) => app[method](url, ...handlers.map(handler => handler === login || handler === admin ? handler : async_route(handler)));
     const fail_if = result => { if (result.error) throw result.error; return result.data; };
 
@@ -491,42 +500,67 @@ function create_app(options = {}) {
         response.json({ message: 'Consulta registrada.', whatsapp_url: `https://wa.me/${whatsapp_number}?text=${encodeURIComponent(`Hola DREAMS, quiero consultar por ${found.name}. ¿Está disponible?`)}` });
     });
     route('get', '/api/admin/stats', admin, async (request, response) => {
+        const db = admin_database(request);
         const tables = ['products', 'profiles', 'inquiries', 'reviews'];
-        const counts = await Promise.all(tables.map(async table => { const result = await database.from(table).select('*', { count: 'exact', head: true }); if (result.error) throw result.error; return result.count || 0; }));
-        const low = await database.from('products').select('*', { count: 'exact', head: true }).lte('stock', 2);
+        const counts = await Promise.all(tables.map(async table => { const result = await db.from(table).select('*', { count: 'exact', head: true }); if (result.error) throw result.error; return result.count || 0; }));
+        const orders = await database.from('orders').select('*', { count: 'exact', head: true });
+        if (orders.error) throw orders.error;
+        const low = await db.from('products').select('*', { count: 'exact', head: true }).lte('stock', 2);
         if (low.error) throw low.error;
-        response.json({ products: counts[0], users: counts[1], inquiries: counts[2], reviews: counts[3], low_stock: low.count || 0 });
+        response.json({ products: counts[0], users: counts[1], inquiries: counts[2], reviews: counts[3], orders: orders.count || 0, low_stock: low.count || 0 });
     });
-    route('get', '/api/admin/products', admin, async (request, response) => response.json(fail_if(await database.from('products').select('*').order('id', { ascending: false })).map(product)));
+    route('get', '/api/admin/products', admin, async (request, response) => response.json(fail_if(await admin_database(request).from('products').select('*').order('id', { ascending: false })).map(product)));
     route('post', '/api/admin/products', admin, async (request, response) => {
         const parsed = payload(request.body);
         if (parsed.e) return response.status(400).json({ error: parsed.e });
-        response.status(201).json(product(fail_if(await database.from('products').insert(parsed.o).select().single())));
+        response.status(201).json(product(fail_if(await admin_database(request).from('products').insert(parsed.o).select().single())));
     });
     route('put', '/api/admin/products/:id', admin, async (request, response) => {
         const id = parse_id(request.params.id);
         if (!id) return response.status(400).json({ error: 'ID de producto inválido.' });
         const parsed = payload(request.body);
         if (parsed.e) return response.status(400).json({ error: parsed.e });
-        const data = fail_if(await database.from('products').update(parsed.o).eq('id', id).select().maybeSingle());
-        return data ? response.json(product(data)) : response.status(404).json({ error: 'Producto no encontrado.' });
+        const db = admin_database(request);
+        const existing = fail_if(await db.from('products').select('id').eq('id', id).maybeSingle());
+        if (!existing) return response.status(404).json({ error: 'Producto no encontrado.' });
+        const data = fail_if(await db.from('products').update(parsed.o).eq('id', id).select().maybeSingle());
+        return data ? response.json(product(data)) : response.status(503).json({ error: 'El producto existe, pero no pudo actualizarse por la configuración de permisos.' });
     });
     route('delete', '/api/admin/products/:id', admin, async (request, response) => {
         const id = parse_id(request.params.id);
         if (!id) return response.status(400).json({ error: 'ID de producto inválido.' });
-        const data = fail_if(await database.from('products').delete().eq('id', id).select('id').maybeSingle());
-        return data ? response.json({ message: 'Producto eliminado.' }) : response.status(404).json({ error: 'Producto no encontrado.' });
+        const db = admin_database(request);
+        const existing = fail_if(await db.from('products').select('id').eq('id', id).maybeSingle());
+        if (!existing) return response.status(404).json({ error: 'Producto no encontrado.' });
+        const data = fail_if(await db.from('products').delete().eq('id', id).select('id').maybeSingle());
+        return data ? response.json({ message: 'Producto eliminado.' }) : response.status(503).json({ error: 'El producto existe, pero no pudo eliminarse por la configuración de permisos.' });
     });
-    route('get', '/api/admin/users', admin, async (request, response) => response.json(fail_if(await database.from('profiles').select('id,name,role,created_at').order('created_at', { ascending: false })).map(value => ({ ...value, email: null, is_admin: value.role === 'admin' }))));
-    route('get', '/api/admin/inquiries', admin, async (request, response) => response.json(fail_if(await database.from('inquiries').select('*,products(brand,name)').order('id', { ascending: false }).limit(100)).map(value => ({ ...value, brand: value.products?.brand || null, name: value.products?.name || value.product_name }))));
-    route('get', '/api/admin/reviews', admin, async (request, response) => response.json(fail_if(await database.from('reviews').select('*').order('id', { ascending: false }))));
+    route('get', '/api/admin/users', admin, async (request, response) => response.json(fail_if(await admin_database(request).from('profiles').select('id,name,role,created_at').order('created_at', { ascending: false })).map(value => ({ ...value, email: null, is_admin: value.role === 'admin' }))));
+    route('get', '/api/admin/inquiries', admin, async (request, response) => response.json(fail_if(await admin_database(request).from('inquiries').select('*,products(brand,name)').order('id', { ascending: false }).limit(100)).map(value => ({ ...value, brand: value.products?.brand || null, name: value.products?.name || value.product_name }))));
+    route('get', '/api/admin/reviews', admin, async (request, response) => response.json(fail_if(await admin_database(request).from('reviews').select('*').order('id', { ascending: false }))));
+    route('put', '/api/admin/reviews/:id', admin, async (request, response) => {
+        const id = parse_id(request.params.id);
+        if (!id) return response.status(400).json({ error: 'ID de opinión inválido.' });
+        const parsed = review_payload(request.body);
+        if (parsed.error) return response.status(400).json({ error: parsed.error });
+        const updated = fail_if(await admin_database(request).from('reviews').update(parsed.data).eq('id', id).select('*').maybeSingle());
+        return updated ? response.json(updated) : response.status(404).json({ error: 'Opinión no encontrada.' });
+    });
+    route('delete', '/api/admin/reviews/:id', admin, async (request, response) => {
+        const id = parse_id(request.params.id);
+        if (!id) return response.status(400).json({ error: 'ID de opinión inválido.' });
+        const deleted = fail_if(await admin_database(request).from('reviews').delete().eq('id', id).select('id').maybeSingle());
+        return deleted ? response.json({ message: 'Opinión eliminada.' }) : response.status(404).json({ error: 'Opinión no encontrada.' });
+    });
+    route('get', '/api/admin/orders', admin, async (request, response) => response.json(fail_if(await database.from('orders').select('id,user_id,provider,status,status_detail,currency,subtotal,discount,total,coupon_code,items,created_at,paid_at').order('created_at', { ascending: false }).limit(100)).map(value => ({ ...value, order_number: order_number(value) }))));
     route('get', '/api/admin/coupons', admin, async (request, response) => response.json(fail_if(await database.from('coupons').select('id,code,discount_percent,active,created_at,updated_at').order('created_at', { ascending: false }))));
     route('post', '/api/admin/coupons', admin, async (request, response) => {
         const parsed = coupon_payload(request.body);
         if (parsed.error) return response.status(400).json({ error: parsed.error });
-        const existing = fail_if(await database.from('coupons').select('id').eq('code', parsed.data.code).maybeSingle());
+        const db = database;
+        const existing = fail_if(await db.from('coupons').select('id').eq('code', parsed.data.code).maybeSingle());
         if (existing) return response.status(409).json({ error: 'Ya existe un cupón con ese código.' });
-        const created = fail_if(await database.from('coupons').insert(parsed.data).select('id,code,discount_percent,active,created_at,updated_at').single());
+        const created = fail_if(await db.from('coupons').insert(parsed.data).select('id,code,discount_percent,active,created_at,updated_at').single());
         response.status(201).json(created);
     });
     route('put', '/api/admin/coupons/:id', admin, async (request, response) => {
@@ -534,9 +568,10 @@ function create_app(options = {}) {
         if (!id) return response.status(400).json({ error: 'ID de cupón inválido.' });
         const parsed = coupon_payload(request.body);
         if (parsed.error) return response.status(400).json({ error: parsed.error });
-        const existing = fail_if(await database.from('coupons').select('id').eq('code', parsed.data.code).neq('id', id).maybeSingle());
+        const db = database;
+        const existing = fail_if(await db.from('coupons').select('id').eq('code', parsed.data.code).neq('id', id).maybeSingle());
         if (existing) return response.status(409).json({ error: 'Ya existe un cupón con ese código.' });
-        const updated = fail_if(await database.from('coupons').update(parsed.data).eq('id', id).select('id,code,discount_percent,active,created_at,updated_at').maybeSingle());
+        const updated = fail_if(await db.from('coupons').update(parsed.data).eq('id', id).select('id,code,discount_percent,active,created_at,updated_at').maybeSingle());
         return updated ? response.json(updated) : response.status(404).json({ error: 'Cupón no encontrado.' });
     });
     route('delete', '/api/admin/coupons/:id', admin, async (request, response) => {
@@ -566,4 +601,4 @@ function create_app(options = {}) {
     return app;
 }
 
-module.exports = { create_app, validate, payload, coupon_payload, normalize_coupon_code, discounted_totals, resolve_coupon, order_number, database_health, auth_cookie, session, parse_id, normalize_cart_items, quote_cart, execute_database_query, normalize_origin, allowed_origin_set, mutation_origin_guard, GENERIC_ERROR };
+module.exports = { create_app, validate, payload, coupon_payload, review_payload, normalize_coupon_code, discounted_totals, resolve_coupon, order_number, database_health, auth_cookie, session, parse_id, normalize_cart_items, quote_cart, execute_database_query, normalize_origin, allowed_origin_set, mutation_origin_guard, GENERIC_ERROR };

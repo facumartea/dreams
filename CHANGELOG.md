@@ -1,8 +1,32 @@
 # Changelog
 
+### 2026-09-01 — Reparación Admin y variantes premium por categoría
+
+- Diagnosticado con evidencia de Railway que `PUT`/`DELETE /api/admin/products/:id` recibían IDs válidos pero devolvían un falso 404; los productos seguían existiendo en Supabase.
+- Las mutaciones de productos y opiniones ahora usan el JWT del administrador y políticas RLS verificadas, sin exponer `service_role`, sin desactivar RLS y sin ampliar tablas server-only.
+- Aplicada la migración `admin_authenticated_policies`: helper seguro por `auth.uid()`/rol y policies Admin para productos, opiniones, perfiles, consultas, pedidos y cupones. Pedidos/cupones conservan sus grants server-only.
+- Editar distingue ID inexistente de una denegación/configuración de permisos; Eliminar verifica existencia, exige confirmación, bloquea doble click y actualiza la UI sin reload.
+- Formulario de producto admite rutas locales o HTTPS, conserva validaciones server-side de stock/precio/intensidad y mantiene hard delete por compatibilidad; archive/restore sigue pendiente.
+- Agregada gestión Admin persistente de opiniones: búsqueda, edición de rating/texto y eliminación confirmada. Ocultar/moderar no se simula porque el schema actual no tiene estado de visibilidad.
+- Agregada vista Admin de pedidos existentes, estrictamente de solo lectura y basada en datos reales.
+- Hombre, Mujer y Unisex continúan usando un único `ProductCard` y tokens compartidos: Hombre usa card `#f4f1e9` y título 600; Mujer base crema `#e8ddcf` y champagne `#a8874e`; Unisex piedra/carbón `#24221f` + `#d8d0c4`.
+- Verificación local: check de 26 JavaScript y 69/69 tests PASS, incluidos CRUD de productos, 404 real, rechazo de usuario normal, persistencia de opiniones, RLS y variantes visuales.
+
 Todos los cambios relevantes de DREAMS se registran aquí. El proyecto aún no usa releases semánticos.
 
 ## Unreleased
+
+### 2026-09-01 — Colecciones editoriales y confirmación robusta del checkout demo
+
+- Unificada la lógica visual de Mujer, Hombre y Unisex mediante una sola configuración y tokens compartidos; cada colección conserva una dirección propia sin duplicar páginas, componentes ni datos.
+- Mujer usa crema/marfil y rosa viejo controlado, Hombre carbón cálido y champagne sobrio, y Unisex grafito/taupe editorial; títulos y cards siguen usando el mismo catálogo real.
+- El checkout demo guarda el ID del pedido antes de procesarlo y reanuda ese mismo pedido tras errores de red o interrupciones, evitando altas duplicadas.
+- La confirmación aprobada muestra un check sobrio, el mensaje `Pago realizado con éxito` y un número de compra determinístico basado en el pedido persistido; sólo entonces limpia carrito y cupón.
+- Aumentada discretamente la rotulación HTML/CSS `DREAMS / EAU DE PARFUM` del frasco del hero, sin cambiar composición ni asset.
+- Añadidas regresiones de arquitectura de colecciones, orden interrumpida/idempotente, número de compra y rotulación. Verificación local: check 25 archivos, 63/63 tests y audit de producción verde.
+- Commit `771aae40f2ac049eec7085c6eb0e792837697bb6`; PR #18 validado por CI #48 y fusionado como `f79080cc78c5fd3487bff73a0d237063749054e9`.
+- Railway deployment `d091a7ac-1208-40a9-a224-24a83bfb8f5a` terminó SUCCESS sobre el merge exacto.
+- Smoke público 1363×936: home, checkout y las tres colecciones sin overflow ni errores de aplicación; 11 productos de Mujer, 18 de Hombre y 2 Unisex. No se declara compra autenticada ni matriz completa de seis viewports.
 
 ### 2026-09-01 — Limpieza del home y corrección de altura del hero
 

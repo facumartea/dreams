@@ -10,7 +10,10 @@ const needed = ['SUPABASE_URL', 'SUPABASE_SECRET_KEY'].filter(key => !process.en
 if (needed.length) throw new Error(`Faltan variables obligatorias: ${needed.join(', ')}`);
 
 const client_options = { auth: { autoRefreshToken: false, persistSession: false } };
-const create_database = () => createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SECRET_KEY, client_options);
+const create_database = access_token => createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SECRET_KEY, {
+    ...client_options,
+    ...(access_token ? { global: { headers: { Authorization: `Bearer ${access_token}` } } } : {})
+});
 const database = create_database();
 const checkout_provider = String(process.env.CHECKOUT_PROVIDER || 'mercado_pago').trim().toLowerCase();
 const payment_provider = checkout_provider === 'demo'
