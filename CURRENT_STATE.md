@@ -8,7 +8,7 @@
 - REPO: `https://github.com/facumartea/dreams.git`
 - RAMA DE TRABAJO: `codex/art-direction-motion-foundation`, fusionada en `main` mediante PR #14.
 - PRS FUSIONADOS: [#1](https://github.com/facumartea/dreams/pull/1), [#2](https://github.com/facumartea/dreams/pull/2), [#3](https://github.com/facumartea/dreams/pull/3), [#4](https://github.com/facumartea/dreams/pull/4), [#5](https://github.com/facumartea/dreams/pull/5), [#6](https://github.com/facumartea/dreams/pull/6), [#7](https://github.com/facumartea/dreams/pull/7) y [#8 — Add persistent checkout coupons and Comprar flow](https://github.com/facumartea/dreams/pull/8).
-- HEAD EN `main`: `fe67828d775f485d58fbd2e6eba5d6e8f96106d5` (`Merge DREAMS art direction motion foundation`).
+- HEAD EN `main`: `bb559a5b28bee7edf5c185d90202115663f963fd` (`Merge verified art direction deployment state`).
 - HEAD FUNCIONAL DE TRABAJO: `d3d12eec5da7d3649bc81f4189b1d94946235200` (`Refine cinematic motion and add product scent trail`).
 - PR: [#14 — Refine cinematic motion and product scent trail](https://github.com/facumartea/dreams/pull/14), fusionado.
 - ÚLTIMO PUSH: `d3d12eec5da7d3649bc81f4189b1d94946235200` en `codex/art-direction-motion-foundation`.
@@ -16,14 +16,21 @@
 - ÚLTIMO PUSH FUNCIONAL: `70dafe332ca2fafd70d7201a5f1952583000b4cc` en `codex/demo-auth-cinematic-security`.
 - ÚLTIMO CI VERIFICADO: GitHub Actions CI #35, SUCCESS sobre `70dafe332ca2fafd70d7201a5f1952583000b4cc`.
 - ÚLTIMO DEPLOY VERIFICADO: Railway `21a27946-ae56-43f6-840d-92641608e572`, SUCCESS sobre `fbb376c024916b1e288f0da179ef2ffaa34bef47`.
-- FASE ACTUAL: F9/F10/F12/F13 — Dirección de arte, motion foundation y Scent Trail.
-- PROGRESO GENERAL: 74% ponderado (73,80% exacto según `PLAN.md`).
+- FASE ACTUAL: F9/F10/F11 — Limpieza del home, hero y responsive.
+- PROGRESO GENERAL: 74% ponderado (73,93% exacto según `PLAN.md`).
 
 ## Porcentaje de todas las fases
 
-F0 100% · F1 78% · F2 85% · F3 84% · F4 78% · F5 62% · F6 82% · F7 50% · F8 75% · F9 85% · F10 98% · F11 72% · F12 76% · F13 47% · F14 15% · F15 88% · F16 78% · F17 0% · F18 78% · F19 70%.
+F0 100% · F1 78% · F2 85% · F3 84% · F4 78% · F5 62% · F6 82% · F7 50% · F8 75% · F9 86% · F10 98% · F11 74% · F12 76% · F13 47% · F14 15% · F15 88% · F16 78% · F17 0% · F18 78% · F19 70%.
 
 ## Último trabajo
+
+- Retirado el bloque claro con perfume rosa del home según la referencia visual aportada.
+- El hero desktop ahora usa el alto real del viewport; la imagen vertical deja de agrandar toda la fila y generar una extensión negra innecesaria.
+- La declaración editorial debajo del hero deja de empezar con opacidad cero, por lo que no vuelve a presentarse como un bloque vacío.
+- Eliminados únicamente el HTML, CSS y JavaScript exclusivos de la sección retirada; catálogo, producto, carrito, checkout y datos no cambiaron.
+- Verificación local: check de 25 JS, 60/60 tests y audit de producción sin vulnerabilidades conocidas.
+- La vista local completa no pudo abrirse en el navegador controlado porque bloquea loopback; la comprobación visual final queda para el deploy seguro.
 
 - Auditada la dirección de arte actual sin reiniciar la auditoría general; decisiones y descartes documentados en `ART_DIRECTION_AUDIT_2026-09-01.md`.
 - Centralizados tokens de motion y easing sin dependencias nuevas ni un motor paralelo.
@@ -218,4 +225,4 @@ F0 100% · F1 78% · F2 85% · F3 84% · F4 78% · F5 62% · F6 82% · F7 50% ·
 
 ## Próxima acción exacta
 
-Completar la matriz responsive del hero y Scent Trail en 390×844, 430×932, 768×1024, 1024×768, 1440×900 y 1920×1080. Después extender el mismo sistema visual a las siguientes secciones priorizadas, sin crear un motor paralelo.
+Publicar la limpieza del home, validar CI y Railway, y ejecutar smoke visual del hero sin espacio extra y de la ausencia del bloque claro. Después completar los tamaños responsive que el navegador disponible permita verificar sin inventar resultados.

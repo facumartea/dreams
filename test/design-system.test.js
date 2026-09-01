@@ -79,7 +79,6 @@ test('motion premium usa JS liviano, fallback y reducción de movimiento', () =>
     assert.match(motion, /prefers-reduced-motion: reduce/);
     assert.doesNotMatch(motion, /three|webgl|gsap/i);
     assert.match(css, /--depth-x/);
-    assert.match(css, /\.motion-spotlight/);
     assert.match(app, /motion_script\.src = '\/js\/motion\.js'/);
     assert.match(css, /\.motion-ready \.hero-entry/);
     assert.match(css, /\.motion-ready \.motion-heading/);
@@ -88,6 +87,16 @@ test('motion premium usa JS liviano, fallback y reducción de movimiento', () =>
     }
     assert.match(motion, /--hero-light-x/);
     assert.match(css, /\.hero-image::before/);
+});
+
+test('la portada no conserva el banner claro y evita el espacio vacío bajo el hero', () => {
+    const html = fs.readFileSync(path.join(root, 'public/index.html'), 'utf8');
+    const css = fs.readFileSync(path.join(root, 'public/css/style.css'), 'utf8');
+    const motion = fs.readFileSync(path.join(root, 'public/js/motion.js'), 'utf8');
+    assert.doesNotMatch(html, /class="split-banner"/);
+    assert.doesNotMatch(html, /images\.unsplash\.com\/photo-1541643600914-78b084683601/);
+    assert.match(css, /@media\(min-width:921px\)\{\.hero\{height:calc\(100svh - 78px\);min-height:660px\}/);
+    assert.doesNotMatch(motion, /querySelectorAll\([^)]*brand-statement/);
 });
 
 test('el detalle presenta las notas reales como un Scent Trail accesible', () => {

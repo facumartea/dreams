@@ -4,6 +4,14 @@ Todos los cambios relevantes de DREAMS se registran aquí. El proyecto aún no u
 
 ## Unreleased
 
+### 2026-09-01 — Limpieza del home y corrección de altura del hero
+
+- Retirado por pedido de producto el bloque claro de diseñador/nicho con perfume rosa; el home continúa directamente desde Más buscados hacia Sobre DREAMS.
+- Corregida la causa del espacio negro bajo el contenido principal: en desktop, el hero ahora ocupa exactamente el viewport disponible y la imagen deja de imponer su proporción vertical a toda la fila.
+- La declaración editorial posterior al hero permanece visible de forma inmediata en vez de ocultar todo el contenedor hasta que IntersectionObserver lo active.
+- Eliminados estilos y listeners exclusivos del bloque retirado; no se agregaron dependencias ni contenido de relleno.
+- Agregada regresión específica. Verificación local: sintaxis de 25 JavaScript, 60/60 tests y audit sin vulnerabilidades conocidas.
+
 ### 2026-09-01 — Dirección de arte: motion foundation y Scent Trail
 
 - Auditadas portada, catálogo, producto y flujos globales en ART_DIRECTION_AUDIT_2026-09-01.md; se preserva el sistema visual existente y se descartan WebGL/Three.js, 360° y transiciones que retrasen la compra por falta de un caso o assets adecuados.

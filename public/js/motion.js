@@ -5,7 +5,7 @@
     const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
 
     function setup_reveals(root = document) {
-        const elements = root.querySelectorAll('.section-heading,.brand-statement,.split-banner>div,.split-banner>img,.about-preview>*,.page-intro>*,.checkout-layout>*,.review-compose>*,.product-card,.review-card,.detail-layout>*,.scent-trail-header,.scent-step');
+        const elements = root.querySelectorAll('.section-heading,.about-preview>*,.page-intro>*,.checkout-layout>*,.review-compose>*,.product-card,.review-card,.detail-layout>*,.scent-trail-header,.scent-step');
         if (reduced.matches || !('IntersectionObserver' in window)) {
             elements.forEach(element => element.classList.add('is-revealed'));
             return;
@@ -21,7 +21,7 @@
             if (element.dataset.motionReady) return;
             element.dataset.motionReady = 'true';
             element.classList.add('motion-reveal');
-            if (element.matches('.section-heading,.brand-statement,.page-intro,.split-banner>div,.scent-trail-header')) element.classList.add('motion-heading');
+            if (element.matches('.section-heading,.page-intro,.scent-trail-header')) element.classList.add('motion-heading');
             element.style.setProperty('--reveal-delay', `${Math.min(index % 4, 3) * 45}ms`);
             observer.observe(element);
         });
@@ -41,7 +41,7 @@
     function setup_scroll_depth() {
         if (reduced.matches) return;
         const hero = document.querySelector('.hero');
-        const editorial = [...document.querySelectorAll('.split-banner,.detail-layout')];
+        const editorial = [...document.querySelectorAll('.detail-layout')];
         if (!hero && !editorial.length) return;
         let frame = 0;
         const render = () => {
@@ -96,26 +96,9 @@
         }, { passive: true });
     }
 
-    function setup_spotlight() {
-        document.querySelectorAll('.split-banner').forEach(element => {
-            if (!can_move()) return;
-            let frame = 0;
-            element.classList.add('motion-spotlight');
-            element.addEventListener('pointermove', event => {
-                if (frame) return;
-                frame = requestAnimationFrame(() => {
-                    const box = element.getBoundingClientRect();
-                    element.style.setProperty('--spot-x', `${event.clientX - box.left}px`);
-                    element.style.setProperty('--spot-y', `${event.clientY - box.top}px`);
-                    frame = 0;
-                });
-            }, { passive: true });
-        });
-    }
-
     function setup_magnetic_buttons() {
         if (!can_move()) return;
-        document.querySelectorAll('.hero .button,.split-banner .button').forEach(button => {
+        document.querySelectorAll('.hero .button').forEach(button => {
             let frame = 0;
             button.classList.add('button-magnetic');
             button.addEventListener('pointermove', event => {
@@ -150,7 +133,6 @@
         setup_reveals();
         setup_hero_depth();
         setup_scroll_depth();
-        setup_spotlight();
         setup_magnetic_buttons();
         setup_dynamic_content();
     }

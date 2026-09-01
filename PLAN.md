@@ -13,9 +13,9 @@ Porcentajes recalibrados el 2026-08-31 al sumar cupones y mantener los pesos en 
 | F6 | Auth, sesiones, recuperación y usuarios | 7% | 82% |
 | F7 | Admin completo, reversible y auditable | 6% | 50% |
 | F8 | Arquitectura, limpieza y documentación técnica | 4% | 75% |
-| F9 | UX funcional y estados | 5% | 85% |
+| F9 | UX funcional y estados | 5% | 86% |
 | F10 | Diseño visual, colección femenina, imagen y sistema de componentes | 4% | 98% |
-| F11 | Responsive verificado | 4% | 72% |
+| F11 | Responsive verificado | 4% | 74% |
 | F12 | Accesibilidad | 4% | 76% |
 | F13 | Performance | 4% | 47% |
 | F14 | SEO y descubribilidad | 3% | 15% |
@@ -25,7 +25,7 @@ Porcentajes recalibrados el 2026-08-31 al sumar cupones y mantener los pesos en 
 | F18 | Checkout Sandbox, pedidos y pagos | 4% | 78% |
 | F19 | Cupones: datos, API, Admin, checkout y seguridad | 4% | 70% |
 
-**Progreso general ponderado: 74%** (73,80% exacto). El avance incluye registro demo inmediato, motion cinematográfico liviano, Scent Trail con datos reales, auditoría adversarial, tres correcciones y 59 pruebas locales; no incluye pagos Sandbox reales ni QA responsive completo.
+**Progreso general ponderado: 74%** (73,93% exacto). El avance incluye registro demo inmediato, motion cinematográfico liviano, Scent Trail con datos reales, limpieza del home, auditoría adversarial, tres correcciones y 60 pruebas locales; no incluye pagos Sandbox reales ni QA responsive completo.
 
 ## Secuencia y criterios
 
