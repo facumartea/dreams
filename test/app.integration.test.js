@@ -17,7 +17,10 @@ function database_with(handler) {
             getUser: async () => ({ data: { user: null } }),
             signUp: async () => ({ data: {}, error: null }),
             signInWithPassword: async () => ({ data: {}, error: new Error('invalid') }),
-            admin: { signOut: async () => ({ error: null }) }
+            admin: {
+                signOut: async () => ({ error: null }),
+                createUser: async () => ({ data: { user: { id: 'demo-user' } }, error: null })
+            }
         },
         from(table) { return query(() => handler(table)); }
     };
@@ -251,6 +254,80 @@ test('registro pendiente distingue confirmación de correo de una sesión activa
         assert.equal(body.authenticated, false);
         assert.equal(body.requires_email_confirmation, true);
         assert.match(body.message, /confirmación/);
+    });
+});
+
+test('modo demo confirma el alta en servidor e inicia sesión sin correo', async () => {
+    const database = database_with(() => ({ data: null, error: null }));
+    let created_payload;
+    database.auth.admin.createUser = async value => {
+        created_payload = value;
+        return { data: { user: { id: 'demo-user' } }, error: null };
+    };
+    const auth = { auth: { signInWithPassword: async ({ email }) => ({
+        data: {
+            user: { id: 'demo-user', email },
+            session: { access_token: 'demo-access', refresh_token: 'demo-refresh', expires_in: 3600 }
+        },
+        error: null
+    }) } };
+    const app = create_app({ database, create_auth_client: () => auth, demo_auto_confirm_email: true, disable_request_log: true });
+    await serve(app, async base => {
+        const response = await fetch(`${base}/api/auth/register`, {
+            method: 'POST', headers: { 'Content-Type': 'application/json', Origin: base },
+            body: JSON.stringify({ name: 'Ana', email: ' ANA@EXAMPLE.COM ', password: 'password-segura' })
+        });
+        assert.equal(response.status, 201);
+        const body = await response.json();
+        assert.equal(body.authenticated, true);
+        assert.equal(body.demo, true);
+        assert.equal(body.user.is_admin, false);
+        assert.equal(created_payload.email_confirm, true);
+        assert.deepEqual(created_payload.user_metadata, { name: 'Ana' });
+        assert.match(response.headers.get('set-cookie'), /dreams_access_token=demo-access/);
+        assert.doesNotMatch(JSON.stringify(body), /confirm|correo enviado/i);
+    });
+});
+
+test('modo demo no enumera usuarios mediante errores de confirmación', async () => {
+    const database = database_with(() => ({ data: [], error: null }));
+    database.auth.signInWithPassword = async () => ({ data: {}, error: { code: 'email_not_confirmed' } });
+    const app = create_app({ database, demo_auto_confirm_email: true, disable_request_log: true });
+    await serve(app, async base => {
+        const response = await fetch(`${base}/api/auth/login`, {
+            method: 'POST', headers: { 'Content-Type': 'application/json', Origin: base },
+            body: JSON.stringify({ email: 'ana@example.com', password: 'password-segura' })
+        });
+        assert.equal(response.status, 401);
+        const body = await response.json();
+        assert.equal(body.error, 'Correo o contraseña incorrectos.');
+        assert.doesNotMatch(body.error, /confirm/i);
+    });
+});
+
+test('una mutación autenticada sin Origin ni Referer se rechaza', async () => {
+    const database = database_with(() => ({ data: [], error: null }));
+    const app = create_app({ database, disable_request_log: true });
+    await serve(app, async base => {
+        const response = await fetch(`${base}/api/reviews`, {
+            method: 'POST', headers: { 'Content-Type': 'application/json', Cookie: 'dreams_access_token=token' },
+            body: JSON.stringify({ rating: 5, comment: 'No debe procesarse.' })
+        });
+        assert.equal(response.status, 403);
+        assert.match((await response.json()).error, /Origen/);
+    });
+});
+
+test('cabeceras defensivas bloquean framing, sniffing y downgrade HTTPS', async () => {
+    const database = database_with(() => ({ data: [], error: null }));
+    const app = create_app({ database, production: true, disable_request_log: true });
+    await serve(app, async base => {
+        const response = await fetch(`${base}/`);
+        assert.equal(response.status, 200);
+        assert.equal(response.headers.get('x-content-type-options'), 'nosniff');
+        assert.equal(response.headers.get('x-frame-options'), 'SAMEORIGIN');
+        assert.match(response.headers.get('strict-transport-security') || '', /max-age=/);
+        assert.match(response.headers.get('referrer-policy') || '', /no-referrer/);
     });
 });
 

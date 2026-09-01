@@ -4,6 +4,18 @@ Todos los cambios relevantes de DREAMS se registran aquí. El proyecto aún no u
 
 ## Unreleased
 
+### 2026-09-01 — Auth demo inmediato, motion cinematográfico y hardening adversarial
+
+- Añadido `DEMO_AUTO_CONFIRM_EMAIL`: el registro demo crea una cuenta confirmada server-side, fuerza rol `customer`, inicia sesión y elimina el paso de correo; el flujo tradicional queda disponible al desactivar la variable.
+- La cuenta explica que el modo demo se activa al instante y el login deja de revelar específicamente `email_not_confirmed`.
+- Inspeccionada visualmente la referencia Xerjoff/Lamborghini en desktop: hero fijado, producto con desplazamiento diferencial, escala de título, imágenes contrapuestas y ritmo de scroll.
+- Extendida la implementación existente, sin librerías nuevas: entrada escalonada, parallax por scroll con un único RAF, reveal por bloque, desplazamiento/escala editorial y fallbacks touch/reduced-motion.
+- Impacto bruto medido: +5.306 bytes entre JS y CSS; gzip actual aproximado 1.811 bytes para motion y 9.414 bytes para CSS.
+- Auditoría adversarial autorizada documentada en `SECURITY_ADVERSARIAL_2026-09-01.md`: 0 críticos, 0 altos, 2 medios, 1 bajo y 2 informativos.
+- Corregidas enumeración parcial por email no confirmado, mutaciones autenticadas sin origen explícito y carrera al resolver dos veces un pedido demo.
+- Supabase `ACTIVE_HEALTHY`; RLS habilitado en todas las tablas. Advisors conservan el WARN de protección de contraseñas filtradas y tres INFO server-only intencionales.
+- Verificación local: 25 archivos JavaScript, 58/58 tests y audit de producción sin vulnerabilidades conocidas.
+
 ### 2026-08-31 — Checkout demo, motion premium y auditoría de expansión
 
 - Añadido proveedor interno `demo` desacoplado de Mercado Pago con estados aprobado, rechazado, pendiente y error; no realiza cobros ni requiere secretos.

@@ -5,27 +5,27 @@ Porcentajes recalibrados el 2026-08-31 al sumar cupones y mantener los pesos en 
 | Fase | Alcance | Peso | Estado |
 |---|---|---:|---:|
 | F0 | Auditoría total, baseline y documentación | 6% | 100% |
-| F1 | Seguridad crítica: XSS, dependencias, headers, CSRF/origin, abuso | 7% | 70% |
+| F1 | Seguridad crítica: XSS, dependencias, headers, CSRF/origin, abuso | 7% | 78% |
 | F2 | Backend/API: validación, errores, health, modularidad mínima | 6% | 85% |
 | F3 | Datos/Supabase: grants mínimos, provisioning, migraciones, integridad, RLS | 8% | 84% |
 | F4 | Catálogo, detalle, carrito y consultas | 6% | 78% |
 | F5 | Opiniones persistentes, edición y moderación | 4% | 62% |
-| F6 | Auth, sesiones, recuperación y usuarios | 7% | 74% |
+| F6 | Auth, sesiones, recuperación y usuarios | 7% | 82% |
 | F7 | Admin completo, reversible y auditable | 6% | 50% |
 | F8 | Arquitectura, limpieza y documentación técnica | 4% | 75% |
 | F9 | UX funcional y estados | 5% | 84% |
-| F10 | Diseño visual, colección femenina, imagen y sistema de componentes | 4% | 95% |
+| F10 | Diseño visual, colección femenina, imagen y sistema de componentes | 4% | 97% |
 | F11 | Responsive verificado | 4% | 72% |
-| F12 | Accesibilidad | 4% | 72% |
-| F13 | Performance | 4% | 38% |
+| F12 | Accesibilidad | 4% | 74% |
+| F13 | Performance | 4% | 45% |
 | F14 | SEO y descubribilidad | 3% | 15% |
-| F15 | Testing y CI | 7% | 84% |
-| F16 | Producción, dominio, deploy y observabilidad | 4% | 76% |
+| F15 | Testing y CI | 7% | 88% |
+| F16 | Producción, dominio, deploy y observabilidad | 4% | 78% |
 | F17 | QA final de punta a punta | 3% | 0% |
-| F18 | Checkout Sandbox, pedidos y pagos | 4% | 76% |
+| F18 | Checkout Sandbox, pedidos y pagos | 4% | 78% |
 | F19 | Cupones: datos, API, Admin, checkout y seguridad | 4% | 70% |
 
-**Progreso general ponderado: 72%** (71,55% exacto). El avance incluye migración demo remota verificada, 53 pruebas locales y motion accesible; no incluye pagos Sandbox reales, CI/deploy de esta tanda ni QA responsive completo.
+**Progreso general ponderado: 74%** (73,55% exacto). El avance incluye registro demo inmediato, motion cinematográfico liviano, auditoría adversarial, tres correcciones y 58 pruebas locales; no incluye pagos Sandbox reales ni QA responsive completo.
 
 ## Secuencia y criterios
 
@@ -111,7 +111,7 @@ Cupones persistentes server-only, código mayúsculo, constraints, CRUD Admin, a
 
 ## Próximo bloque exacto
 
-Publicar checkout demo + motion, activar `CHECKOUT_PROVIDER=demo` en Railway y ejecutar smoke sin datos reales de tarjeta. Después implementar un único motor determinístico de recomendaciones que compartan productos relacionados, quiz y configurador, según `PREMIUM_EXPANSION_AUDIT.md`.
+Publicar el registro demo sin email, motion cinematográfico y hardening adversarial; activar `DEMO_AUTO_CONFIRM_EMAIL=true` y ejecutar smoke de cuenta, homepage, API y reduced-motion. Después implementar un único motor determinístico de recomendaciones que compartan productos relacionados, quiz y configurador, según `PREMIUM_EXPANSION_AUDIT.md`.
 
 ## Expansión premium mapeada al roadmap
 

@@ -5,22 +5,31 @@
 ## Identidad
 
 - PROYECTO: DREAMS — ecommerce de perfumería con checkout preparado y consulta secundaria por WhatsApp.
-- REPO: `https://github.com/facumartea/drams.git`
-- RAMA DE TRABAJO: `codex/demo-checkout-premium-motion`, fusionada en `main` como `773fd8fa6269ceb02b4655c6f7956b19790991b6`.
-- PRS FUSIONADOS: [#1](https://github.com/facumartea/drams/pull/1), [#2](https://github.com/facumartea/drams/pull/2), [#3](https://github.com/facumartea/drams/pull/3), [#4](https://github.com/facumartea/drams/pull/4), [#5](https://github.com/facumartea/drams/pull/5), [#6](https://github.com/facumartea/drams/pull/6), [#7](https://github.com/facumartea/drams/pull/7) y [#8 — Add persistent checkout coupons and Comprar flow](https://github.com/facumartea/drams/pull/8).
-- HEAD EN `main`: `773fd8fa6269ceb02b4655c6f7956b19790991b6` (`Merge secure demo checkout and premium motion`).
-- PR: [#10 — Add secure demo checkout and premium motion](https://github.com/facumartea/drams/pull/10), fusionado.
+- REPO: `https://github.com/facumartea/dreams.git`
+- RAMA DE TRABAJO: `codex/demo-auth-cinematic-security`, preparada desde `main` `1b617d0f6a29fedb5c254f59887c53596cbccdd7`.
+- PRS FUSIONADOS: [#1](https://github.com/facumartea/dreams/pull/1), [#2](https://github.com/facumartea/dreams/pull/2), [#3](https://github.com/facumartea/dreams/pull/3), [#4](https://github.com/facumartea/dreams/pull/4), [#5](https://github.com/facumartea/dreams/pull/5), [#6](https://github.com/facumartea/dreams/pull/6), [#7](https://github.com/facumartea/dreams/pull/7) y [#8 — Add persistent checkout coupons and Comprar flow](https://github.com/facumartea/dreams/pull/8).
+- HEAD BASE EN `main`: `1b617d0f6a29fedb5c254f59887c53596cbccdd7` (`Merge demo checkout production checkpoint`).
+- PR: [#10 — Add secure demo checkout and premium motion](https://github.com/facumartea/dreams/pull/10), fusionado.
 - ÚLTIMO PUSH FUNCIONAL: `0dede4bcae63924fca031526041ac3d5a8f9bff9` en `codex/demo-checkout-premium-motion`.
 - ÚLTIMO CI VERIFICADO: GitHub Actions CI #30, SUCCESS sobre `0dede4bcae63924fca031526041ac3d5a8f9bff9`.
 - ÚLTIMO DEPLOY VERIFICADO: Railway `bfabd1dc-fdd6-4b75-a781-f1a496535df2`, SUCCESS sobre `773fd8fa6269ceb02b4655c6f7956b19790991b6`.
-- FASE ACTUAL: F18/F10/F13 — Checkout demo y motion premium; expansión específica auditada.
-- PROGRESO GENERAL: 72% ponderado (71,55% exacto según `PLAN.md`).
+- FASE ACTUAL: F1/F6/F10/F13 — Auth demo, motion cinematográfico y hardening adversarial.
+- PROGRESO GENERAL: 74% ponderado (73,55% exacto según `PLAN.md`).
 
 ## Porcentaje de todas las fases
 
-F0 100% · F1 70% · F2 85% · F3 84% · F4 78% · F5 62% · F6 74% · F7 50% · F8 75% · F9 84% · F10 95% · F11 72% · F12 72% · F13 38% · F14 15% · F15 84% · F16 76% · F17 0% · F18 76% · F19 70%.
+F0 100% · F1 78% · F2 85% · F3 84% · F4 78% · F5 62% · F6 82% · F7 50% · F8 75% · F9 84% · F10 97% · F11 72% · F12 74% · F13 45% · F14 15% · F15 88% · F16 78% · F17 0% · F18 78% · F19 70%.
 
 ## Último trabajo
+
+- Implementado registro demo inmediato mediante `DEMO_AUTO_CONFIRM_EMAIL=true`: alta server-side confirmada, rol `customer` forzado y sesión inmediata; no se cambian passwords, cookies, RLS ni permisos Admin.
+- Documentado rollback: variable en `false` y `Confirm email` habilitado en Supabase Auth antes de una tienda real.
+- Inspeccionada visualmente la referencia Xerjoff/Lamborghini; se reutilizó el motion existente y se añadieron entrada escalonada, parallax de scroll, reveal por bloque y desplazamiento editorial, sin copiar identidad ni assets.
+- Touch simplifica el movimiento y `prefers-reduced-motion` elimina parallax, mouse-follow, zoom y entradas no esenciales.
+- Auditoría adversarial: 0 críticos, 0 altos, 2 medios, 1 bajo y 2 informativos. Corregidos los tres hallazgos accionables; detalles en `SECURITY_ADVERSARIAL_2026-09-01.md`.
+- Supabase verificado `ACTIVE_HEALTHY`, siete tablas con RLS. Advisor: protección contra contraseñas filtradas desactivada (WARN); `orders`, `coupons` e `inquiries` server-only sin policies públicas (INFO intencional).
+- Verificación local: check de 25 JS, 58/58 tests y audit de producción sin vulnerabilidades conocidas.
+- PENDIENTE EN ESTE CHECKPOINT: push, CI, activar variable Railway, deploy y smoke público.
 
 - Implementado proveedor `demo` sin cobros ni credenciales, con estados aprobado/rechazado/pendiente/error y persistencia en `orders`.
 - Los campos ficticios de tarjeta se validan sólo en navegador; el servidor rechaza payloads con PAN/CVV/vencimiento y recibe únicamente `order_id` + escenario.
@@ -85,7 +94,7 @@ F0 100% · F1 70% · F2 85% · F3 84% · F4 78% · F5 62% · F6 74% · F7 50% ·
 - Confirmado que `/api/config` expone `admin_email`; debe dividirse en `CONTACT_EMAIL=facundo.martearena@dantebariloche.edu.ar` y un identificador Admin nunca público.
 - Inspeccionada la imagen aportada: 684×1020; el asset actual `dreams-bottle.png` mide sólo 185×272 y se amplía, causa directa de la baja calidad. Plan: recreación 2048×3072 y derivados responsivos.
 - Definida dirección para `Perfumes de mujer`: misma identidad negra/marfil/champagne, con rosa viejo/taupe cálido limitado a la cabecera editorial.
-- Railway confirma dominio único `drams-production.up.railway.app`; la documentación oficial permite renombrarlo. Se planificó transición a `dreams-perfumes.up.railway.app` si está disponible, con actualización previa de Supabase Auth y SEO.
+- Railway cambió el dominio histórico `drams-production.up.railway.app` por `dreams-perfumes.up.railway.app`; el servicio y el repositorio enlazado fueron verificados después del cambio.
 - Railway corrigió el estado histórico: deployment `bbc4aa7f-4d71-40d9-aa21-c6829a473f59` figura `SUCCESS`.
 
 - Prompt maestro de continuidad formalizado como regla permanente en `PROJECT_MASTER_RULES.md` y referenciado desde `AGENTS.md`; incluye recuperación de contexto, progreso verificable, reportes, Git/checkpoints, CI, deploy y veracidad.
@@ -170,7 +179,7 @@ F0 100% · F1 70% · F2 85% · F3 84% · F4 78% · F5 62% · F6 74% · F7 50% ·
 - Railway correcto: proyecto `empowering-rebirth` (`f375bb47-59c8-4cc1-b0d1-4d83ecae5780`).
 - Entorno: `production` (`39886077-e963-4fec-b3aa-b0e5d38908dd`).
 - Servicio: `drams` (`c5780bbd-4030-4319-a714-1bc0f564e353`).
-- Dominio: `https://drams-production.up.railway.app`.
+- Dominio: `https://dreams-perfumes.up.railway.app`.
 - Último deployment confirmado: `bfabd1dc-fdd6-4b75-a781-f1a496535df2`, SUCCESS sobre `773fd8fa6269ceb02b4655c6f7956b19790991b6`.
 - Variables nuevas verificadas por comportamiento: `CONTACT_EMAIL` y `APP_ORIGINS`.
 - El incidente histórico de cola congelada quedó resuelto; los deployments antiguos figuran removidos y no bloquean producción.

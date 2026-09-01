@@ -41,6 +41,7 @@ function render_account_forms(initial_message = '') {
             <button class="button button-dark account-submit" type="submit">Ingresar</button>
         </form>
         <form id="register-form" role="tabpanel" aria-labelledby="register-tab" hidden novalidate>
+            <p class="demo-auth-note"><strong>Modo demo:</strong> tu cuenta queda activa al instante; no necesitás confirmar el correo.</p>
             <div class="form-grid">
                 <div class="form-field full"><label for="register-name">Nombre</label><input id="register-name" name="name" autocomplete="name" maxlength="80" required></div>
                 <div class="form-field full"><label for="register-email">Correo electrónico</label><input id="register-email" name="email" type="email" autocomplete="email" inputmode="email" required></div>
