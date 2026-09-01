@@ -5,7 +5,7 @@
     const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
 
     function setup_reveals(root = document) {
-        const elements = root.querySelectorAll('.section-heading,.brand-statement,.split-banner>div,.split-banner>img,.about-preview>*,.page-intro>*,.checkout-layout>*,.review-compose>*,.product-card,.review-card,.detail-layout>*');
+        const elements = root.querySelectorAll('.section-heading,.brand-statement,.split-banner>div,.split-banner>img,.about-preview>*,.page-intro>*,.checkout-layout>*,.review-compose>*,.product-card,.review-card,.detail-layout>*,.scent-trail-header,.scent-step');
         if (reduced.matches || !('IntersectionObserver' in window)) {
             elements.forEach(element => element.classList.add('is-revealed'));
             return;
@@ -21,7 +21,7 @@
             if (element.dataset.motionReady) return;
             element.dataset.motionReady = 'true';
             element.classList.add('motion-reveal');
-            if (element.matches('.section-heading,.brand-statement,.page-intro,.split-banner>div')) element.classList.add('motion-heading');
+            if (element.matches('.section-heading,.brand-statement,.page-intro,.split-banner>div,.scent-trail-header')) element.classList.add('motion-heading');
             element.style.setProperty('--reveal-delay', `${Math.min(index % 4, 3) * 45}ms`);
             observer.observe(element);
         });
@@ -83,12 +83,16 @@
                 const y = ((event.clientY - box.top) / box.height - 0.5) * 2;
                 hero.style.setProperty('--depth-x', x.toFixed(3));
                 hero.style.setProperty('--depth-y', y.toFixed(3));
+                hero.style.setProperty('--hero-light-x', `${(58 + x * 8).toFixed(2)}%`);
+                hero.style.setProperty('--hero-light-y', `${(42 + y * 7).toFixed(2)}%`);
                 frame = 0;
             });
         }, { passive: true });
         hero.addEventListener('pointerleave', () => {
             hero.style.setProperty('--depth-x', '0');
             hero.style.setProperty('--depth-y', '0');
+            hero.style.setProperty('--hero-light-x', '58%');
+            hero.style.setProperty('--hero-light-y', '42%');
         }, { passive: true });
     }
 
