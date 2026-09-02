@@ -12,7 +12,7 @@ const valid_email = value => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) && value.l
 const delay = milliseconds => new Promise(resolve => setTimeout(resolve, milliseconds));
 const unsafe_methods = new Set(['POST', 'PUT', 'PATCH', 'DELETE']);
 
-const IMAGE_URL_ERROR = 'La URL ingresada no apunta a una imagen válida o el servidor no permite mostrarla.';
+const IMAGE_URL_ERROR = 'La URL ingresada no apunta a una imagen válida o el servidor no permite mostrarla. Usá una URL HTTPS directa.';
 
 function validate_product_image_url(value) {
     const image = String(value || '').trim();
