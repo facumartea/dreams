@@ -6,24 +6,29 @@
 
 - PROYECTO: DREAMS — ecommerce de perfumería con checkout preparado y consulta secundaria por WhatsApp.
 - REPO: `https://github.com/facumartea/dreams.git`
-- RAMA FUNCIONAL CERRADA: `codex/admin-category-repair`.
+- RAMA FUNCIONAL EN VALIDACIÓN: `codex/admin-image-url-preview`.
 - PRS FUSIONADOS: [#1](https://github.com/facumartea/dreams/pull/1), [#2](https://github.com/facumartea/dreams/pull/2), [#3](https://github.com/facumartea/dreams/pull/3), [#4](https://github.com/facumartea/dreams/pull/4), [#5](https://github.com/facumartea/dreams/pull/5), [#6](https://github.com/facumartea/dreams/pull/6), [#7](https://github.com/facumartea/dreams/pull/7) y [#8 — Add persistent checkout coupons and Comprar flow](https://github.com/facumartea/dreams/pull/8).
-- HEAD EN `main`: `edba64d8d4641c91e68e7b0d94165adc040e4482` (`Merge PR #19: repair Admin and category themes`).
-- HEAD FUNCIONAL: `1a0a1c8eb126b913776220d7650af6f7dfd34eee`; HEAD documental de PR #19: `030172930baea7540681b3ebf8604ce39c79d6ed`.
-- PR: [#19 — Repair Admin workflows and refine category themes](https://github.com/facumartea/dreams/pull/19), FUSIONADO.
-- ÚLTIMO PUSH: `030172930baea7540681b3ebf8604ce39c79d6ed` en `codex/admin-category-repair`.
-- ÚLTIMO CI VERIFICADO: GitHub Actions CI #50, SUCCESS sobre `030172930baea7540681b3ebf8604ce39c79d6ed`.
+- HEAD EN `main`: `c211045de2d1ebddd5bd4a14fe02e132be9dd966`.
+- HEAD FUNCIONAL: `2768bc102f9c187795b181c212779def33fb7517` en `codex/admin-image-url-preview`.
+- PR: [#24 — Fix Admin external product image URLs](https://github.com/facumartea/dreams/pull/24), ABIERTO; CI verde, fusión pendiente de autorización explícita.
+- ÚLTIMO PUSH: `2768bc102f9c187795b181c212779def33fb7517` en `codex/admin-image-url-preview`.
+- ÚLTIMO CI VERIFICADO: GitHub Actions CI #66, SUCCESS sobre `1fe2636dd98ff18464505224b355e8f9102bbbbf`; la documentación posterior requiere una nueva pasada.
 - ÚLTIMO PUSH FUNCIONAL: `70dafe332ca2fafd70d7201a5f1952583000b4cc` en `codex/demo-auth-cinematic-security`.
 - ÚLTIMO CI VERIFICADO: GitHub Actions CI #35, SUCCESS sobre `70dafe332ca2fafd70d7201a5f1952583000b4cc`.
-- ÚLTIMO DEPLOY VERIFICADO: Railway `fd40779b-1ad1-402d-9c60-9aba64a886f3`, SUCCESS sobre `edba64d8d4641c91e68e7b0d94165adc040e4482`.
-- FASE ACTUAL: F7/F11 — QA Admin autenticado y matriz responsive de las tres colecciones.
-- PROGRESO GENERAL: 77% ponderado (77,31% exacto según `PLAN.md`).
+- ÚLTIMO DEPLOY VERIFICADO: Railway `0bcd1e87-057f-43a8-9c46-b307f020942a`, SUCCESS sobre `c211045de2d1ebddd5bd4a14fe02e132be9dd966`; PR #24 todavía no está desplegado.
+- FASE ACTUAL: F7/F9 — validación y preview de imágenes externas en Admin.
+- PROGRESO GENERAL: 78% ponderado (77,55% exacto según `PLAN.md`).
 
 ## Porcentaje de todas las fases
 
-F0 100% · F1 80% · F2 87% · F3 88% · F4 78% · F5 78% · F6 82% · F7 72% · F8 75% · F9 90% · F10 99% · F11 75% · F12 78% · F13 47% · F14 15% · F15 92% · F16 79% · F17 0% · F18 82% · F19 70%.
+F0 100% · F1 80% · F2 87% · F3 88% · F4 78% · F5 78% · F6 82% · F7 74% · F8 75% · F9 91% · F10 99% · F11 75% · F12 78% · F13 47% · F14 15% · F15 93% · F16 79% · F17 0% · F18 82% · F19 70%.
 
 ## Último trabajo
+
+- Diagnosticado sin modificar productos reales: Supabase conserva `image_url`; el fallo era aceptar páginas Google, bloquear hosts por CSP y ocultar el error con el fallback DREAMS.
+- PR #24 agrega validación server-side de URL HTTPS directa, preview antes de guardar, bloqueo del submit si la imagen no carga, CSP compatible con imágenes HTTPS y fallback visible.
+- Regresión automatizada con DB en memoria: URL directa persiste exactamente; Google `/imgres` se rechaza y no sobrescribe el valor válido. CI #66: sintaxis, audit y 73/73 tests PASS.
+- La fusión de PR #24 fue detenida: requiere autorización explícita para mutar `main` y disparar Railway. Producción aún no contiene este cambio.
 
 - Causa real del falso `Producto no encontrado`: producción recibía IDs válidos y listaba las filas, pero las mutaciones se ejecutaban sin el JWT Admin contra RLS y afectaban cero filas. No era un bug del botón, del parámetro ni del tipo de ID.
 - Productos y opiniones Admin ahora usan un cliente Supabase vinculado al access token del usuario y policies que verifican `auth.uid()` + rol `admin`; usuarios normales continúan en 403 y no se desactivó RLS.
@@ -230,7 +235,7 @@ F0 100% · F1 80% · F2 87% · F3 88% · F4 78% · F5 78% · F6 82% · F7 72% ·
 - Entorno: `production` (`39886077-e963-4fec-b3aa-b0e5d38908dd`).
 - Servicio: `dreams` (`c5780bbd-4030-4319-a714-1bc0f564e353`).
 - Dominio: `https://dreams-perfumes.up.railway.app`.
-- Último deployment confirmado: `fd40779b-1ad1-402d-9c60-9aba64a886f3`, SUCCESS sobre `edba64d8d4641c91e68e7b0d94165adc040e4482`.
+- Último deployment confirmado: `0bcd1e87-057f-43a8-9c46-b307f020942a`, SUCCESS sobre `c211045de2d1ebddd5bd4a14fe02e132be9dd966`. PR #24 no está desplegado.
 - Variables verificadas/configuradas: `DEMO_AUTO_CONFIRM_EMAIL=true`, `APP_BASE_URL=https://dreams-perfumes.up.railway.app` y `APP_ORIGINS=https://dreams-perfumes.up.railway.app`.
 - El incidente histórico de cola congelada quedó resuelto; los deployments antiguos figuran removidos y no bloquean producción.
 - Smoke 2026-08-29 sobre PR #5: `/` 200 con `#review-form`; assets de opiniones 200; `/api/health` 200 con DB ok; `/api/reviews` 200; publicación anónima 401, sin datos falsos.
@@ -254,4 +259,4 @@ F0 100% · F1 80% · F2 87% · F3 88% · F4 78% · F5 78% · F6 82% · F7 72% ·
 
 ## Próxima acción exacta
 
-Realizar QA Admin autenticado no destructivo con una edición controlada y rollback, sin borrar productos ni opiniones reales; después completar la matriz visual 390×844, 430×932, 768×1024, 1024×768, 1440×900 y 1920×1080 para Hombre, Mujer y Unisex.
+Obtener autorización explícita para fusionar PR #24 en `main` y desplegarlo en Railway; después verificar en producción el preview con una URL directa y una URL inválida sin enviar el formulario ni modificar productos reales.
