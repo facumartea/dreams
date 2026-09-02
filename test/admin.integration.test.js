@@ -168,7 +168,7 @@ test('Admin conserva URLs HTTPS directas y rechaza páginas de resultados de Goo
             body: JSON.stringify(invalid)
         });
         assert.equal(rejected.status, 400);
-        assert.equal((await rejected.json()).error, 'La URL ingresada no apunta a una imagen válida o el servidor no permite mostrarla.');
+        assert.equal((await rejected.json()).error, 'La URL ingresada no apunta a una imagen válida o el servidor no permite mostrarla. Usá una URL HTTPS directa.');
         assert.equal(database.state.products[0].image_url, direct_url);
     });
 });
