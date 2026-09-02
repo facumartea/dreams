@@ -3,7 +3,7 @@ const assert = require('node:assert/strict');
 
 process.env.SUPABASE_URL = 'https://example.supabase.co';
 process.env.SUPABASE_SECRET_KEY = 'test-only-placeholder';
-const { app, validate, payload, order_number, database_health, auth_cookie, session, parse_id, normalize_cart_items, quote_cart, execute_database_query } = require('../server/server');
+const { app, validate, validate_product_image_url, IMAGE_URL_ERROR, payload, order_number, database_health, auth_cookie, session, parse_id, normalize_cart_items, quote_cart, execute_database_query } = require('../server/server');
 
 test('validación de producto rechaza números y URLs inseguros', () => {
     const valid = {
@@ -16,6 +16,21 @@ test('validación de producto rechaza números y URLs inseguros', () => {
     assert.match(validate({ ...valid, price: 'NaN' }), /válidos/);
     assert.match(validate({ ...valid, image_url: 'javascript:alert(1)' }), /HTTPS/);
     assert.equal(payload({ ...valid, brand: '  DREAMS  ' }).o.brand, 'DREAMS');
+});
+
+test('URLs de imagen no usan allowlist de Unsplash y bloquean entradas inseguras', () => {
+    assert.equal(validate_product_image_url('https://images.unsplash.com/photo-123?auto=format'), null);
+    assert.equal(validate_product_image_url('https://upload.wikimedia.org/wikipedia/commons/a/a9/Example.jpg'), null);
+    assert.equal(validate_product_image_url('https://cdn.example.com/assets/perfume.webp?width=900'), null);
+    assert.equal(validate_product_image_url('/assets/dreams-bottle.png'), null);
+    for (const value of [
+        'not-a-url',
+        'http://cdn.example.com/perfume.jpg',
+        'javascript:alert(1)',
+        'https://www.google.com/imgres?imgurl=https%3A%2F%2Fcdn.example.com%2Fperfume.jpg',
+        'https://google.com/search?tbm=isch&q=perfume',
+        'https://user:password@cdn.example.com/perfume.jpg'
+    ]) assert.equal(validate_product_image_url(value), IMAGE_URL_ERROR);
 });
 
 test('número de compra es estable y deriva del pedido persistido', () => {
