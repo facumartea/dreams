@@ -161,6 +161,8 @@ test('Admin expone pedidos y gestión persistente de opiniones', () => {
     assert.match(admin, /id="review-search"/);
     assert.match(script, /\/api\/admin\/reviews\/\$\{id\}/);
     assert.match(script, /with_pending/);
+    assert.match(script, /let editing_product_id = ''/);
+    assert.match(script, /function show_toast\\(message\\)/);
 });
 
 test('Hombre, Mujer y Unisex reutilizan tokens de card con paletas propias', () => {

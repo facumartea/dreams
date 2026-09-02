@@ -7,6 +7,7 @@ const migration = readFileSync(join(__dirname, '..', 'supabase', 'migrations', '
 const checkout_migration = readFileSync(join(__dirname, '..', 'supabase', 'migrations', '20260831024826_checkout_orders_and_coupons.sql'), 'utf8');
 const demo_checkout_migration = readFileSync(join(__dirname, '..', 'supabase', 'migrations', '20260831040000_enable_demo_checkout_provider.sql'), 'utf8');
 const admin_rls_migration = readFileSync(join(__dirname, '..', 'supabase', 'migrations', '20260901090000_admin_authenticated_policies.sql'), 'utf8');
+const admin_grants_migration = readFileSync(join(__dirname, '..', 'supabase', 'migrations', '20260902090000_admin_orders_coupons_grants.sql'), 'utf8');
 
 test('baseline mantiene RLS y restringe funciones privilegiadas', () => {
     for (const table of ['profiles', 'products', 'favorites', 'reviews', 'inquiries']) {
@@ -50,4 +51,13 @@ test('Admin usa RLS autenticado sin abrir permisos a anon', () => {
     for (const table of ['products', 'reviews', 'coupons']) assert.match(admin_rls_migration, new RegExp(`${table}_admin_`, 'i'));
     assert.doesNotMatch(admin_rls_migration, /disable row level security|grant all .* anon/i);
     assert.doesNotMatch(admin_rls_migration, /\bdrop\s+table\b|\btruncate\b|\bdelete\s+from\b/i);
+});
+
+
+test('Pedidos y cupones conceden sólo los privilegios Admin necesarios', () => {
+    assert.match(admin_grants_migration, /grant select on table public\\.orders to authenticated/i);
+    assert.match(admin_grants_migration, /grant select, insert, update, delete on table public\\.coupons to authenticated/i);
+    assert.match(admin_grants_migration, /grant usage, select on sequence public\\.coupons_id_seq to authenticated/i);
+    assert.doesNotMatch(admin_grants_migration, /\\bto anon\\b|disable row level security|grant all/i);
+    assert.doesNotMatch(admin_grants_migration, /\\bdrop\\s+table\\b|\\btruncate\\b|\\bdelete\\s+from\\b/i);
 });

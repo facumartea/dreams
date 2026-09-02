@@ -503,7 +503,7 @@ function create_app(options = {}) {
         const db = admin_database(request);
         const tables = ['products', 'profiles', 'inquiries', 'reviews'];
         const counts = await Promise.all(tables.map(async table => { const result = await db.from(table).select('*', { count: 'exact', head: true }); if (result.error) throw result.error; return result.count || 0; }));
-        const orders = await database.from('orders').select('*', { count: 'exact', head: true });
+        const orders = await db.from('orders').select('*', { count: 'exact', head: true });
         if (orders.error) throw orders.error;
         const low = await db.from('products').select('*', { count: 'exact', head: true }).lte('stock', 2);
         if (low.error) throw low.error;
@@ -552,12 +552,12 @@ function create_app(options = {}) {
         const deleted = fail_if(await admin_database(request).from('reviews').delete().eq('id', id).select('id').maybeSingle());
         return deleted ? response.json({ message: 'Opinión eliminada.' }) : response.status(404).json({ error: 'Opinión no encontrada.' });
     });
-    route('get', '/api/admin/orders', admin, async (request, response) => response.json(fail_if(await database.from('orders').select('id,user_id,provider,status,status_detail,currency,subtotal,discount,total,coupon_code,items,created_at,paid_at').order('created_at', { ascending: false }).limit(100)).map(value => ({ ...value, order_number: order_number(value) }))));
-    route('get', '/api/admin/coupons', admin, async (request, response) => response.json(fail_if(await database.from('coupons').select('id,code,discount_percent,active,created_at,updated_at').order('created_at', { ascending: false }))));
+    route('get', '/api/admin/orders', admin, async (request, response) => response.json(fail_if(await admin_database(request).from('orders').select('id,user_id,provider,status,status_detail,currency,subtotal,discount,total,coupon_code,items,created_at,paid_at').order('created_at', { ascending: false }).limit(100)).map(value => ({ ...value, order_number: order_number(value) }))));
+    route('get', '/api/admin/coupons', admin, async (request, response) => response.json(fail_if(await admin_database(request).from('coupons').select('id,code,discount_percent,active,created_at,updated_at').order('created_at', { ascending: false }))));
     route('post', '/api/admin/coupons', admin, async (request, response) => {
         const parsed = coupon_payload(request.body);
         if (parsed.error) return response.status(400).json({ error: parsed.error });
-        const db = database;
+        const db = admin_database(request);
         const existing = fail_if(await db.from('coupons').select('id').eq('code', parsed.data.code).maybeSingle());
         if (existing) return response.status(409).json({ error: 'Ya existe un cupón con ese código.' });
         const created = fail_if(await db.from('coupons').insert(parsed.data).select('id,code,discount_percent,active,created_at,updated_at').single());
@@ -568,7 +568,7 @@ function create_app(options = {}) {
         if (!id) return response.status(400).json({ error: 'ID de cupón inválido.' });
         const parsed = coupon_payload(request.body);
         if (parsed.error) return response.status(400).json({ error: parsed.error });
-        const db = database;
+        const db = admin_database(request);
         const existing = fail_if(await db.from('coupons').select('id').eq('code', parsed.data.code).neq('id', id).maybeSingle());
         if (existing) return response.status(409).json({ error: 'Ya existe un cupón con ese código.' });
         const updated = fail_if(await db.from('coupons').update(parsed.data).eq('id', id).select('id,code,discount_percent,active,created_at,updated_at').maybeSingle());
@@ -577,7 +577,7 @@ function create_app(options = {}) {
     route('delete', '/api/admin/coupons/:id', admin, async (request, response) => {
         const id = parse_id(request.params.id);
         if (!id) return response.status(400).json({ error: 'ID de cupón inválido.' });
-        const deleted = fail_if(await database.from('coupons').delete().eq('id', id).select('id').maybeSingle());
+        const deleted = fail_if(await admin_database(request).from('coupons').delete().eq('id', id).select('id').maybeSingle());
         return deleted ? response.json({ message: 'Cupón eliminado.' }) : response.status(404).json({ error: 'Cupón no encontrado.' });
     });
     route('get', ['/admin', '/admin.html'], admin, async (request, response) => response.sendFile(path.join(views_directory, 'admin.html')));
