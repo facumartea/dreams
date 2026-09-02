@@ -190,4 +190,6 @@ test('Admin valida y previsualiza la URL directa antes de guardar', () => {
     assert.match(script, /La URL ingresada no apunta a una imagen válida/);
     assert.match(server, /validate_product_image_url/);
     assert.match(server, /imgSrc: \["'self'", 'data:', 'https:'\]/);
+    assert.doesNotMatch(server, /imgSrc:[^\n]*images\.unsplash\.com/);
+    assert.doesNotMatch(script, /images\.unsplash\.com/);
 });
