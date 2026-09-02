@@ -1,5 +1,14 @@
 # Changelog
 
+### 2026-09-02 — URLs externas de imagen en Admin
+
+- Confirmado sin mutar productos reales que `image_url` sí se persistía; el fallo era de validación/renderizado: se aceptaban páginas de resultados de Google, CSP sólo permitía Unsplash y el error se reemplazaba silenciosamente por el fallback DREAMS.
+- El backend conserva rutas locales y URLs HTTPS directas, rechaza páginas `/imgres`/`/search` de Google y devuelve un error claro. No realiza fetch server-side de URLs externas, evitando SSRF.
+- Admin incorpora preview real antes de guardar, deshabilita Guardar mientras la imagen no carga y usa `referrerpolicy=no-referrer` para reducir bloqueos de hotlink.
+- CSP permite imágenes HTTPS externas; el fallback público continúa protegiendo el layout pero ahora muestra `Imagen no disponible` en vez de ocultar el fallo.
+- Regresiones: URL directa persiste exactamente, URL de resultados se rechaza sin sobrescribir el valor válido y contrato UI del preview. CI #66: 73/73 PASS; sintaxis y audit PASS.
+- PR #24 abierto sobre `codex/admin-image-url-preview`. La fusión y el deploy quedan pendientes de autorización explícita.
+
 ### 2026-09-01 — Reparación Admin y variantes premium por categoría
 
 - Diagnosticado con evidencia de Railway que `PUT`/`DELETE /api/admin/products/:id` recibían IDs válidos pero devolvían un falso 404; los productos seguían existiendo en Supabase.
