@@ -55,9 +55,9 @@ test('Admin usa RLS autenticado sin abrir permisos a anon', () => {
 
 
 test('Pedidos y cupones conceden sólo los privilegios Admin necesarios', () => {
-    assert.match(admin_grants_migration, /grant select on table public\\.orders to authenticated/i);
-    assert.match(admin_grants_migration, /grant select, insert, update, delete on table public\\.coupons to authenticated/i);
-    assert.match(admin_grants_migration, /grant usage, select on sequence public\\.coupons_id_seq to authenticated/i);
-    assert.doesNotMatch(admin_grants_migration, /\\bto anon\\b|disable row level security|grant all/i);
-    assert.doesNotMatch(admin_grants_migration, /\\bdrop\\s+table\\b|\\btruncate\\b|\\bdelete\\s+from\\b/i);
+    assert.match(admin_grants_migration, /grant select on table public\.orders to authenticated/i);
+    assert.match(admin_grants_migration, /grant select, insert, update, delete on table public\.coupons to authenticated/i);
+    assert.match(admin_grants_migration, /grant usage, select on sequence public\.coupons_id_seq to authenticated/i);
+    assert.doesNotMatch(admin_grants_migration, /\bto anon\b|disable row level security|grant all/i);
+    assert.doesNotMatch(admin_grants_migration, /\bdrop\s+table\b|\btruncate\b|\bdelete\s+from\b/i);
 });
