@@ -12,6 +12,22 @@ const valid_email = value => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) && value.l
 const delay = milliseconds => new Promise(resolve => setTimeout(resolve, milliseconds));
 const unsafe_methods = new Set(['POST', 'PUT', 'PATCH', 'DELETE']);
 
+const IMAGE_URL_ERROR = 'La URL ingresada no apunta a una imagen válida o el servidor no permite mostrarla. Usá una URL HTTPS directa.';
+
+function validate_product_image_url(value) {
+    const image = String(value || '').trim();
+    if (/^\/(?!\/)/.test(image)) return null;
+    try {
+        const parsed = new URL(image);
+        const hostname = parsed.hostname.toLowerCase();
+        const google_page = /(^|\.)google\.[a-z.]+$/.test(hostname) && ['/imgres', '/search'].includes(parsed.pathname);
+        if (parsed.protocol !== 'https:' || parsed.username || parsed.password || google_page) return IMAGE_URL_ERROR;
+        return null;
+    } catch (error) {
+        return IMAGE_URL_ERROR;
+    }
+}
+
 function normalize_origin(value) {
     try {
         const parsed = new URL(String(value || '').trim());
@@ -160,8 +176,8 @@ function validate(value) {
     if (!Number.isSafeInteger(size) || size <= 0 || !Number.isFinite(price) || price < 0 || !Number.isSafeInteger(stock) || stock < 0 || !Number.isSafeInteger(intensity) || intensity < 1 || intensity > 5) return 'Precio, stock, tamaño e intensidad deben ser válidos.';
     const limits = { brand: 120, name: 160, family: 200, top_notes: 500, heart_notes: 500, base_notes: 500, description: 2000, image_url: 2000 };
     if (Object.entries(limits).some(([key, limit]) => String(value[key]).trim().length > limit)) return 'Uno o más campos superan la longitud permitida.';
-    const image = String(value.image_url).trim();
-    if (!image.startsWith('/') && !/^https:\/\//i.test(image)) return 'La imagen debe usar una ruta local o una URL HTTPS.';
+    const image_error = validate_product_image_url(value.image_url);
+    if (image_error) return image_error;
 }
 
 function payload(value) {
@@ -230,7 +246,7 @@ function create_app(options = {}) {
     const views_directory = options.views_directory || path.join(__dirname, '..', 'views');
     const app = express();
     const async_route = handler => (request, response, next) => Promise.resolve(handler(request, response, next)).catch(next);
-    const content_security_policy = { directives: { defaultSrc: ["'self'"], scriptSrc: ["'self'"], styleSrc: ["'self'", 'https://fonts.googleapis.com'], fontSrc: ["'self'", 'https://fonts.gstatic.com'], imgSrc: ["'self'", 'data:', 'https://images.unsplash.com'], connectSrc: ["'self'"], objectSrc: ["'none'"], baseUri: ["'self'"], formAction: ["'self'"], frameAncestors: ["'none'"], upgradeInsecureRequests: production ? [] : null } };
+    const content_security_policy = { directives: { defaultSrc: ["'self'"], scriptSrc: ["'self'"], styleSrc: ["'self'", 'https://fonts.googleapis.com'], fontSrc: ["'self'", 'https://fonts.gstatic.com'], imgSrc: ["'self'", 'data:', 'https:'], connectSrc: ["'self'"], objectSrc: ["'none'"], baseUri: ["'self'"], formAction: ["'self'"], frameAncestors: ["'none'"], upgradeInsecureRequests: production ? [] : null } };
 
     app.set('trust proxy', 1);
     app.use(helmet({ contentSecurityPolicy: content_security_policy, crossOriginEmbedderPolicy: false }));
@@ -580,7 +596,7 @@ function create_app(options = {}) {
         const deleted = fail_if(await admin_database(request).from('coupons').delete().eq('id', id).select('id').maybeSingle());
         return deleted ? response.json({ message: 'Cupón eliminado.' }) : response.status(404).json({ error: 'Cupón no encontrado.' });
     });
-    route('get', '/js/admin-93e536d.js', async (request, response) => response.sendFile(path.join(public_directory, 'js', 'admin.js')));
+    route('get', '/js/admin-image-preview.js', async (request, response) => response.sendFile(path.join(public_directory, 'js', 'admin.js')));
     route('get', ['/admin', '/admin.html'], admin, async (request, response) => response.sendFile(path.join(views_directory, 'admin.html')));
     route('get', ['/favoritos', '/favoritos.html'], async (request, response) => response.redirect(301, '/catalogo.html'));
     route('get', '/api/health', async (request, response) => {
@@ -602,4 +618,4 @@ function create_app(options = {}) {
     return app;
 }
 
-module.exports = { create_app, validate, payload, coupon_payload, review_payload, normalize_coupon_code, discounted_totals, resolve_coupon, order_number, database_health, auth_cookie, session, parse_id, normalize_cart_items, quote_cart, execute_database_query, normalize_origin, allowed_origin_set, mutation_origin_guard, GENERIC_ERROR };
+module.exports = { create_app, validate, validate_product_image_url, IMAGE_URL_ERROR, payload, coupon_payload, review_payload, normalize_coupon_code, discounted_totals, resolve_coupon, order_number, database_health, auth_cookie, session, parse_id, normalize_cart_items, quote_cart, execute_database_query, normalize_origin, allowed_origin_set, mutation_origin_guard, GENERIC_ERROR };

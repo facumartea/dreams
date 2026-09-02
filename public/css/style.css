@@ -202,3 +202,17 @@ input,select,textarea{width:100%;min-height:48px;padding:.78rem 0;border:0;borde
 @media(min-width:921px){.hero{height:calc(100svh - 78px);min-height:660px}.hero-copy,.hero-image{min-height:0}.hero-image{height:100%}}
 @media(max-width:720px){.scent-trail-header{grid-template-columns:1fr}.notes-grid{grid-template-columns:1fr;border-top:0}.notes-grid::before{top:0;bottom:0;left:3px;width:1px;height:auto;transform:scaleY(var(--trail-progress,1));transform-origin:top}.note-block,.note-block:first-child{padding:var(--s4) 0 var(--s4) var(--s5);border-right:0;border-bottom:1px solid var(--border)}.note-block::before,.note-block:first-child::before{top:1.75rem;left:0}.motion-ready .hero .hero-copy{transform:none}.motion-ready .hero .hero-image img{transform:translate3d(0,var(--hero-shift),0) scale(1.015)}}
 @media(prefers-reduced-motion:reduce){.hero-image::before{display:none}.motion-ready .hero-entry,.motion-ready.motion-entered .hero-entry,.motion-ready .motion-heading,.motion-ready .motion-heading.is-revealed{opacity:1;clip-path:none;transform:none;transition:none}.motion-ready .hero .hero-image img,.motion-ready .detail-layout .detail-image{will-change:auto;transform:none!important;transition:none}}
+
+
+/* Admin product image validation */
+.admin-image-preview{display:grid;place-items:center;gap:var(--s3);min-height:260px;margin:0 0 var(--s4);padding:var(--s4);border:1px solid var(--border);background:var(--surface);text-align:center}
+.admin-image-preview[hidden]{display:none}
+.admin-image-preview img{display:block;width:100%;max-width:320px;height:220px;object-fit:contain;background:var(--ivory)}
+.admin-image-preview p{min-height:1.25rem;margin:0;color:var(--muted);font-size:.72rem;line-height:1.5}
+.admin-image-preview[data-state="valid"]{border-color:rgba(106,159,127,.48)}
+.admin-image-preview[data-state="valid"] p{color:var(--success)}
+.admin-image-preview[data-state="invalid"]{border-color:rgba(196,91,91,.5)}
+.admin-image-preview[data-state="invalid"] p{color:var(--danger)}
+.image-load-error{position:absolute;right:.55rem;bottom:.55rem;z-index:2;padding:.28rem .45rem;background:rgba(11,11,11,.86);color:var(--ivory);font-size:.58rem;letter-spacing:.08em;text-transform:uppercase}
+.product-image:has(.image-load-error),.detail-image:has(.image-load-error){position:relative}
+@media(max-width:520px){.admin-image-preview{min-height:220px;padding:var(--s3)}.admin-image-preview img{height:180px}}

@@ -173,3 +173,23 @@ test('Hombre, Mujer y Unisex reutilizan tokens de card con paletas propias', () 
     assert.match(css, /\.collection-unisex\{[^}]*--collection-page:#24221f[^}]*--collection-card:#d8d0c4/);
     assert.match(css, /\.collection-men \.page-intro h1\{font-weight:600/);
 });
+
+
+test('Admin valida y previsualiza la URL directa antes de guardar', () => {
+    const admin = fs.readFileSync(path.join(root, 'views/admin.html'), 'utf8');
+    const script = fs.readFileSync(path.join(root, 'public/js/admin.js'), 'utf8');
+    const server = fs.readFileSync(path.join(root, 'server/app.js'), 'utf8');
+    assert.match(admin, /id="image-preview"/);
+    assert.match(admin, /id="image-preview-image"/);
+    assert.match(admin, /referrerpolicy="no-referrer"/);
+    assert.match(admin, /\/js\/admin-image-preview\.js/);
+    assert.match(script, /preview_product_image/);
+    assert.match(script, /image\.onload/);
+    assert.match(script, /image\.onerror/);
+    assert.match(script, /product_image_preview_state !== 'valid'/);
+    assert.match(script, /La URL ingresada no apunta a una imagen válida/);
+    assert.match(server, /validate_product_image_url/);
+    assert.match(server, /imgSrc: \["'self'", 'data:', 'https:'\]/);
+    assert.doesNotMatch(server, /imgSrc:[^\n]*images\.unsplash\.com/);
+    assert.doesNotMatch(script, /images\.unsplash\.com/);
+});
