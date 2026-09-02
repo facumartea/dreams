@@ -9,10 +9,10 @@
 - RAMA FUNCIONAL EN VALIDACIÓN: `codex/admin-image-url-preview`.
 - PRS FUSIONADOS: [#1](https://github.com/facumartea/dreams/pull/1), [#2](https://github.com/facumartea/dreams/pull/2), [#3](https://github.com/facumartea/dreams/pull/3), [#4](https://github.com/facumartea/dreams/pull/4), [#5](https://github.com/facumartea/dreams/pull/5), [#6](https://github.com/facumartea/dreams/pull/6), [#7](https://github.com/facumartea/dreams/pull/7) y [#8 — Add persistent checkout coupons and Comprar flow](https://github.com/facumartea/dreams/pull/8).
 - HEAD EN `main`: `c211045de2d1ebddd5bd4a14fe02e132be9dd966`.
-- HEAD FUNCIONAL: `2768bc102f9c187795b181c212779def33fb7517` en `codex/admin-image-url-preview`.
+- HEAD FUNCIONAL: `1fe2636dd98ff18464505224b355e8f9102bbbbf`; checkpoint documental verificado: `24cfe3d22e3ecbe0af2eb76d76ed9259f91f10a1`.
 - PR: [#24 — Fix Admin external product image URLs](https://github.com/facumartea/dreams/pull/24), ABIERTO; CI verde, fusión pendiente de autorización explícita.
-- ÚLTIMO PUSH: `2768bc102f9c187795b181c212779def33fb7517` en `codex/admin-image-url-preview`.
-- ÚLTIMO CI VERIFICADO: GitHub Actions CI #66, SUCCESS sobre `1fe2636dd98ff18464505224b355e8f9102bbbbf`; la documentación posterior requiere una nueva pasada.
+- ÚLTIMO PUSH VERIFICADO: `24cfe3d22e3ecbe0af2eb76d76ed9259f91f10a1` en `codex/admin-image-url-preview`.
+- ÚLTIMO CI VERIFICADO: GitHub Actions CI #69, SUCCESS sobre `24cfe3d22e3ecbe0af2eb76d76ed9259f91f10a1`.
 - ÚLTIMO PUSH FUNCIONAL: `70dafe332ca2fafd70d7201a5f1952583000b4cc` en `codex/demo-auth-cinematic-security`.
 - ÚLTIMO CI VERIFICADO: GitHub Actions CI #35, SUCCESS sobre `70dafe332ca2fafd70d7201a5f1952583000b4cc`.
 - ÚLTIMO DEPLOY VERIFICADO: Railway `0bcd1e87-057f-43a8-9c46-b307f020942a`, SUCCESS sobre `c211045de2d1ebddd5bd4a14fe02e132be9dd966`; PR #24 todavía no está desplegado.
