@@ -7,7 +7,7 @@ let editing_product_id = '';
 let product_image_preview_state = 'empty';
 let product_image_preview_token = 0;
 let product_image_preview_timer;
-const IMAGE_URL_ERROR = 'La URL ingresada no apunta a una imagen válida o el servidor no permite mostrarla.';
+const IMAGE_URL_ERROR = 'La URL ingresada no apunta a una imagen válida o el servidor no permite mostrarla. Usá una URL HTTPS directa.';
 
 function show_toast(message) {
     document.querySelector('.toast')?.remove();
