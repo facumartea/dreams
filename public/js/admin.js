@@ -7,6 +7,7 @@ let editing_product_id = '';
 let product_image_preview_state = 'empty';
 let product_image_preview_token = 0;
 let product_image_preview_timer;
+let product_image_load_timer;
 const IMAGE_URL_ERROR = 'La URL ingresada no apunta a una imagen válida o el servidor no permite mostrarla. Usá una URL HTTPS directa.';
 
 function show_toast(message) {
@@ -106,6 +107,7 @@ function is_supported_image_url(value) {
 
 function set_product_image_preview(state, message = '') {
     product_image_preview_state = state;
+    if (state !== 'pending') window.clearTimeout(product_image_load_timer);
     const panel = document.getElementById('image-preview');
     const image = document.getElementById('image-preview-image');
     const status = document.getElementById('image-preview-message');
@@ -119,6 +121,7 @@ function set_product_image_preview(state, message = '') {
 
 function preview_product_image() {
     window.clearTimeout(product_image_preview_timer);
+    window.clearTimeout(product_image_load_timer);
     const candidate = document.getElementById('image_url').value.trim();
     const image = document.getElementById('image-preview-image');
     const token = ++product_image_preview_token;
@@ -132,12 +135,17 @@ function preview_product_image() {
     }
     set_product_image_preview('pending', 'Comprobando imagen…');
     image.onload = () => {
+        window.clearTimeout(product_image_load_timer);
         if (token === product_image_preview_token) set_product_image_preview('valid', 'Vista previa lista.');
     };
     image.onerror = () => {
+        window.clearTimeout(product_image_load_timer);
         if (token === product_image_preview_token) set_product_image_preview('invalid', IMAGE_URL_ERROR);
     };
     image.src = candidate;
+    product_image_load_timer = window.setTimeout(() => {
+        if (token === product_image_preview_token) set_product_image_preview('invalid', IMAGE_URL_ERROR);
+    }, 6000);
 }
 
 function schedule_product_image_preview() {
@@ -189,6 +197,7 @@ function reset_form() {
     document.getElementById('admin-message').textContent = '';
     product_image_preview_token += 1;
     window.clearTimeout(product_image_preview_timer);
+    window.clearTimeout(product_image_load_timer);
     set_product_image_preview('empty');
 }
 

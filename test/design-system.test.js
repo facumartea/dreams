@@ -182,11 +182,13 @@ test('Admin valida y previsualiza la URL directa antes de guardar', () => {
     assert.match(admin, /id="image-preview"/);
     assert.match(admin, /id="image-preview-image"/);
     assert.match(admin, /referrerpolicy="no-referrer"/);
-    assert.match(admin, /\/js\/admin-image-preview\.js/);
+    assert.match(admin, /\/js\/admin-image-preview-v2\.js/);
     assert.match(script, /preview_product_image/);
     assert.match(script, /image\.onload/);
     assert.match(script, /image\.onerror/);
     assert.match(script, /product_image_preview_state !== 'valid'/);
+    assert.match(script, /product_image_load_timer/);
+    assert.match(script, /}, 6000\);/);
     assert.match(script, /La URL ingresada no apunta a una imagen válida/);
     assert.match(server, /validate_product_image_url/);
     assert.match(server, /imgSrc: \["'self'", 'data:', 'https:'\]/);
