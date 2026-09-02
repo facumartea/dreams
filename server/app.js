@@ -12,6 +12,22 @@ const valid_email = value => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) && value.l
 const delay = milliseconds => new Promise(resolve => setTimeout(resolve, milliseconds));
 const unsafe_methods = new Set(['POST', 'PUT', 'PATCH', 'DELETE']);
 
+const IMAGE_URL_ERROR = 'La URL ingresada no apunta a una imagen válida o el servidor no permite mostrarla.';
+
+function validate_product_image_url(value) {
+    const image = String(value || '').trim();
+    if (/^\/(?!\/)/.test(image)) return null;
+    try {
+        const parsed = new URL(image);
+        const hostname = parsed.hostname.toLowerCase();
+        const google_page = /(^|\.)google\.[a-z.]+$/.test(hostname) && ['/imgres', '/search'].includes(parsed.pathname);
+        if (parsed.protocol !== 'https:' || parsed.username || parsed.password || google_page) return IMAGE_URL_ERROR;
+        return null;
+    } catch (error) {
+        return IMAGE_URL_ERROR;
+    }
+}
+
 function normalize_origin(value) {
     try {
         const parsed = new URL(String(value || '').trim());
