@@ -123,3 +123,22 @@ test('Admin edita y elimina opiniones persistentes', async () => {
         assert.equal(database.state.reviews.length, 0);
     });
 });
+
+
+test('Pedidos y cupones Admin usan el cliente JWT y no la conexión global', async () => {
+    const server_database = memory_database();
+    const original_from = server_database.from.bind(server_database);
+    server_database.from = table => {
+        if (table === 'orders' || table === 'coupons') throw new Error('La conexión global no debe consultar tablas Admin.');
+        return original_from(table);
+    };
+    const authenticated_database = memory_database();
+    await serve(create_app({ database: server_database, create_auth_client: () => authenticated_database, disable_request_log: true }), async base => {
+        const orders = await fetch(`${base}/api/admin/orders`, admin_options(base));
+        const coupons = await fetch(`${base}/api/admin/coupons`, admin_options(base));
+        assert.equal(orders.status, 200);
+        assert.equal(coupons.status, 200);
+        assert.deepEqual(await orders.json(), []);
+        assert.deepEqual(await coupons.json(), []);
+    });
+});

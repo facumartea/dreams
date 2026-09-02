@@ -3,6 +3,18 @@ function format_price(value) { return new Intl.NumberFormat('es-AR', { style: 'c
 let admin_products = [];
 let admin_coupons = [];
 let admin_reviews = [];
+let editing_product_id = '';
+
+function show_toast(message) {
+    document.querySelector('.toast')?.remove();
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.setAttribute('role', 'status');
+    toast.setAttribute('aria-live', 'polite');
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    window.setTimeout(() => toast.remove(), 3200);
+}
 
 async function admin_fetch(url, options = {}) {
     const response = await fetch(url, options);
@@ -66,8 +78,9 @@ function render_admin_products() {
 }
 
 function fill_form(product) {
+    editing_product_id = String(product.id);
     document.getElementById('form-label').textContent = `EDITAR PRODUCTO #${product.id}`;
-    document.getElementById('product-id').value = product.id;
+    document.getElementById('product-id').value = editing_product_id;
     for (const key of ['brand','name','gender','category','size_ml','price','stock','intensity','family','top_notes','heart_notes','base_notes','description','image_url']) document.getElementById(key).value = product[key];
     document.getElementById('featured').checked = product.featured;
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -83,7 +96,7 @@ function get_form_data() {
 async function save_product(event) {
     event.preventDefault();
     const submit = event.submitter || event.currentTarget.querySelector('[type="submit"]');
-    const id = document.getElementById('product-id').value;
+    const id = editing_product_id || document.getElementById('product-id').value;
     const url = id ? `/api/admin/products/${id}` : '/api/admin/products';
     const method = id ? 'PUT' : 'POST';
     await with_pending(submit, 'Guardando…', async () => {
@@ -103,7 +116,13 @@ async function delete_product(id, button) {
     });
 }
 
-function reset_form() { document.getElementById('product-form').reset(); document.getElementById('product-id').value = ''; document.getElementById('form-label').textContent = 'NUEVO PRODUCTO'; }
+function reset_form() {
+    editing_product_id = '';
+    document.getElementById('product-form').reset();
+    document.getElementById('product-id').value = '';
+    document.getElementById('form-label').textContent = 'NUEVO PRODUCTO';
+    document.getElementById('admin-message').textContent = '';
+}
 
 async function load_users() {
     const users = await admin_fetch('/api/admin/users');
