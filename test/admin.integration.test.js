@@ -142,3 +142,33 @@ test('Pedidos y cupones Admin usan el cliente JWT y no la conexión global', asy
         assert.deepEqual(await coupons.json(), []);
     });
 });
+
+
+test('Admin conserva URLs HTTPS directas y rechaza páginas de resultados de Google', async () => {
+    const database = memory_database();
+    const app = create_app({ database, create_auth_client: () => database, disable_request_log: true });
+    await serve(app, async base => {
+        const direct_url = 'https://cdn.example.com/perfumes/dreams.webp';
+        const valid = { ...product_data('Imagen externa'), image_url: direct_url };
+        const updated = await fetch(`${base}/api/admin/products/7`, {
+            ...admin_options(base),
+            method: 'PUT',
+            headers: { ...admin_options(base).headers, 'Content-Type': 'application/json' },
+            body: JSON.stringify(valid)
+        });
+        assert.equal(updated.status, 200);
+        assert.equal((await updated.json()).image_url, direct_url);
+        assert.equal(database.state.products[0].image_url, direct_url);
+
+        const invalid = { ...valid, image_url: 'https://www.google.com/imgres?imgurl=https%3A%2F%2Fcdn.example.com%2Fperfume.jpg' };
+        const rejected = await fetch(`${base}/api/admin/products/7`, {
+            ...admin_options(base),
+            method: 'PUT',
+            headers: { ...admin_options(base).headers, 'Content-Type': 'application/json' },
+            body: JSON.stringify(invalid)
+        });
+        assert.equal(rejected.status, 400);
+        assert.equal((await rejected.json()).error, 'La URL ingresada no apunta a una imagen válida o el servidor no permite mostrarla.');
+        assert.equal(database.state.products[0].image_url, direct_url);
+    });
+});
