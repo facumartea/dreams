@@ -6,8 +6,11 @@
 - El backend conserva rutas locales y URLs HTTPS directas, rechaza páginas `/imgres`/`/search` de Google y devuelve un error claro. No realiza fetch server-side de URLs externas, evitando SSRF.
 - Admin incorpora preview real antes de guardar, deshabilita Guardar mientras la imagen no carga y usa `referrerpolicy=no-referrer` para reducir bloqueos de hotlink.
 - CSP permite imágenes HTTPS externas; el fallback público continúa protegiendo el layout pero ahora muestra `Imagen no disponible` en vez de ocultar el fallo.
-- Regresiones: URL directa persiste exactamente, URL de resultados se rechaza sin sobrescribir el valor válido y contrato UI del preview. CI #66: 73/73 PASS; sintaxis y audit PASS.
-- PR #24 abierto sobre `codex/admin-image-url-preview`. La fusión y el deploy quedan pendientes de autorización explícita.
+- PR #24 pasó CI #72, fue fusionado como `e94714d2c871a64d3355be624d8ea13572b4e9dc` y Railway desplegó `640a3233-10fb-49ee-8f10-456c0e96530c` con estado SUCCESS.
+- El primer smoke de producción validó Unsplash, Wikimedia, URL inválida, página HTML y Google Images sin enviar el formulario. También reveló que un host que bloqueaba hotlinking podía dejar el preview indefinidamente en `Comprobando imagen…`.
+- PR #25 añadió un timeout fail-closed de 6 segundos, mantuvo Guardar desactivado ante hosts lentos/bloqueados y versionó el asset Admin para evitar caché. CI #74 pasó y se fusionó como `89d795ce4d9477719e1cda4aac2e6f2221a377d2`.
+- Railway desplegó el merge exacto en `3011a2d6-4f75-4a90-bba3-81012d9c1e50` con estado SUCCESS.
+- Smoke final de seis casos: Unsplash y Wikimedia directas válidas; texto inválido, HTML, Google `/imgres` y servidor 403/bloqueado rechazados con mensaje claro. No se guardó ni modificó ningún producto real.
 
 ### 2026-09-01 — Reparación Admin y variantes premium por categoría
 
