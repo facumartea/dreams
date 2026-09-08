@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /cuenta.html
+Disallow: /carrito.html
+Disallow: /checkout.html
+Disallow: /checkout-resultado.html
+
+Sitemap: https://dreams-perfumes.up.railway.app/sitemap.xml

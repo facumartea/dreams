@@ -1,5 +1,13 @@
 # Changelog
 
+### 2026-09-08 — Base SEO técnica y 404 real
+
+- Añadidas descripciones, canonical y OpenGraph a las páginas públicas indexables del dominio `dreams-perfumes.up.railway.app`.
+- Catálogo y producto actualizan título, descripción, canonical y OpenGraph con la colección o el producto real, sin modificar datos ni interfaz.
+- Añadidos `robots.txt` y `sitemap.xml`; cuenta, carrito, checkout, resultados y Admin quedan fuera de indexación.
+- Las rutas web inexistentes ahora responden HTTP 404 con una página DREAMS dedicada; ya no devuelven silenciosamente la portada con 200.
+- Verificación local: sintaxis de 26 JavaScript, 76/76 tests y audit de producción sin vulnerabilidades conocidas. CI/deploy pendientes.
+
 ### 2026-09-08 — QA Admin autenticado y renovación segura del bundle
 
 - QA autenticado no destructivo en producción confirmó dashboard, 30 productos y carga del formulario de edición para un ID real sin el antiguo `Producto no encontrado`.

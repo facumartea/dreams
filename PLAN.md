@@ -18,14 +18,14 @@ Porcentajes recalibrados el 2026-08-31 al sumar cupones y mantener los pesos en 
 | F11 | Responsive verificado | 4% | 75% |
 | F12 | Accesibilidad | 4% | 78% |
 | F13 | Performance | 4% | 47% |
-| F14 | SEO y descubribilidad | 3% | 15% |
-| F15 | Testing y CI | 7% | 94% |
+| F14 | SEO y descubribilidad | 3% | 65% |
+| F15 | Testing y CI | 7% | 95% |
 | F16 | Producción, dominio, deploy y observabilidad | 4% | 81% |
 | F17 | QA final de punta a punta | 3% | 0% |
 | F18 | Checkout Sandbox, pedidos y pagos | 4% | 82% |
 | F19 | Cupones: datos, API, Admin, checkout y seguridad | 4% | 70% |
 
-**Progreso general ponderado: 78%** (77,82% exacto). El avance suma reparación probada del CRUD Admin de productos, gestión persistente de opiniones, pedidos de solo lectura, RLS Admin autenticado, variantes editoriales compartidas para Mujer/Hombre/Unisex, 74 pruebas y QA Admin autenticado no destructivo en producción; no incluye archive/restore, auditoría de acciones, mutaciones reales en producción ni QA responsive completo en los seis tamaños obligatorios.
+**Progreso general ponderado: 79%** (79,39% exacto). El avance suma reparación probada del CRUD Admin, QA autenticado no destructivo en producción, 76 pruebas y una base SEO verificable con metadata, canonical, OpenGraph, robots, sitemap y 404 HTTP real; no incluye datos estructurados, sitemap dinámico de productos, archive/restore, auditoría de acciones, mutaciones reales en producción ni QA responsive completo en los seis tamaños obligatorios.
 
 ## Secuencia y criterios
 
@@ -87,7 +87,7 @@ Medir Lighthouse/transferencia; optimizar imágenes, dimensiones, lazy loading, 
 
 ### F14 — SEO
 
-Titles/descriptions únicos, canonical, OpenGraph, robots, sitemap, 404 real y structured data apropiado al negocio/dominio.
+Titles/descriptions, canonical y OpenGraph están cubiertos en páginas indexables; catálogo y producto actualizan metadata contextual, y existen robots, sitemap y 404 HTTP real. Faltan structured data, sitemap dinámico de productos y validación final con un crawler/Lighthouse antes de cerrar.
 
 ### F15 — Testing y CI
 

@@ -609,7 +609,9 @@ function create_app(options = {}) {
         }
     });
 
-    app.use((request, response) => request.path.startsWith('/api/') ? response.status(404).json({ error: 'Ruta API no encontrada.' }) : response.sendFile(path.join(public_directory, 'index.html')));
+    app.use((request, response) => request.path.startsWith('/api/')
+        ? response.status(404).json({ error: 'Ruta API no encontrada.' })
+        : response.status(404).sendFile(path.join(public_directory, '404.html')));
     app.use((error, request, response, next) => {
         if (response.headersSent) return next(error);
         logger.error?.('Error inesperado de API.', { method: request.method, path: request.path, kind: error_kind(error) });
