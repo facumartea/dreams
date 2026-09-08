@@ -6,9 +6,9 @@
 
 - PROYECTO: DREAMS — ecommerce de perfumería con checkout preparado y consulta secundaria por WhatsApp.
 - REPO: `https://github.com/facumartea/dreams.git`
-- RAMA EN CURSO: documentación de cierre posterior al merge de `codex/admin-asset-cache-qa`.
+- RAMA EN CURSO: `codex/seo-foundation`, basada en `main` `9ca4a5e97f6aef576a0b67adba4b471c21e4342c`.
 - PRS FUSIONADOS: [#1](https://github.com/facumartea/dreams/pull/1), [#2](https://github.com/facumartea/dreams/pull/2), [#3](https://github.com/facumartea/dreams/pull/3), [#4](https://github.com/facumartea/dreams/pull/4), [#5](https://github.com/facumartea/dreams/pull/5), [#6](https://github.com/facumartea/dreams/pull/6), [#7](https://github.com/facumartea/dreams/pull/7) y [#8 — Add persistent checkout coupons and Comprar flow](https://github.com/facumartea/dreams/pull/8).
-- HEAD EN `main`: `6bcfa0b82b2c3b04e8b5c10d40ba8ac3c5789559` (`Merge PR #29: refresh cached Admin console bundle`).
+- HEAD EN `main`: `9ca4a5e97f6aef576a0b67adba4b471c21e4342c` (`Merge PR #30: document verified Admin production QA`).
 - HEAD FUNCIONAL VERIFICADO: `8e5bd7726fb96872e8d8789035626066444b477a` en `codex/admin-asset-cache-qa`.
 - PRS: [#24 — Fix Admin external product image URLs](https://github.com/facumartea/dreams/pull/24) y [#25 — Fail closed when image preview times out](https://github.com/facumartea/dreams/pull/25), FUSIONADOS.
 - ÚLTIMO PUSH FUNCIONAL VERIFICADO: `b66b7eaa72f1a4ba1d96273a7f00cc893b4b517c` en `codex/admin-image-timeout`.
@@ -18,15 +18,19 @@
 - ÚLTIMO CI VERIFICADO: GitHub Actions CI #79, SUCCESS sobre `4a38a17839c9497d214325088eefa7457b22fc2f`.
 - ÚLTIMO PUSH VERIFICADO: `8e5bd7726fb96872e8d8789035626066444b477a` en `codex/admin-asset-cache-qa`.
 - ÚLTIMO CI VERIFICADO: GitHub Actions CI #83, SUCCESS sobre `8e5bd7726fb96872e8d8789035626066444b477a`.
-- ÚLTIMO DEPLOY VERIFICADO: Railway `22bed787-07e9-43e8-8b03-241513d3c6e1`, SUCCESS sobre `6bcfa0b82b2c3b04e8b5c10d40ba8ac3c5789559`.
+- ÚLTIMO DEPLOY VERIFICADO: Railway `01f40c47-e1b0-4539-8da9-e9176dfcaa38`, SUCCESS sobre `9ca4a5e97f6aef576a0b67adba4b471c21e4342c`.
 - FASE ACTUAL: F7/F11 — QA Admin autenticado y responsive completo pendiente.
-- PROGRESO GENERAL: 78% ponderado (77,82% exacto según `PLAN.md`).
+- PROGRESO GENERAL: 79% ponderado (79,39% exacto según `PLAN.md`).
 
 ## Porcentaje de todas las fases
 
-F0 100% · F1 80% · F2 87% · F3 88% · F4 78% · F5 78% · F6 82% · F7 76% · F8 75% · F9 91% · F10 99% · F11 75% · F12 78% · F13 47% · F14 15% · F15 94% · F16 81% · F17 0% · F18 82% · F19 70%.
+F0 100% · F1 80% · F2 87% · F3 88% · F4 78% · F5 78% · F6 82% · F7 76% · F8 75% · F9 91% · F10 99% · F11 75% · F12 78% · F13 47% · F14 65% · F15 95% · F16 81% · F17 0% · F18 82% · F19 70%.
 
 ## Último trabajo
+
+- Preparado SEO técnico sobre el dominio definitivo: descripciones, canonical y OpenGraph en páginas indexables; catálogo y producto actualizan metadata contextual sin alterar sus datos o UI.
+- Añadidos `robots.txt` y `sitemap.xml`; cuenta, carrito y checkout quedan fuera del índice. Las rutas web inexistentes dejan de devolver la portada con 200 y sirven una página DREAMS con HTTP 404 real.
+- Agregadas regresiones de archivos SEO y respuesta 404. Verificación local: sintaxis de 26 JavaScript PASS, 76/76 tests PASS y audit sin vulnerabilidades conocidas. Publicación/CI/deploy pendientes.
 
 - QA autenticado de producción confirmó acceso Admin, dashboard real (30 productos, 7 usuarios, 1 consulta, 0 opiniones y 0 pedidos), listado de 30 productos y carga correcta de edición para el producto #198 sin mutar datos.
 - El alias nuevo `/js/admin-console-v3.js` fuerza la carga del bundle vigente y evita reutilizar la versión anterior cacheada. La regresión exige el alias y comprueba que `reset_form` limpia estado, ID y etiqueta.

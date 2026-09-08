@@ -372,3 +372,13 @@ test('favoritos retirados devuelve 404 en API y redirige la página histórica',
         assert.equal(page.headers.get('location'), '/catalogo.html');
     });
 });
+
+test('rutas web inexistentes responden una página 404 real', async () => {
+    const database = database_with(() => ({ data: [], error: null }));
+    const app = create_app({ database, disable_request_log: true });
+    await serve(app, async base => {
+        const response = await fetch(`${base}/pagina-que-no-existe`);
+        assert.equal(response.status, 404);
+        assert.match(await response.text(), /Esta página no existe/);
+    });
+});

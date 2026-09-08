@@ -49,6 +49,14 @@ function update_catalog_context(gender) {
     title.textContent = variant?.title || 'Perfumes';
     description.textContent = variant?.description || 'Diseñador, algunos nichos seleccionados y una sola idea: encontrar tu firma.';
     document.title = variant?.document_title || 'Perfumes | DREAMS';
+    const canonical = document.getElementById('canonical-url');
+    if (canonical) canonical.href = `${window.location.origin}/catalogo.html${variant ? `?gender=${encodeURIComponent(gender)}` : ''}`;
+    const og_title = document.querySelector('meta[property="og:title"]');
+    const og_description = document.querySelector('meta[property="og:description"]');
+    const og_url = document.querySelector('meta[property="og:url"]');
+    if (og_title) og_title.content = document.title;
+    if (og_description) og_description.content = description.textContent;
+    if (og_url && canonical) og_url.content = canonical.href;
 }
 
 async function load_catalog() {

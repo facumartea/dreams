@@ -18,13 +18,26 @@ async function load_product_detail() {
             throw new Error(product.error);
         }
 
-        document.title = `${product.name} | DREAMS`;
+        update_product_metadata(product);
         save_recent_product(product);
         render_recent_products();
         await render_product_detail(product);
     } catch (error) {
         container.innerHTML = `<div class="empty-state"><h2>${escape_html(error.message)}</h2><a class="button button-dark" href="/catalogo.html">Volver al catálogo</a></div>`;
     }
+}
+
+function update_product_metadata(product) {
+    const title = `${product.name} | DREAMS`;
+    const description = `${product.brand} ${product.name}, ${product.size_ml} ml. ${product.family}. Consultá precio, notas e intensidad en DREAMS.`;
+    const canonical_url = `${window.location.origin}/producto.html?id=${encodeURIComponent(product.id)}`;
+    document.title = title;
+    document.querySelector('meta[name="description"]').content = description;
+    document.getElementById('canonical-url').href = canonical_url;
+    document.getElementById('og-title').content = title;
+    document.getElementById('og-description').content = description;
+    document.getElementById('og-url').content = canonical_url;
+    document.getElementById('og-image').content = safe_image_url(product.image_url);
 }
 
 async function render_product_detail(product) {
