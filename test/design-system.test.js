@@ -184,7 +184,8 @@ test('Admin valida y previsualiza la URL directa antes de guardar', () => {
     assert.match(admin, /id="image-preview"/);
     assert.match(admin, /id="image-preview-image"/);
     assert.match(admin, /referrerpolicy="no-referrer"/);
-    assert.match(admin, /\/js\/admin-image-preview-v2\.js/);
+    assert.match(admin, /\/js\/admin-console-v3\.js/);
+    assert.match(script, /function reset_form\(\)[\s\S]*editing_product_id = ''[\s\S]*product-form'\)\.reset\(\)[\s\S]*product-id'\)\.value = ''[\s\S]*form-label'\)\.textContent = 'NUEVO PRODUCTO'/);
     assert.match(script, /preview_product_image/);
     assert.match(script, /image\.onload/);
     assert.match(script, /image\.onerror/);

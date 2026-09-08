@@ -596,7 +596,7 @@ function create_app(options = {}) {
         const deleted = fail_if(await admin_database(request).from('coupons').delete().eq('id', id).select('id').maybeSingle());
         return deleted ? response.json({ message: 'Cupón eliminado.' }) : response.status(404).json({ error: 'Cupón no encontrado.' });
     });
-    route('get', '/js/admin-image-preview-v2.js', async (request, response) => response.sendFile(path.join(public_directory, 'js', 'admin.js')));
+    route('get', '/js/admin-console-v3.js', async (request, response) => response.sendFile(path.join(public_directory, 'js', 'admin.js')));
     route('get', ['/admin', '/admin.html'], admin, async (request, response) => response.sendFile(path.join(views_directory, 'admin.html')));
     route('get', ['/favoritos', '/favoritos.html'], async (request, response) => response.redirect(301, '/catalogo.html'));
     route('get', '/api/health', async (request, response) => {
