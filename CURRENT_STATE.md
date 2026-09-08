@@ -6,30 +6,32 @@
 
 - PROYECTO: DREAMS — ecommerce de perfumería con checkout preparado y consulta secundaria por WhatsApp.
 - REPO: `https://github.com/facumartea/dreams.git`
-- RAMA EN CURSO: `codex/admin-asset-cache-qa`, basada en `main` `fd8c8ff24047e5f2462c73f0b0f24e68664c41f1`.
+- RAMA EN CURSO: documentación de cierre posterior al merge de `codex/admin-asset-cache-qa`.
 - PRS FUSIONADOS: [#1](https://github.com/facumartea/dreams/pull/1), [#2](https://github.com/facumartea/dreams/pull/2), [#3](https://github.com/facumartea/dreams/pull/3), [#4](https://github.com/facumartea/dreams/pull/4), [#5](https://github.com/facumartea/dreams/pull/5), [#6](https://github.com/facumartea/dreams/pull/6), [#7](https://github.com/facumartea/dreams/pull/7) y [#8 — Add persistent checkout coupons and Comprar flow](https://github.com/facumartea/dreams/pull/8).
-- HEAD EN `main`: `fd8c8ff24047e5f2462c73f0b0f24e68664c41f1` (`Merge PR #28: document women collection deployment`).
-- HEAD FUNCIONAL EN PREPARACIÓN: cache-busting del bundle Admin en `codex/admin-asset-cache-qa`; SHA remoto pendiente.
+- HEAD EN `main`: `6bcfa0b82b2c3b04e8b5c10d40ba8ac3c5789559` (`Merge PR #29: refresh cached Admin console bundle`).
+- HEAD FUNCIONAL VERIFICADO: `8e5bd7726fb96872e8d8789035626066444b477a` en `codex/admin-asset-cache-qa`.
 - PRS: [#24 — Fix Admin external product image URLs](https://github.com/facumartea/dreams/pull/24) y [#25 — Fail closed when image preview times out](https://github.com/facumartea/dreams/pull/25), FUSIONADOS.
 - ÚLTIMO PUSH FUNCIONAL VERIFICADO: `b66b7eaa72f1a4ba1d96273a7f00cc893b4b517c` en `codex/admin-image-timeout`.
 - ÚLTIMO CI VERIFICADO: GitHub Actions CI #74, SUCCESS sobre `b66b7eaa72f1a4ba1d96273a7f00cc893b4b517c`.
 - ÚLTIMO PUSH FUNCIONAL: `70dafe332ca2fafd70d7201a5f1952583000b4cc` en `codex/demo-auth-cinematic-security`.
 - ÚLTIMO CI VERIFICADO: GitHub Actions CI #35, SUCCESS sobre `70dafe332ca2fafd70d7201a5f1952583000b4cc`.
 - ÚLTIMO CI VERIFICADO: GitHub Actions CI #79, SUCCESS sobre `4a38a17839c9497d214325088eefa7457b22fc2f`.
-- ÚLTIMO DEPLOY VERIFICADO: Railway `5b9c528b-decd-425d-8a78-7c69258451df`, SUCCESS sobre `fd8c8ff24047e5f2462c73f0b0f24e68664c41f1`.
+- ÚLTIMO PUSH VERIFICADO: `8e5bd7726fb96872e8d8789035626066444b477a` en `codex/admin-asset-cache-qa`.
+- ÚLTIMO CI VERIFICADO: GitHub Actions CI #83, SUCCESS sobre `8e5bd7726fb96872e8d8789035626066444b477a`.
+- ÚLTIMO DEPLOY VERIFICADO: Railway `22bed787-07e9-43e8-8b03-241513d3c6e1`, SUCCESS sobre `6bcfa0b82b2c3b04e8b5c10d40ba8ac3c5789559`.
 - FASE ACTUAL: F7/F11 — QA Admin autenticado y responsive completo pendiente.
-- PROGRESO GENERAL: 78% ponderado (77,55% exacto según `PLAN.md`).
+- PROGRESO GENERAL: 78% ponderado (77,82% exacto según `PLAN.md`).
 
 ## Porcentaje de todas las fases
 
-F0 100% · F1 80% · F2 87% · F3 88% · F4 78% · F5 78% · F6 82% · F7 74% · F8 75% · F9 91% · F10 99% · F11 75% · F12 78% · F13 47% · F14 15% · F15 93% · F16 79% · F17 0% · F18 82% · F19 70%.
+F0 100% · F1 80% · F2 87% · F3 88% · F4 78% · F5 78% · F6 82% · F7 76% · F8 75% · F9 91% · F10 99% · F11 75% · F12 78% · F13 47% · F14 15% · F15 94% · F16 81% · F17 0% · F18 82% · F19 70%.
 
 ## Último trabajo
 
 - QA autenticado de producción confirmó acceso Admin, dashboard real (30 productos, 7 usuarios, 1 consulta, 0 opiniones y 0 pedidos), listado de 30 productos y carga correcta de edición para el producto #198 sin mutar datos.
-- Detectado que el HTML seguía sirviendo el alias versionado `/js/admin-image-preview-v2.js`; un cliente con esa versión cacheada no recibía el `reset_form` actual y `Limpiar` podía dejar el formulario en modo edición.
-- Preparado alias nuevo `/js/admin-console-v3.js` para forzar la carga del bundle Admin vigente. La regresión exige el alias nuevo y comprueba que `reset_form` limpia estado, ID y etiqueta.
-- Verificación local: instalación frozen-lockfile, audit sin vulnerabilidades conocidas, sintaxis de 26 JavaScript y 74/74 tests PASS. CI/deploy/smoke pendientes.
+- El alias nuevo `/js/admin-console-v3.js` fuerza la carga del bundle vigente y evita reutilizar la versión anterior cacheada. La regresión exige el alias y comprueba que `reset_form` limpia estado, ID y etiqueta.
+- Smoke post-deploy: el producto #198 cargó marca, nombre, precio, stock, notas, URL y preview; `Limpiar` volvió a `NUEVO PRODUCTO`, vació campos y ocultó el preview sin guardar. Productos, Pedidos, Cupones, Usuarios, Consultas y Opiniones cargaron con datos/estados vacíos reales y sin errores de aplicación.
+- Verificación: instalación frozen-lockfile PASS, audit sin vulnerabilidades conocidas, sintaxis de 26 JavaScript PASS, 74/74 tests PASS, CI #83 SUCCESS y Railway `22bed787-07e9-43e8-8b03-241513d3c6e1` SUCCESS.
 
 - Refinada exclusivamente la variante Mujer sin tocar Hombre, Unisex ni lógica: título `Fragancias Femeninas`, base crema `#f3ebdd`, texto negro cálido `#1f1a17`, cards `#f8f1e8`, acento rosa viejo `#8c4450`, CTA coral profundo `#a84e5b`, hover borgoña cálido `#8e3f4b` y detalle dorado `#7a5b2c`.
 - Se conserva el mismo `ProductCard`, filtros, carrito y navegación. Las diferencias permanecen centralizadas en `COLLECTION_VARIANTS` y tokens CSS de `.collection-women`.
