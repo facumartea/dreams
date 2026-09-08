@@ -1,5 +1,13 @@
 # Changelog
 
+### 2026-09-08 — QA Admin autenticado y renovación segura del bundle
+
+- QA autenticado no destructivo en producción confirmó dashboard, 30 productos y carga del formulario de edición para un ID real sin el antiguo `Producto no encontrado`.
+- Detectado un problema de actualización del cliente: el alias versionado `/js/admin-image-preview-v2.js` seguía estable aunque `admin.js` había evolucionado, por lo que navegadores con caché podían ejecutar una versión anterior.
+- El Admin pasa a cargar `/js/admin-console-v3.js`, servido desde el mismo `admin.js`; no se duplicó lógica ni se modificaron productos, usuarios, pedidos, cupones u opiniones.
+- Añadida regresión que exige el alias nuevo y comprueba que `reset_form` abandone el modo edición, limpie el ID y restaure `NUEVO PRODUCTO`.
+- Verificación local: frozen-lockfile PASS, audit sin vulnerabilidades, sintaxis de 26 JavaScript y 74/74 tests PASS. CI/deploy/smoke pendientes.
+
 ### 2026-09-08 — Refinamiento premium de la colección Mujer
 
 - Cambiado el encabezado de `Perfumes de Mujer` a `Fragancias Femeninas`, conservando el subtítulo editorial existente y el mismo sistema de variantes.
