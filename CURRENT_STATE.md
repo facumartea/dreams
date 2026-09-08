@@ -6,17 +6,17 @@
 
 - PROYECTO: DREAMS — ecommerce de perfumería con checkout preparado y consulta secundaria por WhatsApp.
 - REPO: `https://github.com/facumartea/dreams.git`
-- RAMA FUNCIONAL CERRADA: `codex/admin-image-timeout`; documentación final en `codex/image-url-deploy-docs`.
+- RAMA EN CURSO: `codex/women-premium-palette`, basada en `main` `7f020db9c3d8d745574811b9127ec6c82c9a81f9`.
 - PRS FUSIONADOS: [#1](https://github.com/facumartea/dreams/pull/1), [#2](https://github.com/facumartea/dreams/pull/2), [#3](https://github.com/facumartea/dreams/pull/3), [#4](https://github.com/facumartea/dreams/pull/4), [#5](https://github.com/facumartea/dreams/pull/5), [#6](https://github.com/facumartea/dreams/pull/6), [#7](https://github.com/facumartea/dreams/pull/7) y [#8 — Add persistent checkout coupons and Comprar flow](https://github.com/facumartea/dreams/pull/8).
-- HEAD EN `main`: `89d795ce4d9477719e1cda4aac2e6f2221a377d2` (`Fail closed when image preview times out`).
-- HEAD FUNCIONAL: `89d795ce4d9477719e1cda4aac2e6f2221a377d2` en `main`.
+- HEAD EN `main`: `7f020db9c3d8d745574811b9127ec6c82c9a81f9` (`Merge PR #26: document Admin image URL deployment`).
+- HEAD FUNCIONAL EN PREPARACIÓN: variante Mujer sobre `codex/women-premium-palette`; SHA remoto pendiente de publicación.
 - PRS: [#24 — Fix Admin external product image URLs](https://github.com/facumartea/dreams/pull/24) y [#25 — Fail closed when image preview times out](https://github.com/facumartea/dreams/pull/25), FUSIONADOS.
 - ÚLTIMO PUSH FUNCIONAL VERIFICADO: `b66b7eaa72f1a4ba1d96273a7f00cc893b4b517c` en `codex/admin-image-timeout`.
 - ÚLTIMO CI VERIFICADO: GitHub Actions CI #74, SUCCESS sobre `b66b7eaa72f1a4ba1d96273a7f00cc893b4b517c`.
 - ÚLTIMO PUSH FUNCIONAL: `70dafe332ca2fafd70d7201a5f1952583000b4cc` en `codex/demo-auth-cinematic-security`.
 - ÚLTIMO CI VERIFICADO: GitHub Actions CI #35, SUCCESS sobre `70dafe332ca2fafd70d7201a5f1952583000b4cc`.
 - ÚLTIMO DEPLOY VERIFICADO: Railway `3011a2d6-4f75-4a90-bba3-81012d9c1e50`, SUCCESS sobre `89d795ce4d9477719e1cda4aac2e6f2221a377d2`.
-- FASE ACTUAL: F7/F11 — QA Admin restante y matriz responsive de colecciones.
+- FASE ACTUAL: F10/F11 — refinamiento visual de Mujer y QA responsive pendiente.
 - PROGRESO GENERAL: 78% ponderado (77,55% exacto según `PLAN.md`).
 
 ## Porcentaje de todas las fases
@@ -24,6 +24,11 @@
 F0 100% · F1 80% · F2 87% · F3 88% · F4 78% · F5 78% · F6 82% · F7 74% · F8 75% · F9 91% · F10 99% · F11 75% · F12 78% · F13 47% · F14 15% · F15 93% · F16 79% · F17 0% · F18 82% · F19 70%.
 
 ## Último trabajo
+
+- Refinada exclusivamente la variante Mujer sin tocar Hombre, Unisex ni lógica: título `Fragancias Femeninas`, base crema `#f3ebdd`, texto negro cálido `#1f1a17`, cards `#f8f1e8`, acento rosa viejo `#8c4450`, CTA coral profundo `#a84e5b`, hover borgoña cálido `#8e3f4b` y detalle dorado `#7a5b2c`.
+- Se conserva el mismo `ProductCard`, filtros, carrito y navegación. Las diferencias permanecen centralizadas en `COLLECTION_VARIANTS` y tokens CSS de `.collection-women`.
+- Contrastes calculados: negro cálido sobre crema 14,56:1; texto secundario sobre crema 5,52:1; texto crema sobre CTA 5,10:1; texto crema sobre hover 6,73:1.
+- Verificación local: sintaxis de 26 JavaScript, 74/74 tests PASS y audit de producción sin vulnerabilidades conocidas. CI, deploy y smoke de esta variante todavía pendientes.
 
 - Diagnosticado sin modificar productos reales: Supabase conserva `image_url`; el fallo era aceptar páginas Google, bloquear hosts por CSP y ocultar el error con el fallback DREAMS.
 - PR #24 agrega validación server-side de URL HTTPS directa, preview antes de guardar, bloqueo del submit si la imagen no carga, CSP compatible con imágenes HTTPS y fallback visible.
@@ -259,4 +264,4 @@ F0 100% · F1 80% · F2 87% · F3 88% · F4 78% · F5 78% · F6 82% · F7 74% ·
 
 ## Próxima acción exacta
 
-Retomar QA Admin autenticado no destructivo de flujos restantes; después completar la matriz visual 390×844, 430×932, 768×1024, 1024×768, 1440×900 y 1920×1080 para Hombre, Mujer y Unisex.
+Publicar `codex/women-premium-palette`, validar CI, fusionar si permanece verde y ejecutar smoke visual de Mujer en producción. Después retomar el QA Admin autenticado no destructivo y la matriz responsive pendiente.

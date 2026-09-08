@@ -1,5 +1,14 @@
 # Changelog
 
+### 2026-09-08 — Refinamiento premium de la colección Mujer
+
+- Cambiado el encabezado de `Perfumes de Mujer` a `Fragancias Femeninas`, conservando el subtítulo editorial existente y el mismo sistema de variantes.
+- Reemplazada la base anterior por una paleta más cálida y femenina: crema `#f3ebdd`, negro cálido `#1f1a17`, card `#f8f1e8`, dusty rose `#8c4450`, CTA coral profundo `#a84e5b`, hover borgoña `#8e3f4b` y dorado secundario `#7a5b2c`.
+- El CTA `Agregar al carrito` de Mujer mantiene su lógica y recibe contraste AA, hover discreto y foco visible; las cards usan borde rosa/champagne fino y sombra mínima sólo al hover.
+- Hombre y Unisex no cambiaron. No se duplicó `ProductCard`, no se modificaron datos, Supabase, carrito, filtros, navegación, Admin ni checkout.
+- Contrastes calculados: título 14,56:1, texto secundario 5,52:1, CTA 5,10:1 y hover 6,73:1.
+- Verificación local: `check` sobre 26 JavaScript, 74/74 tests PASS y `pnpm audit --prod` sin vulnerabilidades conocidas. CI/deploy/smoke pendientes de publicación.
+
 ### 2026-09-02 — URLs externas de imagen en Admin
 
 - Confirmado sin mutar productos reales que `image_url` sí se persistía; el fallo era de validación/renderizado: se aceptaban páginas de resultados de Google, CSP sólo permitía Unsplash y el error se reemplazaba silenciosamente por el fallback DREAMS.
