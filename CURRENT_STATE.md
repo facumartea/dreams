@@ -6,17 +6,18 @@
 
 - PROYECTO: DREAMS — ecommerce de perfumería con checkout preparado y consulta secundaria por WhatsApp.
 - REPO: `https://github.com/facumartea/dreams.git`
-- RAMA EN CURSO: `codex/women-premium-palette`, basada en `main` `7f020db9c3d8d745574811b9127ec6c82c9a81f9`.
+- RAMA FUNCIONAL CERRADA: `codex/women-premium-palette`; documentación final en `codex/women-premium-deploy-docs`.
 - PRS FUSIONADOS: [#1](https://github.com/facumartea/dreams/pull/1), [#2](https://github.com/facumartea/dreams/pull/2), [#3](https://github.com/facumartea/dreams/pull/3), [#4](https://github.com/facumartea/dreams/pull/4), [#5](https://github.com/facumartea/dreams/pull/5), [#6](https://github.com/facumartea/dreams/pull/6), [#7](https://github.com/facumartea/dreams/pull/7) y [#8 — Add persistent checkout coupons and Comprar flow](https://github.com/facumartea/dreams/pull/8).
-- HEAD EN `main`: `7f020db9c3d8d745574811b9127ec6c82c9a81f9` (`Merge PR #26: document Admin image URL deployment`).
-- HEAD FUNCIONAL EN PREPARACIÓN: `11ef546f7c5cc126bbe065991658813a5f0f1140` sobre `codex/women-premium-palette`; PR #27 abierto.
+- HEAD EN `main`: `16ef40ebcd72f7674d6c64d56b76f3b0b002da9c` (`Merge PR #27: refine premium women collection palette`).
+- HEAD FUNCIONAL: `16ef40ebcd72f7674d6c64d56b76f3b0b002da9c` en `main`.
 - PRS: [#24 — Fix Admin external product image URLs](https://github.com/facumartea/dreams/pull/24) y [#25 — Fail closed when image preview times out](https://github.com/facumartea/dreams/pull/25), FUSIONADOS.
 - ÚLTIMO PUSH FUNCIONAL VERIFICADO: `b66b7eaa72f1a4ba1d96273a7f00cc893b4b517c` en `codex/admin-image-timeout`.
 - ÚLTIMO CI VERIFICADO: GitHub Actions CI #74, SUCCESS sobre `b66b7eaa72f1a4ba1d96273a7f00cc893b4b517c`.
 - ÚLTIMO PUSH FUNCIONAL: `70dafe332ca2fafd70d7201a5f1952583000b4cc` en `codex/demo-auth-cinematic-security`.
 - ÚLTIMO CI VERIFICADO: GitHub Actions CI #35, SUCCESS sobre `70dafe332ca2fafd70d7201a5f1952583000b4cc`.
-- ÚLTIMO DEPLOY VERIFICADO: Railway `3011a2d6-4f75-4a90-bba3-81012d9c1e50`, SUCCESS sobre `89d795ce4d9477719e1cda4aac2e6f2221a377d2`.
-- FASE ACTUAL: F10/F11 — refinamiento visual de Mujer y QA responsive pendiente.
+- ÚLTIMO CI VERIFICADO: GitHub Actions CI #79, SUCCESS sobre `4a38a17839c9497d214325088eefa7457b22fc2f`.
+- ÚLTIMO DEPLOY VERIFICADO: Railway `ea1d0e74-2d24-4efe-a04f-bd5372ef126e`, SUCCESS sobre `16ef40ebcd72f7674d6c64d56b76f3b0b002da9c`.
+- FASE ACTUAL: F11 — QA responsive completo pendiente.
 - PROGRESO GENERAL: 78% ponderado (77,55% exacto según `PLAN.md`).
 
 ## Porcentaje de todas las fases
@@ -29,7 +30,9 @@ F0 100% · F1 80% · F2 87% · F3 88% · F4 78% · F5 78% · F6 82% · F7 74% ·
 - Se conserva el mismo `ProductCard`, filtros, carrito y navegación. Las diferencias permanecen centralizadas en `COLLECTION_VARIANTS` y tokens CSS de `.collection-women`.
 - Contrastes calculados: negro cálido sobre crema 14,56:1; texto secundario sobre crema 5,52:1; texto crema sobre CTA 5,10:1; texto crema sobre hover 6,73:1.
 - Verificación local: instalación frozen-lockfile, sintaxis de 26 JavaScript, 74/74 tests PASS y audit de producción sin vulnerabilidades conocidas.
-- CI #78 detectó dos avisos moderados recién publicados para la dependencia transitiva `qs` 6.15.3. Se actualizó únicamente el lockfile a `qs` 6.16.0; no cambió código funcional. Revalidación local completa PASS; nuevo CI, deploy y smoke todavía pendientes.
+- CI #78 detectó dos avisos moderados recién publicados para la dependencia transitiva `qs` 6.15.3. Se actualizó únicamente el lockfile a `qs` 6.16.0; no cambió código funcional. CI #79 completó SUCCESS.
+- PR #27 fusionado como `16ef40ebcd72f7674d6c64d56b76f3b0b002da9c`; Railway desplegó exactamente ese SHA en `ea1d0e74-2d24-4efe-a04f-bd5372ef126e` con estado SUCCESS.
+- Smoke visual de producción en 1363×936: título y document title correctos, 10 cards reales, paleta nueva aplicada, CTA coral, cero overflow horizontal y carga completa. La matriz completa de seis viewports continúa pendiente.
 
 - Diagnosticado sin modificar productos reales: Supabase conserva `image_url`; el fallo era aceptar páginas Google, bloquear hosts por CSP y ocultar el error con el fallback DREAMS.
 - PR #24 agrega validación server-side de URL HTTPS directa, preview antes de guardar, bloqueo del submit si la imagen no carga, CSP compatible con imágenes HTTPS y fallback visible.
@@ -265,4 +268,4 @@ F0 100% · F1 80% · F2 87% · F3 88% · F4 78% · F5 78% · F6 82% · F7 74% ·
 
 ## Próxima acción exacta
 
-Publicar `codex/women-premium-palette`, validar CI, fusionar si permanece verde y ejecutar smoke visual de Mujer en producción. Después retomar el QA Admin autenticado no destructivo y la matriz responsive pendiente.
+Retomar QA Admin autenticado no destructivo de flujos restantes; después completar la matriz visual 390×844, 430×932, 768×1024, 1024×768, 1440×900 y 1920×1080 para Hombre, Mujer y Unisex.

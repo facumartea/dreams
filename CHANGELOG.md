@@ -8,7 +8,10 @@
 - Hombre y Unisex no cambiaron. No se duplicó `ProductCard`, no se modificaron datos, Supabase, carrito, filtros, navegación, Admin ni checkout.
 - Contrastes calculados: título 14,56:1, texto secundario 5,52:1, CTA 5,10:1 y hover 6,73:1.
 - Verificación local: instalación con lockfile congelado, `check` sobre 26 JavaScript, 74/74 tests PASS y `pnpm audit --prod` sin vulnerabilidades conocidas.
-- CI #78 falló exclusivamente por dos avisos moderados nuevos en la dependencia transitiva `qs` 6.15.3. Se elevó únicamente el lockfile a `qs` 6.16.0 y se repitió toda la validación local con resultado PASS; CI/deploy/smoke del nuevo head pendientes.
+- CI #78 falló exclusivamente por dos avisos moderados nuevos en la dependencia transitiva `qs` 6.15.3. Se elevó únicamente el lockfile a `qs` 6.16.0 y se repitió toda la validación local con resultado PASS.
+- Commits `11ef546f7c5cc126bbe065991658813a5f0f1140` y `4a38a17839c9497d214325088eefa7457b22fc2f`; PR #27 validado por CI #79 y fusionado como `16ef40ebcd72f7674d6c64d56b76f3b0b002da9c`.
+- Railway deployment `ea1d0e74-2d24-4efe-a04f-bd5372ef126e` terminó SUCCESS sobre el merge exacto.
+- Smoke visual 1363×936: `Fragancias Femeninas`, 10 cards, colores desplegados correctos, CTA coral, imágenes sin fallback activo y sin overflow horizontal. La matriz completa de seis viewports sigue pendiente.
 
 ### 2026-09-02 — URLs externas de imagen en Admin
 
