@@ -11,7 +11,7 @@ Porcentajes recalibrados el 2026-08-31 al sumar cupones y mantener los pesos en 
 | F4 | Catálogo, detalle, carrito y consultas | 6% | 78% |
 | F5 | Opiniones persistentes, edición y moderación | 4% | 78% |
 | F6 | Auth, sesiones, recuperación y usuarios | 7% | 82% |
-| F7 | Admin completo, reversible y auditable | 6% | 74% |
+| F7 | Admin completo, reversible y auditable | 6% | 76% |
 | F8 | Arquitectura, limpieza y documentación técnica | 4% | 75% |
 | F9 | UX funcional y estados | 5% | 91% |
 | F10 | Diseño visual, colección femenina, imagen y sistema de componentes | 4% | 99% |
@@ -19,13 +19,13 @@ Porcentajes recalibrados el 2026-08-31 al sumar cupones y mantener los pesos en 
 | F12 | Accesibilidad | 4% | 78% |
 | F13 | Performance | 4% | 47% |
 | F14 | SEO y descubribilidad | 3% | 15% |
-| F15 | Testing y CI | 7% | 93% |
-| F16 | Producción, dominio, deploy y observabilidad | 4% | 79% |
+| F15 | Testing y CI | 7% | 94% |
+| F16 | Producción, dominio, deploy y observabilidad | 4% | 81% |
 | F17 | QA final de punta a punta | 3% | 0% |
 | F18 | Checkout Sandbox, pedidos y pagos | 4% | 82% |
 | F19 | Cupones: datos, API, Admin, checkout y seguridad | 4% | 70% |
 
-**Progreso general ponderado: 78%** (77,55% exacto). El avance suma reparación probada del CRUD Admin de productos, gestión persistente de opiniones, pedidos de solo lectura, RLS Admin autenticado, variantes editoriales compartidas para Mujer/Hombre/Unisex y 69 pruebas; no incluye QA Admin autenticado sobre producción, archive/restore, auditoría de acciones ni QA responsive completo en los seis tamaños obligatorios.
+**Progreso general ponderado: 78%** (77,82% exacto). El avance suma reparación probada del CRUD Admin de productos, gestión persistente de opiniones, pedidos de solo lectura, RLS Admin autenticado, variantes editoriales compartidas para Mujer/Hombre/Unisex, 74 pruebas y QA Admin autenticado no destructivo en producción; no incluye archive/restore, auditoría de acciones, mutaciones reales en producción ni QA responsive completo en los seis tamaños obligatorios.
 
 ## Secuencia y criterios
 
@@ -59,7 +59,7 @@ Completar refresh/revocación, recuperación de contraseña y redirects/SMTP, MF
 
 ### F7 — Admin
 
-CRUD de productos y cupones, pedidos de solo lectura y edición/eliminación de opiniones están implementados con autorización server-side, JWT Admin y RLS. Faltan archive/restore en lugar de hard delete, búsqueda/filtros amplios, historial de cambios y QA autenticado en producción.
+CRUD de productos y cupones, pedidos de solo lectura y edición/eliminación de opiniones están implementados con autorización server-side, JWT Admin y RLS. El QA autenticado no destructivo de producción verificó dashboard, listado, carga de edición, limpieza sin guardar y navegación de todos los módulos. Faltan archive/restore en lugar de hard delete, búsqueda/filtros amplios, historial de cambios y una prueba controlada de mutación con rollback sobre datos preparados para QA.
 
 ### F8 — Arquitectura y limpieza
 
@@ -111,7 +111,7 @@ Cupones persistentes server-only, código mayúsculo, constraints, CRUD Admin, a
 
 ## Próximo bloque exacto
 
-Publicar el checkpoint Admin/categorías, esperar CI y Railway, y ejecutar QA autenticado no destructivo sobre listado, edición controlada con rollback, pedidos, cupones y opiniones. Después completar la matriz visual de Hombre/Mujer/Unisex en los seis viewports obligatorios.
+Completar la matriz visual de Hombre/Mujer/Unisex en 390x844, 430x932, 768x1024, 1024x768, 1440x900 y 1920x1080 con un navegador que permita fijar viewports. Después preparar datos descartables de QA para probar create/edit/delete con rollback sin tocar productos reales y avanzar archive/auditoría Admin.
 
 ## Expansión premium mapeada al roadmap
 

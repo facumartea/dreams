@@ -6,7 +6,10 @@
 - Detectado un problema de actualización del cliente: el alias versionado `/js/admin-image-preview-v2.js` seguía estable aunque `admin.js` había evolucionado, por lo que navegadores con caché podían ejecutar una versión anterior.
 - El Admin pasa a cargar `/js/admin-console-v3.js`, servido desde el mismo `admin.js`; no se duplicó lógica ni se modificaron productos, usuarios, pedidos, cupones u opiniones.
 - Añadida regresión que exige el alias nuevo y comprueba que `reset_form` abandone el modo edición, limpie el ID y restaure `NUEVO PRODUCTO`.
-- Verificación local: frozen-lockfile PASS, audit sin vulnerabilidades, sintaxis de 26 JavaScript y 74/74 tests PASS. CI/deploy/smoke pendientes.
+- Verificación local: frozen-lockfile PASS, audit sin vulnerabilidades, sintaxis de 26 JavaScript y 74/74 tests PASS.
+- Commit funcional `8e5bd7726fb96872e8d8789035626066444b477a`; PR #29 pasó CI #83 y se fusionó como `6bcfa0b82b2c3b04e8b5c10d40ba8ac3c5789559`.
+- Railway desplegó exactamente el merge en `22bed787-07e9-43e8-8b03-241513d3c6e1` con estado SUCCESS.
+- Smoke autenticado post-deploy: edición de producto #198 carga todos los datos y preview; `Limpiar` restaura `NUEVO PRODUCTO`, vacía el formulario y oculta el preview sin guardar. Todos los módulos Admin existentes cargan; no se mutó ni eliminó información real.
 
 ### 2026-09-08 — Refinamiento premium de la colección Mujer
 
