@@ -49,7 +49,7 @@ test('el catálogo comparte una arquitectura de variantes para Mujer, Hombre y U
     const script = fs.readFileSync(path.join(root, 'public/js/catalogo.js'), 'utf8');
     const css = fs.readFileSync(path.join(root, 'public/css/style.css'), 'utf8');
     assert.match(html, /id="catalog-title"/);
-    assert.match(script, /Perfumes de Mujer/);
+    assert.match(script, /Fragancias Femeninas/);
     assert.match(script, /const COLLECTION_VARIANTS/);
     for (const variant of ['mujer', 'hombre', 'unisex']) assert.match(script, new RegExp(`${variant}: \\{`));
     assert.match(script, /Perfumes de Hombre/);
@@ -169,7 +169,9 @@ test('Hombre, Mujer y Unisex reutilizan tokens de card con paletas propias', () 
     const css = fs.readFileSync(path.join(root, 'public/css/style.css'), 'utf8');
     assert.match(css, /\.collection-themed \.product-card\{border:1px solid/);
     assert.match(css, /\.collection-men\{[^}]*--collection-card:#f4f1e9/);
-    assert.match(css, /\.collection-women\{[^}]*--collection-page:#e8ddcf[^}]*--collection-accent:#a8874e/);
+    assert.match(css, /\.collection-women\{[^}]*--collection-page:#f3ebdd[^}]*--collection-heading:#1f1a17[^}]*--collection-accent:#8c4450/);
+    assert.match(css, /\.collection-women\{[^}]*--collection-card:#f8f1e8[^}]*--collection-cta:#a84e5b[^}]*--collection-cta-hover:#8e3f4b/);
+    assert.match(css, /\.collection-women \.product-card \.small-button\.dark\{border-color:var\(--collection-cta\);background:var\(--collection-cta\)/);
     assert.match(css, /\.collection-unisex\{[^}]*--collection-page:#24221f[^}]*--collection-card:#d8d0c4/);
     assert.match(css, /\.collection-men \.page-intro h1\{font-weight:600/);
 });

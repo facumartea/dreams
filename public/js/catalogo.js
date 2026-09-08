@@ -4,10 +4,10 @@ const COLLECTION_VARIANTS = {
     mujer: {
         body_class: 'collection-women',
         page_class: 'is-women',
-        eyebrow: 'COLECCIÓN · DREAMS 01',
-        title: 'Perfumes de Mujer',
+        eyebrow: 'COLECCIÓN',
+        title: 'Fragancias Femeninas',
         description: 'Fragancias luminosas y envolventes, seleccionadas con una mirada cálida y editorial.',
-        document_title: 'Perfumes de Mujer | DREAMS'
+        document_title: 'Fragancias Femeninas | DREAMS'
     },
     hombre: {
         body_class: 'collection-men',
