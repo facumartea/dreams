@@ -7,7 +7,8 @@
 - El CTA `Agregar al carrito` de Mujer mantiene su lógica y recibe contraste AA, hover discreto y foco visible; las cards usan borde rosa/champagne fino y sombra mínima sólo al hover.
 - Hombre y Unisex no cambiaron. No se duplicó `ProductCard`, no se modificaron datos, Supabase, carrito, filtros, navegación, Admin ni checkout.
 - Contrastes calculados: título 14,56:1, texto secundario 5,52:1, CTA 5,10:1 y hover 6,73:1.
-- Verificación local: `check` sobre 26 JavaScript, 74/74 tests PASS y `pnpm audit --prod` sin vulnerabilidades conocidas. CI/deploy/smoke pendientes de publicación.
+- Verificación local: instalación con lockfile congelado, `check` sobre 26 JavaScript, 74/74 tests PASS y `pnpm audit --prod` sin vulnerabilidades conocidas.
+- CI #78 falló exclusivamente por dos avisos moderados nuevos en la dependencia transitiva `qs` 6.15.3. Se elevó únicamente el lockfile a `qs` 6.16.0 y se repitió toda la validación local con resultado PASS; CI/deploy/smoke del nuevo head pendientes.
 
 ### 2026-09-02 — URLs externas de imagen en Admin
 
