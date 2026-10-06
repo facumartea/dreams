@@ -1,3 +1,14 @@
+# Recuperación y migración Cloudflare — 2026-10-06
+
+- Recuperada base PR33, sin mezclar PR32: compatibilidad marca/brand, seed retirado del arranque y dependencias corregidas.
+- Aislados login/registro/logout; agregadas regresiones de dos usuarios, refresh y revocación/cookies.
+- Health verifica columnas/tablas críticas, incluido checkout configurado, con timeout; sin DDL ni escrituras a Supabase.
+- Corregidos historial corrupto/storage bloqueado, filtros fuera de orden/reintentos, errores de pestañas/logout y doble envío de cupones Admin; copy de demo ajustado y timeout MP. Home consulta 8 productos.
+- Agregado adaptador Workers + Static Assets, entornos separados, empaquetado Admin privado, headers/no-store y pruebas de runtime con fixtures HTTP aisladas.
+- Documentadas variables, limitaciones, publicación de prueba, promoción y rollback. Historia preservada en docs/history.
+- Suite final ejecutada: 89/89; check 32 JS/MJS; audit prod limpio; build preview dry-run correcto; 66 navegaciones en seis viewports sin pageerror/overflow. Resultados finales y CI se registran en CURRENT_STATE.
+- No deploy remoto, DNS, merge, cambio de datos ni configuración Supabase/Railway realizados.
+
 # Changelog
 
 ### 2026-10-05 — Recuperación del estado real y compatibilidad de esquema

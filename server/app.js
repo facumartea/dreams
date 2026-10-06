@@ -222,9 +222,20 @@ async function quote_cart(database, items, coupon_code = '', product_brand_colum
     return { items: quoted, warnings, ...(await resolve_coupon(database, coupon_code, subtotal)) };
 }
 
-async function database_health(database) {
-    const result = await execute_database_query(() => database.from('products').select('id', { count: 'exact', head: true }));
-    if (result.error) throw result.error;
+async function database_health(database, product_brand_column = 'brand', checkout_ready = false) {
+    const schemas = {
+        products: `id,${brand_column(product_brand_column)},name,price,stock,image_url,gender,category,featured,family,size_ml,top_notes,heart_notes,base_notes`,
+        profiles: 'id,name,role', reviews: 'id,user_id,user_name,rating,comment,created_at',
+        inquiries: 'id,product_id,product_name'
+    };
+    if (checkout_ready) Object.assign(schemas, { orders: 'id,user_id,provider,status,total,items', coupons: 'id,code,discount_percent,active' });
+    await Promise.all(Object.entries(schemas).map(async ([table, columns]) => {
+        const result = await execute_database_query(() => {
+            const query = database.from(table).select(columns, { head: true });
+            return typeof query.abortSignal === 'function' ? query.abortSignal(AbortSignal.timeout(5000)) : query;
+        });
+        if (result.error) throw result.error;
+    }));
     return true;
 }
 
@@ -255,8 +266,8 @@ function create_app(options = {}) {
     if (!options.disable_request_log) app.use(morgan(production ? 'combined' : 'dev'));
     app.use(express.json({ limit: '1mb' }), express.urlencoded({ extended: true, limit: '1mb' }));
     app.use(mutation_origin_guard(options.allowed_origins));
-    app.use('/api/auth', (request, response, next) => {
-        response.setHeader('Cache-Control', 'no-store');
+    app.use((request, response, next) => {
+        if (request.path === '/api' || request.path.startsWith('/api/') || ['/admin', '/admin.html'].includes(request.path) || /dreams_(access|refresh)_token=/.test(request.headers.cookie || '')) response.setHeader('Cache-Control', 'no-store');
         next();
     });
     app.use('/api/auth', rateLimit({ windowMs: 900000, limit: 20, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiados intentos. Probá nuevamente en unos minutos.' } }));
@@ -267,7 +278,7 @@ function create_app(options = {}) {
     app.use('/api/payments/webhook', rateLimit({ windowMs: 60000, limit: 120, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiadas notificaciones.' } }));
     const review_limiter = rateLimit({ windowMs: 3600000, limit: 5, standardHeaders: true, legacyHeaders: false, message: { error: 'Publicaste varias opiniones. Probá nuevamente más tarde.' } });
     app.use('/api/reviews', (request, response, next) => request.method === 'POST' ? review_limiter(request, response, next) : next());
-    app.use(express.static(public_directory));
+    app.use(options.static_middleware || express.static(public_directory));
 
     async function profile_for(user) {
         let result = await database.from('profiles').select('name,role').eq('id', user.id).maybeSingle();
@@ -317,7 +328,7 @@ function create_app(options = {}) {
     const route = (method, url, ...handlers) => app[method](url, ...handlers.map(handler => handler === login || handler === admin ? handler : async_route(handler)));
     const fail_if = result => { if (result.error) throw result.error; return result.data; };
 
-    route('get', '/api/config', async (request, response) => response.json({ whatsapp_number, contact_email, app_name: 'DREAMS' }));
+    route('get', '/api/config', async (request, response) => response.json({ whatsapp_number, contact_email, app_name: 'DREAMS', demo_auto_confirm_email }));
     route('get', '/api/checkout/config', async (request, response) => response.json({ enabled: checkout_enabled, provider: checkout_enabled ? payment_provider.name : null, mode: checkout_mode, show_test_data }));
     route('get', '/api/products', async (request, response) => {
         const search = String(request.query.search || '').trim().replace(/[^\p{L}\p{N}\s'-]/gu, '').slice(0, 80);
@@ -327,7 +338,9 @@ function create_app(options = {}) {
             for (const key of ['brand', 'gender', 'category']) if (request.query[key]) query = query.eq(key === 'brand' ? product_brand_column : key, String(request.query[key]).slice(0, 60));
             if (+request.query.max_price > 0) query = query.lte('price', +request.query.max_price);
             if (search) query = query.or(`name.ilike.%${search}%,${product_brand_column}.ilike.%${search}%,family.ilike.%${search}%`);
-            return sort === 'price_asc' ? query.order('price') : sort === 'price_desc' ? query.order('price', { ascending: false }) : sort === 'name' ? query.order('name') : query.order('featured', { ascending: false }).order('id', { ascending: false });
+            query = sort === 'price_asc' ? query.order('price') : sort === 'price_desc' ? query.order('price', { ascending: false }) : sort === 'name' ? query.order('name') : query.order('featured', { ascending: false }).order('id', { ascending: false });
+            const limit = parse_id(request.query.limit);
+            return limit ? query.limit(Math.min(limit, 100)) : query;
         });
         response.json(fail_if(result).map(product));
     });
@@ -354,7 +367,7 @@ function create_app(options = {}) {
             session(response, signed_in.data.session, production);
             return response.status(201).json({ message: 'Cuenta demo creada. Ya podés usar DREAMS.', authenticated: true, demo: true, user: { id: created.data.user.id, name, email, is_admin: false } });
         }
-        const result = await database.auth.signUp({ email, password, options: { data: { name } } });
+        const result = await create_auth_client().auth.signUp({ email, password, options: { data: { name } } });
         if (result.error) return response.status(400).json({ error: 'No se pudo crear la cuenta con esos datos.' });
         if (result.data.user) fail_if(await database.from('profiles').upsert({ id: result.data.user.id, name, role: 'customer' }, { onConflict: 'id', ignoreDuplicates: true }));
         if (result.data.session) {
@@ -366,7 +379,7 @@ function create_app(options = {}) {
     route('post', '/api/auth/login', async (request, response) => {
         const email = normalize_email(request.body.email), password = String(request.body.password || '');
         if (!valid_email(email) || !password || password.length > 128) return response.status(400).json({ error: 'Ingresá un correo válido y tu contraseña.' });
-        const result = await database.auth.signInWithPassword({ email, password });
+        const result = await create_auth_client().auth.signInWithPassword({ email, password });
         if (result.error || !result.data.session || !result.data.user) {
             const confirmation_required = !demo_auto_confirm_email && result.error?.code === 'email_not_confirmed';
             return response.status(401).json({ error: confirmation_required ? 'Primero confirmá tu cuenta desde el correo que te enviamos.' : 'Correo o contraseña incorrectos.' });
@@ -378,7 +391,7 @@ function create_app(options = {}) {
     });
     route('post', '/api/auth/logout', async (request, response) => {
         if (request.access_token) {
-            const result = await database.auth.admin.signOut(request.access_token, 'local');
+            const result = await create_auth_client().auth.admin.signOut(request.access_token, 'local');
             if (result.error) logger.warn?.('No se pudo revocar la sesión remota.', { kind: error_kind(result.error) });
         }
         clear_session(response, production);
@@ -598,12 +611,12 @@ function create_app(options = {}) {
         const deleted = fail_if(await admin_database(request).from('coupons').delete().eq('id', id).select('id').maybeSingle());
         return deleted ? response.json({ message: 'Cupón eliminado.' }) : response.status(404).json({ error: 'Cupón no encontrado.' });
     });
-    route('get', '/js/admin-console-v3.js', async (request, response) => response.sendFile(path.join(public_directory, 'js', 'admin.js')));
-    route('get', ['/admin', '/admin.html'], admin, async (request, response) => response.sendFile(path.join(views_directory, 'admin.html')));
+    route('get', '/js/admin-console-v3.js', async (request, response) => options.admin_script ? response.type('application/javascript').send(options.admin_script) : response.sendFile(path.join(public_directory, 'js', 'admin.js')));
+    route('get', ['/admin', '/admin.html'], admin, async (request, response) => options.admin_html ? response.type('html').send(options.admin_html) : response.sendFile(path.join(views_directory, 'admin.html')));
     route('get', ['/favoritos', '/favoritos.html'], async (request, response) => response.redirect(301, '/catalogo.html'));
     route('get', '/api/health', async (request, response) => {
         try {
-            await database_health(database);
+            await database_health(database, product_brand_column, options.checkout_schema_ready === true);
             response.json({ status: 'ok', api: true, database: 'ok' });
         } catch (error) {
             logger.error?.('Healthcheck de Supabase falló.', { kind: error_kind(error) });
@@ -613,7 +626,7 @@ function create_app(options = {}) {
 
     app.use((request, response) => request.path.startsWith('/api/')
         ? response.status(404).json({ error: 'Ruta API no encontrada.' })
-        : response.status(404).sendFile(path.join(public_directory, '404.html')));
+        : options.not_found_html ? response.status(404).type('html').send(options.not_found_html) : response.status(404).sendFile(path.join(public_directory, '404.html')));
     app.use((error, request, response, next) => {
         if (response.headersSent) return next(error);
         logger.error?.('Error inesperado de API.', { method: request.method, path: request.path, kind: error_kind(error) });

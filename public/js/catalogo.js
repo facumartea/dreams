@@ -1,4 +1,5 @@
 let catalog_products = [];
+let catalog_request_id = 0;
 
 const COLLECTION_VARIANTS = {
     mujer: {
@@ -77,12 +78,15 @@ async function load_brands() {
     const brands = await response.json();
     if (!response.ok || !Array.isArray(brands)) throw new Error('No se pudieron cargar las marcas.');
     const select = document.getElementById('brand-filter');
+    const selected = select.value;
+    select.length = 1;
     brands.forEach(brand => {
         const option = document.createElement('option');
         option.value = brand;
         option.textContent = brand;
         select.appendChild(option);
     });
+    select.value = selected;
 }
 
 async function apply_catalog_filters() {
@@ -101,10 +105,20 @@ async function apply_catalog_filters() {
     if (sort) params.set('sort', sort);
     if (max_price) params.set('max_price', max_price);
 
-    const response = await fetch(`/api/products?${params.toString()}`);
-    catalog_products = await response.json();
-    if (!response.ok || !Array.isArray(catalog_products)) throw new Error('No se pudo cargar el catálogo.');
-    render_catalog();
+    const request_id = ++catalog_request_id;
+    try {
+        const response = await fetch(`/api/products?${params.toString()}`);
+        const data = await response.json();
+        if (request_id !== catalog_request_id) return;
+        if (!response.ok || !Array.isArray(data)) throw new Error('No se pudo cargar el catálogo.');
+        catalog_products = data;
+        render_catalog();
+    } catch {
+        if (request_id !== catalog_request_id) return;
+        document.getElementById('results-count').textContent = '0';
+        document.getElementById('catalog-products').innerHTML = '<div class="empty-state"><h2>No pudimos cargar la colección.</h2><p>Revisá tu conexión e intentá nuevamente.</p><button id="retry-catalog" class="button button-dark" type="button">Reintentar</button></div>';
+        document.getElementById('retry-catalog').addEventListener('click', apply_catalog_filters);
+    }
 }
 
 function render_catalog() {

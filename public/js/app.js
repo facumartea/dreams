@@ -14,7 +14,7 @@ function get_public_config() {
             const data = await response.json();
             if (!response.ok) throw new Error('No se pudo cargar la configuración pública.');
             return data;
-        });
+        }).catch(error => { public_config_promise = undefined; throw error; });
     }
     return public_config_promise;
 }
@@ -206,7 +206,7 @@ async function load_featured_products() {
     container.innerHTML = Array.from({ length: 4 }, () => '<div class="skeleton-card" aria-hidden="true"></div>').join('');
 
     try {
-        const response = await fetch(`${api}/products`);
+        const response = await fetch(`${api}/products?limit=8`);
         const products = await response.json();
         if (!response.ok || !Array.isArray(products)) throw new Error('No se pudieron cargar los perfumes.');
         container.innerHTML = '';
@@ -303,13 +303,16 @@ async function setup_review_form() {
 }
 
 function get_recent_products() {
-    try { return JSON.parse(localStorage.getItem('dreams_recent')) || []; } catch (error) { return []; }
+    try {
+        const value = JSON.parse(localStorage.getItem('dreams_recent'));
+        return Array.isArray(value) ? value.filter(item => item && typeof item === 'object' && Number.isSafeInteger(Number(item.id)) && Number(item.id) > 0 && typeof item.name === 'string' && typeof item.brand === 'string').slice(0, 6) : [];
+    } catch { return []; }
 }
 
 function save_recent_product(product) {
     const recent = get_recent_products().filter(item => item.id !== product.id);
     recent.unshift({ id: product.id, name: product.name, brand: product.brand, price: product.price, image_url: product.image_url, stock: product.stock, size_ml: product.size_ml, gender: product.gender });
-    localStorage.setItem('dreams_recent', JSON.stringify(recent.slice(0, 6)));
+    try { localStorage.setItem('dreams_recent', JSON.stringify(recent.slice(0, 6))); } catch { /* Storage bloqueado: el detalle sigue disponible. */ }
 }
 
 function render_recent_products() {

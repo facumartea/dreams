@@ -1,3 +1,5 @@
+> Actualización verificada 2026-10-06: estado vigente en CURRENT_STATE.md; evidencias y límites nuevos en [docs/cloudflare_validation.md](docs/cloudflare_validation.md), arquitectura/publicación/rollback en [docs/cloudflare_migration.md](docs/cloudflare_migration.md). Destino actualizado a Cloudflare por instrucción del usuario; no deploy remoto ni cambio DNS. El contenido siguiente conserva historia y no reemplaza las verificaciones nuevas.
+
 ## Revalidación de continuidad — 2026-10-05
 
 Esta sección prevalece sobre las instantáneas históricas que siguen. Repositorio facumartea/dreams, main base 4655b0c; PR #33 sin fusionar. Código y documentación recuperados del SHA base por GitHub; estructura completa inventariada, ramas y commits recientes contrastados. No se inició una aplicación nueva.

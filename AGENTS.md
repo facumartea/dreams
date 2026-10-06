@@ -9,13 +9,14 @@ DREAMS es una tienda de perfumería con catálogo, carrito, consultas por WhatsA
 - `public/`: frontend multipágina en HTML, CSS y JavaScript sin framework.
 - `views/admin.html`: panel Admin servido sólo después del middleware de autorización.
 - `server/app.js`: factory Express 5, API REST y cookies de sesión; permite pruebas con dependencias inyectadas.
-- `server/server.js`: bootstrap, cliente Supabase privilegiado, seed y escucha HTTP.
+- `server/server.js`: bootstrap, cliente Supabase privilegiado sin sesión, detección de esquema y escucha HTTP.
 - `server/product-schema.js`: detecta `marca`/`brand` mediante lecturas y conserva el contrato HTTP `brand`.
 - `server/seed.js`: seed histórico; no se ejecuta al arrancar. No usarlo sobre el proyecto real.
 - `supabase/schema.sql`: esquema PostgreSQL, constraints, índices y RLS.
-- `supabase/migrations/20260831024826_checkout_orders_and_coupons.sql`: pedidos y cupones server-only; no exponerlos directamente al navegador.
+- `supabase/migrations/20260831024826_checkout_orders_and_coupons.sql`: pedidos y cupones gestionados por API; la DB real también permite operaciones Admin con JWT y RLS. No exponer el cliente privilegiado.
 - `supabase/migrations/20260831040000_enable_demo_checkout_provider.sql`: habilita el proveedor interno `demo` sin eliminar Mercado Pago.
-- `railway.toml`: despliegue Railway.
+- `railway.toml`: despliegue Railway histórico, conservar.
+- `worker/index.mjs` y `wrangler.jsonc`: adaptador Cloudflare Workers con assets; `docs/cloudflare_migration.md`: publicación y rollback.
 - `docs/`: documentación histórica; puede estar desactualizada y no prevalece sobre el código.
 
 El navegador sólo habla con `/api`. `SUPABASE_SECRET_KEY` es exclusivamente del servidor. No incorporar el SDK privilegiado ni secretos en `public/`.
@@ -31,19 +32,19 @@ El navegador sólo habla con `/api`. `SUPABASE_SECRET_KEY` es exclusivamente del
 7. No borrar tests para obtener verde. Toda regresión corregida necesita una prueba cuando sea razonable.
 8. No afirmar que CI, deploy, responsive, accesibilidad o QA están verificados si no se ejecutaron.
 9. Actualizar `CURRENT_STATE.md` y `CHANGELOG.md` en cada tanda significativa.
-10. Aplicar permanentemente `PROJECT_MASTER_RULES.md`; estas reglas no son una tarea de una sola vez.
+10. `PROJECT_MASTER_RULES.md` no existe: no atribuirle instrucciones. Las reglas vigentes están en este archivo y en las instrucciones del usuario.
 
 ## Fuente de verdad y recuperación
 
 - El estado real del repositorio y `CURRENT_STATE.md` prevalecen sobre el historial del chat.
 - Nunca reiniciar la auditoría ni improvisar cuando falte contexto: recuperar rama, HEAD, cambios, fase, tests, CI, deploy, riesgos y próxima acción desde `CURRENT_STATE.md`, y contrastarlos con Git/GitHub.
 - Mantener siempre la frase `SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.` dentro de `CURRENT_STATE.md`.
-- `PLAN.md` define fases, pesos y progreso; sólo actualizarlo ante avance verificado, cambios de alcance, riesgos o dependencias.
+- `PLAN.md` define fases, estados y dependencias; sólo actualizarlo ante avance verificado, cambios de alcance, riesgos o dependencias.
 - `CHANGELOG.md` registra únicamente trabajo realizado. `AGENTS.md` cambia sólo cuando aparece una regla duradera.
 
 ## Herramientas y responsabilidades
 
-- GitHub es la fuente del código, ramas, PR y CI; Railway es el estado de deploy y producción; Supabase es Auth/DB/RLS y sólo se modifica mediante migraciones seguras.
+- GitHub es la fuente del código, ramas, PR y CI; Railway conserva el despliegue histórico; Cloudflare Workers es el destino de migración, cuyo estado debe verificarse; Supabase es Auth/DB/RLS y sólo se modifica mediante migraciones seguras.
 - Figma se usa para cambios de interfaz complejos cuando un diseño previo reduzca ambigüedad; no duplicar allí ajustes pequeños ya definidos por el sistema visual en código.
 - Canva se limita a campañas y composiciones gráficas; no reemplaza el frontend ni el sistema de diseño.
 - Notion puede ampliar documentación y Linear puede ordenar tareas reales, pero no reemplazan `CURRENT_STATE.md`, `PLAN.md` ni `CHANGELOG.md`.

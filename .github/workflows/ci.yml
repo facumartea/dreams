@@ -40,3 +40,6 @@ jobs:
 
       - name: Run tests
         run: pnpm test
+
+      - name: Build Cloudflare preview bundle without deployment
+        run: pnpm run build:cloudflare

@@ -382,3 +382,82 @@ test('rutas web inexistentes responden una página 404 real', async () => {
         assert.match(await response.text(), /Esta página no existe/);
     });
 });
+
+test('login y registro aíslan dos sesiones del cliente privilegiado', async () => {
+    const database = database_with(() => ({ data: { name: 'Cliente', role: 'customer' }, error: null }));
+    database.auth.signInWithPassword = database.auth.signUp = async () => assert.fail('no autenticar en el cliente privilegiado');
+    const clients = [];
+    const create_auth_client = () => {
+        const client = { session: null, auth: {} };
+        const sign = async ({ email }) => {
+            client.session = email;
+            return { data: { user: { id: email, email }, session: { access_token: email, refresh_token: `refresh-${email}`, expires_in: 3600 } }, error: null };
+        };
+        client.auth.signInWithPassword = client.auth.signUp = sign;
+        clients.push(client);
+        return client;
+    };
+    await serve(create_app({ database, create_auth_client, disable_request_log: true }), async base => {
+        const responses = await Promise.all(['ana', 'bea'].map(name => fetch(base + '/api/auth/login', {
+            method: 'POST', headers: { 'Content-Type': 'application/json', Origin: base }, body: JSON.stringify({ email: `${name}@example.com`, password: 'test-password' })
+        })));
+        assert.deepEqual(responses.map(response => response.status), [200, 200]);
+        assert.match(responses[0].headers.get('set-cookie'), /ana%40example.com/);
+        assert.match(responses[1].headers.get('set-cookie'), /bea%40example.com/);
+        const registered = await fetch(base + '/api/auth/register', { method: 'POST', headers: { 'Content-Type': 'application/json', Origin: base }, body: JSON.stringify({ name: 'Cris', email: 'cris@example.com', password: 'test-password' }) });
+        assert.equal(registered.status, 200);
+        assert.equal(new Set(clients).size, 3);
+        assert.deepEqual(clients.map(client => client.session), ['ana@example.com', 'bea@example.com', 'cris@example.com']);
+        assert.equal((await fetch(base + '/api/auth/me').then(response => response.json())).user, null);
+    });
+});
+
+test('refresh usa cliente aislado; logout revoca local y borra ambas cookies', async () => {
+    const database = database_with(() => ({ data: { name: 'Ana', role: 'customer' }, error: null }));
+    database.auth.getUser = async token => ({ data: { user: token === 'new-access' ? { id: 'ana', email: 'ana@example.com' } : null } });
+    database.auth.admin.signOut = async () => assert.fail('logout no usa cliente global');
+    let refreshes = 0, revokes = 0;
+    const create_auth_client = () => ({ auth: {
+        refreshSession: async input => {
+            assert.equal(input.refresh_token, 'old-refresh'); refreshes++;
+            return { data: { user: { id: 'ana', email: 'ana@example.com' }, session: { access_token: 'new-access', refresh_token: 'new-refresh', expires_in: 3600 } }, error: null };
+        },
+        admin: { signOut: async (token, scope) => { assert.equal(token, 'new-access'); assert.equal(scope, 'local'); revokes++; return { error: null }; } }
+    } });
+    await serve(create_app({ database, create_auth_client, disable_request_log: true }), async base => {
+        const restored = await fetch(base + '/api/auth/me', { headers: { Cookie: 'dreams_access_token=expired; dreams_refresh_token=old-refresh' } });
+        assert.equal((await restored.json()).user.id, 'ana');
+        assert.match(restored.headers.get('set-cookie'), /new-access/);
+        const logout = await fetch(base + '/api/auth/logout', { method: 'POST', headers: { Cookie: 'dreams_access_token=new-access', Origin: base } });
+        assert.equal(logout.status, 200);
+        assert.equal(logout.headers.getSetCookie().length, 2);
+        for (const cookie of logout.headers.getSetCookie()) assert.match(cookie, /Max-Age=0/);
+        assert.equal(refreshes, 1); assert.equal(revokes, 1);
+    });
+});
+
+test('health detecta esquema incompleto, incluye checkout cuando está habilitado', async () => {
+    const calls = [];
+    const database = database_with(table => ({ data: [], error: table === 'coupons' ? { code: '42703', message: 'private details' } : null }));
+    const original = database.from;
+    database.from = table => { calls.push(table); return original(table); };
+    await serve(create_app({ database, checkout_schema_ready: true, product_brand_column: 'marca', disable_request_log: true, logger: { error() {} } }), async base => {
+        const response = await fetch(base + '/api/health');
+        assert.equal(response.status, 503);
+        assert.ok(calls.includes('orders') && calls.includes('coupons') && calls.includes('profiles'));
+        assert.doesNotMatch(await response.text(), /private details/);
+    });
+});
+
+test('home puede limitar productos en servidor sin recortar catálogo completo', async () => {
+    let requested;
+    const database = database_with(() => ({ data: [], error: null }));
+    database.from = () => { const q = query({ data: [], error: null }); q.limit = n => { requested = n; return q; }; return q; };
+    await serve(create_app({ database, disable_request_log: true }), async base => {
+        assert.equal((await fetch(base + '/api/products?limit=8')).status, 200);
+        assert.equal(requested, 8);
+        requested = undefined;
+        await fetch(base + '/api/products'); assert.equal(requested, undefined);
+        await fetch(base + '/api/products?limit=10000'); assert.equal(requested, 100);
+    });
+});
