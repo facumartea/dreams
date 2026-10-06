@@ -61,6 +61,62 @@ No poner secretos en argumentos shell, archivos versionados o PR. Cargar mediant
 
 La prueba local de solo lectura utilizó una clave pública en el binding que normalmente contiene el secreto. Esto NO valida privilegios ni Auth remoto y NO es una configuración válida para desplegar la aplicación completa.
 
+## Continuación de PR34: acceso y comprobación de preview
+
+Revisión del 2026-10-06 (America/Buenos_Aires): HEAD `fdbca5a74992deadc1816430cfa05320827555f9`, CI SUCCESS [run 37530792193](https://github.com/facumartea/dreams/actions/runs/37530792193), 89/89 tests, check 32 y build. Wrangler no autenticado; gestor del entorno sin credenciales. Esto **no prueba que los secretos remotos estén ausentes**: sus nombres/bindings no pueden consultarse hasta autenticar la cuenta. No hay URL de preview obtenida.
+
+### Acceso seguro desde este entorno remoto
+
+- Preferir token restringido a la cuenta destino, cargado mediante el gestor seguro del entorno como `CLOUDFLARE_API_TOKEN`; seleccionar la cuenta real con `CLOUDFLARE_ACCOUNT_ID`. Permiso de edición de scripts Workers y lectura de logs para esta tarea; no solicitar permisos DNS, routes de zonas, Pages, D1, KV o R2 sin necesidad. No usar una Global API Key.
+- Alternativa OAuth para contenedor/SSH sin callback localhost: comando verificado en Wrangler 4.147.0:
+
+```sh
+umask 077
+pnpm exec wrangler login --device --scopes account:read user:read workers_scripts:write workers_tail:read
+pnpm exec wrangler whoami
+```
+
+El navegador sólo recibe un código de autorización temporal, no el token. No guardar el código/URL de autorización en Git. Wrangler añade offline_access internamente; no pasarlo como scope CLI. No usar la modalidad temporary como sustitución de una cuenta autenticada. Las credenciales OAuth quedan gestionadas por Wrangler fuera del repo; usar permisos restrictivos/keychain disponible, no copiar su archivo a Git ni mostrarlo.
+
+### Credencial Supabase identificada por código
+
+`worker/index.mjs` consume **`env.SUPABASE_SECRET_KEY`** como segundo argumento de `createClient(env.SUPABASE_URL, ...)`, junto a clientes auth aislados y un cliente servidor. `server/app.js` usa ese cliente para perfiles y escrituras controladas por API; las llamadas Auth Admin también requieren privilegios elevados. No es una contraseña PostgreSQL, un JWT de usuario ni un Supabase Management Access Token.
+
+La clave debe ser una API key backend del proyecto existente: secret key moderna (`sb_secret_...`) o una `service_role` legacy ya vigente y verificada. El nombre del binding no determina cuál está configurada: el tipo **real** sigue sin verificar porque no hay valor disponible ni acceso al Worker. No rotar ni crear credenciales para superar este bloqueo. Referencia oficial: [API keys Supabase](https://supabase.com/docs/guides/api/api-keys).
+
+El SDK está en el bundle **servidor Worker**; eso es distinto del bundle del navegador. `public/` no importa createClient ni contiene referencias a SUPABASE_SECRET_KEY o valores sb_secret. `/api/config` sólo retorna campos públicos explícitos; no devuelve env. Secret values se inyectan en runtime, no con --var ni sustitución durante build.
+
+### Verificar y configurar sólo el servicio preview
+
+```sh
+pnpm exec wrangler deployments list --env preview
+pnpm exec wrangler secret list --env preview
+```
+
+Estos comandos consultan versiones y **nombres** de secretos, sin valores. Si existe `dreams-migration-preview`, revisar cuenta, bindings, URL de Supabase y versión antes de sobrescribirlo; no asumir que es un servicio descartable. Si el secreto ya existe, conservarlo y verificar acceso con health; no recrearlo a ciegas.
+
+Cuando haga falta cargarlo, el usuario debe abrir el servicio `dreams-migration-preview` en Cloudflare → Settings → Variables and Secrets → añadir **Secret** `SUPABASE_SECRET_KEY`, o usar `pnpm exec wrangler secret put SUPABASE_SECRET_KEY --env preview` con entrada interactiva oculta. Obtener la clave desde el dashboard Supabase del proyecto existente. No pegarla en el chat, argumentos, PR o logs. Si el Worker todavía no existe, preparar secretos/vars en el flujo de creación de la preview y verificar que no publique una versión funcional sin límites de acceso.
+
+Configurar las variables servidor `SUPABASE_URL` (mismo proyecto real), APP_BASE_URL y APP_ORIGINS con la **URL HTTPS asignada realmente** por Cloudflare; no inventar el subdominio. `keep_vars` conserva vars adicionales del dashboard; revisar settings remotos antes y después de desplegar. El comando concreto es `pnpm run deploy:cloudflare:preview` (`wrangler deploy --env preview`). No tiene routes DNS/custom-domain ni bindings de colas/cron/DB nueva; verificar triggers remotos si el servicio ya existe.
+
+El preview usa demo con CHECKOUT_SCHEMA_READY=false, DEMO_AUTO_CONFIRM_EMAIL=false y CHECKOUT_SHOW_TEST_DATA=false. No necesita credenciales Mercado Pago para lecturas. Demo **no equivale a no escribir datos**: habilitar checkout crearía orders en Supabase. Registro convencional puede enviar correo, y login de un usuario sin perfil puede crear uno. Restringir acceso a la preview a los testers antes de usar una clave privilegiada contra la DB real; no registrar usuarios, publicar opiniones, consultas, editar Admin ni habilitar compras sobre datos comerciales durante QA.
+
+### Matriz de validación remota pendiente
+
+| Flujo | Comprobación segura tras deploy | Estado en esta continuación |
+|---|---|---|
+| Catálogo/detalle/marcas/búsqueda/imágenes/assets | Lecturas HTTP y navegador; registrar imágenes fallidas sin sustituirlas | BLOQUEADO sin preview |
+| Carrito/persistencia/quote | localStorage y quote sin cupón/pedido nuevo | BLOQUEADO sin preview |
+| API/health/errors/redirects/private cache | GET/HEAD, 404, Admin anónimo 403, no-store y CSP | BLOQUEADO sin preview |
+| Auth/refresh/logout | Sólo cuentas de prueba existentes con perfil; comprobar cookies Secure/HttpOnly/SameSite | PENDIENTE cuenta de prueba y preview |
+| Recuperación de contraseña | No hay flujo implementado; no enviar recovery a clientes | NO EXISTE actualmente |
+| Checkout/webhooks | Comprobar disabled; escenarios de pago sólo en entorno de pruebas aislado y disponible | PENDIENTE, sin pedidos/cobros reales |
+| Admin | Anónimo rechazado; lectura autorizada con tester Admin; no CRUD real | PENDIENTE credenciales de prueba |
+| Responsive/identidad | Repetir seis viewports sobre URL real; no extrapolar QA local | BLOQUEADO sin preview |
+| Logs/versión/bindings | Inspeccionar versión desplegada, categorías de error y configuración sin valores secretos | BLOQUEADO sin acceso |
+
+No modificar Site URL o redirect allowlist de Supabase sólo por desplegar: login/refresh actuales son cookies del backend, sin OAuth/recovery callback implementado. Si un flujo real necesita una URL adicional, añadir sólo la preview conservando las existentes y verificarla; no retirar orígenes actuales.
+
 ## Publicación de prueba — bloqueos exactos
 
 Faltan acceso Cloudflare (Wrangler `whoami`: no autenticado) y clave Supabase servidor por canal seguro. No hay credenciales configuradas ni integración Cloudflare encontrada; el directorio de plugins puede tener otras opciones. No pedirlas como texto del chat.

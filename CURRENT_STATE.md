@@ -15,8 +15,18 @@ El pedido inicial de auditoría fue reemplazado por autorización de recuperaci�
 - Implementación publicada: `f0d52d620497882b68b2c50e244db6f84a7ef2b8` (29 archivos de esta tanda). Push remoto verificado por SHA.
 - PR nueva de migración: https://github.com/facumartea/dreams/pull/34, abierta, base main, sin merge. Incluye la base de PR33 sin cerrar/alterar esa PR; PR32 excluida.
 - CI del commit de implementación: SUCCESS, https://github.com/facumartea/dreams/actions/runs/37530615797 (verify 27 s). Check Supabase Preview SKIPPED: no se creó un proyecto Supabase nuevo.
-- Esta actualización es un checkpoint documental posterior; su SHA se obtiene con git log. No confundir el CI de implementación con un futuro SHA documental sin verificar.
+- HEAD revisado de PR34: `fdbca5a74992deadc1816430cfa05320827555f9`; CI SUCCESS confirmado para ese SHA exacto (run 37530792193, 89/89, check 32, build). Toda actualización documental posterior debe contrastarse con git log/checks de PR34.
 - Historia anterior preservada en `docs/history/CURRENT_STATE_PR33.md` y `docs/history/PLAN_PR33.md`; sus cifras/hosting NO son estado vigente.
+
+## Continuación de preview (2026-10-06, America/Buenos_Aires)
+
+PR34 abierta, rama existente preservada y sin cambios de implementación. Revisión de bindings: assets públicos; sin cron/colas nuevas; checkout deshabilitado y MP no activo en preview. El registro y reparación de perfiles sí pueden escribir, así que no usarlos sobre datos comerciales en QA.
+
+Acceso rechecado: Wrangler no autenticado, sin tokens Cloudflare ni secreto Supabase en proceso/gestor; no archivos locales de bindings. No se pudo consultar secretos/bindings remotos; NO afirmar que están ausentes. Se inició OAuth por dispositivo con scopes account/user read, workers_scripts write y workers_tail read; código temporal no persistido. Resultado final de acceso se registra al cerrar la continuación.
+
+Build preview dry-run reejecutado en el SHA fdbca5a: correcto, 2156,08 KiB / gzip 499,93 KiB; no deploy. Auditoría estática de public: sin createClient, SUPABASE_SECRET_KEY ni valores sb_secret. Tipo real de la clave sigue sin comprobar; el binding requiere API key backend privilegiada (secret moderna o service_role vigente), no contraseña DB ni token Management.
+
+Guía precisa de acceso seguro, nombres de secretos, matriz remota y efectos comerciales: docs/cloudflare_migration.md, sección Continuación de PR34. Mantener código y PR existentes; no iniciar otra implementación.
 
 ## Hechos comprobados
 

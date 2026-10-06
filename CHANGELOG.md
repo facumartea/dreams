@@ -1,3 +1,11 @@
+# Continuación de preview PR34 — 2026-10-06 (America/Buenos_Aires)
+
+- Revisión de PR34/HEAD fdbca5a y CI del mismo SHA: SUCCESS, run 37530792193; no cambios en código de aplicación.
+- Reejecutado build preview dry-run correctamente; auditada separación de credencial servidor y assets públicos.
+- Acceso comprobado sin revelar valores: Wrangler no autenticado; entorno sin bindings de credenciales; secretos remotos no consultables.
+- Iniciado OAuth por dispositivo con scopes acotados; actualizada guía segura de configuración, credencial Supabase requerida y matriz de validación remota pendiente.
+- Advertidos efectos reales de registro/reparación de perfiles y checkout demo; no se ejecutaron mutaciones, correos, pagos, DNS ni deploy.
+
 # Recuperación y migración Cloudflare — 2026-10-06
 
 - Recuperada base PR33, sin mezclar PR32: compatibilidad marca/brand, seed retirado del arranque y dependencias corregidas.
