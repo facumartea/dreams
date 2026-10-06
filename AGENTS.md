@@ -10,7 +10,8 @@ DREAMS es una tienda de perfumería con catálogo, carrito, consultas por WhatsA
 - `views/admin.html`: panel Admin servido sólo después del middleware de autorización.
 - `server/app.js`: factory Express 5, API REST y cookies de sesión; permite pruebas con dependencias inyectadas.
 - `server/server.js`: bootstrap, cliente Supabase privilegiado, seed y escucha HTTP.
-- `server/seed.js`: catálogo inicial y alta opcional del administrador.
+- `server/product-schema.js`: detecta `marca`/`brand` mediante lecturas y conserva el contrato HTTP `brand`.
+- `server/seed.js`: seed histórico; no se ejecuta al arrancar. No usarlo sobre el proyecto real.
 - `supabase/schema.sql`: esquema PostgreSQL, constraints, índices y RLS.
 - `supabase/migrations/20260831024826_checkout_orders_and_coupons.sql`: pedidos y cupones server-only; no exponerlos directamente al navegador.
 - `supabase/migrations/20260831040000_enable_demo_checkout_provider.sql`: habilita el proveedor interno `demo` sin eliminar Mercado Pago.
@@ -84,6 +85,8 @@ corepack pnpm test
 ```
 
 `pnpm run check` valida la sintaxis de servidor, frontend, scripts y tests. `pnpm test` usa el test runner nativo de Node. La cobertura debe ampliarse en F15; no confundir la suite inicial con cobertura completa.
+
+El arranque sólo lee el esquema antes de escuchar HTTP; no carga productos ni crea/promueve administradores. El acceso Admin usa perfiles ya existentes. `PROJECT_MASTER_RULES.md` está referenciado históricamente pero no existe en el árbol actual: no inventar su contenido.
 
 Variables obligatorias: `SUPABASE_URL`, `SUPABASE_SECRET_KEY`. Variables operativas: `NODE_ENV`, `PORT`, `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `ADMIN_NAME`, `CONTACT_EMAIL`, `WHATSAPP_NUMBER`, `APP_ORIGINS`, `DEMO_AUTO_CONFIRM_EMAIL`. Checkout: `APP_BASE_URL`, `CHECKOUT_PROVIDER`, `MERCADO_PAGO_MODE`, `MERCADO_PAGO_ACCESS_TOKEN`, `MERCADO_PAGO_WEBHOOK_SECRET`, `CHECKOUT_SCHEMA_READY` y `CHECKOUT_SHOW_TEST_DATA`. Tokens/secrets son sólo servidor. `DEMO_AUTO_CONFIRM_EMAIL=true` crea cuentas de prueba confirmadas desde servidor, siempre con rol `customer`; antes de una tienda real debe volver a `false` y reactivarse `Confirm email` en Supabase Auth. No activar `CHECKOUT_SCHEMA_READY` antes de aplicar y verificar la migración indicada en `docs/checkout_sandbox.md`. `CONTACT_EMAIL` puede exponerse en la UI; `ADMIN_EMAIL` no. `APP_ORIGINS` contiene los orígenes HTTPS exactos separados por coma y debe actualizarse antes de una migración de dominio. Nunca versionar `.env` real.
 

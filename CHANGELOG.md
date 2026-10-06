@@ -1,5 +1,18 @@
 # Changelog
 
+### 2026-10-05 — Recuperación del estado real y compatibilidad de esquema
+
+- Contrastado main 4655b0c con Supabase: products tiene marca, no brand, y conserva 46 productos/7 perfiles/1 consulta.
+- Adaptado el límite DB para catálogo, filtros, búsqueda, marcas, detalle, carrito y Admin, conservando brand en el contrato HTTP.
+- Arranque detecta marca/brand mediante sólo lecturas y falla ante errores reales; ya no ejecuta seed ni provisioning Admin.
+- Añadidas regresiones unitarias y HTTP con esquema marca; tests del servidor dejan de importar el bootstrap con credenciales ficticias.
+- Conservados frontend, assets y datos. No hubo migraciones ni mutaciones remotas.
+- CURRENT_STATE reescrito como checkpoint comprobado y PLAN/AGENTS alineados; historial anterior permanece aquí.
+- Detectado dominio Railway documentado caído: APIs devuelven 404 Application not found. Sin acceso Railway, no hubo deploy.
+- Instalación local bloqueada por ENOENT de escritura; check de 29 JS y 21/21 unitarios locales PASS.
+- CI inicial detectó 7 avisos (1 crítico/6 moderados). Corregidas exclusivamente las versiones del lockfile: proxy-addr 2.0.8, morgan 1.12.1 e ip-address 10.7.1, con integridades verificadas en npm.
+- CI 37403358659 SUCCESS sobre a20bfcd: instalación frozen, audit sin vulnerabilidades conocidas, check 29 JS y 81/81 tests PASS. PR #33 abierto, sin merge/deploy.
+
 ### 2026-09-08 — Base SEO técnica y 404 real
 
 - Añadidas descripciones, canonical y OpenGraph a las páginas públicas indexables del dominio `dreams-perfumes.up.railway.app`.
