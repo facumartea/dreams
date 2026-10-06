@@ -109,9 +109,13 @@ Capa de proveedor desacoplada, Checkout Pro oficial, recálculo server-side, ped
 
 Cupones persistentes server-only, código mayúsculo, constraints, CRUD Admin, activar/desactivar/eliminar, validación pública mediada por API, cálculo autoritativo en servidor, snapshot en pedido, UI premium y persistencia durante checkout. Para cerrar faltan CI/deploy, smoke autenticado en producción y prueba con un cupón real creado por Admin.
 
+## Bloque de estabilización — 2026-10-05
+
+El progreso 79,39% es histórico y no fue revalidado integralmente. Orden inmediato: (1) corregir el desacople products.marca/brand sin DDL, (2) evitar seed/provisioning automático al arrancar, (3) validar regresiones en CI, (4) recuperar el servicio/dominio Railway existente, (5) smoke público y QA autenticado aislado, (6) matriz responsive y checkout oficial Sandbox. Hosting devuelve Application not found y bloquea verificación de producción. No aumentar porcentajes por documentación o checks parciales.
+
 ## Próximo bloque exacto
 
-Completar la matriz visual de Hombre/Mujer/Unisex en 390x844, 430x932, 768x1024, 1024x768, 1440x900 y 1920x1080 con un navegador que permita fijar viewports. Después preparar datos descartables de QA para probar create/edit/delete con rollback sin tocar productos reales y avanzar archive/auditoría Admin.
+Revisar CI del PR de estabilización, recuperar Railway y desplegar con smoke verde. Después completar la matriz visual de Hombre/Mujer/Unisex en 390x844, 430x932, 768x1024, 1024x768, 1440x900 y 1920x1080 con un navegador que permita fijar viewports. Después preparar datos descartables de QA para probar create/edit/delete con rollback sin tocar productos reales y avanzar archive/auditoría Admin.
 
 ## Expansión premium mapeada al roadmap
 
