@@ -6,7 +6,7 @@
 
 - Repositorio real: https://github.com/facumartea/dreams.
 - Base verificada: main `4655b0cbdcec8ad2aade4cdde03ef60b22652bf1`, merge de PR #31 (SEO).
-- Rama de esta tanda: `codex/restore-schema-continuity`; commit/PR/CI se verifican en GitHub, no asumir el HEAD a partir de este archivo.
+- Rama de esta tanda: `codex/restore-schema-continuity`; [PR #33](https://github.com/facumartea/dreams/pull/33), sin fusionar. Commit funcional `fa6943ad0389b57b8066407842f392a794b70f9a`; parche de dependencias `a20bfcd8de7308da41b7b4981632c121da0807da`. Verificar el HEAD documental actual en GitHub.
 - La carpeta de esta conversación no contenía un checkout. Git y pnpm fallaron al crear archivos con ENOENT. Se recuperaron los archivos de texto del SHA base mediante el conector GitHub y apply_patch. La copia local es parcial, sin assets binarios ni dependencias; no es un checkout Git.
 - Los registros anteriores de 69/74/76 tests y deploys corresponden a tandas históricas. No prueban el estado actual.
 - El 79,39% de PLAN.md es una estimación histórica sin revalidación integral; esta tanda no la incrementa.
@@ -51,15 +51,17 @@ Railway se conserva como proveedor declarado. railway.toml usa node server/serve
 Dominio documentado: https://dreams-perfumes.up.railway.app.
 Smoke actual: /api/health, /api/products, /api/checkout/config, /api/auth/me y /admin devuelven 404 de Railway, con Application not found en las APIs. Esto no es el 404 de Express; no confirma un deploy activo ni permite QA funcional de producción.
 
-No hay herramientas Railway conectadas en esta sesión. No se verificaron variables, logs, dominio activo, deployment ni SHA servido. Los IDs de deploy históricos del changelog no describen el estado actual. No hubo deploy ni cambio de proveedor/dominio.
+El catálogo de plugins ofrece Railway pero no está instalado/conectado; se presentó su sugerencia de conexión. No hay herramientas Railway conectadas en esta sesión. No se verificaron variables, logs, dominio activo, deployment ni SHA servido. Los IDs de deploy históricos del changelog no describen el estado actual. No hubo deploy ni cambio de proveedor/dominio.
 
 ## Tests y validación de esta tanda
 
 - Node local disponible: 24.19.0.
-- Check inicial de los cambios: PASS (27 JavaScript antes de agregar regresiones).
+- Check local final: PASS, 29 JavaScript; unitarios disponibles sin dependencias: 21/21 PASS.
 - Nuevas pruebas unitarias del adaptador/detección: PASS en ejecución parcial.
 - La ejecución parcial inicial registró 37 PASS y 2 fallos de entorno: asset binario no recuperado y dotenv no instalado. No se borraron tests ni se fabricaron assets.
-- pnpm install --frozen-lockfile: bloqueado por ENOENT al crear archivo temporal. La suite completa, integración HTTP, audit y assets se validan en CI del PR; consultar el resultado exacto en GitHub.
+- pnpm install --frozen-lockfile local: bloqueado por ENOENT al crear archivo temporal.
+- CI inicial falló en audit: 7 avisos (1 crítico y 6 moderados) en proxy-addr/morgan/ip-address. Lockfile actualizado únicamente a proxy-addr 2.0.8, morgan 1.12.1 e ip-address 10.7.1; integridades/dependencias comprobadas contra npm.
+- [CI 37403358659](https://github.com/facumartea/dreams/actions/runs/37403358659), SUCCESS sobre a20bfcd: frozen install PASS, audit sin vulnerabilidades conocidas, check 29 JS PASS, 81/81 tests PASS, cero omitidos. Incluye assets reales del repo e integración HTTP; no equivale a producción.
 - Las nuevas regresiones HTTP cubren marca en catálogo, búsqueda/filtro, marcas, detalle, carrito y create/update/consultas Admin con DB aislada.
 - No se ejecutaron mutaciones reales de Supabase ni compras.
 - Responsive de seis viewports, consola del navegador, accesibilidad manual, performance y E2E autenticado: pendientes; conservar el diseño hasta poder medir.
@@ -67,7 +69,7 @@ No hay herramientas Railway conectadas en esta sesión. No se verificaron variab
 ## Problemas conocidos y pendientes
 
 1. Restaurar o identificar el dominio/servicio Railway activo mediante acceso al proveedor.
-2. Validar CI completo y revisar el diff de este PR antes de integrar; no fusionar main sin evidencia verde.
+2. Revisar el diff y validar el HEAD documental final de este PR antes de integrar; el HEAD funcional/dependencias ya pasó CI completo.
 3. Verificar el arranque con Supabase y las rutas públicas tras desplegar.
 4. QA autenticado aislado de roles/Admin/checkout/cupons y matriz responsive definida en PLAN.md.
 5. Mercado Pago Sandbox requiere configuración oficial y compra de prueba real; demo no equivale a cobros funcionales.

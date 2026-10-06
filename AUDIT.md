@@ -1,3 +1,40 @@
+## Revalidación de continuidad — 2026-10-05
+
+Esta sección prevalece sobre las instantáneas históricas que siguen. Repositorio facumartea/dreams, main base 4655b0c; PR #33 sin fusionar. Código y documentación recuperados del SHA base por GitHub; estructura completa inventariada, ramas y commits recientes contrastados. No se inició una aplicación nueva.
+
+| Área | Estado comprobado / límite |
+|---|---|
+| Frontend | HTML/CSS/JS multipágina, assets de marca y paletas existentes; sin cambios visuales |
+| Backend/API | Express 5; factory inyectable; catálogo, marcas, cotización, auth, reviews, consultas, checkout y Admin |
+| Auth | Supabase Auth, cookies HttpOnly y refresh, roles en profiles; falta QA real/recuperación/MFA |
+| DB | Supabase ACTIVE_HEALTHY, 7 tablas con RLS; 46 productos, 7 perfiles, 1 consulta; otras tablas vacías |
+| Esquema | products.marca real frente a brand del código anterior; corregido en límite DB, sin DDL |
+| Productos/imágenes | image_url presente en los 46 productos; carga de cada imagen no verificada |
+| Carrito | cotización server-side de precio/stock; regresión marca y suite HTTP verdes en CI |
+| Checkout/pedidos | demo y Mercado Pago existentes; orders vacía, no se generó compra falsa; cobros Sandbox/E2E pendientes |
+| Reviews | modelo general, tabla vacía; cobertura aislada existente; no inventar opiniones |
+| Favoritos | retirado previamente, redirecciones conservadas, tabla vacía intacta |
+| Cupones | CRUD/cálculo/snapshots existentes y cobertura aislada; tabla vacía, límites/concurrencia pendientes |
+| Admin | JWT y RLS existentes; create/update marca probado en DB aislada; sin mutaciones reales |
+| Dependencias | CI inicial: 7 avisos, 1 crítico; lock de proxy-addr/morgan/ip-address actualizado; audit final limpio |
+| Scripts/build | start/dev/check/test/ci, sin script build; check 29 JS verde |
+| Git | rama codex/restore-schema-continuity, PR #33; main intacta, sin force-push |
+| CI | run 37403358659 SUCCESS en a20bfcd; frozen install/audit/check y 81/81 tests, cero omitidos |
+| Deployment | railway.toml existente; dominio documentado devuelve 404 Railway Application not found; sin acceso conectado |
+| Responsive/QA | seis viewports, consola, accesibilidad, performance y QA autenticado real pendientes |
+
+Arranque anterior ejecutaba seed/provisioning automático. Se retiró esa llamada: los reinicios ya no insertan catálogo histórico ni promueven perfiles Admin. seed.js permanece como referencia histórica, fuera del arranque.
+
+No se modificaron productos, precios, imágenes, usuarios, pedidos, cupones, opiniones, políticas o schema remotos. Lecturas SQL verificaron el esquema y que las proyecciones con marca leen 46 filas. Las tablas orders/coupons tienen grants authenticated limitados, protegidos por policies Admin; anon no tiene grants en esas dos tablas.
+
+Advisors: [contraseñas filtradas desactivadas](https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection) y [helper SECURITY DEFINER callable](https://supabase.com/docs/guides/database/database-linter?lint=0029_authenticated_security_definer_function_executable). El helper verifica auth.uid()/rol y usa search_path vacío; revocar su permiso sin pruebas rompería policies.
+
+Avisos corregidos: [proxy-addr](https://github.com/advisories/GHSA-jqcg-44mw-7w3h), [morgan](https://github.com/advisories/GHSA-9f6g-j8ch-79g4), [ip-address](https://github.com/advisories/GHSA-h3mg-xc3c-68pw), más los otros cuatro avisos reportados por audit de CI en estos mismos paquetes.
+
+Bloqueo concreto de cierre: conectar Railway o identificar dominio activo, recuperar deployment existente sin cambiar proveedor, desplegar código validado y ejecutar smoke/E2E. No declarar el e-commerce listo para ventas reales mientras pagos, inventario/concurrencia y QA integral no se verifiquen.
+
+---
+
 # Auditoría F0 — DREAMS
 
 Fecha de corte: 2026-08-28. Base auditada: `f3533d7fd0efc653eb39a1cfc8b0f39656068254` (`main`).
