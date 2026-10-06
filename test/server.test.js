@@ -1,9 +1,9 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 
-process.env.SUPABASE_URL = 'https://example.supabase.co';
-process.env.SUPABASE_SECRET_KEY = 'test-only-placeholder';
-const { app, validate, validate_product_image_url, IMAGE_URL_ERROR, payload, order_number, database_health, auth_cookie, session, parse_id, normalize_cart_items, quote_cart, execute_database_query } = require('../server/server');
+const { create_app, validate, validate_product_image_url, IMAGE_URL_ERROR, payload, order_number, database_health, auth_cookie, session, parse_id, normalize_cart_items, quote_cart, execute_database_query } = require('../server/app');
+
+const app = create_app({ database: {}, disable_request_log: true });
 
 test('validación de producto rechaza números y URLs inseguros', () => {
     const valid = {

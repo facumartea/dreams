@@ -1,5 +1,6 @@
 const path = require('node:path');
 const { randomUUID } = require('node:crypto');
+const { normalize_product_brand, product_write_payload, brand_column } = require('./product-schema');
 const express = require('express');
 const helmet = require('helmet');
 const morgan = require('morgan');
@@ -157,7 +158,7 @@ async function resolve_coupon(database, code, subtotal) {
 }
 
 const product = row => ({
-    ...row,
+    ...normalize_product_brand(row),
     featured: Boolean(row.featured),
     stock: Number(row.stock || 0),
     notes: {
@@ -201,13 +202,13 @@ function normalize_cart_items(items) {
     return { quantities };
 }
 
-async function quote_cart(database, items, coupon_code = '') {
+async function quote_cart(database, items, coupon_code = '', product_brand_column = 'brand') {
     const normalized = normalize_cart_items(items);
     if (normalized.error) return normalized;
     const ids = [...normalized.quantities.keys()];
-    const result = await database.from('products').select('id,brand,name,price,stock,image_url,size_ml').in('id', ids);
+    const result = await database.from('products').select(`id,${brand_column(product_brand_column)},name,price,stock,image_url,size_ml`).in('id', ids);
     if (result.error) throw result.error;
-    const products = new Map(result.data.map(item => [Number(item.id), item])), warnings = [], quoted = [];
+    const products = new Map(result.data.map(item => [Number(item.id), normalize_product_brand(item)])), warnings = [], quoted = [];
     for (const [id, requested] of normalized.quantities) {
         const item = products.get(id);
         if (!item) { warnings.push(`El producto ${id} ya no está disponible.`); continue; }
@@ -221,14 +222,26 @@ async function quote_cart(database, items, coupon_code = '') {
     return { items: quoted, warnings, ...(await resolve_coupon(database, coupon_code, subtotal)) };
 }
 
-async function database_health(database) {
-    const result = await execute_database_query(() => database.from('products').select('id', { count: 'exact', head: true }));
-    if (result.error) throw result.error;
+async function database_health(database, product_brand_column = 'brand', checkout_ready = false) {
+    const schemas = {
+        products: `id,${brand_column(product_brand_column)},name,price,stock,image_url,gender,category,featured,family,size_ml,top_notes,heart_notes,base_notes`,
+        profiles: 'id,name,role', reviews: 'id,user_id,user_name,rating,comment,created_at',
+        inquiries: 'id,product_id,product_name'
+    };
+    if (checkout_ready) Object.assign(schemas, { orders: 'id,user_id,provider,status,total,items', coupons: 'id,code,discount_percent,active' });
+    await Promise.all(Object.entries(schemas).map(async ([table, columns]) => {
+        const result = await execute_database_query(() => {
+            const query = database.from(table).select(columns, { head: true });
+            return typeof query.abortSignal === 'function' ? query.abortSignal(AbortSignal.timeout(5000)) : query;
+        });
+        if (result.error) throw result.error;
+    }));
     return true;
 }
 
 function create_app(options = {}) {
     const database = options.database;
+    const product_brand_column = brand_column(options.product_brand_column || 'brand');
     if (!database) throw new TypeError('create_app requiere una base de datos.');
     const production = options.production ?? process.env.NODE_ENV === 'production';
     const logger = options.logger || console;
@@ -253,8 +266,8 @@ function create_app(options = {}) {
     if (!options.disable_request_log) app.use(morgan(production ? 'combined' : 'dev'));
     app.use(express.json({ limit: '1mb' }), express.urlencoded({ extended: true, limit: '1mb' }));
     app.use(mutation_origin_guard(options.allowed_origins));
-    app.use('/api/auth', (request, response, next) => {
-        response.setHeader('Cache-Control', 'no-store');
+    app.use((request, response, next) => {
+        if (request.path === '/api' || request.path.startsWith('/api/') || ['/admin', '/admin.html'].includes(request.path) || /dreams_(access|refresh)_token=/.test(request.headers.cookie || '')) response.setHeader('Cache-Control', 'no-store');
         next();
     });
     app.use('/api/auth', rateLimit({ windowMs: 900000, limit: 20, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiados intentos. Probá nuevamente en unos minutos.' } }));
@@ -265,7 +278,7 @@ function create_app(options = {}) {
     app.use('/api/payments/webhook', rateLimit({ windowMs: 60000, limit: 120, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiadas notificaciones.' } }));
     const review_limiter = rateLimit({ windowMs: 3600000, limit: 5, standardHeaders: true, legacyHeaders: false, message: { error: 'Publicaste varias opiniones. Probá nuevamente más tarde.' } });
     app.use('/api/reviews', (request, response, next) => request.method === 'POST' ? review_limiter(request, response, next) : next());
-    app.use(express.static(public_directory));
+    app.use(options.static_middleware || express.static(public_directory));
 
     async function profile_for(user) {
         let result = await database.from('profiles').select('name,role').eq('id', user.id).maybeSingle();
@@ -315,17 +328,19 @@ function create_app(options = {}) {
     const route = (method, url, ...handlers) => app[method](url, ...handlers.map(handler => handler === login || handler === admin ? handler : async_route(handler)));
     const fail_if = result => { if (result.error) throw result.error; return result.data; };
 
-    route('get', '/api/config', async (request, response) => response.json({ whatsapp_number, contact_email, app_name: 'DREAMS' }));
+    route('get', '/api/config', async (request, response) => response.json({ whatsapp_number, contact_email, app_name: 'DREAMS', demo_auto_confirm_email }));
     route('get', '/api/checkout/config', async (request, response) => response.json({ enabled: checkout_enabled, provider: checkout_enabled ? payment_provider.name : null, mode: checkout_mode, show_test_data }));
     route('get', '/api/products', async (request, response) => {
         const search = String(request.query.search || '').trim().replace(/[^\p{L}\p{N}\s'-]/gu, '').slice(0, 80);
         const sort = String(request.query.sort || 'featured');
         const result = await execute_database_query(() => {
             let query = database.from('products').select('*');
-            for (const key of ['brand', 'gender', 'category']) if (request.query[key]) query = query.eq(key, String(request.query[key]).slice(0, 60));
+            for (const key of ['brand', 'gender', 'category']) if (request.query[key]) query = query.eq(key === 'brand' ? product_brand_column : key, String(request.query[key]).slice(0, 60));
             if (+request.query.max_price > 0) query = query.lte('price', +request.query.max_price);
-            if (search) query = query.or(`name.ilike.%${search}%,brand.ilike.%${search}%,family.ilike.%${search}%`);
-            return sort === 'price_asc' ? query.order('price') : sort === 'price_desc' ? query.order('price', { ascending: false }) : sort === 'name' ? query.order('name') : query.order('featured', { ascending: false }).order('id', { ascending: false });
+            if (search) query = query.or(`name.ilike.%${search}%,${product_brand_column}.ilike.%${search}%,family.ilike.%${search}%`);
+            query = sort === 'price_asc' ? query.order('price') : sort === 'price_desc' ? query.order('price', { ascending: false }) : sort === 'name' ? query.order('name') : query.order('featured', { ascending: false }).order('id', { ascending: false });
+            const limit = parse_id(request.query.limit);
+            return limit ? query.limit(Math.min(limit, 100)) : query;
         });
         response.json(fail_if(result).map(product));
     });
@@ -335,7 +350,7 @@ function create_app(options = {}) {
         const data = fail_if(await execute_database_query(() => database.from('products').select('*').eq('id', id).maybeSingle()));
         return data ? response.json(product(data)) : response.status(404).json({ error: 'Perfume no encontrado.' });
     });
-    route('get', '/api/brands', async (request, response) => response.json([...new Set(fail_if(await execute_database_query(() => database.from('products').select('brand').order('brand'))).map(item => item.brand))]));
+    route('get', '/api/brands', async (request, response) => response.json([...new Set(fail_if(await execute_database_query(() => database.from('products').select(product_brand_column).order(product_brand_column))).map(item => normalize_product_brand(item).brand))]));
     route('post', '/api/auth/register', async (request, response) => {
         const name = String(request.body.name || '').trim().slice(0, 80), email = normalize_email(request.body.email), password = String(request.body.password || '');
         if (!name || !valid_email(email) || password.length < 8 || password.length > 128) return response.status(400).json({ error: 'Completá un nombre, correo válido y una contraseña de 8 a 128 caracteres.' });
@@ -352,7 +367,7 @@ function create_app(options = {}) {
             session(response, signed_in.data.session, production);
             return response.status(201).json({ message: 'Cuenta demo creada. Ya podés usar DREAMS.', authenticated: true, demo: true, user: { id: created.data.user.id, name, email, is_admin: false } });
         }
-        const result = await database.auth.signUp({ email, password, options: { data: { name } } });
+        const result = await create_auth_client().auth.signUp({ email, password, options: { data: { name } } });
         if (result.error) return response.status(400).json({ error: 'No se pudo crear la cuenta con esos datos.' });
         if (result.data.user) fail_if(await database.from('profiles').upsert({ id: result.data.user.id, name, role: 'customer' }, { onConflict: 'id', ignoreDuplicates: true }));
         if (result.data.session) {
@@ -364,7 +379,7 @@ function create_app(options = {}) {
     route('post', '/api/auth/login', async (request, response) => {
         const email = normalize_email(request.body.email), password = String(request.body.password || '');
         if (!valid_email(email) || !password || password.length > 128) return response.status(400).json({ error: 'Ingresá un correo válido y tu contraseña.' });
-        const result = await database.auth.signInWithPassword({ email, password });
+        const result = await create_auth_client().auth.signInWithPassword({ email, password });
         if (result.error || !result.data.session || !result.data.user) {
             const confirmation_required = !demo_auto_confirm_email && result.error?.code === 'email_not_confirmed';
             return response.status(401).json({ error: confirmation_required ? 'Primero confirmá tu cuenta desde el correo que te enviamos.' : 'Correo o contraseña incorrectos.' });
@@ -376,7 +391,7 @@ function create_app(options = {}) {
     });
     route('post', '/api/auth/logout', async (request, response) => {
         if (request.access_token) {
-            const result = await database.auth.admin.signOut(request.access_token, 'local');
+            const result = await create_auth_client().auth.admin.signOut(request.access_token, 'local');
             if (result.error) logger.warn?.('No se pudo revocar la sesión remota.', { kind: error_kind(result.error) });
         }
         clear_session(response, production);
@@ -391,21 +406,21 @@ function create_app(options = {}) {
         response.status(201).json({ message: 'Opinión publicada.' });
     });
     route('post', '/api/cart/quote', async (request, response) => {
-        const quote = await quote_cart(database, request.body.items, request.body.coupon_code);
+        const quote = await quote_cart(database, request.body.items, request.body.coupon_code, product_brand_column);
         if (quote.error) return response.status(400).json({ error: quote.error });
         const lines = quote.items.map(item => `${item.quantity} × ${item.brand} ${item.name} — ${item.price * item.quantity} ARS`);
         const text = ['Hola DREAMS, quiero consultar por este carrito:', ...lines, `Total de referencia: ${quote.total} ARS`].join('\n');
         response.json({ ...quote, whatsapp_url: quote.items.length ? `https://wa.me/${whatsapp_number}?text=${encodeURIComponent(text)}` : null });
     });
     route('post', '/api/coupons/validate', async (request, response) => {
-        const quote = await quote_cart(database, request.body.items, request.body.code);
+        const quote = await quote_cart(database, request.body.items, request.body.code, product_brand_column);
         if (quote.error) return response.status(400).json({ error: quote.error });
         if (!quote.coupon) return response.status(404).json({ error: 'Cupón inválido.', subtotal: quote.subtotal, discount: 0, total: quote.total });
         response.json({ coupon: quote.coupon, subtotal: quote.subtotal, discount: quote.discount, total: quote.total });
     });
     route('post', '/api/checkout/session', login, async (request, response) => {
         if (!checkout_enabled || !app_base_url) return response.status(503).json({ error: 'El checkout todavía no está configurado.' });
-        const quote = await quote_cart(database, request.body.items, request.body.coupon_code);
+        const quote = await quote_cart(database, request.body.items, request.body.coupon_code, product_brand_column);
         if (quote.error) return response.status(400).json({ error: quote.error });
         if (request.body.coupon_code && !quote.coupon) return response.status(409).json({ error: 'Cupón inválido.' });
         if (!quote.items.length || quote.total <= 0) return response.status(409).json({ error: 'No hay productos disponibles para pagar.' });
@@ -529,7 +544,7 @@ function create_app(options = {}) {
     route('post', '/api/admin/products', admin, async (request, response) => {
         const parsed = payload(request.body);
         if (parsed.e) return response.status(400).json({ error: parsed.e });
-        response.status(201).json(product(fail_if(await admin_database(request).from('products').insert(parsed.o).select().single())));
+        response.status(201).json(product(fail_if(await admin_database(request).from('products').insert(product_write_payload(parsed.o, product_brand_column)).select().single())));
     });
     route('put', '/api/admin/products/:id', admin, async (request, response) => {
         const id = parse_id(request.params.id);
@@ -539,7 +554,7 @@ function create_app(options = {}) {
         const db = admin_database(request);
         const existing = fail_if(await db.from('products').select('id').eq('id', id).maybeSingle());
         if (!existing) return response.status(404).json({ error: 'Producto no encontrado.' });
-        const data = fail_if(await db.from('products').update(parsed.o).eq('id', id).select().maybeSingle());
+        const data = fail_if(await db.from('products').update(product_write_payload(parsed.o, product_brand_column)).eq('id', id).select().maybeSingle());
         return data ? response.json(product(data)) : response.status(503).json({ error: 'El producto existe, pero no pudo actualizarse por la configuración de permisos.' });
     });
     route('delete', '/api/admin/products/:id', admin, async (request, response) => {
@@ -552,7 +567,7 @@ function create_app(options = {}) {
         return data ? response.json({ message: 'Producto eliminado.' }) : response.status(503).json({ error: 'El producto existe, pero no pudo eliminarse por la configuración de permisos.' });
     });
     route('get', '/api/admin/users', admin, async (request, response) => response.json(fail_if(await admin_database(request).from('profiles').select('id,name,role,created_at').order('created_at', { ascending: false })).map(value => ({ ...value, email: null, is_admin: value.role === 'admin' }))));
-    route('get', '/api/admin/inquiries', admin, async (request, response) => response.json(fail_if(await admin_database(request).from('inquiries').select('*,products(brand,name)').order('id', { ascending: false }).limit(100)).map(value => ({ ...value, brand: value.products?.brand || null, name: value.products?.name || value.product_name }))));
+    route('get', '/api/admin/inquiries', admin, async (request, response) => response.json(fail_if(await admin_database(request).from('inquiries').select(`*,products(${product_brand_column},name)`).order('id', { ascending: false }).limit(100)).map(value => ({ ...value, brand: value.products ? normalize_product_brand(value.products).brand : null, name: value.products?.name || value.product_name }))));
     route('get', '/api/admin/reviews', admin, async (request, response) => response.json(fail_if(await admin_database(request).from('reviews').select('*').order('id', { ascending: false }))));
     route('put', '/api/admin/reviews/:id', admin, async (request, response) => {
         const id = parse_id(request.params.id);
@@ -596,12 +611,12 @@ function create_app(options = {}) {
         const deleted = fail_if(await admin_database(request).from('coupons').delete().eq('id', id).select('id').maybeSingle());
         return deleted ? response.json({ message: 'Cupón eliminado.' }) : response.status(404).json({ error: 'Cupón no encontrado.' });
     });
-    route('get', '/js/admin-console-v3.js', async (request, response) => response.sendFile(path.join(public_directory, 'js', 'admin.js')));
-    route('get', ['/admin', '/admin.html'], admin, async (request, response) => response.sendFile(path.join(views_directory, 'admin.html')));
+    route('get', '/js/admin-console-v3.js', async (request, response) => options.admin_script ? response.type('application/javascript').send(options.admin_script) : response.sendFile(path.join(public_directory, 'js', 'admin.js')));
+    route('get', ['/admin', '/admin.html'], admin, async (request, response) => options.admin_html ? response.type('html').send(options.admin_html) : response.sendFile(path.join(views_directory, 'admin.html')));
     route('get', ['/favoritos', '/favoritos.html'], async (request, response) => response.redirect(301, '/catalogo.html'));
     route('get', '/api/health', async (request, response) => {
         try {
-            await database_health(database);
+            await database_health(database, product_brand_column, options.checkout_schema_ready === true);
             response.json({ status: 'ok', api: true, database: 'ok' });
         } catch (error) {
             logger.error?.('Healthcheck de Supabase falló.', { kind: error_kind(error) });
@@ -611,7 +626,7 @@ function create_app(options = {}) {
 
     app.use((request, response) => request.path.startsWith('/api/')
         ? response.status(404).json({ error: 'Ruta API no encontrada.' })
-        : response.status(404).sendFile(path.join(public_directory, '404.html')));
+        : options.not_found_html ? response.status(404).type('html').send(options.not_found_html) : response.status(404).sendFile(path.join(public_directory, '404.html')));
     app.use((error, request, response, next) => {
         if (response.headersSent) return next(error);
         logger.error?.('Error inesperado de API.', { method: request.method, path: request.path, kind: error_kind(error) });

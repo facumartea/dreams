@@ -1,3 +1,5 @@
+> Estado vigente: consultar [CURRENT_STATE.md](CURRENT_STATE.md) y [migración Cloudflare](docs/cloudflare_migration.md). Node 24.x, pnpm 11.19.0; puerto Node por defecto 8080. No se ejecuta seed al arrancar. Railway está offline; aún no hay deploy Cloudflare remoto verificado. Las instrucciones históricas siguientes pueden diferir del estado actual.
+
 # DREAMS — Perfumería multimarca
 
 DREAMS es una tienda catálogo de perfumes construida con Node.js, Express, JavaScript y Supabase. Permite explorar productos, publicar opiniones, administrar el catálogo y registrar consultas que continúan por WhatsApp. El carrito es local y no constituye un checkout ni procesa pagos.

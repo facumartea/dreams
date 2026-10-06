@@ -1,118 +1,23 @@
-# Roadmap de producción — DREAMS
+# DREAMS — plan vigente
 
-Porcentajes recalibrados el 2026-08-31 al sumar cupones y mantener los pesos en exactamente 100%. Son estimaciones basadas en evidencia y se actualizan sólo después de validación.
+2026-10-06. Destino actualizado por el usuario: Cloudflare Workers. Sin porcentajes especulativos. Plan histórico preservado en `docs/history/PLAN_PR33.md`.
 
-| Fase | Alcance | Peso | Estado |
-|---|---|---:|---:|
-| F0 | Auditoría total, baseline y documentación | 6% | 100% |
-| F1 | Seguridad crítica: XSS, dependencias, headers, CSRF/origin, abuso | 7% | 80% |
-| F2 | Backend/API: validación, errores, health, modularidad mínima | 6% | 87% |
-| F3 | Datos/Supabase: grants mínimos, provisioning, migraciones, integridad, RLS | 8% | 88% |
-| F4 | Catálogo, detalle, carrito y consultas | 6% | 78% |
-| F5 | Opiniones persistentes, edición y moderación | 4% | 78% |
-| F6 | Auth, sesiones, recuperación y usuarios | 7% | 82% |
-| F7 | Admin completo, reversible y auditable | 6% | 76% |
-| F8 | Arquitectura, limpieza y documentación técnica | 4% | 75% |
-| F9 | UX funcional y estados | 5% | 91% |
-| F10 | Diseño visual, colección femenina, imagen y sistema de componentes | 4% | 99% |
-| F11 | Responsive verificado | 4% | 75% |
-| F12 | Accesibilidad | 4% | 78% |
-| F13 | Performance | 4% | 47% |
-| F14 | SEO y descubribilidad | 3% | 65% |
-| F15 | Testing y CI | 7% | 95% |
-| F16 | Producción, dominio, deploy y observabilidad | 4% | 81% |
-| F17 | QA final de punta a punta | 3% | 0% |
-| F18 | Checkout Sandbox, pedidos y pagos | 4% | 82% |
-| F19 | Cupones: datos, API, Admin, checkout y seguridad | 4% | 70% |
+| Paso | Estado | Evidencia / dependencia |
+|---|---|---|
+| Estado real, Git, PR33, Supabase y Railway | COMPLETADO | Lecturas verificadas; PR32 excluida |
+| Recuperar compatibilidad marca y quitar seed | COMPLETADO en base PR33 | Sin DDL ni datos nuevos |
+| Aislar sesiones y corregir dependencias | COMPLETADO local | 87 tests; audit prod limpio |
+| Adaptador Workers y assets | COMPLETADO local | Express + node:http probado en workerd |
+| Tests/regresiones y build Workers | COMPLETADO local | 89/89, check 32, dry-run correcto |
+| Smoke/responsive local con datos reales de solo lectura | COMPLETADO | 66 navegaciones; filtros, reintento, quote; sin mutaciones |
+| Documentación, variables, cambio de tráfico y rollback | COMPLETADO | docs/cloudflare_migration.md; DNS sin modificar |
+| Commit/push/PR | COMPLETADO | f0d52d6, PR34 abierta; CI implementación SUCCESS; no merge |
+| Deployment preview Cloudflare | PUBLICADO Y VALIDADO EN LECTURAS/CARRITO | dreams-perfumes; versión 4631190f, health 200, catálogo 46, detalle y persistencia |
+| URL solicitada dreams-perfumes.pages.dev | PUBLICADO Y VALIDADO | Pages deployment ae2f7932, Service binding al Worker; health/catalogo/quote/carrito, 390/1440 verificados |
+| Smoke remoto Auth/Admin/checkout | PARCIAL | Admin anónimo 403 probado; Auth/Admin autenticados y pagos pendientes de cuentas/proveedor seguros |
+| Recuperación operativa de hosting | BLOQUEADO | Runbook documentado; Railway offline/REMOVED sin rollback, Workers sin recuperación ejecutada y comprobada; restauración con costo requiere aprobación y SUCCESS + smoke |
+| Promoción de dominio/tráfico | PENDIENTE APROBACIÓN | Sólo después de preview validada y plan presentado |
 
-**Progreso general ponderado: 79%** (79,39% exacto). El avance suma reparación probada del CRUD Admin, QA autenticado no destructivo en producción, 76 pruebas y una base SEO verificable con metadata, canonical, OpenGraph, robots, sitemap y 404 HTTP real; no incluye datos estructurados, sitemap dinámico de productos, archive/restore, auditoría de acciones, mutaciones reales en producción ni QA responsive completo en los seis tamaños obligatorios.
+Supabase se conserva. No migraciones destructivas ni cambios RLS/permisos por hosting. Railway se conserva; actualmente offline y por tanto no constituye un rollback operativo hasta restaurarlo/verificarlo.
 
-## Secuencia y criterios
-
-### F0 — Auditoría total, baseline y documentación
-
-Inventario, arquitectura, datos, seguridad, UX, responsive, accesibilidad, performance, SEO, tests, Git y deploy. Cierre: `AUDIT.md`, `AGENTS.md`, `PLAN.md`, `CURRENT_STATE.md`, `CHANGELOG.md` y verificaciones locales registradas.
-
-### F1 — Seguridad crítica
-
-Eliminar XSS evitando HTML con datos no confiables; retirar/actualizar dependencias vulnerables; mantener CSP; limitar endpoints de escritura; agregar verificación de Origin/CSRF, rate limits faltantes y filtrado de errores. Cierre con regresiones XSS/CSRF, pruebas de abuso y audit verde.
-
-### F2 — Backend y API
-
-Extraer app arrancable para tests, normalizar async errors, validar IDs/tipos/rangos/longitudes/URLs, códigos HTTP y readiness real. Añadir cierre limpio y logs seguros.
-
-### F3 — Datos y Supabase
-
-Separar provisioning Admin y seed inicial del arranque; nunca sobrescribir catálogo administrado. Revocar grants amplios, conceder privilegios mínimos, mantener migraciones versionadas, índices justificados y pruebas reales de integridad/RLS. Verificar advisors después de cada migración.
-
-### F4 — Catálogo, detalle, carrito y consultas
-
-Reconciliar precio/stock con servidor, limitar cantidades, generar consulta de carrito útil y consistente, resolver números/config hardcodeados y fallos de red.
-
-### F5 — Opiniones y retiro controlado de favoritos
-
-Favoritos se retiró por decisión de producto. La tabla vacía permanece protegida hasta una migración destructiva autorizada. Opiniones generales ya tiene formulario autenticado, rate limit específico, persistencia tras reload y cobertura API/UI; faltan edición propia, regla de duplicados y moderación Admin. Asociarlas a productos queda fuera del modelo general actual hasta una decisión funcional.
-
-### F6 — Auth, sesiones y usuarios
-
-Completar refresh/revocación, recuperación de contraseña y redirects/SMTP, MFA Admin, reautenticación sensible, rate limits y pruebas E2E de roles. Separar email público de contacto del identificador Admin.
-
-### F7 — Admin
-
-CRUD de productos y cupones, pedidos de solo lectura y edición/eliminación de opiniones están implementados con autorización server-side, JWT Admin y RLS. El QA autenticado no destructivo de producción verificó dashboard, listado, carga de edición, limpieza sin guardar y navegación de todos los módulos. Faltan archive/restore en lugar de hard delete, búsqueda/filtros amplios, historial de cambios y una prueba controlada de mutación con rollback sobre datos preparados para QA.
-
-### F8 — Arquitectura y limpieza
-
-Separar rutas/servicios/validadores sin sobrearquitectura, eliminar dependencias/código muerto, alinear toda la documentación y reducir duplicación del frontend.
-
-### F9 — UX funcional
-
-Estados loading/empty/error uniformes, feedback accesible, prevención de doble envío, navegación y recuperación ante reload/fallos.
-
-### F10 — Diseño visual
-
-Conservar dirección editorial DREAMS; completar la colección `Perfumes de mujer` con una variante cálida controlada, reemplazar el hero pixelado por un master de alta resolución y unificar el contacto público sin cambiar la identidad global.
-
-### F11 — Responsive
-
-QA real y correcciones en 390x844, 430x932, 768x1024, 1024x768, 1440x900 y 1920x1080; revisar overflow, tablas, sticky, formularios y touch targets.
-
-### F12 — Accesibilidad
-
-Foco visible, teclado, menú accesible, estados ARIA, mensajes live, headings, contraste, labels, alt y `prefers-reduced-motion`. Automatización más QA manual.
-
-### F13 — Performance
-
-Medir Lighthouse/transferencia; optimizar imágenes, dimensiones, lazy loading, fuentes, caching y queries. Registrar antes/después.
-
-### F14 — SEO
-
-Titles/descriptions, canonical y OpenGraph están cubiertos en páginas indexables; catálogo y producto actualizan metadata contextual, y existen robots, sitemap y 404 HTTP real. Faltan structured data, sitemap dinámico de productos y validación final con un crawler/Lighthouse antes de cerrar.
-
-### F15 — Testing y CI
-
-Node test runner o herramienta justificada; unit, API, DB aislada, regresión, E2E y GitHub Actions con install, audit, lint/check, test y smoke/build.
-
-### F16 — Producción y deploy
-
-Verificar Railway, variables, Supabase, logs, readiness/liveness y rollback. Migrar de forma controlada a `dreams-perfumes.up.railway.app` si está disponible, actualizando auth y SEO antes del corte y ejecutando smoke post-deploy.
-
-### F17 — QA final
-
-Happy path, errores, vacío, inválido, reload, concurrencia, auth/roles, mobile/desktop y producción. Sólo 100% con matriz ejecutada y evidencias.
-
-### F18 — Checkout Sandbox, pedidos y pagos
-
-Capa de proveedor desacoplada, Checkout Pro oficial, recálculo server-side, pedidos persistentes, verificación HMAC, confirmación autoritativa, estados completos, UI/UX responsive y pruebas. El proveedor demo permite probar el recorrido y persistir pedidos sin cobros ni secretos. Para cerrar F18 todavía faltan credenciales oficiales, Webhook, compras Sandbox reales y QA en producción; el modo demo no sustituye esa validación.
-
-### F19 — Cupones
-
-Cupones persistentes server-only, código mayúsculo, constraints, CRUD Admin, activar/desactivar/eliminar, validación pública mediada por API, cálculo autoritativo en servidor, snapshot en pedido, UI premium y persistencia durante checkout. Para cerrar faltan CI/deploy, smoke autenticado en producción y prueba con un cupón real creado por Admin.
-
-## Próximo bloque exacto
-
-Completar la matriz visual de Hombre/Mujer/Unisex en 390x844, 430x932, 768x1024, 1024x768, 1440x900 y 1920x1080 con un navegador que permita fijar viewports. Después preparar datos descartables de QA para probar create/edit/delete con rollback sin tocar productos reales y avanzar archive/auditoría Admin.
-
-## Expansión premium mapeada al roadmap
-
-Las diez funcionalidades nuevas no crean fases paralelas: hero/cards/tema/360 pertenecen a F10-F13; quiz/configurador/recomendaciones a F4/F9/F15; dashboard/fidelidad/timeline a F3/F7/F18. `PREMIUM_EXPANSION_AUDIT.md` registra estado, reutilización, faltantes, riesgos y orden. Fidelidad no avanza hasta definir beneficios reales; el 360° real no avanza sin assets adecuados y autorizados.
+Fuera de alcance actual: UI premium, motion PR32, /experiencia, nuevas funcionalidades, MFA/recovery UI, performance avanzada. Mantenerlos como deuda, sin mezclarlos con hosting.

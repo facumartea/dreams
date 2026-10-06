@@ -24,7 +24,7 @@ function set_message(element, text, kind = '') {
     element.className = `form-message${kind ? ` ${kind}` : ''}`;
 }
 
-function render_account_forms(initial_message = '') {
+function render_account_forms(initial_message = '', demo = false) {
     const container = document.getElementById('account-view');
     container.innerHTML = `
         <p class="eyebrow">DREAMS ACCOUNT</p>
@@ -41,7 +41,7 @@ function render_account_forms(initial_message = '') {
             <button class="button button-dark account-submit" type="submit">Ingresar</button>
         </form>
         <form id="register-form" role="tabpanel" aria-labelledby="register-tab" hidden novalidate>
-            <p class="demo-auth-note"><strong>Modo demo:</strong> tu cuenta queda activa al instante; no necesitás confirmar el correo.</p>
+            ${demo ? '<p class="demo-auth-note"><strong>Modo demo:</strong> tu cuenta queda activa al instante; no necesitás confirmar el correo.</p>' : '<p>Si recibís un correo de confirmación, abrilo antes de ingresar.</p>'}
             <div class="form-grid">
                 <div class="form-field full"><label for="register-name">Nombre</label><input id="register-name" name="name" autocomplete="name" maxlength="80" required></div>
                 <div class="form-field full"><label for="register-email">Correo electrónico</label><input id="register-email" name="email" type="email" autocomplete="email" inputmode="email" required></div>
@@ -156,7 +156,10 @@ async function init_account() {
     try {
         const data = await request_json('/api/auth/me');
         if (data.user) render_logged_user(data.user);
-        else render_account_forms(new URLSearchParams(window.location.search).has('admin') ? 'Ingresá con una cuenta administradora para continuar.' : '');
+        else {
+            const config = await get_public_config();
+            render_account_forms(new URLSearchParams(window.location.search).has('admin') ? 'Ingresá con una cuenta administradora para continuar.' : '', config.demo_auto_confirm_email === true);
+        }
     } catch {
         render_account_error();
     }

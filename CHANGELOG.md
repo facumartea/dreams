@@ -1,4 +1,86 @@
+# Hostname Pages publicado y validado — 2026-10-06
+
+- dreams-perfumes.pages.dev publicado con deployment ae2f7932, fuente b3cd5f6; estado SUCCESS y alias raíz HTTP verificados.
+- Service binding DREAMS al Worker preserva app y secretos; añadida sólo URL Pages a APP_ORIGINS conservando Worker/orígenes/configuración vigentes. Backend versión f73d5087.
+- Health/catalogo 46/detalle/recursos y quote read-only 200; Admin anónimo 403, API 404 y headers correctos. 8 navegaciones 390/1440, carrito persistente, cero pageerror/overflow en esos tamaños.
+- CI b3cd5f6 SUCCESS 37541429804, 92/92 y ambos builds. Documentación/PR actualizadas, sin DNS/tráfico existente, Supabase, Railway, compras/órdenes/email o merge.
+
+# Preparación de hostname Pages solicitado — 2026-10-06
+
+- Creado proyecto dreams-perfumes; API confirma dreams-perfumes.pages.dev, rama de la PR como alias raíz, sin auto-deploy Git ni compra de dominio/plan.
+- Agregados proxy Pages por Service binding al Worker, config/build reproducibles y CI build. Sin secret Supabase en Pages ni duplicación de APIs/assets.
+- Tests ampliados a 92/92, check 35 y builds Pages/Workers correctos; preservación de Origin/cuerpo/cookies/errores y fallo cerrado probados con fixtures.
+- Documentado despliegue y recuperación por enlace Worker; QA Pages pendiente de deployment real. Sin producción/DNS/tráfico existente, Railway o Supabase modificados.
+
+# Preview funcional tras actualización segura del Secret — 2026-10-06
+
+- Confirmada versión activa 4631190f, mismo script etag de e80d90a. Health 200 con DB ok, catálogo 46 y detalle 199 correctos tras cambio del usuario.
+- QA remoto: 24 navegaciones/seis viewports todas 200, sin pageerror; home 8 y catálogo 46; carrito real conserva fila al recargar. Admin anónimo rechazado, API 404 y no-store/CSP verificados.
+- Logs: 149 invocaciones sin error/excepción/outcome no OK. Registrados overflow catálogo 360/home 1024, dos fallbacks y límites de lazy loading; no sustituciones ni rediseño.
+- Auth/Admin autenticados, pagos/webhooks, WhatsApp y reemplazo seguro de clave expuesta pendientes. Sin nuevos datos, pedidos, cobros, emails, DNS/tráfico, Railway, Supabase o merge.
+
+# Diagnóstico remoto confirmado — 2026-10-06 UTC
+
+- Desplegado e80d90a en dreams-perfumes, versión 99247be3; CI exacto 37535210179 SUCCESS.
+- Logs redacted confirman HTTP 401 de Supabase; health 503 y catálogo 500. Secret presente no implica credencial aceptada. Usuario debe revisar key backend del proyecto correcto por panel seguro.
+- Verificados HTML/assets/hero 200, Admin anónimo 403, sesión null, API 404, CSP/no-store; navegador móvil sin overflow/pageerror. No catalogo/carrito/Auth autenticados validados.
+- Configurado contacto real del HTML existente; sin número WhatsApp inventado. Sin pagos, pedidos, correos, datos DB, Supabase/Railway/DNS/tráfico/plan modificados.
+
+# Verificación tras Secret y diagnóstico servidor — 2026-10-06 UTC
+
+- Confirmado SUPABASE_SECRET_KEY como secret_text tras configuración del usuario; nueva versión dashboard 71ac3762.
+- Portada/CSS 200, sesión anónima null y Admin 403; health 503 y catálogo 500, todavía sin acceso Supabase validado. Chromium móvil sin overflow/pageerror, catálogo vacío por fallo API.
+- Alineado nombre preview dreams-perfumes y agregado log de status HTTP upstream sin cuerpos, headers ni credenciales. Check 32, tests 89/89 y build correctos; diagnóstico remoto pendiente del deploy.
+
+# Primer upload de preview Workers — 2026-10-06 UTC
+
+- OAuth Wrangler completado; registrado subdominio gratuito y publicado Worker dreams-perfumes desde 8f9311f, versión 28fccd1e-26de-4e00-ba5c-0c9996442d04; URL real dreams-perfumes.dreams-perfumes.workers.dev.
+- Configuración remota inspeccionada: proyecto/orígenes correctos, Secrets vacíos, checkout deshabilitado y sin cron. Falta SUPABASE_SECRET_KEY; aplicación no acreditada como funcional.
+- Raíz/health/products dieron 503 del proxy de salida por TLS, no respuesta DREAMS. Sin QA funcional remoto, pagos, pedidos, correos, cambios Supabase/Railway/DNS/tráfico o compra de plan.
+
+# Verificación de acceso y recuperación operativa — 2026-10-06 UTC
+
+- Confirmado ae7ae38/PR34 y CI exacto SUCCESS (37532206512); no repetidos tests/build acreditados ni login expirado.
+- Acceso Cloudflare sigue ausente; secretos remotos siguen sin inspeccionar. No publicada preview.
+- Railway consultado por API y HTTP: offline, últimos cinco deployments REMOVED sin rollback, dominio raíz/health/products 404. Conservado patch pendiente de agosto.
+- Documentado runbook de restauración con IDs, configuración, efectos de costo, evidencia disponible/faltante y validación necesaria. Advertido que reconstruir main histórico ejecutaría seed; utilizar bootstrap compatible PR34 tras autorización.
+- Respaldo operativo sigue no disponible. Sin cambios de código, Supabase, servicios, DNS, tráfico, pagos, pedidos, emails o producción.
+
+# Continuación de preview PR34 — 2026-10-06 (America/Buenos_Aires)
+
+- Revisión de PR34/HEAD fdbca5a y CI del mismo SHA: SUCCESS, run 37530792193; no cambios en código de aplicación.
+- Reejecutado build preview dry-run correctamente; auditada separación de credencial servidor y assets públicos.
+- Acceso comprobado sin revelar valores: Wrangler no autenticado; entorno sin bindings de credenciales; secretos remotos no consultables.
+- Iniciado OAuth por dispositivo con scopes acotados; expiró tras cinco minutos sin autenticación. No se publicó una preview ni se consultaron secretos remotos.
+- Actualizada guía segura de configuración, credencial Supabase requerida y matriz remota pendiente; checkpoint c271061 pasó CI (run 37531858549).
+- Advertidos efectos reales de registro/reparación de perfiles y checkout demo; no se ejecutaron mutaciones, correos, pagos, DNS ni deploy.
+
+# Recuperación y migración Cloudflare — 2026-10-06
+
+- Recuperada base PR33, sin mezclar PR32: compatibilidad marca/brand, seed retirado del arranque y dependencias corregidas.
+- Aislados login/registro/logout; agregadas regresiones de dos usuarios, refresh y revocación/cookies.
+- Health verifica columnas/tablas críticas, incluido checkout configurado, con timeout; sin DDL ni escrituras a Supabase.
+- Corregidos historial corrupto/storage bloqueado, filtros fuera de orden/reintentos, errores de pestañas/logout y doble envío de cupones Admin; copy de demo ajustado y timeout MP. Home consulta 8 productos.
+- Agregado adaptador Workers + Static Assets, entornos separados, empaquetado Admin privado, headers/no-store y pruebas de runtime con fixtures HTTP aisladas.
+- Documentadas variables, limitaciones, publicación de prueba, promoción y rollback. Historia preservada en docs/history.
+- Suite final ejecutada: 89/89; check 32 JS/MJS; audit prod limpio; build preview dry-run correcto; 66 navegaciones en seis viewports sin pageerror/overflow. Resultados finales y CI se registran en CURRENT_STATE.
+- Commit f0d52d6 publicado y PR34 abierta; CI implementación SUCCESS (run 37530615797).
+- No deploy remoto, DNS, merge, cambio de datos ni configuración Supabase/Railway realizados.
+
 # Changelog
+
+### 2026-10-05 — Recuperación del estado real y compatibilidad de esquema
+
+- Contrastado main 4655b0c con Supabase: products tiene marca, no brand, y conserva 46 productos/7 perfiles/1 consulta.
+- Adaptado el límite DB para catálogo, filtros, búsqueda, marcas, detalle, carrito y Admin, conservando brand en el contrato HTTP.
+- Arranque detecta marca/brand mediante sólo lecturas y falla ante errores reales; ya no ejecuta seed ni provisioning Admin.
+- Añadidas regresiones unitarias y HTTP con esquema marca; tests del servidor dejan de importar el bootstrap con credenciales ficticias.
+- Conservados frontend, assets y datos. No hubo migraciones ni mutaciones remotas.
+- CURRENT_STATE reescrito como checkpoint comprobado y PLAN/AGENTS alineados; historial anterior permanece aquí.
+- Detectado dominio Railway documentado caído: APIs devuelven 404 Application not found. Sin acceso Railway, no hubo deploy.
+- Instalación local bloqueada por ENOENT de escritura; check de 29 JS y 21/21 unitarios locales PASS.
+- CI inicial detectó 7 avisos (1 crítico/6 moderados). Corregidas exclusivamente las versiones del lockfile: proxy-addr 2.0.8, morgan 1.12.1 e ip-address 10.7.1, con integridades verificadas en npm.
+- CI 37403358659 SUCCESS sobre a20bfcd: instalación frozen, audit sin vulnerabilidades conocidas, check 29 JS y 81/81 tests PASS. PR #33 abierto, sin merge/deploy.
 
 ### 2026-09-08 — Base SEO técnica y 404 real
 

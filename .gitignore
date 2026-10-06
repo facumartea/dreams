@@ -145,3 +145,8 @@ data/dreams.db-wal
 *.db
 *.db-shm
 *.db-wal
+
+# Cloudflare local secrets and generated runtime state
+.dev.vars
+.dev.vars.*
+.wrangler/

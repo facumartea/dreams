@@ -1,0 +1,54 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "dreams-local",
+  "main": "worker/index.mjs",
+  "compatibility_date": "2026-10-06",
+  "compatibility_flags": ["nodejs_compat"],
+  "keep_vars": true,
+  "workers_dev": true,
+  "preview_urls": true,
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "run_worker_first": true,
+    "html_handling": "none",
+    "not_found_handling": "none"
+  },
+  "rules": [{ "type": "Text", "globs": ["**/*.html", "**/public/js/admin.js"], "fallthrough": true }],
+  "observability": { "enabled": true, "logs": { "invocation_logs": false } },
+  "vars": {
+    "NODE_ENV": "development",
+    "PRODUCT_BRAND_COLUMN": "marca",
+    "APP_ORIGINS": "http://127.0.0.1:8787,http://localhost:8787",
+    "APP_BASE_URL": "http://127.0.0.1:8787",
+    "CHECKOUT_PROVIDER": "demo",
+    "CHECKOUT_SCHEMA_READY": "false",
+    "DEMO_AUTO_CONFIRM_EMAIL": "false",
+    "CHECKOUT_SHOW_TEST_DATA": "false"
+  },
+  "env": {
+    "preview": {
+      "name": "dreams-perfumes",
+      "vars": {
+        "NODE_ENV": "production",
+        "PRODUCT_BRAND_COLUMN": "marca",
+        "CHECKOUT_PROVIDER": "demo",
+        "CHECKOUT_SCHEMA_READY": "false",
+        "DEMO_AUTO_CONFIRM_EMAIL": "false",
+        "CHECKOUT_SHOW_TEST_DATA": "false"
+      }
+    },
+    "production": {
+      "name": "dreams",
+      "workers_dev": false,
+      "vars": {
+        "NODE_ENV": "production",
+        "PRODUCT_BRAND_COLUMN": "marca",
+        "CHECKOUT_PROVIDER": "mercado_pago",
+        "CHECKOUT_SCHEMA_READY": "false",
+        "DEMO_AUTO_CONFIRM_EMAIL": "false",
+        "CHECKOUT_SHOW_TEST_DATA": "false"
+      }
+    }
+  }
+}
