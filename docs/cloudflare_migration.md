@@ -21,6 +21,10 @@ Referencias oficiales consultadas (documentación de Cloudflare; el acceso web H
 - [Static Assets](https://developers.cloudflare.com/workers/static-assets/).
 - [Secrets](https://developers.cloudflare.com/workers/configuration/secrets/).
 
+## Estado vigente posterior al primer upload
+
+El usuario configuró el Secret; Worker actualizado desde e80d90a, versión 99247be3-dc9b-4158-a400-8e8f9444d3e7. Nombre preview versionado ahora dreams-perfumes: no requiere override en deploy. Logs muestran upstream Supabase HTTP 401; health 503 y catálogo 500. La siguiente intervención es verificar/actualizar la key backend completa del proyecto correcto por panel seguro, no iniciar OAuth ni añadir un Secret duplicado. Ver matriz y límites en cloudflare_validation.md. El primer upload descrito abajo es histórico.
+
 ## Comandos
 
 ### Upload real de preview (2026-10-06 UTC)

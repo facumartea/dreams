@@ -1,3 +1,10 @@
+# Diagnóstico remoto confirmado — 2026-10-06 UTC
+
+- Desplegado e80d90a en dreams-perfumes, versión 99247be3; CI exacto 37535210179 SUCCESS.
+- Logs redacted confirman HTTP 401 de Supabase; health 503 y catálogo 500. Secret presente no implica credencial aceptada. Usuario debe revisar key backend del proyecto correcto por panel seguro.
+- Verificados HTML/assets/hero 200, Admin anónimo 403, sesión null, API 404, CSP/no-store; navegador móvil sin overflow/pageerror. No catalogo/carrito/Auth autenticados validados.
+- Configurado contacto real del HTML existente; sin número WhatsApp inventado. Sin pagos, pedidos, correos, datos DB, Supabase/Railway/DNS/tráfico/plan modificados.
+
 # Verificación tras Secret y diagnóstico servidor — 2026-10-06 UTC
 
 - Confirmado SUPABASE_SECRET_KEY como secret_text tras configuración del usuario; nueva versión dashboard 71ac3762.

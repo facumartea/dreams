@@ -1,8 +1,30 @@
 # DREAMS — evidencias y límites de validación
 
-2026-10-06 UTC. Pruebas locales sobre rama `codex/cloudflare-hosting-migration`. No hay URL Cloudflare remota publicada ni validación de dominio productivo.
+2026-10-06 UTC. Pruebas locales sobre rama `codex/cloudflare-hosting-migration`. Las pruebas locales iniciales se conservan abajo; existe preview remota, sin cambio ni validación de dominio productivo.
 
 CI de implementación f0d52d6: SUCCESS, run 37530615797, incluido check/tests/audit/build; Supabase Preview SKIPPED, no nuevo proyecto DB.
+
+## Resultado remoto actual (2026-10-06 UTC)
+
+URL https://dreams-perfumes.dreams-perfumes.workers.dev; Worker dreams-perfumes, fuente e80d90ab3d392d6c677cf2b6198f893a4c96d106, versión 99247be3-dc9b-4158-a400-8e8f9444d3e7. CI del mismo SHA SUCCESS, run 37535210179. Check 32, tests 89/89, build local 2156,33 KiB/gzip 499,98 KiB.
+
+| Verificación ejecutada | Resultado |
+|---|---|
+| OAuth, configuración, Secret por nombre/tipo | OK: secret_text, URL Supabase y orígenes esperados; sin leer valores secretos |
+| HTML home/catalogo/producto/carrito/cuenta y CSS/JS/hero | HTTP 200; eso no valida datos ni carrito |
+| Chromium 390×844, home | 200, título correcto, sin overflow/pageerror; cero cards por error API |
+| Health y catálogo | FALLIDO: 503 DB unavailable / 500 genérico; log upstream Supabase HTTP 401 |
+| Admin HTML/API anónimo y sesión anónima | OK: 403 / user:null |
+| API inexistente, CSP/private no-store | OK: 404, CSP presente, APIs/Admin no-store |
+| Config checkout | enabled:false, provider:null, mode:demo; show_test_data:true por lógica demo preexistente |
+| Carrito/persistencia/quote con productos reales | BLOQUEADO por catálogo/Supabase |
+| Login/logout/refresh/Admin autorizado | PENDIENTE acceso Supabase válido y cuentas existentes de prueba |
+| Checkout/webhooks | PENDIENTE modo aislado seguro; no generar pedidos/cobros/emails |
+| Responsive completo e imágenes externas de productos | PENDIENTE; no extrapolar QA local ni hero 200 |
+
+Logs conectados al Worker correcto mediante tail, sin excepciones no controladas en solicitudes observadas; API registra unknown y diagnóstico upstream exclusivamente status 401. Sin cuerpos/headers/credenciales en diagnóstico. Public assets revisados sin createClient/SUPABASE_SECRET_KEY/sb_secret; no se dispone del valor para compararlo. Secret permanece sólo runtime servidor. CONTACT_EMAIL real del HTML leído de vuelta por API; WhatsApp vacío pendiente de dato real.
+
+La credencial guardada no está aceptada por el proyecto esperado. Revisar SUPABASE_SECRET_KEY por panel seguro; no rotar, copiar a chat ni usar clave pública como atajo. Sin modificaciones de datos/config Supabase, DNS/tráfico, Railway, plan comercial, usuarios, pedidos o correos.
 
 ## Resultado local
 
