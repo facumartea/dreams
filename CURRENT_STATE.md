@@ -12,7 +12,10 @@ El pedido inicial de auditoría fue reemplazado por autorización de recuperaci�
 - PR33 recuperada hasta `bfbcf9d4945872d3d2ddfd8be52885120e356c21`; adapta `marca`, retira seed del arranque y corrige dependencias.
 - Rama de continuación: `codex/cloudflare-hosting-migration`.
 - PR32 de motion excluida. No rediseño.
-- Implementación local finalizada; checkpoint previo a commit/push. Verificar HEAD/PR/CI por GitHub antes de continuar.
+- Implementación publicada: `f0d52d620497882b68b2c50e244db6f84a7ef2b8` (29 archivos de esta tanda). Push remoto verificado por SHA.
+- PR nueva de migración: https://github.com/facumartea/dreams/pull/34, abierta, base main, sin merge. Incluye la base de PR33 sin cerrar/alterar esa PR; PR32 excluida.
+- CI del commit de implementación: SUCCESS, https://github.com/facumartea/dreams/actions/runs/37530615797 (verify 27 s). Check Supabase Preview SKIPPED: no se creó un proyecto Supabase nuevo.
+- Esta actualización es un checkpoint documental posterior; su SHA se obtiene con git log. No confundir el CI de implementación con un futuro SHA documental sin verificar.
 - Historia anterior preservada en `docs/history/CURRENT_STATE_PR33.md` y `docs/history/PLAN_PR33.md`; sus cifras/hosting NO son estado vigente.
 
 ## Hechos comprobados
@@ -39,4 +42,4 @@ Smoke local ejecutado en workerd mediante harness oficial y salida Node/proxy: 6
 
 Procedimiento de preview/promoción/rollback: docs/cloudflare_migration.md. Sin DNS, merge, tráfico nuevo, deploy remoto ni escrituras reales. Railway offline no es rollback operativo hasta restauración verificada.
 
-Próxima acción: publicar rama/PR y verificar CI; luego habilitar acceso Cloudflare y secreto Supabase por gestor seguro, publicar preview, validar Auth/Admin/pagos con entorno y cuentas de prueba. Presentar resultado y rollback antes de pedir aprobación para cambiar tráfico.
+Próxima acción: habilitar acceso Cloudflare y secreto Supabase por gestor seguro, publicar preview, validar Auth/Admin/pagos con entorno y cuentas de prueba. Presentar resultado y rollback antes de pedir aprobación para cambiar tráfico.

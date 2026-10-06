@@ -2,6 +2,8 @@
 
 2026-10-06 UTC. Pruebas locales sobre rama `codex/cloudflare-hosting-migration`. No hay URL Cloudflare remota publicada ni validación de dominio productivo.
 
+CI de implementación f0d52d6: SUCCESS, run 37530615797, incluido check/tests/audit/build; Supabase Preview SKIPPED, no nuevo proyecto DB.
+
 ## Resultado local
 
 - Recuperación funcional: 87 tests pasaron; la suite final incorpora además pruebas en workerd. Suite final local: 89/89, sin fallos ni omitidos; consultar CURRENT_STATE para CI del commit publicado.

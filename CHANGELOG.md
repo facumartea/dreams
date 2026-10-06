@@ -7,6 +7,7 @@
 - Agregado adaptador Workers + Static Assets, entornos separados, empaquetado Admin privado, headers/no-store y pruebas de runtime con fixtures HTTP aisladas.
 - Documentadas variables, limitaciones, publicación de prueba, promoción y rollback. Historia preservada en docs/history.
 - Suite final ejecutada: 89/89; check 32 JS/MJS; audit prod limpio; build preview dry-run correcto; 66 navegaciones en seis viewports sin pageerror/overflow. Resultados finales y CI se registran en CURRENT_STATE.
+- Commit f0d52d6 publicado y PR34 abierta; CI implementación SUCCESS (run 37530615797).
 - No deploy remoto, DNS, merge, cambio de datos ni configuración Supabase/Railway realizados.
 
 # Changelog

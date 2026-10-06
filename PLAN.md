@@ -11,7 +11,7 @@
 | Tests/regresiones y build Workers | COMPLETADO local | 89/89, check 32, dry-run correcto |
 | Smoke/responsive local con datos reales de solo lectura | COMPLETADO | 66 navegaciones; filtros, reintento, quote; sin mutaciones |
 | Documentación, variables, cambio de tráfico y rollback | COMPLETADO | docs/cloudflare_migration.md; DNS sin modificar |
-| Commit/push/PR | PENDIENTE | Diff y checks previos; no merge |
+| Commit/push/PR | COMPLETADO | f0d52d6, PR34 abierta; CI implementación SUCCESS; no merge |
 | Deployment preview Cloudflare | BLOQUEADO | Falta acceso Cloudflare y secreto Supabase por gestor seguro |
 | Smoke remoto Auth/Admin/checkout | BLOQUEADO | Requiere preview y cuentas/proveedor de prueba |
 | Promoción de dominio/tráfico | PENDIENTE APROBACIÓN | Sólo después de preview validada y plan presentado |
