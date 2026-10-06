@@ -1,3 +1,11 @@
+# Verificación de acceso y recuperación operativa — 2026-10-06 UTC
+
+- Confirmado ae7ae38/PR34 y CI exacto SUCCESS (37532206512); no repetidos tests/build acreditados ni login expirado.
+- Acceso Cloudflare sigue ausente; secretos remotos siguen sin inspeccionar. No publicada preview.
+- Railway consultado por API y HTTP: offline, últimos cinco deployments REMOVED sin rollback, dominio raíz/health/products 404. Conservado patch pendiente de agosto.
+- Documentado runbook de restauración con IDs, configuración, efectos de costo, evidencia disponible/faltante y validación necesaria. Advertido que reconstruir main histórico ejecutaría seed; utilizar bootstrap compatible PR34 tras autorización.
+- Respaldo operativo sigue no disponible. Sin cambios de código, Supabase, servicios, DNS, tráfico, pagos, pedidos, emails o producción.
+
 # Continuación de preview PR34 — 2026-10-06 (America/Buenos_Aires)
 
 - Revisión de PR34/HEAD fdbca5a y CI del mismo SHA: SUCCESS, run 37530792193; no cambios en código de aplicación.

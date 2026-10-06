@@ -14,6 +14,7 @@
 | Commit/push/PR | COMPLETADO | f0d52d6, PR34 abierta; CI implementación SUCCESS; no merge |
 | Deployment preview Cloudflare | BLOQUEADO | Falta acceso Cloudflare y secreto Supabase por gestor seguro |
 | Smoke remoto Auth/Admin/checkout | BLOQUEADO | Requiere preview y cuentas/proveedor de prueba |
+| Recuperación operativa de hosting | BLOQUEADO | Runbook documentado; Railway offline/REMOVED sin rollback, Workers sin versión publicada; restauración con costo requiere aprobación y SUCCESS + smoke |
 | Promoción de dominio/tráfico | PENDIENTE APROBACIÓN | Sólo después de preview validada y plan presentado |
 
 Supabase se conserva. No migraciones destructivas ni cambios RLS/permisos por hosting. Railway se conserva; actualmente offline y por tanto no constituye un rollback operativo hasta restaurarlo/verificarlo.

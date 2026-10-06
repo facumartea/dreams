@@ -30,6 +30,14 @@ Guía precisa de acceso seguro, nombres de secretos, matriz remota y efectos com
 
 ## Hechos comprobados
 
+### Nueva comprobación de acceso y recuperación (2026-10-06 UTC)
+
+- HEAD revisado `ae7ae380dea17b55506d5c6559aae96d1c3e2a90`, PR34 abierta, CI exacto SUCCESS [37532206512](https://github.com/facumartea/dreams/actions/runs/37532206512). Sin cambios de implementación ni repetición de tests/build acreditados.
+- Wrangler sigue no autenticado; gestor sin credenciales, token/cuenta Cloudflare y secreto servidor no disponibles en proceso. No se reinició login. Bindings/secretos/versiones remotos no inspeccionables; no hay preview ni commit desplegado.
+- Railway reconsultado: offline, sin deployments activos; últimos cinco REMOVED, canRollback=false y canRedeploy=true. Dominio raíz/health/products devuelve 404 Application not found. Patch de agosto pendiente conservado.
+- [docs/recovery_runbook.md](docs/recovery_runbook.md) registra IDs, evidencia HTTP/API, destino/configuración y procedimiento. No redeployar main histórico: conserva seed en el arranque. Restaurar con bootstrap PR34 exige nuevo deployment con costo, revisión segura de variables y aprobación previa.
+- Rollback operativo **NO disponible**: sin Railway saludable ni versión Workers verificada. No reactivación, costos nuevos, Supabase, DNS, tráfico o producción modificados. Faltan presupuesto/autorización de restauración y evidencia SUCCESS + smoke del destino. Esta tanda es documental; el SHA final se comprueba con Git/CI, sin atribuirle un deploy.
+
 - Supabase `nwsmbemwtexmrtpkgxrz`: activo; 46 productos, 7 perfiles, 8 usuarios Auth, 1 consulta; 0 pedidos/cupones/reviews. RLS activa en las siete tablas públicas. Conteos verificados por SELECT el 2026-10-06.
 - `products.marca` es la columna real; HTTP conserva `brand`. No se renombró ninguna columna.
 - Railway sin deployment activo, dominio histórico responde 404. No se modificó Railway.

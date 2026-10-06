@@ -143,6 +143,8 @@ Auth existente es password login/registro + cookies/refresh. No hay flujo de rec
 
 ## Rollback
 
+Estado y procedimiento detallados: [recovery_runbook.md](recovery_runbook.md). Reconsulta del 2026-10-06: Railway offline, deployments recientes REMOVED con canRollback=false; HTTP raíz/health/products 404. Hay opción de reconstrucción con costo, pero main histórico ejecuta seed y no es el artefacto seguro de recuperación. Sin versión Workers publicada y comprobada, **no existe hoy rollback operativo**. Restauración requiere autorización, configuración verificada, nuevo SUCCESS y smoke remoto.
+
 - Antes del cambio guardar export DNS, TTL, versión Worker anterior (si existe), backend anterior y variables/orígenes necesarios; confirmar que el destino anterior responde.
 - Si falla el nuevo tráfico: desasociar la route/custom domain añadida y restaurar exactamente los registros web previos aprobados, sin alterar MX/TXT; esperar TTL y repetir smoke. Conservar ambos hosting durante la observación.
 - Si ya había una versión Workers verificada: `pnpm exec wrangler rollback <VERSION_ID_VERIFICADO> --env production`; no inventar IDs. Verificar runtime y dominio después.
