@@ -20,7 +20,14 @@ function createWorkerApp(env) {
     if (!env.SUPABASE_URL || !env.SUPABASE_SECRET_KEY) throw new Error('Missing server Supabase configuration');
     const createDatabase = accessToken => createClient(env.SUPABASE_URL, env.SUPABASE_SECRET_KEY, {
         auth: { autoRefreshToken: false, persistSession: false, detectSessionInUrl: false },
-        ...(accessToken ? { global: { headers: { Authorization: `Bearer ${accessToken}` } } } : {})
+        global: {
+            fetch: async (...args) => {
+                const response = await fetch(...args);
+                if (!response.ok) console.error('DREAMS Supabase HTTP failed', { status: response.status });
+                return response;
+            },
+            ...(accessToken ? { headers: { Authorization: `Bearer ${accessToken}` } } : {})
+        }
     });
     const paymentProvider = env.CHECKOUT_PROVIDER === 'demo'
         ? new demoPayments.DemoPaymentProvider()

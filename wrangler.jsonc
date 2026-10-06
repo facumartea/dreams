@@ -28,7 +28,7 @@
   },
   "env": {
     "preview": {
-      "name": "dreams-migration-preview",
+      "name": "dreams-perfumes",
       "vars": {
         "NODE_ENV": "production",
         "PRODUCT_BRAND_COLUMN": "marca",

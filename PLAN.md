@@ -12,7 +12,7 @@
 | Smoke/responsive local con datos reales de solo lectura | COMPLETADO | 66 navegaciones; filtros, reintento, quote; sin mutaciones |
 | Documentación, variables, cambio de tráfico y rollback | COMPLETADO | docs/cloudflare_migration.md; DNS sin modificar |
 | Commit/push/PR | COMPLETADO | f0d52d6, PR34 abierta; CI implementación SUCCESS; no merge |
-| Deployment preview Cloudflare | BLOQUEADO | Falta acceso Cloudflare y secreto Supabase por gestor seguro |
+| Deployment preview Cloudflare | PUBLICADO, NO FUNCIONAL | dreams-perfumes; OAuth y Secret configurados, health 503 y catálogo 500; diagnosticar acceso Supabase |
 | Smoke remoto Auth/Admin/checkout | BLOQUEADO | Requiere preview y cuentas/proveedor de prueba |
 | Recuperación operativa de hosting | BLOQUEADO | Runbook documentado; Railway offline/REMOVED sin rollback, Workers sin versión publicada; restauración con costo requiere aprobación y SUCCESS + smoke |
 | Promoción de dominio/tráfico | PENDIENTE APROBACIÓN | Sólo después de preview validada y plan presentado |

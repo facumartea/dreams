@@ -1,3 +1,9 @@
+# Verificación tras Secret y diagnóstico servidor — 2026-10-06 UTC
+
+- Confirmado SUPABASE_SECRET_KEY como secret_text tras configuración del usuario; nueva versión dashboard 71ac3762.
+- Portada/CSS 200, sesión anónima null y Admin 403; health 503 y catálogo 500, todavía sin acceso Supabase validado. Chromium móvil sin overflow/pageerror, catálogo vacío por fallo API.
+- Alineado nombre preview dreams-perfumes y agregado log de status HTTP upstream sin cuerpos, headers ni credenciales. Check 32, tests 89/89 y build correctos; diagnóstico remoto pendiente del deploy.
+
 # Primer upload de preview Workers — 2026-10-06 UTC
 
 - OAuth Wrangler completado; registrado subdominio gratuito y publicado Worker dreams-perfumes desde 8f9311f, versión 28fccd1e-26de-4e00-ba5c-0c9996442d04; URL real dreams-perfumes.dreams-perfumes.workers.dev.
