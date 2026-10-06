@@ -1,3 +1,10 @@
+# Preview funcional tras actualización segura del Secret — 2026-10-06
+
+- Confirmada versión activa 4631190f, mismo script etag de e80d90a. Health 200 con DB ok, catálogo 46 y detalle 199 correctos tras cambio del usuario.
+- QA remoto: 24 navegaciones/seis viewports todas 200, sin pageerror; home 8 y catálogo 46; carrito real conserva fila al recargar. Admin anónimo rechazado, API 404 y no-store/CSP verificados.
+- Logs: 149 invocaciones sin error/excepción/outcome no OK. Registrados overflow catálogo 360/home 1024, dos fallbacks y límites de lazy loading; no sustituciones ni rediseño.
+- Auth/Admin autenticados, pagos/webhooks, WhatsApp y reemplazo seguro de clave expuesta pendientes. Sin nuevos datos, pedidos, cobros, emails, DNS/tráfico, Railway, Supabase o merge.
+
 # Diagnóstico remoto confirmado — 2026-10-06 UTC
 
 - Desplegado e80d90a en dreams-perfumes, versión 99247be3; CI exacto 37535210179 SUCCESS.

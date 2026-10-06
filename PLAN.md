@@ -12,9 +12,9 @@
 | Smoke/responsive local con datos reales de solo lectura | COMPLETADO | 66 navegaciones; filtros, reintento, quote; sin mutaciones |
 | Documentación, variables, cambio de tráfico y rollback | COMPLETADO | docs/cloudflare_migration.md; DNS sin modificar |
 | Commit/push/PR | COMPLETADO | f0d52d6, PR34 abierta; CI implementación SUCCESS; no merge |
-| Deployment preview Cloudflare | PUBLICADO, NO FUNCIONAL | dreams-perfumes; OAuth y Secret configurados, health 503 y catálogo 500; diagnosticar acceso Supabase |
-| Smoke remoto Auth/Admin/checkout | BLOQUEADO | Requiere preview y cuentas/proveedor de prueba |
-| Recuperación operativa de hosting | BLOQUEADO | Runbook documentado; Railway offline/REMOVED sin rollback, Workers sin versión publicada; restauración con costo requiere aprobación y SUCCESS + smoke |
+| Deployment preview Cloudflare | PUBLICADO Y VALIDADO EN LECTURAS/CARRITO | dreams-perfumes; versión 4631190f, health 200, catálogo 46, detalle y persistencia |
+| Smoke remoto Auth/Admin/checkout | PARCIAL | Admin anónimo 403 probado; Auth/Admin autenticados y pagos pendientes de cuentas/proveedor seguros |
+| Recuperación operativa de hosting | BLOQUEADO | Runbook documentado; Railway offline/REMOVED sin rollback, Workers sin recuperación ejecutada y comprobada; restauración con costo requiere aprobación y SUCCESS + smoke |
 | Promoción de dominio/tráfico | PENDIENTE APROBACIÓN | Sólo después de preview validada y plan presentado |
 
 Supabase se conserva. No migraciones destructivas ni cambios RLS/permisos por hosting. Railway se conserva; actualmente offline y por tanto no constituye un rollback operativo hasta restaurarlo/verificarlo.

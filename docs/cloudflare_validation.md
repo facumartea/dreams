@@ -4,7 +4,25 @@
 
 CI de implementación f0d52d6: SUCCESS, run 37530615797, incluido check/tests/audit/build; Supabase Preview SKIPPED, no nuevo proyecto DB.
 
-## Resultado remoto actual (2026-10-06 UTC)
+## Preview funcional tras corrección del Secret
+
+URL https://dreams-perfumes.dreams-perfumes.workers.dev, versión activa **4631190f-0a33-4768-8e27-f601cf8393f6**, fuente **e80d90a**. ETag de script idéntico a 99247be3: dashboard cambió Secret sin modificar código. Health 200/database ok, catálogo 200 con 46 productos, detalle 199 200. Fuente CI verde 37535210179; checkpoint documental 2f9610b verde 37535392489. No rerun manual de tests/build sin cambio de implementación.
+
+| Verificación ejecutada | Resultado |
+|---|---|
+| 24 navegaciones home/catalogo/detalle/carrito, seis viewports | Todas 200, sin pageerror ni marcas vacías |
+| Home / catálogo | 8 / 46 cards en todos los tamaños |
+| Agregar producto real a carrito y recargar | Una fila persiste y localStorage conserva producto |
+| APIs health/catalogo/detalle | 200, integración de lectura Supabase verificada |
+| Admin anónimo HTML/API | 403; no Auth/Admin autenticados probados |
+| API desconocida, CSP y no-store | 404 y headers correctos |
+| Tail logs | 149 invocaciones, cero exceptions/error logs/outcomes no OK |
+| Responsive | Overflow catálogo 360 y portada 1024; no declarar matriz visual plenamente aprobada |
+| Imágenes catálogo | 46 img, 12 cargadas al medir por lazy loading, dos fallbacks; cobertura incompleta de externos |
+
+Primer intento del script QA falló por APIRequestContext fuera del proxy (ENETUNREACH); corregido harness para fetch en navegador y ejecutada matriz final anterior. No fue un fallo del Worker. Checkout permanece disabled; no se enviaron pagos, webhooks, pedidos, correos, registro o mutaciones comerciales. Auth/logout/refresh/Admin autorizado sin cuentas de prueba siguen pendientes. WhatsApp vacío, contacto real de HTML conservado. Clave expuesta en captura: planificar reemplazo seguro sin revocar otros consumidores a ciegas. No se copió su valor a código/logs/Git.
+
+## Evidencia histórica antes de corregir el Secret (2026-10-06 UTC)
 
 URL https://dreams-perfumes.dreams-perfumes.workers.dev; Worker dreams-perfumes, fuente e80d90ab3d392d6c677cf2b6198f893a4c96d106, versión 99247be3-dc9b-4158-a400-8e8f9444d3e7. CI del mismo SHA SUCCESS, run 37535210179. Check 32, tests 89/89, build local 2156,33 KiB/gzip 499,98 KiB.
 
