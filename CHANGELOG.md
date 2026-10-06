@@ -1,3 +1,9 @@
+# Primer upload de preview Workers — 2026-10-06 UTC
+
+- OAuth Wrangler completado; registrado subdominio gratuito y publicado Worker dreams-perfumes desde 8f9311f, versión 28fccd1e-26de-4e00-ba5c-0c9996442d04; URL real dreams-perfumes.dreams-perfumes.workers.dev.
+- Configuración remota inspeccionada: proyecto/orígenes correctos, Secrets vacíos, checkout deshabilitado y sin cron. Falta SUPABASE_SECRET_KEY; aplicación no acreditada como funcional.
+- Raíz/health/products dieron 503 del proxy de salida por TLS, no respuesta DREAMS. Sin QA funcional remoto, pagos, pedidos, correos, cambios Supabase/Railway/DNS/tráfico o compra de plan.
+
 # Verificación de acceso y recuperación operativa — 2026-10-06 UTC
 
 - Confirmado ae7ae38/PR34 y CI exacto SUCCESS (37532206512); no repetidos tests/build acreditados ni login expirado.

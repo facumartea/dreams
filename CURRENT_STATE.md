@@ -4,6 +4,14 @@ SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
 
 Actualizado: 2026-10-06 UTC. Repositorio: facumartea/dreams.
 
+## Último evento: Worker publicado, aplicación pendiente de Secret
+
+OAuth completado y sesión Wrangler confirmada en la cuenta `9f3d7af60fcb0c2b4fff8570843588f9`. Worker preview **dreams-perfumes** publicado desde `8f9311f50eb5e410f2468f880bd297aa010e334a` mediante override `--name dreams-perfumes`; versión `28fccd1e-26de-4e00-ba5c-0c9996442d04`. URL asignada por Cloudflare: https://dreams-perfumes.dreams-perfumes.workers.dev. Se registró el subdominio gratuito workers.dev; sin compra de dominio ni cambios de plan, DNS/tráfico existente o Railway.
+
+**NO es todavía un enlace funcional validado.** API Cloudflare confirma Secrets vacíos: falta `SUPABASE_SECRET_KEY`. Variables SUPABASE_URL y orígenes HTTPS corresponden al proyecto `nwsmbemwtexmrtpkgxrz` y a la URL asignada. Checkout false/demo, auto-confirm false, sin schedules, assets y workers.dev habilitados. El código falla cerrado sin Secret. Las tres solicitudes HTTP remotas (raíz/health/products) recibieron 503 del proxy de salida por TLS: no fue una respuesta de DREAMS y no acredita un fallo del runtime. No Auth/Admin/pagos ni datos comerciales modificados.
+
+Intervención pendiente: en el panel del Worker, Settings → Variables and Secrets, agregar SUPABASE_SECRET_KEY como **Secret** con la API key backend del proyecto correcto y guardar/desplegar. Nunca chat ni Git. Luego comprobar versión/secret por nombre y repetir HTTP/logs/QA remoto. Los bloqueos de autenticación descritos más abajo son históricos: OAuth ya está resuelto. El nombre versionado preview sigue dreams-migration-preview; usar override dreams-perfumes hasta alinear configuración tras desbloqueo. No cambiar tráfico de producción ni reactivar Railway.
+
 ## Alcance y recuperación
 
 El pedido inicial de auditoría fue reemplazado por autorización de recuperación funcional y luego por migración a **Cloudflare**. Render ya no es el destino. No hacer merge, cambios DNS ni cambio de tráfico sin presentar validación y rollback para aprobación. No borrar/desactivar Railway ni modificar datos/esquema/RLS de Supabase.

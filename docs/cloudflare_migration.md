@@ -23,6 +23,12 @@ Referencias oficiales consultadas (documentación de Cloudflare; el acceso web H
 
 ## Comandos
 
+### Upload real de preview (2026-10-06 UTC)
+
+OAuth resuelto. Cuenta `9f3d7af60fcb0c2b4fff8570843588f9`, Worker `dreams-perfumes`, SHA `8f9311f50eb5e410f2468f880bd297aa010e334a`, versión `28fccd1e-26de-4e00-ba5c-0c9996442d04`; URL real https://dreams-perfumes.dreams-perfumes.workers.dev. Publicado con `wrangler deploy --env preview --name dreams-perfumes` y vars públicas URL/SUPABASE_URL/orígenes, sin valores secretos. Conservar override para comandos de versiones/secret/tail: la config versionada aún tiene el nombre preview anterior.
+
+**Aplicación funcional pendiente:** remote secrets list devuelve vacío. Agregar SUPABASE_SECRET_KEY como Secret desde Settings → Variables and Secrets del Worker, verificando proyecto Supabase `nwsmbemwtexmrtpkgxrz`. Checkout false/demo, auto-confirm false y schedules vacíos confirmados. Primeros GET raíz/health/products devolvieron 503 del proxy de salida por TLS; no se recibió respuesta del runtime DREAMS ni se validaron flujos. Repetir HTTP/logs/QA tras Secret y propagación TLS. Sin DNS/tráfico/Railway/Supabase/plan comercial modificados. Los textos de falta de OAuth siguientes documentan el bloqueo previo, ahora resuelto.
+
 ```sh
 corepack pnpm install --frozen-lockfile
 pnpm run check
