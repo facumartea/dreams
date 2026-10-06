@@ -43,3 +43,6 @@ jobs:
 
       - name: Build Cloudflare preview bundle without deployment
         run: pnpm run build:cloudflare
+
+      - name: Build Pages Service binding proxy without deployment
+        run: pnpm run build:pages

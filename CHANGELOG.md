@@ -1,3 +1,10 @@
+# Preparación de hostname Pages solicitado — 2026-10-06
+
+- Creado proyecto dreams-perfumes; API confirma dreams-perfumes.pages.dev, rama de la PR como alias raíz, sin auto-deploy Git ni compra de dominio/plan.
+- Agregados proxy Pages por Service binding al Worker, config/build reproducibles y CI build. Sin secret Supabase en Pages ni duplicación de APIs/assets.
+- Tests ampliados a 92/92, check 35 y builds Pages/Workers correctos; preservación de Origin/cuerpo/cookies/errores y fallo cerrado probados con fixtures.
+- Documentado despliegue y recuperación por enlace Worker; QA Pages pendiente de deployment real. Sin producción/DNS/tráfico existente, Railway o Supabase modificados.
+
 # Preview funcional tras actualización segura del Secret — 2026-10-06
 
 - Confirmada versión activa 4631190f, mismo script etag de e80d90a. Health 200 con DB ok, catálogo 46 y detalle 199 correctos tras cambio del usuario.

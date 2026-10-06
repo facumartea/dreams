@@ -9,7 +9,7 @@ function javascript_files(directory) {
     });
 }
 
-const files = ['server', join('public', 'js'), 'scripts', 'test', 'worker'].flatMap(directory => javascript_files(directory));
+const files = ['server', join('public', 'js'), 'scripts', 'test', 'worker', 'pages'].flatMap(directory => javascript_files(directory));
 for (const file of files) {
     const result = spawnSync(process.execPath, ['--check', file], { stdio: 'inherit' });
     if (result.status !== 0) process.exit(result.status || 1);

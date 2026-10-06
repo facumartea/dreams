@@ -4,6 +4,10 @@ SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
 
 Actualizado: 2026-10-06 UTC. Repositorio: facumartea/dreams.
 
+## Solicitud vigente: URL dreams-perfumes.pages.dev
+
+El usuario autoriza ahora Pages como hostname público. Proyecto dreams-perfumes creado por conexión Cloudflare con permisos Pages; subdomain exacto confirmado. Se agrega proxy advanced-mode con Service binding DREAMS al Worker existente, sin duplicar backend/secret ni modificar Supabase. Preparación local: check 35, 92/92 y ambos builds correctos; publicación/QA todavía por ejecutar en este checkpoint. Guía: docs/pages_frontdoor.md. Conservar URL Worker y origen vigente, añadir sólo Pages a APP_ORIGINS para mutaciones same-origin. No DNS/tráfico existente, main, Railway, pagos, correos ni datos reales modificados.
+
 ## Estado remoto vigente: preview funcional en lecturas y carrito
 
 URL **https://dreams-perfumes.dreams-perfumes.workers.dev**, Worker **dreams-perfumes**, cuenta `9f3d7af60fcb0c2b4fff8570843588f9`. Fuente desplegada `e80d90ab3d392d6c677cf2b6198f893a4c96d106`; versión activa tras actualización segura del Secret por el usuario **4631190f-0a33-4768-8e27-f601cf8393f6**, deployment `8d176af0-d488-4b78-af21-c05af5e289d1` al 100%. API Cloudflare confirma script etag idéntico a versión 99247be3 del código e80d90a: el cambio dashboard fue el Secret, no el código.
