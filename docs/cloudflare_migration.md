@@ -65,6 +65,8 @@ La prueba local de solo lectura utilizó una clave pública en el binding que no
 
 Revisión del 2026-10-06 (America/Buenos_Aires): HEAD `fdbca5a74992deadc1816430cfa05320827555f9`, CI SUCCESS [run 37530792193](https://github.com/facumartea/dreams/actions/runs/37530792193), 89/89 tests, check 32 y build. Wrangler no autenticado; gestor del entorno sin credenciales. Esto **no prueba que los secretos remotos estén ausentes**: sus nombres/bindings no pueden consultarse hasta autenticar la cuenta. No hay URL de preview obtenida.
 
+Intento OAuth de esta continuación: expiró tras cinco minutos sin autenticación. El código ya no es válido; iniciar uno nuevo sólo cuando el usuario pueda completar el navegador, o configurar token/cuenta en el gestor seguro. CI del checkpoint documental c271061: SUCCESS (run 37531858549). Sin URL ni versión remota obtenidas.
+
 ### Acceso seguro desde este entorno remoto
 
 - Preferir token restringido a la cuenta destino, cargado mediante el gestor seguro del entorno como `CLOUDFLARE_API_TOKEN`; seleccionar la cuenta real con `CLOUDFLARE_ACCOUNT_ID`. Permiso de edición de scripts Workers y lectura de logs para esta tarea; no solicitar permisos DNS, routes de zonas, Pages, D1, KV o R2 sin necesidad. No usar una Global API Key.
