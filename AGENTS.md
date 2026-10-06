@@ -17,6 +17,7 @@ DREAMS es una tienda de perfumería con catálogo, carrito, consultas por WhatsA
 - `supabase/migrations/20260831040000_enable_demo_checkout_provider.sql`: habilita el proveedor interno `demo` sin eliminar Mercado Pago.
 - `railway.toml`: despliegue Railway histórico, conservar.
 - `worker/index.mjs` y `wrangler.jsonc`: adaptador Cloudflare Workers con assets; `docs/cloudflare_migration.md`: publicación y rollback.
+- `pages/proxy.mjs` y `pages/wrangler.jsonc`: hostname dreams-perfumes.pages.dev mediante Service binding al Worker existente; `docs/pages_frontdoor.md`: build, publicación y recuperación. Secret Supabase permanece sólo en el Worker.
 - `docs/`: documentación histórica; puede estar desactualizada y no prevalece sobre el código.
 
 El navegador sólo habla con `/api`. `SUPABASE_SECRET_KEY` es exclusivamente del servidor. No incorporar el SDK privilegiado ni secretos en `public/`.

@@ -1,6 +1,8 @@
 # DREAMS en pages.dev
 
-El usuario solicita `dreams-perfumes.pages.dev`. Se creó el proyecto Pages **dreams-perfumes** en la cuenta existente `9f3d7af60fcb0c2b4fff8570843588f9`; la API confirmó ese subdominio exacto. La publicación/QA deben confirmarse en el checkpoint final, no se infieren de crear el proyecto.
+El usuario solicita `dreams-perfumes.pages.dev`. Proyecto Pages **dreams-perfumes** en cuenta `9f3d7af60fcb0c2b4fff8570843588f9`; API y HTTP confirman **https://dreams-perfumes.pages.dev**. Deployment `ae2f7932-aefe-48b2-a9e9-8c3597b607f9` SUCCESS, commit `b3cd5f62523d15603078798baa9f31b633692d3f`; URL inmutable https://ae2f7932.dreams-perfumes.pages.dev (mutaciones habilitadas sólo en alias raíz aprobado). CI exacto SUCCESS 37541429804. Backend versión `f73d5087-ac19-4168-890b-6da3abb6b635`, con Pages añadido a APP_ORIGINS y demás configuración/Secret preservados.
+
+QA final ejecutado: raíz/health/catalogo/detalle/CSS 200, 46 productos, quote sin pedido desde Origin Pages 200, Admin HTML/API anónimo 403, ruta API 404 y CSP/no-store privados. Ocho navegaciones 390/1440 todas 200, home 8/catalogo 46, carrito persistente al recargar, sin pageerror/overflow en esos dos tamaños. El primer harness HTTP tuvo un error de indentación local y se corrigió antes de ejecutarlo; no fue fallo de aplicación. Auth/Admin autenticados, pagos/webhooks y matriz completa siguen pendientes. Worker URL original también health 200; no comprado dominio/plan ni modificado DNS/tráfico existente/Supabase/Railway.
 
 ## Arquitectura
 

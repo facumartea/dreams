@@ -6,7 +6,11 @@ Actualizado: 2026-10-06 UTC. Repositorio: facumartea/dreams.
 
 ## Solicitud vigente: URL dreams-perfumes.pages.dev
 
-El usuario autoriza ahora Pages como hostname público. Proyecto dreams-perfumes creado por conexión Cloudflare con permisos Pages; subdomain exacto confirmado. Se agrega proxy advanced-mode con Service binding DREAMS al Worker existente, sin duplicar backend/secret ni modificar Supabase. Preparación local: check 35, 92/92 y ambos builds correctos; publicación/QA todavía por ejecutar en este checkpoint. Guía: docs/pages_frontdoor.md. Conservar URL Worker y origen vigente, añadir sólo Pages a APP_ORIGINS para mutaciones same-origin. No DNS/tráfico existente, main, Railway, pagos, correos ni datos reales modificados.
+**Enlace principal: https://dreams-perfumes.pages.dev**. Proyecto dreams-perfumes publicado mediante conexión Cloudflare con permisos Pages. Deployment `ae2f7932-aefe-48b2-a9e9-8c3597b607f9` SUCCESS, fuente `b3cd5f62523d15603078798baa9f31b633692d3f`, alias raíz confirmado por HTTP. Proxy advanced-mode con Service binding DREAMS al Worker existente, sin duplicar backend/secret ni modificar Supabase. Backend actualizado a versión `f73d5087-ac19-4168-890b-6da3abb6b635` para añadir Pages a APP_ORIGINS conservando el origen Worker y demás variables/Secret. Ambos enlaces funcionan.
+
+QA Pages: health 200, catálogo 46, detalle 199, CSS/HTML 200; quote de producto real (lectura, sin pedido) 200 desde Origin Pages; Admin anónimo 403, API 404, CSP/no-store correctos. Navegador: 8 navegaciones, 390/1440, todas 200, home 8 y catálogo 46, carrito conserva fila al recargar, sin pageerror/overflow en esos dos tamaños. No extrapolar a 360/1024 ni Auth/Admin autenticados/pagos.
+
+Checks: 35 JS, **92/92**, builds Pages y Workers correctos; CI exacto b3cd5f6 SUCCESS [37541429804](https://github.com/facumartea/dreams/actions/runs/37541429804). Guía: docs/pages_frontdoor.md. Los datos de Worker abajo conservan evidencia anterior; Pages es ahora el hostname solicitado. Sin DNS/tráfico del dominio existente, main/merge, Railway, compra de plan, pagos, correos o datos reales modificados. Supabase permanece; clave sólo servidor. Pendientes de seguridad, Auth, pagos, imágenes, WhatsApp y overflow anteriores conservados.
 
 ## Estado remoto vigente: preview funcional en lecturas y carrito
 

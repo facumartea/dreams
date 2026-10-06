@@ -1,3 +1,10 @@
+# Hostname Pages publicado y validado — 2026-10-06
+
+- dreams-perfumes.pages.dev publicado con deployment ae2f7932, fuente b3cd5f6; estado SUCCESS y alias raíz HTTP verificados.
+- Service binding DREAMS al Worker preserva app y secretos; añadida sólo URL Pages a APP_ORIGINS conservando Worker/orígenes/configuración vigentes. Backend versión f73d5087.
+- Health/catalogo 46/detalle/recursos y quote read-only 200; Admin anónimo 403, API 404 y headers correctos. 8 navegaciones 390/1440, carrito persistente, cero pageerror/overflow en esos tamaños.
+- CI b3cd5f6 SUCCESS 37541429804, 92/92 y ambos builds. Documentación/PR actualizadas, sin DNS/tráfico existente, Supabase, Railway, compras/órdenes/email o merge.
+
 # Preparación de hostname Pages solicitado — 2026-10-06
 
 - Creado proyecto dreams-perfumes; API confirma dreams-perfumes.pages.dev, rama de la PR como alias raíz, sin auto-deploy Git ni compra de dominio/plan.
