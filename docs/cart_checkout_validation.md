@@ -1,4 +1,22 @@
-# Carrito, checkout y presentación — 2026-10-06 (America/Buenos_Aires)
+# Carrito, checkout y presentación — actualizado 2026-10-07 (America/Buenos_Aires)
+
+## Preview real de PR35 — 2026-10-07
+
+**[Abrir DREAMS](https://cart-checkout-review-dreams-perfumes.dreams-perfumes.workers.dev/)**. Preview `cart-checkout-review` id da9e5bd9435f47b1a82da81d137d548c, deployment 1537279f-9851-4532-b72a-4d60f7132524, fuente b75ce0dfcd11b6f4425a3b8193c9d85ad669b34d. URL inmutable: https://1537279f-dreams-perfumes.dreams-perfumes.workers.dev. Se usa el alias para navegar/pagar/POST porque APP_ORIGINS permite únicamente ese origen exacto. No habilitar pagos en esta preview.
+
+El usuario cargó el Secret en Previews Base. Se verificó sólo nombre/tipo secret_text y SUPABASE_URL del proyecto esperado; no se obtuvo su valor. Uso servidor conservado. Se añadió env.preview.previews vacío tras el error específico de Wrangler (ningún deploy durante el intento fallido). Publicación por `wrangler preview --env preview --worker-name dreams-perfumes --name cart-checkout-review`; variables no secretas mediante --var: NODE_ENV production, PRODUCT_BRAND_COLUMN marca, SUPABASE_URL esperado, APP_BASE_URL/APP_ORIGINS igual a URL propia sin slash final, CHECKOUT_PROVIDER demo, CHECKOUT_SCHEMA_READY false, DEMO_AUTO_CONFIRM_EMAIL false, CHECKOUT_SHOW_TEST_DATA false y CONTACT_EMAIL vigente. Nada de cron/colas/integraciones comerciales nuevas; registro y reparación de perfiles siguen pudiendo escribir, por eso no se probaron.
+
+Build Workers correcto y dos tests runtime Workers correctos por cambio de configuración. CI exacto de b75ce0d SUCCESS: https://github.com/facumartea/dreams/actions/runs/37565195401. La suite 98/98 ya estaba acreditada; CI la volvió a ejecutar automáticamente. Commits posteriores exclusivamente documentales no cambian el código desplegado.
+
+**Verificación remota real, sin interceptar assets:** Chromium 390×900 y 1440×900; menús y Escape, 46 productos, búsqueda Ombre (1) y vacía (0), marca/género mujer (10)/categoría (34), máximo 250000 (13), sort asc/desc y reset (46). Agregar dos productos, cantidades +/−, eliminación individual, vaciado, reload, contador y subtotal coherentes; envío no incluido, COMPRAR deshabilitado. Sin pageerror ni API fallidas en este recorrido ni overflow del carrito. Reduced-motion 390×844 mantiene hero visible. Cuatro assets cambiados coinciden byte por byte con fuente, sin patrones sb_secret/SUPABASE_SECRET_KEY/createClient.
+
+**Fallos controlados sobre código remoto:** demoras de requests de quote en navegador hacen llegar respuestas fuera de orden; cantidades nuevas y vaciado se conservan. 503 de cotización inyectado en navegador muestra Reintentar; retirar la inyección vuelve a la API real y recupera el carrito. Ambas pruebas pasaron en móvil/escritorio; el 503 simulado no es un error ocurrido en el servidor.
+
+Auth anónima user=null, Admin 403. Primera consulta real health 503; cuatro consultas posteriores 200, tres medidas entre 0.34 y 0.48 s. Causa inicial no confirmada y queda vigilancia pendiente, no atribuirla a cold start sin evidencia. Tail por version-id no capturó eventos; observabilidad específica **no verificada**, no afirmar cero errores runtime globales. WhatsApp_number vacío: link inválido ausente, consulta real y resumen con destinatario válidos pendientes de contacto; pruebas de formato/resumen del servidor siguen siendo locales.
+
+Worker vigente f73d5087 al 100% comprobado después del deploy; Pages ae2f7932 permanece. Rollback/retirada: esta preview es independiente del tráfico vigente; no promocionarla ni usar commands deploy sobre env.preview (ese entorno nombra al Worker público). Si la preview falla, conservar sitio vigente y corregir/publicar otra versión con wrangler preview. No usar Railway offline como respaldo. Auth/Admin autenticados, pagos/webhooks seguros, segundo banner y observabilidad/readiness siguen pendientes.
+
+## Evidencia del checkpoint anterior (2026-10-06)
 
 ## Base y deployment comprobados
 
@@ -47,9 +65,9 @@ La portada publicada y su código tienen una imagen fija, no carrusel. Se inspec
 - Smoke remoto sin interceptar: health 200, sesión anónima user=null, Admin 403. Consola de home/catalogo/producto: cero errores y respuestas fallidas en el muestreo. Tail de Worker: 5 invocaciones observadas, outcome ok en todas, cero logs error/excepciones; no extrapolar a todo el tráfico.
 - Auth real autenticada, permisos Admin autenticados, pago sandbox y webhooks remotos pendientes: no hay cuentas ni credenciales de prueba disponibles. No se registraron usuarios, enviaron mensajes/correos, cobraron pagos ni crearon pedidos.
 
-## Preview y configuración segura pendiente
+## Configuración segura — bloqueo histórico resuelto el 2026-10-07
 
-No se publicó esta rama. Existe autenticación Cloudflare; el Secret del Worker activo está configurado, pero **la base de previews aisladas devuelve lista de secretos vacía** (`wrangler preview base-config secret list --env preview --json`). No se puede recuperar ni copiar el valor del Secret activo. No se reemplazó la versión que sirve Pages para simular una preview.
+En el checkpoint del 2026-10-06 no se había publicado esta rama. Existía autenticación Cloudflare; el Secret del Worker activo está configurado, pero **la base de previews aisladas devuelve lista de secretos vacía** (`wrangler preview base-config secret list --env preview --json`). No se puede recuperar ni copiar el valor del Secret activo. No se reemplazó la versión que sirve Pages para simular una preview.
 
 Para habilitar una preview aislada, desde un terminal privado con Wrangler autenticado y este repositorio:
 
@@ -65,6 +83,6 @@ WHATSAPP_NUMBER requiere el contacto real del negocio, con código de país. Es 
 
 ## Recuperación y pendientes
 
-Sin nuevo deployment, rollback de esta tarea no es necesario: Worker y Pages conservan las versiones iniciales. Una preview aislada futura se retira sin promover ni alterar la versión activa. Revertir commits de esta PR en su rama si es necesario; no force push. Railway no se restauró ni se considera respaldo operativo.
+En el checkpoint local anterior no había nuevo deployment, por lo que no requería rollback: Worker y Pages conservan las versiones iniciales. Una preview aislada futura se retira sin promover ni alterar la versión activa. Revertir commits de esta PR en su rama si es necesario; no force push. Railway no se restauró ni se considera respaldo operativo.
 
 Antes de promover: integrar dependencias por revisión de PRs; resolver Secret de preview, validar el deployment real; prueba Auth/Admin segura, credenciales sandbox y pedidos exclusivamente de QA; reglas de envío, idempotencia server-side de nuevas sesiones/reserva de stock (deuda existente); banner adicional; seguridad de credencial anteriormente expuesta y recuperación operativa. Esta tarea no autoriza producción/merge.

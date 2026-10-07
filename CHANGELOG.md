@@ -1,5 +1,15 @@
 # DREAMS — Changelog
 
+## 2026-10-07 — Preview aislada de PR35 publicada
+
+- Secret de Previews Base configurado por usuario y confirmado como secret_text; ninguna credencial leída/impresa/versionada.
+- Añadido bloque previews vacío requerido por Wrangler 4.147.0. Commit fuente b75ce0d, push y CI 37565195401 SUCCESS; build y dos tests runtime Workers correctos.
+- Preview real: https://cart-checkout-review-dreams-perfumes.dreams-perfumes.workers.dev/, deployment 1537279f. Origen exacto y Supabase existente configurados, checkout y auto-confirmación desactivados.
+- QA remota 390/1440: menús/filtros completos, productos/carrito/persistencia/contador/subtotal/envío; atrasos/reintento con fallos inyectados de navegador. Sin errores JS en recorrido normal. WhatsApp sin número, no se envió mensaje.
+- Health inicial 503, después cuatro 200; causa no confirmada. Tail específico sin eventos, logs no declarados validados.
+- Worker f73d5087/Pages ae2f7932 vigentes intactos; sin DNS/tráfico, merge, datos, pagos, pedidos, correos o migraciones. Carrusel, Auth/Admin autenticados y pagos siguen pendientes.
+
+
 ## 2026-10-06 — Carrito y diagnóstico de checkout (America/Buenos_Aires)
 
 - COMPRAR bloqueado por configuración remota, no proveedor fallido: demo, esquema flag false y sin secretos MP. Supabase orders/coupons existentes confirmados por lectura, sin cambios.

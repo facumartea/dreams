@@ -1,15 +1,16 @@
 # DREAMS — plan vigente
 
-2026-10-06. Destino actualizado por el usuario: Cloudflare Workers. Sin porcentajes especulativos. Plan histórico preservado en `docs/history/PLAN_PR33.md`.
+2026-10-07. Destino actualizado por el usuario: Cloudflare Workers. Sin porcentajes especulativos. Plan histórico preservado en `docs/history/PLAN_PR33.md`.
 
 ## Alcance vigente: carrito y navegación
 
-- Corregir carreras, estados de cotización, WhatsApp inválido y subtotal/envío: COMPLETADO LOCAL.
-- Verificar menús/filtros y carrito en desktop/móvil: COMPLETADO con frontend local sobre APIs remotas de lectura; 98 tests/builds.
+- Corregir carreras, estados de cotización, WhatsApp inválido y subtotal/envío: PUBLICADO EN PREVIEW AISLADA b75ce0d.
+- Verificar menús/filtros y carrito en desktop/móvil: COMPLETADO también remotamente en preview cart-checkout-review (390/1440); 98 tests previos + CI del deployment y dos runtime tests.
 - Checkout comercial: BLOQUEADO CONFIGURACIÓN, no habilitado. Proveedor implementado; faltan secretos MP y QA comercial aislada.
 - Carrusel: PENDIENTE MATERIAL. Hero fijo; falta un segundo banner distinto.
-- Preview aislada: BLOQUEADA por Secret ausente en Previews Base; no alterar deployment vigente.
-- PR de tarea: base codex/cloudflare-hosting-migration, dependiente de #34 sin mezclar PR32; publicar cambios/CI según GitHub.
+- Preview aislada: PUBLICADA Y VERIFICADA. Secret configurado por usuario; origen propio exacto, deployment 1537279f. Deployment vigente intacto.
+- PR35: ABIERTA, dependiente de #34, base codex/cloudflare-hosting-migration. b75ce0d push + CI SUCCESS; sin PR32 ni merge.
+- Observabilidad/readiness: primera health 503 y posteriores 200; causa pendiente, tail específico sin eventos.
 
 ## Plan de hosting anterior (conservado como contexto)
 

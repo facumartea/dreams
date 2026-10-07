@@ -2,9 +2,21 @@
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
 
-Actualizado: 2026-10-06 (America/Buenos_Aires). Repositorio: facumartea/dreams.
+Actualizado: 2026-10-07 (America/Buenos_Aires). Repositorio: facumartea/dreams.
 
-## Tarea vigente: carrito, checkout, menús/filtros y presentación
+## Preview PR35 publicada y verificada — 2026-10-07
+
+**URL: https://cart-checkout-review-dreams-perfumes.dreams-perfumes.workers.dev/**. Preview aislada `cart-checkout-review` del Worker dreams-perfumes, id `da9e5bd9435f47b1a82da81d137d548c`. Deployment `1537279f-9851-4532-b72a-4d60f7132524`, fuente `b75ce0dfcd11b6f4425a3b8193c9d85ad669b34d`, CI SUCCESS [37565195401](https://github.com/facumartea/dreams/actions/runs/37565195401). Se añadió sólo `env.preview.previews={}`, requerido por Wrangler 4.147.0; build correcto y dos tests de runtime Workers pasaron. La suite de carrito 98/98 estaba acreditada y CI volvió a validar el commit; no se repitió localmente toda la suite.
+
+El usuario configuró SUPABASE_SECRET_KEY en Previews Base, verificado como secret_text sin leer/mostrar su valor. Preview apunta a Supabase `nwsmbemwtexmrtpkgxrz`; origen HTTPS propio exacto configurado en APP_BASE_URL/APP_ORIGINS. Contacto email vigente conservado; WhatsApp continúa sin número. Checkout sigue false/demo y auto-confirm false. Sin seeds, DDL, cuentas, pedidos, cobros ni correos de QA.
+
+QA **remota sin sustituir assets locales**, 390/1440: menús, búsqueda real/vacía, marca/género/categoría/precio/orden/reset, productos/carrito/+−/eliminar/vaciar/persistencia/contador/subtotal y envío. Respuestas de cotización atrasadas no pisan cantidades ni restauran vaciado; error y reintento pasaron con 503 inyectado en navegador sobre código publicado. Sin pageerror/respuestas API fallidas en recorrido normal ni overflow del carrito. Cuatro assets modificados coinciden byte por byte con la fuente y sin patrones Secret/SDK Supabase. Admin anónimo 403; sesión null. Primera health dio 503; cuatro consultas posteriores 200, causa no confirmada. Tail filtrado de esta preview capturó cero eventos: **logs específicos no verificados**, no confundir con los cinco del deployment anterior.
+
+Worker vigente conserva `f73d5087-ac19-4168-890b-6da3abb6b635` al 100%, Pages ae2f7932 intacto; sin DNS/tráfico ni merge. PR35 sigue dependiente de PR34. Pendientes: WhatsApp real, pagos sandbox y Auth/Admin con cuentas seguras, banner distinto (ideal 1024×1536), observabilidad/readiness transitorio. Evidencia completa: docs/cart_checkout_validation.md. Próxima acción: probar esta URL desde celular del usuario; no activar compras ni promover a producción.
+
+## Checkpoint anterior: carrito local y preview bloqueada
+
+
 
 2026-10-06 (America/Buenos_Aires). Rama `codex/cart-checkout-ux`, basada en PR34/8d80fdd, PR apilada con base `codex/cloudflare-hosting-migration`. PR34 sigue abierta; main y deployment vigentes sin modificar. Fuente Pages b3cd5f6/ae2f7932, backend f73d5087 confirmados nuevamente; el checkpoint de abajo es histórico.
 
