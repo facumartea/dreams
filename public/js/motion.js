@@ -29,8 +29,8 @@
 
     function setup_entry_sequence() {
         const hero = document.querySelector('.hero');
-        if (!hero) return;
-        const parts = hero.querySelectorAll('.eyebrow,h1,.hero-copy>p:not(.eyebrow),.button,.hero-image');
+        if (!hero || hero.classList.contains('hero-cinema')) return;
+        const parts = hero.querySelectorAll('.eyebrow,h1,.hero-copy>p:not(.eyebrow),.hero-image');
         parts.forEach((part, index) => {
             part.classList.add('hero-entry');
             part.style.setProperty('--entry-delay', `${120 + index * 85}ms`);
@@ -40,7 +40,7 @@
 
     function setup_scroll_depth() {
         if (reduced.matches) return;
-        const hero = document.querySelector('.hero');
+        const hero = document.querySelector('.hero:not(.hero-cinema)');
         const editorial = [...document.querySelectorAll('.detail-layout')];
         if (!hero && !editorial.length) return;
         let frame = 0;
@@ -72,7 +72,7 @@
     }
 
     function setup_hero_depth() {
-        const hero = document.querySelector('.hero');
+        const hero = document.querySelector('.hero:not(.hero-cinema)');
         if (!hero || !can_move()) return;
         let frame = 0;
         hero.addEventListener('pointermove', event => {
@@ -98,7 +98,7 @@
 
     function setup_magnetic_buttons() {
         if (!can_move()) return;
-        document.querySelectorAll('.hero .button').forEach(button => {
+        document.querySelectorAll('.hero:not(.hero-cinema) .button').forEach(button => {
             let frame = 0;
             button.classList.add('button-magnetic');
             button.addEventListener('pointermove', event => {
@@ -127,8 +127,40 @@
         observer.observe(document.body, { childList: true, subtree: true });
     }
 
+    function setup_hero_cinema() {
+        const hero = document.querySelector('.hero-cinema');
+        const toggle = hero?.querySelector('.hero-motion-toggle');
+        if (!toggle) return;
+        let paused = false;
+        let visible = true;
+        const update = () => {
+            const stopped = paused || reduced.matches || document.hidden || !visible;
+            hero.classList.toggle('is-motion-paused', stopped);
+            toggle.hidden = reduced.matches;
+            toggle.setAttribute('aria-pressed', String(paused));
+            toggle.textContent = paused ? 'Reanudar animación' : 'Pausar animación';
+        };
+        toggle.addEventListener('click', () => {
+            paused = !paused;
+            update();
+        });
+        reduced.addEventListener('change', update);
+        document.addEventListener('visibilitychange', update);
+        if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver(entries => {
+                visible = entries[0].isIntersecting;
+                update();
+            });
+            observer.observe(hero);
+        }
+        update();
+        // Only start continuous motion once its accessible pause control is ready.
+        hero.classList.add('cinema-ready');
+    }
+
     function initialize_motion() {
         document.documentElement.classList.add('motion-ready');
+        setup_hero_cinema();
         setup_entry_sequence();
         setup_reveals();
         setup_hero_depth();

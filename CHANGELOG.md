@@ -1,5 +1,14 @@
 # DREAMS — Changelog
 
+## 2026-10-07 — Presentación cinematográfica con asset existente
+
+- Rama visual dependiente de PR35; fotografía y lettering unidos sin deformación ni cambios comerciales.
+- Entrada suave, movimiento vertical de 6 px y luz discreta; CTA y control de pausa fuera de la entrada animada, pausa por teclado, suspensión fuera de pantalla y reduced-motion estático.
+- Marco responsive 2:3 y salto del email del footer para evitar overflow a 1024 px. Sin dependencias nuevas.
+- Check 37 JS, 100/100 tests y build Workers; CI b3f56b5 SUCCESS 37568051539. Preview aislada perfume-hero-review publicada (deployment 697999ef), PR36 dependiente de PR35.
+- QA remota en seis tamaños: imagen, controles inmediatos, pausa/Enter y reduced-motion sin errores/overflow; 390/1440 menús/filtros completos/carrito/contador/persistencia/subtotal. Health 200; capturas y grabación guardadas fuera del repo.
+- Conservados checkout deshabilitado, menús/carrito, Supabase, producción y previews anteriores. Material/licencia y video futuros documentados en docs/hero_cinematic_validation.md.
+
 ## 2026-10-07 — Preview aislada de PR35 publicada
 
 - Secret de Previews Base configurado por usuario y confirmado como secret_text; ninguna credencial leída/impresa/versionada.

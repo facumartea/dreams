@@ -2,7 +2,15 @@
 
 2026-10-07. Destino actualizado por el usuario: Cloudflare Workers. Sin porcentajes especulativos. Plan histórico preservado en `docs/history/PLAN_PR33.md`.
 
-## Alcance vigente: carrito y navegación
+## Alcance vigente: presentación cinematográfica
+
+- Branch visual dependiente de PR35/a04e732: CREADA, sin merges ni cambios de checkout.
+- Asset y referencia: VERIFICADOS; fondo integrado y derechos individuales no documentados.
+- Entrada, movimiento sutil, pausa y modo reducido: IMPLEMENTADOS. Check 37, 100/100 y build Workers; QA local en seis tamaños.
+- PR/push/preview aislada y QA remota: COMPLETADOS. PR36 depende de PR35; fuente b3f56b5/CI SUCCESS y preview perfume-hero-review. Seis tamaños, controles/reduced y regresiones menús/filtros/carrito verificadas; previews anteriores y sitio vigente intactos.
+- Video/segundo banner: PENDIENTES MATERIAL autorizado del mismo producto.
+
+## Alcance previo: carrito y navegación
 
 - Corregir carreras, estados de cotización, WhatsApp inválido y subtotal/envío: PUBLICADO EN PREVIEW AISLADA b75ce0d.
 - Verificar menús/filtros y carrito en desktop/móvil: COMPLETADO también remotamente en preview cart-checkout-review (390/1440); 98 tests previos + CI del deployment y dos runtime tests.

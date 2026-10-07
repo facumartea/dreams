@@ -39,7 +39,7 @@
     </header>
 
     <main>
-        <section class="hero">
+        <section class="hero hero-cinema">
             <div class="hero-copy">
                 <p class="eyebrow">DREAMS PERFUMES</p>
                 <h1>Los perfumes<br>de tus sueños.</h1>
@@ -47,12 +47,15 @@
                 <a class="button button-dark" href="/catalogo.html">Descubrir perfumes</a>
             </div>
             <div class="hero-image">
-                <picture>
-                    <source type="image/webp" srcset="/assets/dreams-hero-640.webp 640w, /assets/dreams-hero-1024.webp 1024w" sizes="(max-width: 920px) 100vw, 54vw">
-                    <img src="/assets/dreams-hero-1024.webp" width="1024" height="1536" alt="Frasco negro de perfume DREAMS sobre piedra" fetchpriority="high" decoding="async">
-                </picture>
-                <span class="hero-bottle-mark" aria-hidden="true"><strong>DREAMS</strong><small>EAU DE PARFUM</small></span>
+                <div class="hero-product-stage">
+                    <picture>
+                        <source type="image/webp" srcset="/assets/dreams-hero-640.webp 640w, /assets/dreams-hero-1024.webp 1024w" sizes="(max-width: 920px) 100vw, 54vw">
+                        <img src="/assets/dreams-hero-1024.webp" width="1024" height="1536" alt="Frasco negro de perfume DREAMS sobre piedra" fetchpriority="high" decoding="async">
+                    </picture>
+                    <span class="hero-bottle-mark" aria-hidden="true"><strong>DREAMS</strong><small>EAU DE PARFUM</small></span>
+                </div>
             </div>
+            <button class="hero-motion-toggle" type="button" aria-pressed="false" hidden>Pausar animación</button>
         </section>
 
         <section class="brand-statement">
