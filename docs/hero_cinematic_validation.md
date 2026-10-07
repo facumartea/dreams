@@ -11,7 +11,7 @@ La portada utiliza `public/assets/dreams-hero-1024.webp` (1024×1536 RGB opaco, 
 ## Implementación
 
 - Foto y lettering en un único contenedor de proporción 2:3; sin deformación, cambio de colores ni rotación 3D ficticia. Se adapta el marco al fondo integrado y se suavizan únicamente sus bordes.
-- Entrada CSS de texto/fotografía de 1–1,2 s; CTA visible y usable desde el inicio. No se espera carga de JS para mostrar el CTA y no se bloquea scroll.
+- Entrada CSS de texto/fotografía de 1–1,2 s; CTA visible y usable desde el inicio; el control de pausa queda fuera del contenedor que aparece animado. No se espera carga de JS para mostrar el CTA y no se bloquea scroll.
 - Movimiento vertical total de 6 px en un ciclo de 12 s y luz ambiental discreta. Sin librerías nuevas, audio, video genérico, promociones ni cambios de copy.
 - Botón accesible de 44 px para pausar/reanudar, teclado y foco visible. Movimiento continuo sólo empieza después de instalar el control. Pausa automática cuando la portada sale del viewport o la pestaña está oculta; se conserva la pausa elegida por el usuario.
 - `prefers-reduced-motion: reduce`: presentación estática, incluso si cambia durante la sesión; conserva el centrado del lettering y no deja títulos invisibles.
