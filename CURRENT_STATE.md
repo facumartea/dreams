@@ -2,9 +2,15 @@
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
 
-Actualizado: 2026-10-06 UTC. Repositorio: facumartea/dreams.
+Actualizado: 2026-10-07 (America/Buenos_Aires). Repositorio: facumartea/dreams.
 
-## Solicitud vigente: URL dreams-perfumes.pages.dev
+## Solicitud vigente: hero estático en Pages — 2026-10-07
+
+Rama `codex/static-home-pages`, base PR34/8d80fdd; PR35/a04e732 y PR36/6c68ff7 siguen abiertas y no se integran. Diseño de PR36 reutilizado sólo en portada: imagen original, composición, tipografía, copy e iluminación fija; todos los efectos/control de hero retirados. Build Pages empaqueta únicamente inicio/CSS/motion y preserva API/resto del sitio mediante DREAMS. Worker f73d5087 intacto; Pages previo ae2f7932/b3cd5f6 confirmado y rollback identificado. Sin cambios de carrito/checkout/Auth/Supabase.
+
+Check 35 JS, 95/95 y builds correctos. QA local seis tamaños: carga/2:3, espera/hover/scroll/reduced sin movimiento interno ni brillo variable, sin pausa y CTA visible. Regresión 390/1440 menús/filtros/carrito pasada; frontend local sobre API vigente, no publicación nueva. Próxima acción: commit/push/PR, Direct Upload preview, revisar y publicar únicamente ese bundle en alias Pages autorizado; QA remota después. Evidencia/procedimiento seguro: docs/static_home_pages.md.
+
+## Checkpoint previo: URL dreams-perfumes.pages.dev
 
 **Enlace principal: https://dreams-perfumes.pages.dev**. Proyecto dreams-perfumes publicado mediante conexión Cloudflare con permisos Pages. Deployment `ae2f7932-aefe-48b2-a9e9-8c3597b607f9` SUCCESS, fuente `b3cd5f62523d15603078798baa9f31b633692d3f`, alias raíz confirmado por HTTP. Proxy advanced-mode con Service binding DREAMS al Worker existente, sin duplicar backend/secret ni modificar Supabase. Backend actualizado a versión `f73d5087-ac19-4168-890b-6da3abb6b635` para añadir Pages a APP_ORIGINS conservando el origen Worker y demás variables/Secret. Ambos enlaces funcionan.
 

@@ -1,3 +1,7 @@
+## Actualización 2026-10-07: portada estática aislada
+
+El build ahora empaqueta sólo inicio/CSS/motion para publicar el diseño estático solicitado sin incluir PR35/36. El proxy conserva respuestas y permisos del backend y reemplaza únicamente esos GET/HEAD exitosos; resto de HTML/JS/API/assets y SUPABASE_SECRET_KEY siguen en el Worker sin modificación. ETag/HEAD/304 y cabeceras protegidas probados. Ver [static_home_pages.md](static_home_pages.md) para evidencia, destino exacto y reversión. El checkpoint de deployment de abajo es histórico hasta cerrar esta publicación.
+
 # DREAMS en pages.dev
 
 El usuario solicita `dreams-perfumes.pages.dev`. Proyecto Pages **dreams-perfumes** en cuenta `9f3d7af60fcb0c2b4fff8570843588f9`; API y HTTP confirman **https://dreams-perfumes.pages.dev**. Deployment `ae2f7932-aefe-48b2-a9e9-8c3597b607f9` SUCCESS, commit `b3cd5f62523d15603078798baa9f31b633692d3f`; URL inmutable https://ae2f7932.dreams-perfumes.pages.dev (mutaciones habilitadas sólo en alias raíz aprobado). CI exacto SUCCESS 37541429804. Backend versión `f73d5087-ac19-4168-890b-6da3abb6b635`, con Pages añadido a APP_ORIGINS y demás configuración/Secret preservados.
