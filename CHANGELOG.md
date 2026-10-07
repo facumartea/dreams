@@ -1,5 +1,13 @@
 # DREAMS — Changelog
 
+## 2026-10-07 — Presentación cinematográfica con asset existente
+
+- Rama visual dependiente de PR35; fotografía y lettering unidos sin deformación ni cambios comerciales.
+- Entrada suave, movimiento vertical de 6 px y luz discreta; CTA inmediato, pausa por teclado, suspensión fuera de pantalla y reduced-motion estático.
+- Marco responsive 2:3 y salto del email del footer para evitar overflow a 1024 px. Sin dependencias nuevas.
+- Check 37 JS, 100/100 tests y build Workers; QA local 390/430/768/1024/1440/1920 con imagen, pausa y preferencias sin errores. Preview nueva todavía pendiente.
+- Conservados checkout deshabilitado, menús/carrito, Supabase, producción y previews anteriores. Material/licencia y video futuros documentados en docs/hero_cinematic_validation.md.
+
 ## 2026-10-07 — Preview aislada de PR35 publicada
 
 - Secret de Previews Base configurado por usuario y confirmado como secret_text; ninguna credencial leída/impresa/versionada.

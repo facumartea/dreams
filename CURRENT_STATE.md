@@ -4,6 +4,10 @@ SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
 
 Actualizado: 2026-10-07 (America/Buenos_Aires). Repositorio: facumartea/dreams.
 
+## Mejora visual de portada — 2026-10-07
+
+Rama `codex/perfume-hero-cinema`, dependiente de PR35/a04e732 (abierta, a su vez sobre PR34). Foto opaca existente 1024×1536 conservada; entrada suave, movimiento vertical de 6 px, brillo discreto y pausa accesible/reduced-motion estático. Sin checkout, Supabase ni producción modificados. Check 37 JS, 100/100 y build Workers correctos; QA local en seis tamaños con pausa/teclado/reduced/image sin errores ni overflow. Referencia Apple revisada sólo como inspiración de composición. Derechos individuales del asset no documentados. Evidencia: docs/hero_cinematic_validation.md. Próxima acción: commit/push, PR apilada y preview aislada `perfume-hero-review`, luego QA remota.
+
 ## Preview PR35 publicada y verificada — 2026-10-07
 
 **URL: https://cart-checkout-review-dreams-perfumes.dreams-perfumes.workers.dev/**. Preview aislada `cart-checkout-review` del Worker dreams-perfumes, id `da9e5bd9435f47b1a82da81d137d548c`. Deployment `1537279f-9851-4532-b72a-4d60f7132524`, fuente `b75ce0dfcd11b6f4425a3b8193c9d85ad669b34d`, CI SUCCESS [37565195401](https://github.com/facumartea/dreams/actions/runs/37565195401). Se añadió sólo `env.preview.previews={}`, requerido por Wrangler 4.147.0; build correcto y dos tests de runtime Workers pasaron. La suite de carrito 98/98 estaba acreditada y CI volvió a validar el commit; no se repitió localmente toda la suite.
