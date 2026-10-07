@@ -2,7 +2,17 @@
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
 
-Actualizado: 2026-10-06 UTC. Repositorio: facumartea/dreams.
+Actualizado: 2026-10-06 (America/Buenos_Aires). Repositorio: facumartea/dreams.
+
+## Tarea vigente: carrito, checkout, menús/filtros y presentación
+
+2026-10-06 (America/Buenos_Aires). Rama `codex/cart-checkout-ux`, basada en PR34/8d80fdd, PR apilada con base `codex/cloudflare-hosting-migration`. PR34 sigue abierta; main y deployment vigentes sin modificar. Fuente Pages b3cd5f6/ae2f7932, backend f73d5087 confirmados nuevamente; el checkpoint de abajo es histórico.
+
+Bloqueo COMPRAR comprobado: CHECKOUT_SCHEMA_READY=false, proveedor demo y sin secretos Mercado Pago. Orders/coupons sí existen por lectura de information_schema; no se activó checkout ni modificó Supabase. WHATSAPP_NUMBER vacío. Correcciones: carreras de cotización/vaciado, fallos de configuración independientes de cotización, reintento, contacto WhatsApp válido y subtotal sin envío desconocido; ver docs/cart_checkout_validation.md.
+
+Checks locales: 36 JS, 98/98, audit prod limpio, builds Workers/Pages correctos. QA 390/1440: menú, búsqueda/marca/género/categoría/precio/orden/reset, carrito/cantidades/eliminar/vaciar/contador/persistencia/subtotal; archivos frontend locales interceptados sobre APIs remotas de lectura, **no deployment nuevo**. Doble clic/error de proveedor probado con respuestas exclusivamente sintéticas; cero pedidos reales. Auth/Admin autenticados y pago remoto siguen pendientes.
+
+Carrusel pendiente de otra imagen distinta y pertinente: sólo existe el hero fijo y variantes del mismo frasco/logos. No se duplicó contenido. Preview aislada sin publicar: autenticación disponible, pero base de previews sin SUPABASE_SECRET_KEY. Paso seguro exacto documentado, nunca recuperar/exportar el Secret activo. Producción/DNS/tráfico y servicios vigentes sin modificar. Próxima acción: configurar Secret de preview de forma segura, publicar origen aislado y validar; pago sandbox requiere datos de QA, credenciales y revisión de envío.
 
 ## Solicitud vigente: URL dreams-perfumes.pages.dev
 

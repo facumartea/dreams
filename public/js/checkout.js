@@ -144,7 +144,7 @@ async function setup_checkout() {
         checkout_config = config;
         const user = await user_response.json();
         const quote = await quote_response.json();
-        if (!config_response.ok || !config.enabled) throw new Error('El checkout todavía no está configurado. Podés continuar por WhatsApp.');
+        if (!config_response.ok || !config.enabled) throw new Error('El pago online no está disponible. No se realizó ningún pedido ni cobro.');
         configure_payment_ui(config);
         if (!user_response.ok || !user.user) {
             status.innerHTML = 'Para pagar necesitás <a href="/cuenta.html">iniciar sesión o crear una cuenta</a>.';

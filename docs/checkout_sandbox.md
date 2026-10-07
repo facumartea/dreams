@@ -1,5 +1,9 @@
 # Checkout Sandbox — diseño y activación
 
+## Diagnóstico vigente — 2026-10-06 (America/Buenos_Aires)
+
+Pages/Worker publican checkout desactivado (demo, CHECKOUT_SCHEMA_READY=false), sin credenciales Mercado Pago y sin contacto WhatsApp. Las tablas orders/coupons sí existen. No activar demo/sandbox contra datos comerciales: ambos guardan pedidos. La cotización muestra subtotal sin envío; la integración no determina una tarifa. Guía actual y pasos seguros: [cart_checkout_validation.md](cart_checkout_validation.md). URLs Railway de los ejemplos de abajo son históricas, no un destino operativo ni configuración vigente.
+
 ## Estado
 
 La aplicación incluye una integración desacoplada de Checkout Pro mediante `server/payments/mercado-pago.js`, pantallas de checkout/resultado, verificación HMAC de Webhooks, consulta server-side del pago y estados `approved`, `rejected`, `pending`, `cancelled` y `error`.
@@ -14,7 +18,7 @@ El feature flag es cerrado por defecto. `/api/checkout/config` sólo devuelve `e
 2. `APP_BASE_URL` es un origen HTTPS válido;
 3. `CHECKOUT_SCHEMA_READY=true` después de aplicar y verificar la migración.
 
-Nunca activar el flag sólo para mostrar la interfaz. Hasta completar la activación, el carrito conserva el flujo de consulta por WhatsApp.
+Nunca activar el flag sólo para mostrar la interfaz. Hasta completar la activación, el carrito permite consulta por WhatsApp únicamente cuando el contacto real está configurado.
 
 ## Esquema aplicado
 

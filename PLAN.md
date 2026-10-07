@@ -2,6 +2,17 @@
 
 2026-10-06. Destino actualizado por el usuario: Cloudflare Workers. Sin porcentajes especulativos. Plan histórico preservado en `docs/history/PLAN_PR33.md`.
 
+## Alcance vigente: carrito y navegación
+
+- Corregir carreras, estados de cotización, WhatsApp inválido y subtotal/envío: COMPLETADO LOCAL.
+- Verificar menús/filtros y carrito en desktop/móvil: COMPLETADO con frontend local sobre APIs remotas de lectura; 98 tests/builds.
+- Checkout comercial: BLOQUEADO CONFIGURACIÓN, no habilitado. Proveedor implementado; faltan secretos MP y QA comercial aislada.
+- Carrusel: PENDIENTE MATERIAL. Hero fijo; falta un segundo banner distinto.
+- Preview aislada: BLOQUEADA por Secret ausente en Previews Base; no alterar deployment vigente.
+- PR de tarea: base codex/cloudflare-hosting-migration, dependiente de #34 sin mezclar PR32; publicar cambios/CI según GitHub.
+
+## Plan de hosting anterior (conservado como contexto)
+
 | Paso | Estado | Evidencia / dependencia |
 |---|---|---|
 | Estado real, Git, PR33, Supabase y Railway | COMPLETADO | Lecturas verificadas; PR32 excluida |

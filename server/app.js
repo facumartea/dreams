@@ -248,7 +248,8 @@ function create_app(options = {}) {
     const create_auth_client = options.create_auth_client || (() => database);
     const configured_contact_email = normalize_email(options.contact_email || 'contacto@example.com');
     const contact_email = valid_email(configured_contact_email) ? configured_contact_email : 'contacto@example.com';
-    const whatsapp_number = String(options.whatsapp_number || '').replace(/\D/g, '');
+    const configured_whatsapp_number = String(options.whatsapp_number || '').replace(/\D/g, '');
+    const whatsapp_number = /^\d{8,15}$/.test(configured_whatsapp_number) ? configured_whatsapp_number : '';
     const payment_provider = options.payment_provider || null;
     const demo_auto_confirm_email = options.demo_auto_confirm_email === true;
     const checkout_mode = ['production', 'sandbox', 'demo'].includes(payment_provider?.mode) ? payment_provider.mode : 'sandbox';
@@ -409,8 +410,8 @@ function create_app(options = {}) {
         const quote = await quote_cart(database, request.body.items, request.body.coupon_code, product_brand_column);
         if (quote.error) return response.status(400).json({ error: quote.error });
         const lines = quote.items.map(item => `${item.quantity} × ${item.brand} ${item.name} — ${item.price * item.quantity} ARS`);
-        const text = ['Hola DREAMS, quiero consultar por este carrito:', ...lines, `Total de referencia: ${quote.total} ARS`].join('\n');
-        response.json({ ...quote, whatsapp_url: quote.items.length ? `https://wa.me/${whatsapp_number}?text=${encodeURIComponent(text)}` : null });
+        const text = ['Hola DREAMS, quiero consultar por este carrito:', ...lines, `Subtotal de referencia: ${quote.total} ARS`, 'Envío a consultar, no incluido.'].join('\n');
+        response.json({ ...quote, whatsapp_url: quote.items.length && whatsapp_number ? `https://wa.me/${whatsapp_number}?text=${encodeURIComponent(text)}` : null });
     });
     route('post', '/api/coupons/validate', async (request, response) => {
         const quote = await quote_cart(database, request.body.items, request.body.code, product_brand_column);
