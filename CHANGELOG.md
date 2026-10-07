@@ -1,4 +1,24 @@
-# Hostname Pages publicado y validado — 2026-10-06
+# DREAMS — Changelog
+
+## 2026-10-07 — Preview aislada de PR35 publicada
+
+- Secret de Previews Base configurado por usuario y confirmado como secret_text; ninguna credencial leída/impresa/versionada.
+- Añadido bloque previews vacío requerido por Wrangler 4.147.0. Commit fuente b75ce0d, push y CI 37565195401 SUCCESS; build y dos tests runtime Workers correctos.
+- Preview real: https://cart-checkout-review-dreams-perfumes.dreams-perfumes.workers.dev/, deployment 1537279f. Origen exacto y Supabase existente configurados, checkout y auto-confirmación desactivados.
+- QA remota 390/1440: menús/filtros completos, productos/carrito/persistencia/contador/subtotal/envío; atrasos/reintento con fallos inyectados de navegador. Sin errores JS en recorrido normal. WhatsApp sin número, no se envió mensaje.
+- Health inicial 503, después cuatro 200; causa no confirmada. Tail específico sin eventos, logs no declarados validados.
+- Worker f73d5087/Pages ae2f7932 vigentes intactos; sin DNS/tráfico, merge, datos, pagos, pedidos, correos o migraciones. Carrusel, Auth/Admin autenticados y pagos siguen pendientes.
+
+
+## 2026-10-06 — Carrito y diagnóstico de checkout (America/Buenos_Aires)
+
+- COMPRAR bloqueado por configuración remota, no proveedor fallido: demo, esquema flag false y sin secretos MP. Supabase orders/coupons existentes confirmados por lectura, sin cambios.
+- Impedidas respuestas atrasadas que restauraban carrito o cantidades; configuración de pago fallida no invalida cotización; reintento persistente y sincronización entre pestañas.
+- WhatsApp sólo con contacto válido; subtotal y envío desconocido explícitos, sin inventar contacto/precios/tarifas.
+- 98/98 tests, check 36, audit prod limpio y builds Workers/Pages correctos. Desktop/móvil: menús, filtros completos y carrito; QA frontend local interceptado sobre APIs reales. Duplicados/error con endpoint sintético, sin pedidos/cobros/correos.
+- Hero fijo confirmado; carrusel pendiente de otro banner distinto. Sin deployment nuevo: Secret no configurado en base de previews aisladas. Guía/evidencia: docs/cart_checkout_validation.md; branch codex/cart-checkout-ux depende de PR34. Sin cambios de DNS/tráfico/Supabase ni merge.
+
+## Hostname Pages publicado y validado — 2026-10-06
 
 - dreams-perfumes.pages.dev publicado con deployment ae2f7932, fuente b3cd5f6; estado SUCCESS y alias raíz HTTP verificados.
 - Service binding DREAMS al Worker preserva app y secretos; añadida sólo URL Pages a APP_ORIGINS conservando Worker/orígenes/configuración vigentes. Backend versión f73d5087.

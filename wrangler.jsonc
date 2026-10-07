@@ -29,6 +29,7 @@
   "env": {
     "preview": {
       "name": "dreams-perfumes",
+      "previews": {},
       "vars": {
         "NODE_ENV": "production",
         "PRODUCT_BRAND_COLUMN": "marca",

@@ -150,6 +150,55 @@ test('checkout permanece cerrado si faltan esquema o credenciales Sandbox', asyn
     });
 });
 
+test('cotización no publica WhatsApp sin contacto válido y usa precios del servidor', async () => {
+    const row = { id: 1, brand: 'Fixture', name: 'Perfume', stock: 3, price: 150, size_ml: 50 };
+    for (const number of ['', '123', '+54 9 11 1234 5678']) {
+        const database = database_with(table => {
+            assert.equal(table, 'products');
+            return { data: [row], error: null };
+        });
+        await serve(create_app({ database, whatsapp_number: number, disable_request_log: true }), async base => {
+            const response = await fetch(`${base}/api/cart/quote`, {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ items: [{ id: 1, quantity: 2, price: 1 }] })
+            });
+            assert.equal(response.status, 200);
+            const body = await response.json();
+            assert.equal(body.total, 300);
+            if (number.length < 8) assert.equal(body.whatsapp_url, null);
+            else {
+                const url = new URL(body.whatsapp_url);
+                assert.equal(url.hostname, 'wa.me');
+                assert.equal(url.pathname, '/5491112345678');
+                assert.match(url.searchParams.get('text'), /2 × Fixture Perfume — 300 ARS/);
+                assert.match(url.searchParams.get('text'), /Subtotal de referencia: 300 ARS/);
+                assert.match(url.searchParams.get('text'), /Envío a consultar, no incluido/);
+            }
+        });
+    }
+});
+
+test('checkout requiere proveedor, URL y esquema: demo por sí solo no habilita compra', async () => {
+    const { DemoPaymentProvider } = require('../server/payments/demo');
+    const { MercadoPagoProvider } = require('../server/payments/mercado-pago');
+    const database = database_with(() => { throw new Error('Config must not read or write commercial data'); });
+    const ready = { payment_provider: new DemoPaymentProvider(), app_base_url: 'https://preview.example', checkout_schema_ready: true };
+    for (const [override, enabled] of [
+        [{ checkout_schema_ready: false }, false],
+        [{ app_base_url: '' }, false],
+        [{ payment_provider: new MercadoPagoProvider({ access_token: '', webhook_secret: '' }) }, false],
+        [{}, true]
+    ]) {
+        await serve(create_app({ database, ...ready, ...override, disable_request_log: true }), async base => {
+            const response = await fetch(`${base}/api/checkout/config`);
+            assert.equal(response.status, 200);
+            const body = await response.json();
+            assert.equal(body.enabled, enabled);
+            assert.equal(body.provider, enabled ? 'demo' : null);
+        });
+    }
+});
+
 test('mutaciones rechazan orígenes cruzados y aceptan el mismo origen', async () => {
     const database = database_with(() => ({ data: [], error: null }));
     const app = create_app({ database, disable_request_log: true });

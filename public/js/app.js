@@ -23,7 +23,11 @@ async function apply_public_config() {
     try {
         const config = await get_public_config();
         document.querySelectorAll('[data-whatsapp-link]').forEach(link => {
-            link.href = `https://wa.me/${encodeURIComponent(config.whatsapp_number)}`;
+            if (/^\d{8,15}$/.test(config.whatsapp_number || '')) {
+                link.href = `https://wa.me/${encodeURIComponent(config.whatsapp_number)}`;
+            } else {
+                link.removeAttribute('href');
+            }
         });
         document.querySelectorAll('[data-contact-email]').forEach(link => {
             link.textContent = config.contact_email;
