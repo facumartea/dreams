@@ -4,9 +4,15 @@ SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
 
 Actualizado: 2026-10-07 (America/Buenos_Aires). Repositorio: facumartea/dreams.
 
-## Mejora visual de portada — 2026-10-07
+## Portada cinematográfica publicada y verificada — 2026-10-07
 
-Rama `codex/perfume-hero-cinema`, dependiente de PR35/a04e732 (abierta, a su vez sobre PR34). Foto opaca existente 1024×1536 conservada; entrada suave, movimiento vertical de 6 px, brillo discreto y pausa accesible/reduced-motion estático. Sin checkout, Supabase ni producción modificados. Check 37 JS, 100/100 y build Workers correctos; QA local en seis tamaños con pausa/teclado/reduced/image sin errores ni overflow. Referencia Apple revisada sólo como inspiración de composición. Derechos individuales del asset no documentados. Evidencia: docs/hero_cinematic_validation.md. Próxima acción: commit/push, PR apilada y preview aislada `perfume-hero-review`, luego QA remota.
+**URL: https://perfume-hero-review-dreams-perfumes.dreams-perfumes.workers.dev/**. Rama `codex/perfume-hero-cinema`, PR36 abierta con base PR35/a04e732 (abierta; depende de PR34). Fuente desplegada b3f56b5c8e013ac452b662478cd3927653e8880e, deployment 697999ef-22de-4b82-ae61-9e8232f94d65, preview d147f1fe5f5740bd840401b3f3e28ded. CI SUCCESS [37568051539](https://github.com/facumartea/dreams/actions/runs/37568051539): 100/100, check 37, audit y builds Workers/Pages. Checkpoint documental posterior no requiere redeploy.
+
+Foto opaca existente 1024×1536 conservada, lettering unido, proporción 2:3; entrada suave, movimiento vertical de 6 px, luz discreta, CTA y pausa visibles sin esperar entrada. Pausa accesible/teclado, automática fuera de pantalla/pestaña oculta y reduced-motion estático. Sin librerías nuevas. Email footer puede partirse a 1024 px. Derechos individuales del asset no acreditados; no se inventó recorte/video/rotación ni contenido.
+
+QA remota real Chromium: seis tamaños con imagen, pausa, Enter y preferencias sin pageerror/overflow; 390/1440 menús, búsqueda/filtros completos y carrito/persistencia/contador/subtotal/envío pasaron. Health 200, assets publicados coinciden con fuente. Capturas y grabación disponibles fuera del repo. Sin Auth/Admin autenticados, pagos, Safari/iOS físico, métricas CWV ni logs de runtime validados. Evidencia: docs/hero_cinematic_validation.md.
+
+Secret secret_text heredado sin leer/exportar; Supabase existente y origen exacto; checkout y auto-confirmación false. Worker f73d5087, Pages ae2f7932 y preview carrito 1537279f intactos. Sin merges, DNS/tráfico, pagos ni datos cambiados. Carrusel/filmación pendientes de material autorizado del mismo perfume. Próxima acción: revisar esta preview desde celular antes de decidir nuevas mejoras o promoción; la cadena PR34→PR35→PR36 sigue sin merge.
 
 ## Preview PR35 publicada y verificada — 2026-10-07
 
