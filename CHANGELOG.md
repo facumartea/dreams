@@ -1,3 +1,12 @@
+# 2026-10-08 — Acceso limpio y español consistente
+
+- Retirados rótulo DREAMS ACCOUNT y aviso técnico Google; login existente preservado.
+- Asset de marca transparente derivado del original, sin fondo/texto ISOTIPO, sin regeneración; escala de acceso ampliada moderadamente.
+- Rótulos públicos/Admin/checkout y estados/proveedores de pedidos traducidos al español sin alterar identificadores ni funcionalidades. Validaciones nativas y fallos de navegador en español.
+- Correos y teléfono real preservados; WhatsApp muestra su número. Segundo teléfono y destino pendientes de respuesta, sin datos inventados.
+- 111/111 tests, sintaxis 43, builds Workers/Pages y QA local de acceso/Admin correctos. Preview/QA remotos de esta tanda pendientes de publicación.
+- Producción, DNS, tráfico, Supabase y permisos intactos; sin merge.
+
 # 2026-10-08 UTC — Acceso y presentación académica aislada
 
 - Corregido overflow móvil Admin demostrado en fixture: grid antes 574 px sobre 390; seis módulos/editar/limpiar ahora 390/1440 sin overflow.

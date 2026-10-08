@@ -266,14 +266,14 @@ function create_app(options = {}) {
     app.use('/api/inquiries', rateLimit({ windowMs: 900000, limit: 10, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiadas consultas. Probá nuevamente en unos minutos.' } }));
     app.use('/api/cart', rateLimit({ windowMs: 900000, limit: 30, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiadas verificaciones del carrito. Probá nuevamente en unos minutos.' } }));
     app.use('/api/presentation', rateLimit({ windowMs: 900000, limit: 60, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiados intentos. Probá nuevamente en unos minutos.' } }));
-    app.use('/api/checkout', rateLimit({ skip: request => !unsafe_methods.has(request.method), windowMs: 900000, limit: 15, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiados intentos de checkout. Probá nuevamente en unos minutos.' } }));
+    app.use('/api/checkout', rateLimit({ skip: request => !unsafe_methods.has(request.method), windowMs: 900000, limit: 15, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiados intentos de pago. Probá nuevamente en unos minutos.' } }));
     app.use('/api/coupons', rateLimit({ windowMs: 900000, limit: 30, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiados intentos. Probá nuevamente en unos minutos.' } }));
     app.use('/api/payments/webhook', rateLimit({ windowMs: 60000, limit: 120, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiadas notificaciones.' } }));
     const review_limiter = rateLimit({ windowMs: 3600000, limit: 5, standardHeaders: true, legacyHeaders: false, message: { error: 'Publicaste varias opiniones. Probá nuevamente más tarde.' } });
     app.use('/api/reviews', (request, response, next) => request.method === 'POST' ? review_limiter(request, response, next) : next());
     app.use((request, response, next) => {
         const safe = ['/api/cart/quote', '/api/auth/google', '/api/auth/login', '/api/auth/logout', '/api/presentation/session', '/api/presentation/payment', '/api/presentation/result'];
-        if (options.preview_read_only && unsafe_methods.has(request.method) && !safe.includes(request.path)) return response.status(403).json({ error: 'Esta preview permite lecturas; las operaciones comerciales están protegidas.' });
+        if (options.preview_read_only && unsafe_methods.has(request.method) && !safe.includes(request.path)) return response.status(403).json({ error: 'Esta vista de prueba permite consultas; las operaciones comerciales están protegidas.' });
         next();
     });
     app.use(options.static_middleware || express.static(public_directory));
@@ -420,7 +420,7 @@ function create_app(options = {}) {
         response.json({ coupon: quote.coupon, subtotal: quote.subtotal, discount: quote.discount, total: quote.total });
     });
     route('post', '/api/checkout/session', login, async (request, response) => {
-        if (!checkout_enabled || !app_base_url) return response.status(503).json({ error: 'El checkout todavía no está configurado.' });
+        if (!checkout_enabled || !app_base_url) return response.status(503).json({ error: 'El pago online todavía no está disponible.' });
         const quote = await quote_cart(database, request.body.items, request.body.coupon_code, product_brand_column);
         if (quote.error) return response.status(400).json({ error: quote.error });
         if (request.body.coupon_code && !quote.coupon) return response.status(409).json({ error: 'Cupón inválido.' });
@@ -465,7 +465,7 @@ function create_app(options = {}) {
     });
     route('post', '/api/checkout/demo-payment', login, async (request, response) => {
         if (!checkout_enabled || payment_provider?.name !== 'demo' || typeof payment_provider.process_payment !== 'function') {
-            return response.status(404).json({ error: 'El checkout demo no está disponible.' });
+            return response.status(404).json({ error: 'El pago de prueba no está disponible.' });
         }
         if (request.body.card_number || request.body.cvv || request.body.expiry) {
             return response.status(400).json({ error: 'Los datos ficticios de tarjeta no deben enviarse al servidor.' });
@@ -473,14 +473,14 @@ function create_app(options = {}) {
         const order_id = String(request.body.order_id || '');
         if (!/^[0-9a-f-]{36}$/i.test(order_id)) return response.status(400).json({ error: 'ID de pedido inválido.' });
         const order = fail_if(await database.from('orders').select('id,user_id,provider,status,total,currency,created_at').eq('id', order_id).eq('user_id', request.user.id).maybeSingle());
-        if (!order || order.provider !== 'demo') return response.status(404).json({ error: 'Pedido demo no encontrado.' });
-        if (order.status !== 'created') return response.status(409).json({ error: 'Este pedido demo ya fue procesado.' });
+        if (!order || order.provider !== 'demo') return response.status(404).json({ error: 'Pedido de prueba no encontrado.' });
+        if (order.status !== 'created') return response.status(409).json({ error: 'Este pedido de prueba ya fue procesado.' });
 
         let payment;
         try {
             payment = await payment_provider.process_payment({ order_id, scenario: request.body.scenario });
         } catch (error) {
-            if (error?.code === 'DEMO_SCENARIO_INVALID') return response.status(400).json({ error: 'Resultado demo inválido.' });
+            if (error?.code === 'DEMO_SCENARIO_INVALID') return response.status(400).json({ error: 'Resultado de prueba inválido.' });
             throw error;
         }
         const updated = fail_if(await database.from('orders').update({
@@ -489,7 +489,7 @@ function create_app(options = {}) {
             status_detail: payment.status_detail,
             paid_at: payment.paid_at
         }).eq('id', order.id).eq('status', 'created').select('id').maybeSingle());
-        if (!updated) return response.status(409).json({ error: 'Este pedido demo ya fue procesado.' });
+        if (!updated) return response.status(409).json({ error: 'Este pedido de prueba ya fue procesado.' });
         response.json({ order_id: order.id, order_number: order_number(order), status: payment.status, status_detail: payment.status_detail });
     });
     route('post', '/api/checkout/confirm', login, async (request, response) => {

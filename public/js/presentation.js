@@ -46,7 +46,7 @@ const PresentationCheckout = (() => {
             save_cart(quote.items);
             button.disabled = false;
             if (quote.warnings?.length) status.textContent = quote.warnings.join(' ');
-        } catch (error) { status.textContent = error.message; return; }
+        } catch (error) { status.textContent = interface_error(error); return; }
         document.querySelectorAll('.copy-test-data').forEach(copy => copy.addEventListener('click', () => {
             document.getElementById('demo-card-number').value = format_demo_card_number(copy.dataset.copy);
             document.getElementById('demo-card-expiry').value = '12/30';
@@ -80,7 +80,7 @@ const PresentationCheckout = (() => {
                 sessionStorage.removeItem(KEY);
                 document.getElementById('demo-card-form').reset();
                 window.location.assign('/checkout-resultado.html?presentation=1');
-            } catch (error) { status.textContent = error.message; button.disabled = false; button.removeAttribute('aria-busy'); button.textContent = 'Reintentar';
+            } catch (error) { status.textContent = interface_error(error); button.disabled = false; button.removeAttribute('aria-busy'); button.textContent = 'Reintentar';
                 if (!document.getElementById('presentation-reset')) {
                     const reset = document.createElement('button'); reset.id = 'presentation-reset'; reset.type = 'button'; reset.className = 'text-button'; reset.textContent = 'Comenzar otra prueba';
                     reset.addEventListener('click', () => { sessionStorage.removeItem(KEY); reset.remove(); status.textContent = 'Podés elegir otro resultado.'; });
@@ -101,7 +101,7 @@ const PresentationCheckout = (() => {
                 if (snapshot(get_cart()) === snapshot(data.items)) { localStorage.removeItem('dreams_cart'); update_cart_count(); }
                 sessionStorage.setItem('dreams_presentation_completed', data.reference);
             }
-        } catch (error) { container.textContent = `${error.message} El carrito se conserva.`; }
+        } catch (error) { container.textContent = `${interface_error(error)} El carrito se conserva.`; }
     }
     return { setup, result };
 })();

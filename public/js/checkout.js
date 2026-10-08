@@ -28,17 +28,17 @@ function demo_card_scenario() {
 function configure_payment_ui(config) {
     const is_demo = config.provider === 'demo';
     document.getElementById('demo-card-form').hidden = !is_demo;
-    document.getElementById('payment-title').textContent = is_demo ? 'Tarjeta demo' : 'Mercado Pago';
+    document.getElementById('payment-title').textContent = is_demo ? 'Tarjeta de prueba' : 'Mercado Pago';
     document.getElementById('payment-description').textContent = is_demo
         ? 'Usá únicamente los datos ficticios indicados. No ingreses una tarjeta real.'
-        : 'Al continuar vas a elegir el medio de pago dentro del checkout protegido de Mercado Pago.';
+        : 'Al continuar vas a elegir el medio de pago dentro del pago protegido de Mercado Pago.';
     document.getElementById('checkout-intro-copy').textContent = is_demo
         ? 'Revisá el pedido y probá el flujo completo sin realizar ningún cobro.'
         : 'Revisá el pedido. El pago se completa en el entorno oficial de Mercado Pago.';
     document.getElementById('sandbox-banner').textContent = is_demo
-        ? 'MODO DEMO — No se realizarán cobros reales.'
-        : 'MODO SANDBOX — No se realizarán cobros reales.';
-    document.getElementById('checkout-submit').textContent = is_demo ? 'Pagar demo' : 'Continuar a Mercado Pago';
+        ? 'MODO DE PRUEBA — No se realizarán cobros reales.'
+        : 'ENTORNO DE PRUEBA — No se realizarán cobros reales.';
+    document.getElementById('checkout-submit').textContent = is_demo ? 'Pagar de prueba' : 'Continuar a Mercado Pago';
 }
 
 function checkout_items_payload() {
@@ -147,7 +147,7 @@ async function setup_checkout() {
         checkout_config = config;
         const user = await user_response.json();
         const quote = await quote_response.json();
-        if (!config_response.ok || !config.enabled) throw new Error('El checkout todavía no está configurado. Podés continuar por WhatsApp.');
+        if (!config_response.ok || !config.enabled) throw new Error('El pago online todavía no está disponible. Podés continuar por WhatsApp.');
         configure_payment_ui(config);
         if (!user_response.ok || !user.user) {
             status.innerHTML = 'Para pagar necesitás <a href="/cuenta.html">iniciar sesión o crear una cuenta</a>.';
@@ -169,7 +169,7 @@ async function setup_checkout() {
         button.disabled = false;
         if (quote.warnings.length) status.textContent = quote.warnings.join(' ');
     } catch (error) {
-        status.textContent = error.message;
+        status.textContent = interface_error(error);
         button.disabled = true;
     }
 
@@ -183,7 +183,7 @@ async function setup_checkout() {
             return;
         }
         button.disabled = true;
-        button.textContent = is_demo ? 'Procesando demo…' : 'Creando checkout seguro…';
+        button.textContent = is_demo ? 'Procesando prueba…' : 'Preparando pago seguro…';
         status.textContent = is_demo ? 'Registrando tu pedido de demostración…' : '';
         try {
             const pending_demo_order = is_demo ? sessionStorage.getItem(DEMO_ORDER_STORAGE_KEY) : null;
@@ -197,16 +197,16 @@ async function setup_checkout() {
             if (!response.ok) throw new Error(data.error || 'No se pudo iniciar el pago.');
             if (is_demo && data.requires_demo_payment === true) {
                 sessionStorage.setItem(DEMO_ORDER_STORAGE_KEY, data.order_id);
-                status.textContent = 'Procesando el resultado demo…';
+                status.textContent = 'Procesando el resultado de prueba…';
                 await process_demo_order(data.order_id, scenario);
                 return;
             }
             if (!/^https:\/\//.test(data.checkout_url || '')) throw new Error('No se pudo iniciar el pago.');
             window.location.assign(data.checkout_url);
         } catch (error) {
-            status.textContent = error.message;
+            status.textContent = interface_error(error);
             button.disabled = false;
-            button.textContent = is_demo ? 'Pagar demo' : 'Continuar a Mercado Pago';
+            button.textContent = is_demo ? 'Pagar de prueba' : 'Continuar a Mercado Pago';
         }
     });
 

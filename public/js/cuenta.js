@@ -26,7 +26,7 @@ function set_message(element, text, kind = '') {
 
 function render_account_forms(initial_message = '') {
     const container = document.getElementById('account-view');
-    container.innerHTML = `<img class="account-isologo" src="/assets/dreams-isotype.png" alt="DREAMS"><h1>Ingresá a DREAMS</h1><button id="google-login" class="button google-login" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M21.6 12.2c0-.7-.1-1.4-.2-2.1H12v4h5.4a4.6 4.6 0 0 1-2 3v2.5h3.2c1.9-1.8 3-4.3 3-7.4Z"/><path fill="#34A853" d="M12 22c2.7 0 5-.9 6.6-2.4l-3.2-2.5c-.9.6-2.1 1-3.4 1-2.6 0-4.8-1.8-5.6-4.1H3.1v2.6A10 10 0 0 0 12 22Z"/><path fill="#FBBC05" d="M6.4 14a6 6 0 0 1 0-4V7.4H3.1a10 10 0 0 0 0 9.2L6.4 14Z"/><path fill="#EA4335" d="M12 5.9c1.5 0 2.8.5 3.8 1.5l2.9-2.8A9.7 9.7 0 0 0 12 2a10 10 0 0 0-8.9 5.4L6.4 10c.8-2.3 3-4.1 5.6-4.1Z"/></svg><span>Continuar con Google</span></button><p id="google-message" class="form-message" role="status">${escape_html(initial_message)}</p><a class="text-button" href="/">Volver a la tienda</a>`;
+    container.innerHTML = `<img class="account-isologo" src="/assets/dreams-isologo-clean.png" alt="DREAMS" width="56" height="79"><h1>Ingresá a DREAMS</h1><button id="google-login" class="button google-login" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M21.6 12.2c0-.7-.1-1.4-.2-2.1H12v4h5.4a4.6 4.6 0 0 1-2 3v2.5h3.2c1.9-1.8 3-4.3 3-7.4Z"/><path fill="#34A853" d="M12 22c2.7 0 5-.9 6.6-2.4l-3.2-2.5c-.9.6-2.1 1-3.4 1-2.6 0-4.8-1.8-5.6-4.1H3.1v2.6A10 10 0 0 0 12 22Z"/><path fill="#FBBC05" d="M6.4 14a6 6 0 0 1 0-4V7.4H3.1a10 10 0 0 0 0 9.2L6.4 14Z"/><path fill="#EA4335" d="M12 5.9c1.5 0 2.8.5 3.8 1.5l2.9-2.8A9.7 9.7 0 0 0 12 2a10 10 0 0 0-8.9 5.4L6.4 10c.8-2.3 3-4.1 5.6-4.1Z"/></svg><span>Continuar con Google</span></button><p id="google-message" class="form-message" role="status">${escape_html(initial_message)}</p><a class="text-button" href="/">Volver a la tienda</a>`;
     document.getElementById('google-login').addEventListener('click', async event => {
         const button = event.currentTarget;
         const message = document.getElementById('google-message');
@@ -48,9 +48,7 @@ function render_account_forms(initial_message = '') {
 function render_legacy_forms(initial_message = '', demo = false) {
     const container = document.getElementById('account-view');
     container.innerHTML = `
-        <p class="eyebrow">DREAMS ACCOUNT</p>
-        <img class="account-isologo" src="/assets/dreams-isotype.png" alt="DREAMS"><h1>Ingresá a DREAMS</h1>
-        <p class="account-lead">Google está pendiente de configuración. Conservamos tu acceso existente.</p>
+        <img class="account-isologo" src="/assets/dreams-isologo-clean.png" alt="DREAMS" width="56" height="79"><h1>Ingresá a DREAMS</h1>
         <div class="account-tabs" role="tablist" aria-label="Acceso a la cuenta">
             <button id="login-tab" type="button" role="tab" aria-controls="login-form" aria-selected="true" class="active">Iniciar sesión</button>
             <button id="register-tab" type="button" role="tab" aria-controls="register-form" aria-selected="false">Crear cuenta</button>
@@ -62,7 +60,7 @@ function render_legacy_forms(initial_message = '', demo = false) {
             <button class="button button-dark account-submit" type="submit">Ingresar</button>
         </form>
         <form id="register-form" role="tabpanel" aria-labelledby="register-tab" hidden novalidate>
-            ${demo ? '<p class="demo-auth-note"><strong>Modo demo:</strong> tu cuenta queda activa al instante; no necesitás confirmar el correo.</p>' : '<p>Si recibís un correo de confirmación, abrilo antes de ingresar.</p>'}
+            ${demo ? '<p class="demo-auth-note"><strong>Modo de prueba:</strong> tu cuenta queda activa al instante; no necesitás confirmar el correo.</p>' : '<p>Si recibís un correo de confirmación, abrilo antes de ingresar.</p>'}
             <div class="form-grid">
                 <div class="form-field full"><label for="register-name">Nombre</label><input id="register-name" name="name" autocomplete="name" maxlength="80" required></div>
                 <div class="form-field full"><label for="register-email">Correo electrónico</label><input id="register-email" name="email" type="email" autocomplete="email" inputmode="email" required></div>

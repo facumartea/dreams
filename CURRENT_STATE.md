@@ -1,3 +1,11 @@
+# Limpieza de acceso e idioma — 2026-10-08 (America/Buenos_Aires)
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Continuación PR38 en la misma rama `codex/academic-access-checkout`, preservando base PR37/PR34, sin merge. Acceso sin rótulo ACCOUNT ni aviso técnico Google; login existente conservado. Isologo original recortado con fondo transparente, ampliación moderada y textos de interfaz en español. Contactos preservados y WhatsApp con número visible; segundo teléfono/destino WhatsApp pendientes de respuesta a la única pregunta enviada.
+
+111/111 tests, sintaxis 43 y builds Workers/Pages correctos; QA local login/reintento/logout con fixtures 320/390/1440, Admin 390/1440 sin overflow. Publicación y QA remoto de esta tanda en curso, no atribuirle todavía el deployment anterior. Evidencia/procedencia del asset en docs/access_language_refinement.md. Producción y Supabase intactos.
+
 # Preview académica publicada y verificada — 2026-10-08 UTC
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.

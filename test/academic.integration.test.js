@@ -107,3 +107,16 @@ test('Admin translates a non-JSON upstream failure into a controlled error', asy
     vm.runInContext(require('node:fs').readFileSync(require.resolve('../public/js/admin.js'), 'utf8'), context);
     await assert.rejects(context.admin_fetch('/api/admin/products'), /Ocurrió un error/);
 });
+
+test('Admin renders order labels in Spanish without changing stored statuses or providers', async () => {
+    const vm = require('node:vm');
+    const nodes = { 'admin-orders': { innerHTML: '' }, 'order-total': { textContent: '' } };
+    const orders = ['created', 'approved', 'rejected', 'pending', 'cancelled', 'error'].map((status, i) => ({ status, provider: i % 2 ? 'mercado_pago' : 'demo', order_number: `DRM-${i}`, created_at: '2026-10-08T00:00:00Z', total: 100, items: [] }));
+    const original = structuredClone(orders);
+    const context = vm.createContext({ document: { addEventListener() {}, getElementById: id => nodes[id] }, escape_html: require('../public/js/safe').escape_html, fetch: async () => ({ ok: true, json: async () => orders }) });
+    vm.runInContext(require('node:fs').readFileSync(require.resolve('../public/js/admin.js'), 'utf8'), context);
+    await context.load_orders();
+    for (const label of ['Creado', 'Aprobado', 'Rechazado', 'Pendiente', 'Cancelado', 'Error', 'Mercado Pago', 'Simulación de prueba']) assert.ok(nodes['admin-orders'].innerHTML.includes(label), label);
+    assert.doesNotMatch(nodes['admin-orders'].innerHTML, />approved<|>pending<|>mercado_pago<|>demo</);
+    assert.deepEqual(orders, original);
+});

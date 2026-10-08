@@ -1,3 +1,11 @@
+# Refinamiento PR38 — 2026-10-08
+
+- Estado/dependencias/preview: VERIFICADOS; misma rama y sin merges.
+- Acceso/isologo transparente/idioma: IMPLEMENTADOS; QA local y 111 tests/builds COMPLETADOS.
+- Segundo teléfono y elección de WhatsApp: PENDIENTES de respuesta; datos vigentes conservados.
+- Push/CI/preview/QA remota de esta tanda: EN CURSO.
+- Google/Admin remoto autenticado: pendientes técnicos previos, sin avisos de implementación en acceso.
+
 # Tarea académica — 2026-10-08 UTC
 
 - Base PR37 y sitio vigente: VERIFICADOS. Dependencia PR34; selección carrito PR35 sin merge.
