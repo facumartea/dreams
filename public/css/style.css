@@ -230,3 +230,6 @@ input,select,textarea{width:100%;min-height:48px;padding:.78rem 0;border:0;borde
 
 /* Google access uses existing DREAMS typography and palette. */
 .account-shell-google{display:block;max-width:510px;margin:0 auto}.account-shell-google .account-card{text-align:center;padding:clamp(2rem,5vw,4rem) clamp(1.3rem,4vw,3rem)}.account-shell-google h1{font-size:clamp(2.8rem,8vw,4rem);margin:1.2rem 0 2rem}.account-isologo{width:64px;height:64px;object-fit:contain;margin-inline:auto}.google-login{display:flex;width:100%;align-items:center;justify-content:center;gap:14px;min-height:52px;text-transform:none;letter-spacing:.02em}.google-login svg{width:22px;height:22px;flex-shrink:0}.contact-links{display:flex;flex-direction:column;gap:10px;overflow-wrap:anywhere}.footer-bottom{line-height:1.6;color:var(--muted);text-transform:none}.account-shell-google .text-button{display:inline-block;margin-top:1rem}.presentation-shipping{font-size:.85rem;color:var(--muted);line-height:1.6}.presentation-result .result-actions{flex-wrap:wrap}
+/* Keep wide administrative tables inside their own scrolling container. */
+.admin-layout>*,.admin-brand-lockup,.admin-brand-lockup>div{min-width:0}
+@media(max-width:1180px){.admin-layout{grid-template-columns:minmax(0,1fr)}}

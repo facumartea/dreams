@@ -1,5 +1,6 @@
 # 2026-10-08 UTC — Acceso y presentación académica aislada
 
+- Corregido overflow móvil Admin demostrado en fixture: grid antes574pxsobre390; seis módulos/editar/limpiar ahora390/1440sin overflow.
 - Autores/contactos solicitados, tarjeta centrada y acceso Google PKCE preparado; fallback password conservado por instrucción posterior hasta configurar/verificar Google.
 - Auditoría Admin/roles/RLS con sólo lecturas; protección de escrituras preview y errores no JSON controlados. Grants TRUNCATE heredados pendientes de revisión segura. Cuenta Google admin inexistente, sin promoción.
 - Checkout académico firmado independiente de orders/proveedor comercial, tarjeta sólo navegador y precios servidor; resultados reproducibles, replay y protección del carrito.

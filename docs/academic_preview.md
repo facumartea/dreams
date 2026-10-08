@@ -20,7 +20,7 @@ Después del primer ingreso Google real de la cuenta indicada, verificar su UUID
 
 Módulos reales: dashboard/productos (imagen, stock, alta/edición/eliminación)/usuarios/consultas/opiniones/pedidos de lectura/cupones. Todos los endpoints Admin y páginas usan rol leído en servidor; mutaciones usan cliente JWT y policies. RLS activa en siete tablas. Helper is_dreams_admin() compara auth.uid() y profiles.role con search_path vacío; policies no usan metadata editable. Profiles sólo SELECT para propietarios; promociones no disponibles en API pública. Pedidos Admin tienen sólo SELECT y cupones grants/policies Admin.
 
-Corrección: respuestas no JSON del Admin producen error controlado. Preview comunica protección de escrituras. PREVIEW_READ_ONLY=true rechaza globalmente escrituras de productos, stock, cupones, reviews, consultas y pedidos, incluso para admin. Login/logout, OAuth, quote y presentación aislada admitidos. Registro por password protegido en preview; Google puede crear usuario/perfil al completar un acceso real, no ejecutado por QA.
+Correcciones: respuestas no JSON del Admin producen error controlado; un grid mínimo heredado estiraba formulario/tabla a574px sobre pantalla390. min-width:0 y track minmax(0,1fr) mantienen scroll dentro de la tabla; QA local390/1440 sin overflow, seis módulos y editar/limpiar. Preview comunica protección de escrituras. PREVIEW_READ_ONLY=true rechaza globalmente escrituras de productos, stock, cupones, reviews, consultas y pedidos, incluso para admin. Login/logout, OAuth, quote y presentación aislada admitidos. Registro por password protegido en preview; Google puede crear usuario/perfil al completar un acceso real, no ejecutado por QA.
 
 Hallazgos pendientes:
 
@@ -61,8 +61,21 @@ Son escenarios del simulador DREAMS, no tarjetas oficiales Mercado Pago. Nunca u
 
 Checks locales: sintaxis, suite Node, audit prod y builds Workers/Pages. No scripts independientes lint/TypeScript en este proyecto. Permisos, Google PKCE/cancelación, aislamiento, firma/manipulación/replay/resultados y carrito tardío cubiertos con fixtures. No atribuir estas pruebas a Supabase/Google reales.
 
-Publicación autorizada sólo `wrangler preview --env preview --name academic-review`, Wrangler 4.147.0; hereda secreto Supabase Base. Secret independiente creado con randomBytes y transferido por stdin a `wrangler preview secret put PRESENTATION_SIGNING_KEY --env preview --name academic-review`, sin valores en comandos/archivos/logs. URL y SHA finales se registran después de publicación/QA remota. No divulgar valores de Secrets.
+Publicación autorizada sólo `wrangler preview --env preview --name academic-review`, Wrangler 4.147.0; hereda secreto Supabase Base. Secret independiente creado con randomBytes y transferido por stdin a `wrangler preview secret put PRESENTATION_SIGNING_KEY --env preview --name academic-review`, sin valores en comandos/archivos/logs. Preview publicada: https://academic-review-dreams-perfumes.dreams-perfumes.workers.dev/. Fuente3cf7cc8/CI37722759409 SUCCESS108/108; deployment2979e56d. Ajuste CSS Admin posterior se publica sobre el mismo nombre; SHA definitivo se registra tras upload. No divulgar valores de Secrets.
 
 Rollback de esta preview: volver a desplegar su SHA anterior sobre el mismo nombre. Preview nueva no modifica Pages production444489eb ni Worker f73d5087; no requiere tocar DNS/producción. Si se integra posteriormente, revisar diff contra deployment vigente y preparar rollback Pages al deployment444489eb (SUCCESS), sin borrar deployments. Ningún merge autorizado aquí.
 
 Carrusel sigue pendiente de segundo banner original distinto; referencia asset portada 1024×1536, composición2:3. Para una segunda diapositiva conservar proporción2:3 y mínimo1024×1536 con margen para móvil/textos; no duplicar el mismo frasco/promoción inventada. Hero permanece estático.
+
+## Evidencia ejecutada
+
+- Local:108/108, sintaxis43 archivos JS, audit prod sin vulnerabilidades, builds Workers/Pages correctos. SDK Supabase real en workerd prueba generación PKCE y cookie; callback/cancelación/roles con fixtures. No lint/TypeScript independientes.
+- Remoto3cf7cc8:390/1440 contactos/autores/Nosotros, menú/Escape, búsqueda vacía/reset, género/categoría/precio/sort/reset,46 productos, carrito agregar/cantidades/persistencia/subtotal/WhatsApp542944160065 con resumen sin enviar, sin pageerror.
+- Remoto: rechazado/error/pending conservan carrito; aprobado lo limpia. Body inspection confirma sólo items/scenario/intent_id, ticket o receipt, ningún campo de tarjeta transmitido.
+- Fallos provocados en el navegador contra preview real: quote demoradotrasvaciado no restaura producto; aborto de conexión de payment conserva ticket y mismo retry (1 prepare,2 payment incluyendoabortado), dobleclick no crea segundo intento; recargar recibo antiguo conserva carrito nuevo. Distinguir estas inyecciones de un fallo real del proveedor.
+- Auth remoto: sesión anónima null/logout200, Googleconfigfalse/start503, ocho rutas Admin anónimas403; escrituraAdmin403. No login/Google/Admin autorizado reales por falta de cuenta/sesión. UI Admin local con fixture autorizado: seis módulos, edición/limpieza,390/1440, no overflow/pageerror trascorrección. No escrituras comerciales.
+- Logs porAPI Telemetry: una cancelación OAuth esperada en preview, cero logs de nivelerror observados, sin patrones secreto/token/tarjetas. Invocationlogs desactivados: no extrapolar a todas las invocaciones ni a periodos sin cobertura. redact_query_string=true confirmado.
+- SELECT posterior:0orders,46products y0usuarios con emailadminsolicitado. No DDL/roles/RLS/grants/datos cambiados.
+- Capturas remotas acceso fallback/footer/checkout/resultado: /workspace/dreams-academic-evidence; Admincapturasfixture son locales, no prueba deAuthremoto. Googleonly UI pendiente deprovider+callback+validación yGOOGLE_ACCESS_READY.
+
+Estado: push/PR38/CI/preview efectuados; sin merge ni publicación Pages. PendienteGoogleCloud/SupabaseProvider+URLs, primeringresoGoogleverified ypromociónUUIDsegura; no requeridos para demostrar checkoutinvitadoaislado. Antes decomercio real: pagosSandbox/verificaciónwebhook/stock/idempotencia durable yreduccióngrants históricos. Próximaacción: probar la preview en celular ycompletarclienteGoogle en paneles seguros.
