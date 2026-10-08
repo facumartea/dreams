@@ -1,6 +1,17 @@
 # DREAMS — plan vigente
 
-2026-10-06. Destino actualizado por el usuario: Cloudflare Workers. Sin porcentajes especulativos. Plan histórico preservado en `docs/history/PLAN_PR33.md`.
+2026-10-07. Destino actualizado por el usuario: Cloudflare Workers. Sin porcentajes especulativos. Plan histórico preservado en `docs/history/PLAN_PR33.md`.
+
+## Portada estática autorizada en Pages
+
+- Identificar sitio vigente y rollback: COMPLETADO (Pages ae2f7932, Worker f73d5087).
+- Aislar diseño PR36 sin funcionalidades PR35/36: IMPLEMENTADO sobre PR34/8d80fdd.
+- Quitar motion/control de hero y conservar interacción compartida: IMPLEMENTADO; QA local seis tamaños y 390/1440 menús/filtros/carrito.
+- Checks/build: 35 JS, 95/95, Pages/Workers correctos.
+- PR37/push, preview y publicación Pages: COMPLETADOS. Fuente 5e3835e/CI SUCCESS, production 444489eb, backend intacto.
+- QA remota tras deploy: COMPLETADA para hero/CTA/menús/filtros y carrito secuencial. Carrera previa de quote/vaciado confirmada y pendiente PR35; no publicada por esta tarea.
+
+## Plan de hosting previo (histórico)
 
 | Paso | Estado | Evidencia / dependencia |
 |---|---|---|

@@ -18,7 +18,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/style.css?v=static-home-1">
 </head>
 <body>
     <header class="site-header">
@@ -39,7 +39,7 @@
     </header>
 
     <main>
-        <section class="hero">
+        <section class="hero-static">
             <div class="hero-copy">
                 <p class="eyebrow">DREAMS PERFUMES</p>
                 <h1>Los perfumes<br>de tus sueños.</h1>
@@ -47,11 +47,13 @@
                 <a class="button button-dark" href="/catalogo.html">Descubrir perfumes</a>
             </div>
             <div class="hero-image">
-                <picture>
-                    <source type="image/webp" srcset="/assets/dreams-hero-640.webp 640w, /assets/dreams-hero-1024.webp 1024w" sizes="(max-width: 920px) 100vw, 54vw">
-                    <img src="/assets/dreams-hero-1024.webp" width="1024" height="1536" alt="Frasco negro de perfume DREAMS sobre piedra" fetchpriority="high" decoding="async">
-                </picture>
-                <span class="hero-bottle-mark" aria-hidden="true"><strong>DREAMS</strong><small>EAU DE PARFUM</small></span>
+                <div class="hero-product-stage">
+                    <picture>
+                        <source type="image/webp" srcset="/assets/dreams-hero-640.webp 640w, /assets/dreams-hero-1024.webp 1024w" sizes="(max-width: 920px) 100vw, 54vw">
+                        <img src="/assets/dreams-hero-1024.webp" width="1024" height="1536" alt="Frasco negro de perfume DREAMS sobre piedra" fetchpriority="high" decoding="async">
+                    </picture>
+                    <span class="hero-bottle-mark" aria-hidden="true"><strong>DREAMS</strong><small>EAU DE PARFUM</small></span>
+                </div>
             </div>
         </section>
 

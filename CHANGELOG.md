@@ -1,3 +1,13 @@
+# 2026-10-07 — Portada estática aislada para Pages
+
+- Diseño PR36 seleccionado sin integrar cambios funcionales de PR35/36; rama basada en PR34/8d80fdd.
+- Conservados asset original, fotografía 2:3, textos/CTA, tipografía e iluminación fija. Retirados eventos/estilos de motion del hero y sin control de pausa.
+- Pages empaqueta sólo HTML inicio/CSS/motion; proxy conserva CSP/cookies/autorización/API y representa correctamente cache/ETag/HEAD. Backend vigente no modificado.
+- Check 35 JS, 95/95, builds Pages/Workers; QA local en seis tamaños y regresión menús/filtros/carrito 390/1440. PR37 y fuente 5e3835e/CI 37652905399 SUCCESS. Publicados el mismo bundle en preview 9ad4fa43 y Pages production 444489eb; rollback ae2f7932 identificado y accesible.
+- QA remota: hero estático en seis tamaños y alturas cortas, CTA, menús/filtros y carrito secuencial; doce assets/source iguales, CSP/ETag/304/HEAD y health 200.
+- Carrera previa del carrito reproducida: cotización pendiente restaura una fila tras vaciar; solución PR35 no incluida. No hubo regresión nueva de código funcional.
+- Sin checkout/Auth/carrito/data changes, migraciones/seeds, DNS ni merge. Evidencia en docs/static_home_pages.md.
+
 # Hostname Pages publicado y validado — 2026-10-06
 
 - dreams-perfumes.pages.dev publicado con deployment ae2f7932, fuente b3cd5f6; estado SUCCESS y alias raíz HTTP verificados.

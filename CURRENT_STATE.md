@@ -2,9 +2,21 @@
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
 
-Actualizado: 2026-10-06 UTC. Repositorio: facumartea/dreams.
+Actualizado: 2026-10-07 (America/Buenos_Aires). Repositorio: facumartea/dreams.
 
-## Solicitud vigente: URL dreams-perfumes.pages.dev
+## Portada estática publicada en Pages — 2026-10-07
+
+**URL: https://dreams-perfumes.pages.dev/**. Fuente 5e3835eafc1fdf4c4f77f232cd65acda5c1f0060, deployment production 444489eb-dcfe-4650-b005-acc3469ab02e SUCCESS; preview 9ad4fa43 SUCCESS del mismo bundle. Rama `codex/static-home-pages`, PR37 base PR34/8d80fdd, sin merge ni integración de PR35/a04e732 o PR36/6c68ff7. Se reutiliza sólo diseño/asset de PR36. Checkpoint documental posterior no cambia el bundle publicado.
+
+Imagen, textos, tipografía, fondo/iluminación fija y composición 2:3 conservados; entrada/hover/parallax/zoom/flotación/brillo automático/control de pausa retirados. Pages empaqueta exclusivamente inicio/CSS/motion; API, demás HTML/JS y secretos permanecen en Worker f73d5087 al 100%. Sin catálogo/carrito/checkout/Auth/DB/DNS modificados.
+
+CI fuente SUCCESS [37652905399](https://github.com/facumartea/dreams/actions/runs/37652905399): 95/95 (92 base + 3 proxy), check 35, audit y builds Pages/Workers. QA remota real alias raíz: seis tamaños con foto/espera/hover/scroll/reduced estáticos; texto sin recorte en tamaños cortos, CTA catálogo, menús/filtros completos 390/1440, carrito secuencial/contador/persistencia/total; sin pageerror. Doce archivos coinciden con fuente y funcionales con sitio previo; CSP/ETag/304/HEAD correctos. Health 200. Capturas en /workspace/dreams-static-evidence.
+
+**Pendiente previo confirmado:** vaciar antes de finalizar una cotización puede restaurar productos; caso falló y se reprodujo con quote real demorada. Código del carrito idéntico al anterior; corrección pendiente PR35, intencionalmente no incluida. No se presenta esta carrera como resuelta. Auth/Admin autenticados, pagos, dispositivo físico/Safari y logs de runtime no verificados.
+
+Rollback original: Pages ae2f7932 SUCCESS, URL inmutable HTTP 200 y endpoint oficial documentado, sin borrado ni cambios Worker; no ejecutado porque no hay regresión nueva que requiera revertir el hero. Evidencia: docs/static_home_pages.md. Próxima acción: revisar apariencia en celular del usuario y abordar por separado la integración segura de PR35 si se autoriza; PR34/35/36/37 siguen abiertas.
+
+## Checkpoint previo: URL dreams-perfumes.pages.dev
 
 **Enlace principal: https://dreams-perfumes.pages.dev**. Proyecto dreams-perfumes publicado mediante conexión Cloudflare con permisos Pages. Deployment `ae2f7932-aefe-48b2-a9e9-8c3597b607f9` SUCCESS, fuente `b3cd5f62523d15603078798baa9f31b633692d3f`, alias raíz confirmado por HTTP. Proxy advanced-mode con Service binding DREAMS al Worker existente, sin duplicar backend/secret ni modificar Supabase. Backend actualizado a versión `f73d5087-ac19-4168-890b-6da3abb6b635` para añadir Pages a APP_ORIGINS conservando el origen Worker y demás variables/Secret. Ambos enlaces funcionan.
 
