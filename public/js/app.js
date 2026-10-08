@@ -23,7 +23,15 @@ async function apply_public_config() {
     try {
         const config = await get_public_config();
         document.querySelectorAll('[data-whatsapp-link]').forEach(link => {
-            link.href = `https://wa.me/${encodeURIComponent(config.whatsapp_number)}`;
+            if (/^\d{8,15}$/.test(config.whatsapp_number || '')) link.href = `https://wa.me/${config.whatsapp_number}`;
+            else link.removeAttribute('href');
+        });
+        document.querySelectorAll('[data-dreams-contacts]').forEach(container => {
+            if (!Array.isArray(config.contacts?.emails)) return;
+            container.querySelectorAll('a[href^="mailto:"]').forEach((link, index) => {
+                const email = config.contacts.emails[index];
+                if (typeof email === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { link.textContent = email; link.href = `mailto:${email}`; }
+            });
         });
         document.querySelectorAll('[data-contact-email]').forEach(link => {
             link.textContent = config.contact_email;

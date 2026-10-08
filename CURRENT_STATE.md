@@ -1,3 +1,9 @@
+# Preview académica en preparación — 2026-10-08 UTC
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Rama codex/academic-access-checkout desde PR37/ac7e088; dependencia PR34. Autores/contactos, acceso Google PKCE con fallback legacy (Google deshabilitado, administrador inexistente), guard de escrituras preview y checkout simulado firmado sin orders/stock. Carrito/controller y 4 regresiones seleccionados PR35/a5158b0 sin merge. Local105/105/check/build/audit; remotos pendientes de deploy. No cambios de Pages vigente444489eb/fuente5e3835e ni Supabase. Evidencia y configuración: docs/academic_preview.md.
+
 # DREAMS — estado actual verificado
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.

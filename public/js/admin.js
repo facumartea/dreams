@@ -23,7 +23,7 @@ function show_toast(message) {
 
 async function admin_fetch(url, options = {}) {
     const response = await fetch(url, options);
-    const data = await response.json();
+    const data = await response.json().catch(() => ({}));
     if (!response.ok) throw new Error(data.error || 'Ocurrió un error.');
     return data;
 }
@@ -340,6 +340,12 @@ function setup_tabs() {
 
 document.addEventListener('DOMContentLoaded', async () => {
     if (!(await verify_admin())) return;
+    const config = await admin_fetch('/api/config').catch(() => ({}));
+    if (config.preview_read_only) {
+        const notice = document.createElement('p'); notice.className = 'form-message'; notice.setAttribute('role', 'status');
+        notice.textContent = 'Preview de revisión: las escrituras están protegidas. Los datos se consultan sin modificarlos.';
+        document.querySelector('main')?.prepend(notice);
+    }
     document.getElementById('product-form').addEventListener('submit', save_product);
     document.getElementById('image_url').addEventListener('input', schedule_product_image_preview);
     set_product_image_preview('empty');

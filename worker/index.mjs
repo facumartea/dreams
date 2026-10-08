@@ -18,8 +18,8 @@ function createWorkerApp(env) {
         if (!base?.startsWith('https://') || !origins.has(base) || !entries.length || entries.some(value => !appModule.normalize_origin(value)?.startsWith('https://'))) throw new Error('Missing exact HTTPS application origins');
     }
     if (!env.SUPABASE_URL || !env.SUPABASE_SECRET_KEY) throw new Error('Missing server Supabase configuration');
-    const createDatabase = accessToken => createClient(env.SUPABASE_URL, env.SUPABASE_SECRET_KEY, {
-        auth: { autoRefreshToken: false, persistSession: false, detectSessionInUrl: false },
+    const createDatabase = (accessToken, authOptions = {}) => createClient(env.SUPABASE_URL, env.SUPABASE_SECRET_KEY, {
+        auth: { autoRefreshToken: false, persistSession: false, detectSessionInUrl: false, ...authOptions },
         global: {
             fetch: async (...args) => {
                 const response = await fetch(...args);
@@ -34,6 +34,15 @@ function createWorkerApp(env) {
         : new payments.MercadoPagoProvider({ access_token: env.MERCADO_PAGO_ACCESS_TOKEN, webhook_secret: env.MERCADO_PAGO_WEBHOOK_SECRET, mode: env.MERCADO_PAGO_MODE });
     return appModule.create_app({
         database: createDatabase(), create_auth_client: createDatabase,
+        preview_read_only: env.PREVIEW_READ_ONLY === 'true',
+        presentation_checkout: env.PRESENTATION_CHECKOUT_ENABLED === 'true',
+        presentation_signing_key: env.PRESENTATION_SIGNING_KEY,
+        create_oauth_client: storage => createDatabase(null, { flowType: 'pkce', storage, storageKey: 'dreams-google', persistSession: true }),
+        google_provider_enabled: async () => {
+            const response = await fetch(`${env.SUPABASE_URL}/auth/v1/settings`, { headers: { apikey: env.SUPABASE_SECRET_KEY } });
+            if (!response.ok) return false;
+            return (await response.json()).external?.google === true;
+        },
         product_brand_column: env.PRODUCT_BRAND_COLUMN || 'marca',
         production: env.NODE_ENV !== 'development',
         disable_request_log: true,

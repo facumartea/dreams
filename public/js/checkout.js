@@ -135,6 +135,9 @@ async function setup_checkout() {
     const button = document.getElementById('checkout-submit');
     const status = document.getElementById('checkout-status');
     try {
+        const initial_config = await fetch('/api/checkout/config');
+        const initial = await initial_config.json();
+        if (initial_config.ok && initial.enabled && initial.provider === 'presentation_demo') return PresentationCheckout.setup(initial);
         const [config_response, user_response, quote_response] = await Promise.all([
             fetch('/api/checkout/config'),
             fetch('/api/auth/me'),

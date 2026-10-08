@@ -3,7 +3,9 @@
   "name": "dreams-local",
   "main": "worker/index.mjs",
   "compatibility_date": "2026-10-06",
-  "compatibility_flags": ["nodejs_compat"],
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
   "keep_vars": true,
   "workers_dev": true,
   "preview_urls": true,
@@ -14,8 +16,22 @@
     "html_handling": "none",
     "not_found_handling": "none"
   },
-  "rules": [{ "type": "Text", "globs": ["**/*.html", "**/public/js/admin.js"], "fallthrough": true }],
-  "observability": { "enabled": true, "logs": { "invocation_logs": false } },
+  "rules": [
+    {
+      "type": "Text",
+      "globs": [
+        "**/*.html",
+        "**/public/js/admin.js"
+      ],
+      "fallthrough": true
+    }
+  ],
+  "observability": {
+    "enabled": true,
+    "logs": {
+      "invocation_logs": false
+    }
+  },
   "vars": {
     "NODE_ENV": "development",
     "PRODUCT_BRAND_COLUMN": "marca",
@@ -36,6 +52,23 @@
         "CHECKOUT_SCHEMA_READY": "false",
         "DEMO_AUTO_CONFIRM_EMAIL": "false",
         "CHECKOUT_SHOW_TEST_DATA": "false"
+      },
+      "previews": {
+        "vars": {
+          "NODE_ENV": "production",
+          "PRODUCT_BRAND_COLUMN": "marca",
+          "SUPABASE_URL": "https://nwsmbemwtexmrtpkgxrz.supabase.co",
+          "APP_BASE_URL": "https://academic-review-dreams-perfumes.dreams-perfumes.workers.dev",
+          "APP_ORIGINS": "https://academic-review-dreams-perfumes.dreams-perfumes.workers.dev",
+          "CHECKOUT_PROVIDER": "demo",
+          "CHECKOUT_SCHEMA_READY": "false",
+          "DEMO_AUTO_CONFIRM_EMAIL": "false",
+          "CHECKOUT_SHOW_TEST_DATA": "true",
+          "PRESENTATION_CHECKOUT_ENABLED": "true",
+          "PREVIEW_READ_ONLY": "true",
+          "CONTACT_EMAIL": "facundo.martearena@dantebariloche.edu.ar",
+          "WHATSAPP_NUMBER": "542944160065"
+        }
       }
     },
     "production": {

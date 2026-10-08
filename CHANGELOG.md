@@ -1,3 +1,10 @@
+# 2026-10-08 UTC — Acceso y presentación académica aislada
+
+- Autores/contactos solicitados, tarjeta centrada y acceso Google PKCE preparado; fallback password conservado por instrucción posterior hasta configurar/verificar Google.
+- Auditoría Admin/roles/RLS con sólo lecturas; protección de escrituras preview y errores no JSON controlados. Grants TRUNCATE heredados pendientes de revisión segura. Cuenta Google admin inexistente, sin promoción.
+- Checkout académico firmado independiente de orders/proveedor comercial, tarjeta sólo navegador y precios servidor; resultados reproducibles, replay y protección del carrito.
+- Corrección de carrito atrasado seleccionada PR35 con pruebas, sin merge. Local105/105, check/build/audit. Deploy/QA remotos pendientes.
+
 # 2026-10-07 — Portada estática aislada para Pages
 
 - Diseño PR36 seleccionado sin integrar cambios funcionales de PR35/36; rama basada en PR34/8d80fdd.

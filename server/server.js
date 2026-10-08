@@ -11,8 +11,8 @@ async function start() {
     if (needed.length) throw new Error(`Faltan variables obligatorias: ${needed.join(', ')}`);
 
     const client_options = { auth: { autoRefreshToken: false, persistSession: false } };
-    const create_database = access_token => createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SECRET_KEY, {
-        ...client_options,
+    const create_database = (access_token, auth_options = {}) => createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SECRET_KEY, {
+        ...client_options, auth: { ...client_options.auth, ...auth_options },
         ...(access_token ? { global: { headers: { Authorization: `Bearer ${access_token}` } } } : {})
     });
     const database = create_database();
@@ -27,6 +27,15 @@ async function start() {
     const port = Number(process.env.PORT || 8080);
     const product_brand_column = await resolve_product_brand_column(database);
     const app = app_module.create_app({
+        preview_read_only: process.env.PREVIEW_READ_ONLY === 'true',
+        presentation_checkout: process.env.PRESENTATION_CHECKOUT_ENABLED === 'true',
+        presentation_signing_key: process.env.PRESENTATION_SIGNING_KEY,
+        create_oauth_client: storage => create_database(null, { flowType: 'pkce', storage, storageKey: 'dreams-google', persistSession: true }),
+        google_provider_enabled: async () => {
+            const response = await fetch(`${process.env.SUPABASE_URL}/auth/v1/settings`, { headers: { apikey: process.env.SUPABASE_SECRET_KEY } });
+            if (!response.ok) return false;
+            return (await response.json()).external?.google === true;
+        },
         product_brand_column,
         database,
         create_auth_client: create_database,

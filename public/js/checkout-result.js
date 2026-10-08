@@ -24,6 +24,7 @@ function render_payment_result(status, order_number) {
 
 async function load_payment_result() {
     const params = new URLSearchParams(window.location.search);
+    if (params.get('presentation') === '1') return PresentationCheckout.result();
     const order_id = params.get('order_id') || '';
     const payment_id = params.get('payment_id') || params.get('collection_id') || '';
     try {
