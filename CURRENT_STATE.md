@@ -1,3 +1,21 @@
+# Oficial estática publicada — 2026-10-08 (America/Buenos_Aires)
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+OFICIAL: https://dreams-perfumes.pages.dev/. Pages deployment 900a4bd8-0baa-4c64-926f-12a25836d7c2 SUCCESS; commit del proxy c22a5d0e3efed323088761fadfc5d68cb6df2351, fuente de aplicación/preview pre-video b04993467b820ec3b81af0991fa9cda5ef276dda. CI SUCCESS 37852300142, 113/113 tests, check 43, audit limpio, builds Workers/Pages. Rama codex/promote-academic-static-pages, PR39 dependiente de PR38/37/34, sin merge. Checkpoint documental posterior no altera deployment.
+
+Backend oficial inmutable 40e7b0a3-022f-491b-9d74-f3fc63f9746f, fuente b049934; orígenes Pages explícitos, secret Supabase heredado servidor/firma interna propia por stdin, sin valores publicados. PREVIEW_READ_ONLY=true/CHECKOUT_SCHEMA_READY=false: checkout académico firmado sin orders/stock/pagos comerciales. Pages fija backend por configuración y no por hostname; fallo cerrado y redirects manuales. Conserva autores/contactos/acceso/catálogo/carrito desplegados, portada estática y ningún video.
+
+QA remota oficial Chromium 390/1440: hero cargado/estático tras espera/hover/scroll, menú móvil/Escape y desktop visible, búsqueda vacía/reset y marca Byredo/reset, 46 productos, dos contactos/autores, login legacy visible sin avisos técnicos, ocho rutas Admin anónimas 403. Carrito agregar/+/-/persistencia/contador/subtotal/WhatsApp con envío excluido; checkout académico aprobado y vaciado comprobados, sin errores de página/overflow en los tamaños probados. 14 hashes de archivos remotos iguales a fuente. No sesión remota legítima: Admin autorizado/Login/Logout autenticados pendientes, fixtures locales sí probados. Otros resultados académicos cubiertos localmente/pruebas remotas previas; no reiterados en esta promoción. Logs post-publicación: cero eventos error observados, invocation logs desactivados/cobertura limitada. Capturas en /workspace/dreams-official-evidence; evidencia detallada docs/official_academic_release.md.
+
+PREVIEW: https://academic-review-dreams-perfumes.dreams-perfumes.workers.dev/, fuente b049934, deployment 4ad20144-f896-4ba9-9735-f43c9ffd1603; intacta/health200/hero estático. Video gemini_generated_video_1e78e674.mp4 NO ADJUNTO: etapa de video bloqueada, no usar sustituto; esperar archivo y crear branch separada exclusivamente preview. Pages Direct Upload no tiene auto-deploy Git.
+
+Admin confirmado: admin@dreamsperfumes.com, UUID a88d8d4e-ada3-4bfa-a6f5-db39d2dc9c19, perfil admin y correo confirmado; admindreams@gmail.com no existe. Acceso /cuenta.html → /admin con rol servidor. Sin contraseña legítima ni gestor/sesión accesible; hash no recuperable. Flujo de restablecimiento preparado como runbook, pendiente control del correo/SMTP/callback UI y autorización específica antes de cambiar cuenta compartida. No emails/cambios password/revocación.
+
+Rollback: Pages previo 444489eb-dcfe-4650-b005-acc3469ab02e SUCCESS y endpoint POST rollback oficial disponibles; health/catalogo previos 200. Un request previo falló 503 por Supabase401 registrado en Worker f73d5087; causa no resuelta, posteriores exitosos: limitación real del respaldo anterior. No rollback ejecutado porque nueva versión pasó QA. Worker original f73d5087 al 100%, deployment anterior y binding conservados. Supabase sólo SELECT: 46 productos/0orders/rol admin; RLS activa, grants TRUNCATE históricos pendientes. Sin DNS, seeds/migraciones, pagos, datos ni merges modificados. Publicación oficial sí autorizada y realizada.
+
+Próxima acción: solicitar adjunto MP4 para inspección/optimización y cambio exclusivo preview. Auditar acceso Admin real/recovery separado sin inventar credenciales. No repetir publicación oficial para integrar video.
+
 # Promoción estática autorizada en preparación — 2026-10-08
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.

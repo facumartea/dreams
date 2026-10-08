@@ -1,3 +1,10 @@
+# 2026-10-08 — Oficial académica estática publicada
+
+- Publicado Pages 900a4bd8 desde c22a5d0 con backend b049934 inmutable; PR39/CI SUCCESS (113 tests). Portada sin video; preview academic-review y Worker histórico intactos.
+- QA remota 390/1440 de hero, menús/filtro marca/búsqueda/reset, contactos/autores, carrito/persistencia/contador/WhatsApp y checkout académico aprobado/vaciado sin errores de página. 14 hashes iguales a fuente; ocho rutas Admin rechazan visitantes.
+- SELECT confirma 0orders/46productos/rol admin conservado. Logs nuevos sin errores observados; error Supabase401 del rollback antiguo registrado como límite, sin cambios de credenciales.
+- Admin autenticado remoto/recovery pendientes; video no adjunto. Sin DNS, merge, correos, cobros, migraciones ni datos modificados.
+
 # 2026-10-08 — Preparación de promoción académica estática a Pages
 
 - Fijada fuente pre-video b049934 y backend inmutable independiente, sin reemplazar Worker vigente ni preview academic-review.

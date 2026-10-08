@@ -1,3 +1,10 @@
+# Resultado promoción estática — 2026-10-08
+
+- PR39/push/CI y Pages oficial c22a5d0/900a4bd8: COMPLETADOS, sin merge.
+- QA remota 390/1440/14 hashes/checkout aprobado/logs: COMPLETADA en cobertura documentada.
+- Admin real identificado; sesión autorizada y recuperación funcional: PENDIENTES.
+- Video exclusivo preview: BLOQUEADO por MP4 no adjunto. Oficial permanece estática y fijada.
+
 # Promoción oficial y video aislado — 2026-10-08
 
 - Fijar preview b049934 y diff contra oficial: COMPLETADO.
