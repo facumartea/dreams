@@ -2,9 +2,9 @@
 
 - Estado/dependencias/preview: VERIFICADOS; misma rama y sin merges.
 - Acceso/isologo transparente/idioma: IMPLEMENTADOS; QA local y 111 tests/builds COMPLETADOS.
-- Segundo teléfono y elección de WhatsApp: PENDIENTES de respuesta; datos vigentes conservados.
+- Segundo teléfono +54 294 4502390: CONFIRMADO e incorporado; WhatsApp conserva el destino vigente por pedido de cambiar sólo el teléfono.
 - Push/CI/preview 7eae7a7 y QA remota de esta tanda: COMPLETADOS (111/111, 390/1440, nueve páginas/404 y hashes de assets).
-- Documentación/PR38 actualizadas; publicación sólo preview. Confirmación de contactos y Auth/Admin real siguen abiertos.
+- Documentación/PR38 actualizadas; publicación sólo preview. Contactos confirmados; Auth/Admin real sigue pendiente.
 - Google/Admin remoto autenticado: pendientes técnicos previos, sin avisos de implementación en acceso.
 
 # Tarea académica — 2026-10-08 UTC

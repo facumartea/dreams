@@ -1,3 +1,8 @@
+# 2026-10-08 — Segundo teléfono de Contacto
+
+- Agregado +54 294 4502390 en configuración pública e Inicio/Nosotros, con enlace tel:+542944502390.
+- WhatsApp, correos, resumen del carrito y demás funcionalidades conservados. Alcance exclusivo del número solicitado; publicación sólo preview.
+
 # 2026-10-08 — Acceso limpio y español consistente
 
 - Retirados rótulo DREAMS ACCOUNT y aviso técnico Google; login existente preservado.

@@ -1,14 +1,20 @@
+# Segundo teléfono confirmado — 2026-10-08
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Agregado +54 294 4502390 como segundo teléfono de Contacto en Inicio/Nosotros y configuración pública, con tel:+542944502390. Por pedido “solo eso”, WhatsApp conserva +54 294 4160065 y el resumen del carrito. Misma rama/PR38, publicación sólo en preview academic-review; producción intacta. El checkpoint siguiente registra la versión anterior a este dato adicional.
+
 # Limpieza de acceso e idioma publicada — 2026-10-08 (America/Buenos_Aires)
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
 
-Continuación PR38 en la misma rama `codex/academic-access-checkout`, preservando base PR37/PR34, sin merge. Acceso sin rótulo ACCOUNT ni aviso técnico Google; login existente conservado. Isologo original recortado con fondo transparente, ampliación moderada y textos de interfaz en español. Contactos preservados y WhatsApp con número visible; segundo teléfono/destino WhatsApp pendientes de respuesta a la única pregunta enviada.
+Continuación PR38 en la misma rama `codex/academic-access-checkout`, preservando base PR37/PR34, sin merge. Acceso sin rótulo ACCOUNT ni aviso técnico Google; login existente conservado. Isologo original recortado con fondo transparente, ampliación moderada y textos de interfaz en español. Contactos preservados y WhatsApp con número visible; segundo teléfono confirmado en el checkpoint superior; WhatsApp vigente conservado.
 
 **Preview: https://academic-review-dreams-perfumes.dreams-perfumes.workers.dev/**. Fuente publicada `7eae7a79421cba653cc543d69ff87d81fae159a4`; deployment `a6070de5-c8b6-47e0-b563-2cc5da4a2f27`. [CI fuente SUCCESS](https://github.com/facumartea/dreams/actions/runs/37725729903): 111/111 tests, sintaxis 43, audit limpio y builds Workers/Pages. El checkpoint documental posterior no altera el bundle publicado.
 
 QA local login/reintento/logout con fixtures 320/390/1440 y Admin 390/1440 sin overflow. Remoto 390/1440: acceso limpio, contactos, menús, búsqueda/filtros/reinicio, cantidades/persistencia/subtotal/WhatsApp y cuatro resultados académicos sin regresiones ni errores de página. Nueve páginas/404 revisadas, validación española incluso con navegador inglés y hashes CSS/PNG/cuenta.js iguales a fuente. Auth/Admin autenticados remotos siguen pendientes por falta de cuenta legítima. Capturas/evidencia/procedencia del asset en docs/access_language_refinement.md.
 
-Producción Pages 444489eb/5e3835e y Worker f73d5087 al 100% confirmados intactos por API; Supabase, DNS, tráfico y permisos sin cambios. PR38 actualizada, sin merge. Próxima acción: confirmar segundo teléfono y destino WhatsApp; mientras tanto sólo se publica el dato conocido, sin duplicarlo.
+Producción Pages 444489eb/5e3835e y Worker f73d5087 al 100% confirmados intactos por API; Supabase, DNS, tráfico y permisos sin cambios. PR38 actualizada, sin merge. Próxima acción: revisar ambos enlaces de teléfono en la preview; WhatsApp conserva el destino vigente.
 
 # Checkpoint anterior: preview académica publicada y verificada — 2026-10-08 UTC
 

@@ -13,7 +13,7 @@ Actualizado el 2026-10-08 (America/Buenos_Aires). Continuación de `codex/academ
 
 ## Datos pendientes
 
-Se formuló una única pregunta por el segundo teléfono y la elección del destino WhatsApp. Sin respuesta confirmada, se mantiene un único teléfono real y el WhatsApp vigente. No crear placeholders ni asumir otro número. Cuando lleguen ambos datos, actualizar server/contacts.js, fallback Inicio/Nosotros y WHATSAPP_NUMBER sólo del entorno autorizado; validar resumen del carrito sin enviar mensajes.
+El usuario confirmó +54 294 4502390 como segundo teléfono y pidió cambiar sólo eso. Incorporado en server/contacts.js y fallback Inicio/Nosotros, con tel:+542944502390. WhatsApp conserva +54 294 4160065; WHATSAPP_NUMBER y resumen del carrito intactos.
 
 Google sigue deshabilitado y la cuenta admin solicitada no existe. No configurar clientes, crear usuarios ni modificar roles/URLs/Supabase por esta limpieza. Pasos seguros y riesgos previos en docs/academic_preview.md.
 
