@@ -1,3 +1,15 @@
+# Promoción estática autorizada en preparación — 2026-10-08
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Pedido vigente: publicar en OFICIAL https://dreams-perfumes.pages.dev el estado exacto pre-video de PREVIEW b049934, luego video sólo preview. Rama codex/promote-academic-static-pages dependiente de PR38, sin merges. Preview academic-review fijada por API en deployment 4ad20144-f896-4ba9-9735-f43c9ffd1603/tag b049934.
+
+Backend estático independiente creado desde b049934, deployment inmutable 40e7b0a3-022f-491b-9d74-f3fc63f9746f. Misma app/DB, orígenes Pages explícitos, secreto Supabase heredado servidor y firma aislada por stdin. PREVIEW_READ_ONLY=true, CHECKOUT_SCHEMA_READY=false, presentación académica activa: no orders/stock/pagos reales. Worker original y preview academic-review intactos. Pages aún no promovido en este checkpoint; configuración fija en pages/official-release.json impide que futuros cambios/video de preview lleguen a oficial.
+
+Admin comprobado por SELECT: admin@dreamsperfumes.com, UUID a88d8d4e-ada3-4bfa-a6f5-db39d2dc9c19, perfil admin y Auth confirmado. admindreams@gmail.com inexistente. Sin contraseña/sesión legítima ni gestor de contraseñas disponible; QA autorizado remoto pendiente, recuperación preparada pero no enviada/cambiada. RLS activa; grants TRUNCATE históricos siguen pendientes, sin DDL.
+
+Check 43 JS, 113/113 tests, builds Pages/Workers y audit producción correctos. Rollback Pages 444489eb confirmado SUCCESS, raíz y health accesibles; endpoint de rollback oficial identificado. Video solicitado no adjunto: no inventar ruta ni sustituir material. Próximo paso: CI/PR, publicación Pages autorizada, QA remota y checkpoint de evidencia.
+
 # Segundo teléfono confirmado — 2026-10-08
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.

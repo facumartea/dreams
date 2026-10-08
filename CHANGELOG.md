@@ -1,3 +1,10 @@
+# 2026-10-08 — Preparación de promoción académica estática a Pages
+
+- Fijada fuente pre-video b049934 y backend inmutable independiente, sin reemplazar Worker vigente ni preview academic-review.
+- Pages permite destino aprobado inmutable, conserva Origin/cookies/cuerpo y redirects manuales; falla cerrado sin fallback a versiones móviles. Dos regresiones adicionales, 113/113 tests y builds correctos.
+- Admin real comprobado por lecturas: admin@dreamsperfumes.com con perfil admin confirmado. No se recuperaron hashes, cambiaron contraseñas ni enviaron correos; acceso autenticado remoto pendiente.
+- Rollback Pages previo identificado/accesible. Video no adjunto y no incluido en esta versión.
+
 # 2026-10-08 — Segundo teléfono de Contacto
 
 - Agregado +54 294 4502390 en configuración pública e Inicio/Nosotros, con enlace tel:+542944502390.
