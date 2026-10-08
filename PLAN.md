@@ -1,3 +1,12 @@
+# Etapa video preview — 2026-10-08
+
+- Adjunto/codec/encuadre/audio/peso: INSPECCIONADOS, optimizado sin audio.
+- Reproducción única/pausa/fallback/preferencias y aislamiento Pages: IMPLEMENTADOS.
+- Local120tests/builds/QA3901440: COMPLETADOS; fin local acelerado.
+- Push/PR/CI/preview y QA remota: EN CURSO.
+- Contraseña Admin: no disponible por OAuth; variable histórica presente/nunca leída, vigencia PENDIENTE.
+- Oficial900a4bd8/c22a5d0: CONSERVADA ESTÁTICA; no republicar por video.
+
 # Resultado promoción estática — 2026-10-08
 
 - PR39/push/CI y Pages oficial c22a5d0/900a4bd8: COMPLETADOS, sin merge.

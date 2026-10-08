@@ -57,12 +57,11 @@ test('la portada incluye un formulario accesible de opiniones persistentes', () 
     assert.match(script, /await load_reviews\(\)/);
 });
 
-test('el hero usa una imagen responsive de alta resolución y lettering HTML', () => {
+test('el hero preview reserva el encuadre del video y conserva un respaldo real sin superponer lettering al producto', () => {
     const html = fs.readFileSync(path.join(root, 'public/index.html'), 'utf8');
-    assert.match(html, /dreams-hero-640\.webp 640w/);
-    assert.match(html, /dreams-hero-1024\.webp 1024w/);
-    assert.match(html, /<img src="\/assets\/dreams-hero-1024\.webp" width="1024" height="1536"/);
-    assert.match(html, /class="hero-bottle-mark" aria-hidden="true"/);
+    assert.match(html, /<img src="\/assets\/dreams-hero-video-poster\.webp" width="1280" height="720"/);
+    assert.match(html, /hero-video-layout/);
+    assert.doesNotMatch(html, /class="hero-bottle-mark"/);
 });
 
 test('el catálogo comparte una arquitectura de variantes para Mujer, Hombre y Unisex', () => {

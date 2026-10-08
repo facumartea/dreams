@@ -1,3 +1,11 @@
+# 2026-10-08 — Video exclusivo de preview preparado
+
+- Integrado MP4 aportado por usuario, optimizado4,29→1,78MB/sin audio; posters del mismo archivo, encuadre completo/reserva16:9 y textos/CTA conservados.
+- Reproducción única, pausa/resume/frame final/retorno, preferencias y error/fallback; flag servidor sólo preview.
+- Build Pages fija fuentes visuales a commit oficial b049934; CI obtiene historia Git y test de bundle excluye video.
+-120/120 tests, check46 y builds correctos; QA local390/1440 y preferencias/fallos inyectados pasada. Fin local acelerado por seek, remoto pendiente.
+- Consulta Admin histórica sólo nombres de variables por OAuth, sin valores ni cambio de contraseña/cuentas/datos/servicio.
+
 # 2026-10-08 — Oficial académica estática publicada
 
 - Publicado Pages 900a4bd8 desde c22a5d0 con backend b049934 inmutable; PR39/CI SUCCESS (113 tests). Portada sin video; preview academic-review y Worker histórico intactos.

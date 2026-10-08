@@ -1,3 +1,13 @@
+# Video de preview implementado, pendiente publicación — 2026-10-08
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+MP4 solicitado adjuntado e inspeccionado:20s/1280×720/H264; versión web1.778.425bytes sin audio/faststart y posters propios. Rama codex/preview-perfume-video dependiente de PR39(c763d05), sin merges. Hero conserva textos/CTA; encuadre16:9 completo y control accesible. Reproducción una vez/sin loop/frame final/retorno sin reinicio, reduced-motion/saveData sin descarga y fallback implementados. Activación explícita PREVIEW_HERO_VIDEO sólo previews; Pages build fija también HTML/CSS/motion a b049934, sin video desde esta branch.
+
+Check46, tests120/120, builds correctos; QA visual local390/1440 y preferencias/fallos inyectados pasada, fin local acelerado por seek. Publicación/fin natural/remoto aún pendientes. Evidencia y rollback en docs/preview_hero_video.md.
+
+Admin usuario confirmado admin@dreamsperfumes.com; integración Railway OAuth sólo devuelve nombres ADMIN_PASSWORD/ADMIN_EMAIL, no valores (valuesRedacted=true). Vigencia de contraseña histórica no verificada. Sin cambio/reset/revocación/email. Oficial900a4bd8/c22a5d0 y backend40e7b0a3/b049934 intactos por API. Próximo:commit/push/PR dependiente, CI, publicar sólo academic-review y validar ambasURLs. No deploy Pages.
+
 # Oficial estática publicada — 2026-10-08 (America/Buenos_Aires)
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
