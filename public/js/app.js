@@ -23,7 +23,26 @@ async function apply_public_config() {
     try {
         const config = await get_public_config();
         document.querySelectorAll('[data-whatsapp-link]').forEach(link => {
-            link.href = `https://wa.me/${encodeURIComponent(config.whatsapp_number)}`;
+            if (/^\d{8,15}$/.test(config.whatsapp_number || '')) link.href = `https://wa.me/${config.whatsapp_number}`;
+            else link.removeAttribute('href');
+            if (link.hasAttribute('data-whatsapp-number') && /^\d{8,15}$/.test(config.whatsapp_number || '')) {
+                const phone = config.contacts?.phones?.find(value => String(value).replace(/\D/g, '') === config.whatsapp_number);
+                link.textContent = `WhatsApp · ${phone || '+' + config.whatsapp_number}`;
+            }
+        });
+        document.querySelectorAll('[data-dreams-contacts]').forEach(container => {
+            if (!Array.isArray(config.contacts?.emails)) return;
+            container.querySelectorAll('a[href^="mailto:"]').forEach((link, index) => {
+                const email = config.contacts.emails[index];
+                if (typeof email === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { link.textContent = email; link.href = `mailto:${email}`; }
+            });
+        });
+        document.querySelectorAll('[data-contact-phones]').forEach(container => {
+            if (!Array.isArray(config.contacts?.phones)) return;
+            const phones = [...new Set(config.contacts.phones)].filter(value => typeof value === 'string' && /^\+?[\d ()-]+$/.test(value) && /^\d{8,15}$/.test(value.replace(/\D/g, '')));
+            if (!phones.length) return;
+            const links = phones.map(phone => { const link = document.createElement('a'); link.textContent = phone; link.href = `tel:+${phone.replace(/\D/g, '')}`; return link; });
+            container.replaceChildren(...links);
         });
         document.querySelectorAll('[data-contact-email]').forEach(link => {
             link.textContent = config.contact_email;
@@ -294,7 +313,7 @@ async function setup_review_form() {
             status.textContent = 'Tu opinión fue publicada y guardada.';
             await load_reviews();
         } catch (error) {
-            status.textContent = error.message || 'No se pudo publicar la opinión.';
+            status.textContent = interface_error(error);
         } finally {
             button.disabled = false;
             button.removeAttribute('aria-busy');

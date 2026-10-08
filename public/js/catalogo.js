@@ -46,7 +46,7 @@ function update_catalog_context(gender) {
         document.body.classList.remove('collection-themed');
     }
 
-    eyebrow.textContent = variant?.eyebrow || 'DREAMS COLLECTION';
+    eyebrow.textContent = variant?.eyebrow || 'COLECCIÓN DREAMS';
     title.textContent = variant?.title || 'Perfumes';
     description.textContent = variant?.description || 'Diseñador, algunos nichos seleccionados y una sola idea: encontrar tu firma.';
     document.title = variant?.document_title || 'Perfumes | DREAMS';

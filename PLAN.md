@@ -1,3 +1,23 @@
+# Refinamiento PR38 — 2026-10-08
+
+- Estado/dependencias/preview: VERIFICADOS; misma rama y sin merges.
+- Acceso/isologo transparente/idioma: IMPLEMENTADOS; QA local y 111 tests/builds COMPLETADOS.
+- Segundo teléfono +54 294 4502390: CONFIRMADO e incorporado; WhatsApp conserva el destino vigente por pedido de cambiar sólo el teléfono.
+- Push/CI/preview 7eae7a7 y QA remota de esta tanda: COMPLETADOS (111/111, 390/1440, nueve páginas/404 y hashes de assets).
+- Documentación/PR38 actualizadas; publicación sólo preview. Contactos confirmados; Auth/Admin real sigue pendiente.
+- Google/Admin remoto autenticado: pendientes técnicos previos, sin avisos de implementación en acceso.
+
+# Tarea académica — 2026-10-08 UTC
+
+- Base PR37 y sitio vigente: VERIFICADOS. Dependencia PR34; selección carrito PR35 sin merge.
+- Autores/contactos/acceso centrado/Google PKCE/Admin guard/checkout aislado: IMPLEMENTADOS.
+- Google proveedor y cuenta admin: BLOQUEADOS por configuración/identidad inexistente; legacy conservado.
+- Checks locales y CI: 108/108, sintaxis 43, audit y builds Workers/Pages: COMPLETADOS.
+- Push/PR38 y preview aislada 87d64d4: COMPLETADOS. QA remota Chromium 390/1440 de menús/filtros/carrito y cuatro resultados académicos: COMPLETADA.
+- Auth Google/Admin autenticado remoto: PENDIENTES; Admin local con fixtures y denegación anónima remota verificados.
+- Documentación/evidencia/rollback de preview: COMPLETADOS; revisión del usuario en celular pendiente.
+- Producción y DNS: fuera de publicación autorizada actual; conservar sitio.
+
 # DREAMS — plan vigente
 
 2026-10-07. Destino actualizado por el usuario: Cloudflare Workers. Sin porcentajes especulativos. Plan histórico preservado en `docs/history/PLAN_PR33.md`.

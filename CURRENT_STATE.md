@@ -1,3 +1,35 @@
+# Segundo teléfono confirmado — 2026-10-08
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Agregado +54 294 4502390 como segundo teléfono de Contacto en Inicio/Nosotros y configuración pública, con tel:+542944502390. Por pedido “solo eso”, WhatsApp conserva +54 294 4160065 y el resumen del carrito. Misma rama/PR38, publicación sólo en preview academic-review; producción intacta. El checkpoint siguiente registra la versión anterior a este dato adicional.
+
+# Limpieza de acceso e idioma publicada — 2026-10-08 (America/Buenos_Aires)
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Continuación PR38 en la misma rama `codex/academic-access-checkout`, preservando base PR37/PR34, sin merge. Acceso sin rótulo ACCOUNT ni aviso técnico Google; login existente conservado. Isologo original recortado con fondo transparente, ampliación moderada y textos de interfaz en español. Contactos preservados y WhatsApp con número visible; segundo teléfono confirmado en el checkpoint superior; WhatsApp vigente conservado.
+
+**Preview: https://academic-review-dreams-perfumes.dreams-perfumes.workers.dev/**. Fuente publicada `7eae7a79421cba653cc543d69ff87d81fae159a4`; deployment `a6070de5-c8b6-47e0-b563-2cc5da4a2f27`. [CI fuente SUCCESS](https://github.com/facumartea/dreams/actions/runs/37725729903): 111/111 tests, sintaxis 43, audit limpio y builds Workers/Pages. El checkpoint documental posterior no altera el bundle publicado.
+
+QA local login/reintento/logout con fixtures 320/390/1440 y Admin 390/1440 sin overflow. Remoto 390/1440: acceso limpio, contactos, menús, búsqueda/filtros/reinicio, cantidades/persistencia/subtotal/WhatsApp y cuatro resultados académicos sin regresiones ni errores de página. Nueve páginas/404 revisadas, validación española incluso con navegador inglés y hashes CSS/PNG/cuenta.js iguales a fuente. Auth/Admin autenticados remotos siguen pendientes por falta de cuenta legítima. Capturas/evidencia/procedencia del asset en docs/access_language_refinement.md.
+
+Producción Pages 444489eb/5e3835e y Worker f73d5087 al 100% confirmados intactos por API; Supabase, DNS, tráfico y permisos sin cambios. PR38 actualizada, sin merge. Próxima acción: revisar ambos enlaces de teléfono en la preview; WhatsApp conserva el destino vigente.
+
+# Checkpoint anterior: preview académica publicada y verificada — 2026-10-08 UTC
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+**Preview: https://academic-review-dreams-perfumes.dreams-perfumes.workers.dev/**. Fuente publicada `87d64d4b1c3a7a0754c247c48a768a198971d045`; deployment `253981ae-1be2-4b14-ad5c-508ea03fb3cf`. Rama `codex/academic-access-checkout`, [PR38](https://github.com/facumartea/dreams/pull/38) abierta sobre PR37/ac7e088 (dependencia PR34). Selección del controlador y cuatro regresiones de carrito PR35/a5158b0, sin merges. El checkpoint documental posterior no altera el código publicado.
+
+Autores/contactos, acceso centrado con PKCE preparado, protección de escrituras y checkout académico firmado implementados. Google está deshabilitado y la cuenta admin solicitada no existe: se conserva login por contraseña hasta configurar y verificar Google. No promoción ni configuración Auth remota realizada.
+
+CI de la fuente SUCCESS [37723212856](https://github.com/facumartea/dreams/actions/runs/37723212856): 108/108 tests, sintaxis de 43 archivos, audit producción limpio y builds Workers/Pages. QA remota completa en 390/1440 sobre 3cf7cc8; último commit sólo corrige CSS Admin y documentación. Smoke final 87d64d4: CSS remoto idéntico a fuente, hero estático, autores, acceso centrado, checkout aprobado y carrito vaciado, sin errores de página en ambos tamaños. Menús/filtros, persistencia/cantidades, cuatro resultados, reintento y respuestas atrasadas verificados; tarjeta no transmitida. Admin autenticado probado únicamente con fixtures locales; rutas anónimas remotas 403. Logs muestreados: una cancelación OAuth esperada, cero eventos de nivel error; cobertura limitada.
+
+Supabase sólo lecturas: 46 productos, cero pedidos y cuenta admin inexistente. Pendientes: Google Cloud/proveedor/callbacks, acceso Admin real, grants TRUNCATE históricos y comercio real. No cambios de datos, roles, policies, migraciones ni seeds. Producción intacta: Pages `444489eb` fuente `5e3835e`, Worker `f73d5087`; DNS y tráfico sin modificar. Sin merge. Evidencia, configuración, rollback de preview y reproducción: `docs/academic_preview.md`.
+
+Próxima acción: revisar esta preview desde celular; completar cliente OAuth en paneles seguros y validar Google antes de activar GOOGLE_ACCESS_READY y promover la identidad verificada por UUID. El checkout mostrado es una simulación aislada, no Mercado Pago ni pedido comercial.
+
 # DREAMS — estado actual verificado
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.

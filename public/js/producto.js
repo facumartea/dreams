@@ -60,7 +60,7 @@ async function render_product_detail(product) {
                 <div class="intensity" title="Intensidad ${product.intensity} de 5">
                     ${[1, 2, 3, 4, 5].map(number => `<span class="${number <= product.intensity ? 'active' : ''}"></span>`).join('')}
                 </div>
-                <p class="product-meta">Intensidad: ${product.intensity}/5 · Stock: ${product.stock > 0 ? product.stock + " unidades" : "Agotado"}</p>
+                <p class="product-meta">Intensidad: ${product.intensity}/5 · Disponibilidad: ${product.stock > 0 ? product.stock + " unidades" : "Agotado"}</p>
                 <div class="detail-actions">
                     <button id="detail-add" class="button button-dark" ${Number(product.stock) === 0 ? 'disabled' : ''}>${Number(product.stock) === 0 ? 'Agotado' : 'Agregar al carrito'}</button>
                     <a class="button" href="${whatsapp_url}" target="_blank" rel="noreferrer" data-whatsapp-inquiry>Consultar por WhatsApp</a>

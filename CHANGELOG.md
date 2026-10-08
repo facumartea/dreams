@@ -1,3 +1,29 @@
+# 2026-10-08 — Segundo teléfono de Contacto
+
+- Agregado +54 294 4502390 en configuración pública e Inicio/Nosotros, con enlace tel:+542944502390.
+- WhatsApp, correos, resumen del carrito y demás funcionalidades conservados. Alcance exclusivo del número solicitado; publicación sólo preview.
+
+# 2026-10-08 — Acceso limpio y español consistente
+
+- Retirados rótulo DREAMS ACCOUNT y aviso técnico Google; login existente preservado.
+- Asset de marca transparente derivado del original, sin fondo/texto ISOTIPO, sin regeneración; escala de acceso ampliada moderadamente.
+- Rótulos públicos/Admin/checkout y estados/proveedores de pedidos traducidos al español sin alterar identificadores ni funcionalidades. Validaciones nativas y fallos de navegador en español.
+- Correos y teléfono real preservados; WhatsApp muestra su número. Segundo teléfono y destino pendientes de respuesta, sin datos inventados.
+- 111/111 tests, sintaxis 43, builds Workers/Pages y QA local de acceso/Admin correctos. Publicada preview aislada desde 7eae7a7, deployment a6070de5, CI 37725729903 SUCCESS.
+- QA remota 390/1440: acceso limpio, contactos, menús/filtros/carrito y cuatro resultados académicos; nueve páginas/404 en español y hashes CSS/PNG/cuenta.js iguales a fuente. Cero errores de página en la cobertura ejecutada. Login/Admin autenticados remotos pendientes; capturas en dreams-interface-evidence.
+- Producción, DNS, tráfico, Supabase y permisos intactos; sin merge.
+
+# 2026-10-08 UTC — Acceso y presentación académica aislada
+
+- Corregido overflow móvil Admin demostrado en fixture: grid antes 574 px sobre 390; seis módulos/editar/limpiar ahora 390/1440 sin overflow.
+- Autores/contactos solicitados, tarjeta centrada y acceso Google PKCE preparado; fallback password conservado por instrucción posterior hasta configurar/verificar Google.
+- Auditoría Admin/roles/RLS con sólo lecturas; protección de escrituras preview y errores no JSON controlados. Grants TRUNCATE heredados pendientes de revisión segura. Cuenta Google admin inexistente, sin promoción.
+- Checkout académico firmado independiente de orders/proveedor comercial, tarjeta sólo navegador y precios servidor; resultados reproducibles, replay y protección del carrito.
+- Lecturas de configuración no consumen el límite de envíos de checkout. GOOGLE_ACCESS_READY mantiene acceso legacy hasta validar proveedor/callbacks; logs preview redactan query strings.
+- Corrección de carrito atrasado seleccionada PR35 con pruebas, sin merge. Local y CI 108/108, sintaxis 43, audit limpio y builds Workers/Pages. PR38 abierta y preview publicada desde 87d64d4, deployment 253981ae.
+- QA remota 390/1440: menús/filtros, carrito/persistencia/respuestas atrasadas, reintento y cuatro resultados sin transmisión de tarjeta. Smoke final confirma CSS exacto, hero estático, acceso centrado y aprobación aislada sin errores de página.
+- Producción Pages/Worker, DNS, tráfico y Supabase intactos. Google/Admin real siguen pendientes; login existente preservado. Evidencia y rollback en docs/academic_preview.md.
+
 # 2026-10-07 — Portada estática aislada para Pages
 
 - Diseño PR36 seleccionado sin integrar cambios funcionales de PR35/36; rama basada en PR34/8d80fdd.

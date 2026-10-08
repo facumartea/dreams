@@ -84,7 +84,7 @@ test('el checkout declara modo demo, estados y diseño responsive', () => {
     const html = fs.readFileSync(path.join(root, 'public/checkout.html'), 'utf8');
     const result = fs.readFileSync(path.join(root, 'public/js/checkout-result.js'), 'utf8');
     const cart = fs.readFileSync(path.join(root, 'public/js/carrito.js'), 'utf8');
-    assert.match(html, /MODO DEMO — No se realizarán cobros reales/);
+    assert.match(html, /MODO DE PRUEBA — No se realizarán cobros reales/);
     assert.match(html, /id="demo-card-form"[^>]*hidden/);
     assert.match(html, /DREAMS no envía ni guarda números o códigos de tarjeta/);
     assert.match(html, /id="sandbox-help"[^>]*hidden/);
@@ -156,7 +156,7 @@ test('el detalle presenta las notas reales como un Scent Trail accesible', () =>
 test('registro comunica claramente el modo demo sin confirmación de correo', () => {
     const account = fs.readFileSync(path.join(root, 'public', 'js', 'cuenta.js'), 'utf8');
     const server = fs.readFileSync(path.join(root, 'server', 'server.js'), 'utf8');
-    assert.match(account, /Modo demo:/);
+    assert.match(account, /Modo de prueba:/);
     assert.match(account, /no necesitás confirmar el correo/);
     assert.match(server, /DEMO_AUTO_CONFIRM_EMAIL/);
 });

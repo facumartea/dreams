@@ -1,4 +1,8 @@
 const path = require('node:path');
+const { auth_cookie, session } = require('./auth-cookies');
+const { google_routes } = require('./google-auth');
+const { presentation_checkout } = require('./presentation-checkout');
+const contacts = require('./contacts');
 const { randomUUID } = require('node:crypto');
 const { normalize_product_brand, product_write_payload, brand_column } = require('./product-schema');
 const express = require('express');
@@ -83,19 +87,6 @@ function parse_cookie_header(header = '') {
         if (separator < 0) return ['', ''];
         return [decodeURIComponent(part.slice(0, separator).trim()), decodeURIComponent(part.slice(separator + 1))];
     }).filter(([name]) => name));
-}
-
-function auth_cookie(name, value, max_age, production = process.env.NODE_ENV === 'production') {
-    return `${name}=${encodeURIComponent(value)}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${max_age}${production ? '; Secure' : ''}`;
-}
-
-function session(response, current_session, production = process.env.NODE_ENV === 'production') {
-    const configured_age = Number(current_session.expires_in);
-    const access_age = Number.isSafeInteger(configured_age) && configured_age > 0 ? configured_age : 3600;
-    response.setHeader('Set-Cookie', [
-        auth_cookie('dreams_access_token', current_session.access_token, access_age, production),
-        auth_cookie('dreams_refresh_token', current_session.refresh_token, 2592000, production)
-    ]);
 }
 
 function clear_session(response, production) {
@@ -246,15 +237,16 @@ function create_app(options = {}) {
     const production = options.production ?? process.env.NODE_ENV === 'production';
     const logger = options.logger || console;
     const create_auth_client = options.create_auth_client || (() => database);
-    const configured_contact_email = normalize_email(options.contact_email || 'contacto@example.com');
+    const configured_contact_email = normalize_email(options.contact_email || contacts.emails[1]);
     const contact_email = valid_email(configured_contact_email) ? configured_contact_email : 'contacto@example.com';
-    const whatsapp_number = String(options.whatsapp_number || '').replace(/\D/g, '');
+    const whatsapp_number = String(options.whatsapp_number ?? contacts.whatsapp_number).replace(/\D/g, '');
     const payment_provider = options.payment_provider || null;
     const demo_auto_confirm_email = options.demo_auto_confirm_email === true;
     const checkout_mode = ['production', 'sandbox', 'demo'].includes(payment_provider?.mode) ? payment_provider.mode : 'sandbox';
     const app_base_url = normalize_origin(options.app_base_url);
     const checkout_enabled = Boolean(payment_provider?.configured && app_base_url && options.checkout_schema_ready);
     const show_test_data = checkout_mode === 'demo' || (checkout_mode === 'sandbox' && Boolean(options.show_checkout_test_data));
+    const presentation = presentation_checkout({ enabled: options.presentation_checkout, signing_key: options.presentation_signing_key, quote_cart, database, product_brand_column, production });
     const public_directory = options.public_directory || path.join(__dirname, '..', 'public');
     const views_directory = options.views_directory || path.join(__dirname, '..', 'views');
     const app = express();
@@ -263,7 +255,7 @@ function create_app(options = {}) {
 
     app.set('trust proxy', 1);
     app.use(helmet({ contentSecurityPolicy: content_security_policy, crossOriginEmbedderPolicy: false }));
-    if (!options.disable_request_log) app.use(morgan(production ? 'combined' : 'dev'));
+    if (!options.disable_request_log) app.use(morgan((tokens, request, response) => `${request.method} ${request.path} ${response.statusCode}`));
     app.use(express.json({ limit: '1mb' }), express.urlencoded({ extended: true, limit: '1mb' }));
     app.use(mutation_origin_guard(options.allowed_origins));
     app.use((request, response, next) => {
@@ -273,11 +265,17 @@ function create_app(options = {}) {
     app.use('/api/auth', rateLimit({ windowMs: 900000, limit: 20, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiados intentos. Probá nuevamente en unos minutos.' } }));
     app.use('/api/inquiries', rateLimit({ windowMs: 900000, limit: 10, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiadas consultas. Probá nuevamente en unos minutos.' } }));
     app.use('/api/cart', rateLimit({ windowMs: 900000, limit: 30, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiadas verificaciones del carrito. Probá nuevamente en unos minutos.' } }));
-    app.use('/api/checkout', rateLimit({ windowMs: 900000, limit: 15, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiados intentos de checkout. Probá nuevamente en unos minutos.' } }));
+    app.use('/api/presentation', rateLimit({ windowMs: 900000, limit: 60, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiados intentos. Probá nuevamente en unos minutos.' } }));
+    app.use('/api/checkout', rateLimit({ skip: request => !unsafe_methods.has(request.method), windowMs: 900000, limit: 15, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiados intentos de pago. Probá nuevamente en unos minutos.' } }));
     app.use('/api/coupons', rateLimit({ windowMs: 900000, limit: 30, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiados intentos. Probá nuevamente en unos minutos.' } }));
     app.use('/api/payments/webhook', rateLimit({ windowMs: 60000, limit: 120, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiadas notificaciones.' } }));
     const review_limiter = rateLimit({ windowMs: 3600000, limit: 5, standardHeaders: true, legacyHeaders: false, message: { error: 'Publicaste varias opiniones. Probá nuevamente más tarde.' } });
     app.use('/api/reviews', (request, response, next) => request.method === 'POST' ? review_limiter(request, response, next) : next());
+    app.use((request, response, next) => {
+        const safe = ['/api/cart/quote', '/api/auth/google', '/api/auth/login', '/api/auth/logout', '/api/presentation/session', '/api/presentation/payment', '/api/presentation/result'];
+        if (options.preview_read_only && unsafe_methods.has(request.method) && !safe.includes(request.path)) return response.status(403).json({ error: 'Esta vista de prueba permite consultas; las operaciones comerciales están protegidas.' });
+        next();
+    });
     app.use(options.static_middleware || express.static(public_directory));
 
     async function profile_for(user) {
@@ -328,8 +326,11 @@ function create_app(options = {}) {
     const route = (method, url, ...handlers) => app[method](url, ...handlers.map(handler => handler === login || handler === admin ? handler : async_route(handler)));
     const fail_if = result => { if (result.error) throw result.error; return result.data; };
 
-    route('get', '/api/config', async (request, response) => response.json({ whatsapp_number, contact_email, app_name: 'DREAMS', demo_auto_confirm_email }));
-    route('get', '/api/checkout/config', async (request, response) => response.json({ enabled: checkout_enabled, provider: checkout_enabled ? payment_provider.name : null, mode: checkout_mode, show_test_data }));
+    presentation.install(app, route);
+    google_routes(app, { create_oauth_client: options.create_oauth_client, provider_enabled: async () => options.google_access_ready === true && await (options.google_provider_enabled || (async () => false))(), app_base_url, production, profile_for, logger });
+    route('get', '/api/auth/google/config', async (request, response) => response.json({ enabled: Boolean(options.google_access_ready === true && options.create_oauth_client && app_base_url && await (options.google_provider_enabled || (async () => false))()) }));
+    route('get', '/api/config', async (request, response) => response.json({ whatsapp_number, contact_email, contacts, app_name: 'DREAMS', demo_auto_confirm_email, preview_read_only: options.preview_read_only === true }));
+    route('get', '/api/checkout/config', async (request, response) => response.json({ enabled: presentation.ready || checkout_enabled, provider: presentation.ready ? 'presentation_demo' : checkout_enabled ? payment_provider.name : null, mode: presentation.ready ? 'demo' : checkout_mode, show_test_data: presentation.ready || show_test_data }));
     route('get', '/api/products', async (request, response) => {
         const search = String(request.query.search || '').trim().replace(/[^\p{L}\p{N}\s'-]/gu, '').slice(0, 80);
         const sort = String(request.query.sort || 'featured');
@@ -409,8 +410,8 @@ function create_app(options = {}) {
         const quote = await quote_cart(database, request.body.items, request.body.coupon_code, product_brand_column);
         if (quote.error) return response.status(400).json({ error: quote.error });
         const lines = quote.items.map(item => `${item.quantity} × ${item.brand} ${item.name} — ${item.price * item.quantity} ARS`);
-        const text = ['Hola DREAMS, quiero consultar por este carrito:', ...lines, `Total de referencia: ${quote.total} ARS`].join('\n');
-        response.json({ ...quote, whatsapp_url: quote.items.length ? `https://wa.me/${whatsapp_number}?text=${encodeURIComponent(text)}` : null });
+        const text = ['Hola DREAMS, quiero consultar por este carrito:', ...lines, `Subtotal de productos: ${quote.total} ARS. Envío a consultar, no incluido.`].join('\n');
+        response.json({ ...quote, whatsapp_url: quote.items.length && /^\d{8,15}$/.test(whatsapp_number) ? `https://wa.me/${whatsapp_number}?text=${encodeURIComponent(text)}` : null });
     });
     route('post', '/api/coupons/validate', async (request, response) => {
         const quote = await quote_cart(database, request.body.items, request.body.code, product_brand_column);
@@ -419,7 +420,7 @@ function create_app(options = {}) {
         response.json({ coupon: quote.coupon, subtotal: quote.subtotal, discount: quote.discount, total: quote.total });
     });
     route('post', '/api/checkout/session', login, async (request, response) => {
-        if (!checkout_enabled || !app_base_url) return response.status(503).json({ error: 'El checkout todavía no está configurado.' });
+        if (!checkout_enabled || !app_base_url) return response.status(503).json({ error: 'El pago online todavía no está disponible.' });
         const quote = await quote_cart(database, request.body.items, request.body.coupon_code, product_brand_column);
         if (quote.error) return response.status(400).json({ error: quote.error });
         if (request.body.coupon_code && !quote.coupon) return response.status(409).json({ error: 'Cupón inválido.' });
@@ -464,7 +465,7 @@ function create_app(options = {}) {
     });
     route('post', '/api/checkout/demo-payment', login, async (request, response) => {
         if (!checkout_enabled || payment_provider?.name !== 'demo' || typeof payment_provider.process_payment !== 'function') {
-            return response.status(404).json({ error: 'El checkout demo no está disponible.' });
+            return response.status(404).json({ error: 'El pago de prueba no está disponible.' });
         }
         if (request.body.card_number || request.body.cvv || request.body.expiry) {
             return response.status(400).json({ error: 'Los datos ficticios de tarjeta no deben enviarse al servidor.' });
@@ -472,14 +473,14 @@ function create_app(options = {}) {
         const order_id = String(request.body.order_id || '');
         if (!/^[0-9a-f-]{36}$/i.test(order_id)) return response.status(400).json({ error: 'ID de pedido inválido.' });
         const order = fail_if(await database.from('orders').select('id,user_id,provider,status,total,currency,created_at').eq('id', order_id).eq('user_id', request.user.id).maybeSingle());
-        if (!order || order.provider !== 'demo') return response.status(404).json({ error: 'Pedido demo no encontrado.' });
-        if (order.status !== 'created') return response.status(409).json({ error: 'Este pedido demo ya fue procesado.' });
+        if (!order || order.provider !== 'demo') return response.status(404).json({ error: 'Pedido de prueba no encontrado.' });
+        if (order.status !== 'created') return response.status(409).json({ error: 'Este pedido de prueba ya fue procesado.' });
 
         let payment;
         try {
             payment = await payment_provider.process_payment({ order_id, scenario: request.body.scenario });
         } catch (error) {
-            if (error?.code === 'DEMO_SCENARIO_INVALID') return response.status(400).json({ error: 'Resultado demo inválido.' });
+            if (error?.code === 'DEMO_SCENARIO_INVALID') return response.status(400).json({ error: 'Resultado de prueba inválido.' });
             throw error;
         }
         const updated = fail_if(await database.from('orders').update({
@@ -488,7 +489,7 @@ function create_app(options = {}) {
             status_detail: payment.status_detail,
             paid_at: payment.paid_at
         }).eq('id', order.id).eq('status', 'created').select('id').maybeSingle());
-        if (!updated) return response.status(409).json({ error: 'Este pedido demo ya fue procesado.' });
+        if (!updated) return response.status(409).json({ error: 'Este pedido de prueba ya fue procesado.' });
         response.json({ order_id: order.id, order_number: order_number(order), status: payment.status, status_detail: payment.status_detail });
     });
     route('post', '/api/checkout/confirm', login, async (request, response) => {

@@ -22,8 +22,10 @@ function show_toast(message) {
 }
 
 async function admin_fetch(url, options = {}) {
-    const response = await fetch(url, options);
-    const data = await response.json();
+    let response;
+    try { response = await fetch(url, options); }
+    catch { throw new Error('No pudimos conectar con DREAMS. Revisá tu conexión e intentá nuevamente.'); }
+    const data = await response.json().catch(() => ({}));
     if (!response.ok) throw new Error(data.error || 'Ocurrió un error.');
     return data;
 }
@@ -60,7 +62,7 @@ async function load_dashboard() {
         stat_card('Consultas', stats.inquiries, 'por WhatsApp'),
         stat_card('Opiniones', stats.reviews, 'publicadas'),
         stat_card('Pedidos', stats.orders, 'registrados'),
-        stat_card('Stock bajo', stats.low_stock, '2 unidades o menos')
+        stat_card('Disponibilidad baja', stats.low_stock, '2 unidades o menos')
     ].join('');
 }
 
@@ -256,10 +258,18 @@ async function delete_review(id, button) {
     });
 }
 
+function order_status_label(value) {
+    return ({ created: 'Creado', approved: 'Aprobado', rejected: 'Rechazado', pending: 'Pendiente', cancelled: 'Cancelado', error: 'Error' })[value] || 'Estado no reconocido';
+}
+
+function order_provider_label(value) {
+    return ({ mercado_pago: 'Mercado Pago', demo: 'Simulación de prueba', presentation_demo: 'Presentación académica' })[value] || 'Proveedor no reconocido';
+}
+
 async function load_orders() {
     const orders = await admin_fetch('/api/admin/orders');
     document.getElementById('order-total').textContent = `${orders.length} pedidos`;
-    document.getElementById('admin-orders').innerHTML = orders.map(order => `<tr><td><strong>${escape_html(order.order_number)}</strong></td><td>${escape_html(new Date(order.created_at).toLocaleString('es-AR'))}</td><td><span class="status-pill">${escape_html(order.status)}</span></td><td>${escape_html(order.provider)}</td><td>${escape_html(order.coupon_code || '—')}</td><td>${escape_html(format_price(order.total))}</td><td>${escape_html(Array.isArray(order.items) ? order.items.reduce((sum, item) => sum + Number(item.quantity || 0), 0) : 0)}</td></tr>`).join('');
+    document.getElementById('admin-orders').innerHTML = orders.map(order => `<tr><td><strong>${escape_html(order.order_number)}</strong></td><td>${escape_html(new Date(order.created_at).toLocaleString('es-AR'))}</td><td><span class="status-pill">${escape_html(order_status_label(order.status))}</span></td><td>${escape_html(order_provider_label(order.provider))}</td><td>${escape_html(order.coupon_code || '—')}</td><td>${escape_html(format_price(order.total))}</td><td>${escape_html(Array.isArray(order.items) ? order.items.reduce((sum, item) => sum + Number(item.quantity || 0), 0) : 0)}</td></tr>`).join('');
 }
 
 async function load_admin_coupons() {
@@ -340,6 +350,12 @@ function setup_tabs() {
 
 document.addEventListener('DOMContentLoaded', async () => {
     if (!(await verify_admin())) return;
+    const config = await admin_fetch('/api/config').catch(() => ({}));
+    if (config.preview_read_only) {
+        const notice = document.createElement('p'); notice.className = 'form-message'; notice.setAttribute('role', 'status');
+        notice.textContent = 'Vista de revisión: las escrituras están protegidas. Los datos se consultan sin modificarlos.';
+        document.querySelector('main')?.prepend(notice);
+    }
     document.getElementById('product-form').addEventListener('submit', save_product);
     document.getElementById('image_url').addEventListener('input', schedule_product_image_preview);
     set_product_image_preview('empty');
