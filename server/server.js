@@ -30,6 +30,7 @@ async function start() {
         preview_read_only: process.env.PREVIEW_READ_ONLY === 'true',
         presentation_checkout: process.env.PRESENTATION_CHECKOUT_ENABLED === 'true',
         presentation_signing_key: process.env.PRESENTATION_SIGNING_KEY,
+        google_access_ready: process.env.GOOGLE_ACCESS_READY === 'true',
         create_oauth_client: storage => create_database(null, { flowType: 'pkce', storage, storageKey: 'dreams-google', persistSession: true }),
         google_provider_enabled: async () => {
             const response = await fetch(`${process.env.SUPABASE_URL}/auth/v1/settings`, { headers: { apikey: process.env.SUPABASE_SECRET_KEY } });

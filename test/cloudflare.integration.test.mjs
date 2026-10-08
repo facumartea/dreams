@@ -12,6 +12,7 @@ test('Workers preserva rutas, sesiones aisladas, Admin, errores y caché privada
         const url = new URL(req.url, 'http://fixture');
         calls.push({ path: url.pathname, authorization: req.headers.authorization, query: url.search });
         res.setHeader('Content-Type', 'application/json');
+        if (url.pathname.endsWith('/settings')) return res.end(JSON.stringify({ external: { google: true } }));
         if (url.pathname.endsWith('/token')) {
             let body = ''; for await (const chunk of req) body += chunk;
             const { email } = JSON.parse(body);
@@ -29,7 +30,7 @@ test('Workers preserva rutas, sesiones aisladas, Admin, errores y caché privada
     fixture.listen(0, '127.0.0.1');
     await new Promise(resolve => fixture.once('listening', resolve));
     t.after(() => new Promise(resolve => fixture.close(resolve)));
-    const harness = createTestHarness({ workers: [{ configPath: './wrangler.jsonc', vars: { NODE_ENV: 'production', APP_BASE_URL: 'https://preview.example', APP_ORIGINS: 'https://preview.example' }, secrets: { SUPABASE_URL: `http://127.0.0.1:${fixture.address().port}`, SUPABASE_SECRET_KEY: 'sb_secret_WORKER_FIXTURE' } }] });
+    const harness = createTestHarness({ workers: [{ configPath: './wrangler.jsonc', vars: { NODE_ENV: 'production', APP_BASE_URL: 'https://preview.example', APP_ORIGINS: 'https://preview.example', GOOGLE_ACCESS_READY: 'true' }, secrets: { SUPABASE_URL: `http://127.0.0.1:${fixture.address().port}`, SUPABASE_SECRET_KEY: 'sb_secret_WORKER_FIXTURE' } }] });
     t.after(() => harness.close());
     const { url } = await harness.listen();
     for (const [path, status] of [['/', 200], ['/catalogo.html', 200], ['/js/admin-console-v3.js', 200], ['/admin', 403], ['/api/missing', 404], ['/missing', 404], ['/favoritos.html', 301]]) {
@@ -38,6 +39,10 @@ test('Workers preserva rutas, sesiones aisladas, Admin, errores y caché privada
         assert.match(response.headers.get('content-security-policy'), /script-src 'self'/);
         if (path.startsWith('/api/') || path === '/admin') assert.equal(response.headers.get('cache-control'), 'no-store');
     }
+    const google = await harness.fetch('/api/auth/google', { method: 'POST', headers: { 'Content-Type': 'application/json', Origin: 'https://preview.example' }, body: JSON.stringify({ next: '/checkout.html' }) });
+    assert.equal(google.status, 200);
+    assert.match((await google.json()).url, /provider=google/);
+    assert.match(google.headers.getSetCookie()[0], /dreams_google_pkce=.*HttpOnly.*Secure/);
     const login = async email => {
         const response = await harness.fetch('/api/auth/login', { method: 'POST', headers: { 'Content-Type': 'application/json', Origin: 'https://preview.example' }, body: JSON.stringify({ email, password: 'fixture-password' }) });
         assert.equal(response.status, 200);

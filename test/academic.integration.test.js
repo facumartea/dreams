@@ -76,7 +76,7 @@ test('Google binds code exchange to HttpOnly PKCE cookie and server profile; no 
         signInWithOAuth: async options => { calls.push(options); storage.setItem('dreams-google-code-verifier', 'fixture-verifier'); return { data: { url: 'https://fixture.supabase.co/auth/v1/authorize?provider=google' } }; },
         exchangeCodeForSession: async code => { assert.equal(storage.getItem('dreams-google-code-verifier'), 'fixture-verifier'); return code === 'good' ? { data: { user: { id: 'fixture', email: 'fixture@example.com', user_metadata: { role: 'admin' } }, session: { access_token: 'fixture-token', refresh_token: 'fixture-refresh', expires_in: 3600 } } } : { error: new Error('Invalid exchange'), data: {} }; }
     } });
-    await serve({ create_oauth_client, google_provider_enabled: async () => true, app_base_url: 'https://preview.example', production: true }, async base => {
+    await serve({ google_access_ready: true, create_oauth_client, google_provider_enabled: async () => true, app_base_url: 'https://preview.example', production: true }, async base => {
         const start = await post(base, '/api/auth/google', { next: 'https://attacker.example', email: 'admindreams@gmail.com' });
         assert.equal(start.status, 200); const header = start.headers.getSetCookie()[0]; assert.match(header, /HttpOnly/); assert.match(header, /Secure/); assert.match(header, /Max-Age=600/);
         const result = await fetch(base + '/api/auth/google/callback?code=good', { headers: { Cookie: header.split(';')[0] }, redirect: 'manual' });
@@ -84,4 +84,26 @@ test('Google binds code exchange to HttpOnly PKCE cookie and server profile; no 
         assert.equal(calls[0].provider, 'google'); assert.equal(calls[0].options.redirectTo, 'https://preview.example/api/auth/google/callback');
         const cancelled = await fetch(base + '/api/auth/google/callback?error=access_denied', { headers: { Cookie: header.split(';')[0] }, redirect: 'manual' }); assert.equal(cancelled.headers.get('location'), '/cuenta.html?auth_error=1');
     });
+});
+
+test('configuration reads do not consume the checkout submission budget', async () => {
+    await serve({}, async base => {
+        for (let i = 0; i < 25; i++) assert.equal((await fetch(base + '/api/checkout/config')).status, 200);
+        for (let i = 0; i < 15; i++) assert.equal((await post(base, '/api/checkout/session', {})).status, 401);
+        assert.equal((await post(base, '/api/checkout/session', {})).status, 429);
+    });
+});
+
+test('Google provider alone cannot hide legacy access before explicit flow validation', async () => {
+    await serve({ create_oauth_client() { throw new Error('Must not start OAuth'); }, google_provider_enabled: async () => true, app_base_url: 'https://preview.example' }, async base => {
+        assert.equal((await (await fetch(base + '/api/auth/google/config')).json()).enabled, false);
+        assert.equal((await post(base, '/api/auth/google', {})).status, 503);
+    });
+});
+
+test('Admin translates a non-JSON upstream failure into a controlled error', async () => {
+    const vm = require('node:vm');
+    const context = vm.createContext({ document: { addEventListener() {} }, fetch: async () => ({ ok: false, json: async () => { throw new SyntaxError('upstream html'); } }) });
+    vm.runInContext(require('node:fs').readFileSync(require.resolve('../public/js/admin.js'), 'utf8'), context);
+    await assert.rejects(context.admin_fetch('/api/admin/products'), /Ocurrió un error/);
 });

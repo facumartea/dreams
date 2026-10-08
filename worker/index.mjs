@@ -37,6 +37,7 @@ function createWorkerApp(env) {
         preview_read_only: env.PREVIEW_READ_ONLY === 'true',
         presentation_checkout: env.PRESENTATION_CHECKOUT_ENABLED === 'true',
         presentation_signing_key: env.PRESENTATION_SIGNING_KEY,
+        google_access_ready: env.GOOGLE_ACCESS_READY === 'true',
         create_oauth_client: storage => createDatabase(null, { flowType: 'pkce', storage, storageKey: 'dreams-google', persistSession: true }),
         google_provider_enabled: async () => {
             const response = await fetch(`${env.SUPABASE_URL}/auth/v1/settings`, { headers: { apikey: env.SUPABASE_SECRET_KEY } });

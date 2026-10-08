@@ -3,7 +3,7 @@
 - Base PR37 y sitio vigente: VERIFICADOS. Dependencia PR34; selección carrito PR35 sin merge.
 - Autores/contactos/acceso centrado/Google PKCE/Admin guard/checkout aislado: IMPLEMENTADOS.
 - Google proveedor y cuenta admin: BLOQUEADOS por configuración/identidad inexistente; legacy conservado.
-- Checks locales:105/105 y builds; QA móvil/escritorio, push/PR/preview: EN CURSO.
+- Checks locales:108/108 y builds; QA móvil/escritorio, push/PR/preview: EN CURSO.
 - Producción y DNS: fuera de publicación autorizada actual; conservar sitio.
 
 # DREAMS — plan vigente
