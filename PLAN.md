@@ -8,8 +8,8 @@
 - Aislar diseño PR36 sin funcionalidades PR35/36: IMPLEMENTADO sobre PR34/8d80fdd.
 - Quitar motion/control de hero y conservar interacción compartida: IMPLEMENTADO; QA local seis tamaños y 390/1440 menús/filtros/carrito.
 - Checks/build: 35 JS, 95/95, Pages/Workers correctos.
-- PR/push, preview y publicación Pages: PENDIENTES. Sólo bundle visual permitido; API/DB/hosting backend intactos.
-- QA remota tras deploy: PENDIENTE.
+- PR37/push, preview y publicación Pages: COMPLETADOS. Fuente 5e3835e/CI SUCCESS, production 444489eb, backend intacto.
+- QA remota tras deploy: COMPLETADA para hero/CTA/menús/filtros y carrito secuencial. Carrera previa de quote/vaciado confirmada y pendiente PR35; no publicada por esta tarea.
 
 ## Plan de hosting previo (histórico)
 

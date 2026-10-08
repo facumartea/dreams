@@ -4,11 +4,17 @@ SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
 
 Actualizado: 2026-10-07 (America/Buenos_Aires). Repositorio: facumartea/dreams.
 
-## Solicitud vigente: hero estático en Pages — 2026-10-07
+## Portada estática publicada en Pages — 2026-10-07
 
-Rama `codex/static-home-pages`, base PR34/8d80fdd; PR35/a04e732 y PR36/6c68ff7 siguen abiertas y no se integran. Diseño de PR36 reutilizado sólo en portada: imagen original, composición, tipografía, copy e iluminación fija; todos los efectos/control de hero retirados. Build Pages empaqueta únicamente inicio/CSS/motion y preserva API/resto del sitio mediante DREAMS. Worker f73d5087 intacto; Pages previo ae2f7932/b3cd5f6 confirmado y rollback identificado. Sin cambios de carrito/checkout/Auth/Supabase.
+**URL: https://dreams-perfumes.pages.dev/**. Fuente 5e3835eafc1fdf4c4f77f232cd65acda5c1f0060, deployment production 444489eb-dcfe-4650-b005-acc3469ab02e SUCCESS; preview 9ad4fa43 SUCCESS del mismo bundle. Rama `codex/static-home-pages`, PR37 base PR34/8d80fdd, sin merge ni integración de PR35/a04e732 o PR36/6c68ff7. Se reutiliza sólo diseño/asset de PR36. Checkpoint documental posterior no cambia el bundle publicado.
 
-Check 35 JS, 95/95 y builds correctos. QA local seis tamaños: carga/2:3, espera/hover/scroll/reduced sin movimiento interno ni brillo variable, sin pausa y CTA visible. Regresión 390/1440 menús/filtros/carrito pasada; frontend local sobre API vigente, no publicación nueva. Próxima acción: commit/push/PR, Direct Upload preview, revisar y publicar únicamente ese bundle en alias Pages autorizado; QA remota después. Evidencia/procedimiento seguro: docs/static_home_pages.md.
+Imagen, textos, tipografía, fondo/iluminación fija y composición 2:3 conservados; entrada/hover/parallax/zoom/flotación/brillo automático/control de pausa retirados. Pages empaqueta exclusivamente inicio/CSS/motion; API, demás HTML/JS y secretos permanecen en Worker f73d5087 al 100%. Sin catálogo/carrito/checkout/Auth/DB/DNS modificados.
+
+CI fuente SUCCESS [37652905399](https://github.com/facumartea/dreams/actions/runs/37652905399): 95/95 (92 base + 3 proxy), check 35, audit y builds Pages/Workers. QA remota real alias raíz: seis tamaños con foto/espera/hover/scroll/reduced estáticos; texto sin recorte en tamaños cortos, CTA catálogo, menús/filtros completos 390/1440, carrito secuencial/contador/persistencia/total; sin pageerror. Doce archivos coinciden con fuente y funcionales con sitio previo; CSP/ETag/304/HEAD correctos. Health 200. Capturas en /workspace/dreams-static-evidence.
+
+**Pendiente previo confirmado:** vaciar antes de finalizar una cotización puede restaurar productos; caso falló y se reprodujo con quote real demorada. Código del carrito idéntico al anterior; corrección pendiente PR35, intencionalmente no incluida. No se presenta esta carrera como resuelta. Auth/Admin autenticados, pagos, dispositivo físico/Safari y logs de runtime no verificados.
+
+Rollback original: Pages ae2f7932 SUCCESS, URL inmutable HTTP 200 y endpoint oficial documentado, sin borrado ni cambios Worker; no ejecutado porque no hay regresión nueva que requiera revertir el hero. Evidencia: docs/static_home_pages.md. Próxima acción: revisar apariencia en celular del usuario y abordar por separado la integración segura de PR35 si se autoriza; PR34/35/36/37 siguen abiertas.
 
 ## Checkpoint previo: URL dreams-perfumes.pages.dev
 

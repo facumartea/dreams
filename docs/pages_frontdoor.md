@@ -1,6 +1,6 @@
 ## Actualización 2026-10-07: portada estática aislada
 
-El build ahora empaqueta sólo inicio/CSS/motion para publicar el diseño estático solicitado sin incluir PR35/36. El proxy conserva respuestas y permisos del backend y reemplaza únicamente esos GET/HEAD exitosos; resto de HTML/JS/API/assets y SUPABASE_SECRET_KEY siguen en el Worker sin modificación. ETag/HEAD/304 y cabeceras protegidas probados. Ver [static_home_pages.md](static_home_pages.md) para evidencia, destino exacto y reversión. El checkpoint de deployment de abajo es histórico hasta cerrar esta publicación.
+El build ahora empaqueta sólo inicio/CSS/motion para publicar el diseño estático solicitado sin incluir PR35/36. El proxy conserva respuestas y permisos del backend y reemplaza únicamente esos GET/HEAD exitosos; resto de HTML/JS/API/assets y SUPABASE_SECRET_KEY siguen en el Worker sin modificación. ETag/HEAD/304 y cabeceras protegidas probados. Ver [static_home_pages.md](static_home_pages.md) para evidencia, destino exacto y reversión. Publicado como deployment 444489eb-dcfe-4650-b005-acc3469ab02e, fuente 5e3835e, PR37 y CI verde. Alias raíz verificado con hero estático; Worker f73d5087 intacto. El checkpoint ae2f7932 de abajo es histórico y constituye el destino de reversión. Carrera previa del carrito pendiente PR35.
 
 # DREAMS en pages.dev
 

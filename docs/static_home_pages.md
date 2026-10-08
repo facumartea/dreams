@@ -22,7 +22,21 @@ QA local con frontend interceptado sobre APIs Pages vigentes: seis tamaños (390
 
 ## Publicación y reversión
 
-Publicación pendiente. Primero Direct Upload de prueba con branch `codex/static-home-pages`; revisar GET e identidad. Esa URL preview no está en APP_ORIGINS del backend: no cambiar allowlist ni simular Auth/quote desde ese origen. Para alias raíz autorizado, repetir el mismo bundle/commit con branch `codex/cloudflare-hosting-migration`, conservando configuración y bindings del proyecto. API oficial: POST `/accounts/{account}/pages/projects/dreams-perfumes/deployments` con multipart `_worker.js`, `_routes.json`, manifest vacío, SHA y branch explícitos; flujo existente de este proyecto, sin reconfigurar Git/DNS.
+**Sitio actualizado: https://dreams-perfumes.pages.dev/**.
+
+Fuente publicada `5e3835eafc1fdf4c4f77f232cd65acda5c1f0060`; [CI SUCCESS 37652905399](https://github.com/facumartea/dreams/actions/runs/37652905399) con 95/95, audit, check y ambos builds. [PR37](https://github.com/facumartea/dreams/pull/37) base PR34, sin merge. Deployment preview `9ad4fa43-25d5-4b6b-9cd2-0fbf4f00b749` y production `444489eb-dcfe-4650-b005-acc3469ab02e`, ambos SUCCESS, mismo bundle/commit. Canonical y SHA confirmados por API; alias raíz HTTP 200. Checkpoint posterior sólo documental, sin otro deployment.
+
+QA **remota sobre el alias raíz, sin sustituir assets**:
+
+- Seis tamaños 390/430/768/1024/1440/1920×900: imagen cargada y 2:3; transform/posición interna/brillo constantes al cargar, esperar, hover, scroll y reduced-motion; cero animaciones del producto y control de pausa ausente. Sin pageerror. Además 1366/1440×768 y 390×667 mantienen todo el texto/CTA dentro del hero.
+- Comparación computada con PR36 en 1440×900: copy, asset, familias/tamaños/pesos de fuente, colores, espaciado tipográfico, dimensiones del producto y fondo idénticos. Iluminación fijada, sin control ni movimiento.
+- CTA abre `/catalogo.html`; menú móvil/Escape, búsqueda real/vacía, marca/género/categoría/precio/orden/reset pasaron en 390/1440. Catálogo real: 46 productos.
+- Carrito secuencial, esperando cada cotización: agregar, cantidades, eliminar, vaciar, persistencia, contador y total pasaron; cero errores JS/respuestas API fallidas en ese recorrido. Compra sigue deshabilitada.
+- **Fallo previo conservado:** el recorrido rápido falló al vaciar con una cotización pendiente; una prueba con la petición real demorada reprodujo la restauración de una fila después del vaciado. `carrito.js`/`app.js` y la API son idénticos al sitio anterior; su corrección está en PR35 y no se publicó aquí. No declarar el caso de respuestas atrasadas resuelto ni ocultarlo como prueba exitosa.
+- Health 200 api/database OK. Doce HTML/JS/CSS/imagen publicados coinciden byte a byte con la rama; los funcionales coinciden con b3cd5f6. CSP conservada, ETag/304 y HEAD comprobados remotamente. Worker f73d5087 sigue al 100%, bindings/configuración de backend intactos.
+- Capturas remotas guardadas en `/workspace/dreams-static-evidence/desktop.png` y `mobile.png`, entregadas en el chat. Chromium Linux emulado; dispositivo físico/Safari, Auth/Admin autenticados, pagos y logs específicos de runtime no probados.
+
+Procedimiento usado: primero Direct Upload de prueba con branch `codex/static-home-pages`; revisar GET e identidad. Esa URL preview no está en APP_ORIGINS del backend: no cambiar allowlist ni simular Auth/quote desde ese origen. Para alias raíz autorizado, se repitió el mismo bundle/commit con branch `codex/cloudflare-hosting-migration`, conservando configuración y bindings del proyecto. API oficial: POST `/accounts/{account}/pages/projects/dreams-perfumes/deployments` con multipart `_worker.js`, `_routes.json`, manifest vacío, SHA y branch explícitos; flujo existente de este proyecto, sin reconfigurar Git/DNS.
 
 Antes de publicar se confirmó el deployment anterior SUCCESS y su URL inmutable https://ae2f7932.dreams-perfumes.pages.dev/ responde 200. Si la publicación presenta una regresión crítica, usar POST `/accounts/9f3d7af60fcb0c2b4fff8570843588f9/pages/projects/dreams-perfumes/deployments/ae2f7932-aefe-48b2-a9e9-8c3597b607f9/rollback`, endpoint oficial revisado. Luego verificar canonical_deployment, raíz, CSS, health y quote/carrito de lectura desde alias raíz. No borrar deployments ni cambiar DNS/Worker. Recuperación es de la capa Pages; no es un respaldo independiente de Supabase. Rollback no ejecutado porque aún no hay incidente.
 
