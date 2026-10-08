@@ -2,6 +2,41 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import proxy, { create_proxy } from '../pages/proxy.mjs';
 
+test('Pinned Pages release preserves query, mutation body, origin and session without following redirects', async () => {
+    const request = new Request('https://dreams-perfumes.pages.dev/api/presentation/payment?fixture=1', {
+        method: 'POST', headers: { Origin: 'https://dreams-perfumes.pages.dev', Cookie: 'session=fixture', 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ticket: 'fixture' })
+    });
+    const response = await create_proxy({}, {
+        backend_url: 'https://40e7b0a3-dreams-perfumes.dreams-perfumes.workers.dev',
+        fetch_backend: async incoming => {
+            assert.equal(incoming.url, 'https://40e7b0a3-dreams-perfumes.dreams-perfumes.workers.dev/api/presentation/payment?fixture=1');
+            assert.equal(incoming.redirect, 'manual');
+            assert.equal(incoming.headers.get('origin'), 'https://dreams-perfumes.pages.dev');
+            assert.equal(incoming.headers.get('cookie'), 'session=fixture');
+            assert.deepEqual(await incoming.json(), { ticket: 'fixture' });
+            return new Response(null, { status: 302, headers: { Location: '/cuenta.html', 'Cache-Control': 'no-store', 'Set-Cookie': 'session=fixture; Secure; HttpOnly; Path=/' } });
+        }
+    }).fetch(request, { DREAMS: { fetch: () => { throw new Error('moving production must not be called'); } } });
+    assert.equal(response.status, 302);
+    assert.equal(response.headers.get('location'), '/cuenta.html');
+    assert.equal(response.headers.get('cache-control'), 'no-store');
+    assert.match(response.headers.get('set-cookie'), /Secure; HttpOnly/);
+});
+
+test('Pinned Pages release rejects moving or foreign destinations and never falls back on outage', async () => {
+    let calls = 0;
+    const env = { DREAMS: { fetch: () => { calls++; return new Response('wrong release'); } } };
+    for (const backend_url of ['https://academic-review-dreams-perfumes.dreams-perfumes.workers.dev', 'https://example.com', 'http://40e7b0a3-dreams-perfumes.dreams-perfumes.workers.dev']) {
+        const response = await create_proxy({}, { backend_url, fetch_backend: () => { calls++; } }).fetch(new Request('https://dreams-perfumes.pages.dev/'), env);
+        assert.equal(response.status, 503);
+    }
+    const response = await create_proxy({}, { backend_url: 'https://40e7b0a3-dreams-perfumes.dreams-perfumes.workers.dev', fetch_backend: async () => { throw new Error('private fixture'); } }).fetch(new Request('https://dreams-perfumes.pages.dev/'), env);
+    assert.equal(response.status, 503);
+    assert.doesNotMatch(await response.text(), /private fixture/);
+    assert.equal(calls, 0);
+});
+
 test('Pages preserves same-origin mutations, cookies, private headers and body without redirecting to workers.dev', async () => {
     const request = new Request('https://dreams-perfumes.pages.dev/api/cart/quote', {
         method: 'POST', headers: { Origin: 'https://dreams-perfumes.pages.dev', Cookie: 'dreams_access_token=fixture', 'Content-Type': 'application/json' },

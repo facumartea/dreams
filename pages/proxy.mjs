@@ -8,10 +8,13 @@ function unavailable() {
 // API bodies, authentication, cookies and authorization remain in DREAMS.
 const visual_paths = new Set(['/', '/index.html', '/css/style.css', '/js/motion.js']);
 
-export function create_proxy(visual_assets = {}) {
+export function create_proxy(visual_assets = {}, options = {}) {
+    // Pin an immutable pre-video release explicitly, never a moving preview alias.
+    const backend_url = options.backend_url;
+    const valid_backend = /^https:\/\/[a-f0-9]{8}-dreams-perfumes\.dreams-perfumes\.workers\.dev$/.test(backend_url || '');
     return {
         async fetch(request, env) {
-            if (!env.DREAMS?.fetch) return unavailable();
+            if (backend_url ? !valid_backend : !env.DREAMS?.fetch) return unavailable();
             try {
                 const pathname = new URL(request.url).pathname;
                 const asset = visual_paths.has(pathname) && ['GET', 'HEAD'].includes(request.method) ? visual_assets[pathname] : null;
@@ -21,7 +24,17 @@ export function create_proxy(visual_assets = {}) {
                     for (const name of ['If-None-Match', 'If-Modified-Since', 'Range', 'If-Range']) headers.delete(name);
                     upstream_request = new Request(request, { headers });
                 }
-                const upstream = await env.DREAMS.fetch(upstream_request);
+                let upstream;
+                if (backend_url) {
+                    const target = new URL(upstream_request.url);
+                    target.host = new URL(backend_url).host;
+                    const forwarded = new Request(target, upstream_request);
+                    forwarded.headers.delete('Host');
+                    // Never follow a redirect while forwarding private cookies/body.
+                    upstream = await (options.fetch_backend || fetch)(new Request(forwarded, { redirect: 'manual' }));
+                } else {
+                    upstream = await env.DREAMS.fetch(upstream_request);
+                }
                 if (!asset || upstream.status !== 200) return upstream;
                 const headers = new Headers(upstream.headers);
                 for (const name of ['Content-Length', 'Content-Encoding', 'Last-Modified', 'Content-Range', 'Accept-Ranges']) headers.delete(name);
