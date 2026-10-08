@@ -1,8 +1,16 @@
-# Preview académica en preparación — 2026-10-08 UTC
+# Preview académica publicada y verificada — 2026-10-08 UTC
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
 
-Rama codex/academic-access-checkout desde PR37/ac7e088; dependencia PR34. Autores/contactos, acceso Google PKCE con fallback legacy (Google deshabilitado, administrador inexistente), guard de escrituras preview y checkout simulado firmado sin orders/stock. Carrito/controller y 4 regresiones seleccionados PR35/a5158b0 sin merge. Local108/108/check/build/audit; remotos pendientes de deploy. No cambios de Pages vigente444489eb/fuente5e3835e ni Supabase. Evidencia y configuración: docs/academic_preview.md.
+**Preview: https://academic-review-dreams-perfumes.dreams-perfumes.workers.dev/**. Fuente publicada `87d64d4b1c3a7a0754c247c48a768a198971d045`; deployment `253981ae-1be2-4b14-ad5c-508ea03fb3cf`. Rama `codex/academic-access-checkout`, [PR38](https://github.com/facumartea/dreams/pull/38) abierta sobre PR37/ac7e088 (dependencia PR34). Selección del controlador y cuatro regresiones de carrito PR35/a5158b0, sin merges. El checkpoint documental posterior no altera el código publicado.
+
+Autores/contactos, acceso centrado con PKCE preparado, protección de escrituras y checkout académico firmado implementados. Google está deshabilitado y la cuenta admin solicitada no existe: se conserva login por contraseña hasta configurar y verificar Google. No promoción ni configuración Auth remota realizada.
+
+CI de la fuente SUCCESS [37723212856](https://github.com/facumartea/dreams/actions/runs/37723212856): 108/108 tests, sintaxis de 43 archivos, audit producción limpio y builds Workers/Pages. QA remota completa en 390/1440 sobre 3cf7cc8; último commit sólo corrige CSS Admin y documentación. Smoke final 87d64d4: CSS remoto idéntico a fuente, hero estático, autores, acceso centrado, checkout aprobado y carrito vaciado, sin errores de página en ambos tamaños. Menús/filtros, persistencia/cantidades, cuatro resultados, reintento y respuestas atrasadas verificados; tarjeta no transmitida. Admin autenticado probado únicamente con fixtures locales; rutas anónimas remotas 403. Logs muestreados: una cancelación OAuth esperada, cero eventos de nivel error; cobertura limitada.
+
+Supabase sólo lecturas: 46 productos, cero pedidos y cuenta admin inexistente. Pendientes: Google Cloud/proveedor/callbacks, acceso Admin real, grants TRUNCATE históricos y comercio real. No cambios de datos, roles, policies, migraciones ni seeds. Producción intacta: Pages `444489eb` fuente `5e3835e`, Worker `f73d5087`; DNS y tráfico sin modificar. Sin merge. Evidencia, configuración, rollback de preview y reproducción: `docs/academic_preview.md`.
+
+Próxima acción: revisar esta preview desde celular; completar cliente OAuth en paneles seguros y validar Google antes de activar GOOGLE_ACCESS_READY y promover la identidad verificada por UUID. El checkout mostrado es una simulación aislada, no Mercado Pago ni pedido comercial.
 
 # DREAMS — estado actual verificado
 

@@ -1,11 +1,13 @@
 # 2026-10-08 UTC — Acceso y presentación académica aislada
 
-- Corregido overflow móvil Admin demostrado en fixture: grid antes574pxsobre390; seis módulos/editar/limpiar ahora390/1440sin overflow.
+- Corregido overflow móvil Admin demostrado en fixture: grid antes 574 px sobre 390; seis módulos/editar/limpiar ahora 390/1440 sin overflow.
 - Autores/contactos solicitados, tarjeta centrada y acceso Google PKCE preparado; fallback password conservado por instrucción posterior hasta configurar/verificar Google.
 - Auditoría Admin/roles/RLS con sólo lecturas; protección de escrituras preview y errores no JSON controlados. Grants TRUNCATE heredados pendientes de revisión segura. Cuenta Google admin inexistente, sin promoción.
 - Checkout académico firmado independiente de orders/proveedor comercial, tarjeta sólo navegador y precios servidor; resultados reproducibles, replay y protección del carrito.
 - Lecturas de configuración no consumen el límite de envíos de checkout. GOOGLE_ACCESS_READY mantiene acceso legacy hasta validar proveedor/callbacks; logs preview redactan query strings.
-- Corrección de carrito atrasado seleccionada PR35 con pruebas, sin merge. Local108/108, check/build/audit. Deploy/QA remotos pendientes.
+- Corrección de carrito atrasado seleccionada PR35 con pruebas, sin merge. Local y CI 108/108, sintaxis 43, audit limpio y builds Workers/Pages. PR38 abierta y preview publicada desde 87d64d4, deployment 253981ae.
+- QA remota 390/1440: menús/filtros, carrito/persistencia/respuestas atrasadas, reintento y cuatro resultados sin transmisión de tarjeta. Smoke final confirma CSS exacto, hero estático, acceso centrado y aprobación aislada sin errores de página.
+- Producción Pages/Worker, DNS, tráfico y Supabase intactos. Google/Admin real siguen pendientes; login existente preservado. Evidencia y rollback en docs/academic_preview.md.
 
 # 2026-10-07 — Portada estática aislada para Pages
 

@@ -3,7 +3,10 @@
 - Base PR37 y sitio vigente: VERIFICADOS. Dependencia PR34; selección carrito PR35 sin merge.
 - Autores/contactos/acceso centrado/Google PKCE/Admin guard/checkout aislado: IMPLEMENTADOS.
 - Google proveedor y cuenta admin: BLOQUEADOS por configuración/identidad inexistente; legacy conservado.
-- Checks locales:108/108 y builds; QA móvil/escritorio, push/PR/preview: EN CURSO.
+- Checks locales y CI: 108/108, sintaxis 43, audit y builds Workers/Pages: COMPLETADOS.
+- Push/PR38 y preview aislada 87d64d4: COMPLETADOS. QA remota Chromium 390/1440 de menús/filtros/carrito y cuatro resultados académicos: COMPLETADA.
+- Auth Google/Admin autenticado remoto: PENDIENTES; Admin local con fixtures y denegación anónima remota verificados.
+- Documentación/evidencia/rollback de preview: COMPLETADOS; revisión del usuario en celular pendiente.
 - Producción y DNS: fuera de publicación autorizada actual; conservar sitio.
 
 # DREAMS — plan vigente
