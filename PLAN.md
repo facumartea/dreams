@@ -1,11 +1,12 @@
-# Etapa video preview — 2026-10-08
+# Etapa video preview — 2026-10-08: COMPLETADA en alcance verificado
 
-- Adjunto/codec/encuadre/audio/peso: INSPECCIONADOS, optimizado sin audio.
-- Reproducción única/pausa/fallback/preferencias y aislamiento Pages: IMPLEMENTADOS.
-- Local120tests/builds/QA3901440: COMPLETADOS; fin local acelerado.
-- Push/PR/CI/preview y QA remota: EN CURSO.
-- Contraseña Admin: no disponible por OAuth; variable histórica presente/nunca leída, vigencia PENDIENTE.
-- Oficial900a4bd8/c22a5d0: CONSERVADA ESTÁTICA; no republicar por video.
+- Adjunto/optimización/hero accesible/aislamiento Pages: COMPLETADOS.
+- Local120tests/check46/builds; PR40/push/CI41907ba: COMPLETADOS.
+- Preview70089602 y QA remota390/1440/fin natural/preferencias/carrito: COMPLETADOS.
+- Oficial900a4bd8/c22a5d0: CONSERVADA ESTÁTICA, sin nueva publicación.
+- Admin: usuario comprobado; contraseña/sesión autenticada/recovery: PENDIENTES. No reset ni correos.
+- Google, pagos comerciales y deuda de seguridad: PENDIENTES previos, sin cambios.
+- Próxima acción: revisión visual del usuario y acceso Admin legítimo mediante consulta privada o recuperación específicamente autorizada.
 
 # Resultado promoción estática — 2026-10-08
 

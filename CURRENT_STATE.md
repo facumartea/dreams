@@ -1,12 +1,16 @@
-# Video de preview implementado, pendiente publicación — 2026-10-08
+# Video exclusivo de preview publicado y verificado — 2026-10-08
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
 
-MP4 solicitado adjuntado e inspeccionado:20s/1280×720/H264; versión web1.778.425bytes sin audio/faststart y posters propios. Rama codex/preview-perfume-video dependiente de PR39(c763d05), sin merges. Hero conserva textos/CTA; encuadre16:9 completo y control accesible. Reproducción una vez/sin loop/frame final/retorno sin reinicio, reduced-motion/saveData sin descarga y fallback implementados. Activación explícita PREVIEW_HERO_VIDEO sólo previews; Pages build fija también HTML/CSS/motion a b049934, sin video desde esta branch.
+Preview: https://academic-review-dreams-perfumes.dreams-perfumes.workers.dev/. Fuente 41907ba1ed43a4ceb0d7f9444d5f9da2038a5167; deployment 70089602-bc64-4a9a-bcb1-e585b9bb4c13. PR40 abierta, rama codex/preview-perfume-video, dependiente de PR39 → PR38 → PR37 → PR34, sin merges. CI fuente SUCCESS 37861535878: check46,120/120 tests, audit limpio y builds Workers/Pages. Checkpoint posterior sólo documental, no altera bundle publicado.
 
-Check46, tests120/120, builds correctos; QA visual local390/1440 y preferencias/fallos inyectados pasada, fin local acelerado por seek. Publicación/fin natural/remoto aún pendientes. Evidencia y rollback en docs/preview_hero_video.md.
+MP4 real del usuario optimizado a 1.778.425bytes/20s/1280×720/H264/faststart/sin audio, posters propios. Textos/CTA conservados; encuadre16:9 completo. Autoplay silenciado, sin loop, pausa/continuación, fin natural/fotograma final, retorno sin nueva descarga y recarga explícita permiten reproducir una vez de nuevo. Reduced-motion y ahorro detectado sin MP4; fallback ante bloqueo/error. Flag PREVIEW_HERO_VIDEO sólo entorno preview; build Pages fija archivos visuales a b049934, sin video.
 
-Admin usuario confirmado admin@dreamsperfumes.com; integración Railway OAuth sólo devuelve nombres ADMIN_PASSWORD/ADMIN_EMAIL, no valores (valuesRedacted=true). Vigencia de contraseña histórica no verificada. Sin cambio/reset/revocación/email. Oficial900a4bd8/c22a5d0 y backend40e7b0a3/b049934 intactos por API. Próximo:commit/push/PR dependiente, CI, publicar sólo academic-review y validar ambasURLs. No deploy Pages.
+QA remota Chromium390/1440 COMPLETADA: espera natural de20s, pausa/continuación, último fotograma/retorno/reload; movimiento reducido real y ahorro/autoplay/error inyectados pasaron. Menús/búsqueda vacía/reset/marca,46productos, contactos/acceso visible, carrito agregar/cantidades/persistencia/contador/subtotal/WhatsApp y checkout académico aprobado/vaciado sin escrituras comerciales; ocho rutas Admin anónimas403, sin pageerrors/overflow. Dos intentos iniciales de activación agotaron30s; causa no comprobada. Diagnóstico posterior JS/config200 y ejecución final exitosa, sin corrección adicional. Telemetría últimos15min:0eventos error observados, invocation logs desactivados/cobertura limitada. Evidencia y rollback: docs/preview_hero_video.md; capturas /workspace/dreams-video-evidence y dreams-video-regression-evidence.
+
+Oficial https://dreams-perfumes.pages.dev continúa ESTÁTICA: Pages900a4bd8/c22a5d0, backend40e7b0a3/b049934 y Worker histórico f73d5087 al100% confirmados intactos por API después de publicar video. HTML/CSS/motion oficiales idénticos a b049934; MP4 en oficial404. No deploy Pages/DNS/tráfico oficial ni datos de Supabase modificados; SELECT conserva46productos/0pedidos/rol admin.
+
+Admin usuario confirmado admin@dreamsperfumes.com; contraseña inaccesible: Railway OAuth sólo nombres ADMIN_PASSWORD/ADMIN_EMAIL (valuesRedacted=true), vigencia histórica no comprobada. Sin reset/revocación/email/reactivación. Auth/Admin autenticados, Google y comercio real pendientes; seguridad previa/grantsTRUNCATE sin cambios. Próximo: revisión visual de preview por usuario; consultar privadamente variable histórica o preparar recuperación autorizada y validar acceso legítimo. No incorporar video a oficial sin nueva autorización.
 
 # Oficial estática publicada — 2026-10-08 (America/Buenos_Aires)
 

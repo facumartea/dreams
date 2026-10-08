@@ -1,3 +1,10 @@
+# 2026-10-08 — Video preview publicado y validado
+
+- Publicado41907ba en academic-review/deployment70089602; PR40 dependiente de PR39/38/37/34, CI SUCCESS120/120/check46/builds/audit. Sin merges.
+- QA remota390/1440 con fin natural20s, pausa/continuación/frame final/retorno/reload y fallback/preferencias; menús/filtros/contactos/carrito/checkout académico sin regresiones observadas. Dos timeouts iniciales de activación documentados, causa no comprobada; diagnóstico y repetición final exitosos sin código adicional.
+- Oficial900a4bd8 estática y Worker histórico intactos; hashes visuales oficiales conservados, MP4 oficial404. Cero errores observados en muestra de telemetría con cobertura limitada.
+- SELECT46productos/0pedidos/rolAdmin conservados. Usuario Admin confirmado, contraseña no disponible por acceso autorizado; no resets/emails/datos/DNS cambiados.
+
 # 2026-10-08 — Video exclusivo de preview preparado
 
 - Integrado MP4 aportado por usuario, optimizado4,29→1,78MB/sin audio; posters del mismo archivo, encuadre completo/reserva16:9 y textos/CTA conservados.
