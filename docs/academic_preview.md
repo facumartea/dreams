@@ -1,3 +1,5 @@
+> Actualización 2026-10-08: preview vigente `7eae7a7`, deployment `a6070de5`, CI 111/111 SUCCESS. Acceso limpio sin aviso Google, isologo transparente e idioma revisado: [evidencia de refinamiento](access_language_refinement.md). La evidencia 87d64d4/108 tests que sigue corresponde al checkpoint anterior; no al deployment vigente. Contactos adicionales siguen pendientes de confirmación.
+
 # DREAMS — preview académica
 
 ## Base y alcance

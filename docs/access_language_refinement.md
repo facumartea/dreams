@@ -17,12 +17,17 @@ Se formuló una única pregunta por el segundo teléfono y la elección del dest
 
 Google sigue deshabilitado y la cuenta admin solicitada no existe. No configurar clientes, crear usuarios ni modificar roles/URLs/Supabase por esta limpieza. Pasos seguros y riesgos previos en docs/academic_preview.md.
 
-## Evidencia antes de publicar
+## Evidencia ejecutada
 
 - 111/111 tests, sintaxis 43 archivos, builds Workers/Pages correctos. Dos expectativas literales históricas ajustadas a la traducción sin quitar cobertura; pruebas nuevas de validación/errores de navegador y rótulos Admin sin mutar valores.
 - QA local con fixtures: acceso 320/390/1440, proporción correcta/transparencia/carga, ausencia de Google pendiente/ISOTIPO/ACCOUNT, sin overflow; validación española con locale en-US, login erróneo, reintento exitoso y logout. El harness usa una instancia por tamaño para respetar el límite Auth; no se relajó el servidor real.
 - Admin local con fixtures: seis módulos, editar/limpiar, 390/1440 sin errores de página ni overflow. Ningún fixture se publica como dato del catálogo.
-- Publicación y QA remota de esta fuente se registrarán tras upload. Auth remoto autenticado pendiente por falta de cuenta de prueba legítima; no confundir login fixture con Supabase real. No auditoría completa de performance ni celular físico/Safari.
+- Preview publicada desde `7eae7a79421cba653cc543d69ff87d81fae159a4`, deployment `a6070de5-c8b6-47e0-b563-2cc5da4a2f27`: https://academic-review-dreams-perfumes.dreams-perfumes.workers.dev/. [CI de la fuente SUCCESS](https://github.com/facumartea/dreams/actions/runs/37725729903), 111/111 y builds. El checkpoint documental posterior no altera el bundle publicado.
+- Remoto Chromium 390/1440: acceso sin ACCOUNT/ISOTIPO/Google pendiente, PNG cargado y proporciones correctas, contactos y enlaces, menú/Escape, búsqueda real y vacía, género/categoría/precio/orden y reinicio. Carrito cantidades/persistencia/contador/subtotal/WhatsApp con resumen correcto, sin enviar; cuatro resultados académicos y recarga aprobada sin regresiones ni datos de tarjeta enviados. Cero errores de página en esa cobertura.
+- Recorrido de nueve rutas públicas/404: rótulos propios, títulos y atributos de accesibilidad inspeccionados sin los términos ingleses detectados. CSS, PNG y cuenta.js remotos tienen hash idéntico a fuente. Validación nativa remota en español con navegador en-US y mensaje eliminado al corregir el campo. No se declara auditoría automática capaz de garantizar toda traducción futura o contenido comercial.
+- Remoto anónimo: sesión null, logout 200, ocho rutas Admin 403 y escrituras protegidas 403. Login remoto autenticado pendiente por falta de cuenta de prueba legítima; no confundir login fixture con Supabase real. Sin auditoría completa de performance ni celular físico/Safari.
+- Capturas reales de acceso y Contacto, móvil/escritorio: `/workspace/dreams-interface-evidence/access-390.png`, `access-1440.png`, `contact-390.png`, `contact-1440.png`. No contienen credenciales.
+- API Cloudflare posterior confirma Pages 444489eb/fuente5e3835e y Worker f73d5087 al 100% sin modificar. Secrets existentes conservados como secret_text; proyecto/origen/flags correctos, valores secretos no leídos.
 
 ## Publicación y reversión
 
