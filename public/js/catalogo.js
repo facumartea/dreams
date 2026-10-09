@@ -79,7 +79,8 @@ async function load_brands() {
     const brands = await response.json();
     if (!response.ok || !Array.isArray(brands)) throw new Error('No se pudieron cargar las marcas.');
     const select = document.getElementById('brand-filter');
-    const selected = select.value;
+    // Brand options arrive asynchronously; retain the URL selection on reload.
+    const selected = select.value || new URLSearchParams(window.location.search).get('brand') || '';
     select.length = 1;
     brands.forEach(brand => {
         const option = document.createElement('option');

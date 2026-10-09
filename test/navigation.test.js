@@ -51,3 +51,28 @@ test('las páginas públicas pre-renderizan una única plantilla de footer y dat
     for (const phone of contacts.phones) assert.ok(template.includes(`href="tel:+${phone.replace(/\D/g, '')}"`));
     assert.ok(template.includes(`https://wa.me/${contacts.whatsapp_number}`));
 });
+
+test('la marca filtrada en la URL se restaura después de cargar las opciones asíncronas', async () => {
+    const vm = require('node:vm');
+    const options = [{ value: '' }];
+    let selected = '';
+    const select = {
+        get value() { return selected; },
+        set value(value) { selected = options.some(option => option.value === value) ? value : ''; },
+        set length(value) { options.length = value; },
+        appendChild(option) { options.push(option); }
+    };
+    const sandbox = {
+        URLSearchParams,
+        window: { location: { search: '?gender=mujer&brand=Byredo' } },
+        document: { addEventListener() {}, getElementById: () => select, createElement: () => ({}) },
+        fetch: async () => ({ ok: true, json: async () => ['Byredo', 'Dior'] })
+    };
+    vm.createContext(sandbox);
+    vm.runInContext(readFileSync('public/js/catalogo.js', 'utf8'), sandbox);
+    await vm.runInContext('load_brands()', sandbox);
+    assert.equal(select.value, 'Byredo');
+    select.value = 'Dior';
+    await vm.runInContext('load_brands()', sandbox);
+    assert.equal(select.value, 'Dior');
+});
