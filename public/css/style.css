@@ -261,3 +261,4 @@ input,select,textarea{width:100%;min-height:48px;padding:.78rem 0;border:0;borde
 .collection-themed .site-header .main-nav a[aria-current],.collection-themed .site-header .main-nav a:focus-visible,.collection-themed .site-header .main-nav a:active{background:var(--nav-bg);color:var(--nav-text)}
 .collection-themed .site-header .main-nav a::after{background:currentColor}
 @media(hover:hover) and (pointer:fine){.collection-themed .site-header .main-nav a:hover{background:var(--nav-bg);color:var(--nav-text)}}
+@media(max-width:980px){body.menu-open .site-header{backdrop-filter:none}body.menu-open .site-header>.brand,body.menu-open .site-header>.menu-toggle,body.menu-open .site-header>.header-actions{position:relative;z-index:102}.site-header .main-nav{min-height:100dvh;overflow-y:auto}}
