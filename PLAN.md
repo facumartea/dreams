@@ -1,10 +1,12 @@
-# Ajuste hero completo — 2026-10-08
+# Ajuste hero completo — 2026-10-08: COMPLETADO en alcance verificado
 
-- EstadoGit/PR40/destinos oficiales y preview: VERIFICADOS.
-- Tramo pulverización5s/layout cover/texto superpuesto/sin controles: IMPLEMENTADOS.
-- Tests121/check46/builds y QA local: COMPLETADOS; QA remota PENDIENTE.
-- Push/CI/preview/documentación final: PENDIENTES.
-- Oficial Pages estática: preservar y verificar hashes; no publicar.
+- EstadoGit/PR40/dependencias/destinos: VERIFICADOS; sin merges.
+- Clip pulverización5s/layout cover/overlay/sin controles: IMPLEMENTADOS.
+- Tests121/check46/builds/CI9a7705f: COMPLETADOS.
+- Preview798a5e28 y QA remota cinco tamaños/fallbacks: COMPLETADOS.
+- Menús/filtros/carrito QA390/1440: COMPLETADOS en cobertura documentada.
+- Oficial900a4bd8 estática/hashes/imagen3901440: CONSERVADA y VERIFICADA.
+- Pendientes previos: Admin real/Google/pagos/seguridad/dispositivo físico. Próximo: revisión del usuario; no publicar video en oficial.
 
 # Etapa video preview — 2026-10-08: COMPLETADA en alcance verificado
 

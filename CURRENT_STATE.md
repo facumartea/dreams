@@ -1,10 +1,16 @@
-# Hero preview a pantalla completa en preparación — 2026-10-08
+# Hero preview completo publicado y verificado — 2026-10-08
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
 
-Rama codex/preview-perfume-video/PR40 abierta, dependenciasPR39/38/37/34 conservadas; sin merges. Video real recortado12–17s, cinco segundos/sin audio/696.507bytes. Layout completo bajo menú, texto/CTA superpuestos/degradado, cover70%desktop80%móvil; controles visibles y lógica pausa eliminados. Reproducción única/frame final/retorno/reload/fallback/preferencias conservados; límite metadata5s probado. Oficial900a4bd8 y preview anterior70089602 verificados por API antes de cambios. No publicar Pages/production.
+Preview https://academic-review-dreams-perfumes.dreams-perfumes.workers.dev/. Fuente9a7705f8d2eb8f45244f9183f173850093f06678, deployment798a5e28-5b13-4f60-8581-103c08a346a5, CI37864436894 SUCCESS. Misma rama codex/preview-perfume-video/PR40 abierta, basePR39/dependencias38/37/34, sin merge. Checkpoint posterior sólo documental, no altera bundle publicado.
 
-Check46/121tests/builds Workers y Pages correctos. QA local inicial cinco tamaños y final390/1440/preferencias/fallos pasada; encuadre corregido de73% a80% móvil antes de publicar. Próximo: commit/push/CI; publicar sólo academic-review, comprobar ambasURLs/hashes oficiales y documentar QA remota. Evidencia/runbook docs/preview_hero_video.md. Admin/Google/pagos/deuda previa permanecen pendientes; ningún dato de Supabase alterado.
+Hero cubre portada visible bajo menú (sin fullscreen API), video object-fit:cover y texto/CTA actual superpuestos/degradado. Tramo original12–17s/5s exactos/24fps/sin audio/696.507bytes, posters nuevos; sin controles de pausa/reproducción, sin loop. Autoplay cuando permitido, frame final/retorno sin nueva descarga/recarga explícita nueva conservados. Reduced-motion/saveData/autoplay bloqueado/error usan respaldo estático; metadata mayor5s detiene reproducción. Mobile80% conserva bordes del frasco, cover recorta entorno/humo y parte de la base en horizontal bajo; sin deformación.
+
+121/121tests, sintaxis46, builds Workers/Pages correctos. QA local y remotaChromium320×568/390×844/768×1024/844×390/1440×900: cover/overlay/CTA/menú visible, fin natural5s/frame estable/hover-scroll/retorno/reload y fallback/preferencias pasaron, sin pageerrors/overflow. Tres escenarios de ahorro/autoplay/error inyectados, no fallos del proveedor. Regresión remota390/1440 menús/búsqueda vacía/reset/marca/46productos/contactos/acceso/carrito+/−/persistencia/contador/subtotal/WhatsApp/checkout académico aprobado-vaciado y Admin anónimo403 pasada; eliminación/vaciado manual/carreras conservan cobertura previa y suite, no repetidos remotamente en esta tanda. Dispositivo físico/Safari/AuthAdmin reales pendientes. Telemetría15min0eventoserror, invocation logs apagados/cobertura limitada. Capturas /workspace/dreams-cover-evidence; runbook docs/preview_hero_video.md.
+
+OFICIAL https://dreams-perfumes.pages.dev intacta: Pages900a4bd8/c22a5d0 y Workerf73d5087 al100% confirmados por API, hashes HTML/CSS/motion idénticos antes/después, MP4oficial404 y QA390/1440 sin video/imagen cargada. No deploy Pages/DNS/tráfico/datosSupabase/Secrets/Auth/pagos alterados. Recuperación preview anterior70089602/41907ba conservada; procedimiento documentado sin ejecutarlo.
+
+Admin/Google/pagos comerciales/deuda anterior siguen pendientes; no cambia contraseña/cuentas ni envía correos. Próximo: abrir preview en celular físico para revisión del usuario. Video no autorizado en oficial. No calcular nuevos porcentajes generales sin reevaluación del roadmap.
 
 # Video exclusivo de preview publicado y verificado — 2026-10-08
 

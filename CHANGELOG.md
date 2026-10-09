@@ -1,3 +1,9 @@
+# 2026-10-08 — Hero completo verificado en preview
+
+- Publicado9a7705f/798a5e28 sólo academic-review; CI SUCCESS121tests/check46/builds. PR40 misma rama/dependencias sin merge.
+- QA remota cinco tamaños/fin natural5s/fallbacks/retorno/reload y overlay/CTA pasó; menús/filtros/carrito/checkout académico3901440 sin errores de página/overflow observados.
+- Oficial900a4bd8 estática confirmada por API/hashes/QA3901440 y MP4oficial404. Telemetría0eventoserror con cobertura limitada; ningún cambio de Pages/DNS/datos/Secret/pagos/Auth.
+
 # 2026-10-08 — Hero preview completo y clip corto
 
 - Sustituida composición de dos columnas por video cover bajo menú con textos/CTA originales superpuestos y degradado estático.
