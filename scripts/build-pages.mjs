@@ -6,6 +6,7 @@ const release = JSON.parse(await readFile(new URL('../pages/official-release.jso
 if (!/^https:\/\/[a-f0-9]{8}-dreams-perfumes\.dreams-perfumes\.workers\.dev$/.test(release.backend_url)) throw new Error('Pages requires an immutable approved backend URL');
 for (const [pathname, relative, content_type] of [
     ['/index.html', 'public/index.html', 'text/html; charset=utf-8'],
+    ['/nosotros.html', 'public/nosotros.html', 'text/html; charset=utf-8'],
     ['/css/style.css', 'public/css/style.css', 'text/css; charset=utf-8'],
     ['/js/motion.js', 'public/js/motion.js', 'application/javascript; charset=utf-8']
 ]) {

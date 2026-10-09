@@ -1,3 +1,19 @@
+# Retiro de la línea WhatsApp en todas las secciones — 2026-10-08
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Continuación PR41/misma rama. Sólo Nosotros conservaba “WhatsApp · +54 294 4160065”; retirado ese anchor, Inicio ya limpio. Teléfonos/correos y acciones de WhatsApp/productos/carrito conservados. Pages empaqueta también /nosotros.html como overlay público para no modificar backend inmutable40e7b0a3/b049934 ni previewvideo. HTML Nosotros previo y nuevo difieren sólo por anchor. Oficial actual https://dreams-perfumes.pages.dev: deployment1eb932f3-529d-40a1-8998-78cafc3c8138 SUCCESS, fuente29aa0bfb6e266c9d99f08a7a5f2998691f83f28a, CI37875894364 SUCCESS113tests/check43/buildPages. Staging789d1a65 y QA final oficial de nueve páginas390/1440 pasaron: línea ausente en todas, teléfonos/correos conservados y ocho hashes no afectados intactos. Primeras comprobaciones inmediatas del alias devolvieron Nosotros anterior; lectura posterior y QA final coinciden con URL inmutable, sin nuevo cambio de código. Logs /tmp/dreams-contact-all-final-verified.log, capturas /workspace/dreams-contact-evidence/*-nosotros-contact.png. Previewaf79434d intacta. Rollback7fa48f95 disponible sin ejecutar; checkpoint posterior sólo documental. Próximo: revisar Nosotros en enlace oficial, sin más cambios pendientes de este retiro. Sin DNS/Auth/pagos/Secret/Supabase alterados.
+
+# Retiro puntual de WhatsApp del contacto de Inicio — 2026-10-08
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Pedido: quitar sólo “WhatsApp · +54 294 4160065” de Contacto en Inicio oficial. Rama aislada codex/remove-official-contact-whatsapp desde PR39/c763d05, sin video ni merges. HTML remoto comprobado idéntico a fuente salvo eliminación de ese único anchor; teléfonos/correos/WhatsApp genérico y carrito conservados. Backend inmutable40e7b0a3/b049934 y configuración Pages intactos. Oficial previa900a4bd8/c22a5d0, rollback a ese deployment por API disponible; preview video8d1b4cd/af79434d independiente, no publicar allí.
+
+Oficial actual https://dreams-perfumes.pages.dev, deployment7fa48f95-9b56-4d9b-aca0-4beb63981c6c SUCCESS, fuente265d81d28f7fd3fbe85f7ab4637ab9edc014d0f3, PR41 abierta dependientePR39, CI37874514079 SUCCESS. Staging5589ab17 y oficial390/1440 verificadas: línea solicitada ausente, teléfonos/correos/hero estático presentes, seis hashes de rutas no afectadas iguales. Previewaf79434d intacta por API.
+
+Scripts Node de sintaxis43/tests113/113/buildPages ejecutados directamente: pnpm sobre symlink node_modules intentó verificación de dependencias y abortó por noTTY antes de ejecutar scripts; no se modificó instalación compartida. Resultados en logs /tmp/dreams-contact-*. Publicación y QA completadas, capturas /workspace/dreams-contact-evidence, logs /tmp/dreams-contact-stage-qa.log y final-qa.log. Sin DNS/pagos/Auth/Supabase/configuración alterados. Próximo: revisar enlace oficial; no cambios adicionales solicitados. Checkpoint posterior sólo documental. Rollback previo900a4bd8 disponible, sin ejecutarlo.
+
 # Oficial estática publicada — 2026-10-08 (America/Buenos_Aires)
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
