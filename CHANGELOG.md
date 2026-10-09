@@ -1,3 +1,9 @@
+# 2026-10-08 — Línea de WhatsApp retirada en oficial
+
+- Publicado265d81d en Pages7fa48f95 SUCCESS, PR41/CI verde113tests, sintaxis43 y buildPages.
+- QA remota390/1440 confirma retiro de la única línea, teléfonos/correos/hero estático conservados; seis rutas con hashes intactos. Previewvideoaf79434d sin cambios por API.
+- Sin merges, DNS, backend, Secrets, Auth, pagos ni datos de Supabase alterados. Rollback a900a4bd8 conservado.
+
 # 2026-10-08 — Retiro puntual del enlace WhatsApp de Contacto en Inicio
 
 - Eliminado únicamente el anchor “WhatsApp · +54 294 4160065” del footer de Inicio.
