@@ -1,3 +1,10 @@
+# 2026-10-08 — Video completo verificado en preview
+
+- Publicado8d1b4cd/af79434d sóloacademic-review, CI SUCCESS121tests/check46/builds/audit, PR40sin merge.
+- QA remota3901440fin natural20s/inicio-medio-final/pausaEnter/retorno/reload/fallbacks pasó; variantes estáticas320768844 y menús/filtros/carrito/checkoutacadémico3901440 sinpageerrors/overflow observados.
+- MP4 remoto hash idéntico al remux; imágenes decodificadas idénticas al original. Fuente tiene tapa elevándose sin mano visible/microtexto blando, documentados sin prometer regeneración.
+- Oficial900a4bd8estática/hashes/QA/assetMP4404 confirmada, telemetría0errores con cobertura limitada. Sin datos/Secret/Auth/pagos/DNS cambiados.
+
 # 2026-10-08 — Video completo y encuadre conservado
 
 - Inspeccionado adjunto55d77b94, idéntico por hash al anterior; documentados calidad real y recorte temporal5s/visualcover anterior como causas distintas.

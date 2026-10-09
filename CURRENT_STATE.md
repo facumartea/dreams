@@ -1,10 +1,16 @@
-# Video completo sin recorte en preparación — 2026-10-08
+# Video completo publicado y verificado — 2026-10-08
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
 
-Misma rama codex/preview-perfume-video/PR40 abierta dependientePR39/38/37/34, sin merges. Nuevo adjunto55d77b94 idéntico por SHA al anterior;1280×720/16:9/H264/24fps/20,01scontenedor. Video completo remux20s/480frames/sin audio/3.950.130bytes, todas imágenes idénticas por hash decodificado original/web. Sin recompresión/upscale/aceleración/recorte. Preview actual anterior9a7705f/798a5e28 era5s12–17 +cover recortado: causas diferenciadas y diagnóstico en docs/preview_hero_video.md.
+Preview https://academic-review-dreams-perfumes.dreams-perfumes.workers.dev/. Fuente8d1b4cd4ef08d0a3ba352346c06ec3a4086166f2, deploymentaf79434d-5333-414d-b2c0-9a7c96c9a11b. CI37866512642 SUCCESS:121tests/check46/builds/audit. Misma rama codex/preview-perfume-video/PR40 abierta, basePR39/dependencias38/37/34, sin merges. Checkpoint posterior sólo documental, no altera bundle.
 
-Implementado contain/fondo oscuro/textoCTA preservados, frasco/etiqueta sin recorte añadido; círculo accesible44pxpausa/continuación por20s, sin controles nativos/loop. Frame final/memoria v3/retorno/reload/fallback/preferencias conservados.121tests/check46/builds correctos, QA local3901440inicio/medio/fin natural/teclado y estáticos320768844/fallbacks pasada. Próximo:commit/push/CI/publicar sóloacademic-review/QAremota/hash oficial. Oficial900a4bd8 estática verificada antes, no modificarPages/DNS/datos/Secrets/Auth/pagos.
+Adjunto55d77b94 idéntico por SHA al anterior:1280×720/16:9/H264/24fps/video1,58Mb/s/20s de imágenes y20,01s contenedor con audio. Preview anterior9a7705f/798a5e28 mostraba recorte12–17s explícito ycover recortaba entorno: causas distintas. Archivo web completo3.950.130bytes/remux sin audio, sin transcode/upscale/recorte/aceleración; hash de todas imágenes decodificadas idéntico original/web. Tapa se eleva sin mano visible, efecto generado del original; microtexto blando, sin deformación gruesa observada en muestras. No regenerado ni prometida calidad ausente.
+
+Contain/fondo oscuro/CTAcopy preservados; mobile acción sobre región superior sin tapar etiqueta, frasco menor por aspecto horizontal. Círculo pausa/continuación44px/teclado/aria necesario por20s, no controles nativos ni loop; fin real/retorno/reload/fallback/preferencias conservados, memoria v3. QA remota390/1440:inicio/medio/fin natural20s, pausa400ms/continuación porEnter, frame estable/retorno sin MP4/reload/CTA pasaron sin pageerrors/overflow.320/768/844horizontal revisados sólo estáticos/reduced; no atribuirles reproducción remota completa. Autoplay/error/saveData inyectados y reducedMotion emulado pasaron. Menús/filtros/reset/búsqueda vacía/46productos/contactos/acceso/carrito+/−/persistencia/contador/subtotal/WhatsApp/checkout académicoaprobado-vaciado yAdmin anónimo403 pasaron3901440. Carreras/eliminación/vaciado manual mantienen suite/evidencia previa, no repetidosremotos. Capturas inicio/medio/final /workspace/dreams-full-video-evidence; runbook docs/preview_hero_video.md.
+
+Oficial Pages900a4bd8/c22a5d0, backend40e7b0a3/b049934, Workerf73d5087 al100% intactos porAPI; hashesHTML/CSS/motion conservados, QA3901440 estática/imagen cargada, MP4oficial404. Telemetría15min0errorobservados, invocation logs apagados/cobertura limitada. No deployPages/DNS/tráfico/Secrets/Auth/pagos/Supabasealterados. Rollback preview798a5e28/9a7705f conservado/procedimiento sin ejercitar.
+
+Próximo: revisión por usuario en celular físico; fuente nueva sólo si requiere más resolución/microtexto/realismo de tapa. Admin/Google/pagos/seguridad previos pendientes, no credenciales nuevas ni resets. No publicar video oficial sin nueva autorización; porcentaje general no recalculado.
 
 # Hero preview completo publicado y verificado — 2026-10-08
 

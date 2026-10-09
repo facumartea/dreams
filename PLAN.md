@@ -1,10 +1,12 @@
-# Integración video completo — 2026-10-08
+# Video completo — 2026-10-08: COMPLETADO en cobertura verificada
 
-- Diagnóstico original/preview y preservación sin recompresión: COMPLETADOS.
-- Contain/fondo/copy/discreta pausa/fallback/memoria: IMPLEMENTADOS.
--121tests/check46/builds/QA local: COMPLETADOS.
-- Push/CI/preview/QA remoto/documentación final: PENDIENTES.
-- Oficial estática: preservar y verificar. Admin/Google/pagos pendientes previos.
+- Diagnóstico calidad/identidad del adjunto/causas5s ycover: COMPLETADOS.
+- Remux de imágenes idénticas/contain/discreta pausa/fallback: IMPLEMENTADOS.
+-121tests/check46/builds/CI8d1b4cd: COMPLETADOS.
+- Previewaf79434d/QA remota3901440inicio-medio-fin20s y teclado: COMPLETADOS.
+-320768844: QA estática/reducedMotion; reproducción en esos tamaños no probada.
+- Regresión menús/filtros/carrito3901440 y oficialestática/hashes: COMPLETADAS.
+- Pendientes previos sin cambios. Próximo: revisión celular físico/material fuente si pide detalle mayor; no publicar video oficial.
 
 # Ajuste hero completo — 2026-10-08: COMPLETADO en alcance verificado
 

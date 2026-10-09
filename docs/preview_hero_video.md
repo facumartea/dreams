@@ -22,6 +22,18 @@ Control circular44px discreto, iconoCSS de pausa/continuación, aria-label y ari
 
 Rollback sólo preview: redeployar9a7705f con config actual y nombreacademic-review; anterior798a5e28/URL inmutable conservados. No usar deployPages/production, no modificar Secrets ni borrar deployments. Procedimiento no ejercitado. Admin/Google/pagos/deuda previa pendientes intactos.
 
+## Publicación y evidencia de esta versión completa
+
+Preview https://academic-review-dreams-perfumes.dreams-perfumes.workers.dev/, fuente `8d1b4cd4ef08d0a3ba352346c06ec3a4086166f2`, deployment `af79434d-5333-414d-b2c0-9a7c96c9a11b`; URL inmutable https://af79434d-dreams-perfumes.dreams-perfumes.workers.dev. [CI fuente SUCCESS](https://github.com/facumartea/dreams/actions/runs/37866512642):121tests/check46/builds/audit. Publicado con Wrangler4.147/OAuth vigente, `pnpm exec wrangler preview --env preview --name academic-review --tag 8d1b4cd --message 'PR40 complete source video without recompression or cropping; official unchanged'`. Sin configuración/Secret nuevo ni deploymentPages. Checkpoint posterior sólo documental.
+
+QA remota Chromium390/1440: captura inicial, media10s, fin natural20s; duración20/muted/playsinline/noloop/nativosdesactivados, contain, overlay/CTAaccesible, pausa400ms y continuación porEnter mantienen tiempo; frame realestable/controloculto, return sin MP4 y reload nuevo pasaron. Sinpageerrors/overflow; `/tmp/dreams-full-remote-qa.log` exit0. Imágenes remote-390-start/middle/end.png y remote-1440-start/middle/end.png en `/workspace/dreams-full-video-evidence`. Tamaños320568/7681024/844390 comprobados sólo estáticos/reduced-motion, sin extrapolar reproducción natural. Fallbackreduced emulado ysaveData/autoplay/error inyectados pasaron; no errores espontáneos deproveedor. NoSafari/dispositivo físico/CWV medidos.
+
+Regresión remota3901440 menús/móvilEscape,búsquedavacía/reset/Byredo,46productos/contactos/accesovisible,carrito+/−/persistencia/contador/subtotal/WhatsApp sinenvío,checkoutacadémicoaprobado/vaciado yAdminanónimo403 pasó. `/tmp/dreams-full-regression-qa.log` exit0. Sinpedido/cobro/stock/emails/datoscomerciales. AuthAdminreal/Google/pagos pendientes; carreras/eliminación/vaciado manual cubiertos previos/suite, no nuevas comprobacionesremotas.
+
+Oficial QA3901440sinvideo/imagen cargada/hashesHTMLCSSmotionantes-después idénticos, MP4oficial404; `/tmp/dreams-full-official-qa.log` exit0. API confirma Pages900a4bd8/c22a5d0 yWorkerf73d5087al100% intactos. AssetMP4 remotoSHA coincideconremux. Telemetría últimos15min0eventoserror, invocation logs apagados/cobertura limitada. Copia completa sinrecompresión usa3,95MB, más que5s; no tratarlo como mejora de CWV medida. Rollback798a5e28/9a7705f conservado/procedimiento sin ejecutar.
+
+Diagnóstico adicional transición9–13s inspeccionada: tapa se eleva sinmano visible ydejaexpuestoatomizador, efecto contenidoenoriginal. No se corrigió inventando fotogramas; realismo físico mayor/microtexto nítido requieren fuente distinta. Sheetcap-transition.jpg ysource-sheet/middle/final disponiblesen evidencia. Integración preserva lafuente, no certifica exactitud física dematerialIA.
+
 # Evidencia histórica de versiones anteriores
 
 # Portada de video a pantalla completa — estado vigente 2026-10-08
