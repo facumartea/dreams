@@ -1,3 +1,11 @@
+# Retiro puntual de WhatsApp del contacto de Inicio — 2026-10-08
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Pedido: quitar sólo “WhatsApp · +54 294 4160065” de Contacto en Inicio oficial. Rama aislada codex/remove-official-contact-whatsapp desde PR39/c763d05, sin video ni merges. HTML remoto comprobado idéntico a fuente salvo eliminación de ese único anchor; teléfonos/correos/WhatsApp genérico y carrito conservados. Backend inmutable40e7b0a3/b049934 y configuración Pages intactos. Oficial previa900a4bd8/c22a5d0, rollback a ese deployment por API disponible; preview video8d1b4cd/af79434d independiente, no publicar allí.
+
+Scripts Node de sintaxis/tests/buildPages ejecutados directamente: pnpm sobre symlink node_modules intentó verificación de dependencias y abortó por noTTY antes de ejecutar scripts; no se modificó instalación compartida. Resultados en logs /tmp/dreams-contact-*. Publicación/QA en curso; comparar seis hashes de rutas no afectadas y contactos3901440. Sin DNS/pagos/Auth/Supabase/configuración alterados. Próximo:commit/push/PR dependiente, staging y publicación oficial de este único cambio.
+
 # Oficial estática publicada — 2026-10-08 (America/Buenos_Aires)
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.

@@ -1,3 +1,8 @@
+# 2026-10-08 — Retiro puntual del enlace WhatsApp de Contacto en Inicio
+
+- Eliminado únicamente el anchor “WhatsApp · +54 294 4160065” del footer de Inicio.
+- Teléfonos, correos, otros accesos WhatsApp/carrito y hero estático conservados; rama aislada desde PR39, sin cambios de preview video/backend.
+
 # 2026-10-08 — Oficial académica estática publicada
 
 - Publicado Pages 900a4bd8 desde c22a5d0 con backend b049934 inmutable; PR39/CI SUCCESS (113 tests). Portada sin video; preview academic-review y Worker histórico intactos.
