@@ -1,3 +1,9 @@
+# 2026-10-08 — Retiro verificado en todas las secciones oficiales
+
+- Publicado29aa0bf/Pages1eb932f3 SUCCESS, CI113tests/check43/buildPages; misma PR41 sin merge.
+- QA remota nueve páginas390/1440 confirma ausencia de línea WhatsApp/número y contactos conservados; ocho hashes de rutas no afectadas intactos. Alias sirvió inicialmente Nosotros anterior, posteriormente y en QA final actualizado sin cambio extra de código.
+- Backend/preview/DNS/datos/Secret/Auth/pagos sin cambios; rollback7fa48f95 conservado.
+
 # 2026-10-08 — Línea de WhatsApp retirada también de Nosotros
 
 - Eliminado último anchor con WhatsApp/número del footer de Nosotros, conservando teléfonos/correos.
