@@ -1,3 +1,25 @@
+# Navegación y footer oficiales publicados — 2026-10-09 UTC
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+https://dreams-perfumes.pages.dev/ actualizado desde c3cea8cfd56d790ca170744537705722ab32bd53; Pagesc658e4da-c854-4b74-ade9-78b5822bffab SUCCESS. PR42/rama codex/official-navigation-footer dependiente PR41/39/38/37/34, sin merges/PR40/video. CI37881134803 SUCCESS120tests/check45/audit/buildsWorkersPages. Checkpoint posterior sólo documental, sin otro deployment.
+
+Staging9140ca6f y oficial QA Chromium390/1440:11rutas por tamaño, selección única/estados/teclado, footer uniforme ocho layouts/contactos correctos, menú móvil/Escape, cero overflow/pageerror. Género/historial/recarga, Byredo recargado, búsqueda vacía/reset comprobados. Carrito agregar/+/-/persistencia/contador/eliminar/vaciar/WhatsApp y formulario académico probados, sin envío de pago/pedido/cliente. Seis hashes funcionales intactos. Previewaf79434d/8d1b4cd, Workerf73d5087 al100%, backend40e7b0a3/b049934, portada estática/DB/Auth/pagos/DNS conservados.
+
+Rollback1eb932f3 SUCCESS y raíz/health/catálogo200, endpointPOST disponible/no ejecutado. Evidencia/capturas/límites/procedimiento en docs/official_navigation_footer.md. Capturas de referencia no adjuntas: no afirmar comparación literal. Sin físico/Safari/Auth/Admin autenticados/pagos reales/CWV verificados. Alcance terminado, sin porcentaje global inventado. Próxima acción: revisión visual del usuario en oficial. PUSH/DEPLOY:SÍ.
+
+# Navegación y footer oficial — 2026-10-09 UTC
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Rama codex/official-navigation-footer desde PR41/f166ba1, dependiente PR41/39/38/37/34, sin PR40/video ni merges. Oficial vigente verificada por API: Pages1eb932f3/fuente29aa0bf; backend inmutable40e7b0a3/b049934 conservado. Previewaf79434d intacta. Publicación oficial explícitamente autorizada exclusivamente navegación/footer. Rollback disponible POST /accounts/9f3d7af60fcb0c2b4fff8570843588f9/pages/projects/dreams-perfumes/deployments/1eb932f3-529d-40a1-8998-78cafc3c8138/rollback; no ejecutado.
+
+Causa: mark_current_navigation comparaba sólo pathname, activando cuatro destinos catálogo a la vez. Resolución exacta ruta/género limpia marcas; categorías aria-current=true, páginas aria-current=page. Filtros sincronizan URL/historial y restauran controles al recargar/atrás/adelante. Paletas existentes Mujer rosa8c4450/Hombre champagnea88f61/Unisex taupeb9a582; Inicio/Perfumes/Nosotros doradoc5a46a, foco/pulsación y borde/subrayado, hover sólo puntero fino.
+
+Footer público compartido templates/public-footer.html, pre-renderizado/sin flash en ocho páginas y buildPages; scripts/sync-public-footer.mjs actualiza copias estáticas para Workers/Node. Conserva dos correos/teléfonos, autores textuales y WhatsApp542944160065 verificado por configuración. No recrear línea WhatsApp/número en Contacto. Pages amplia únicamente HTML públicos y JS de navegación/app/catálogo, resto backend intacto; nueva navegación obtiene cabeceras de ruta script existente. API/mutaciones/Admin/autorización sin cambio. Portada/imágenes/motion estáticos intactos.
+
+120/120 tests locales y sintaxis45 correctos, buildPages correcto; regresiones selección exacta/limpieza/múltiples destinos y seguridad del overlay. CI84c0434 SUCCESS37880627255 (119tests, audit y ambos builds). Primera inspección staging mostró menú móvil limitado por backdrop-filter del header: desactivado únicamente con menú abierto, controles elevados y altura viewport/scroll interno. Harness de filtros también corrigió medición antes de completar respuesta, sin cambiar lógica para esa espera. CIcdd56cb SUCCESS37880752267. Restauración de marca por URL conserva selección tras llegada asíncrona de options; regresión adicional con fetch aislado. QA/deploy final pendientes en este checkpoint. Capturas referidas en solicitud no adjuntas en esta tanda: diseño usa composición existente y especificación textual, sin inventar comparativa. Sin Auth/Admin reales/pagos/DB/DNS modificados. Próximo: staging, QA móvil/escritorio, CI y publicación oficial sólo si sin regresión material.
+
 # Retiro de la línea WhatsApp en todas las secciones — 2026-10-08
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.

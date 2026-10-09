@@ -1,3 +1,16 @@
+# 2026-10-09 — Navegación/footer oficial publicados
+
+- c3cea8c/Pagesc658e4da SUCCESS, PR42/CI37881134803 verde120tests/check45/audit/builds.
+- QA staging/oficial390/1440,11rutas, selección única/estados/footer/contactos/historial/filtros/recarga/búsqueda/reset correctos, sin overflow/pageerror. Carrito/formulario académico sin envío; seis hashes funcionales intactos.
+- Previewvideo/backend/Worker/DNS/Auth/Supabase/pagos conservados. Rollback1eb932f3 disponible200; docs/official_navigation_footer.md registra evidencia/límites/capturas.
+
+# 2026-10-09 — Navegación exacta y footer compartido
+
+- Corregida comparación que ignoraba género y marcaba cuatro enlaces del catálogo. Selección única con accesibilidad, filtros/historial sincronizados, paletas existentes y estados hover/foco/pulsación/activo.
+- Corregido menú móvil limitado por el bloque de backdrop-filter: overlay de altura viewport y controles accesibles por encima, sin modificar otros componentes.
+- Unificada plantilla de footer en ocho páginas públicas con correos/teléfonos/WhatsApp/autores confirmados; responsive sin correos desbordados, sin variante WhatsApp/número en Contacto.
+- Overlay Pages sólo navegación/footer, backend/API/Auth/checkout/video intactos. Regresión adicional de marca por URL con opciones asíncronas;120tests/sintaxis45/buildPages locales correctos; publicación/QA remota pendientes de checkpoint posterior.
+
 # 2026-10-08 — Retiro verificado en todas las secciones oficiales
 
 - Publicado29aa0bf/Pages1eb932f3 SUCCESS, CI113tests/check43/buildPages; misma PR41 sin merge.
