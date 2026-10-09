@@ -1,3 +1,33 @@
+# Video completo — 2026-10-08: COMPLETADO en cobertura verificada
+
+- Diagnóstico calidad/identidad del adjunto/causas5s ycover: COMPLETADOS.
+- Remux de imágenes idénticas/contain/discreta pausa/fallback: IMPLEMENTADOS.
+-121tests/check46/builds/CI8d1b4cd: COMPLETADOS.
+- Previewaf79434d/QA remota3901440inicio-medio-fin20s y teclado: COMPLETADOS.
+-320768844: QA estática/reducedMotion; reproducción en esos tamaños no probada.
+- Regresión menús/filtros/carrito3901440 y oficialestática/hashes: COMPLETADAS.
+- Pendientes previos sin cambios. Próximo: revisión celular físico/material fuente si pide detalle mayor; no publicar video oficial.
+
+# Ajuste hero completo — 2026-10-08: COMPLETADO en alcance verificado
+
+- EstadoGit/PR40/dependencias/destinos: VERIFICADOS; sin merges.
+- Clip pulverización5s/layout cover/overlay/sin controles: IMPLEMENTADOS.
+- Tests121/check46/builds/CI9a7705f: COMPLETADOS.
+- Preview798a5e28 y QA remota cinco tamaños/fallbacks: COMPLETADOS.
+- Menús/filtros/carrito QA390/1440: COMPLETADOS en cobertura documentada.
+- Oficial900a4bd8 estática/hashes/imagen3901440: CONSERVADA y VERIFICADA.
+- Pendientes previos: Admin real/Google/pagos/seguridad/dispositivo físico. Próximo: revisión del usuario; no publicar video en oficial.
+
+# Etapa video preview — 2026-10-08: COMPLETADA en alcance verificado
+
+- Adjunto/optimización/hero accesible/aislamiento Pages: COMPLETADOS.
+- Local120tests/check46/builds; PR40/push/CI41907ba: COMPLETADOS.
+- Preview70089602 y QA remota390/1440/fin natural/preferencias/carrito: COMPLETADOS.
+- Oficial900a4bd8/c22a5d0: CONSERVADA ESTÁTICA, sin nueva publicación.
+- Admin: usuario comprobado; contraseña/sesión autenticada/recovery: PENDIENTES. No reset ni correos.
+- Google, pagos comerciales y deuda de seguridad: PENDIENTES previos, sin cambios.
+- Próxima acción: revisión visual del usuario y acceso Admin legítimo mediante consulta privada o recuperación específicamente autorizada.
+
 # Resultado promoción estática — 2026-10-08
 
 - PR39/push/CI y Pages oficial c22a5d0/900a4bd8: COMPLETADOS, sin merge.

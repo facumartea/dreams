@@ -19,6 +19,13 @@ async function serve(options, fn) {
 const post = (base, path, body, cookie = '') => fetch(base + path, { method: 'POST', headers: { 'Content-Type': 'application/json', Origin: base, Cookie: cookie }, body: JSON.stringify(body) });
 const enabled = { presentation_checkout: true, presentation_signing_key: 'a'.repeat(64), preview_read_only: true };
 
+test('hero playback requires explicit server opt-in; visitors cannot activate it through query parameters', async () => {
+    for (const hero_video of [undefined, true]) await serve({ hero_video }, async base => {
+        const config = await (await fetch(base + '/api/config?hero_video=true')).json();
+        assert.equal(config.hero_video, hero_video === true);
+    });
+});
+
 test('presentation is disabled by default and requires its own signing secret, independently of commercial schema', async () => {
     await serve({ presentation_checkout: true }, async base => { assert.equal((await post(base, '/api/presentation/session', {})).status, 404); assert.equal((await (await fetch(base + '/api/checkout/config')).json()).enabled, false); });
     await serve(enabled, async base => { const config = await (await fetch(base + '/api/checkout/config')).json(); assert.equal(config.enabled, true); assert.equal(config.provider, 'presentation_demo'); assert.equal((await post(base, '/api/checkout/session', {})).status, 403); });

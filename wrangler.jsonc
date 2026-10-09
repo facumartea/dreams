@@ -66,6 +66,7 @@
           "CHECKOUT_SHOW_TEST_DATA": "true",
           "PRESENTATION_CHECKOUT_ENABLED": "true",
           "PREVIEW_READ_ONLY": "true",
+          "PREVIEW_HERO_VIDEO": "true",
           "CONTACT_EMAIL": "facundo.martearena@dantebariloche.edu.ar",
           "WHATSAPP_NUMBER": "542944160065",
           "GOOGLE_ACCESS_READY": "false"

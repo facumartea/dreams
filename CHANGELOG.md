@@ -1,3 +1,45 @@
+# 2026-10-08 — Video completo verificado en preview
+
+- Publicado8d1b4cd/af79434d sóloacademic-review, CI SUCCESS121tests/check46/builds/audit, PR40sin merge.
+- QA remota3901440fin natural20s/inicio-medio-final/pausaEnter/retorno/reload/fallbacks pasó; variantes estáticas320768844 y menús/filtros/carrito/checkoutacadémico3901440 sinpageerrors/overflow observados.
+- MP4 remoto hash idéntico al remux; imágenes decodificadas idénticas al original. Fuente tiene tapa elevándose sin mano visible/microtexto blando, documentados sin prometer regeneración.
+- Oficial900a4bd8estática/hashes/QA/assetMP4404 confirmada, telemetría0errores con cobertura limitada. Sin datos/Secret/Auth/pagos/DNS cambiados.
+
+# 2026-10-08 — Video completo y encuadre conservado
+
+- Inspeccionado adjunto55d77b94, idéntico por hash al anterior; documentados calidad real y recorte temporal5s/visualcover anterior como causas distintas.
+- Remux completo20s/480frames sin audio ni transcode, hash de imágenes decodificadas idéntico al original; posters nuevos, sin regeneración/upscale.
+- Contain/fondo oscuro con textoCTA actual preservado, control circular accesible pausa/resume para secuencia larga; retirado límite5s, memoria/fallback/frame final conservados.
+-121tests/check46/builds y QA local pasaron. Oficial/configuración/API/carrito/pagos/Auth/Supabase sin cambios.
+
+# 2026-10-08 — Hero completo verificado en preview
+
+- Publicado9a7705f/798a5e28 sólo academic-review; CI SUCCESS121tests/check46/builds. PR40 misma rama/dependencias sin merge.
+- QA remota cinco tamaños/fin natural5s/fallbacks/retorno/reload y overlay/CTA pasó; menús/filtros/carrito/checkout académico3901440 sin errores de página/overflow observados.
+- Oficial900a4bd8 estática confirmada por API/hashes/QA3901440 y MP4oficial404. Telemetría0eventoserror con cobertura limitada; ningún cambio de Pages/DNS/datos/Secret/pagos/Auth.
+
+# 2026-10-08 — Hero preview completo y clip corto
+
+- Sustituida composición de dos columnas por video cover bajo menú con textos/CTA originales superpuestos y degradado estático.
+- Recortado video original12–17s a velocidad normal, cinco segundos/sin audio/696.507bytes y nuevos posters propios.
+- Eliminados controles/lógica/estilos de pausa y acción de autoplay; bloqueo/error usan respaldo estático, preferencias/memoria/frame final preservados.
+- Regresión del límite de cinco segundos añadida. Oficial/Pages/API/pagos/Auth/carrito/Supabase sin cambios de implementación.
+
+# 2026-10-08 — Video preview publicado y validado
+
+- Publicado41907ba en academic-review/deployment70089602; PR40 dependiente de PR39/38/37/34, CI SUCCESS120/120/check46/builds/audit. Sin merges.
+- QA remota390/1440 con fin natural20s, pausa/continuación/frame final/retorno/reload y fallback/preferencias; menús/filtros/contactos/carrito/checkout académico sin regresiones observadas. Dos timeouts iniciales de activación documentados, causa no comprobada; diagnóstico y repetición final exitosos sin código adicional.
+- Oficial900a4bd8 estática y Worker histórico intactos; hashes visuales oficiales conservados, MP4 oficial404. Cero errores observados en muestra de telemetría con cobertura limitada.
+- SELECT46productos/0pedidos/rolAdmin conservados. Usuario Admin confirmado, contraseña no disponible por acceso autorizado; no resets/emails/datos/DNS cambiados.
+
+# 2026-10-08 — Video exclusivo de preview preparado
+
+- Integrado MP4 aportado por usuario, optimizado4,29→1,78MB/sin audio; posters del mismo archivo, encuadre completo/reserva16:9 y textos/CTA conservados.
+- Reproducción única, pausa/resume/frame final/retorno, preferencias y error/fallback; flag servidor sólo preview.
+- Build Pages fija fuentes visuales a commit oficial b049934; CI obtiene historia Git y test de bundle excluye video.
+-120/120 tests, check46 y builds correctos; QA local390/1440 y preferencias/fallos inyectados pasada. Fin local acelerado por seek, remoto pendiente.
+- Consulta Admin histórica sólo nombres de variables por OAuth, sin valores ni cambio de contraseña/cuentas/datos/servicio.
+
 # 2026-10-08 — Oficial académica estática publicada
 
 - Publicado Pages 900a4bd8 desde c22a5d0 con backend b049934 inmutable; PR39/CI SUCCESS (113 tests). Portada sin video; preview academic-review y Worker histórico intactos.

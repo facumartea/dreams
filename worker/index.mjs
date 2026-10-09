@@ -35,6 +35,7 @@ function createWorkerApp(env) {
     return appModule.create_app({
         database: createDatabase(), create_auth_client: createDatabase,
         preview_read_only: env.PREVIEW_READ_ONLY === 'true',
+        hero_video: env.PREVIEW_HERO_VIDEO === 'true',
         presentation_checkout: env.PRESENTATION_CHECKOUT_ENABLED === 'true',
         presentation_signing_key: env.PRESENTATION_SIGNING_KEY,
         google_access_ready: env.GOOGLE_ACCESS_READY === 'true',

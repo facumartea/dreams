@@ -1,3 +1,45 @@
+# Video completo publicado y verificado — 2026-10-08
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Preview https://academic-review-dreams-perfumes.dreams-perfumes.workers.dev/. Fuente8d1b4cd4ef08d0a3ba352346c06ec3a4086166f2, deploymentaf79434d-5333-414d-b2c0-9a7c96c9a11b. CI37866512642 SUCCESS:121tests/check46/builds/audit. Misma rama codex/preview-perfume-video/PR40 abierta, basePR39/dependencias38/37/34, sin merges. Checkpoint posterior sólo documental, no altera bundle.
+
+Adjunto55d77b94 idéntico por SHA al anterior:1280×720/16:9/H264/24fps/video1,58Mb/s/20s de imágenes y20,01s contenedor con audio. Preview anterior9a7705f/798a5e28 mostraba recorte12–17s explícito ycover recortaba entorno: causas distintas. Archivo web completo3.950.130bytes/remux sin audio, sin transcode/upscale/recorte/aceleración; hash de todas imágenes decodificadas idéntico original/web. Tapa se eleva sin mano visible, efecto generado del original; microtexto blando, sin deformación gruesa observada en muestras. No regenerado ni prometida calidad ausente.
+
+Contain/fondo oscuro/CTAcopy preservados; mobile acción sobre región superior sin tapar etiqueta, frasco menor por aspecto horizontal. Círculo pausa/continuación44px/teclado/aria necesario por20s, no controles nativos ni loop; fin real/retorno/reload/fallback/preferencias conservados, memoria v3. QA remota390/1440:inicio/medio/fin natural20s, pausa400ms/continuación porEnter, frame estable/retorno sin MP4/reload/CTA pasaron sin pageerrors/overflow.320/768/844horizontal revisados sólo estáticos/reduced; no atribuirles reproducción remota completa. Autoplay/error/saveData inyectados y reducedMotion emulado pasaron. Menús/filtros/reset/búsqueda vacía/46productos/contactos/acceso/carrito+/−/persistencia/contador/subtotal/WhatsApp/checkout académicoaprobado-vaciado yAdmin anónimo403 pasaron3901440. Carreras/eliminación/vaciado manual mantienen suite/evidencia previa, no repetidosremotos. Capturas inicio/medio/final /workspace/dreams-full-video-evidence; runbook docs/preview_hero_video.md.
+
+Oficial Pages900a4bd8/c22a5d0, backend40e7b0a3/b049934, Workerf73d5087 al100% intactos porAPI; hashesHTML/CSS/motion conservados, QA3901440 estática/imagen cargada, MP4oficial404. Telemetría15min0errorobservados, invocation logs apagados/cobertura limitada. No deployPages/DNS/tráfico/Secrets/Auth/pagos/Supabasealterados. Rollback preview798a5e28/9a7705f conservado/procedimiento sin ejercitar.
+
+Próximo: revisión por usuario en celular físico; fuente nueva sólo si requiere más resolución/microtexto/realismo de tapa. Admin/Google/pagos/seguridad previos pendientes, no credenciales nuevas ni resets. No publicar video oficial sin nueva autorización; porcentaje general no recalculado.
+
+# Hero preview completo publicado y verificado — 2026-10-08
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Preview https://academic-review-dreams-perfumes.dreams-perfumes.workers.dev/. Fuente9a7705f8d2eb8f45244f9183f173850093f06678, deployment798a5e28-5b13-4f60-8581-103c08a346a5, CI37864436894 SUCCESS. Misma rama codex/preview-perfume-video/PR40 abierta, basePR39/dependencias38/37/34, sin merge. Checkpoint posterior sólo documental, no altera bundle publicado.
+
+Hero cubre portada visible bajo menú (sin fullscreen API), video object-fit:cover y texto/CTA actual superpuestos/degradado. Tramo original12–17s/5s exactos/24fps/sin audio/696.507bytes, posters nuevos; sin controles de pausa/reproducción, sin loop. Autoplay cuando permitido, frame final/retorno sin nueva descarga/recarga explícita nueva conservados. Reduced-motion/saveData/autoplay bloqueado/error usan respaldo estático; metadata mayor5s detiene reproducción. Mobile80% conserva bordes del frasco, cover recorta entorno/humo y parte de la base en horizontal bajo; sin deformación.
+
+121/121tests, sintaxis46, builds Workers/Pages correctos. QA local y remotaChromium320×568/390×844/768×1024/844×390/1440×900: cover/overlay/CTA/menú visible, fin natural5s/frame estable/hover-scroll/retorno/reload y fallback/preferencias pasaron, sin pageerrors/overflow. Tres escenarios de ahorro/autoplay/error inyectados, no fallos del proveedor. Regresión remota390/1440 menús/búsqueda vacía/reset/marca/46productos/contactos/acceso/carrito+/−/persistencia/contador/subtotal/WhatsApp/checkout académico aprobado-vaciado y Admin anónimo403 pasada; eliminación/vaciado manual/carreras conservan cobertura previa y suite, no repetidos remotamente en esta tanda. Dispositivo físico/Safari/AuthAdmin reales pendientes. Telemetría15min0eventoserror, invocation logs apagados/cobertura limitada. Capturas /workspace/dreams-cover-evidence; runbook docs/preview_hero_video.md.
+
+OFICIAL https://dreams-perfumes.pages.dev intacta: Pages900a4bd8/c22a5d0 y Workerf73d5087 al100% confirmados por API, hashes HTML/CSS/motion idénticos antes/después, MP4oficial404 y QA390/1440 sin video/imagen cargada. No deploy Pages/DNS/tráfico/datosSupabase/Secrets/Auth/pagos alterados. Recuperación preview anterior70089602/41907ba conservada; procedimiento documentado sin ejecutarlo.
+
+Admin/Google/pagos comerciales/deuda anterior siguen pendientes; no cambia contraseña/cuentas ni envía correos. Próximo: abrir preview en celular físico para revisión del usuario. Video no autorizado en oficial. No calcular nuevos porcentajes generales sin reevaluación del roadmap.
+
+# Video exclusivo de preview publicado y verificado — 2026-10-08
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Preview: https://academic-review-dreams-perfumes.dreams-perfumes.workers.dev/. Fuente 41907ba1ed43a4ceb0d7f9444d5f9da2038a5167; deployment 70089602-bc64-4a9a-bcb1-e585b9bb4c13. PR40 abierta, rama codex/preview-perfume-video, dependiente de PR39 → PR38 → PR37 → PR34, sin merges. CI fuente SUCCESS 37861535878: check46,120/120 tests, audit limpio y builds Workers/Pages. Checkpoint posterior sólo documental, no altera bundle publicado.
+
+MP4 real del usuario optimizado a 1.778.425bytes/20s/1280×720/H264/faststart/sin audio, posters propios. Textos/CTA conservados; encuadre16:9 completo. Autoplay silenciado, sin loop, pausa/continuación, fin natural/fotograma final, retorno sin nueva descarga y recarga explícita permiten reproducir una vez de nuevo. Reduced-motion y ahorro detectado sin MP4; fallback ante bloqueo/error. Flag PREVIEW_HERO_VIDEO sólo entorno preview; build Pages fija archivos visuales a b049934, sin video.
+
+QA remota Chromium390/1440 COMPLETADA: espera natural de20s, pausa/continuación, último fotograma/retorno/reload; movimiento reducido real y ahorro/autoplay/error inyectados pasaron. Menús/búsqueda vacía/reset/marca,46productos, contactos/acceso visible, carrito agregar/cantidades/persistencia/contador/subtotal/WhatsApp y checkout académico aprobado/vaciado sin escrituras comerciales; ocho rutas Admin anónimas403, sin pageerrors/overflow. Dos intentos iniciales de activación agotaron30s; causa no comprobada. Diagnóstico posterior JS/config200 y ejecución final exitosa, sin corrección adicional. Telemetría últimos15min:0eventos error observados, invocation logs desactivados/cobertura limitada. Evidencia y rollback: docs/preview_hero_video.md; capturas /workspace/dreams-video-evidence y dreams-video-regression-evidence.
+
+Oficial https://dreams-perfumes.pages.dev continúa ESTÁTICA: Pages900a4bd8/c22a5d0, backend40e7b0a3/b049934 y Worker histórico f73d5087 al100% confirmados intactos por API después de publicar video. HTML/CSS/motion oficiales idénticos a b049934; MP4 en oficial404. No deploy Pages/DNS/tráfico oficial ni datos de Supabase modificados; SELECT conserva46productos/0pedidos/rol admin.
+
+Admin usuario confirmado admin@dreamsperfumes.com; contraseña inaccesible: Railway OAuth sólo nombres ADMIN_PASSWORD/ADMIN_EMAIL (valuesRedacted=true), vigencia histórica no comprobada. Sin reset/revocación/email/reactivación. Auth/Admin autenticados, Google y comercio real pendientes; seguridad previa/grantsTRUNCATE sin cambios. Próximo: revisión visual de preview por usuario; consultar privadamente variable histórica o preparar recuperación autorizada y validar acceso legítimo. No incorporar video a oficial sin nueva autorización.
+
 # Oficial estática publicada — 2026-10-08 (America/Buenos_Aires)
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.

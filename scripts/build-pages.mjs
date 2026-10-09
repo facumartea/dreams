@@ -1,15 +1,20 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
+import { execFileSync } from 'node:child_process';
 
 const assets = {};
 const release = JSON.parse(await readFile(new URL('../pages/official-release.json', import.meta.url), 'utf8'));
 if (!/^https:\/\/[a-f0-9]{8}-dreams-perfumes\.dreams-perfumes\.workers\.dev$/.test(release.backend_url)) throw new Error('Pages requires an immutable approved backend URL');
+if (!/^[a-f0-9]{40}$/.test(release.source_commit)) throw new Error('Pages requires an exact approved source commit');
 for (const [pathname, relative, content_type] of [
     ['/index.html', 'public/index.html', 'text/html; charset=utf-8'],
     ['/css/style.css', 'public/css/style.css', 'text/css; charset=utf-8'],
     ['/js/motion.js', 'public/js/motion.js', 'application/javascript; charset=utf-8']
 ]) {
-    const body = await readFile(new URL(`../${relative}`, import.meta.url), 'utf8');
+    // Keep the official overlay static even when this build runs on a video branch.
+    const body = execFileSync('git', ['show', `${release.source_commit}:${relative}`], {
+        cwd: new URL('../', import.meta.url), encoding: 'utf8', maxBuffer: 5 * 1024 * 1024
+    });
     assets[pathname] = { body, content_type, etag: `"${createHash('sha256').update(body).digest('hex')}"` };
 }
 assets['/'] = assets['/index.html'];

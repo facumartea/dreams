@@ -329,7 +329,7 @@ function create_app(options = {}) {
     presentation.install(app, route);
     google_routes(app, { create_oauth_client: options.create_oauth_client, provider_enabled: async () => options.google_access_ready === true && await (options.google_provider_enabled || (async () => false))(), app_base_url, production, profile_for, logger });
     route('get', '/api/auth/google/config', async (request, response) => response.json({ enabled: Boolean(options.google_access_ready === true && options.create_oauth_client && app_base_url && await (options.google_provider_enabled || (async () => false))()) }));
-    route('get', '/api/config', async (request, response) => response.json({ whatsapp_number, contact_email, contacts, app_name: 'DREAMS', demo_auto_confirm_email, preview_read_only: options.preview_read_only === true }));
+    route('get', '/api/config', async (request, response) => response.json({ whatsapp_number, contact_email, contacts, app_name: 'DREAMS', demo_auto_confirm_email, preview_read_only: options.preview_read_only === true, hero_video: options.hero_video === true }));
     route('get', '/api/checkout/config', async (request, response) => response.json({ enabled: presentation.ready || checkout_enabled, provider: presentation.ready ? 'presentation_demo' : checkout_enabled ? payment_provider.name : null, mode: presentation.ready ? 'demo' : checkout_mode, show_test_data: presentation.ready || show_test_data }));
     route('get', '/api/products', async (request, response) => {
         const search = String(request.query.search || '').trim().replace(/[^\p{L}\p{N}\s'-]/gu, '').slice(0, 80);
