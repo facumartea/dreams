@@ -27,7 +27,7 @@ h1{font-size:clamp(3.3rem,6.6vw,7.6rem)}h2{font-size:clamp(2.5rem,4.2vw,4.9rem)}
 .main-nav{display:flex;align-items:center;justify-content:center;gap:clamp(1.2rem,2.3vw,2.4rem)}
 .main-nav a{position:relative;padding:.6rem 0;color:var(--muted);font-size:.7rem;font-weight:500;letter-spacing:.13em;text-transform:uppercase;transition:color var(--fast)}
 .main-nav a::after{position:absolute;right:0;bottom:0;left:0;height:1px;background:var(--accent);content:"";transform:scaleX(0);transform-origin:right;transition:transform var(--slow)}
-.main-nav a:hover,.main-nav a[aria-current=page]{color:var(--ivory)}.main-nav a:hover::after,.main-nav a[aria-current=page]::after{transform:scaleX(1);transform-origin:left}
+.main-nav a[aria-current=page]{color:var(--ivory)}.main-nav a[aria-current=page]::after{transform:scaleX(1);transform-origin:left}
 .header-actions{display:flex;align-items:center;justify-content:flex-end;gap:1.15rem}
 .icon-link,.cart-link{position:relative;display:inline-flex;align-items:center;justify-content:center;min-width:42px;min-height:42px;color:var(--ivory-soft);transition:color var(--fast),transform var(--fast)}
 .icon-link:hover,.cart-link:hover{color:var(--accent-soft);transform:translateY(-1px)}
@@ -246,7 +246,7 @@ input,select,textarea{width:100%;min-height:48px;padding:.78rem 0;border:0;borde
 .site-header .main-nav a[aria-current]{background:var(--nav-bg);color:var(--nav-text);border-color:var(--nav-text)}
 .site-header .main-nav a::after{right:.75rem;left:.75rem;bottom:.4rem;background:currentColor;transition:transform 160ms ease}
 .site-header .main-nav a[aria-current]::after{transform:scaleX(1)}
-@media(hover:hover) and (pointer:fine){.site-header .main-nav a:hover{background:var(--nav-bg);color:var(--nav-text);border-color:var(--nav-bg)}.site-header .main-nav a:hover::after{transform:scaleX(1)}}
+@media(hover:hover) and (pointer:fine){.site-header .main-nav a:hover{background:var(--nav-bg);color:var(--nav-text);border-color:var(--nav-bg)}.site-header .main-nav a:hover:not([aria-current])::after{transform:scaleX(0)}}
 .site-header .main-nav a:focus-visible{background:var(--nav-bg);color:var(--nav-text);outline:2px solid var(--accent-soft);outline-offset:3px}
 .site-header .main-nav a:active{background:var(--nav-bg);color:var(--nav-text);box-shadow:inset 0 0 0 2px currentColor}
 .site-footer{grid-template-columns:minmax(0,1.25fr) minmax(0,.65fr) minmax(0,.65fr) minmax(0,1.6fr)}
