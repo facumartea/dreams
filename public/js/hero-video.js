@@ -1,53 +1,39 @@
 (() => {
-    const KEY = 'dreams_hero_video_started_v1';
-    function create_controller({ video, button, fallback, storage, reduced, connection, navigation_type, page }) {
-        let started = false, ended = false, failed = false, busy = false;
+    const KEY = 'dreams_hero_video_started_v2';
+    function create_controller({ video, fallback, storage, reduced, connection, navigation_type, page }) {
+        let started = false, ended = false, failed = false;
         const limited = () => reduced.matches || connection?.saveData === true;
         const remembered = () => { try { return storage.getItem(KEY) === 'true'; } catch { return false; } };
-        const remember = () => { try { storage.setItem(KEY, 'true'); } catch { /* Playback still works if storage is unavailable. */ } };
+        const remember = () => { try { storage.setItem(KEY, 'true'); } catch { /* Optional session memory. */ } };
         const static_frame = final => {
             video.pause(); video.hidden = true; fallback.hidden = false;
             fallback.src = final ? '/assets/dreams-hero-video-final.webp' : '/assets/dreams-hero-video-poster.webp';
-            button.hidden = true;
         };
         if (navigation_type === 'reload') { try { storage.removeItem(KEY); } catch { /* Optional session memory. */ } }
-        const play = async () => {
-            if (busy || ended || failed || limited()) return;
-            busy = true;
-            try { await video.play(); }
-            catch {
-                if (limited() || failed || ended) { static_frame(started || ended); return; }
-                video.hidden = true; fallback.hidden = false; button.hidden = false;
-                button.textContent = started ? 'Continuar video' : 'Reproducir video';
-            } finally { busy = false; }
-        };
         video.addEventListener('playing', () => {
-            if (limited() || failed) { static_frame(started); return; }
+            if (limited() || failed || ended) { static_frame(started || ended); return; }
             started = true; remember(); video.hidden = false; fallback.hidden = true;
-            button.hidden = false; button.textContent = 'Pausar video';
         });
-        video.addEventListener('pause', () => { if (!ended) button.textContent = 'Continuar video'; });
         video.addEventListener('ended', () => {
-            ended = true; remember(); button.hidden = true;
-            // Do not seek, reload or remove the source: preserve the actual last frame.
+            ended = true; remember();
+            // Preserve the actual last frame without seeking, reloading or removing src.
         });
         video.addEventListener('error', () => { failed = true; static_frame(false); });
-        button.addEventListener('click', () => {
-            if (busy || ended || failed || limited()) return;
-            if (video.paused) void play(); else video.pause();
+        // A mismatched future asset must not introduce uncontrolled motion beyond five seconds.
+        video.addEventListener('loadedmetadata', () => {
+            if (!Number.isFinite(video.duration) || video.duration > 5) { failed = true; static_frame(false); }
         });
-        const preferences = () => {
-            if (limited()) static_frame(started || ended);
-            else if (video.src && !ended && !failed) { button.hidden = false; button.textContent = 'Continuar video'; }
-        };
+        const preferences = () => { if (limited()) { failed = true; static_frame(started || ended); } };
         reduced.addEventListener?.('change', preferences);
         connection?.addEventListener?.('change', preferences);
         page.addEventListener('pagehide', () => video.pause());
-        // BFCache returns keep the frame/time and never resume automatically.
+        // BFCache returns retain their frame/time without automatically resuming.
         if (limited() || remembered()) { static_frame(remembered()); return; }
+        video.muted = true; video.loop = false; video.playsInline = true; video.controls = false;
         video.src = '/assets/dreams-hero-video.mp4';
-        video.muted = true; video.loop = false; video.playsInline = true;
-        void play();
+        try {
+            Promise.resolve(video.play()).catch(() => { failed = true; static_frame(started || ended); });
+        } catch { failed = true; static_frame(started || ended); }
     }
 
     async function install() {
@@ -71,13 +57,11 @@
         video.hidden = true; video.preload = 'none';
         video.setAttribute('aria-label', 'Presentación del perfume DREAMS');
         video.setAttribute('playsinline', ''); video.setAttribute('muted', '');
-        const button = document.createElement('button');
-        button.type = 'button'; button.className = 'hero-video-toggle';
-        button.textContent = 'Reproducir video'; button.hidden = true;
-        stage.replaceChildren(fallback, video, button);
+        video.controls = false; video.disablePictureInPicture = true;
+        stage.replaceChildren(fallback, video);
         let storage;
         try { storage = window.sessionStorage; } catch { storage = null; }
-        create_controller({ video, button, fallback, storage,
+        create_controller({ video, fallback, storage,
             reduced: matchMedia('(prefers-reduced-motion: reduce)'), connection: navigator.connection,
             navigation_type: performance.getEntriesByType('navigation')[0]?.type, page: window });
     }

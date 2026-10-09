@@ -1,3 +1,11 @@
+# Hero preview a pantalla completa en preparación — 2026-10-08
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Rama codex/preview-perfume-video/PR40 abierta, dependenciasPR39/38/37/34 conservadas; sin merges. Video real recortado12–17s, cinco segundos/sin audio/696.507bytes. Layout completo bajo menú, texto/CTA superpuestos/degradado, cover70%desktop80%móvil; controles visibles y lógica pausa eliminados. Reproducción única/frame final/retorno/reload/fallback/preferencias conservados; límite metadata5s probado. Oficial900a4bd8 y preview anterior70089602 verificados por API antes de cambios. No publicar Pages/production.
+
+Check46/121tests/builds Workers y Pages correctos. QA local inicial cinco tamaños y final390/1440/preferencias/fallos pasada; encuadre corregido de73% a80% móvil antes de publicar. Próximo: commit/push/CI; publicar sólo academic-review, comprobar ambasURLs/hashes oficiales y documentar QA remota. Evidencia/runbook docs/preview_hero_video.md. Admin/Google/pagos/deuda previa permanecen pendientes; ningún dato de Supabase alterado.
+
 # Video exclusivo de preview publicado y verificado — 2026-10-08
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.

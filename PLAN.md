@@ -1,3 +1,11 @@
+# Ajuste hero completo — 2026-10-08
+
+- EstadoGit/PR40/destinos oficiales y preview: VERIFICADOS.
+- Tramo pulverización5s/layout cover/texto superpuesto/sin controles: IMPLEMENTADOS.
+- Tests121/check46/builds y QA local: COMPLETADOS; QA remota PENDIENTE.
+- Push/CI/preview/documentación final: PENDIENTES.
+- Oficial Pages estática: preservar y verificar hashes; no publicar.
+
 # Etapa video preview — 2026-10-08: COMPLETADA en alcance verificado
 
 - Adjunto/optimización/hero accesible/aislamiento Pages: COMPLETADOS.

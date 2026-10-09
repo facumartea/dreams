@@ -1,3 +1,17 @@
+# Portada de video a pantalla completa — estado vigente 2026-10-08
+
+Alcance sólo preview `academic-review`, misma rama `codex/preview-perfume-video`/PR40 dependiente de PR39 → PR38 → PR37 → PR34. Oficial Pages900a4bd8/c22a5d0/backend40e7b0a3/b049934 conserva su hero estático; no ejecutar deploy Pages ni Worker production. Los apartados siguientes sobre veinte segundos/dos columnas/pausa son evidencia histórica sustituida por esta tanda.
+
+Video ocupa ancho completo/altura visible bajo header (100svh menos78px/70px); capas absolutas, object-fit:cover sin deformación/márgenes/recuadro/barras. Texto actual superpuesto con degradado horizontal en escritorio y inferior en móvil, CTA operativo. Posición70% desktop/80% móvil conserva el frasco en el recorte; cover recorta entorno y parte del humo en formato vertical. Menú sigue sticky y navegación disponible; no fullscreen API ni bloqueo de scroll. Ajustes para pantallas bajas/horizontal; sin movimiento CSS adicional.
+
+Fuente original del usuario recortada a segundos12–17, cinco segundos exactos, velocidad24fps original, pulverización principal conservada; no aceleración/interpolación/video ajeno. MP4 H2641280×720/yuv420p/faststart/sin audio,696.507bytes, SHA256cb6aa9a6c29139def4baf5026680276ecb189aefdfd9eb5e56562c08cc484536. Poster14.320bytes/final17.994bytes derivados del nuevo tramo.
+
+Retirados botón, eventos y estilos de pausa/reanudación/reproducir. Sin controls, sin loop; autoplay programático silenciado/playsinline, una vez por carga inicial. Al finalizar conserva frame real; retorno mantiene poster final/sin descarga y recarga explícita permite una reproducción nueva. Memoria sessionStorage v2 separa el nuevo clip del anterior. Reduced-motion/saveData no descargan MP4; autoplay rechazado/error muestran poster sin acción ni reintento automático. Metadata de más de cinco segundos detiene reproducción y usa respaldo para evitar que un asset futuro prolongue movimiento sin pausa. BFCache/pagehide no reanuda automáticamente. Sin storage la memoria entre documentos continúa limitada al soporte disponible.
+
+Cambios versionados: CSS hero, controlador, tres assets, pruebas del controlador, CURRENT_STATE/PLAN/CHANGELOG y este documento; catálogo/carrito/API/Auth/pagos/configuración/Secret sin cambios. Regresión nueva rechaza asset de duración mayor de cinco segundos; prueba de autoplay reemplaza expectativa de botón por respaldo permanente. Check46/121tests/builds Workers y Pages correctos. QA local inicial320/390/768/844horizontal/1440 y final390/1440 con encuadre corregido pasó: reproducción natural5s/frame final/retorno/reload, overlay/CTA y fallback/preferencias. Sin pageerrors/overflow. Pruebas remotas se registran al publicar. Recuperación: redeployar sólo academic-review desde41907ba con su config; deployment anterior70089602/URL inmutable conservados. No tocar oficial/Secrets ni borrar deployments. Rollback no ejecutado.
+
+# Evidencia histórica — primera versión de veinte segundos
+
 # Video DREAMS exclusivo de preview
 
 Rama `codex/preview-perfume-video`, dependiente de PR39 → PR38 → PR37 → PR34, sin merges. Oficial preservada: https://dreams-perfumes.pages.dev/, proxy c22a5d0/deployment 900a4bd8 y backend b049934/deployment 40e7b0a3. Sólo se publica `academic-review`.

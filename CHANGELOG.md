@@ -1,3 +1,10 @@
+# 2026-10-08 — Hero preview completo y clip corto
+
+- Sustituida composición de dos columnas por video cover bajo menú con textos/CTA originales superpuestos y degradado estático.
+- Recortado video original12–17s a velocidad normal, cinco segundos/sin audio/696.507bytes y nuevos posters propios.
+- Eliminados controles/lógica/estilos de pausa y acción de autoplay; bloqueo/error usan respaldo estático, preferencias/memoria/frame final preservados.
+- Regresión del límite de cinco segundos añadida. Oficial/Pages/API/pagos/Auth/carrito/Supabase sin cambios de implementación.
+
 # 2026-10-08 — Video preview publicado y validado
 
 - Publicado41907ba en academic-review/deployment70089602; PR40 dependiente de PR39/38/37/34, CI SUCCESS120/120/check46/builds/audit. Sin merges.
