@@ -1,3 +1,9 @@
+# Retiro de la línea WhatsApp en todas las secciones — 2026-10-08
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Continuación PR41/misma rama. Sólo Nosotros conservaba “WhatsApp · +54 294 4160065”; retirado ese anchor, Inicio ya limpio. Teléfonos/correos y acciones de WhatsApp/productos/carrito conservados. Pages empaqueta también /nosotros.html como overlay público para no modificar backend inmutable40e7b0a3/b049934 ni previewvideo. HTML Nosotros previo y nuevo difieren sólo por anchor. Oficial previa7fa48f95, rollback porAPI disponible; publicación/QA en curso. Sin DNS/Auth/pagos/Secret/Supabase alterados.
+
 # Retiro puntual de WhatsApp del contacto de Inicio — 2026-10-08
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.

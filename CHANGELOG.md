@@ -1,3 +1,8 @@
+# 2026-10-08 — Línea de WhatsApp retirada también de Nosotros
+
+- Eliminado último anchor con WhatsApp/número del footer de Nosotros, conservando teléfonos/correos.
+- Añadida sólo esa página a la capa visual Pages para mantener backend y preview intactos; sin cambios de productos/carrito/pagos/Auth.
+
 # 2026-10-08 — Línea de WhatsApp retirada en oficial
 
 - Publicado265d81d en Pages7fa48f95 SUCCESS, PR41/CI verde113tests, sintaxis43 y buildPages.
