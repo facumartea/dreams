@@ -1,3 +1,15 @@
+# Navegación y footer oficial — 2026-10-09 UTC
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Rama codex/official-navigation-footer desde PR41/f166ba1, dependiente PR41/39/38/37/34, sin PR40/video ni merges. Oficial vigente verificada por API: Pages1eb932f3/fuente29aa0bf; backend inmutable40e7b0a3/b049934 conservado. Previewaf79434d intacta. Publicación oficial explícitamente autorizada exclusivamente navegación/footer. Rollback disponible POST /accounts/9f3d7af60fcb0c2b4fff8570843588f9/pages/projects/dreams-perfumes/deployments/1eb932f3-529d-40a1-8998-78cafc3c8138/rollback; no ejecutado.
+
+Causa: mark_current_navigation comparaba sólo pathname, activando cuatro destinos catálogo a la vez. Resolución exacta ruta/género limpia marcas; categorías aria-current=true, páginas aria-current=page. Filtros sincronizan URL/historial y restauran controles al recargar/atrás/adelante. Paletas existentes Mujer rosa8c4450/Hombre champagnea88f61/Unisex taupeb9a582; Inicio/Perfumes/Nosotros doradoc5a46a, foco/pulsación y borde/subrayado, hover sólo puntero fino.
+
+Footer público compartido templates/public-footer.html, pre-renderizado/sin flash en ocho páginas y buildPages; scripts/sync-public-footer.mjs actualiza copias estáticas para Workers/Node. Conserva dos correos/teléfonos, autores textuales y WhatsApp542944160065 verificado por configuración. No recrear línea WhatsApp/número en Contacto. Pages amplia únicamente HTML públicos y JS de navegación/app/catálogo, resto backend intacto; nueva navegación obtiene cabeceras de ruta script existente. API/mutaciones/Admin/autorización sin cambio. Portada/imágenes/motion estáticos intactos.
+
+119/119 tests locales y sintaxis45 correctos, buildPages correcto; regresiones selección exacta/limpieza/múltiples destinos y seguridad del overlay. QA remota/CI/deploy pendientes en este checkpoint. Capturas referidas en solicitud no adjuntas en esta tanda: diseño usa composición existente y especificación textual, sin inventar comparativa. Sin Auth/Admin reales/pagos/DB/DNS modificados. Próximo: staging, QA móvil/escritorio, CI y publicación oficial sólo si sin regresión material.
+
 # Retiro de la línea WhatsApp en todas las secciones — 2026-10-08
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.

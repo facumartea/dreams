@@ -34,6 +34,7 @@ function update_catalog_context(gender) {
     const title = document.getElementById('catalog-title');
     const description = document.getElementById('catalog-description');
     const variant = COLLECTION_VARIANTS[gender] || null;
+    window.DreamsNavigation?.update(variant ? gender : '');
     const page_classes = Object.values(COLLECTION_VARIANTS).map(item => item.page_class);
     const body_classes = Object.values(COLLECTION_VARIANTS).map(item => item.body_class);
 
@@ -89,7 +90,7 @@ async function load_brands() {
     select.value = selected;
 }
 
-async function apply_catalog_filters() {
+async function apply_catalog_filters(sync_url = true) {
     const search = document.getElementById('search').value.trim();
     const brand = document.getElementById('brand-filter').value;
     const gender = document.getElementById('gender-filter').value;
@@ -102,8 +103,14 @@ async function apply_catalog_filters() {
     if (brand) params.set('brand', brand);
     if (gender) params.set('gender', gender);
     if (category) params.set('category', category);
-    if (sort) params.set('sort', sort);
+    if (sort && sort !== 'featured') params.set('sort', sort);
     if (max_price) params.set('max_price', max_price);
+
+    if (sync_url) {
+        const target = `/catalogo.html${params.size ? '?' + params.toString() : ''}`;
+        if (window.location.pathname + window.location.search !== target) history.pushState(null, '', target);
+    }
+    window.DreamsNavigation?.update(gender);
 
     const request_id = ++catalog_request_id;
     try {
@@ -135,13 +142,20 @@ function render_catalog() {
     catalog_products.forEach(product => container.appendChild(create_product_card(product)));
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+function restore_catalog_filters() {
     const params = new URLSearchParams(window.location.search);
-    const initial_gender = params.get('gender');
-    if (initial_gender) {
-        document.getElementById('gender-filter').value = initial_gender;
+    for (const [key, id] of Object.entries({ search: 'search', brand: 'brand-filter', gender: 'gender-filter', category: 'category-filter', sort: 'sort-filter', max_price: 'max-price' })) {
+        document.getElementById(id).value = params.get(key) || (key === 'sort' ? 'featured' : '');
     }
-    update_catalog_context(initial_gender);
+    update_catalog_context(document.getElementById('gender-filter').value);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    restore_catalog_filters();
+    window.addEventListener('popstate', () => {
+        restore_catalog_filters();
+        apply_catalog_filters(false);
+    });
 
     document.getElementById('search').addEventListener('input', debounce(apply_catalog_filters, 300));
     document.getElementById('brand-filter').addEventListener('change', apply_catalog_filters);

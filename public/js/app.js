@@ -387,18 +387,11 @@ function setup_header_scroll() {
     window.addEventListener('scroll', update, { passive: true });
 }
 
-function mark_current_navigation() {
-    const current_path = window.location.pathname === '/' ? '/' : window.location.pathname.replace(/\/$/, '');
-    document.querySelectorAll('.main-nav a').forEach(link => {
-        const link_path = new URL(link.href, window.location.origin).pathname.replace(/\/$/, '') || '/';
-        if (link_path === current_path) link.setAttribute('aria-current', 'page');
-    });
-}
 
 update_cart_count();
 setup_menu();
 setup_header_scroll();
-mark_current_navigation();
+window.DreamsNavigation?.update();
 apply_public_config();
 load_featured_products();
 load_reviews();

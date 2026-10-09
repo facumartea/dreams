@@ -1,3 +1,9 @@
+# 2026-10-09 — Navegación exacta y footer compartido
+
+- Corregida comparación que ignoraba género y marcaba cuatro enlaces del catálogo. Selección única con accesibilidad, filtros/historial sincronizados, paletas existentes y estados hover/foco/pulsación/activo.
+- Unificada plantilla de footer en ocho páginas públicas con correos/teléfonos/WhatsApp/autores confirmados; responsive sin correos desbordados, sin variante WhatsApp/número en Contacto.
+- Overlay Pages sólo navegación/footer, backend/API/Auth/checkout/video intactos. Regresiones y119tests/sintaxis45/buildPages locales correctos; publicación/QA remota pendientes de checkpoint posterior.
+
 # 2026-10-08 — Retiro verificado en todas las secciones oficiales
 
 - Publicado29aa0bf/Pages1eb932f3 SUCCESS, CI113tests/check43/buildPages; misma PR41 sin merge.

@@ -115,10 +115,10 @@ test('Pages visual overlay serves valid HEAD/304 and never masks upstream failur
     assert.equal(await failed.text(), 'outage');
 });
 
-test('Pages visual overlay cannot replace catalog/cart/auth/API paths or mutations', async () => {
+test('Pages public shell cannot replace API/Admin paths or mutations', async () => {
     const asset = { body: 'unexpected visual body', content_type: 'text/html', etag: '"fixture"' };
     const overlay = create_proxy(Object.fromEntries(['/', '/catalogo.html', '/carrito.html', '/cuenta.html', '/api/cart/quote', '/admin'].map(p => [p, asset])));
-    for (const [pathname, method] of [['/catalogo.html', 'GET'], ['/carrito.html', 'GET'], ['/cuenta.html', 'GET'], ['/api/cart/quote', 'POST'], ['/admin', 'GET'], ['/', 'POST']]) {
+    for (const [pathname, method] of [['/api/cart/quote', 'POST'], ['/admin', 'GET'], ['/', 'POST']]) {
         const request = new Request(`https://dreams-perfumes.pages.dev${pathname}`, { method });
         const upstream = new Response('original route', { status: 403 });
         const response = await overlay.fetch(request, { DREAMS: { fetch: async incoming => {
@@ -127,4 +127,32 @@ test('Pages visual overlay cannot replace catalog/cart/auth/API paths or mutatio
         } } });
         assert.equal(response, upstream);
     }
+});
+
+
+test('Pages public HTML overlays never mask denied or failed upstream access', async () => {
+    for (const pathname of ['/catalogo.html', '/carrito.html', '/cuenta.html', '/checkout.html']) {
+        const overlay = create_proxy({ [pathname]: { body: 'public shell', content_type: 'text/html', etag: '"shell"' } });
+        for (const status of [403, 404, 503]) {
+            const response = await overlay.fetch(new Request(`https://dreams-perfumes.pages.dev${pathname}`), {
+                DREAMS: { fetch: async () => new Response('upstream failure', { status }) }
+            });
+            assert.equal(response.status, status);
+            assert.equal(await response.text(), 'upstream failure');
+        }
+    }
+});
+
+test('New navigation asset inherits same-origin script security headers without exposing another route', async () => {
+    const overlay = create_proxy({ '/js/navigation.js': { body: 'public navigation', content_type: 'application/javascript', etag: '"navigation"' } });
+    const response = await overlay.fetch(new Request('https://dreams-perfumes.pages.dev/js/navigation.js'), {
+        DREAMS: { fetch: async incoming => {
+            assert.equal(new URL(incoming.url).pathname, '/js/app.js');
+            return new Response('old script', { headers: { 'Content-Security-Policy': "default-src 'self'", 'X-Content-Type-Options': 'nosniff' } });
+        } }
+    });
+    assert.equal(response.status, 200);
+    assert.equal(await response.text(), 'public navigation');
+    assert.equal(response.headers.get('X-Content-Type-Options'), 'nosniff');
+    assert.equal(response.headers.get('Content-Type'), 'application/javascript');
 });
