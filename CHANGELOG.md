@@ -1,3 +1,9 @@
+# 2026-10-09 — Navegación/footer oficial publicados
+
+- c3cea8c/Pagesc658e4da SUCCESS, PR42/CI37881134803 verde120tests/check45/audit/builds.
+- QA staging/oficial390/1440,11rutas, selección única/estados/footer/contactos/historial/filtros/recarga/búsqueda/reset correctos, sin overflow/pageerror. Carrito/formulario académico sin envío; seis hashes funcionales intactos.
+- Previewvideo/backend/Worker/DNS/Auth/Supabase/pagos conservados. Rollback1eb932f3 disponible200; docs/official_navigation_footer.md registra evidencia/límites/capturas.
+
 # 2026-10-09 — Navegación exacta y footer compartido
 
 - Corregida comparación que ignoraba género y marcaba cuatro enlaces del catálogo. Selección única con accesibilidad, filtros/historial sincronizados, paletas existentes y estados hover/foco/pulsación/activo.

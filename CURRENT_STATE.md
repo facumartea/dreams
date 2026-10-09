@@ -1,3 +1,13 @@
+# Navegación y footer oficiales publicados — 2026-10-09 UTC
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+https://dreams-perfumes.pages.dev/ actualizado desde c3cea8cfd56d790ca170744537705722ab32bd53; Pagesc658e4da-c854-4b74-ade9-78b5822bffab SUCCESS. PR42/rama codex/official-navigation-footer dependiente PR41/39/38/37/34, sin merges/PR40/video. CI37881134803 SUCCESS120tests/check45/audit/buildsWorkersPages. Checkpoint posterior sólo documental, sin otro deployment.
+
+Staging9140ca6f y oficial QA Chromium390/1440:11rutas por tamaño, selección única/estados/teclado, footer uniforme ocho layouts/contactos correctos, menú móvil/Escape, cero overflow/pageerror. Género/historial/recarga, Byredo recargado, búsqueda vacía/reset comprobados. Carrito agregar/+/-/persistencia/contador/eliminar/vaciar/WhatsApp y formulario académico probados, sin envío de pago/pedido/cliente. Seis hashes funcionales intactos. Previewaf79434d/8d1b4cd, Workerf73d5087 al100%, backend40e7b0a3/b049934, portada estática/DB/Auth/pagos/DNS conservados.
+
+Rollback1eb932f3 SUCCESS y raíz/health/catálogo200, endpointPOST disponible/no ejecutado. Evidencia/capturas/límites/procedimiento en docs/official_navigation_footer.md. Capturas de referencia no adjuntas: no afirmar comparación literal. Sin físico/Safari/Auth/Admin autenticados/pagos reales/CWV verificados. Alcance terminado, sin porcentaje global inventado. Próxima acción: revisión visual del usuario en oficial. PUSH/DEPLOY:SÍ.
+
 # Navegación y footer oficial — 2026-10-09 UTC
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.

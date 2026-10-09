@@ -2,8 +2,8 @@
 
 - Base PR41 y Pages1eb932f3, dependencia PR39/38/37/34, exclusión PR40: VERIFICADAS.
 - Selección única, historial de filtros, interacción y plantilla compartida: IMPLEMENTADOS.
-- 119tests/sintaxis45/buildPages: COMPLETADOS.
-- CI/PR/staging/QA/publicación oficial/evidencia: PENDIENTES.
+- 120tests/sintaxis45/buildPages: COMPLETADOS.
+- CI/PR42/staging9140ca6f/QA390-1440/publicación oficialc658e4da/evidencia: COMPLETADOS. Rollback1eb932f3 conservado; revisión del usuario pendiente.
 - Auth/Admin/pagos previos fuera de alcance; previewvideo intacta. Sin porcentajes globales inventados.
 
 # Resultado promoción estática — 2026-10-08
