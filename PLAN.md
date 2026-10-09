@@ -1,3 +1,11 @@
+# Integración video completo — 2026-10-08
+
+- Diagnóstico original/preview y preservación sin recompresión: COMPLETADOS.
+- Contain/fondo/copy/discreta pausa/fallback/memoria: IMPLEMENTADOS.
+-121tests/check46/builds/QA local: COMPLETADOS.
+- Push/CI/preview/QA remoto/documentación final: PENDIENTES.
+- Oficial estática: preservar y verificar. Admin/Google/pagos pendientes previos.
+
 # Ajuste hero completo — 2026-10-08: COMPLETADO en alcance verificado
 
 - EstadoGit/PR40/dependencias/destinos: VERIFICADOS; sin merges.

@@ -1,3 +1,11 @@
+# Video completo sin recorte en preparación — 2026-10-08
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Misma rama codex/preview-perfume-video/PR40 abierta dependientePR39/38/37/34, sin merges. Nuevo adjunto55d77b94 idéntico por SHA al anterior;1280×720/16:9/H264/24fps/20,01scontenedor. Video completo remux20s/480frames/sin audio/3.950.130bytes, todas imágenes idénticas por hash decodificado original/web. Sin recompresión/upscale/aceleración/recorte. Preview actual anterior9a7705f/798a5e28 era5s12–17 +cover recortado: causas diferenciadas y diagnóstico en docs/preview_hero_video.md.
+
+Implementado contain/fondo oscuro/textoCTA preservados, frasco/etiqueta sin recorte añadido; círculo accesible44pxpausa/continuación por20s, sin controles nativos/loop. Frame final/memoria v3/retorno/reload/fallback/preferencias conservados.121tests/check46/builds correctos, QA local3901440inicio/medio/fin natural/teclado y estáticos320768844/fallbacks pasada. Próximo:commit/push/CI/publicar sóloacademic-review/QAremota/hash oficial. Oficial900a4bd8 estática verificada antes, no modificarPages/DNS/datos/Secrets/Auth/pagos.
+
 # Hero preview completo publicado y verificado — 2026-10-08
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.

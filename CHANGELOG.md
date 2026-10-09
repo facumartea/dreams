@@ -1,3 +1,10 @@
+# 2026-10-08 — Video completo y encuadre conservado
+
+- Inspeccionado adjunto55d77b94, idéntico por hash al anterior; documentados calidad real y recorte temporal5s/visualcover anterior como causas distintas.
+- Remux completo20s/480frames sin audio ni transcode, hash de imágenes decodificadas idéntico al original; posters nuevos, sin regeneración/upscale.
+- Contain/fondo oscuro con textoCTA actual preservado, control circular accesible pausa/resume para secuencia larga; retirado límite5s, memoria/fallback/frame final conservados.
+-121tests/check46/builds y QA local pasaron. Oficial/configuración/API/carrito/pagos/Auth/Supabase sin cambios.
+
 # 2026-10-08 — Hero completo verificado en preview
 
 - Publicado9a7705f/798a5e28 sólo academic-review; CI SUCCESS121tests/check46/builds. PR40 misma rama/dependencias sin merge.

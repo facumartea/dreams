@@ -1,3 +1,29 @@
+# Video completo sin recompresión — estado vigente 2026-10-08
+
+Sólo preview academic-review, misma rama/PR40, dependenciasPR39 → PR38 → PR37 → PR34 conservadas. Oficial Pages900a4bd8/c22a5d0/backend40e7b0a3/b049934 estática, no publicar Pages ni production. Los apartados siguientes sobre cinco segundos/cover son evidencia histórica sustituida por esta tanda.
+
+## Diagnóstico del adjunto
+
+`gemini_generated_video_55d77b94.mp4` y el adjunto anterior `gemini_generated_video_1e78e674.mp4` son idénticos por SHA256 `4f7cd94ec3eae0987c68716ec3f78b4ffe197145282a0ec4f11a744570b7b832`:4.286.330bytes,1280×720/16:9/H264/24fps, bitrate video1.577.378bit/s, total1.713.675bit/s, audioAAC128.191bit/s; contenedor20,01s y stream de video20s/480fotogramas. No es un original4K. Fotogramas0/5/10/15/final inspeccionados: acercamiento/alejamiento, cambio de luz/reflejos, tapa y posterior pulverización. DREAMS legible, texto pequeño blando; no deformación gruesa del frasco/marca detectada en muestras, sin certificar coherencia de cada píxel/fotograma. Material generado por IA según nombre/procedencia del usuario; no nueva licencia presumida.
+
+Archivo publicado anterior comprobado remoto:5s/696.507bytes/1.114.411bit/s. Era recorte temporal explícito12–17s por pedido anterior y transcodeCRF24. Además object-fit:cover recortaba entorno/humo en vertical. Pérdida de duración y recorte visual son independientes; el navegador no estaba cortando veinte segundos por un fallo demostrado.
+
+Integración puede corregir duración/encuadre/compresión adicional. No puede recuperar resolución, microtexto/detalles ausentes ni corregir deformaciones o cambios de marca que existan dentro del original. Esos defectos necesitarían otra generación/grabación de fuente; no se regeneró ni inventó un video nuevo.
+
+## Archivo y reproducción actuales
+
+Remux de todo stream H264 (`-map 0:v:0 -c:v copy -an -movflags +faststart`), sin upscale/transcode/recorte temporal/aceleración. Web3.950.130bytes,20s/24fps/1280×720, bitrate video original conservado y sin audio. SHA256archivo `ffab2ba7c3482a1ca0ce8fde75bfff54642fd605a64759d4a0f23e45aff679b8`. Hash de todos los fotogramas decodificados original/web coincidente `147d84f19422cf1e4e7768fcf483dd7d685290d1d185181b28984796be970845`: prueba de preservación de imágenes, no detalle recuperado. Los0,01s del contenedor original eran cola de audio, no fotogramas eliminados. Posters WebP del primer/último fotograma,12.860/19.314bytes.
+
+Object-fit:contain conserva todo el cuadro; fondo oscuro integra espacio sobrante, no estira. En móvil la acción se reserva por encima de la copy superpuesta sobre el fondo común para no tapar etiqueta; producto se ve menor por aspecto horizontal del original. Desktop mantiene copy a izquierda/video completo; textos/CTA/tipo/paleta sin cambios. Sin fullscreen API/scroll bloqueado/más animación CSS.
+
+Control circular44px discreto, iconoCSS de pausa/continuación, aria-label y aria-pressed en español, foco visible/teclado. Necesario para veinte segundos de movimiento automático; no barra/controles nativos. Se oculta al terminar/fallback, no cubre botella. Pause/resume conservan currentTime, protección de doble interacción; memoria sesiónv3/retorno/reload y frame final sin seek. Autoplay silenciado/playsinline cuando permitido, sin loop; reduced-motion/saveData sin MP4, bloqueo/error poster sin reintento automático. Retirado límite metadata5s de versión corta. Storage entre documentos sigue condicionado al navegador.
+
+121tests/check46/buildsWorkersPages correctos; QA local390/1440 con fin natural20s, inicio/medio/final, pausa400ms/continuación por teclado/retorno/reload pasó; variantes estáticas320/768/844horizontal y preferencias/fallos controlados pasaron. No pageerrors/overflow observados. QA remota/deployment se registran después de publicar. Más peso que5s, sin medir Core Web Vitals/Safari/dispositivo físico.
+
+Rollback sólo preview: redeployar9a7705f con config actual y nombreacademic-review; anterior798a5e28/URL inmutable conservados. No usar deployPages/production, no modificar Secrets ni borrar deployments. Procedimiento no ejercitado. Admin/Google/pagos/deuda previa pendientes intactos.
+
+# Evidencia histórica de versiones anteriores
+
 # Portada de video a pantalla completa — estado vigente 2026-10-08
 
 Alcance sólo preview `academic-review`, misma rama `codex/preview-perfume-video`/PR40 dependiente de PR39 → PR38 → PR37 → PR34. Oficial Pages900a4bd8/c22a5d0/backend40e7b0a3/b049934 conserva su hero estático; no ejecutar deploy Pages ni Worker production. Los apartados siguientes sobre veinte segundos/dos columnas/pausa son evidencia histórica sustituida por esta tanda.
