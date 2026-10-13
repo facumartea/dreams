@@ -1,3 +1,9 @@
+# 2026-10-13 — Buscador y revisión acotada Admin
+
+- Buscador sólo nombre/marca, sin diacríticos/case/espacios exteriores, local sin solicitudes por tecla y estados accesibles/limpiar/retry/respuesta obsoleta ignorada.
+- Imagen invalida URL anterior inmediatamente, exige comprobación actual, ignora respuesta tras timeout, ofrece retry/avisos claros y caducidad conocida; servidor/navegador comparten sintaxis segura sin HEAD/fetch backend ni extensión obligatoria. Guardar no se habilita tras reset vacío/campos ausentes tratados.
+-138tests/check51/audit/builds y QA local3901440 pasaron; escrituras sólo fixture9 local. Auditoría real46URLs/41originales/5fallbacks registrada sin mutar enlaces. Auth remota/producción condicionados, permisos intactos.
+
 # 2026-10-13 — Checkout directo oficial publicado y verificado
 
 - Pagesac755bbe/c83b148 y backendd5df723d/ec04a35 publicados sin video/carrito por cuenta, PR44 abierta y CI verde124tests/check47/builds.

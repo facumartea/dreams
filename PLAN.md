@@ -1,3 +1,11 @@
+# Buscador y revisión Admin — 2026-10-13
+
+- Estado/repositorio/fuente Admin/paginación/permisos/deployment: VERIFICADOS.
+- Buscador y correcciones URL/preview/estado Guardar: IMPLEMENTADOS.
+-138tests/check51/builds/audit/QA local3901440: COMPLETADOS.
+- PR/CI/preview aislada y smoke remoto: EN CURSO.
+- Autenticación remota y promoción oficial: BLOQUEADAS hasta sesión legítima; no ampliar permisos/creds ni sustituir por fixtures.
+
 # Resultado oficial — 2026-10-13
 
 - Checkout directo aislado/PR44/CI/Workers/staging/Pages oficial: COMPLETADOS.

@@ -1,10 +1,13 @@
 function format_price(value) { return new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 }).format(value); }
 
 let admin_products = [];
+let admin_products_state = 'loading';
+let admin_products_request_id = 0;
 let admin_coupons = [];
 let admin_reviews = [];
 let editing_product_id = '';
 let product_image_preview_state = 'empty';
+let product_image_preview_url = '';
 let product_image_preview_token = 0;
 let product_image_preview_timer;
 let product_image_load_timer;
@@ -38,7 +41,7 @@ async function with_pending(button, pending_label, action) {
     button.textContent = pending_label;
     try { return await action(); }
     finally {
-        button.disabled = false;
+        button.disabled = button === document.querySelector('#product-form [type="submit"]') ? !is_current_product_image() : false;
         button.removeAttribute('aria-busy');
         button.textContent = label;
     }
@@ -67,15 +70,50 @@ async function load_dashboard() {
 }
 
 async function load_admin_products() {
-    admin_products = await admin_fetch('/api/admin/products');
+    const request_id = ++admin_products_request_id;
+    admin_products_state = 'loading';
+    render_admin_products();
+    try {
+        const products = await admin_fetch('/api/admin/products');
+        if (request_id !== admin_products_request_id) return;
+        if (!Array.isArray(products)) throw new Error('Listado de productos inválido.');
+        admin_products = products;
+        admin_products_state = 'ready';
+    } catch (error) {
+        if (request_id !== admin_products_request_id) return;
+        admin_products_state = 'error';
+    }
     render_admin_products();
 }
 
 function render_admin_products() {
     const tbody = document.getElementById('admin-products');
-    document.getElementById('product-total').textContent = `${admin_products.length} productos`;
+    const query = document.getElementById('admin-product-search').value;
+    const status = document.getElementById('admin-products-status');
+    const total = document.getElementById('product-total');
+    document.getElementById('clear-product-search').disabled = query.length === 0;
+    document.getElementById('retry-admin-products').hidden = admin_products_state !== 'error';
+    tbody.setAttribute('aria-busy', String(admin_products_state === 'loading'));
     tbody.innerHTML = '';
-    admin_products.forEach(product => {
+    function message_row(message) {
+        const row = document.createElement('tr');
+        const cell = document.createElement('td');
+        cell.colSpan = 7;
+        cell.textContent = message;
+        row.appendChild(cell);
+        tbody.appendChild(row);
+    }
+    if (admin_products_state !== 'ready') {
+        total.textContent = '';
+        status.textContent = admin_products_state === 'loading' ? 'Cargando productos…' : 'No se pudieron cargar los productos. Volvé a intentar.';
+        message_row(admin_products_state === 'loading' ? 'Cargando productos…' : 'No se pudieron cargar los productos.');
+        return;
+    }
+    const products = DreamsAdminProducts.filter_products(admin_products, query);
+    total.textContent = DreamsAdminProducts.normalize_search(query) ? `${products.length} de ${admin_products.length} productos` : `${admin_products.length} productos`;
+    status.textContent = products.length ? `${products.length} productos disponibles en el listado.` : 'No se encontraron productos';
+    if (!products.length) { message_row('No se encontraron productos'); return; }
+    products.forEach(product => {
         const row = document.createElement('tr');
         row.innerHTML = `<td>${escape_html(product.id)}</td><td><strong>${escape_html(product.name)}</strong><br><small>${escape_html(product.size_ml)} ml</small></td><td>${escape_html(product.brand)}</td><td>${escape_html(product.gender)}</td><td>${escape_html(product.stock)}</td><td>${escape_html(format_price(product.price))}</td><td><div class="admin-actions"><button class="small-button edit-button">Editar</button><button class="small-button delete-button">Eliminar</button></div></td>`;
         row.querySelector('.edit-button').addEventListener('click', () => fill_form(product));
@@ -88,27 +126,21 @@ function fill_form(product) {
     editing_product_id = String(product.id);
     document.getElementById('form-label').textContent = `EDITAR PRODUCTO #${product.id}`;
     document.getElementById('product-id').value = editing_product_id;
-    for (const key of ['brand','name','gender','category','size_ml','price','stock','intensity','family','top_notes','heart_notes','base_notes','description','image_url']) document.getElementById(key).value = product[key];
+    for (const key of ['brand','name','gender','category','size_ml','price','stock','intensity','family','top_notes','heart_notes','base_notes','description','image_url']) document.getElementById(key).value = product[key] ?? '';
     document.getElementById('featured').checked = product.featured;
     preview_product_image();
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function is_supported_image_url(value) {
-    const candidate = String(value || '').trim();
-    if (/^\/(?!\/)/.test(candidate)) return true;
-    try {
-        const parsed = new URL(candidate);
-        const hostname = parsed.hostname.toLowerCase();
-        const google_page = /(^|\.)google\.[a-z.]+$/.test(hostname) && ['/imgres', '/search'].includes(parsed.pathname);
-        return parsed.protocol === 'https:' && !parsed.username && !parsed.password && !google_page;
-    } catch (error) {
-        return false;
-    }
+function is_supported_image_url(value) { return DreamsAdminImages.supported_image_url(value); }
+
+function is_current_product_image() {
+    return product_image_preview_state === 'valid' && product_image_preview_url === document.getElementById('image_url').value.trim();
 }
 
 function set_product_image_preview(state, message = '') {
     product_image_preview_state = state;
+    if (state !== 'valid') product_image_preview_url = '';
     if (state !== 'pending') window.clearTimeout(product_image_load_timer);
     const panel = document.getElementById('image-preview');
     const image = document.getElementById('image-preview-image');
@@ -118,7 +150,8 @@ function set_product_image_preview(state, message = '') {
     panel.dataset.state = state;
     status.textContent = message;
     if (state === 'empty' || state === 'invalid') image.removeAttribute('src');
-    if (submit) submit.disabled = state !== 'valid';
+    if (submit) submit.disabled = !is_current_product_image();
+    document.getElementById('retry-image-preview').hidden = state !== 'invalid' || !is_supported_image_url(document.getElementById('image_url').value);
 }
 
 function preview_product_image() {
@@ -128,29 +161,39 @@ function preview_product_image() {
     const image = document.getElementById('image-preview-image');
     const token = ++product_image_preview_token;
     if (!candidate) {
-        set_product_image_preview('empty');
+        set_product_image_preview('invalid', 'Ingresá un enlace HTTPS directo a una imagen.');
         return;
     }
     if (!is_supported_image_url(candidate)) {
-        set_product_image_preview('invalid', IMAGE_URL_ERROR);
+        set_product_image_preview('invalid', /^http:/i.test(candidate) ? 'Usá HTTPS: los enlaces HTTP se bloquean en esta página.' : IMAGE_URL_ERROR);
         return;
     }
     set_product_image_preview('pending', 'Comprobando imagen…');
     image.onload = () => {
+        if (token !== product_image_preview_token) return;
         window.clearTimeout(product_image_load_timer);
-        if (token === product_image_preview_token) set_product_image_preview('valid', 'Vista previa lista.');
+        product_image_preview_url = candidate;
+        const warning = DreamsAdminImages.temporary_image_url(candidate) ? ' Este enlace es temporal o firmado y puede vencer. Preferí un enlace permanente.' : '';
+        set_product_image_preview('valid', 'Vista previa lista.' + warning);
     };
     image.onerror = () => {
+        if (token !== product_image_preview_token) return;
         window.clearTimeout(product_image_load_timer);
-        if (token === product_image_preview_token) set_product_image_preview('invalid', IMAGE_URL_ERROR);
+        product_image_preview_token += 1;
+        set_product_image_preview('invalid', 'El enlace no cargó una imagen. Puede apuntar a una página, haber vencido o bloquear el acceso. Usá un enlace directo y permanente.');
     };
     image.src = candidate;
     product_image_load_timer = window.setTimeout(() => {
-        if (token === product_image_preview_token) set_product_image_preview('invalid', IMAGE_URL_ERROR);
+        if (token !== product_image_preview_token) return;
+        product_image_preview_token += 1;
+        set_product_image_preview('invalid', 'La imagen tardó demasiado en cargar. Revisá tu conexión o reintentá.');
     }, 6000);
 }
 
 function schedule_product_image_preview() {
+    product_image_preview_token += 1;
+    window.clearTimeout(product_image_load_timer);
+    set_product_image_preview('pending', 'Comprobando imagen…');
     window.clearTimeout(product_image_preview_timer);
     product_image_preview_timer = window.setTimeout(preview_product_image, 250);
 }
@@ -165,7 +208,7 @@ function get_form_data() {
 async function save_product(event) {
     event.preventDefault();
     const submit = event.submitter || event.currentTarget.querySelector('[type="submit"]');
-    if (product_image_preview_state !== 'valid') {
+    if (product_image_preview_state !== 'valid' || !is_current_product_image()) {
         document.getElementById('admin-message').textContent = IMAGE_URL_ERROR;
         preview_product_image();
         return;
@@ -356,8 +399,17 @@ document.addEventListener('DOMContentLoaded', async () => {
         notice.textContent = 'Vista de revisión: las escrituras están protegidas. Los datos se consultan sin modificarlos.';
         document.querySelector('main')?.prepend(notice);
     }
+    document.getElementById('admin-product-search').addEventListener('input', render_admin_products);
+    document.getElementById('clear-product-search').addEventListener('click', () => {
+        const input = document.getElementById('admin-product-search');
+        input.value = '';
+        render_admin_products();
+        input.focus();
+    });
+    document.getElementById('retry-admin-products').addEventListener('click', load_admin_products);
     document.getElementById('product-form').addEventListener('submit', save_product);
     document.getElementById('image_url').addEventListener('input', schedule_product_image_preview);
+    document.getElementById('retry-image-preview').addEventListener('click', preview_product_image);
     set_product_image_preview('empty');
     document.getElementById('cancel-edit').addEventListener('click', reset_form);
     document.getElementById('coupon-form').addEventListener('submit', save_coupon);

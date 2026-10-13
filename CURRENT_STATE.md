@@ -1,3 +1,13 @@
+# Buscador y revisión Admin en preparación — 2026-10-13
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Rama codex/admin-product-search desde PR44/b33a2ee, no PR45/video ni merge. Oficialac755bbe/c83b148/backendd5df723d verificada e intacta. Búsqueda local nombre/brand sólo, NFD/case/trim/partial, label/limpiar/error/retry/ID monótono implementada. GETadminproducts sin paginación ordenIDdesc, consulta completa46reales.
+
+Imagen: helper sintaxis compartido sin HEAD/fetch servidor/extensiones obligatorias, invalidación inmediata URL/datosviejos/timeout, guardar sólo URL comprobada, retry/mensajes/aviso firmado, disabled tras reset/campos ausentes corregidos. No Storage/upload. 138tests/check51/audit/builds correctos; QA local390/1440 sesionesfixture/buscador y dos PUTs sólo producto fixture9 por tamaño, reload/catalogo/detalle/conservar imagen/módulos/customer403 sinpageerrors/overflow. No Auth/escrituras remotas Supabase verificadas.
+
+Auditoría oficial46URLs válidas/noHTTP/no temporales conocidos/sinespacios,41originales cargadas/5fallbacks21/205/198/197/16/0pending; no modificar enlaces reales. OficialPREVIEW_READ_ONLYtrue, AuthAdmin/Secret proceso/sesión legítima ausentes; no cambiar permisos/creds. Docs: docs/admin_search_images.md. Próximo: PR/CI/preview aislada y comprobaciones remotas no autenticadas; gate de oficial requiere verificación autenticada exitosa, no sustituir por fixtures. Rollbackac755bbe/d5df723d conservado. Progreso global no recalculado.
+
 # Oficial checkout directo publicada — 2026-10-13
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
