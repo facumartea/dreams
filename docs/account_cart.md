@@ -136,3 +136,8 @@ builds pasaron; no prueba autenticada remota.
 Último deploymentadc45355-a812-4827-8e61-8f0082e10b86, fuente53572ba,
 tag53572ba, revisión de stock. Actualización de dependencia basePR44/b33
 limita diff a documentación; no merge de PRs GitHub ni otro cambio funcional.
+
+QA remota visitante390/1440 repetida sobre53572ba pasó; CI del checkpoint
+1507b81 (código idéntico)/38344683228 SUCCESS134tests/check50/audit/builds.
+PR45 mergeable/clean tras resolver únicamente documentos de dependencia.
+Carrito autenticado remoto sigue NO VERIFICADO; oficial no lo incluye.

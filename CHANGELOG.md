@@ -1,3 +1,8 @@
+# 2026-10-13 — Última revisión de carrito validada en su cobertura
+
+- Preview53572ba/adc45355 pasó QA visitante3901440; CI1507b81/38344683228 verde134tests/check50/builds. Dependencia documental resuelta y PR45 sin conflictos.
+- Persistencia/aislamiento autenticados remotos siguen bloqueados; no promovidos a oficial.
+
 # 2026-10-13 — Dependencia documental PR44 actualizada
 
 - Resueltos conflictos sólo en CURRENT_STATE/PLAN/CHANGELOG, conservando estado del carrito e incorporando documento de publicación oficial. No cambios de código del checkout/carrito por la actualización. PRs GitHub abiertas.
