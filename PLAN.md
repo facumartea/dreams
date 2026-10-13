@@ -1,3 +1,11 @@
+# Estado final de esta tanda — 2026-10-13
+
+- PR44 checkout oficial/CI/publicación/QA3901440: COMPLETADOS.
+- PR45 carrito por usuario/código/migración/RLS/pruebas locales/CI/preview visitante: COMPLETADOS en cobertura declarada.
+- Crear dos cuentas de prueba y QA autenticada remota: BLOQUEADOS por falta de vía segura a Auth Admin e identidades controladas.
+- Publicación oficial de carrito: NO REALIZADA, depende del punto anterior.
+- Admin vigente: VERIFICADO por datos; contraseña/acceso real: NO disponibles/verificados, no cambios.
+
 # Carrito por cuenta — 2026-10-13
 
 - API/cliente/migración/SQL RLS con rollback: COMPLETADOS.

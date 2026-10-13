@@ -96,3 +96,34 @@ el recibo académico. Corregido: purgar recibos sólo al salir/cambiar dueño
 o al encontrar outbox privada de una sesión ausente. Nueva regresión del
 visitante conserva intent/receipt. 134tests/check50/builds correctos; nuevo
 deploy/QA remota se registran después. Esa prueba no valida sesiones reales.
+
+## Checkpoint remoto
+
+Preview https://account-cart-review-dreams-perfumes.dreams-perfumes.workers.dev/,
+fuente736edfdcdc367e7e77040262098901f87b950a40, deployment
+5a6b0076-467d-42db-add5-8af0e188ac7d (tag134-tests). PR45 abierta,
+CI38343943255 SUCCESS134tests/check50/audit/builds. Secrets existentes de
+Supabase heredados y firma interna propia nueva para este entorno, sin rotar
+los entornos anteriores. Publicación Workers, no Pages ni producción.
+
+QA remota **visitante**, Chromium390/1440, tras corregir recibo: catálogo46,
+menú/Escape, búsqueda vacía/filtros/reset, carrito+/−/contador/persistencia,
+envío0/WhatsApp correcto sin mensaje, Tarjeta sin canarios en red/storage/
+consola, doble clic y pérdida de respuestas inyectadas, confirmación/recarga
+estable/carrito vacío inválido bloqueado. Sinpageerrors/overflow. Health200,
+config account_cart:true, GETaccount anónimo401. NO comprobaron persistencia
+por usuario ni aislamiento con sesiones reales. Capturas
+/workspace/dreams-account-evidence/remote-*.png y local-*.png.
+
+Fuente local/fixture de dos cuentas pasó; no cuentas remotas creadas ni
+contraseñas generadas. SQL final0carts/0operations/0orders/46productos y hash
+stock7a58615dd40e0dcfd898a52aa108b820. Admin mismo correo/UUID/rol.
+Oficial Pagesac755bbe/c83b148 y Workerprincipal f73d5087 al100% confirmados.
+Previewacademic-review con video no reemplazada. Sin DNS/merge/credenciales
+Auth ni datos comerciales modificados. Advisors/errores anteriores permanecen
+limitaciones, no afirmar cobertura Auth o ausencia global de runtime errors.
+
+No hay publicación oficial de carrito por cuenta. Próxima acción concreta:
+habilitar al proceso una vía segura a Supabase Auth Admin y las identidades
+de prueba controladas, crear/probar dos cuentas sin admin y completar matriz
+remota antes de activar. No modificar Auth ni inventar confirmación de correo.

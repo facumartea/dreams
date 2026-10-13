@@ -1,3 +1,9 @@
+# 2026-10-13 — Preview de carrito y bloqueo de promoción documentados
+
+- Publicado736edfd/5a6b0076, CI134tests/check50/builds; QA remota visitante3901440 pasó tras corregir limpieza receipt. PrivateAPI anónimo401, health200; sesiones reales no disponibles, no afirmar persistencia remota comprobada.
+- Oficialac755bbe/c83b148 checkout directo sin módulo cuenta/video, Workerprincipal y previewvideo intactos. SQL conserva0carts/0operations/0orders/46productos/stock. No crear usuarios ni modificar credenciales/roles/DNS.
+- Bloqueo concreto y matriz autenticada/recursos de prueba pendientes en docs/account_cart.md. No activar oficial sin QA real.
+
 # 2026-10-13 — Corrección de recibo visitante en preview de carrito
 
 - QA remota detectó limpieza incorrecta de recibo académico al inicializar visitante; corregida y añadida regresión.

@@ -1,3 +1,15 @@
+# Carrito PR45 en preview, oficial checkout PR44 publicada — 2026-10-13
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+PR45/codex/account-cart-official, fuente736edfd/CI38343943255 SUCCESS134tests/check50/audit/builds. Preview https://account-cart-review-dreams-perfumes.dreams-perfumes.workers.dev/deployment5a6b0076-467d-42db-add5-8af0e188ac7d. BasePR44/c83b148→PR42/41/39/38/37/34, sin merge/video. Checkout directo seleccionaPR43; dependencia no integraPR40. Checkpoint posterior sólo docs, no otro deploy.
+
+Carrito servidor por UUID Auth/scope/RLS y RPC atómica idempotente preparado. SQL rollback verifies permisos/merge/replay/stock/consume, cero filas; QA local3901440 dos sesionesfixture/otro navegador/logout/cambio/retry pasó. QA remota sólo VISITANTE3901440: menús/filtros/carrito local/checkout/retry/receipt/reload pasaron, health200, privateAPI401 anónimo. Primera QA reveló limpieza errónea receiptvisitante: corregida/nueva regresión,134tests. No afirmar aislamiento o persistencia autenticada remota.
+
+OFICIAL https://dreams-perfumes.pages.dev publicada por PR44, Pagesac755bbe/c83b148 SUCCESS/backendd5df723d/ec04a35, CI38343215733 SUCCESS124tests/check47/builds. Fuente no incorpora account-cart: endpoint404/heroestático, envío gratis/Tarjeta/confirmación directa v2, menús/contactos preservados y QA remoto3901440 correcta. Recuperación c658e4da/backend40e7 disponibles200/APIrollback sin ejecutarlo. Workerprincipal f73d5087 al100%, previewacademic-review7c3cd341/video intacta, sinDNS ni merges. Docs oficiales: docs/official_direct_checkout.md.
+
+DB0carts/0operations/0orders/46productos/stockhash7a58615dd40e0dcfd898a52aa108b820; nueva migración aditiva aplicada con RLS/operationsserver-only. Sin crear cuentas ni modificar stock/Auth/admin/password. Admin comprobado admin@dreamsperfumes.com,UUIDesperado/roladmin/sincorreo pendiente; contraseña no accesible/verificada. Login /cuenta.html, panel /admin, autenticado remoto no probado. Supabase Auth Admin/Secret proceso ausentes; anonymous deshabilitado y no activado. Promoción de persistencia por usuario BLOQUEADA hasta dos sesiones reales/controladas. No credenciales por chat ni resets. Progreso global no recalculado. Siguiente: acceso seguro/identidades de prueba y matriz autenticada; no promover por testsfixture. PUSH:SÍ; DEPLOY OFICIAL:SÍ(sólo checkout); DEPLOY PREVIEW:SÍ.
+
 # Carrito por cuenta preparado, promoción bloqueada — 2026-10-13
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
