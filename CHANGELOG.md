@@ -1,3 +1,9 @@
+# 2026-10-12 — Checkout académico directo preparado
+
+- Regla central envío gratis/costo0/total=subtotal sólo académica; comercial separado intacto.
+- Retirados escenarios/validación financiera/instrucciones académicas. Confirmación completed con productos/total, UUID completo y recibo firmado; intent persistido antes de red/doble clic protegido/reintentos estables.
+- Regresiones significativas125tests/check47/builds, QA local390/1440 con fixtures y canarios, sin campos en red/storage/consola; sin DB/pagos/credenciales/DNS alterados. Publicación/QA remota pendientes.
+
 # 2026-10-08 — Video completo verificado en preview
 
 - Publicado8d1b4cd/af79434d sóloacademic-review, CI SUCCESS121tests/check46/builds/audit, PR40sin merge.

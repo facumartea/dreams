@@ -1,6 +1,7 @@
 let cart_request_id = 0;
+let academic_cart_summary = null;
 
-function render_cart(cart = get_cart(), whatsapp_url = null, checkout_enabled = false, state = 'loading') {
+function render_cart(cart = get_cart(), whatsapp_url = null, checkout_enabled = false, state = 'loading', academic = academic_cart_summary) {
     const container = document.getElementById('cart-items');
     const summary = document.getElementById('cart-summary');
 
@@ -60,9 +61,8 @@ function render_cart(cart = get_cart(), whatsapp_url = null, checkout_enabled = 
     summary.innerHTML = `
         <p class="eyebrow">RESUMEN</p>
         <div class="summary-line"><span>Productos</span><strong>${format_price(total)}</strong></div>
-        <div class="summary-line"><span>Envío</span><span>A consultar</span></div>
-        <div class="summary-line summary-total"><span>Subtotal</span><strong>${format_price(total)}</strong></div>
-        <p class="cart-payment-note">Envío no incluido. Su costo se confirma antes del pago.</p>
+        ${academic ? `<div class="summary-line"><span>${escape_html(academic.shipping_label)}</span><span>${format_price(academic.shipping)}</span></div>` : state === 'ready' ? '<div class="summary-line"><span>Envío</span><span>A consultar</span></div><p class="cart-payment-note">Envío no incluido. Su costo se confirma antes del pago.</p>' : ''}
+        <div class="summary-line summary-total"><span>${academic ? 'Total' : 'Subtotal'}</span><strong>${format_price(total)}</strong></div>
         ${checkout}
         ${consultation}
         ${state === 'error' ? '<button id="retry-cart" class="text-button" type="button">Reintentar</button>' : ''}
@@ -101,6 +101,7 @@ async function load_cart() {
         const data = await response.json();
         if (request_id !== cart_request_id) return;
         if (!response.ok) throw new Error(data.error || 'No se pudo verificar el carrito.');
+        academic_cart_summary = data.shipping === 0 && typeof data.shipping_label === 'string' ? { shipping: data.shipping, shipping_label: data.shipping_label } : null;
         save_cart(data.items);
         render_cart(data.items, data.whatsapp_url, checkout_response, 'ready');
         if (data.warnings?.length) show_toast(data.warnings.join(' '));

@@ -1,3 +1,11 @@
+# Simplificación checkout académico — 2026-10-12
+
+- Base preview PR40/8d1b4cd/d3ef4e6, oficial actual y aislamiento: VERIFICADOS.
+- Envío gratuito, ausencia validación financiera y confirmación/referencia/reintento: IMPLEMENTADOS.
+- 125tests/check47/builds/QA localfixture390-1440: COMPLETADOS.
+- PR/CI/previewacademic-review/QA remota y comprobación oficial/DB intactas: PENDIENTES.
+- Auth/Admin y comercial pendientes anteriores fuera de alcance; no cambiar credenciales ni flags.
+
 # Video completo — 2026-10-08: COMPLETADO en cobertura verificada
 
 - Diagnóstico calidad/identidad del adjunto/causas5s ycover: COMPLETADOS.

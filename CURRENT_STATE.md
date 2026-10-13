@@ -1,3 +1,13 @@
+# Checkout académico directo en preparación — 2026-10-12 America/Buenos_Aires
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Rama codex/academic-checkout-direct desde PR40/d3ef4e6, dependiente39/38/37/34, sin merges ni PR42. Preview vigente af79434d/8d1b4cd y oficial c658e4da/c3cea8c verificadas por API, documentación anterior de oficial900a4bd8 es histórica. Sólo preview autorizada para esta tarea; nada de credenciales/roles/Auth/pagos comerciales.
+
+Envío0/Envío gratis/total=subtotal centralizados para presentación. Card fields no leídos/validados/transmitidos/guardados; validación de comprador/carrito conservada. Confirmación completed/simulated, UUID criptográfico completo persistido antes del primer envío, replay/reintento sin nueva referencia, recibo firmado20min/owner cookie y reload; referencia no historial comercial. Sin orders/stock/pasarela. Artefactos académicosv1 se invalidan por versión del contrato, sin rotar Secret.
+
+125tests/check47/buildsWorkersPages y QA local fixture390/1440 correctos: campos inválidos, doble clic, respuestas perdidas antes/después de procesar, misma referencia/reload, cero canarios en red/storage/consola, empty/ID inválido bloqueados y menús/filtros/carrito conservados. Dos fallos de red inyectados, no bugs remotos. Docs/evidencia: docs/academic_checkout_direct.md. DB baseline SELECT0orders/46products/stock hash7a58615dd40e0dcfd898a52aa108b820; seis archivos oficiales hashbaseline. Próximo: PR/CI/publicación únicamenteacademic-review/QA remota/checkpoint. Porcentaje global no recalculado.
+
 # Video completo publicado y verificado — 2026-10-08
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
