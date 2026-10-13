@@ -1,3 +1,17 @@
+# Resultado oficial — 2026-10-13
+
+- Checkout directo aislado/PR44/CI/Workers/staging/Pages oficial: COMPLETADOS.
+- QA remota oficial390/1440 y rollback recuperable: COMPLETADOS en cobertura documentada; rollback no ejecutado.
+- Carrito por cuenta PR45: implementación/SQL/pruebas locales completadas; QA autenticada remota y promoción BLOQUEADAS por acceso seguro/identidades controladas.
+- Admin original/rol: VERIFICADOS; contraseña/login real: NO disponibles ni verificados, no reset.
+
+# Promoción oficial y carrito por cuenta — 2026-10-13
+
+- Estado oficial/preview/PRs/Admin: VERIFICADOS.
+- Checkout directo aislado sin video: IMPLEMENTADO y checks locales COMPLETADOS.
+- PR/CI/Workers estático/Pages/QA oficial: PENDIENTES.
+- Carrito por cuenta: rama separada; implementación y migración aditiva. Activación oficial BLOQUEADA hasta QA autenticada real.
+
 # Navegación/footer oficial — 2026-10-09 UTC
 
 - Base PR41 y Pages1eb932f3, dependencia PR39/38/37/34, exclusión PR40: VERIFICADAS.

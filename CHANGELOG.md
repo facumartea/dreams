@@ -1,3 +1,15 @@
+# 2026-10-13 — Checkout directo oficial publicado y verificado
+
+- Pagesac755bbe/c83b148 y backendd5df723d/ec04a35 publicados sin video/carrito por cuenta, PR44 abierta y CI verde124tests/check47/builds.
+- QA real390/1440 envío0/total/confirmación/referencia/retry y carrito/menús/filtros, hero estático/contactos/acceso sin errores de página; tarjeta no en red/storage/consola.
+- Admin original verificado por UUID/rol, contraseña no accesible. Rollbackc658/backend40e7 conservados; no DNS/merge/Auth/pagos/stock/pedidos cambiados. Carrito por cuenta PR45 bloqueado hasta QA autenticada remota.
+
+# 2026-10-13 — Checkout directo aislado para oficial
+
+- Seleccionado envío gratis/confirmación directa de PR43 sin video, sobre oficial PR42. Backend v2 y frontend deben publicarse juntos mediante Pages fijado.
+-124tests/check47/audit/build Workers correctos; rollback c658e4da conservado. Carrito por cuenta separado, no aprobado para oficial sin sesiones reales.
+- Admin confirmado con correo original/rol; no credenciales modificadas ni contraseña accesible.
+
 # 2026-10-09 — Navegación/footer oficial publicados
 
 - c3cea8c/Pagesc658e4da SUCCESS, PR42/CI37881134803 verde120tests/check45/audit/builds.

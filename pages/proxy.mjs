@@ -6,7 +6,7 @@ function unavailable() {
 
 // Only the explicitly packaged visual assets are replaced. All other routes,
 // API bodies, authentication, cookies and authorization remain in DREAMS.
-const visual_paths = new Set(['/', '/index.html', '/nosotros.html', '/catalogo.html', '/producto.html', '/carrito.html', '/cuenta.html', '/checkout.html', '/checkout-resultado.html', '/css/style.css', '/js/motion.js', '/js/app.js', '/js/catalogo.js', '/js/navigation.js']);
+const visual_paths = new Set(['/', '/index.html', '/nosotros.html', '/catalogo.html', '/producto.html', '/carrito.html', '/cuenta.html', '/checkout.html', '/checkout-resultado.html', '/css/style.css', '/js/motion.js', '/js/app.js', '/js/catalogo.js', '/js/navigation.js', '/js/carrito.js', '/js/presentation.js']);
 
 export function create_proxy(visual_assets = {}, options = {}) {
     // Pin an immutable pre-video release explicitly, never a moving preview alias.
