@@ -1,3 +1,15 @@
+# Checkout académico directo publicado y verificado — 2026-10-12 America/Buenos_Aires
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Preview https://academic-review-dreams-perfumes.dreams-perfumes.workers.dev/. Fuente d938a97c6c0006411f3404d68b5fb297a36e52c1; deployment7c3cd341-0ce1-4045-a6ec-9b5d5bdad9c9, CI38339523102 SUCCESS125tests/check47/audit/buildsWorkersPages. Rama codex/academic-checkout-direct/PR43 abierta dependientePR40→39/38/37/34, sin merges ni PR42. Checkpoint posterior sólo documental, sin otro deploy.
+
+Envío gratis/costo0/total=subtotal centralizados. Tarjeta sin panel/instrucciones ni lectura/validación financiera. Comprador/carrito validan, completed/simulated con productos/total y UUID completo persistido ANTES del primer envío, recibo firmado20min y owner cookie; reload/reintentos/doble clic estables. Sin orders/stock/pasarela/pago comercial aprobado. Secret no rotado; contratosv1 académicos temporales deben reiniciar recorrido, carrito intacto.
+
+QA local con fixtures y remota390/1440 con46productos reales completadas: canarios ficticios no en red a ningún host/storage/consola; empty/ID inválido/comprador vacío bloqueados, máscaras/escenarios financieros ausentes, quantities/contador/persistencia, menús/búsqueda vacía/reset/marca y confirmación/referencia/reload/reintentos pasaron, sin pageerror/overflow. Primer harness remoto route.fetch falló por proxy: se corrigió sólo harness; dos pérdidas de respuesta inyectadas antes y después del procesamiento, no fallos reales del servicio. Referencia móvil real DREAMS-1A6BBE145B894787941B2225CC3140CF. Docs/capturas: docs/academic_checkout_direct.md y /workspace/dreams-direct-evidence/remote-*.png.
+
+DB antes/después SELECT0orders/46products/stock hash7a58615dd40e0dcfd898a52aa108b820. Oficialc658e4da/c3cea8c y Workerf73d5087 al100% intactos por API; seis hashes oficiales iguales. Sin Pages/DNS/credenciales/roles/Supabase/flags/pagos comerciales cambiados. Telemetry filtrada0eventos y sin canarios; invocation logs apagados/cobertura limitada. No Safari/físico/AuthAdmin/CWV verificados. Rollback previoaf79434d/8d1b4cd reconstruible con configuración/Secret existentes, no ejecutado. Alcance completado, porcentaje global no recalculado. Próximo: revisión preview en celular, no promover oficial ni merge. PUSH/DEPLOY:SÍ.
+
 # Checkout académico directo en preparación — 2026-10-12 America/Buenos_Aires
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.

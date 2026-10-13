@@ -1,3 +1,9 @@
+# 2026-10-12 — Preview del checkout académico directo verificada
+
+- Publicado d938a97/preview7c3cd341, PR43 y CI38339523102 SUCCESS125tests/check47/audit/builds.
+- QA remota390/1440 confirma envío gratuito/total, Tarjeta sin validación financiera, referencia estable con doble clic/respuestas perdidas/reload, productos y carrito vacío/inválido bloqueado; ningún canario en red/storage/consola, sin pageerrors/overflow. Carrito/menús/filtros conservados.
+- SELECT conserva0pedidos/46productos/stock íntegro; oficial/Workerprincipal/seis hashes intactos. Logs muestreados0eventos/cobertura limitada. Sin credenciales/roles/flags/DNS/comercio alterados; evidencia/límites en docs/academic_checkout_direct.md.
+
 # 2026-10-12 — Checkout académico directo preparado
 
 - Regla central envío gratis/costo0/total=subtotal sólo académica; comercial separado intacto.
