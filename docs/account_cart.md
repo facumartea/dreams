@@ -127,3 +127,8 @@ No hay publicación oficial de carrito por cuenta. Próxima acción concreta:
 habilitar al proceso una vía segura a Supabase Auth Admin y las identidades
 de prueba controladas, crear/probar dos cuentas sin admin y completar matriz
 remota antes de activar. No modificar Auth ni inventar confirmación de correo.
+
+Revisión final: reconciliar una cotización actualiza precio/stock sin reducir
+cantidades guardadas; mantiene unavailable si el stock cayó por debajo de
+lo solicitado, bloqueando Comprar/WhatsApp. Regresión ampliada/134tests/check50/
+builds pasaron; no prueba autenticada remota.

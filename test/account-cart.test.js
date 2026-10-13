@@ -74,6 +74,7 @@ test('stale response after account switch never paints previous owner or writes 
 test('reconciliation refreshes prices without dropping unavailable entries or persisting a quote as a mutation',async()=>{
  const s=service(),{c}=client(s);s.carts.set(A,{items:[{id:1,quantity:2,price:100,stock:9},{id:2,quantity:1,price:0,stock:0,unavailable:true}],revision:1});await c.initialize();
  c.save([{id:1,quantity:1,price:150,stock:9}],{reconcile:true});assert.equal(c.get()[0].price,150);assert.equal(c.get()[0].quantity,2);assert.equal(c.get()[1].unavailable,true);assert.equal(s.calls(),0);
+ c.save([{id:1,quantity:1,price:150,stock:1}],{reconcile:true});assert.equal(c.get()[0].quantity,2);assert.equal(c.get()[0].unavailable,true);assert.equal(s.calls(),0);
 });
 
 function db(){const rows=new Map(),calls=[];return {rows,calls,auth:{getUser:async token=>({data:{user:[A,B].includes(token)?{id:token,email:'fixture@example.invalid'}:null}})},from(table){let user;const q={select(){return q},eq(k,v){user=v;return q},in(){return q},maybeSingle(){return q},then(resolve){return Promise.resolve({data:table==='profiles'?{name:'Fixture',role:'customer'}:table==='products'?[{id:1,name:'Current product',brand:'Fixture',price:123,stock:3}]:rows.get(user)||null}).then(resolve)}};return q;},rpc:async(name,args)=>{calls.push(args);rows.set(args.p_user_id,{items:[{id:1,quantity:1}],revision:1});return{data:rows.get(args.p_user_id)}}};}

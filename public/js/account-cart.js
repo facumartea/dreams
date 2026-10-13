@@ -94,7 +94,7 @@
             ready:async()=>{if (!initialized || initialization) await (initialization || initialize()); await flush();},
             save(cart,{reconcile=false}={}) {
                 if (!enabled || !user) {write_guest(cart); return;}
-                if (reconcile) { items=items.map(i=>{const fresh=cart.find(p=>p.id===i.id);return fresh?{...fresh,quantity:i.quantity}:i;});return; }
+                if (reconcile) { items=items.map(i=>{const fresh=cart.find(p=>p.id===i.id);return fresh?{...fresh,quantity:i.quantity,unavailable:Number(fresh.stock)<i.quantity}:i;});return; }
                 const old=visible();
                 if (!cart.length) { enqueue({type:'clear'});return; }
                 for (const prior of old) if(!cart.some(i=>i.id===prior.id)) enqueue({type:'remove',id:prior.id});

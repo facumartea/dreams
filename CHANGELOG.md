@@ -1,3 +1,7 @@
+# 2026-10-13 — Disponibilidad conservada al reconciliar cotizaciones
+
+- Conservado indicador de stock insuficiente junto a cantidad persistida; evita habilitar Comprar/WhatsApp antes de resolver disponibilidad. Regresión ampliada/134tests/check50/builds correctos; sólo rama de carrito, no oficial.
+
 # 2026-10-13 — Preview de carrito y bloqueo de promoción documentados
 
 - Publicado736edfd/5a6b0076, CI134tests/check50/builds; QA remota visitante3901440 pasó tras corregir limpieza receipt. PrivateAPI anónimo401, health200; sesiones reales no disponibles, no afirmar persistencia remota comprobada.
