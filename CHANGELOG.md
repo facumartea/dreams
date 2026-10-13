@@ -1,3 +1,9 @@
+# 2026-10-13 — Checkout directo aislado para oficial
+
+- Seleccionado envío gratis/confirmación directa de PR43 sin video, sobre oficial PR42. Backend v2 y frontend deben publicarse juntos mediante Pages fijado.
+-124tests/check47/audit/build Workers correctos; rollback c658e4da conservado. Carrito por cuenta separado, no aprobado para oficial sin sesiones reales.
+- Admin confirmado con correo original/rol; no credenciales modificadas ni contraseña accesible.
+
 # 2026-10-09 — Navegación/footer oficial publicados
 
 - c3cea8c/Pagesc658e4da SUCCESS, PR42/CI37881134803 verde120tests/check45/audit/builds.

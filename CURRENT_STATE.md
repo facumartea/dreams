@@ -1,3 +1,9 @@
+# Promoción oficial de checkout directo en preparación — 2026-10-13
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Rama codex/official-direct-checkout desde PR42/43fadbe; selección acotada PR43/d938a97 sin video/PR40/merge. 124tests/check47/build Workers/audit correctos. Pages requiere backend inmutable v2; oficial c658e4da y backend40e7b0a3 conservados para rollback. Carrito por cuenta aislado en otra rama y bloqueado para oficial por falta QA autenticada remota/acceso Auth Admin. Admin sigue admin@dreamsperfumes.com con UUID esperado/rol admin; contraseña no disponible/verificada. No cambios de credenciales. Docs: docs/official_direct_checkout.md. Próximo: PR/CI, preview estática de backend, configuración Pages, staging y promoción/QA. Porcentaje global no recalculado.
+
 # Navegación y footer oficiales publicados — 2026-10-09 UTC
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.

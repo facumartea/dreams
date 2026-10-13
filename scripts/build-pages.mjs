@@ -15,6 +15,8 @@ for (const [pathname, relative, content_type] of [
     ['/checkout.html', 'public/checkout.html', 'text/html; charset=utf-8'],
     ['/checkout-resultado.html', 'public/checkout-resultado.html', 'text/html; charset=utf-8'],
     ['/js/motion.js', 'public/js/motion.js', 'application/javascript; charset=utf-8'],
+    ['/js/carrito.js', 'public/js/carrito.js', 'application/javascript; charset=utf-8'],
+    ['/js/presentation.js', 'public/js/presentation.js', 'application/javascript; charset=utf-8'],
     ['/js/app.js', 'public/js/app.js', 'application/javascript; charset=utf-8'],
     ['/js/catalogo.js', 'public/js/catalogo.js', 'application/javascript; charset=utf-8'],
     ['/js/navigation.js', 'public/js/navigation.js', 'application/javascript; charset=utf-8'],
