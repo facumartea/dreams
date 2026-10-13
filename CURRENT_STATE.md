@@ -1,3 +1,27 @@
+# Admin buscador/imágenes en preview, oficial intacta — 2026-10-13
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Rama codex/admin-product-search/PR46 abierta sobrePR44/b33a2ee, preservaPR42/41/39/38/37/34; noPR45/video/merge. Fuentec5746969f552941e3e7469e57ef32721ed78e8a2, preview https://admin-search-review-dreams-perfumes.dreams-perfumes.workers.dev/admin, deploymentfa8761cd-6560-49b5-ac9b-c34d043c37ed. CI38397118296 SUCCESS139tests/check51/audit/builds; checkpoint posterior sólo docs, sin otro deploy.
+
+Buscador local sólo nombre/marca parcial/NFD/case/trim/limpiar/accesible, completo46sinpaginación/ordenIDdesc, recargas fueraorden ignoradas. Imagen syntax compartida sin HEAD/fetch backend/extensión requerida, invalidación inmediata/callbacks+timeout/guardarURL comprobada/retry/aviso temporal, bloqueo formulario/doblesubmit/reset/camposausentes corregidos. No Storage upload. QA local390/1440 buscador+módulos y dos PUTs sólo fixture9 por tamaño, reload/catalogo/detalle/imagen intacta/precio/URL/móvil/customer403 pasaron; no equivalen a Supabase remoto.
+
+QA remota pública/anónima3901440: health200/catálogo46/menús/búsqueda/reset/carrito visitante/persistencia/login/static/4assetsHash/secretliteralcheck pasaron, privadaAdmin+API403, sinpageerrors/overflow. No sesión Admin remota, no publicación oficial. Logs1HTTP401Supabase/api/products deldeployment; causa no probada, consultas posteriores200, invocationlogsdesactivados/cobertura limitada. TransporteGit503 aislado resuelto en lectura siguiente; SHA remoto confirmado.
+
+OficialPagesac755bbe/c83b148/backendd5df723d intacta; PREVIEW_READ_ONLYtrue conservado, sin DNS/tráfico/merge/roles/creds/esquema/productos reales cambiados. Nueva preview firma académica independiente por stdin seguro conserva funciones; SupabaseKey servidor heredada, no valores expuestos. Auditoría46URLs sintaxisvalidas/41originales/5fallbacks21/205/198/197/16/0pending; no enlaces sustituidos. Docs/capturas: docs/admin_search_images.md y /workspace/dreams-admin-search-evidence/local-*.png. Useremail noDisponible/intencional y PUTsinrevisionoptimista/recuperación uniforme otrosmódulos siguen deuda mayor, sin ampliación insegura.
+
+Gate oficial BLOQUEADO por falta sesión/credencial Admin legítima en gestor, no solicitar secretos porchat/adivinar/reset/privilegios para eludirlo. Verificar privado enpreview y401 antespromover; rollbackoficialac755bbe/backendd5df723d disponible sin ejecutarlo. Progreso global no recalculado. PUSH:SÍ; DEPLOY PREVIEW:SÍ; DEPLOY OFICIAL:NO.
+
+# Buscador y revisión Admin en preparación — 2026-10-13
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Rama codex/admin-product-search desde PR44/b33a2ee, no PR45/video ni merge. Oficialac755bbe/c83b148/backendd5df723d verificada e intacta. Búsqueda local nombre/brand sólo, NFD/case/trim/partial, label/limpiar/error/retry/ID monótono implementada. GETadminproducts sin paginación ordenIDdesc, consulta completa46reales.
+
+Imagen: helper sintaxis compartido sin HEAD/fetch servidor/extensiones obligatorias, invalidación inmediata URL/datosviejos/timeout, guardar sólo URL comprobada, retry/mensajes/aviso firmado, disabled tras reset/campos ausentes corregidos; formulario bloqueado durante guardado/doble submit ignorado. No Storage/upload. 139tests/check51/audit/builds correctos; QA local390/1440 sesionesfixture/buscador y dos PUTs sólo producto fixture9 por tamaño, reload/catalogo/detalle/conservar imagen/módulos/customer403 sinpageerrors/overflow. No Auth/escrituras remotas Supabase verificadas.
+
+Auditoría oficial46URLs válidas/noHTTP/no temporales conocidos/sinespacios,41originales cargadas/5fallbacks21/205/198/197/16/0pending; no modificar enlaces reales. OficialPREVIEW_READ_ONLYtrue, AuthAdmin/Secret proceso/sesión legítima ausentes; no cambiar permisos/creds. Docs: docs/admin_search_images.md. Próximo: PR/CI/preview aislada y comprobaciones remotas no autenticadas; gate de oficial requiere verificación autenticada exitosa, no sustituir por fixtures. Rollbackac755bbe/d5df723d conservado. Progreso global no recalculado.
+
 # Oficial checkout directo publicada — 2026-10-13
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.

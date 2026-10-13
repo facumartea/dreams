@@ -266,3 +266,10 @@ input,select,textarea{width:100%;min-height:48px;padding:.78rem 0;border:0;borde
 .presentation-products{margin:2rem 0;padding:0;list-style:none;text-align:left}
 .presentation-products li{display:flex;justify-content:space-between;gap:1rem;padding:.75rem 0;border-bottom:1px solid var(--border);overflow-wrap:anywhere}
 .presentation-products strong{flex-shrink:0}.presentation-result .summary-line{text-align:left}
+
+/* Admin product search: scoped to the existing product list. */
+.admin-product-search{display:flex;align-items:flex-end;gap:var(--s3);margin-bottom:var(--s3)}
+.admin-product-search .form-field{flex:1;min-width:0;margin:0}
+.admin-product-search .small-button,#retry-admin-products{min-height:44px}
+#admin-products-status{font-size:.75rem;min-height:1.4em;overflow-wrap:anywhere}
+@media(max-width:600px){.admin-product-search{flex-wrap:wrap}.admin-product-search .form-field{flex-basis:100%}}

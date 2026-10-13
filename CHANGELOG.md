@@ -1,3 +1,20 @@
+# 2026-10-13 — Preview de Admin publicada con gate autenticado
+
+- c574696/previewfa8761cd y PR46/CI139tests/check51/builds verdes; QA pública/anónima3901440 pasó, assets iguales y permisos403. Auth Admin real no disponible ni validado, oficial no publicada.
+-139tests/QA fixture3901440 de buscador/imágenes/bloqueo guardar/proveedorerror/retry/persistenciaimagen pasaron. Sin escrituras remotas en productos, roles/creds/esquema/DNS ni video.
+- Logs1Supabase401/api/products documentado con posteriores200, cobertura limitada. Cinco fallback de datos reales pendientes sin reemplazo. docs/admin_search_images.md con evidencia/rollback/pendientes.
+
+# 2026-10-13 — Guardado de producto estable durante preview de imagen
+
+- Formulario bloqueado en PUT/POST, imagen no habilita segundo envío, Editar/Limpiar no cambian contexto pendiente. Regresión y QA fixture3901440 con respuesta demorada pasaron.
+-139tests/check51/builds verdes; prueba legacy de reset conserva validación con firma ampliada. Sin datos/roles/credenciales/permisos reales cambiados.
+
+# 2026-10-13 — Buscador y revisión acotada Admin
+
+- Buscador sólo nombre/marca, sin diacríticos/case/espacios exteriores, local sin solicitudes por tecla y estados accesibles/limpiar/retry/respuesta obsoleta ignorada.
+- Imagen invalida URL anterior inmediatamente, exige comprobación actual, ignora respuesta tras timeout, ofrece retry/avisos claros y caducidad conocida; servidor/navegador comparten sintaxis segura sin HEAD/fetch backend ni extensión obligatoria. Guardar no se habilita tras reset vacío/campos ausentes tratados.
+-138tests/check51/audit/builds y QA local3901440 pasaron; escrituras sólo fixture9 local. Auditoría real46URLs/41originales/5fallbacks registrada sin mutar enlaces. Auth remota/producción condicionados, permisos intactos.
+
 # 2026-10-13 — Checkout directo oficial publicado y verificado
 
 - Pagesac755bbe/c83b148 y backendd5df723d/ec04a35 publicados sin video/carrito por cuenta, PR44 abierta y CI verde124tests/check47/builds.

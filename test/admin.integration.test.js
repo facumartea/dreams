@@ -172,3 +172,17 @@ test('Admin conserva URLs HTTPS directas y rechaza páginas de resultados de Goo
         assert.equal(database.state.products[0].image_url, direct_url);
     });
 });
+
+test('image survives reload, catalog/detail and unrelated updates; invalid changes never erase stored URL', async()=>{
+ const database=memory_database();const app=create_app({database,create_auth_client:()=>database,disable_request_log:true});
+ await serve(app,async base=>{
+  const url='https://cdn.example.invalid/image?id=7';let record={...product_data('Imagen conservada'),image_url:'  '+url+'  '};
+  const put=body=>fetch(base+'/api/admin/products/7',{...admin_options(base),method:'PUT',headers:{...admin_options(base).headers,'Content-Type':'application/json'},body:JSON.stringify(body)});
+  assert.equal((await put(record)).status,200);
+  let loaded=(await(await fetch(base+'/api/admin/products',admin_options(base))).json())[0];assert.equal(loaded.image_url,url);
+  record={...loaded,price:777};assert.equal((await put(record)).status,200);
+  assert.equal((await(await fetch(base+'/api/products/7')).json()).image_url,url);
+  assert.equal((await(await fetch(base+'/api/products')).json()).find(p=>p.id===7).image_url,url);
+  for(const image_url of ['', 'http://cdn.example.invalid/image','not a URL','https://cdn.example.invalid/\nimage']){assert.equal((await put({...record,image_url})).status,400);assert.equal(database.state.products[0].image_url,url);}
+ });
+});

@@ -25,11 +25,17 @@
 <div class="form-field"><label for="family">Familia olfativa</label><input id="family" required></div><div class="form-field"><label for="top_notes">Notas de salida</label><input id="top_notes" required></div><div class="form-field"><label for="heart_notes">Notas de corazón</label><input id="heart_notes" required></div><div class="form-field"><label for="base_notes">Notas de fondo</label><input id="base_notes" required></div><div class="form-field"><label for="description">Descripción</label><textarea id="description" required></textarea></div><div class="form-field"><label for="image_url">Imagen (ruta local o URL HTTPS directa)</label><input id="image_url" type="text" placeholder="https://sitio.com/perfume.webp" aria-describedby="image-url-help image-preview-message" required><small id="image-url-help">Usá una URL directa HTTPS de imagen. Los enlaces a resultados de Google no sirven.</small></div>
 <div class="admin-image-preview" id="image-preview" data-state="empty" hidden>
 <img id="image-preview-image" alt="Vista previa del perfume" referrerpolicy="no-referrer">
-<p id="image-preview-message" role="status" aria-live="polite"></p>
+<p id="image-preview-message" role="status" aria-live="polite"></p><button id="retry-image-preview" class="small-button" type="button" hidden>Reintentar imagen</button>
 </div><div class="form-field"><label><input id="featured" type="checkbox"> Destacar en inicio</label></div>
 <div class="form-message" id="admin-message"></div><div class="admin-actions"><button class="button button-dark" type="submit">Guardar producto</button><button class="button" type="button" id="cancel-edit">Limpiar</button></div>
 </form></section>
-<section class="admin-table-wrap"><div class="section-heading"><div><p class="eyebrow">BASE DE DATOS</p><h2>Productos</h2></div><span id="product-total"></span></div><div class="table-scroll"><table class="admin-table"><thead><tr><th>ID</th><th>Producto</th><th>Marca</th><th>Género</th><th>Disponibilidad</th><th>Precio</th><th>Acciones</th></tr></thead><tbody id="admin-products"></tbody></table></div></section>
+<section class="admin-table-wrap"><div class="section-heading"><div><p class="eyebrow">BASE DE DATOS</p><h2>Productos</h2></div><span id="product-total"></span></div><div class="admin-product-search">
+<div class="form-field"><label for="admin-product-search">Buscar productos</label><input id="admin-product-search" type="search" placeholder="Buscar por nombre o marca" autocomplete="off" aria-controls="admin-products" aria-describedby="admin-products-status"></div>
+<button id="clear-product-search" class="small-button" type="button" disabled>Limpiar búsqueda</button>
+</div>
+<p id="admin-products-status" class="muted" role="status" aria-live="polite">Cargando productos…</p>
+<button id="retry-admin-products" class="small-button" type="button" hidden>Reintentar</button>
+<div class="table-scroll"><table class="admin-table"><thead><tr><th>ID</th><th>Producto</th><th>Marca</th><th>Género</th><th>Disponibilidad</th><th>Precio</th><th>Acciones</th></tr></thead><tbody id="admin-products"></tbody></table></div></section>
 </div></section>
 <section id="tab-cupones" class="admin-tab-content">
 <div class="admin-layout">
@@ -48,5 +54,7 @@
 <section id="tab-opiniones" class="admin-tab-content"><div class="section-heading"><div><p class="eyebrow">COMUNIDAD</p><h2>Opiniones</h2></div><label class="admin-review-search" for="review-search"><span>Buscar</span><input id="review-search" type="search" placeholder="Nombre o comentario"></label></div><p class="muted admin-section-note">El modelo actual permite editar o eliminar. La visibilidad/ocultamiento no existe todavía en el esquema y no se simula.</p><div class="review-grid admin-review-grid" id="admin-reviews"></div></section>
 </main>
 <script src="/js/safe.js"></script>
+<script src="/js/admin-product-search.js"></script>
+<script src="/js/admin-image-url.js"></script>
 <script src="/js/admin-console-v3.js"></script>
 </body></html>
