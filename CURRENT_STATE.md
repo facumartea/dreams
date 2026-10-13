@@ -1,14 +1,26 @@
-# Oficial checkout directo publicada — 2026-10-13
+# Última preview de carrito — 2026-10-13
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
 
-Oficial https://dreams-perfumes.pages.dev: Pagesac755bbe/c83b148 SUCCESS, backendd5df723d fuenteec04a35/Secret firma propia nuevo entorno. CI38343215733 SUCCESS124tests/check47/audit/builds, PR44 abierta sobrePR42 sin merge. Checkpoint documental posterior no cambia deployment. Video y persistencia por cuenta PR45 EXCLUIDOS: hero estático/módulo account-cart ausente/API404. Envío gratis y confirmación directa v2 académica publicados.
+Fuente53572ba23f15f2d2256a1bae6778a3bcfea9f9bd, previewaccount-cart-review/deploymentadc45355-a812-4827-8e61-8f0082e10b86. 134tests/check50/builds locales correctos tras conservar unavailable cuando cae stock. QA remota visitante390/1440 del nuevo commit53572ba pasó sin pageerrors/overflow; sesión autenticada remota sigue bloqueada, no publicar carrito oficial. Checkpoint integra únicamente documentación de basePR44/b33a2ee para resolver conflicto de CI, sin merge de PRs GitHub ni cambios de código ajenos. Docs/official_direct_checkout.md recibe evidencia oficial completa. CI38344683228/1507b81 SUCCESS134tests/check50/audit/builds, código idéntico53572ba; PR45 mergeable/clean. Checkpoint posterior sólo documental, sin redeploy.
 
-QA Chromium390/1440 Worker/staging/oficial completa: catálogo46/menús/filtros/carrito visitante, total/envío0, Tarjeta sin datos en red/storage/consola, dobleclic/retry antes-después/referencia/reload/empty inválido sinpageerrors/overflow. Hero/foto/hover/CTA/contactos/loginlegacy/Admin anónimo403 comprobados. Harness hover bbox inicialmente falló por scroll automático; medida corregida, no código. Capturas/docs: docs/official_direct_checkout.md y /workspace/dreams-official-direct-evidence.
+# Carrito PR45 en preview, oficial checkout PR44 publicada — 2026-10-13
 
-Rollback c658e4da y backend40e7b0a3 conservados/HTTP200/APIendpoint verificado, no ejecutado. DB0orders/46productos/stockhash7a58615dd40e0dcfd898a52aa108b820; nueva migración carrito en PR45 aplicada/SQLrollback dejó0filas, sin stock/pedidos/Auth cambiados. Muestra logs1Supabase401 en reviews del primer backend9eb, causa no confirmada; reviews actual200/[], invocationoff/cobertura limitada. No DNS/merge/video/credenciales/pagos alterados.
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
 
-Admin sigue admin@dreamsperfumes.com, UUID esperado y roladmin; sin correo pendiente ni contraseña accesible/verificada. Login /cuenta.html, panel /admin; acceso autenticado real no comprobado. PR45 prepara carrito por cuenta en preview independiente pero faltan dos sesiones reales y acceso Auth Admin/Secret del proceso; NO activar oficial antes de validarlos. No crear identidades verificadas ficticias ni cambiar política Auth. Porcentaje global no recalculado. Próximo: habilitar acceso seguro a dos cuentas de prueba y QA autenticada de PR45 antes de promoción. PUSH/DEPLOY OFICIAL:SÍ.
+PR45/codex/account-cart-official, fuente736edfd/CI38343943255 SUCCESS134tests/check50/audit/builds. Preview https://account-cart-review-dreams-perfumes.dreams-perfumes.workers.dev/deployment5a6b0076-467d-42db-add5-8af0e188ac7d. BasePR44/c83b148→PR42/41/39/38/37/34, sin merge/video. Checkout directo seleccionaPR43; dependencia no integraPR40. Checkpoint posterior sólo docs, no otro deploy.
+
+Carrito servidor por UUID Auth/scope/RLS y RPC atómica idempotente preparado. SQL rollback verifies permisos/merge/replay/stock/consume, cero filas; QA local3901440 dos sesionesfixture/otro navegador/logout/cambio/retry pasó. QA remota sólo VISITANTE3901440: menús/filtros/carrito local/checkout/retry/receipt/reload pasaron, health200, privateAPI401 anónimo. Primera QA reveló limpieza errónea receiptvisitante: corregida/nueva regresión,134tests. No afirmar aislamiento o persistencia autenticada remota.
+
+OFICIAL https://dreams-perfumes.pages.dev publicada por PR44, Pagesac755bbe/c83b148 SUCCESS/backendd5df723d/ec04a35, CI38343215733 SUCCESS124tests/check47/builds. Fuente no incorpora account-cart: endpoint404/heroestático, envío gratis/Tarjeta/confirmación directa v2, menús/contactos preservados y QA remoto3901440 correcta. Recuperación c658e4da/backend40e7 disponibles200/APIrollback sin ejecutarlo. Workerprincipal f73d5087 al100%, previewacademic-review7c3cd341/video intacta, sinDNS ni merges. Docs oficiales: docs/official_direct_checkout.md.
+
+DB0carts/0operations/0orders/46productos/stockhash7a58615dd40e0dcfd898a52aa108b820; nueva migración aditiva aplicada con RLS/operationsserver-only. Sin crear cuentas ni modificar stock/Auth/admin/password. Admin comprobado admin@dreamsperfumes.com,UUIDesperado/roladmin/sincorreo pendiente; contraseña no accesible/verificada. Login /cuenta.html, panel /admin, autenticado remoto no probado. Supabase Auth Admin/Secret proceso ausentes; anonymous deshabilitado y no activado. Promoción de persistencia por usuario BLOQUEADA hasta dos sesiones reales/controladas. No credenciales por chat ni resets. Progreso global no recalculado. Siguiente: acceso seguro/identidades de prueba y matriz autenticada; no promover por testsfixture. PUSH:SÍ; DEPLOY OFICIAL:SÍ(sólo checkout); DEPLOY PREVIEW:SÍ.
+
+# Carrito por cuenta preparado, promoción bloqueada — 2026-10-13
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Rama codex/account-cart-official desde PR44/c83b148; preserva oficial estática/PR42, checkout directo seleccionadoPR43, sin video/merge. API por UUID verificado/scope, RPC atómica/operaciones idempotentes, combinación max/stock, outbox propia/epoch/revisiones/logout y precios actuales implementados. Migración aditiva 20261013032746 aplicada; SQL con rollback verificó RLS/replay/stock/consume, cero filas conservadas. QA local fixture390/1440 pasó; no equivale a remoto autenticado. Acceso Auth Admin/Secret proceso ausente y anonymous deshabilitado; NO cuentas de prueba creadas/admin reset. Oficial debe recibir sólo PR44 checkout, no persistencia hasta dos sesiones legítimas. Docs: docs/account_cart.md. Próximo: terminar CI/preview aislada, habilitar acceso seguro y QA autenticada antes de promoción. Progreso global no recalculado.
 
 # Promoción oficial de checkout directo en preparación — 2026-10-13
 

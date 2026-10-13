@@ -1,9 +1,17 @@
-# Resultado oficial — 2026-10-13
+# Estado final de esta tanda — 2026-10-13
 
-- Checkout directo aislado/PR44/CI/Workers/staging/Pages oficial: COMPLETADOS.
-- QA remota oficial390/1440 y rollback recuperable: COMPLETADOS en cobertura documentada; rollback no ejecutado.
-- Carrito por cuenta PR45: implementación/SQL/pruebas locales completadas; QA autenticada remota y promoción BLOQUEADAS por acceso seguro/identidades controladas.
-- Admin original/rol: VERIFICADOS; contraseña/login real: NO disponibles ni verificados, no reset.
+- PR44 checkout oficial/CI/publicación/QA3901440: COMPLETADOS.
+- PR45 carrito por usuario/código/migración/RLS/pruebas locales/CI/preview visitante: COMPLETADOS en cobertura declarada.
+- Crear dos cuentas de prueba y QA autenticada remota: BLOQUEADOS por falta de vía segura a Auth Admin e identidades controladas.
+- Publicación oficial de carrito: NO REALIZADA, depende del punto anterior.
+- Admin vigente: VERIFICADO por datos; contraseña/acceso real: NO disponibles/verificados, no cambios.
+
+# Carrito por cuenta — 2026-10-13
+
+- API/cliente/migración/SQL RLS con rollback: COMPLETADOS.
+- QA local de dos sesiones fixture390/1440: COMPLETADA.
+- PR/CI/preview aislada: EN CURSO.
+- QA autenticada remota y promoción oficial: BLOQUEADAS por acceso Auth Admin/identidades de prueba.
 
 # Promoción oficial y carrito por cuenta — 2026-10-13
 

@@ -1,8 +1,32 @@
-# 2026-10-13 — Checkout directo oficial publicado y verificado
+# 2026-10-13 — Última revisión de carrito validada en su cobertura
 
-- Pagesac755bbe/c83b148 y backendd5df723d/ec04a35 publicados sin video/carrito por cuenta, PR44 abierta y CI verde124tests/check47/builds.
-- QA real390/1440 envío0/total/confirmación/referencia/retry y carrito/menús/filtros, hero estático/contactos/acceso sin errores de página; tarjeta no en red/storage/consola.
-- Admin original verificado por UUID/rol, contraseña no accesible. Rollbackc658/backend40e7 conservados; no DNS/merge/Auth/pagos/stock/pedidos cambiados. Carrito por cuenta PR45 bloqueado hasta QA autenticada remota.
+- Preview53572ba/adc45355 pasó QA visitante3901440; CI1507b81/38344683228 verde134tests/check50/builds. Dependencia documental resuelta y PR45 sin conflictos.
+- Persistencia/aislamiento autenticados remotos siguen bloqueados; no promovidos a oficial.
+
+# 2026-10-13 — Dependencia documental PR44 actualizada
+
+- Resueltos conflictos sólo en CURRENT_STATE/PLAN/CHANGELOG, conservando estado del carrito e incorporando documento de publicación oficial. No cambios de código del checkout/carrito por la actualización. PRs GitHub abiertas.
+
+# 2026-10-13 — Disponibilidad conservada al reconciliar cotizaciones
+
+- Conservado indicador de stock insuficiente junto a cantidad persistida; evita habilitar Comprar/WhatsApp antes de resolver disponibilidad. Regresión ampliada/134tests/check50/builds correctos; sólo rama de carrito, no oficial.
+
+# 2026-10-13 — Preview de carrito y bloqueo de promoción documentados
+
+- Publicado736edfd/5a6b0076, CI134tests/check50/builds; QA remota visitante3901440 pasó tras corregir limpieza receipt. PrivateAPI anónimo401, health200; sesiones reales no disponibles, no afirmar persistencia remota comprobada.
+- Oficialac755bbe/c83b148 checkout directo sin módulo cuenta/video, Workerprincipal y previewvideo intactos. SQL conserva0carts/0operations/0orders/46productos/stock. No crear usuarios ni modificar credenciales/roles/DNS.
+- Bloqueo concreto y matriz autenticada/recursos de prueba pendientes en docs/account_cart.md. No activar oficial sin QA real.
+
+# 2026-10-13 — Corrección de recibo visitante en preview de carrito
+
+- QA remota detectó limpieza incorrecta de recibo académico al inicializar visitante; corregida y añadida regresión.
+-134tests/check50/builds pasaron. Oficial excluye este módulo y conserva checkout remoto verificado.
+
+# 2026-10-13 — Carrito por usuario aislado preparado
+
+- API ligada a UUID Auth y scope firmado; SQL atómico/idempotente con RLS, merge max y stock, precios actuales sin órdenes/stock comercial.
+- Cola de cantidades por dueño/retry/epoch/revisiones y limpieza logout; visitante local conservado, consume académico no borra cambios ajenos.
+- Migración aditiva aplicada y SQL rollback verificados, tablas vacías. QA local390/1440 con fixtures pasó; remoto autenticado pendiente por acceso real ausente. No activar oficial.
 
 # 2026-10-13 — Checkout directo aislado para oficial
 

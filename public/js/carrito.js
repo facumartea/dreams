@@ -1,3 +1,4 @@
+var cart_account = typeof account_cart === 'undefined' ? null : account_cart;
 let cart_request_id = 0;
 let academic_cart_summary = null;
 
@@ -24,7 +25,7 @@ function render_cart(cart = get_cart(), whatsapp_url = null, checkout_enabled = 
             <div>
                 <p>${escape_html(item.brand)}</p>
                 <h3>${escape_html(item.name)}</h3>
-                <p>${format_price(item.price)} cada uno</p>
+                <p>${item.unavailable ? 'No disponible en la cantidad solicitada' : format_price(item.price) + ' cada uno'}</p>
                 <div class="quantity-controls">
                     <button data-action="minus" aria-label="Quitar una unidad">−</button>
                     <span>${item.quantity}</span>
@@ -39,8 +40,8 @@ function render_cart(cart = get_cart(), whatsapp_url = null, checkout_enabled = 
         attach_image_fallback(row.querySelector('img'));
         row.querySelector('[data-action="minus"]').addEventListener('click', () => update_cart(item.id, -1));
         row.querySelector('[data-action="plus"]').addEventListener('click', () => update_cart(item.id, 1));
-        row.querySelector('.remove-button').addEventListener('click', () => {
-            remove_from_cart(item.id);
+        row.querySelector('.remove-button').addEventListener('click', async () => {
+            await remove_from_cart(item.id);
             show_toast('Producto eliminado del carrito.');
             load_cart();
         });
@@ -70,20 +71,22 @@ function render_cart(cart = get_cart(), whatsapp_url = null, checkout_enabled = 
     `;
 
     document.getElementById('clear-cart').addEventListener('click', () => {
-        localStorage.removeItem('dreams_cart');
+        clear_cart();
         update_cart_count();
         load_cart();
     });
     document.getElementById('retry-cart')?.addEventListener('click', load_cart);
 }
 
-function update_cart(product_id, change) {
-    change_quantity(product_id, change);
+async function update_cart(product_id, change) {
+    await change_quantity(product_id, change);
     load_cart();
 }
 
 async function load_cart() {
     const request_id = ++cart_request_id;
+    try { if(cart_account) await cart_account.ready(); } catch { render_cart(get_cart(),null,false,'error'); return; }
+    if (request_id !== cart_request_id) return;
     const cart = get_cart();
     render_cart(cart);
     if (!cart.length) return;
@@ -102,8 +105,8 @@ async function load_cart() {
         if (request_id !== cart_request_id) return;
         if (!response.ok) throw new Error(data.error || 'No se pudo verificar el carrito.');
         academic_cart_summary = data.shipping === 0 && typeof data.shipping_label === 'string' ? { shipping: data.shipping, shipping_label: data.shipping_label } : null;
-        save_cart(data.items);
-        render_cart(data.items, data.whatsapp_url, checkout_response, 'ready');
+        save_cart(data.items, {reconcile:true});
+        render_cart(cart_account?.active() ? get_cart() : data.items, get_cart().some(i=>i.unavailable) ? null : data.whatsapp_url, checkout_response && !get_cart().some(i=>i.unavailable), 'ready');
         if (data.warnings?.length) show_toast(data.warnings.join(' '));
     } catch (error) {
         if (request_id !== cart_request_id) return;
@@ -116,3 +119,5 @@ document.addEventListener('DOMContentLoaded', load_cart);
 window.addEventListener('storage', event => {
     if (event.key === 'dreams_cart' || event.key === null) load_cart();
 });
+
+window.addEventListener('dreams:cart', load_cart);

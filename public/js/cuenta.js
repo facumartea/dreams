@@ -102,6 +102,7 @@ async function login(event) {
             method: 'POST', headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email: document.getElementById('login-email').value.trim(), password: document.getElementById('login-password').value })
         });
+        localStorage.setItem('dreams_account_changed', crypto.randomUUID());
         set_message(message, data.message || 'Sesión iniciada.', 'success');
         window.location.assign(data.redirect || '/cuenta.html');
     } catch (error) {
@@ -156,7 +157,10 @@ function render_logged_user(user) {
         button.disabled = true;
         set_message(message, 'Cerrando sesión…');
         try {
+            await account_cart?.ready();
             await request_json('/api/auth/logout', { method: 'POST' });
+            account_cart?.logout();
+            localStorage.setItem('dreams_account_changed', crypto.randomUUID());
             window.location.assign('/cuenta.html');
         } catch (error) {
             set_message(message, error.message, 'error');

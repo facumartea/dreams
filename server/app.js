@@ -3,6 +3,7 @@ const { auth_cookie, session } = require('./auth-cookies');
 const { google_routes } = require('./google-auth');
 const { presentation_checkout, academic_summary } = require('./presentation-checkout');
 const contacts = require('./contacts');
+const { install_account_cart } = require('./account-cart');
 const { randomUUID } = require('node:crypto');
 const { normalize_product_brand, product_write_payload, brand_column } = require('./product-schema');
 const express = require('express');
@@ -262,9 +263,9 @@ function create_app(options = {}) {
         if (request.path === '/api' || request.path.startsWith('/api/') || ['/admin', '/admin.html'].includes(request.path) || /dreams_(access|refresh)_token=/.test(request.headers.cookie || '')) response.setHeader('Cache-Control', 'no-store');
         next();
     });
-    app.use('/api/auth', rateLimit({ windowMs: 900000, limit: 20, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiados intentos. Probá nuevamente en unos minutos.' } }));
+    app.use('/api/auth', rateLimit({ skip: request => !unsafe_methods.has(request.method), windowMs: 900000, limit: 20, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiados intentos. Probá nuevamente en unos minutos.' } }));
     app.use('/api/inquiries', rateLimit({ windowMs: 900000, limit: 10, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiadas consultas. Probá nuevamente en unos minutos.' } }));
-    app.use('/api/cart', rateLimit({ windowMs: 900000, limit: 30, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiadas verificaciones del carrito. Probá nuevamente en unos minutos.' } }));
+    app.use('/api/cart', rateLimit({ windowMs: 900000, limit: 180, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiadas verificaciones del carrito. Probá nuevamente en unos minutos.' } }));
     app.use('/api/presentation', rateLimit({ windowMs: 900000, limit: 60, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiados intentos. Probá nuevamente en unos minutos.' } }));
     app.use('/api/checkout', rateLimit({ skip: request => !unsafe_methods.has(request.method), windowMs: 900000, limit: 15, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiados intentos de pago. Probá nuevamente en unos minutos.' } }));
     app.use('/api/coupons', rateLimit({ windowMs: 900000, limit: 30, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiados intentos. Probá nuevamente en unos minutos.' } }));
@@ -272,7 +273,7 @@ function create_app(options = {}) {
     const review_limiter = rateLimit({ windowMs: 3600000, limit: 5, standardHeaders: true, legacyHeaders: false, message: { error: 'Publicaste varias opiniones. Probá nuevamente más tarde.' } });
     app.use('/api/reviews', (request, response, next) => request.method === 'POST' ? review_limiter(request, response, next) : next());
     app.use((request, response, next) => {
-        const safe = ['/api/cart/quote', '/api/auth/google', '/api/auth/login', '/api/auth/logout', '/api/presentation/session', '/api/presentation/payment', '/api/presentation/result'];
+        const safe = ['/api/cart/account', '/api/cart/quote', '/api/auth/google', '/api/auth/login', '/api/auth/logout', '/api/presentation/session', '/api/presentation/payment', '/api/presentation/result'];
         if (options.preview_read_only && unsafe_methods.has(request.method) && !safe.includes(request.path)) return response.status(403).json({ error: 'Esta vista de prueba permite consultas; las operaciones comerciales están protegidas.' });
         next();
     });
@@ -326,10 +327,11 @@ function create_app(options = {}) {
     const route = (method, url, ...handlers) => app[method](url, ...handlers.map(handler => handler === login || handler === admin ? handler : async_route(handler)));
     const fail_if = result => { if (result.error) throw result.error; return result.data; };
 
+    install_account_cart({ route, login, database, enabled: options.account_cart_enabled, signing_key: options.presentation_signing_key, product_brand_column });
     presentation.install(app, route);
     google_routes(app, { create_oauth_client: options.create_oauth_client, provider_enabled: async () => options.google_access_ready === true && await (options.google_provider_enabled || (async () => false))(), app_base_url, production, profile_for, logger });
     route('get', '/api/auth/google/config', async (request, response) => response.json({ enabled: Boolean(options.google_access_ready === true && options.create_oauth_client && app_base_url && await (options.google_provider_enabled || (async () => false))()) }));
-    route('get', '/api/config', async (request, response) => response.json({ whatsapp_number, contact_email, contacts, app_name: 'DREAMS', demo_auto_confirm_email, preview_read_only: options.preview_read_only === true }));
+    route('get', '/api/config', async (request, response) => response.json({ whatsapp_number, contact_email, contacts, app_name: 'DREAMS', demo_auto_confirm_email, preview_read_only: options.preview_read_only === true, account_cart: options.account_cart_enabled === true }));
     route('get', '/api/checkout/config', async (request, response) => response.json({ enabled: presentation.ready || checkout_enabled, provider: presentation.ready ? 'presentation_demo' : checkout_enabled ? payment_provider.name : null, mode: presentation.ready ? 'demo' : checkout_mode, show_test_data: presentation.ready || show_test_data }));
     route('get', '/api/products', async (request, response) => {
         const search = String(request.query.search || '').trim().replace(/[^\p{L}\p{N}\s'-]/gu, '').slice(0, 80);
