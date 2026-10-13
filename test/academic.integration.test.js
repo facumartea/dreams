@@ -2,11 +2,11 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const { create_app } = require('../server/app');
 
-function db(role = 'customer') {
+function db(role = 'customer', price = 120) {
     const state = { writes: 0 };
     return { state, auth: { getUser: async token => ({ data: { user: token === 'verified' ? { id: 'fixture', email: 'fixture@example.com', user_metadata: { role: 'admin' } } : null } }) }, from(table) {
         if (!['products', 'profiles'].includes(table)) throw new Error('Commercial data must not be accessed by presentation');
-        const q = { select() { return q; }, eq() { return q; }, in() { return q; }, maybeSingle() { return q; }, then(resolve, reject) { return Promise.resolve({ data: table === 'profiles' ? { name: 'Fixture', role } : [{ id: 7, brand: 'Fixture', name: 'Test product', price: 120, stock: 3 }], error: null }).then(resolve, reject); } };
+        const q = { select() { return q; }, eq() { return q; }, in() { return q; }, maybeSingle() { return q; }, then(resolve, reject) { return Promise.resolve({ data: table === 'profiles' ? { name: 'Fixture', role } : [{ id: 7, brand: 'Fixture', name: 'Test product', price, stock: 3 }], error: null }).then(resolve, reject); } };
         for (const method of ['insert', 'upsert', 'update', 'delete']) q[method] = () => { state.writes++; throw new Error('No writes allowed'); };
         return q;
     } };
@@ -30,32 +30,57 @@ test('presentation is disabled by default and requires its own signing secret, i
     await serve({ presentation_checkout: true }, async base => { assert.equal((await post(base, '/api/presentation/session', {})).status, 404); assert.equal((await (await fetch(base + '/api/checkout/config')).json()).enabled, false); });
     await serve(enabled, async base => { const config = await (await fetch(base + '/api/checkout/config')).json(); assert.equal(config.enabled, true); assert.equal(config.provider, 'presentation_demo'); assert.equal((await post(base, '/api/checkout/session', {})).status, 403); });
 });
-test('signed presentation recalculates products, isolates stock/orders, replays deterministically and verifies all outcomes', async () => {
+test('direct academic confirmation recalculates products, has zero shipping, replays deterministically and never writes orders or stock', async () => {
     const database = db();
+    const references = new Set();
     await serve({ ...enabled, database }, async base => {
-        for (const scenario of ['approved', 'rejected', 'pending', 'error']) {
-            const created = await post(base, '/api/presentation/session', { items: [{ id: 7, quantity: 2 }], scenario, intent_id: require('node:crypto').randomUUID() });
+        for (let i = 0; i < 4; i++) {
+            const intent_id = require('node:crypto').randomUUID();
+            const body = { items: [{ id: 7, quantity: 2 }], intent_id };
+            const created = await post(base, '/api/presentation/session', body);
             assert.equal(created.status, 200);
             const cookie = created.headers.getSetCookie()[0].split(';')[0];
-            const data = await created.json(); assert.equal(data.subtotal, 240); assert.equal(data.shipping, null);
-            const pay = await post(base, '/api/presentation/payment', { ticket: data.ticket }, cookie); const receipt = await pay.json();
-            assert.equal(receipt.status, scenario);
+            const data = await created.json();
+            assert.equal(data.subtotal, 240); assert.equal(data.shipping, 0); assert.equal(data.total, data.subtotal); assert.equal(data.shipping_label, 'Envío gratis');
+            const receipt = await (await post(base, '/api/presentation/payment', { ticket: data.ticket }, cookie)).json();
+            assert.equal(receipt.status, 'completed');
             assert.deepEqual(await (await post(base, '/api/presentation/payment', { ticket: data.ticket }, cookie)).json(), receipt);
+            // If the first session response is lost, the same intent keeps its reference.
+            const retry = await (await post(base, '/api/presentation/session', body, cookie)).json();
+            const retried = await (await post(base, '/api/presentation/payment', { ticket: retry.ticket }, cookie)).json();
+            assert.equal(retried.reference, receipt.reference);
             const result = await (await post(base, '/api/presentation/result', { receipt: receipt.receipt }, cookie)).json();
-            assert.equal(result.status, scenario); assert.equal(result.subtotal, 240); assert.equal(result.simulated, true); assert.match(result.reference, /^DEMO-/);
+            assert.equal(result.status, 'completed'); assert.equal(result.subtotal, 240); assert.equal(result.total, 240); assert.equal(result.shipping, 0); assert.equal(result.simulated, true);
+            assert.match(result.reference, /^DREAMS-[0-9A-F]{32}$/); references.add(result.reference);
+            assert.deepEqual(await (await post(base, '/api/presentation/result', { receipt: receipt.receipt }, cookie)).json(), result);
             assert.equal((await post(base, '/api/presentation/payment', { ticket: data.ticket }, 'dreams_presentation=11111111-1111-4111-8111-111111111111')).status, 400);
             assert.equal((await post(base, '/api/presentation/result', { receipt: receipt.receipt.slice(0, -5) + 'wrong' }, cookie)).status, 400);
             assert.equal((await post(base, '/api/presentation/payment', { ticket: receipt.receipt }, cookie)).status, 400);
         }
     });
-    assert.equal(database.state.writes, 0);
+    assert.equal(references.size, 4); assert.equal(database.state.writes, 0);
 });
-test('presentation rejects sensitive fields, browser totals, invalid scenarios and unavailable quantities', async () => {
+test('academic requests reject card data, client totals, old card scenarios, empty or invalid carts and unavailable quantities', async () => {
     await serve(enabled, async base => {
-        const body = { items: [{ id: 7, quantity: 1 }], scenario: 'approved', intent_id: require('node:crypto').randomUUID() };
-        for (const extra of [{ card_number: '4242424242424242' }, { cvv: '123' }, { total: 1 }, { buyer_email: 'x@example.com' }, { scenario: 'paid' }, { items: [{ id: 7, quantity: 1, price: 1 }] }]) assert.equal((await post(base, '/api/presentation/session', { ...body, ...extra })).status, 400);
-        assert.equal((await post(base, '/api/presentation/session', { ...body, items: [{ id: 7, quantity: 4 }] })).status, 409);
+        const body = { items: [{ id: 7, quantity: 1 }], intent_id: require('node:crypto').randomUUID() };
+        for (const extra of [{ card_number: 'FAKE-CARD' }, { cvv: 'XXX' }, { total: 1 }, { buyer_email: 'x@example.com' }, { scenario: 'approved' }, { intent_id: 'invalid' }, { items: [{ id: 7, quantity: 1, price: 1 }] }]) assert.equal((await post(base, '/api/presentation/session', { ...body, ...extra })).status, 400);
+        for (const items of [[], [{ id: 7, quantity: 0 }], [{ id: 7, quantity: -1 }], [{ id: 7, quantity: 4 }]]) assert.equal((await post(base, '/api/presentation/session', { ...body, items })).status, 409);
+        assert.equal((await post(base, '/api/presentation/payment', { ticket: 'forged', cvv: 'XXX' })).status, 400);
+        assert.equal((await post(base, '/api/presentation/result', { receipt: 'forged', card_number: 'FAKE-CARD' })).status, 400);
         assert.equal((await post(base, '/api/presentation/result', { receipt: 'forged' })).status, 400);
+    });
+});
+test('academic confirmation cannot finalize a nonfinite or nonpositive server quote', async () => {
+    for (const price of [NaN, Infinity, -1, 0]) await serve({ ...enabled, database: db('customer', price) }, async base => {
+        assert.equal((await post(base, '/api/presentation/session', { items: [{ id: 7, quantity: 1 }], intent_id: require('node:crypto').randomUUID() })).status, 409);
+    });
+});
+test('free shipping and WhatsApp total apply only to academic quote, preserving the independent commercial flow', async () => {
+    for (const academic of [false, true]) await serve({ ...(academic ? enabled : {}), whatsapp_number: '5491112345678' }, async base => {
+        const quote = await (await post(base, '/api/cart/quote', { items: [{ id: 7, quantity: 2 }] })).json();
+        assert.equal(quote.total, 240);
+        if (academic) { assert.equal(quote.shipping, 0); assert.equal(quote.shipping_label, 'Envío gratis'); assert.match(decodeURIComponent(quote.whatsapp_url), /Envío gratis/); }
+        else { assert.equal(quote.shipping, undefined); assert.match(decodeURIComponent(quote.whatsapp_url), /Envío a consultar, no incluido/); }
     });
 });
 test('all admin modules reject anonymous and user-editable admin metadata; preview blocks writes even for an administrator', async () => {

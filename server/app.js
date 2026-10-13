@@ -1,7 +1,7 @@
 const path = require('node:path');
 const { auth_cookie, session } = require('./auth-cookies');
 const { google_routes } = require('./google-auth');
-const { presentation_checkout } = require('./presentation-checkout');
+const { presentation_checkout, academic_summary } = require('./presentation-checkout');
 const contacts = require('./contacts');
 const { randomUUID } = require('node:crypto');
 const { normalize_product_brand, product_write_payload, brand_column } = require('./product-schema');
@@ -407,11 +407,12 @@ function create_app(options = {}) {
         response.status(201).json({ message: 'Opinión publicada.' });
     });
     route('post', '/api/cart/quote', async (request, response) => {
-        const quote = await quote_cart(database, request.body.items, request.body.coupon_code, product_brand_column);
+        const quote = await quote_cart(database, request.body.items, presentation.ready ? '' : request.body.coupon_code, product_brand_column);
         if (quote.error) return response.status(400).json({ error: quote.error });
         const lines = quote.items.map(item => `${item.quantity} × ${item.brand} ${item.name} — ${item.price * item.quantity} ARS`);
-        const text = ['Hola DREAMS, quiero consultar por este carrito:', ...lines, `Subtotal de productos: ${quote.total} ARS. Envío a consultar, no incluido.`].join('\n');
-        response.json({ ...quote, whatsapp_url: quote.items.length && /^\d{8,15}$/.test(whatsapp_number) ? `https://wa.me/${whatsapp_number}?text=${encodeURIComponent(text)}` : null });
+        const summary = presentation.ready ? academic_summary(quote.subtotal) : null;
+        const text = ['Hola DREAMS, quiero consultar por este carrito:', ...lines, summary ? `Total: ${summary.total} ARS. ${summary.shipping_label}.` : `Subtotal de productos: ${quote.total} ARS. Envío a consultar, no incluido.`].join('\n');
+        response.json({ ...quote, ...(summary || {}), whatsapp_url: quote.items.length && /^\d{8,15}$/.test(whatsapp_number) ? `https://wa.me/${whatsapp_number}?text=${encodeURIComponent(text)}` : null });
     });
     route('post', '/api/coupons/validate', async (request, response) => {
         const quote = await quote_cart(database, request.body.items, request.body.code, product_brand_column);

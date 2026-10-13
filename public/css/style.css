@@ -267,3 +267,7 @@ input,select,textarea{width:100%;min-height:48px;padding:.78rem 0;border:0;borde
 .hero-video-control[data-paused="true"]::before{width:0;height:0;border:0;border-top:7px solid transparent;border-bottom:7px solid transparent;border-left:11px solid currentColor;margin-left:3px}
 .hero-video-control:focus-visible{outline:2px solid var(--ivory);outline-offset:4px}
 @media(max-height:600px) and (min-width:600px){.hero-video-layout .hero-image{bottom:0;height:100%}}
+.presentation-result .order-reference strong{max-width:100%;overflow-wrap:anywhere}
+.presentation-products{margin:2rem 0;padding:0;list-style:none;text-align:left}
+.presentation-products li{display:flex;justify-content:space-between;gap:1rem;padding:.75rem 0;border-bottom:1px solid var(--border);overflow-wrap:anywhere}
+.presentation-products strong{flex-shrink:0}.presentation-result .summary-line{text-align:left}
