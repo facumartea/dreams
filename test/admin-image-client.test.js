@@ -9,7 +9,7 @@ test('known expiring links are warnings, not extension-based rejections',()=>{
  assert.equal(images.temporary_image_url('https://cdn.example.invalid/image?width=800&format=webp'),false);
 });
 function harness(){const nodes=new Map(),timers=new Map();let n=0;const node=id=>{if(!nodes.has(id))nodes.set(id,{value:'',textContent:'',dataset:{},disabled:false,hidden:false,removeAttribute(){},setAttribute(){},reset(){}});return nodes.get(id)};
- const submit=node('submit');const context=vm.createContext({document:{getElementById:node,querySelector:()=>submit,addEventListener(){}},window:{setTimeout(fn,ms){timers.set(++n,{fn,ms});return n},clearTimeout(id){timers.delete(id)}},DreamsAdminImages:images,URL,Intl});vm.runInContext(readFileSync(require.resolve('../public/js/admin.js'),'utf8'),context);
+ const submit=node('submit');node('product-form').elements=[submit,node('image_url'),node('name')];const context=vm.createContext({document:{getElementById:node,querySelector:()=>submit,addEventListener(){}},window:{setTimeout(fn,ms){timers.set(++n,{fn,ms});return n},clearTimeout(id){timers.delete(id)}},DreamsAdminImages:images,URL,Intl});vm.runInContext(readFileSync(require.resolve('../public/js/admin.js'),'utf8'),context);
  return{context,node,submit,timers};}
 test('editing a valid URL invalidates saving immediately, even before debounce or a stale load callback',async()=>{
  const h=harness();h.node('image_url').value='https://cdn.example.invalid/original';h.context.preview_product_image();const oldLoad=h.node('image-preview-image').onload;oldLoad();assert.equal(h.submit.disabled,false);
@@ -26,4 +26,9 @@ test('pending completion never enables product saving after the form was reset t
 });
 test('loaded signed image explains expiration without modifying the URL',()=>{
  const h=harness();const url='https://cdn.example.invalid/image?X-Amz-Signature=fixture';h.node('image_url').value=url;h.context.preview_product_image();h.node('image-preview-image').onload();assert.match(h.node('image-preview-message').textContent,/puede vencer/);assert.equal(h.node('image_url').value,url);assert.equal(h.submit.disabled,false);
+});
+
+test('in-flight product save keeps inputs and submit locked even if image load completes, and duplicate submit is ignored',async()=>{
+ const h=harness();h.node('image_url').value='https://cdn.example.invalid/image';h.context.preview_product_image();h.context.set_product_save_pending(true);h.node('image-preview-image').onload();assert.equal(h.submit.disabled,true);assert.equal(h.node('image_url').disabled,true);assert.equal(h.node('name').disabled,true);
+ let writes=0;h.context.admin_fetch=async()=>{writes++;};await h.context.save_product({preventDefault(){},submitter:h.submit});assert.equal(writes,0);h.context.set_product_save_pending(false);assert.equal(h.node('image_url').disabled,false);
 });

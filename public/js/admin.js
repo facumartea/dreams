@@ -6,6 +6,8 @@ let admin_products_request_id = 0;
 let admin_coupons = [];
 let admin_reviews = [];
 let editing_product_id = '';
+let product_save_pending = false;
+let product_disabled_controls = new Map();
 let product_image_preview_state = 'empty';
 let product_image_preview_url = '';
 let product_image_preview_token = 0;
@@ -123,6 +125,7 @@ function render_admin_products() {
 }
 
 function fill_form(product) {
+    if (product_save_pending) { show_toast('Esperá a que termine el guardado.'); return; }
     editing_product_id = String(product.id);
     document.getElementById('form-label').textContent = `EDITAR PRODUCTO #${product.id}`;
     document.getElementById('product-id').value = editing_product_id;
@@ -150,7 +153,7 @@ function set_product_image_preview(state, message = '') {
     panel.dataset.state = state;
     status.textContent = message;
     if (state === 'empty' || state === 'invalid') image.removeAttribute('src');
-    if (submit) submit.disabled = !is_current_product_image();
+    if (submit) submit.disabled = product_save_pending || !is_current_product_image();
     document.getElementById('retry-image-preview').hidden = state !== 'invalid' || !is_supported_image_url(document.getElementById('image_url').value);
 }
 
@@ -205,9 +208,24 @@ function get_form_data() {
     return data;
 }
 
+function set_product_save_pending(busy) {
+    product_save_pending = busy;
+    const form = document.getElementById('product-form');
+    if (busy) {
+        form.setAttribute('aria-busy', 'true');
+        product_disabled_controls = new Map([...form.elements].map(element => [element, element.disabled]));
+        for (const element of form.elements) element.disabled = true;
+    } else {
+        for (const [element, disabled] of product_disabled_controls) element.disabled = disabled;
+        product_disabled_controls.clear();
+        form.removeAttribute('aria-busy');
+    }
+}
+
 async function save_product(event) {
     event.preventDefault();
     const submit = event.submitter || event.currentTarget.querySelector('[type="submit"]');
+    if (product_save_pending) return;
     if (product_image_preview_state !== 'valid' || !is_current_product_image()) {
         document.getElementById('admin-message').textContent = IMAGE_URL_ERROR;
         preview_product_image();
@@ -217,13 +235,15 @@ async function save_product(event) {
     const url = id ? `/api/admin/products/${id}` : '/api/admin/products';
     const method = id ? 'PUT' : 'POST';
     await with_pending(submit, 'Guardando…', async () => {
+        set_product_save_pending(true);
         try {
             await admin_fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(get_form_data()) });
             const success_message = id ? 'Producto actualizado correctamente.' : 'Producto creado correctamente.';
-            reset_form();
+            reset_form(true);
             document.getElementById('admin-message').textContent = success_message;
             await Promise.all([load_dashboard(), load_admin_products()]);
         } catch (error) { document.getElementById('admin-message').textContent = error.message; }
+        finally { set_product_save_pending(false); }
     });
 }
 
@@ -234,7 +254,8 @@ async function delete_product(id, button) {
     });
 }
 
-function reset_form() {
+function reset_form(force = false) {
+    if (product_save_pending && force !== true) return;
     editing_product_id = '';
     document.getElementById('product-form').reset();
     document.getElementById('product-id').value = '';

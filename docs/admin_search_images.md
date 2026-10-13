@@ -63,8 +63,8 @@ Pedidos sólo lectura, Usuarios/roles, Consultas, logout y controles servidor
 revisados en código. No otras funciones eliminadas ni permisos ampliados.
 Usuarios muestra correo No disponible porque endpoint no expone Auth emails;
 no se rellenó con datos inventados. Otros módulos conservan recuperación vía
-sus tabs/toast; retry uniforme y bloqueo integral de formulario durante
-mutaciones son mejoras mayores pendientes, no afirmar implementadas.
+sus tabs/toast; retry uniforme en otros módulos y control de revisión de producto entre
+dos administradores son mejoras mayores pendientes, no afirmar implementadas.
 No se prueban escrituras de cupones/pedidos/usuarios reales ni stock.
 
 Oficial/preview existentes PREVIEW_READ_ONLY=true bloquean escrituras
@@ -74,7 +74,7 @@ Middleware/rutas Admin/RLS intactos. Nueva validación URL no llama red/HEAD.
 
 ## Evidencia ejecutada
 
-- 138 tests Node (14 nuevas regresiones respecto base124), check51 JS,
+- 139 tests Node (15 nuevas regresiones respecto base124), check51 JS,
   audit producción sin vulnerabilidades conocidas, builds Workers/Pages.
 - Chromium local390/1440 con sesión **fixture** verificada por servidor:
   nombre/marca parcial/tildes/case/espacios/vacío/limpiar/sin resultados,
@@ -121,3 +121,15 @@ No rollback ejecutado por esta tarea, oficial intacta.
 CI/preview y verificaciones remotas se completan en checkpoint final.
 Progreso global no recalculado; pendientes Auth/Storage real/escrituras reales
 no acreditados. Sin datos, credenciales, roles, esquema, DNS o tráfico alterados.
+
+Revisión final de guardado: formulario de producto bloqueado mientras PUT/POST
+está pendiente, Editar/Limpiar no cambian el producto en curso y un onload no
+habilita un segundo envío. Se restauran controles al terminar; reset interno
+conserva botón deshabilitado para formulario vacío. Regresión de submit repetido
+y QA local390/1440 con PUT demorado/doble submit sintético pasaron, dos PUTs
+únicamente fixture9 por tamaño, ninguna petición extra por doble submit.
+139tests/check51/builds verdes. Se flexibilizó sólo firma de una prueba legacy
+de reset para aceptar guard interno, conservando verificaciones de ID/formulario.
+El servidor actual usa PUT completo sin revisión optimista; escrituras de dos
+Admins pueden sobrescribirse según último guardado. Es deuda preexistente mayor,
+no alterar esquema ni habilitar escrituras comerciales para eludirla.

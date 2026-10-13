@@ -1,3 +1,8 @@
+# 2026-10-13 — Guardado de producto estable durante preview de imagen
+
+- Formulario bloqueado en PUT/POST, imagen no habilita segundo envío, Editar/Limpiar no cambian contexto pendiente. Regresión y QA fixture3901440 con respuesta demorada pasaron.
+-139tests/check51/builds verdes; prueba legacy de reset conserva validación con firma ampliada. Sin datos/roles/credenciales/permisos reales cambiados.
+
 # 2026-10-13 — Buscador y revisión acotada Admin
 
 - Buscador sólo nombre/marca, sin diacríticos/case/espacios exteriores, local sin solicitudes por tecla y estados accesibles/limpiar/retry/respuesta obsoleta ignorada.
