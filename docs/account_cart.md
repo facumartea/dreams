@@ -132,3 +132,7 @@ Revisión final: reconciliar una cotización actualiza precio/stock sin reducir
 cantidades guardadas; mantiene unavailable si el stock cayó por debajo de
 lo solicitado, bloqueando Comprar/WhatsApp. Regresión ampliada/134tests/check50/
 builds pasaron; no prueba autenticada remota.
+
+Último deploymentadc45355-a812-4827-8e61-8f0082e10b86, fuente53572ba,
+tag53572ba, revisión de stock. Actualización de dependencia basePR44/b33
+limita diff a documentación; no merge de PRs GitHub ni otro cambio funcional.

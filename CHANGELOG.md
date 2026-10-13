@@ -1,3 +1,7 @@
+# 2026-10-13 — Dependencia documental PR44 actualizada
+
+- Resueltos conflictos sólo en CURRENT_STATE/PLAN/CHANGELOG, conservando estado del carrito e incorporando documento de publicación oficial. No cambios de código del checkout/carrito por la actualización. PRs GitHub abiertas.
+
 # 2026-10-13 — Disponibilidad conservada al reconciliar cotizaciones
 
 - Conservado indicador de stock insuficiente junto a cantidad persistida; evita habilitar Comprar/WhatsApp antes de resolver disponibilidad. Regresión ampliada/134tests/check50/builds correctos; sólo rama de carrito, no oficial.

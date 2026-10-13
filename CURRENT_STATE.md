@@ -1,3 +1,9 @@
+# Última preview de carrito — 2026-10-13
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Fuente53572ba23f15f2d2256a1bae6778a3bcfea9f9bd, previewaccount-cart-review/deploymentadc45355-a812-4827-8e61-8f0082e10b86. 134tests/check50/builds locales correctos tras conservar unavailable cuando cae stock. QA remota visitante del nuevo commit en curso; sesión autenticada remota sigue bloqueada, no publicar carrito oficial. Checkpoint integra únicamente documentación de basePR44/b33a2ee para resolver conflicto de CI, sin merge de PRs GitHub ni cambios de código ajenos. Docs/official_direct_checkout.md recibe evidencia oficial completa. CI del checkpoint debe verificarse en GitHub.
+
 # Carrito PR45 en preview, oficial checkout PR44 publicada — 2026-10-13
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.

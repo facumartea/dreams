@@ -51,3 +51,46 @@ heredado). Generada clave interna independiente por stdin seguro, sin valores
 en archivos/argumentos/logs. No rotación de Secrets existentes ni Auth.
 Nuevo deployment d5df723d-e1f1-4889-ae5b-e79ebfd131cd, misma app ec04a35.
 Pages se fija a esta versión; recorrido remoto debe pasar antes de promover.
+
+## Publicación y evidencia final
+
+Oficial https://dreams-perfumes.pages.dev/ publicada desde
+c83b1481fca5d59e1254c6745d168a1c8cf3b800 en Pages
+ac755bbe-f339-422a-91ef-006426abf0bf SUCCESS. CI38343215733 SUCCESS;
+backend inmutable d5df723d/sourceec04a35, firma propia servidor.
+Candidato Pages96ac925f del mismo bundle probado antes de promover.
+PR44 abierta sin merge. Cambios de carrito por cuenta PR45 excluidos:
+/api/cart/account oficial404, ningún módulo account-cart ni video empaquetado.
+
+QA real Chromium390/1440 en Worker, staging Pages y oficial: catálogo46,
+menú/Escape, búsqueda vacía/reset/marca, agregar/+/-/persistencia/contador,
+WhatsApp con envío gratis sin mensaje, Tarjeta y textos retirados,
+comprador vacío/carrito vacío o inválido bloqueados, doble clic y respuesta
+perdida antes de sesión/después de confirmar, misma referencia/reload,
+productos/total/envío0, sin canarios ficticios de tarjeta en red/storage/
+consola ni pageerrors/overflow. Dos fallos de transporte intencionales por
+viewport, no fallos de servicio. Referencia móvil real
+DREAMS-FCE04CA1C9C54CAC91332494D727C5F0; recibo verificado20min.
+
+QA adicional de oficial: foto cargada sin video, tamaño/transform/animation
+inalterados tras hover/espera; CTA catálogo, contactos/correos/autores,
+login legacy visible sin Google y Admin anónimo403. Primer harness midió
+bounding-box viewport antes/después de hover y falló por scroll automático
+de Playwright; se corrigió sólo la medida, no CSS/hero. No sesión Admin ni
+contraseña realmente disponible/verificada. Acceso /cuenta.html → /admin.
+Capturas /workspace/dreams-official-direct-evidence/remote-*.png y
+/official-{390,1440}-home.png. No Safari/dispositivo físico/CWV verificados.
+
+SELECT posterior conserva0orders/46productos/stock hash
+7a58615dd40e0dcfd898a52aa108b820. Cero carritos/operaciones persistidas
+por pruebas SQL con rollback. No cuentas de prueba creadas ni cambios Auth.
+Logs muestreados: una respuesta Supabase401 en /api/reviews del primer
+backend9ebd8175; no se comprobó su causa, respuestas posteriores y oficial
+reviews200/[]; invocation logs apagados, cobertura limitada. No declarar
+cero errores globales. Actual backend y checkout pasaron recorrido real.
+
+Rollback anterior c658e4da sigue disponible/raíz yhealth200; backend40e7b0a3
+conservado, endpoint oficial rollback verificado en documentación. No
+reversión ejecutada al no detectar regresión material del sitio publicado.
+Sin DNS/merge/video/Auth/credenciales de usuarios/pagos comerciales alterados.
+Porcentaje global no recalculado. Carrito remoto autenticado aún bloqueado.
