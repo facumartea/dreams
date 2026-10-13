@@ -1,3 +1,30 @@
+// Completa sólo el intercambio PKCE y la sesión actual, con rol consultado en servidor.
+async function complete_google_callback(request, response, context) {
+    const { create_oauth_client, production, profile_for, logger, clear } = context;
+    clear(response);
+    try {
+        const raw = String(request.headers.cookie || '').split(';').find(part => part.trim().startsWith(`${COOKIE}=`));
+        if (request.query.error || !raw || !request.query.code || typeof request.query.code !== 'string') throw new Error('OAuth cancelled');
+        const saved = JSON.parse(decodeURIComponent(raw.trim().slice(COOKIE.length + 1)));
+        if (!saved.values || typeof saved.values !== 'object') throw new Error('Missing PKCE');
+        const storage = { getItem: key => saved.values[key] ?? null, setItem() {}, removeItem() {} };
+        const result = await create_oauth_client(storage).auth.exchangeCodeForSession(request.query.code);
+        if (result.error || !result.data?.session || !result.data?.user) throw new Error('Invalid OAuth exchange');
+        const profile = await profile_for(result.data.user);
+        session(response, result.data.session, production, true);
+        const target = allowed_next(saved.next);
+        response.redirect(303, profile?.role === 'admin' && target === '/cuenta.html' ? '/admin' : target);
+    } catch (error) {
+        logger.warn?.('No se pudo completar Google.', { kind: 'oauth_callback_failed' });
+        response.redirect(303, '/cuenta.html?auth_error=1');
+    }
+}
+
+// Canje PKCE privado; no se autoriza por user_metadata ni por correo.
+function install_google_callback(app, { create_oauth_client, production, profile_for, logger, clear }) {
+    app.get('/api/auth/google/callback', (request, response) => complete_google_callback(request, response, { create_oauth_client, production, profile_for, logger, clear }));
+}
+
 const { auth_cookie, session } = require('./auth-cookies');
 const COOKIE = 'dreams_google_pkce';
 const allowed_next = value => ['/checkout.html', '/admin', '/cuenta.html'].includes(value) ? value : '/cuenta.html';
@@ -16,24 +43,6 @@ function google_routes(app, { create_oauth_client, provider_enabled, app_base_ur
             response.json({ url: result.data.url });
         } catch (error) { next(error); }
     });
-    app.get('/api/auth/google/callback', async (request, response) => {
-        clear(response);
-        try {
-            const raw = String(request.headers.cookie || '').split(';').find(part => part.trim().startsWith(`${COOKIE}=`));
-            if (request.query.error || !raw || !request.query.code || typeof request.query.code !== 'string') throw new Error('OAuth cancelled');
-            const saved = JSON.parse(decodeURIComponent(raw.trim().slice(COOKIE.length + 1)));
-            if (!saved.values || typeof saved.values !== 'object') throw new Error('Missing PKCE');
-            const storage = { getItem: key => saved.values[key] ?? null, setItem() {}, removeItem() {} };
-            const result = await create_oauth_client(storage).auth.exchangeCodeForSession(request.query.code);
-            if (result.error || !result.data?.session || !result.data?.user) throw new Error('Invalid OAuth exchange');
-            const profile = await profile_for(result.data.user);
-            session(response, result.data.session, production, true);
-            const target = allowed_next(saved.next);
-            response.redirect(303, profile?.role === 'admin' && target === '/cuenta.html' ? '/admin' : target);
-        } catch (error) {
-            logger.warn?.('No se pudo completar Google.', { kind: 'oauth_callback_failed' });
-            response.redirect(303, '/cuenta.html?auth_error=1');
-        }
-    });
+    install_google_callback(app, { create_oauth_client, production, profile_for, logger, clear });
 }
 module.exports = { google_routes, allowed_next };

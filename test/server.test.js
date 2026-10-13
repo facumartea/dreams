@@ -1,3 +1,28 @@
+function cart_quote_fixture_from(table) {
+    assert.equal(table, 'products');
+    return {
+        select(columns) {
+            assert.match(columns, /price,stock/);
+            return {
+                async in(column, ids) {
+                    assert.equal(column, 'id');
+                    assert.deepEqual(ids, [1, 2, 3]);
+                    return { error: null, data: [
+                            { id: 1, brand: 'DREAMS', name: 'Uno', price: 150, stock: 2, image_url: '/one.png', size_ml: 50 },
+                            { id: 2, brand: 'DREAMS', name: 'Dos', price: 200, stock: 0, image_url: '/two.png', size_ml: 100 }
+                    ] };
+                }
+            };
+        }
+    };
+}
+
+function cart_quote_database_fixture() {
+    return {
+        from: cart_quote_fixture_from
+    };
+}
+
 const test = require('node:test');
 const assert = require('node:assert/strict');
 
@@ -73,26 +98,7 @@ test('consultas reintentan una sola vez ante el desfase JWT transitorio', async 
 test('carrito valida cantidades y se reconcilia con precio y stock del servidor', async () => {
     assert.match(normalize_cart_items([]).error, /entre 1 y 30/);
     assert.match(normalize_cart_items([{ id: 1, quantity: 0 }]).error, /cantidad inválida/);
-    const database = {
-        from(table) {
-            assert.equal(table, 'products');
-            return {
-                select(columns) {
-                    assert.match(columns, /price,stock/);
-                    return {
-                        async in(column, ids) {
-                            assert.equal(column, 'id');
-                            assert.deepEqual(ids, [1, 2, 3]);
-                            return { error: null, data: [
-                                { id: 1, brand: 'DREAMS', name: 'Uno', price: 150, stock: 2, image_url: '/one.png', size_ml: 50 },
-                                { id: 2, brand: 'DREAMS', name: 'Dos', price: 200, stock: 0, image_url: '/two.png', size_ml: 100 }
-                            ] };
-                        }
-                    };
-                }
-            };
-        }
-    };
+    const database = cart_quote_database_fixture();
     const quote = await quote_cart(database, [{ id: 1, quantity: 3 }, { id: 2, quantity: 1 }, { id: 3, quantity: 1 }]);
     assert.equal(quote.total, 300);
     assert.equal(quote.items[0].quantity, 2);

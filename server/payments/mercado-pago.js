@@ -1,3 +1,34 @@
+// Conserva el importe autoritativo y el descuento antes de enviar a Mercado Pago.
+function payment_preference_items(order_id, items, total, discount) {
+    return discount > 0
+    ? [{ id: order_id, title: 'Pedido DREAMS con descuento', description: `${items.length} producto(s)`, category_id: 'beauty', currency_id: 'ARS', quantity: 1, unit_price: total }]
+    : items.map(item => ({
+        id: String(item.id),
+        title: `${item.brand} ${item.name}`.slice(0, 256),
+        description: `${item.size_ml || ''} ml`.trim(),
+        category_id: 'beauty',
+        currency_id: 'ARS',
+        quantity: item.quantity,
+        unit_price: item.price
+    }));
+}
+
+function payment_preference_body(order_id, checkout_items, payer_email, app_base_url, result_path) {
+    return {
+        items: checkout_items,
+        external_reference: order_id,
+        metadata: { order_id },
+        payer: payer_email ? { email: payer_email } : undefined,
+        back_urls: {
+            success: `${result_path}?result=success&order_id=${encodeURIComponent(order_id)}`,
+            failure: `${result_path}?result=failure&order_id=${encodeURIComponent(order_id)}`,
+            pending: `${result_path}?result=pending&order_id=${encodeURIComponent(order_id)}`
+        },
+        auto_return: 'approved',
+        notification_url: `${app_base_url}/api/payments/webhook`
+    };
+}
+
 const crypto = require('node:crypto');
 
 const PAYMENT_API = 'https://api.mercadopago.com';
@@ -66,30 +97,8 @@ class MercadoPagoProvider {
 
     async create_checkout({ order_id, items, total, discount = 0, payer_email, app_base_url }) {
         const result_path = `${app_base_url}/checkout-resultado.html`;
-        const checkout_items = discount > 0
-            ? [{ id: order_id, title: 'Pedido DREAMS con descuento', description: `${items.length} producto(s)`, category_id: 'beauty', currency_id: 'ARS', quantity: 1, unit_price: total }]
-            : items.map(item => ({
-                id: String(item.id),
-                title: `${item.brand} ${item.name}`.slice(0, 256),
-                description: `${item.size_ml || ''} ml`.trim(),
-                category_id: 'beauty',
-                currency_id: 'ARS',
-                quantity: item.quantity,
-                unit_price: item.price
-            }));
-        const body = {
-            items: checkout_items,
-            external_reference: order_id,
-            metadata: { order_id },
-            payer: payer_email ? { email: payer_email } : undefined,
-            back_urls: {
-                success: `${result_path}?result=success&order_id=${encodeURIComponent(order_id)}`,
-                failure: `${result_path}?result=failure&order_id=${encodeURIComponent(order_id)}`,
-                pending: `${result_path}?result=pending&order_id=${encodeURIComponent(order_id)}`
-            },
-            auto_return: 'approved',
-            notification_url: `${app_base_url}/api/payments/webhook`
-        };
+        const checkout_items = payment_preference_items(order_id, items, total, discount);
+        const body = payment_preference_body(order_id, checkout_items, payer_email, app_base_url, result_path);
         const preference = await this.request('/checkout/preferences', {
             method: 'POST',
             headers: { 'X-Idempotency-Key': order_id },

@@ -1,3 +1,176 @@
+// Responsabilidad create commercial checkout; preserva la secuencia original.
+async function create_commercial_checkout(is_demo, scenario, status) {
+    const pending_demo_order = is_demo ? sessionStorage.getItem(DEMO_ORDER_STORAGE_KEY) : null;
+    if (pending_demo_order) {
+        status.textContent = 'Retomando el pedido sin duplicarlo…';
+        await process_demo_order(pending_demo_order, scenario);
+        return;
+    }
+    const response = await fetch('/api/checkout/session', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ items: checkout_items_payload(), coupon_code: applied_coupon?.code || '' }) });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || 'No se pudo iniciar el pago.');
+    if (is_demo && data.requires_demo_payment === true) {
+        sessionStorage.setItem(DEMO_ORDER_STORAGE_KEY, data.order_id);
+        status.textContent = 'Procesando el resultado de prueba…';
+        await process_demo_order(data.order_id, scenario);
+        return;
+    }
+    if (!/^https:\/\//.test(data.checkout_url || '')) throw new Error('No se pudo iniciar el pago.');
+    window.location.assign(data.checkout_url);
+}
+
+async function submit_commercial_checkout(button, status) {
+    if (!checkout_quote || button.disabled) return;
+    const is_demo = checkout_config?.provider === 'demo';
+    const scenario = is_demo ? demo_card_scenario() : null;
+    if (is_demo && !scenario) {
+        status.textContent = 'Completá los datos ficticios y usá uno de los números de prueba.';
+        document.getElementById('demo-card-number').focus();
+        return;
+    }
+    button.disabled = true;
+    button.textContent = is_demo ? 'Procesando prueba…' : 'Preparando pago seguro…';
+    status.textContent = is_demo ? 'Registrando tu pedido de demostración…' : '';
+    try {
+        await create_commercial_checkout(is_demo, scenario, status);
+    } catch (error) {
+        status.textContent = interface_error(error);
+        button.disabled = false;
+        button.textContent = is_demo ? 'Pagar de prueba' : 'Continuar a Mercado Pago';
+    }
+}
+
+// Responsabilidad initialize checkout; preserva la secuencia original.
+async function initialize_checkout(button, status) {
+    try {
+        const initial_config = await fetch('/api/checkout/config');
+        const initial = await initial_config.json();
+        if (initial_config.ok && initial.enabled && initial.provider === 'presentation_demo') { await PresentationCheckout.setup(initial); return true; }
+        const quote = await load_commercial_checkout(status);
+        if (!quote) return true;
+        show_checkout_quote(quote, checkout_config, button, status);
+        button.disabled = false;
+        if (quote.warnings.length) status.textContent = quote.warnings.join(' ');
+    } catch (error) {
+        status.textContent = interface_error(error);
+        button.disabled = true;
+    }
+    return false;
+}
+
+// Responsabilidad show checkout quote; preserva la secuencia original.
+function show_checkout_quote(quote, config, button, status) {
+    checkout_quote = quote;
+    save_cart(quote.items);
+    applied_coupon = quote.coupon || null;
+    render_checkout(quote.items, quote.subtotal, quote.discount, quote.total);
+    if (applied_coupon) {
+        document.getElementById('coupon-code').value = applied_coupon.code;
+        document.getElementById('coupon-status').textContent = `${applied_coupon.code} aplicado: ${applied_coupon.discount_percent}% de descuento.`;
+        document.getElementById('coupon-status').classList.add('is-valid');
+        document.getElementById('coupon-remove').hidden = false;
+    } else if (quote.coupon_error) sessionStorage.removeItem('dreams_coupon');
+    document.getElementById('sandbox-banner').hidden = !['sandbox', 'demo'].includes(config.mode);
+    document.getElementById('sandbox-help').hidden = !config.show_test_data;
+}
+
+// Responsabilidad load commercial checkout; preserva la secuencia original.
+async function load_commercial_checkout(status) {
+    const [config_response, user_response, quote_response] = await Promise.all([
+        fetch('/api/checkout/config'),
+        fetch('/api/auth/me'),
+        fetch('/api/cart/quote', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ items: checkout_items_payload(), coupon_code: sessionStorage.getItem('dreams_coupon') || '' }) })
+    ]);
+    const config = await config_response.json();
+    checkout_config = config;
+    const user = await user_response.json();
+    const quote = await quote_response.json();
+    if (!config_response.ok || !config.enabled) throw new Error('El pago online todavía no está disponible. Podés continuar por WhatsApp.');
+    configure_payment_ui(config);
+    if (!user_response.ok || !user.user) {
+        status.innerHTML = 'Para pagar necesitás <a href="/cuenta.html">iniciar sesión o crear una cuenta</a>.';
+        return;
+    }
+    if (!quote_response.ok || !quote.items?.length) throw new Error(quote.error || 'El carrito no tiene productos disponibles.');
+    return quote;
+}
+
+// Responsabilidad bind test card selection; preserva la secuencia original.
+function bind_test_card_selection() {
+    document.querySelectorAll('.copy-test-data').forEach(copy => copy.addEventListener('click', async () => {
+        const card_input = document.getElementById('demo-card-number');
+        if (checkout_config?.provider === 'demo') {
+            card_input.value = format_demo_card_number(copy.dataset.copy);
+            document.getElementById('demo-card-expiry').value = '12/30';
+            document.getElementById('demo-card-cvv').value = '123';
+            document.getElementById('demo-card-preview-number').textContent = card_input.value;
+            card_input.dispatchEvent(new Event('input'));
+        } else if (navigator.clipboard) await navigator.clipboard.writeText(copy.dataset.copy);
+        copy.textContent = checkout_config?.provider === 'demo' ? 'Elegida' : 'Copiado';
+        setTimeout(() => { copy.textContent = checkout_config?.provider === 'demo' ? 'Usar' : 'Copiar'; }, 1200);
+    }));
+}
+
+// Responsabilidad bind demo card fields; preserva la secuencia original.
+function bind_demo_card_fields(button) {
+    const card_number = document.getElementById('demo-card-number');
+    card_number.addEventListener('input', () => {
+        card_number.value = format_demo_card_number(card_number.value);
+        document.getElementById('demo-card-preview-number').textContent = card_number.value || '•••• •••• •••• ••••';
+    });
+    const expiry = document.getElementById('demo-card-expiry');
+    expiry.addEventListener('input', () => {
+        const value = digits(expiry.value).slice(0, 4);
+        expiry.value = value.length > 2 ? `${value.slice(0, 2)}/${value.slice(2)}` : value;
+    });
+    const cvv = document.getElementById('demo-card-cvv');
+    cvv.addEventListener('input', () => { cvv.value = digits(cvv.value).slice(0, 3); });
+    document.getElementById('demo-card-form').addEventListener('submit', event => {
+        event.preventDefault();
+        if (!button.disabled) button.click();
+    });
+}
+
+// Responsabilidad bind checkout coupons; preserva la secuencia original.
+function bind_checkout_coupons() {
+    const coupon_input = document.getElementById('coupon-code');
+    coupon_input.addEventListener('input', () => { coupon_input.value = coupon_input.value.toUpperCase(); });
+    coupon_input.addEventListener('keydown', event => { if (event.key === 'Enter') { event.preventDefault(); apply_coupon(); } });
+    document.getElementById('coupon-apply').addEventListener('click', apply_coupon);
+    document.getElementById('coupon-remove').addEventListener('click', remove_coupon);
+}
+
+// Responsabilidad apply coupon request; preserva la secuencia original.
+async function apply_coupon_request(code, button, status) {
+    try {
+        await validate_checkout_coupon(code, status);
+    } catch (error) {
+        applied_coupon = null;
+        sessionStorage.removeItem('dreams_coupon');
+        status.classList.remove('is-valid');
+        status.textContent = 'Cupón inválido.';
+        document.getElementById('coupon-remove').hidden = true;
+        if (checkout_quote) render_checkout(checkout_quote.items, checkout_quote.subtotal, 0, checkout_quote.subtotal);
+    } finally {
+        button.disabled = false;
+        button.textContent = 'Aplicar';
+    }
+}
+
+// Responsabilidad validate checkout coupon; preserva la secuencia original.
+async function validate_checkout_coupon(code, status) {
+    const response = await fetch('/api/coupons/validate', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ code, items: checkout_items_payload() }) });
+    const data = await response.json();
+    if (!response.ok || !data.coupon) throw new Error('Cupón inválido.');
+    applied_coupon = data.coupon;
+    sessionStorage.setItem('dreams_coupon', data.coupon.code);
+    checkout_quote = { ...checkout_quote, ...data };
+    render_checkout(checkout_quote.items, data.subtotal, data.discount, data.total);
+    status.textContent = `${data.coupon.code} aplicado: ${data.coupon.discount_percent}% de descuento.`;
+    status.classList.add('is-valid');
+    document.getElementById('coupon-remove').hidden = false;
+}
+
 let checkout_quote = null;
 let applied_coupon = null;
 let checkout_config = null;
@@ -30,14 +203,14 @@ function configure_payment_ui(config) {
     document.getElementById('demo-card-form').hidden = !is_demo;
     document.getElementById('payment-title').textContent = is_demo ? 'Tarjeta de prueba' : 'Mercado Pago';
     document.getElementById('payment-description').textContent = is_demo
-        ? 'Usá únicamente los datos ficticios indicados. No ingreses una tarjeta real.'
-        : 'Al continuar vas a elegir el medio de pago dentro del pago protegido de Mercado Pago.';
+    ? 'Usá únicamente los datos ficticios indicados. No ingreses una tarjeta real.'
+    : 'Al continuar vas a elegir el medio de pago dentro del pago protegido de Mercado Pago.';
     document.getElementById('checkout-intro-copy').textContent = is_demo
-        ? 'Revisá el pedido y probá el flujo completo sin realizar ningún cobro.'
-        : 'Revisá el pedido. El pago se completa en el entorno oficial de Mercado Pago.';
+    ? 'Revisá el pedido y probá el flujo completo sin realizar ningún cobro.'
+    : 'Revisá el pedido. El pago se completa en el entorno oficial de Mercado Pago.';
     document.getElementById('sandbox-banner').textContent = is_demo
-        ? 'MODO DE PRUEBA — No se realizarán cobros reales.'
-        : 'ENTORNO DE PRUEBA — No se realizarán cobros reales.';
+    ? 'MODO DE PRUEBA — No se realizarán cobros reales.'
+    : 'ENTORNO DE PRUEBA — No se realizarán cobros reales.';
     document.getElementById('checkout-submit').textContent = is_demo ? 'Pagar de prueba' : 'Continuar a Mercado Pago';
 }
 
@@ -94,28 +267,7 @@ async function apply_coupon() {
     button.disabled = true;
     button.textContent = 'Aplicando…';
     status.textContent = 'Verificando cupón…';
-    try {
-        const response = await fetch('/api/coupons/validate', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ code, items: checkout_items_payload() }) });
-        const data = await response.json();
-        if (!response.ok || !data.coupon) throw new Error('Cupón inválido.');
-        applied_coupon = data.coupon;
-        sessionStorage.setItem('dreams_coupon', data.coupon.code);
-        checkout_quote = { ...checkout_quote, ...data };
-        render_checkout(checkout_quote.items, data.subtotal, data.discount, data.total);
-        status.textContent = `${data.coupon.code} aplicado: ${data.coupon.discount_percent}% de descuento.`;
-        status.classList.add('is-valid');
-        document.getElementById('coupon-remove').hidden = false;
-    } catch (error) {
-        applied_coupon = null;
-        sessionStorage.removeItem('dreams_coupon');
-        status.classList.remove('is-valid');
-        status.textContent = 'Cupón inválido.';
-        document.getElementById('coupon-remove').hidden = true;
-        if (checkout_quote) render_checkout(checkout_quote.items, checkout_quote.subtotal, 0, checkout_quote.subtotal);
-    } finally {
-        button.disabled = false;
-        button.textContent = 'Aplicar';
-    }
+    await apply_coupon_request(code, button, status);
 }
 
 function remove_coupon() {
@@ -134,115 +286,13 @@ function remove_coupon() {
 async function setup_checkout() {
     const button = document.getElementById('checkout-submit');
     const status = document.getElementById('checkout-status');
-    try {
-        const initial_config = await fetch('/api/checkout/config');
-        const initial = await initial_config.json();
-        if (initial_config.ok && initial.enabled && initial.provider === 'presentation_demo') return PresentationCheckout.setup(initial);
-        const [config_response, user_response, quote_response] = await Promise.all([
-            fetch('/api/checkout/config'),
-            fetch('/api/auth/me'),
-            fetch('/api/cart/quote', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ items: checkout_items_payload(), coupon_code: sessionStorage.getItem('dreams_coupon') || '' }) })
-        ]);
-        const config = await config_response.json();
-        checkout_config = config;
-        const user = await user_response.json();
-        const quote = await quote_response.json();
-        if (!config_response.ok || !config.enabled) throw new Error('El pago online todavía no está disponible. Podés continuar por WhatsApp.');
-        configure_payment_ui(config);
-        if (!user_response.ok || !user.user) {
-            status.innerHTML = 'Para pagar necesitás <a href="/cuenta.html">iniciar sesión o crear una cuenta</a>.';
-            return;
-        }
-        if (!quote_response.ok || !quote.items?.length) throw new Error(quote.error || 'El carrito no tiene productos disponibles.');
-        checkout_quote = quote;
-        save_cart(quote.items);
-        applied_coupon = quote.coupon || null;
-        render_checkout(quote.items, quote.subtotal, quote.discount, quote.total);
-        if (applied_coupon) {
-            document.getElementById('coupon-code').value = applied_coupon.code;
-            document.getElementById('coupon-status').textContent = `${applied_coupon.code} aplicado: ${applied_coupon.discount_percent}% de descuento.`;
-            document.getElementById('coupon-status').classList.add('is-valid');
-            document.getElementById('coupon-remove').hidden = false;
-        } else if (quote.coupon_error) sessionStorage.removeItem('dreams_coupon');
-        document.getElementById('sandbox-banner').hidden = !['sandbox', 'demo'].includes(config.mode);
-        document.getElementById('sandbox-help').hidden = !config.show_test_data;
-        button.disabled = false;
-        if (quote.warnings.length) status.textContent = quote.warnings.join(' ');
-    } catch (error) {
-        status.textContent = interface_error(error);
-        button.disabled = true;
-    }
+    if (await initialize_checkout(button, status)) return;
 
-    button.addEventListener('click', async () => {
-        if (!checkout_quote || button.disabled) return;
-        const is_demo = checkout_config?.provider === 'demo';
-        const scenario = is_demo ? demo_card_scenario() : null;
-        if (is_demo && !scenario) {
-            status.textContent = 'Completá los datos ficticios y usá uno de los números de prueba.';
-            document.getElementById('demo-card-number').focus();
-            return;
-        }
-        button.disabled = true;
-        button.textContent = is_demo ? 'Procesando prueba…' : 'Preparando pago seguro…';
-        status.textContent = is_demo ? 'Registrando tu pedido de demostración…' : '';
-        try {
-            const pending_demo_order = is_demo ? sessionStorage.getItem(DEMO_ORDER_STORAGE_KEY) : null;
-            if (pending_demo_order) {
-                status.textContent = 'Retomando el pedido sin duplicarlo…';
-                await process_demo_order(pending_demo_order, scenario);
-                return;
-            }
-            const response = await fetch('/api/checkout/session', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ items: checkout_items_payload(), coupon_code: applied_coupon?.code || '' }) });
-            const data = await response.json();
-            if (!response.ok) throw new Error(data.error || 'No se pudo iniciar el pago.');
-            if (is_demo && data.requires_demo_payment === true) {
-                sessionStorage.setItem(DEMO_ORDER_STORAGE_KEY, data.order_id);
-                status.textContent = 'Procesando el resultado de prueba…';
-                await process_demo_order(data.order_id, scenario);
-                return;
-            }
-            if (!/^https:\/\//.test(data.checkout_url || '')) throw new Error('No se pudo iniciar el pago.');
-            window.location.assign(data.checkout_url);
-        } catch (error) {
-            status.textContent = interface_error(error);
-            button.disabled = false;
-            button.textContent = is_demo ? 'Pagar de prueba' : 'Continuar a Mercado Pago';
-        }
-    });
+    button.addEventListener('click', () => submit_commercial_checkout(button, status));
 
-    document.querySelectorAll('.copy-test-data').forEach(copy => copy.addEventListener('click', async () => {
-        const card_input = document.getElementById('demo-card-number');
-        if (checkout_config?.provider === 'demo') {
-            card_input.value = format_demo_card_number(copy.dataset.copy);
-            document.getElementById('demo-card-expiry').value = '12/30';
-            document.getElementById('demo-card-cvv').value = '123';
-            document.getElementById('demo-card-preview-number').textContent = card_input.value;
-            card_input.dispatchEvent(new Event('input'));
-        } else if (navigator.clipboard) await navigator.clipboard.writeText(copy.dataset.copy);
-        copy.textContent = checkout_config?.provider === 'demo' ? 'Elegida' : 'Copiado';
-        setTimeout(() => { copy.textContent = checkout_config?.provider === 'demo' ? 'Usar' : 'Copiar'; }, 1200);
-    }));
-    const card_number = document.getElementById('demo-card-number');
-    card_number.addEventListener('input', () => {
-        card_number.value = format_demo_card_number(card_number.value);
-        document.getElementById('demo-card-preview-number').textContent = card_number.value || '•••• •••• •••• ••••';
-    });
-    const expiry = document.getElementById('demo-card-expiry');
-    expiry.addEventListener('input', () => {
-        const value = digits(expiry.value).slice(0, 4);
-        expiry.value = value.length > 2 ? `${value.slice(0, 2)}/${value.slice(2)}` : value;
-    });
-    const cvv = document.getElementById('demo-card-cvv');
-    cvv.addEventListener('input', () => { cvv.value = digits(cvv.value).slice(0, 3); });
-    document.getElementById('demo-card-form').addEventListener('submit', event => {
-        event.preventDefault();
-        if (!button.disabled) button.click();
-    });
-    const coupon_input = document.getElementById('coupon-code');
-    coupon_input.addEventListener('input', () => { coupon_input.value = coupon_input.value.toUpperCase(); });
-    coupon_input.addEventListener('keydown', event => { if (event.key === 'Enter') { event.preventDefault(); apply_coupon(); } });
-    document.getElementById('coupon-apply').addEventListener('click', apply_coupon);
-    document.getElementById('coupon-remove').addEventListener('click', remove_coupon);
+    bind_test_card_selection();
+    bind_demo_card_fields(button);
+    bind_checkout_coupons();
 }
 
 document.addEventListener('DOMContentLoaded', setup_checkout);

@@ -1,3 +1,34 @@
+// Prepara datos aislados de: crea una preferencia Sandbox sin exponer el token en el payload.
+async function preparar_crea_una_preferencia_Sandbox_sin_exponer_el_token_en_36(context) {
+    let received;
+    const provider = new MercadoPagoProvider({
+        access_token: 'TEST-token',
+        webhook_secret: 'secret',
+        mode: 'sandbox',
+        fetch_impl: async (url, options) => {
+            context.received = { url, options, body: JSON.parse(options.body) };
+            return { ok: true, json: async () => ({ id: 'pref-1', sandbox_init_point: 'https://sandbox.mercadopago.test/checkout' }) };
+        }
+    });
+    Object.assign(context, { received, provider });
+}
+
+// Comprueba resultados observables de: crea una preferencia Sandbox sin exponer el token en el payload.
+async function verificar_crea_una_preferencia_Sandbox_sin_exponer_el_token_en_37(context) {
+    const { received, provider } = context;
+    const result = await provider.create_checkout({
+        order_id: '11111111-1111-4111-8111-111111111111',
+        items: [{ id: 1, brand: 'DREAMS', name: 'Noche', size_ml: 100, price: 25000, quantity: 1 }],
+        payer_email: 'cliente@example.com',
+        app_base_url: 'https://dreams.example'
+    });
+    assert.equal(result.checkout_url, 'https://sandbox.mercadopago.test/checkout');
+    assert.equal(context.received.options.headers.Authorization, 'Bearer TEST-token');
+    assert.equal(context.received.body.external_reference, '11111111-1111-4111-8111-111111111111');
+    assert.doesNotMatch(JSON.stringify(context.received.body), /TEST-token/);
+    Object.assign(context, { result });
+}
+
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const crypto = require('node:crypto');
@@ -30,26 +61,9 @@ test('valida firmas webhook con HMAC y rechaza alteraciones', () => {
 });
 
 test('crea una preferencia Sandbox sin exponer el token en el payload', async () => {
-    let received;
-    const provider = new MercadoPagoProvider({
-        access_token: 'TEST-token',
-        webhook_secret: 'secret',
-        mode: 'sandbox',
-        fetch_impl: async (url, options) => {
-            received = { url, options, body: JSON.parse(options.body) };
-            return { ok: true, json: async () => ({ id: 'pref-1', sandbox_init_point: 'https://sandbox.mercadopago.test/checkout' }) };
-        }
-    });
-    const result = await provider.create_checkout({
-        order_id: '11111111-1111-4111-8111-111111111111',
-        items: [{ id: 1, brand: 'DREAMS', name: 'Noche', size_ml: 100, price: 25000, quantity: 1 }],
-        payer_email: 'cliente@example.com',
-        app_base_url: 'https://dreams.example'
-    });
-    assert.equal(result.checkout_url, 'https://sandbox.mercadopago.test/checkout');
-    assert.equal(received.options.headers.Authorization, 'Bearer TEST-token');
-    assert.equal(received.body.external_reference, '11111111-1111-4111-8111-111111111111');
-    assert.doesNotMatch(JSON.stringify(received.body), /TEST-token/);
+    const context = {  };
+    await preparar_crea_una_preferencia_Sandbox_sin_exponer_el_token_en_36(context);
+    await verificar_crea_una_preferencia_Sandbox_sin_exponer_el_token_en_37(context);
 });
 
 test('diferencia error HTTP del proveedor y error de red', async () => {

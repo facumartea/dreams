@@ -15,3 +15,9 @@ for (const file of files) {
     if (result.status !== 0) process.exit(result.status || 1);
 }
 console.log(`Sintaxis verificada: ${files.length} archivos JavaScript.`);
+
+// Barrera académica reproducible: incluye tests y callbacks propios.
+for (const script of ['scripts/function-lines.js', 'scripts/sql-function-lines.js']) {
+    const result = spawnSync(process.execPath, [script, '--summary'], { stdio: 'inherit' });
+    if (result.status !== 0) process.exit(result.status || 1);
+}

@@ -1,6 +1,18 @@
-(() => {
+{
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
     const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
+
+    // Registra sólo elementos nuevos; evita animar otra vez al actualizar el DOM.
+    function observe_reveal_elements(elements, observer) {
+        elements.forEach((element, index) => {
+            if (element.dataset.motionReady) return;
+            element.dataset.motionReady = 'true';
+            element.classList.add('motion-reveal');
+            if (element.matches('.section-heading,.page-intro,.scent-trail-header')) element.classList.add('motion-heading');
+            element.style.setProperty('--reveal-delay', `${Math.min(index % 4, 3) * 45}ms`);
+            observer.observe(element);
+        });
+    }
 
     function setup_reveals(root = document) {
         const elements = root.querySelectorAll('.section-heading,.about-preview>*,.page-intro>*,.checkout-layout>*,.review-compose>*,.product-card,.review-card,.detail-layout>*,.scent-trail-header,.scent-step');
@@ -15,20 +27,10 @@
                 observer.unobserve(entry.target);
             });
         }, { rootMargin: '0px 0px -7% 0px', threshold: 0.08 });
-        elements.forEach((element, index) => {
-            if (element.dataset.motionReady) return;
-            element.dataset.motionReady = 'true';
-            element.classList.add('motion-reveal');
-            if (element.matches('.section-heading,.page-intro,.scent-trail-header')) element.classList.add('motion-heading');
-            element.style.setProperty('--reveal-delay', `${Math.min(index % 4, 3) * 45}ms`);
-            observer.observe(element);
-        });
+        observe_reveal_elements(elements, observer);
     }
 
-    function setup_scroll_depth() {
-        if (reduced.matches) return;
-        const editorial = [...document.querySelectorAll('.detail-layout')];
-        if (!editorial.length) return;
+    function observe_scroll_depth(editorial) {
         let frame = 0;
         const render = () => {
             frame = 0;
@@ -49,6 +51,13 @@
         window.addEventListener('resize', queue, { passive: true });
     }
 
+    function setup_scroll_depth() {
+        if (reduced.matches) return;
+        const editorial = [...document.querySelectorAll('.detail-layout')];
+        if (!editorial.length) return;
+        observe_scroll_depth(editorial);
+    }
+
     function setup_dynamic_content() {
         if (!('MutationObserver' in window)) return;
         const observer = new MutationObserver(records => {
@@ -66,4 +75,4 @@
 
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initialize_motion, { once: true });
     else initialize_motion();
-})();
+}

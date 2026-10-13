@@ -1,3 +1,19 @@
+# 2026-10-13 — Preview de rúbrica verificada
+
+- Fuente8988130/PR47/CI38428906880 verde; nueva preview rubric-review deployment0e4e08ae tras firma aislada por stdin seguro, proyecto/origen/SecretText/flags verificados sin valores.
+- QA remota390/1440 carrusel/productos/menús/filtros/carrito/checkoutacadémico/retry/recarga/referencia/tarjeta fuera de red/storage/consola, sinpageerrors/overflow. Admin anónimo403; Auth/Adminreal no acreditados.
+- Supabase46productos/8perfiles/0orders/9RLS conservado, sin datos/stock/roles/passwords cambiados. Logs0eventosmuestra limitada. OficialPagesac755bbe y dos previews anteriores intactas, sin DNS/merge/video.
+- ZIP Marteaena-Ruas-DREAMS.zip exportado desde32fc265,157entradas/2736246bytes e integridad/ausencia de secretos/dependencias/video verificadas; no Classroom. Documentos no atribuyen asistencia/aportes ni nota no verificada.
+
+# 2026-10-13 — Adecuación de rúbrica y refactor20
+
+- Inventario AST JS/SQL reproducible en check, cuenta funciones/flechas/métodos/callbacks/tests/SQLDO, máximo20; base78violaciones eliminadas sin compresión de instrucciones.
+- Separados handlers/configuración/validación/render/snapshots/pruebas, contratos y guardas intactos. Dos regresiones de medidor y dos de exposición de passwords;143tests verdes.
+- Carrusel manual de productos distintos existentes en Más buscados con teclado/reduced, sin autoplay/video/cambio hero.
+- Documentación académica/matriz/arquitectura9tablasRLS/API/manual/wireframe/pseudocódigo y seguridad password actualizada; no hashes/secretos consultados ni roles/DB cambiados.
+- QA local390/1440 y builds/check/audit/frozen correctos; errores intermedios del refactor corregidos por tests antes de publicación. Parser reciente rechazado y sustituido por libpg-query estable, sin excepciones supplychain.
+- Confirmación usuario API/condiciones/apellidosMarteaenaRuas registrada, sin aportes/asistencia inventados. Publicación aislada y ZIP pendientes del checkpoint Git; oficial intacta.
+
 # 2026-10-13 — Preview de Admin publicada con gate autenticado
 
 - c574696/previewfa8761cd y PR46/CI139tests/check51/builds verdes; QA pública/anónima3901440 pasó, assets iguales y permisos403. Auth Admin real no disponible ni validado, oficial no publicada.

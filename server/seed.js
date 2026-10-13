@@ -1,3 +1,20 @@
+// Provisioning histórico manual, fuera del arranque; no usarlo en QA ni producción real.
+async function provision_legacy_admin(database) {
+    const admin_email = (process.env.ADMIN_EMAIL || 'admin@dreamsperfumes.com').toLowerCase();
+    const admin_password = process.env.ADMIN_PASSWORD;
+    if (!admin_password) return;
+    const users_result = await database.auth.admin.listUsers({ page: 1, perPage: 1000 });
+    if (users_result.error) throw users_result.error;
+    let admin = users_result.data.users.find((user) => user.email?.toLowerCase() === admin_email);
+    if (!admin) {
+        const create_result = await database.auth.admin.createUser({ email: admin_email, password: admin_password, email_confirm: true });
+        if (create_result.error) throw create_result.error;
+        admin = create_result.data.user;
+    }
+    const profile_result = await database.from('profiles').upsert({ id: admin.id, name: process.env.ADMIN_NAME || 'Administrador DREAMS', role: 'admin' }, { onConflict: 'id' });
+    if (profile_result.error) throw profile_result.error;
+}
+
 require('dotenv').config({quiet:true});
 
 const image_urls = [
@@ -55,19 +72,7 @@ async function seed_database(database) {
         const products_result = await database.from('products').upsert(rows, { onConflict: 'brand,name', ignoreDuplicates: true });
         if (products_result.error) throw products_result.error;
     }
-    const admin_email = (process.env.ADMIN_EMAIL || 'admin@dreamsperfumes.com').toLowerCase();
-    const admin_password = process.env.ADMIN_PASSWORD;
-    if (!admin_password) return;
-    const users_result = await database.auth.admin.listUsers({ page: 1, perPage: 1000 });
-    if (users_result.error) throw users_result.error;
-    let admin = users_result.data.users.find((user) => user.email?.toLowerCase() === admin_email);
-    if (!admin) {
-        const create_result = await database.auth.admin.createUser({ email: admin_email, password: admin_password, email_confirm: true });
-        if (create_result.error) throw create_result.error;
-        admin = create_result.data.user;
-    }
-    const profile_result = await database.from('profiles').upsert({ id: admin.id, name: process.env.ADMIN_NAME || 'Administrador DREAMS', role: 'admin' }, { onConflict: 'id' });
-    if (profile_result.error) throw profile_result.error;
+    await provision_legacy_admin(database);
 }
 
 module.exports = { seed_database };

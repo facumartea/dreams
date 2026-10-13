@@ -1,3 +1,41 @@
+// Prepara datos aislados de: la marca filtrada en la URL se restaura después de cargar las opciones asíncronas.
+async function preparar_la_marca_filtrada_en_la_URL_se_restaura_despues_de_c_25(context) {
+    const vm = require('node:vm');
+    const options = [{ value: '' }];
+    let selected = '';
+    const select = {
+        get value() { return selected; },
+        set value(value) { selected = options.some(option => option.value === value) ? value : ''; },
+        set length(value) { options.length = value; },
+        appendChild(option) { options.push(option); }
+    };
+    Object.assign(context, { vm, options, selected, select });
+}
+
+// Comprueba resultados observables de: la marca filtrada en la URL se restaura después de cargar las opciones asíncronas.
+async function verificar_la_marca_filtrada_en_la_URL_se_restaura_despues_de_c_26(context) {
+    const { vm, select } = context;
+    const sandbox = {
+        URLSearchParams,
+        window: { location: { search: '?gender=mujer&brand=Byredo' } },
+        document: { addEventListener() {}, getElementById: () => select, createElement: () => ({}) },
+        fetch: async () => ({ ok: true, json: async () => ['Byredo', 'Dior'] })
+    };
+    vm.createContext(sandbox);
+    vm.runInContext(readFileSync('public/js/catalogo.js', 'utf8'), sandbox);
+    await vm.runInContext('load_brands()', sandbox);
+    assert.equal(select.value, 'Byredo');
+    select.value = 'Dior';
+    await vm.runInContext('load_brands()', sandbox);
+    Object.assign(context, { sandbox });
+}
+
+// Comprueba resultados observables de: la marca filtrada en la URL se restaura después de cargar las opciones asíncronas.
+async function verificar_la_marca_filtrada_en_la_URL_se_restaura_despues_de_c_27(context) {
+    const { select } = context;
+    assert.equal(select.value, 'Dior');
+}
+
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const { readFileSync } = require('node:fs');
@@ -53,26 +91,8 @@ test('las páginas públicas pre-renderizan una única plantilla de footer y dat
 });
 
 test('la marca filtrada en la URL se restaura después de cargar las opciones asíncronas', async () => {
-    const vm = require('node:vm');
-    const options = [{ value: '' }];
-    let selected = '';
-    const select = {
-        get value() { return selected; },
-        set value(value) { selected = options.some(option => option.value === value) ? value : ''; },
-        set length(value) { options.length = value; },
-        appendChild(option) { options.push(option); }
-    };
-    const sandbox = {
-        URLSearchParams,
-        window: { location: { search: '?gender=mujer&brand=Byredo' } },
-        document: { addEventListener() {}, getElementById: () => select, createElement: () => ({}) },
-        fetch: async () => ({ ok: true, json: async () => ['Byredo', 'Dior'] })
-    };
-    vm.createContext(sandbox);
-    vm.runInContext(readFileSync('public/js/catalogo.js', 'utf8'), sandbox);
-    await vm.runInContext('load_brands()', sandbox);
-    assert.equal(select.value, 'Byredo');
-    select.value = 'Dior';
-    await vm.runInContext('load_brands()', sandbox);
-    assert.equal(select.value, 'Dior');
+    const context = {  };
+    await preparar_la_marca_filtrada_en_la_URL_se_restaura_despues_de_c_25(context);
+    await verificar_la_marca_filtrada_en_la_URL_se_restaura_despues_de_c_26(context);
+    await verificar_la_marca_filtrada_en_la_URL_se_restaura_despues_de_c_27(context);
 });

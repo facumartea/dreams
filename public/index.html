@@ -66,11 +66,18 @@
             <div class="section-heading">
                 <div>
                     <p class="eyebrow">SELECCIÓN DREAMS</p>
-                    <h2>Más buscados</h2>
+                    <h2 id="featured-heading">Más buscados</h2>
                 </div>
                 <a href="/catalogo.html" class="text-link">Ver todos</a>
             </div>
-            <div id="featured-products" class="product-grid"></div>
+            <div class="featured-carousel" role="region" aria-roledescription="carrusel" aria-labelledby="featured-heading">
+                <div class="carousel-controls">
+                    <button id="featured-previous" class="small-button" type="button" aria-label="Producto anterior" aria-controls="featured-products" disabled>Anterior</button>
+                    <span id="featured-status" role="status" aria-live="polite"></span>
+                    <button id="featured-next" class="small-button" type="button" aria-label="Producto siguiente" aria-controls="featured-products" disabled>Siguiente</button>
+                </div>
+                <div id="featured-products" class="product-grid carousel-products"></div>
+            </div>
         </section>
 
         <section class="section about-preview">
@@ -145,5 +152,6 @@
     <script src="/js/safe.js"></script>
     <script src="/js/navigation.js"></script><script src="/js/app.js"></script>
     <script src="/js/motion.js"></script>
+    <script src="/js/featured-carousel.js"></script>
 </body>
 </html>

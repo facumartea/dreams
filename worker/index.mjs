@@ -1,23 +1,5 @@
-import { createServer } from 'node:http';
-import { handleAsNodeRequest } from 'cloudflare:node';
-import { createClient } from '@supabase/supabase-js';
-import appModule from '../server/app.js';
-import payments from '../server/payments/mercado-pago.js';
-import demoPayments from '../server/payments/demo.js';
-import adminHtml from '../views/admin.html';
-import notFoundHtml from '../public/404.html';
-import adminScript from '../public/js/admin.js';
-
-let server;
-
-function createWorkerApp(env) {
-    if (env.NODE_ENV !== 'development') {
-        const base = appModule.normalize_origin(env.APP_BASE_URL);
-        const origins = appModule.allowed_origin_set(env.APP_ORIGINS);
-        const entries = String(env.APP_ORIGINS || '').split(',').map(value => value.trim()).filter(Boolean);
-        if (!base?.startsWith('https://') || !origins.has(base) || !entries.length || entries.some(value => !appModule.normalize_origin(value)?.startsWith('https://'))) throw new Error('Missing exact HTTPS application origins');
-    }
-    if (!env.SUPABASE_URL || !env.SUPABASE_SECRET_KEY) throw new Error('Missing server Supabase configuration');
+// Cada operación Auth recibe un cliente aislado; el cliente privilegiado no guarda sesiones.
+function worker_database_factory(env) {
     const createDatabase = (accessToken, authOptions = {}) => createClient(env.SUPABASE_URL, env.SUPABASE_SECRET_KEY, {
         auth: { autoRefreshToken: false, persistSession: false, detectSessionInUrl: false, ...authOptions },
         global: {
@@ -29,11 +11,25 @@ function createWorkerApp(env) {
             ...(accessToken ? { headers: { Authorization: `Bearer ${accessToken}` } } : {})
         }
     });
-    const paymentProvider = env.CHECKOUT_PROVIDER === 'demo'
-        ? new demoPayments.DemoPaymentProvider()
-        : new payments.MercadoPagoProvider({ access_token: env.MERCADO_PAGO_ACCESS_TOKEN, webhook_secret: env.MERCADO_PAGO_WEBHOOK_SECRET, mode: env.MERCADO_PAGO_MODE });
-    return appModule.create_app({
-        database: createDatabase(), create_auth_client: createDatabase,
+    return createDatabase;
+}
+
+// Falla cerrado si los orígenes HTTPS no coinciden o falta configuración servidor.
+function validate_worker_environment(env) {
+    if (env.NODE_ENV !== 'development') {
+        const base = appModule.normalize_origin(env.APP_BASE_URL);
+        const origins = appModule.allowed_origin_set(env.APP_ORIGINS);
+        const entries = String(env.APP_ORIGINS || '').split(',').map(value => value.trim()).filter(Boolean);
+        if (!base?.startsWith('https://') || !origins.has(base) || !entries.length || entries.some(value => !appModule.normalize_origin(value)?.startsWith('https://'))) throw new Error('Missing exact HTTPS application origins');
+    }
+    if (!env.SUPABASE_URL || !env.SUPABASE_SECRET_KEY) throw new Error('Missing server Supabase configuration');
+}
+
+// Auth y flags privados del runtime; ninguna credencial se serializa para el cliente.
+function worker_auth_options(env, createDatabase, paymentProvider) {
+    return {
+        database: createDatabase(),
+        create_auth_client: createDatabase,
         preview_read_only: env.PREVIEW_READ_ONLY === 'true',
         presentation_checkout: env.PRESENTATION_CHECKOUT_ENABLED === 'true',
         presentation_signing_key: env.PRESENTATION_SIGNING_KEY,
@@ -48,15 +44,31 @@ function createWorkerApp(env) {
         production: env.NODE_ENV !== 'development',
         disable_request_log: true,
         logger: { error: (_, metadata) => console.error('DREAMS API request failed', { kind: metadata?.kind }), warn: (_, metadata) => console.warn('DREAMS session operation failed', { kind: metadata?.kind }) },
+    };
+}
+
+// Configuración de aplicación y HTML privado, separados de las opciones Auth.
+function worker_application_options(env, createDatabase, paymentProvider) {
+    return {
         allowed_origins: env.APP_ORIGINS,
         app_base_url: env.APP_BASE_URL,
-        contact_email: env.CONTACT_EMAIL, whatsapp_number: env.WHATSAPP_NUMBER,
+        contact_email: env.CONTACT_EMAIL,
+        whatsapp_number: env.WHATSAPP_NUMBER,
         demo_auto_confirm_email: env.DEMO_AUTO_CONFIRM_EMAIL === 'true',
         checkout_schema_ready: env.CHECKOUT_SCHEMA_READY === 'true',
         show_checkout_test_data: env.CHECKOUT_SHOW_TEST_DATA === 'true',
         payment_provider: paymentProvider,
-        public_directory: '/virtual/public', views_directory: '/virtual/views',
-        admin_html: adminHtml, not_found_html: notFoundHtml, admin_script: adminScript,
+        public_directory: '/virtual/public',
+        views_directory: '/virtual/views',
+        admin_html: adminHtml,
+        not_found_html: notFoundHtml,
+        admin_script: adminScript,
+    };
+}
+
+// Sirve únicamente Static Assets propios sin sobrescribir seguridad ni caché privada.
+function worker_static_options(env, createDatabase, paymentProvider) {
+    return {
         static_middleware: async (request, response, next) => {
             if (!['GET', 'HEAD'].includes(request.method) || request.path.startsWith('/api/') || ['/admin', '/admin.html', '/favoritos', '/favoritos.html'].includes(request.path)) return next();
             try {
@@ -71,8 +83,29 @@ function createWorkerApp(env) {
                 }
                 response.send(request.method === 'HEAD' ? undefined : Buffer.from(await asset.arrayBuffer()));
             } catch (error) { next(error); }
-        }
-    });
+        },
+    };
+}
+
+import { createServer } from 'node:http';
+import { handleAsNodeRequest } from 'cloudflare:node';
+import { createClient } from '@supabase/supabase-js';
+import appModule from '../server/app.js';
+import payments from '../server/payments/mercado-pago.js';
+import demoPayments from '../server/payments/demo.js';
+import adminHtml from '../views/admin.html';
+import notFoundHtml from '../public/404.html';
+import adminScript from '../public/js/admin.js';
+
+let server;
+
+function createWorkerApp(env) {
+    validate_worker_environment(env);
+    const createDatabase = worker_database_factory(env);
+    const paymentProvider = env.CHECKOUT_PROVIDER === 'demo'
+    ? new demoPayments.DemoPaymentProvider()
+    : new payments.MercadoPagoProvider({ access_token: env.MERCADO_PAGO_ACCESS_TOKEN, webhook_secret: env.MERCADO_PAGO_WEBHOOK_SECRET, mode: env.MERCADO_PAGO_MODE });
+    return appModule.create_app({ ...worker_auth_options(env, createDatabase, paymentProvider), ...worker_application_options(env, createDatabase, paymentProvider), ...worker_static_options(env, createDatabase, paymentProvider) });
 }
 
 export default {
@@ -82,7 +115,7 @@ export default {
                 server = createServer(createWorkerApp(env));
                 server.listen(8080);
             }
-            // Only the Cloudflare-provided client IP participates in Express limits.
+            // Sólo la IP provista por Cloudflare participa en los límites de Express.
             const headers = new Headers(request.headers);
             headers.delete('x-forwarded-for');
             headers.delete('x-forwarded-host');

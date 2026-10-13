@@ -1,5 +1,95 @@
-// Academic-only signed snapshots. Card fields are never read, sent or stored.
-const PresentationCheckout = (() => {
+let PresentationCheckout;
+{
+    // Confirma sólo el snapshot vigente; no lee datos financieros ni crea pedidos comerciales.
+    async function finish_academic_operation(saved, form) {
+        if (snapshot(get_cart()) !== saved.snapshot) throw new Error('El carrito cambió. Volvé a revisarlo antes de continuar.');
+        const operation = await request('payment', { ticket: saved.ticket });
+        sessionStorage.setItem(RECEIPT, operation.receipt);
+        sessionStorage.removeItem(KEY);
+        form.reset();
+        window.location.assign('/checkout-resultado.html?presentation=1');
+    }
+
+    // Reutiliza el intento y ticket para que reintentos no generen otra referencia.
+    async function academic_saved_intent(cart) {
+        let saved;
+        try { saved = JSON.parse(sessionStorage.getItem(KEY)); } catch { saved = null; }
+        // Persistir v2 antes de la primera llamada conserva la referencia si se pierde la respuesta.
+        if (saved && saved.version !== 2) { sessionStorage.removeItem(KEY); saved = null; }
+        if (saved && saved.snapshot !== snapshot(cart)) throw new Error('Revisá el carrito antes de comenzar otra operación.');
+        if (!saved) {
+            saved = { version: 2, intent_id: crypto.randomUUID(), snapshot: snapshot(cart), ticket: null };
+            sessionStorage.setItem(KEY, JSON.stringify(saved));
+        }
+        if (!saved.ticket) {
+            const data = await request('session', { items: checkout_items_payload(), intent_id: saved.intent_id });
+            saved.ticket = data.ticket;
+            sessionStorage.setItem(KEY, JSON.stringify(saved));
+        }
+        return saved;
+    }
+
+    // Precios y envío se toman del servidor antes de habilitar la confirmación académica.
+    async function prepare_academic_quote(button, status, initial_snapshot) {
+        try {
+            const response = await fetch('/api/cart/quote', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ items: checkout_items_payload() }) });
+            const quote = await response.json();
+            if (!response.ok || !quote.items?.length || quote.warnings?.length || quote.shipping !== 0 || quote.total !== quote.subtotal || !Number.isFinite(quote.subtotal) || quote.subtotal <= 0 || snapshot(get_cart()) !== initial_snapshot) throw new Error(quote.error || 'Revisá los productos del carrito antes de continuar.');
+            render_checkout(quote.items, quote.subtotal, 0, quote.total);
+            const shipping = document.createElement('div');
+            shipping.id = 'checkout-shipping'; shipping.className = 'summary-line';
+            const label = document.createElement('span'); label.textContent = quote.shipping_label;
+            const amount = document.createElement('strong'); amount.textContent = format_price(quote.shipping);
+            shipping.append(label, amount); document.getElementById('checkout-total').before(shipping);
+            save_cart(quote.items);
+            button.disabled = false;
+        } catch (error) { status.textContent = interface_error(error); return false; }
+        return true;
+    }
+
+    async function continue_academic_checkout(button, status, form, initial_snapshot) {
+        if (button.disabled) return;
+        // Conserva nombre del comprador; nunca valida ni lee campos financieros.
+        if (!document.getElementById('demo-card-holder').value.trim()) { status.textContent = 'Completá tu nombre para continuar.'; return; }
+        button.disabled = true; button.setAttribute('aria-busy', 'true'); button.textContent = 'Procesando…'; status.textContent = '';
+        try {
+            const cart = get_cart();
+            if (!cart.length || snapshot(cart) !== initial_snapshot) throw new Error('El carrito cambió. Volvé a revisarlo antes de continuar.');
+            const saved = await academic_saved_intent(cart);
+            await finish_academic_operation(saved, form);
+        } catch (error) {
+            status.textContent = interface_error(error); button.disabled = false; button.removeAttribute('aria-busy'); button.textContent = 'Reintentar';
+        }
+    }
+
+    // Responsabilidad configure academic labels; preserva la secuencia original.
+    function configure_academic_labels(button) {
+        document.querySelector('.demo-card-preview small').textContent = 'TARJETA';
+        document.querySelector('label[for="demo-card-holder"]').textContent = 'Nombre';
+        document.querySelector('label[for="demo-card-number"]').textContent = 'Número';
+        document.querySelector('label[for="demo-card-cvv"]').textContent = 'CVV';
+        document.getElementById('demo-card-number').placeholder = '•••• •••• •••• ••••';
+        document.getElementById('demo-card-number').removeAttribute('aria-describedby');
+        document.getElementById('checkout-intro-copy').textContent = 'Revisá tus productos para continuar.';
+        button.textContent = 'Continuar';
+    }
+
+    // Responsabilidad configure academic form; preserva la secuencia original.
+    function configure_academic_form(form) {
+        document.getElementById('sandbox-banner').hidden = true;
+        document.getElementById('sandbox-help').remove();
+        form.hidden = false;
+        form.noValidate = true;
+        document.querySelector('.coupon-box').hidden = true;
+        document.getElementById('payment-title').textContent = 'Tarjeta';
+        document.getElementById('payment-description').textContent = '';
+        document.getElementById('payment-description').hidden = true;
+        document.getElementById('demo-card-privacy').textContent = '';
+        document.getElementById('demo-card-privacy').hidden = true;
+    }
+
+    // Snapshots sólo académicos: campos de tarjeta no se leen, transmiten ni almacenan.
+
     const KEY = 'dreams_presentation_checkout';
     const RECEIPT = 'dreams_presentation_receipt';
     const snapshot = items => JSON.stringify(items.map(item => [Number(item.id), Number(item.quantity)]).sort((a, b) => a[0] - b[0]));
@@ -18,71 +108,12 @@ const PresentationCheckout = (() => {
         const button = document.getElementById('checkout-submit');
         const status = document.getElementById('checkout-status');
         const form = document.getElementById('demo-card-form');
-        document.getElementById('sandbox-banner').hidden = true;
-        document.getElementById('sandbox-help').remove();
-        form.hidden = false;
-        form.noValidate = true;
-        document.querySelector('.coupon-box').hidden = true;
-        document.getElementById('payment-title').textContent = 'Tarjeta';
-        document.getElementById('payment-description').textContent = '';
-        document.getElementById('payment-description').hidden = true;
-        document.getElementById('demo-card-privacy').textContent = '';
-        document.getElementById('demo-card-privacy').hidden = true;
-        document.querySelector('.demo-card-preview small').textContent = 'TARJETA';
-        document.querySelector('label[for="demo-card-holder"]').textContent = 'Nombre';
-        document.querySelector('label[for="demo-card-number"]').textContent = 'Número';
-        document.querySelector('label[for="demo-card-cvv"]').textContent = 'CVV';
-        document.getElementById('demo-card-number').placeholder = '•••• •••• •••• ••••';
-        document.getElementById('demo-card-number').removeAttribute('aria-describedby');
-        document.getElementById('checkout-intro-copy').textContent = 'Revisá tus productos para continuar.';
-        button.textContent = 'Continuar';
+        configure_academic_form(form);
+        configure_academic_labels(button);
         const initial_snapshot = snapshot(get_cart());
-        try {
-            const response = await fetch('/api/cart/quote', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ items: checkout_items_payload() }) });
-            const quote = await response.json();
-            if (!response.ok || !quote.items?.length || quote.warnings?.length || quote.shipping !== 0 || quote.total !== quote.subtotal || !Number.isFinite(quote.subtotal) || quote.subtotal <= 0 || snapshot(get_cart()) !== initial_snapshot) throw new Error(quote.error || 'Revisá los productos del carrito antes de continuar.');
-            render_checkout(quote.items, quote.subtotal, 0, quote.total);
-            const shipping = document.createElement('div');
-            shipping.id = 'checkout-shipping'; shipping.className = 'summary-line';
-            const label = document.createElement('span'); label.textContent = quote.shipping_label;
-            const amount = document.createElement('strong'); amount.textContent = format_price(quote.shipping);
-            shipping.append(label, amount); document.getElementById('checkout-total').before(shipping);
-            save_cart(quote.items);
-            button.disabled = false;
-        } catch (error) { status.textContent = interface_error(error); return; }
+        if (!(await prepare_academic_quote(button, status, initial_snapshot))) return;
         form.addEventListener('submit', event => { event.preventDefault(); button.click(); });
-        button.addEventListener('click', async () => {
-            if (button.disabled) return;
-            // Preserve the existing buyer-name validation; no financial-field validation.
-            if (!document.getElementById('demo-card-holder').value.trim()) { status.textContent = 'Completá tu nombre para continuar.'; return; }
-            button.disabled = true; button.setAttribute('aria-busy', 'true'); button.textContent = 'Procesando…'; status.textContent = '';
-            try {
-                const cart = get_cart();
-                if (!cart.length || snapshot(cart) !== initial_snapshot) throw new Error('El carrito cambió. Volvé a revisarlo antes de continuar.');
-                let saved;
-                try { saved = JSON.parse(sessionStorage.getItem(KEY)); } catch { saved = null; }
-                // A v2 intent is persisted BEFORE the first network call, including retries.
-                if (saved && saved.version !== 2) { sessionStorage.removeItem(KEY); saved = null; }
-                if (saved && saved.snapshot !== snapshot(cart)) throw new Error('Revisá el carrito antes de comenzar otra operación.');
-                if (!saved) {
-                    saved = { version: 2, intent_id: crypto.randomUUID(), snapshot: snapshot(cart), ticket: null };
-                    sessionStorage.setItem(KEY, JSON.stringify(saved));
-                }
-                if (!saved.ticket) {
-                    const data = await request('session', { items: checkout_items_payload(), intent_id: saved.intent_id });
-                    saved.ticket = data.ticket;
-                    sessionStorage.setItem(KEY, JSON.stringify(saved));
-                }
-                if (snapshot(get_cart()) !== saved.snapshot) throw new Error('El carrito cambió. Volvé a revisarlo antes de continuar.');
-                const operation = await request('payment', { ticket: saved.ticket });
-                sessionStorage.setItem(RECEIPT, operation.receipt);
-                sessionStorage.removeItem(KEY);
-                form.reset();
-                window.location.assign('/checkout-resultado.html?presentation=1');
-            } catch (error) {
-                status.textContent = interface_error(error); button.disabled = false; button.removeAttribute('aria-busy'); button.textContent = 'Reintentar';
-            }
-        });
+        button.addEventListener('click', () => continue_academic_checkout(button, status, form, initial_snapshot));
     }
     async function result() {
         const container = document.getElementById('payment-result');
@@ -98,5 +129,5 @@ const PresentationCheckout = (() => {
             }
         } catch (error) { container.textContent = `${interface_error(error)} El carrito se conserva.`; }
     }
-    return { setup, result };
-})();
+    PresentationCheckout = { setup, result };
+}

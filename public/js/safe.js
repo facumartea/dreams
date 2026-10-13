@@ -1,4 +1,5 @@
-(function expose_safe_helpers(root) {
+{
+    const root = typeof window === 'undefined' ? globalThis : window;
     const fallback_image = '/assets/dreams-bottle.png';
 
     function escape_html(value) {
@@ -66,4 +67,4 @@
     const helpers = { escape_html, safe_image_url, attach_image_fallback, fallback_image, interface_error, validation_message };
     Object.assign(root, helpers);
     if (typeof module !== 'undefined' && module.exports) module.exports = helpers;
-})(typeof window === 'undefined' ? globalThis : window);
+}

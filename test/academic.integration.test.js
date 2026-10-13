@@ -1,3 +1,48 @@
+// Comprueba resultados observables de: verify_academic_operation.
+async function verificar_verify_academic_operation_1(context) {
+    const { base } = context;
+    const intent_id = require('node:crypto').randomUUID();
+    const body = { items: [{ id: 7, quantity: 2 }], intent_id };
+    const created = await post(base, '/api/presentation/session', body);
+    assert.equal(created.status, 200);
+    const cookie = created.headers.getSetCookie()[0].split(';')[0];
+    const data = await created.json();
+    assert.equal(data.subtotal, 240); assert.equal(data.shipping, 0); assert.equal(data.total, data.subtotal); assert.equal(data.shipping_label, 'Envío gratis');
+    const receipt = await (await post(base, '/api/presentation/payment', { ticket: data.ticket }, cookie)).json();
+    assert.equal(receipt.status, 'completed');
+    Object.assign(context, { intent_id, body, created, cookie, data, receipt });
+}
+
+// Comprueba resultados observables de: verify_academic_operation.
+async function verificar_verify_academic_operation_2(context) {
+    const { base, references, body, cookie, data, receipt } = context;
+    assert.deepEqual(await (await post(base, '/api/presentation/payment', { ticket: data.ticket }, cookie)).json(), receipt);
+    // If the first session response is lost, the same intent keeps its reference.
+    const retry = await (await post(base, '/api/presentation/session', body, cookie)).json();
+    const retried = await (await post(base, '/api/presentation/payment', { ticket: retry.ticket }, cookie)).json();
+    assert.equal(retried.reference, receipt.reference);
+    const result = await (await post(base, '/api/presentation/result', { receipt: receipt.receipt }, cookie)).json();
+    assert.equal(result.status, 'completed'); assert.equal(result.subtotal, 240); assert.equal(result.total, 240); assert.equal(result.shipping, 0); assert.equal(result.simulated, true);
+    assert.match(result.reference, /^DREAMS-[0-9A-F]{32}$/); references.add(result.reference);
+    Object.assign(context, { retry, retried, result });
+}
+
+// Comprueba resultados observables de: verify_academic_operation.
+async function verificar_verify_academic_operation_3(context) {
+    const { base, cookie, data, receipt, result } = context;
+    assert.deepEqual(await (await post(base, '/api/presentation/result', { receipt: receipt.receipt }, cookie)).json(), result);
+    assert.equal((await post(base, '/api/presentation/payment', { ticket: data.ticket }, 'dreams_presentation=11111111-1111-4111-8111-111111111111')).status, 400);
+    assert.equal((await post(base, '/api/presentation/result', { receipt: receipt.receipt.slice(0, -5) + 'wrong' }, cookie)).status, 400);
+    assert.equal((await post(base, '/api/presentation/payment', { ticket: receipt.receipt }, cookie)).status, 400);
+}
+
+async function verify_academic_operation(base, references) {
+    const context = { base, references };
+    await verificar_verify_academic_operation_1(context);
+    await verificar_verify_academic_operation_2(context);
+    await verificar_verify_academic_operation_3(context);
+}
+
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const { create_app } = require('../server/app');
@@ -5,10 +50,10 @@ const { create_app } = require('../server/app');
 function db(role = 'customer', price = 120) {
     const state = { writes: 0 };
     return { state, auth: { getUser: async token => ({ data: { user: token === 'verified' ? { id: 'fixture', email: 'fixture@example.com', user_metadata: { role: 'admin' } } : null } }) }, from(table) {
-        if (!['products', 'profiles'].includes(table)) throw new Error('Commercial data must not be accessed by presentation');
-        const q = { select() { return q; }, eq() { return q; }, in() { return q; }, maybeSingle() { return q; }, then(resolve, reject) { return Promise.resolve({ data: table === 'profiles' ? { name: 'Fixture', role } : [{ id: 7, brand: 'Fixture', name: 'Test product', price, stock: 3 }], error: null }).then(resolve, reject); } };
-        for (const method of ['insert', 'upsert', 'update', 'delete']) q[method] = () => { state.writes++; throw new Error('No writes allowed'); };
-        return q;
+            if (!['products', 'profiles'].includes(table)) throw new Error('Commercial data must not be accessed by presentation');
+            const q = { select() { return q; }, eq() { return q; }, in() { return q; }, maybeSingle() { return q; }, then(resolve, reject) { return Promise.resolve({ data: table === 'profiles' ? { name: 'Fixture', role } : [{ id: 7, brand: 'Fixture', name: 'Test product', price, stock: 3 }], error: null }).then(resolve, reject); } };
+            for (const method of ['insert', 'upsert', 'update', 'delete']) q[method] = () => { state.writes++; throw new Error('No writes allowed'); };
+            return q;
     } };
 }
 async function serve(options, fn) {
@@ -27,29 +72,7 @@ test('direct academic confirmation recalculates products, has zero shipping, rep
     const database = db();
     const references = new Set();
     await serve({ ...enabled, database }, async base => {
-        for (let i = 0; i < 4; i++) {
-            const intent_id = require('node:crypto').randomUUID();
-            const body = { items: [{ id: 7, quantity: 2 }], intent_id };
-            const created = await post(base, '/api/presentation/session', body);
-            assert.equal(created.status, 200);
-            const cookie = created.headers.getSetCookie()[0].split(';')[0];
-            const data = await created.json();
-            assert.equal(data.subtotal, 240); assert.equal(data.shipping, 0); assert.equal(data.total, data.subtotal); assert.equal(data.shipping_label, 'Envío gratis');
-            const receipt = await (await post(base, '/api/presentation/payment', { ticket: data.ticket }, cookie)).json();
-            assert.equal(receipt.status, 'completed');
-            assert.deepEqual(await (await post(base, '/api/presentation/payment', { ticket: data.ticket }, cookie)).json(), receipt);
-            // If the first session response is lost, the same intent keeps its reference.
-            const retry = await (await post(base, '/api/presentation/session', body, cookie)).json();
-            const retried = await (await post(base, '/api/presentation/payment', { ticket: retry.ticket }, cookie)).json();
-            assert.equal(retried.reference, receipt.reference);
-            const result = await (await post(base, '/api/presentation/result', { receipt: receipt.receipt }, cookie)).json();
-            assert.equal(result.status, 'completed'); assert.equal(result.subtotal, 240); assert.equal(result.total, 240); assert.equal(result.shipping, 0); assert.equal(result.simulated, true);
-            assert.match(result.reference, /^DREAMS-[0-9A-F]{32}$/); references.add(result.reference);
-            assert.deepEqual(await (await post(base, '/api/presentation/result', { receipt: receipt.receipt }, cookie)).json(), result);
-            assert.equal((await post(base, '/api/presentation/payment', { ticket: data.ticket }, 'dreams_presentation=11111111-1111-4111-8111-111111111111')).status, 400);
-            assert.equal((await post(base, '/api/presentation/result', { receipt: receipt.receipt.slice(0, -5) + 'wrong' }, cookie)).status, 400);
-            assert.equal((await post(base, '/api/presentation/payment', { ticket: receipt.receipt }, cookie)).status, 400);
-        }
+        for (let i = 0; i < 4; i++) { await verify_academic_operation(base, references); }
     });
     assert.equal(references.size, 4); assert.equal(database.state.writes, 0);
 });
@@ -98,8 +121,8 @@ test('Google fails clearly while unconfigured and callbacks without PKCE cannot 
 test('Google binds code exchange to HttpOnly PKCE cookie and server profile; no email/metadata promotion or open redirects', async () => {
     const calls = [];
     const create_oauth_client = storage => ({ auth: {
-        signInWithOAuth: async options => { calls.push(options); storage.setItem('dreams-google-code-verifier', 'fixture-verifier'); return { data: { url: 'https://fixture.supabase.co/auth/v1/authorize?provider=google' } }; },
-        exchangeCodeForSession: async code => { assert.equal(storage.getItem('dreams-google-code-verifier'), 'fixture-verifier'); return code === 'good' ? { data: { user: { id: 'fixture', email: 'fixture@example.com', user_metadata: { role: 'admin' } }, session: { access_token: 'fixture-token', refresh_token: 'fixture-refresh', expires_in: 3600 } } } : { error: new Error('Invalid exchange'), data: {} }; }
+            signInWithOAuth: async options => { calls.push(options); storage.setItem('dreams-google-code-verifier', 'fixture-verifier'); return { data: { url: 'https://fixture.supabase.co/auth/v1/authorize?provider=google' } }; },
+            exchangeCodeForSession: async code => { assert.equal(storage.getItem('dreams-google-code-verifier'), 'fixture-verifier'); return code === 'good' ? { data: { user: { id: 'fixture', email: 'fixture@example.com', user_metadata: { role: 'admin' } }, session: { access_token: 'fixture-token', refresh_token: 'fixture-refresh', expires_in: 3600 } } } : { error: new Error('Invalid exchange'), data: {} }; }
     } });
     await serve({ google_access_ready: true, create_oauth_client, google_provider_enabled: async () => true, app_base_url: 'https://preview.example', production: true }, async base => {
         const start = await post(base, '/api/auth/google', { next: 'https://attacker.example', email: 'admindreams@gmail.com' });
