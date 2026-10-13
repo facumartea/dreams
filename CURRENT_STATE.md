@@ -1,3 +1,9 @@
+# Carrito por cuenta preparado, promoción bloqueada — 2026-10-13
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Rama codex/account-cart-official desde PR44/c83b148; preserva oficial estática/PR42, checkout directo seleccionadoPR43, sin video/merge. API por UUID verificado/scope, RPC atómica/operaciones idempotentes, combinación max/stock, outbox propia/epoch/revisiones/logout y precios actuales implementados. Migración aditiva 20261013032746 aplicada; SQL con rollback verificó RLS/replay/stock/consume, cero filas conservadas. QA local fixture390/1440 pasó; no equivale a remoto autenticado. Acceso Auth Admin/Secret proceso ausente y anonymous deshabilitado; NO cuentas de prueba creadas/admin reset. Oficial debe recibir sólo PR44 checkout, no persistencia hasta dos sesiones legítimas. Docs: docs/account_cart.md. Próximo: terminar CI/preview aislada, habilitar acceso seguro y QA autenticada antes de promoción. Progreso global no recalculado.
+
 # Promoción oficial de checkout directo en preparación — 2026-10-13
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.

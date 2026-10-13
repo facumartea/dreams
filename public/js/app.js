@@ -61,7 +61,7 @@ function format_price(value) {
     }).format(value);
 }
 
-function get_cart() {
+function read_guest_cart() {
     try {
         const stored = JSON.parse(localStorage.getItem('dreams_cart'));
         if (!Array.isArray(stored)) return [];
@@ -87,10 +87,30 @@ function get_cart() {
     }
 }
 
-function save_cart(cart) {
-    localStorage.setItem('dreams_cart', JSON.stringify(cart));
+function get_cart() { return account_cart ? account_cart.get() : read_guest_cart(); }
+function save_cart(cart, options = {}) {
+    if (account_cart) account_cart.save(cart, options);
+    else localStorage.setItem('dreams_cart', JSON.stringify(cart));
     update_cart_count();
 }
+function clear_cart() { save_cart([]); }
+var account_cart = window.create_account_cart?.({
+    request: async (path, body) => {
+        const response = await fetch(path, body ? { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body) } : {});
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error || 'No se pudo guardar el carrito.');
+        return data;
+    },
+    storage: sessionStorage,
+    read_guest: read_guest_cart,
+    write_guest: cart => { if(cart.length) localStorage.setItem('dreams_cart', JSON.stringify(cart)); else localStorage.removeItem('dreams_cart'); },
+    emit: message => { update_cart_count(); window.dispatchEvent(new Event('dreams:cart')); if(message) show_toast(message); }
+});
+account_cart?.initialize().catch(()=>show_toast('No se pudo recuperar el carrito. Volvé a intentar.'));
+window.addEventListener('online', ()=>account_cart?.ready().catch(()=>{}));
+window.addEventListener('focus', ()=>account_cart?.initialize().catch(()=>{}));
+window.addEventListener('pageshow', event=>{if(event.persisted)account_cart?.initialize().catch(()=>{});});
+window.addEventListener('storage', event=>{if(event.key==='dreams_account_changed'){account_cart?.logout();account_cart?.initialize().catch(()=>{});}});
 
 function update_cart_count() {
     const count_element = document.getElementById('cart-count');
@@ -102,7 +122,8 @@ function update_cart_count() {
     count_element.textContent = total;
 }
 
-function add_to_cart(product) {
+async function add_to_cart(product) {
+    try { await account_cart?.ready(); } catch { show_toast('No se pudo sincronizar el carrito. Reintentá.'); return; }
     if (Number(product.stock) === 0) {
         show_toast('Este perfume está agotado.');
         return;
@@ -140,12 +161,14 @@ function add_to_cart(product) {
     show_toast(`${product.name} fue agregado al carrito.`);
 }
 
-function remove_from_cart(product_id) {
+async function remove_from_cart(product_id) {
+    try { await account_cart?.ready(); } catch { show_toast('No se pudo sincronizar el carrito. Reintentá.'); return; }
     const cart = get_cart().filter(item => item.id !== product_id);
     save_cart(cart);
 }
 
-function change_quantity(product_id, change) {
+async function change_quantity(product_id, change) {
+    try { await account_cart?.ready(); } catch { show_toast('No se pudo sincronizar el carrito. Reintentá.'); return; }
     const cart = get_cart();
     const item = cart.find(product => product.id === product_id);
 
@@ -161,7 +184,7 @@ function change_quantity(product_id, change) {
     }
 
     if (item.quantity <= 0) {
-        remove_from_cart(product_id);
+        await remove_from_cart(product_id);
         return;
     }
 

@@ -6,7 +6,7 @@ function unavailable() {
 
 // Only the explicitly packaged visual assets are replaced. All other routes,
 // API bodies, authentication, cookies and authorization remain in DREAMS.
-const visual_paths = new Set(['/', '/index.html', '/nosotros.html', '/catalogo.html', '/producto.html', '/carrito.html', '/cuenta.html', '/checkout.html', '/checkout-resultado.html', '/css/style.css', '/js/motion.js', '/js/app.js', '/js/catalogo.js', '/js/navigation.js', '/js/carrito.js', '/js/presentation.js']);
+const visual_paths = new Set(['/', '/index.html', '/nosotros.html', '/catalogo.html', '/producto.html', '/carrito.html', '/cuenta.html', '/checkout.html', '/checkout-resultado.html', '/css/style.css', '/js/motion.js', '/js/app.js', '/js/catalogo.js', '/js/navigation.js', '/js/account-cart.js', '/js/cuenta.js', '/js/carrito.js', '/js/presentation.js']);
 
 export function create_proxy(visual_assets = {}, options = {}) {
     // Pin an immutable pre-video release explicitly, never a moving preview alias.
@@ -19,7 +19,7 @@ export function create_proxy(visual_assets = {}, options = {}) {
                 const pathname = new URL(request.url).pathname;
                 const asset = visual_paths.has(pathname) && ['GET', 'HEAD'].includes(request.method) ? visual_assets[pathname] : null;
                 // A new packaged script borrows the existing script route for security headers.
-                let upstream_request = pathname === '/js/navigation.js' && asset ? new Request(new URL('/js/app.js', request.url), request) : request;
+                let upstream_request = ['/js/navigation.js','/js/account-cart.js'].includes(pathname) && asset ? new Request(new URL('/js/app.js', request.url), request) : request;
                 if (asset) {
                     const headers = new Headers(request.headers);
                     for (const name of ['If-None-Match', 'If-Modified-Since', 'Range', 'If-Range']) headers.delete(name);

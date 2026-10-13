@@ -36,6 +36,7 @@ const PresentationCheckout = (() => {
         document.getElementById('demo-card-number').removeAttribute('aria-describedby');
         document.getElementById('checkout-intro-copy').textContent = 'Revisá tus productos para continuar.';
         button.textContent = 'Continuar';
+        try { if(typeof account_cart !== 'undefined') await account_cart?.ready(); } catch(error) { status.textContent=interface_error(error); return; }
         const initial_snapshot = snapshot(get_cart());
         try {
             const response = await fetch('/api/cart/quote', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ items: checkout_items_payload() }) });
@@ -47,7 +48,7 @@ const PresentationCheckout = (() => {
             const label = document.createElement('span'); label.textContent = quote.shipping_label;
             const amount = document.createElement('strong'); amount.textContent = format_price(quote.shipping);
             shipping.append(label, amount); document.getElementById('checkout-total').before(shipping);
-            save_cart(quote.items);
+            save_cart(quote.items, {reconcile:true});
             button.disabled = false;
         } catch (error) { status.textContent = interface_error(error); return; }
         form.addEventListener('submit', event => { event.preventDefault(); button.click(); });
@@ -87,13 +88,14 @@ const PresentationCheckout = (() => {
     async function result() {
         const container = document.getElementById('payment-result');
         try {
+            if(typeof account_cart !== 'undefined') await account_cart?.ready();
             const data = await request('result', { receipt: sessionStorage.getItem(RECEIPT) });
             if (data.status !== 'completed' || data.simulated !== true || data.shipping !== 0 || data.total !== data.subtotal || !Number.isFinite(data.subtotal) || data.subtotal <= 0 || !Array.isArray(data.items) || !data.items.length) throw new Error('No pudimos verificar la confirmación.');
             container.className = 'payment-result presentation-result status-completed';
             const products = data.items.map(item => `<li>${escape_html(item.quantity)} × ${escape_html(item.brand)} ${escape_html(item.name)}<strong>${escape_html(format_price(item.price * item.quantity))}</strong></li>`).join('');
             container.innerHTML = `<span class="payment-result-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="m13 25 7 7 15-17"/></svg></span><p class="eyebrow">DREAMS</p><h1>Pedido confirmado</h1><div class="order-reference"><span>Pedido</span><strong>${escape_html(data.reference)}</strong></div><ul class="presentation-products">${products}</ul><div class="summary-line"><span>${escape_html(data.shipping_label)}</span><strong>${escape_html(format_price(data.shipping))}</strong></div><div class="summary-line summary-total"><span>Total</span><strong>${escape_html(format_price(data.total))}</strong></div><div class="result-actions"><a class="button" href="/catalogo.html">Volver a la colección</a></div>`;
             if (sessionStorage.getItem('dreams_presentation_completed') !== data.reference) {
-                if (snapshot(get_cart()) === snapshot(data.items)) { localStorage.removeItem('dreams_cart'); update_cart_count(); }
+                if (snapshot(get_cart()) === snapshot(data.items)) { if (typeof account_cart !== 'undefined' && account_cart?.active()) { account_cart.consume(data.items); await account_cart.flush(); } else { localStorage.removeItem('dreams_cart'); update_cart_count(); } }
                 sessionStorage.setItem('dreams_presentation_completed', data.reference);
             }
         } catch (error) { container.textContent = `${interface_error(error)} El carrito se conserva.`; }

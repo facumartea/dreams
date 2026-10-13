@@ -39,6 +39,7 @@ async function start() {
         },
         product_brand_column,
         database,
+        account_cart_enabled: process.env.ACCOUNT_CART_ENABLED === 'true',
         create_auth_client: create_database,
         production: process.env.NODE_ENV === 'production',
         contact_email: process.env.CONTACT_EMAIL,

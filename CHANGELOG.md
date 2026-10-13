@@ -1,3 +1,9 @@
+# 2026-10-13 — Carrito por usuario aislado preparado
+
+- API ligada a UUID Auth y scope firmado; SQL atómico/idempotente con RLS, merge max y stock, precios actuales sin órdenes/stock comercial.
+- Cola de cantidades por dueño/retry/epoch/revisiones y limpieza logout; visitante local conservado, consume académico no borra cambios ajenos.
+- Migración aditiva aplicada y SQL rollback verificados, tablas vacías. QA local390/1440 con fixtures pasó; remoto autenticado pendiente por acceso real ausente. No activar oficial.
+
 # 2026-10-13 — Checkout directo aislado para oficial
 
 - Seleccionado envío gratis/confirmación directa de PR43 sin video, sobre oficial PR42. Backend v2 y frontend deben publicarse juntos mediante Pages fijado.

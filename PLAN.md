@@ -1,3 +1,10 @@
+# Carrito por cuenta — 2026-10-13
+
+- API/cliente/migración/SQL RLS con rollback: COMPLETADOS.
+- QA local de dos sesiones fixture390/1440: COMPLETADA.
+- PR/CI/preview aislada: EN CURSO.
+- QA autenticada remota y promoción oficial: BLOQUEADAS por acceso Auth Admin/identidades de prueba.
+
 # Promoción oficial y carrito por cuenta — 2026-10-13
 
 - Estado oficial/preview/PRs/Admin: VERIFICADOS.
