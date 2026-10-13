@@ -1,3 +1,15 @@
+# Oficial checkout directo publicada — 2026-10-13
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Oficial https://dreams-perfumes.pages.dev: Pagesac755bbe/c83b148 SUCCESS, backendd5df723d fuenteec04a35/Secret firma propia nuevo entorno. CI38343215733 SUCCESS124tests/check47/audit/builds, PR44 abierta sobrePR42 sin merge. Checkpoint documental posterior no cambia deployment. Video y persistencia por cuenta PR45 EXCLUIDOS: hero estático/módulo account-cart ausente/API404. Envío gratis y confirmación directa v2 académica publicados.
+
+QA Chromium390/1440 Worker/staging/oficial completa: catálogo46/menús/filtros/carrito visitante, total/envío0, Tarjeta sin datos en red/storage/consola, dobleclic/retry antes-después/referencia/reload/empty inválido sinpageerrors/overflow. Hero/foto/hover/CTA/contactos/loginlegacy/Admin anónimo403 comprobados. Harness hover bbox inicialmente falló por scroll automático; medida corregida, no código. Capturas/docs: docs/official_direct_checkout.md y /workspace/dreams-official-direct-evidence.
+
+Rollback c658e4da y backend40e7b0a3 conservados/HTTP200/APIendpoint verificado, no ejecutado. DB0orders/46productos/stockhash7a58615dd40e0dcfd898a52aa108b820; nueva migración carrito en PR45 aplicada/SQLrollback dejó0filas, sin stock/pedidos/Auth cambiados. Muestra logs1Supabase401 en reviews del primer backend9eb, causa no confirmada; reviews actual200/[], invocationoff/cobertura limitada. No DNS/merge/video/credenciales/pagos alterados.
+
+Admin sigue admin@dreamsperfumes.com, UUID esperado y roladmin; sin correo pendiente ni contraseña accesible/verificada. Login /cuenta.html, panel /admin; acceso autenticado real no comprobado. PR45 prepara carrito por cuenta en preview independiente pero faltan dos sesiones reales y acceso Auth Admin/Secret del proceso; NO activar oficial antes de validarlos. No crear identidades verificadas ficticias ni cambiar política Auth. Porcentaje global no recalculado. Próximo: habilitar acceso seguro a dos cuentas de prueba y QA autenticada de PR45 antes de promoción. PUSH/DEPLOY OFICIAL:SÍ.
+
 # Promoción oficial de checkout directo en preparación — 2026-10-13
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
