@@ -44,3 +44,10 @@ Backend estático publicado: ec04a35812d044e57196c6a1ca55232e723ff60c,
 9ebd8175-1723-4b49-8797-84f6f6b5a386. CI38342951788 SUCCESS.
 Secrets heredados, flag carrito por cuenta desactivado. Rollback c658e4da
 raíz200/health200 verificados antes de promoción. No rollback ejecutado.
+
+Primera QA candidata falló: /api/checkout/config devolvía enabled:false;
+faltaba PRESENTATION_SIGNING_KEY propio del entorno nuevo (Supabase Secret sí
+heredado). Generada clave interna independiente por stdin seguro, sin valores
+en archivos/argumentos/logs. No rotación de Secrets existentes ni Auth.
+Nuevo deployment d5df723d-e1f1-4889-ae5b-e79ebfd131cd, misma app ec04a35.
+Pages se fija a esta versión; recorrido remoto debe pasar antes de promover.
