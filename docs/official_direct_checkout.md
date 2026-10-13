@@ -39,3 +39,8 @@ Acceso /cuenta.html → /admin. Contraseña no accesible/verificada en gestor;
 no se modificaron correo, contraseña, roles ni sesiones.
 
 Deployment/CI y verificaciones remotas se registrarán al completar promoción.
+
+Backend estático publicado: ec04a35812d044e57196c6a1ca55232e723ff60c,
+9ebd8175-1723-4b49-8797-84f6f6b5a386. CI38342951788 SUCCESS.
+Secrets heredados, flag carrito por cuenta desactivado. Rollback c658e4da
+raíz200/health200 verificados antes de promoción. No rollback ejecutado.
