@@ -273,3 +273,13 @@ input,select,textarea{width:100%;min-height:48px;padding:.78rem 0;border:0;borde
 .admin-product-search .small-button,#retry-admin-products{min-height:44px}
 #admin-products-status{font-size:.75rem;min-height:1.4em;overflow-wrap:anywhere}
 @media(max-width:600px){.admin-product-search{flex-wrap:wrap}.admin-product-search .form-field{flex-basis:100%}}
+
+/* Carrusel editorial manual: los controles permanecen visibles y táctiles. */
+.carousel-controls { display: flex; align-items: center; justify-content: flex-end; gap: 1rem; margin-bottom: 1.5rem; }
+.carousel-controls .small-button { min-height: 44px; min-width: 80px; }
+#featured-status { color: var(--muted); font-size: .85rem; }
+#featured-products.carousel-products { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 24px; padding-bottom: 1rem; }
+.carousel-products > .product-card { flex: 0 0 calc((100% - 72px) / 4); min-width: 0; scroll-snap-align: start; }
+@media (max-width: 1024px) { .carousel-products > .product-card { flex-basis: calc((100% - 24px) / 2); } }
+@media (max-width: 600px) { .carousel-products > .product-card { flex-basis: 85%; } .carousel-controls { gap: .65rem; justify-content: space-between; } }
+@media (prefers-reduced-motion: reduce) { .carousel-products { scroll-behavior: auto; } }

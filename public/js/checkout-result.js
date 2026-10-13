@@ -10,8 +10,8 @@ function render_payment_result(status, order_number) {
     const result = document.getElementById('payment-result');
     const copy = RESULT_COPY[status] || RESULT_COPY.error;
     const icon = status === 'approved'
-        ? '<span class="payment-result-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="m13 25 7 7 15-17"/></svg></span>'
-        : '';
+    ? '<span class="payment-result-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="m13 25 7 7 15-17"/></svg></span>'
+    : '';
     result.className = `payment-result status-${status}`;
     result.innerHTML = `${icon}<p class="eyebrow">DREAMS · PAGO</p><h1>${escape_html(copy[0])}</h1><p>${escape_html(copy[1])}</p><div class="order-reference"><span>N° de compra</span><strong>${escape_html(order_number)}</strong></div><div class="result-actions"><a class="button button-primary" href="/catalogo.html">Seguir comprando</a><a class="button" href="/cuenta.html">Ir a mi cuenta</a></div>`;
     if (status === 'approved') {

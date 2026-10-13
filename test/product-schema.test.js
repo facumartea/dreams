@@ -13,11 +13,11 @@ test('marca se adapta al contrato brand sin alterar el producto original', () =>
 
 function schema_database(results, calls) {
     return { from(table) {
-        assert.equal(table, 'products');
-        return { select(column) { calls.push(column); return { async limit(size) {
-            assert.equal(size, 1);
-            return results[column];
-        } }; } };
+            assert.equal(table, 'products');
+            return { select(column) { calls.push(column); return { async limit(size) {
+                            assert.equal(size, 1);
+                            return results[column];
+                    } }; } };
     } };
 }
 

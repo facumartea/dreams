@@ -12,8 +12,8 @@ function controller() {
         get_cart: () => cart, save_cart: value => { cart = value; saved.push(value); },
         show_toast: value => notices.push(value),
         fetch: path => path === '/api/checkout/config'
-            ? Promise.resolve({ ok: true, json: async () => ({ enabled: true }) })
-            : new Promise(resolve => requests.push(resolve))
+        ? Promise.resolve({ ok: true, json: async () => ({ enabled: true }) })
+        : new Promise(resolve => requests.push(resolve))
     });
     vm.runInContext(readFileSync(require.resolve('../public/js/carrito.js'), 'utf8'), context);
     context.render_cart = (...args) => renders.push(args);

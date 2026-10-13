@@ -30,7 +30,9 @@
     "ws": "^8.18.3"
   },
   "devDependencies": {
+    "acorn": "8.15.0",
     "nodemon": "^3.1.10",
-    "wrangler": "^4.147.0"
+    "wrangler": "^4.147.0",
+    "libpg-query": "18.1.5"
   }
 }

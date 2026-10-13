@@ -1,3 +1,118 @@
+// Diferencia URL ausente e insegura sin borrar campos ajenos del formulario.
+function validate_image_candidate(candidate) {
+    if (!candidate) {
+        set_product_image_preview('invalid', 'Ingresá un enlace HTTPS directo a una imagen.');
+        return false;
+    }
+    if (!is_supported_image_url(candidate)) {
+        set_product_image_preview('invalid', /^http:/i.test(candidate) ? 'Usá HTTPS: los enlaces HTTP se bloquean en esta página.' : IMAGE_URL_ERROR);
+        return false;
+    }
+    return true;
+}
+
+// Conecta controles de búsqueda y edición sin permitir doble envío durante guardado.
+function bind_admin_products() {
+    document.getElementById('admin-product-search').addEventListener('input', render_admin_products);
+    document.getElementById('clear-product-search').addEventListener('click', () => {
+        const input = document.getElementById('admin-product-search');
+        input.value = '';
+        render_admin_products();
+        input.focus();
+    });
+    document.getElementById('retry-admin-products').addEventListener('click', load_admin_products);
+    document.getElementById('product-form').addEventListener('submit', save_product);
+    document.getElementById('image_url').addEventListener('input', schedule_product_image_preview);
+    document.getElementById('retry-image-preview').addEventListener('click', preview_product_image);
+    set_product_image_preview('empty');
+    document.getElementById('cancel-edit').addEventListener('click', reset_form);
+}
+
+// Responsabilidad bind admin modules; preserva la secuencia original.
+function bind_admin_modules() {
+    document.getElementById('coupon-form').addEventListener('submit', save_coupon);
+    document.getElementById('cancel-coupon-edit').addEventListener('click', reset_coupon_form);
+    const coupon_code = document.getElementById('admin-coupon-code');
+    coupon_code.addEventListener('input', () => { coupon_code.value = coupon_code.value.toUpperCase(); });
+    document.getElementById('review-search').addEventListener('input', render_admin_reviews);
+    document.getElementById('logout-admin').addEventListener('click', event => with_pending(event.currentTarget, 'Cerrando…', async () => {
+        try { await admin_fetch('/api/auth/logout', { method: 'POST' }); window.location.href = '/'; }
+        catch (error) { show_toast(error.message); }
+    }));
+}
+
+// Bloquea formulario y mantiene ID/URL durante la escritura y su respuesta.
+async function persist_admin_product(submit) {
+    const id = editing_product_id || document.getElementById('product-id').value;
+    const url = id ? `/api/admin/products/${id}` : '/api/admin/products';
+    const method = id ? 'PUT' : 'POST';
+    await with_pending(submit, 'Guardando…', async () => {
+        set_product_save_pending(true);
+        try {
+            await admin_fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(get_form_data()) });
+            const success_message = id ? 'Producto actualizado correctamente.' : 'Producto creado correctamente.';
+            reset_form(true);
+            document.getElementById('admin-message').textContent = success_message;
+            await Promise.all([load_dashboard(), load_admin_products()]);
+        } catch (error) { document.getElementById('admin-message').textContent = error.message; }
+        finally { set_product_save_pending(false); }
+    });
+}
+
+// Carga nativa de imagen, sin petición HEAD ni descarga arbitraria desde servidor.
+function load_image_preview(image, candidate, token) {
+    set_product_image_preview('pending', 'Comprobando imagen…');
+    bind_image_events(image, candidate, token);
+    image.src = candidate;
+}
+
+// Ignora eventos de una URL anterior; guardar requiere la imagen actual comprobada.
+function bind_image_events(image, candidate, token) {
+    image.onload = () => {
+        if (token !== product_image_preview_token) return;
+        window.clearTimeout(product_image_load_timer);
+        product_image_preview_url = candidate;
+        const warning = DreamsAdminImages.temporary_image_url(candidate) ? ' Este enlace es temporal o firmado y puede vencer. Preferí un enlace permanente.' : '';
+        set_product_image_preview('valid', 'Vista previa lista.' + warning);
+    };
+    image.onerror = () => {
+        if (token !== product_image_preview_token) return;
+        window.clearTimeout(product_image_load_timer);
+        product_image_preview_token += 1;
+        set_product_image_preview('invalid', 'El enlace no cargó una imagen. Puede apuntar a una página, haber vencido o bloquear el acceso. Usá un enlace directo y permanente.');
+    };
+}
+
+// Filtra sólo nombre o marca sobre la respuesta vigente, conservando orden y acciones.
+function populate_admin_products(tbody, query, status, total) {
+    if (admin_products_state !== 'ready') {
+        total.textContent = '';
+        status.textContent = admin_products_state === 'loading' ? 'Cargando productos…' : 'No se pudieron cargar los productos. Volvé a intentar.';
+        message_row(tbody, admin_products_state === 'loading' ? 'Cargando productos…' : 'No se pudieron cargar los productos.');
+        return;
+    }
+    const products = DreamsAdminProducts.filter_products(admin_products, query);
+    total.textContent = DreamsAdminProducts.normalize_search(query) ? `${products.length} de ${admin_products.length} productos` : `${admin_products.length} productos`;
+    status.textContent = products.length ? `${products.length} productos disponibles en el listado.` : 'No se encontraron productos';
+    if (!products.length) { message_row(tbody, 'No se encontraron productos'); return; }
+    products.forEach(product => {
+        const row = document.createElement('tr');
+        row.innerHTML = `<td>${escape_html(product.id)}</td><td><strong>${escape_html(product.name)}</strong><br><small>${escape_html(product.size_ml)} ml</small></td><td>${escape_html(product.brand)}</td><td>${escape_html(product.gender)}</td><td>${escape_html(product.stock)}</td><td>${escape_html(format_price(product.price))}</td><td><div class="admin-actions"><button class="small-button edit-button">Editar</button><button class="small-button delete-button">Eliminar</button></div></td>`;
+        row.querySelector('.edit-button').addEventListener('click', () => fill_form(product));
+        row.querySelector('.delete-button').addEventListener('click', event => delete_product(product.id, event.currentTarget));
+        tbody.appendChild(row);
+    });
+}
+
+function message_row(tbody, message) {
+    const row = document.createElement('tr');
+    const cell = document.createElement('td');
+    cell.colSpan = 7;
+    cell.textContent = message;
+    row.appendChild(cell);
+    tbody.appendChild(row);
+}
+
 function format_price(value) { return new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 }).format(value); }
 
 let admin_products = [];
@@ -97,31 +212,8 @@ function render_admin_products() {
     document.getElementById('retry-admin-products').hidden = admin_products_state !== 'error';
     tbody.setAttribute('aria-busy', String(admin_products_state === 'loading'));
     tbody.innerHTML = '';
-    function message_row(message) {
-        const row = document.createElement('tr');
-        const cell = document.createElement('td');
-        cell.colSpan = 7;
-        cell.textContent = message;
-        row.appendChild(cell);
-        tbody.appendChild(row);
-    }
-    if (admin_products_state !== 'ready') {
-        total.textContent = '';
-        status.textContent = admin_products_state === 'loading' ? 'Cargando productos…' : 'No se pudieron cargar los productos. Volvé a intentar.';
-        message_row(admin_products_state === 'loading' ? 'Cargando productos…' : 'No se pudieron cargar los productos.');
-        return;
-    }
-    const products = DreamsAdminProducts.filter_products(admin_products, query);
-    total.textContent = DreamsAdminProducts.normalize_search(query) ? `${products.length} de ${admin_products.length} productos` : `${admin_products.length} productos`;
-    status.textContent = products.length ? `${products.length} productos disponibles en el listado.` : 'No se encontraron productos';
-    if (!products.length) { message_row('No se encontraron productos'); return; }
-    products.forEach(product => {
-        const row = document.createElement('tr');
-        row.innerHTML = `<td>${escape_html(product.id)}</td><td><strong>${escape_html(product.name)}</strong><br><small>${escape_html(product.size_ml)} ml</small></td><td>${escape_html(product.brand)}</td><td>${escape_html(product.gender)}</td><td>${escape_html(product.stock)}</td><td>${escape_html(format_price(product.price))}</td><td><div class="admin-actions"><button class="small-button edit-button">Editar</button><button class="small-button delete-button">Eliminar</button></div></td>`;
-        row.querySelector('.edit-button').addEventListener('click', () => fill_form(product));
-        row.querySelector('.delete-button').addEventListener('click', event => delete_product(product.id, event.currentTarget));
-        tbody.appendChild(row);
-    });
+
+    populate_admin_products(tbody, query, status, total);
 }
 
 function fill_form(product) {
@@ -163,29 +255,8 @@ function preview_product_image() {
     const candidate = document.getElementById('image_url').value.trim();
     const image = document.getElementById('image-preview-image');
     const token = ++product_image_preview_token;
-    if (!candidate) {
-        set_product_image_preview('invalid', 'Ingresá un enlace HTTPS directo a una imagen.');
-        return;
-    }
-    if (!is_supported_image_url(candidate)) {
-        set_product_image_preview('invalid', /^http:/i.test(candidate) ? 'Usá HTTPS: los enlaces HTTP se bloquean en esta página.' : IMAGE_URL_ERROR);
-        return;
-    }
-    set_product_image_preview('pending', 'Comprobando imagen…');
-    image.onload = () => {
-        if (token !== product_image_preview_token) return;
-        window.clearTimeout(product_image_load_timer);
-        product_image_preview_url = candidate;
-        const warning = DreamsAdminImages.temporary_image_url(candidate) ? ' Este enlace es temporal o firmado y puede vencer. Preferí un enlace permanente.' : '';
-        set_product_image_preview('valid', 'Vista previa lista.' + warning);
-    };
-    image.onerror = () => {
-        if (token !== product_image_preview_token) return;
-        window.clearTimeout(product_image_load_timer);
-        product_image_preview_token += 1;
-        set_product_image_preview('invalid', 'El enlace no cargó una imagen. Puede apuntar a una página, haber vencido o bloquear el acceso. Usá un enlace directo y permanente.');
-    };
-    image.src = candidate;
+    if (!validate_image_candidate(candidate)) return;
+    load_image_preview(image, candidate, token);
     product_image_load_timer = window.setTimeout(() => {
         if (token !== product_image_preview_token) return;
         product_image_preview_token += 1;
@@ -231,20 +302,7 @@ async function save_product(event) {
         preview_product_image();
         return;
     }
-    const id = editing_product_id || document.getElementById('product-id').value;
-    const url = id ? `/api/admin/products/${id}` : '/api/admin/products';
-    const method = id ? 'PUT' : 'POST';
-    await with_pending(submit, 'Guardando…', async () => {
-        set_product_save_pending(true);
-        try {
-            await admin_fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(get_form_data()) });
-            const success_message = id ? 'Producto actualizado correctamente.' : 'Producto creado correctamente.';
-            reset_form(true);
-            document.getElementById('admin-message').textContent = success_message;
-            await Promise.all([load_dashboard(), load_admin_products()]);
-        } catch (error) { document.getElementById('admin-message').textContent = error.message; }
-        finally { set_product_save_pending(false); }
-    });
+    await persist_admin_product(submit);
 }
 
 async function delete_product(id, button) {
@@ -420,28 +478,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         notice.textContent = 'Vista de revisión: las escrituras están protegidas. Los datos se consultan sin modificarlos.';
         document.querySelector('main')?.prepend(notice);
     }
-    document.getElementById('admin-product-search').addEventListener('input', render_admin_products);
-    document.getElementById('clear-product-search').addEventListener('click', () => {
-        const input = document.getElementById('admin-product-search');
-        input.value = '';
-        render_admin_products();
-        input.focus();
-    });
-    document.getElementById('retry-admin-products').addEventListener('click', load_admin_products);
-    document.getElementById('product-form').addEventListener('submit', save_product);
-    document.getElementById('image_url').addEventListener('input', schedule_product_image_preview);
-    document.getElementById('retry-image-preview').addEventListener('click', preview_product_image);
-    set_product_image_preview('empty');
-    document.getElementById('cancel-edit').addEventListener('click', reset_form);
-    document.getElementById('coupon-form').addEventListener('submit', save_coupon);
-    document.getElementById('cancel-coupon-edit').addEventListener('click', reset_coupon_form);
-    const coupon_code = document.getElementById('admin-coupon-code');
-    coupon_code.addEventListener('input', () => { coupon_code.value = coupon_code.value.toUpperCase(); });
-    document.getElementById('review-search').addEventListener('input', render_admin_reviews);
-    document.getElementById('logout-admin').addEventListener('click', event => with_pending(event.currentTarget, 'Cerrando…', async () => {
-        try { await admin_fetch('/api/auth/logout', { method: 'POST' }); window.location.href = '/'; }
-        catch (error) { show_toast(error.message); }
-    }));
+    bind_admin_products();
+    bind_admin_modules();
     setup_tabs();
     try { await Promise.all([load_dashboard(), load_admin_products()]); } catch (error) { show_toast(error.message); }
 });

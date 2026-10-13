@@ -1,3 +1,247 @@
+// Snapshot mínimo del producto agregado; no incorpora datos de cuenta ni credenciales.
+function new_cart_item(product) {
+    return {
+        id: product.id,
+        name: product.name,
+        brand: product.brand,
+        price: product.price,
+        image_url: product.image_url,
+        quantity: 1,
+        size_ml: product.size_ml,
+        stock: product.stock
+    };
+}
+
+// Responsabilidad bind menu toggle; preserva la secuencia original.
+function bind_menu_toggle(toggle, nav) {
+    toggle.addEventListener('click', () => {
+        const open = nav.classList.toggle('open');
+        document.body.classList.toggle('menu-open', open);
+        toggle.setAttribute('aria-expanded', String(open));
+        toggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+    });
+}
+
+// Responsabilidad set review pending; preserva la secuencia original.
+function set_review_pending(button, status) {
+    button.disabled = true;
+    button.setAttribute('aria-busy', 'true');
+    status.textContent = 'Publicando…';
+}
+
+// Plantilla de product card image markup; todos los datos conservan su escape.
+function product_card_image_markup(product, stock_label) {
+    return `
+        <div class="product-image-wrap">
+            ${stock_label}
+            <a href="/producto.html?id=${encodeURIComponent(Number(product.id))}">
+                <img src="${escape_html(safe_image_url(product.image_url))}" alt="${escape_html(`${product.brand} ${product.name}`)}" loading="lazy">
+            </a>
+        </div>
+`;
+}
+
+// Plantilla de product card information markup; todos los datos conservan su escape.
+function product_card_information_markup(product, stock_label) {
+    return `        <div class="product-info">
+            <div class="brand-name">${escape_html(product.brand)}</div>
+            <h3><a href="/producto.html?id=${encodeURIComponent(Number(product.id))}">${escape_html(product.name)}</a></h3>
+            <div class="product-meta"><span>${escape_html(product.gender)}</span><span>${escape_html(product.size_ml)} ml</span></div>
+            <div class="product-price">${format_price(product.price)}</div>
+            <div class="product-actions">
+                <button class="small-button dark add-cart-button" ${Number(product.stock) === 0 ? 'disabled' : ''}>${Number(product.stock) === 0 ? 'Agotado' : 'Agregar al carrito'}</button>
+                <a class="small-button" href="/producto.html?id=${encodeURIComponent(Number(product.id))}">Ver perfume</a>
+            </div>
+        </div>
+    `;
+}
+
+// Responsabilidad bind menu closing; preserva la secuencia original.
+function bind_menu_closing(toggle, nav) {
+    document.addEventListener('keydown', event => {
+        if (event.key !== 'Escape' || !nav.classList.contains('open')) return;
+        nav.classList.remove('open');
+        document.body.classList.remove('menu-open');
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.setAttribute('aria-label', 'Abrir menú');
+        toggle.focus();
+    });
+
+    nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+        nav.classList.remove('open');
+        document.body.classList.remove('menu-open');
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.setAttribute('aria-label', 'Abrir menú');
+    }));
+}
+
+// Responsabilidad publish review; preserva la secuencia original.
+async function publish_review(rating, comment, form, status) {
+    const response = await fetch(`${api}/reviews`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ rating, comment })
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || 'No se pudo publicar la opinión.');
+    form.reset();
+    status.textContent = 'Tu opinión fue publicada y guardada.';
+    await load_reviews();
+}
+
+async function submit_public_review(event, form, status) {
+    event.preventDefault();
+    const button = form.querySelector('button[type="submit"]');
+    const rating = Number(form.elements.rating.value);
+    const comment = String(form.elements.comment.value || '').trim();
+    if (!Number.isInteger(rating) || rating < 1 || rating > 5 || !comment) {
+        status.textContent = 'Elegí una puntuación y escribí tu opinión.';
+        return;
+    }
+
+    set_review_pending(button, status);
+    try {
+        await publish_review(rating, comment, form, status);
+    } catch (error) {
+        status.textContent = interface_error(error);
+    } finally {
+        button.disabled = false;
+        button.removeAttribute('aria-busy');
+    }
+}
+
+// Responsabilidad prepare review access; preserva la secuencia original.
+async function prepare_review_access(form, access) {
+    try {
+        const response = await fetch(`${api}/auth/me`);
+        const data = await response.json();
+        if (!response.ok) throw new Error('No se pudo comprobar la sesión.');
+        if (!data.user) {
+            access.innerHTML = 'Para publicar necesitás <a href="/cuenta.html">iniciar sesión o crear una cuenta</a>.';
+            return false;
+        }
+        access.textContent = `Publicás como ${data.user.name}.`;
+        form.hidden = false;
+    } catch (error) {
+        access.textContent = 'No se pudo comprobar tu sesión. Recargá la página para volver a intentar.';
+        return false;
+    }
+    return true;
+}
+
+// Responsabilidad render public reviews; preserva la secuencia original.
+function render_public_reviews(container, reviews) {
+    if (!reviews.length) {
+        container.innerHTML = '<div class="empty-state"><h2>La comunidad recién empieza.</h2><p>Las primeras opiniones verificadas van a aparecer acá.</p></div>';
+        return;
+    }
+
+    reviews.slice(0, 3).forEach(review => {
+        const card = document.createElement('article');
+        card.className = 'review-card';
+        card.innerHTML = `
+        <div class="review-stars">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</div>
+        <p>“${escape_html(review.comment)}”</p>
+        <div class="review-author">${escape_html(review.user_name)}</div>
+    `;
+        container.appendChild(card);
+    });
+}
+
+// Responsabilidad fill product card; preserva la secuencia original.
+function fill_product_card(card, product) {
+    const stock_label = Number(product.stock) === 0 ? '<span class="stock-badge out">Agotado</span>' : Number(product.stock) <= 2 ? '<span class="stock-badge low">Últimas unidades</span>' : '<span class="stock-badge">Disponible</span>';
+    card.innerHTML = product_card_image_markup(product, stock_label) + product_card_information_markup(product, stock_label);
+}
+
+// Responsabilidad adjust cart quantity; preserva la secuencia original.
+function adjust_cart_quantity(item, change) {
+    item.quantity += change;
+
+    if (Number.isSafeInteger(item.stock) && item.quantity > item.stock) {
+        item.quantity = item.stock;
+        show_toast('Alcanzaste el stock disponible.');
+    }
+}
+
+// Conserva el límite local de stock antes de guardar la selección.
+function insert_cart_selection(cart, product, existing) {
+    if (existing) {
+        if (Number.isSafeInteger(existing.stock) && existing.quantity >= existing.stock) {
+            show_toast('No hay más unidades disponibles.');
+            return false;
+        }
+        existing.quantity += 1;
+    } else {
+        cart.push(new_cart_item(product));
+    }
+    return true;
+}
+
+// Responsabilidad animate cart counter; preserva la secuencia original.
+function animate_cart_counter() {
+    const cart_link = document.querySelector('.cart-link');
+    if (cart_link) {
+        cart_link.classList.remove('is-updated');
+        void cart_link.offsetWidth;
+        cart_link.classList.add('is-updated');
+        setTimeout(() => cart_link.classList.remove('is-updated'), 560);
+    }
+}
+
+// El almacenamiento puede estar corrupto o manipulado; sólo admite ítems válidos.
+function normalize_stored_cart_item(item) {
+    const id = Number(item?.id);
+    const price = Number(item?.price);
+    const quantity = Number(item?.quantity);
+    const stock = Number(item?.stock);
+    if (!Number.isSafeInteger(id) || id <= 0 || !Number.isFinite(price) || price < 0 || !Number.isSafeInteger(quantity) || quantity <= 0) return [];
+    return [{
+            id,
+            name: String(item.name ?? '').slice(0, 160),
+            brand: String(item.brand ?? '').slice(0, 120),
+            price,
+            image_url: safe_image_url(item.image_url),
+            quantity: Math.min(quantity, 99),
+            size_ml: Number.isFinite(Number(item.size_ml)) ? Number(item.size_ml) : null,
+            stock: Number.isSafeInteger(stock) && stock >= 0 ? stock : null
+    }];
+}
+
+// Responsabilidad apply contact links; preserva la secuencia original.
+function apply_contact_links(config) {
+    document.querySelectorAll('[data-dreams-contacts]').forEach(container => {
+        if (!Array.isArray(config.contacts?.emails)) return;
+        container.querySelectorAll('a[href^="mailto:"]').forEach((link, index) => {
+            const email = config.contacts.emails[index];
+            if (typeof email === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { link.textContent = email; link.href = `mailto:${email}`; }
+        });
+    });
+    document.querySelectorAll('[data-contact-phones]').forEach(container => {
+        if (!Array.isArray(config.contacts?.phones)) return;
+        const phones = [...new Set(config.contacts.phones)].filter(value => typeof value === 'string' && /^\+?[\d ()-]+$/.test(value) && /^\d{8,15}$/.test(value.replace(/\D/g, '')));
+        if (!phones.length) return;
+        const links = phones.map(phone => { const link = document.createElement('a'); link.textContent = phone; link.href = `tel:+${phone.replace(/\D/g, '')}`; return link; });
+        container.replaceChildren(...links);
+    });
+    document.querySelectorAll('[data-contact-email]').forEach(link => {
+        link.textContent = config.contact_email;
+        link.href = `mailto:${config.contact_email}`;
+    });
+}
+
+// Responsabilidad apply whatsapp links; preserva la secuencia original.
+function apply_whatsapp_links(config) {
+    document.querySelectorAll('[data-whatsapp-link]').forEach(link => {
+        if (/^\d{8,15}$/.test(config.whatsapp_number || '')) link.href = `https://wa.me/${config.whatsapp_number}`;
+        else link.removeAttribute('href');
+        if (link.hasAttribute('data-whatsapp-number') && /^\d{8,15}$/.test(config.whatsapp_number || '')) {
+            const phone = config.contacts?.phones?.find(value => String(value).replace(/\D/g, '') === config.whatsapp_number);
+            link.textContent = `WhatsApp · ${phone || '+' + config.whatsapp_number}`;
+        }
+    });
+}
+
 const api = '/api';
 let public_config_promise;
 
@@ -22,32 +266,8 @@ function get_public_config() {
 async function apply_public_config() {
     try {
         const config = await get_public_config();
-        document.querySelectorAll('[data-whatsapp-link]').forEach(link => {
-            if (/^\d{8,15}$/.test(config.whatsapp_number || '')) link.href = `https://wa.me/${config.whatsapp_number}`;
-            else link.removeAttribute('href');
-            if (link.hasAttribute('data-whatsapp-number') && /^\d{8,15}$/.test(config.whatsapp_number || '')) {
-                const phone = config.contacts?.phones?.find(value => String(value).replace(/\D/g, '') === config.whatsapp_number);
-                link.textContent = `WhatsApp · ${phone || '+' + config.whatsapp_number}`;
-            }
-        });
-        document.querySelectorAll('[data-dreams-contacts]').forEach(container => {
-            if (!Array.isArray(config.contacts?.emails)) return;
-            container.querySelectorAll('a[href^="mailto:"]').forEach((link, index) => {
-                const email = config.contacts.emails[index];
-                if (typeof email === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { link.textContent = email; link.href = `mailto:${email}`; }
-            });
-        });
-        document.querySelectorAll('[data-contact-phones]').forEach(container => {
-            if (!Array.isArray(config.contacts?.phones)) return;
-            const phones = [...new Set(config.contacts.phones)].filter(value => typeof value === 'string' && /^\+?[\d ()-]+$/.test(value) && /^\d{8,15}$/.test(value.replace(/\D/g, '')));
-            if (!phones.length) return;
-            const links = phones.map(phone => { const link = document.createElement('a'); link.textContent = phone; link.href = `tel:+${phone.replace(/\D/g, '')}`; return link; });
-            container.replaceChildren(...links);
-        });
-        document.querySelectorAll('[data-contact-email]').forEach(link => {
-            link.textContent = config.contact_email;
-            link.href = `mailto:${config.contact_email}`;
-        });
+        apply_whatsapp_links(config);
+        apply_contact_links(config);
     } catch (error) {
         document.querySelectorAll('[data-whatsapp-link]').forEach(link => link.removeAttribute('href'));
     }
@@ -65,23 +285,7 @@ function get_cart() {
     try {
         const stored = JSON.parse(localStorage.getItem('dreams_cart'));
         if (!Array.isArray(stored)) return [];
-        return stored.flatMap(item => {
-            const id = Number(item?.id);
-            const price = Number(item?.price);
-            const quantity = Number(item?.quantity);
-            const stock = Number(item?.stock);
-            if (!Number.isSafeInteger(id) || id <= 0 || !Number.isFinite(price) || price < 0 || !Number.isSafeInteger(quantity) || quantity <= 0) return [];
-            return [{
-                id,
-                name: String(item.name ?? '').slice(0, 160),
-                brand: String(item.brand ?? '').slice(0, 120),
-                price,
-                image_url: safe_image_url(item.image_url),
-                quantity: Math.min(quantity, 99),
-                size_ml: Number.isFinite(Number(item.size_ml)) ? Number(item.size_ml) : null,
-                stock: Number.isSafeInteger(stock) && stock >= 0 ? stock : null
-            }];
-        });
+        return stored.flatMap(normalize_stored_cart_item);
     } catch (error) {
         return [];
     }
@@ -110,33 +314,10 @@ function add_to_cart(product) {
     const cart = get_cart();
     const existing = cart.find(item => item.id === product.id);
 
-    if (existing) {
-        if (Number.isSafeInteger(existing.stock) && existing.quantity >= existing.stock) {
-            show_toast('No hay más unidades disponibles.');
-            return;
-        }
-        existing.quantity += 1;
-    } else {
-        cart.push({
-            id: product.id,
-            name: product.name,
-            brand: product.brand,
-            price: product.price,
-            image_url: product.image_url,
-            quantity: 1,
-            size_ml: product.size_ml,
-            stock: product.stock
-        });
-    }
+    if (!insert_cart_selection(cart, product, existing)) return;
 
     save_cart(cart);
-    const cart_link = document.querySelector('.cart-link');
-    if (cart_link) {
-        cart_link.classList.remove('is-updated');
-        void cart_link.offsetWidth;
-        cart_link.classList.add('is-updated');
-        setTimeout(() => cart_link.classList.remove('is-updated'), 560);
-    }
+    animate_cart_counter();
     show_toast(`${product.name} fue agregado al carrito.`);
 }
 
@@ -153,12 +334,7 @@ function change_quantity(product_id, change) {
         return;
     }
 
-    item.quantity += change;
-
-    if (Number.isSafeInteger(item.stock) && item.quantity > item.stock) {
-        item.quantity = item.stock;
-        show_toast('Alcanzaste el stock disponible.');
-    }
+    adjust_cart_quantity(item, change);
 
     if (item.quantity <= 0) {
         remove_from_cart(product_id);
@@ -187,25 +363,7 @@ function show_toast(message) {
 function create_product_card(product) {
     const card = document.createElement('article');
     card.className = 'product-card';
-    const stock_label = Number(product.stock) === 0 ? '<span class="stock-badge out">Agotado</span>' : Number(product.stock) <= 2 ? '<span class="stock-badge low">Últimas unidades</span>' : '<span class="stock-badge">Disponible</span>';
-    card.innerHTML = `
-        <div class="product-image-wrap">
-            ${stock_label}
-            <a href="/producto.html?id=${encodeURIComponent(Number(product.id))}">
-                <img src="${escape_html(safe_image_url(product.image_url))}" alt="${escape_html(`${product.brand} ${product.name}`)}" loading="lazy">
-            </a>
-        </div>
-        <div class="product-info">
-            <div class="brand-name">${escape_html(product.brand)}</div>
-            <h3><a href="/producto.html?id=${encodeURIComponent(Number(product.id))}">${escape_html(product.name)}</a></h3>
-            <div class="product-meta"><span>${escape_html(product.gender)}</span><span>${escape_html(product.size_ml)} ml</span></div>
-            <div class="product-price">${format_price(product.price)}</div>
-            <div class="product-actions">
-                <button class="small-button dark add-cart-button" ${Number(product.stock) === 0 ? 'disabled' : ''}>${Number(product.stock) === 0 ? 'Agotado' : 'Agregar al carrito'}</button>
-                <a class="small-button" href="/producto.html?id=${encodeURIComponent(Number(product.id))}">Ver perfume</a>
-            </div>
-        </div>
-    `;
+    fill_product_card(card, product);
 
     attach_image_fallback(card.querySelector('img'));
 
@@ -247,21 +405,7 @@ async function load_reviews() {
         if (!response.ok || !Array.isArray(reviews)) throw new Error('No se pudieron cargar las opiniones.');
         container.innerHTML = '';
 
-        if (!reviews.length) {
-            container.innerHTML = '<div class="empty-state"><h2>La comunidad recién empieza.</h2><p>Las primeras opiniones verificadas van a aparecer acá.</p></div>';
-            return;
-        }
-
-        reviews.slice(0, 3).forEach(review => {
-            const card = document.createElement('article');
-            card.className = 'review-card';
-            card.innerHTML = `
-                <div class="review-stars">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</div>
-                <p>“${escape_html(review.comment)}”</p>
-                <div class="review-author">${escape_html(review.user_name)}</div>
-            `;
-            container.appendChild(card);
-        });
+        render_public_reviews(container, reviews);
     } catch (error) {
         container.innerHTML = '<p>No se pudieron cargar las opiniones.</p>';
     }
@@ -273,52 +417,9 @@ async function setup_review_form() {
     const status = document.getElementById('review-status');
     if (!form || !access || !status) return;
 
-    try {
-        const response = await fetch(`${api}/auth/me`);
-        const data = await response.json();
-        if (!response.ok) throw new Error('No se pudo comprobar la sesión.');
-        if (!data.user) {
-            access.innerHTML = 'Para publicar necesitás <a href="/cuenta.html">iniciar sesión o crear una cuenta</a>.';
-            return;
-        }
-        access.textContent = `Publicás como ${data.user.name}.`;
-        form.hidden = false;
-    } catch (error) {
-        access.textContent = 'No se pudo comprobar tu sesión. Recargá la página para volver a intentar.';
-        return;
-    }
+    if (!(await prepare_review_access(form, access))) return;
 
-    form.addEventListener('submit', async event => {
-        event.preventDefault();
-        const button = form.querySelector('button[type="submit"]');
-        const rating = Number(form.elements.rating.value);
-        const comment = String(form.elements.comment.value || '').trim();
-        if (!Number.isInteger(rating) || rating < 1 || rating > 5 || !comment) {
-            status.textContent = 'Elegí una puntuación y escribí tu opinión.';
-            return;
-        }
-
-        button.disabled = true;
-        button.setAttribute('aria-busy', 'true');
-        status.textContent = 'Publicando…';
-        try {
-            const response = await fetch(`${api}/reviews`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ rating, comment })
-            });
-            const data = await response.json();
-            if (!response.ok) throw new Error(data.error || 'No se pudo publicar la opinión.');
-            form.reset();
-            status.textContent = 'Tu opinión fue publicada y guardada.';
-            await load_reviews();
-        } catch (error) {
-            status.textContent = interface_error(error);
-        } finally {
-            button.disabled = false;
-            button.removeAttribute('aria-busy');
-        }
-    });
+    form.addEventListener('submit', event => submit_public_review(event, form, status));
 }
 
 function get_recent_products() {
@@ -355,28 +456,9 @@ function setup_menu() {
     toggle.setAttribute('aria-controls', nav.id);
     toggle.setAttribute('aria-expanded', 'false');
 
-    toggle.addEventListener('click', () => {
-        const open = nav.classList.toggle('open');
-        document.body.classList.toggle('menu-open', open);
-        toggle.setAttribute('aria-expanded', String(open));
-        toggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
-    });
+    bind_menu_toggle(toggle, nav);
 
-    document.addEventListener('keydown', event => {
-        if (event.key !== 'Escape' || !nav.classList.contains('open')) return;
-        nav.classList.remove('open');
-        document.body.classList.remove('menu-open');
-        toggle.setAttribute('aria-expanded', 'false');
-        toggle.setAttribute('aria-label', 'Abrir menú');
-        toggle.focus();
-    });
-
-    nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
-        nav.classList.remove('open');
-        document.body.classList.remove('menu-open');
-        toggle.setAttribute('aria-expanded', 'false');
-        toggle.setAttribute('aria-label', 'Abrir menú');
-    }));
+    bind_menu_closing(toggle, nav);
 }
 
 function setup_header_scroll() {

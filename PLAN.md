@@ -1,3 +1,13 @@
+# Adecuación a rúbrica — 2026-10-13
+
+- Auditoría/Git/deployments/base139 y matriz: COMPLETADOS. Base PR46, no duplicación ni merge.
+- Modularidad20JS/SQL + comentarios y carrusel manual: IMPLEMENTADOS/VERIFICADOS LOCALMENTE. Hero estático.
+- Documentación/API/DB/manual/mapa/pseudocódigo/passwords: COMPLETADOS en repo; logo3colores/aportes/asistencia parcial/no verificable.
+- Tests143/check56/builds/audit/frozen supplychain: COMPLETADOS; QA local390/1440 explícita, no equivale a sesión remota.
+- Commit/push/PR/CI/nueva preview/QA remota pública: PENDIENTES.
+- ZIP Marteaena-Ruas-DREAMS.zip: nombre confirmado, exportar tras commit final.
+- Auth/Admin remoto y PR45cuentas: PENDIENTES por acceso legítimo; no promoción oficial ni cambios de permisos/credenciales.
+
 # Resultado de revisión Admin — 2026-10-13
 
 - Auditoría/implementación acotada/buscador+imágenes/formulario: COMPLETADOS.

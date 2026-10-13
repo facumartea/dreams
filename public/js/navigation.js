@@ -1,4 +1,5 @@
-(function (root) {
+{
+    const root = typeof window === 'undefined' ? globalThis : window;
     'use strict';
     const genders = new Set(['mujer', 'hombre', 'unisex']);
     function selection(address, selected_gender) {
@@ -25,4 +26,4 @@
     const navigation = { selection, update };
     if (typeof module === 'object' && module.exports) module.exports = navigation;
     else root.DreamsNavigation = navigation;
-})(typeof window === 'object' ? window : globalThis);
+}

@@ -1,4 +1,5 @@
-(function (root) {
+{
+    const root = typeof window === 'undefined' ? globalThis : window;
     function supported_image_url(value) {
         const candidate = String(value ?? '').trim();
         if (!candidate || /[\\\u0000-\u001f\u007f]/u.test(candidate)) return false;
@@ -14,11 +15,11 @@
             const parsed = new URL(String(value ?? '').trim());
             const keys = new Set([...parsed.searchParams.keys()].map(k => k.toLowerCase()));
             return (parsed.pathname.includes('/storage/v1/object/sign/') && keys.has('token')) ||
-                keys.has('x-amz-signature') || keys.has('x-goog-signature') ||
-                (keys.has('signature') && keys.has('expires')) || (keys.has('sig') && keys.has('se'));
+            keys.has('x-amz-signature') || keys.has('x-goog-signature') ||
+            (keys.has('signature') && keys.has('expires')) || (keys.has('sig') && keys.has('se'));
         } catch { return false; }
     }
     const helpers = { supported_image_url, temporary_image_url };
     if (typeof module !== 'undefined' && module.exports) module.exports = helpers;
     else root.DreamsAdminImages = helpers;
-})(typeof window !== 'undefined' ? window : globalThis);
+}

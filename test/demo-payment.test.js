@@ -29,7 +29,7 @@ test('checkout demo rechaza escenarios fuera de la lista permitida', async () =>
     const provider = new DemoPaymentProvider();
     assert.equal(normalize_demo_scenario('inventado'), null);
     await assert.rejects(
-        () => provider.process_payment({ order_id: '33333333-3333-4333-8333-333333333333', scenario: 'inventado' }),
-        error => error.code === 'DEMO_SCENARIO_INVALID'
+    () => provider.process_payment({ order_id: '33333333-3333-4333-8333-333333333333', scenario: 'inventado' }),
+    error => error.code === 'DEMO_SCENARIO_INVALID'
     );
 });

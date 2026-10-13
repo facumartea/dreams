@@ -1,3 +1,15 @@
+# Adecuación de rúbrica preparada — 2026-10-13
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Rama codex/rubric-academic-review desde PR46/3365e57, dependencia PR44/42/41/39/38/37/34; no PR45/video/merge. Oficial ac755bbe/backendd5df723d y previews existentes conservadas. Nueva tarea no publica Pages.
+
+Refactor 78 funciones >20 de base985; final1265JS máximo20 y SQL3funciones+DO máximo18, contadores AST Acorn/libpg-query en check, tests incluidos. Programa principal interpretado como orquestación, no módulo/datos completo. Comentarios/indentación y contratos de Auth/Admin/cart/pagos conservados. Carrusel manual8productos reales en Más buscados, teclado/reduced/noautoplay; hero estático. PR46 buscador/imágenes/guardado conservados, sin escrituras reales ni cambio de roles/passwords.
+
+143/143/check56/buildsWorkersPages/audit/frozen204 aprobados; dev parser estable sin excepciones supplychain. QA local390/1440 Admin+imágenes fixture9, navegación y checkout académico/retry/referencia/envío0/tarjeta fuera de red/storage pasaron; carrusel cuatro escenarios reduce/no-preference pasó. NO QA Auth/Admin real remoto. Supabase SELECT46productos/8perfiles/0orders/9tablasRLS, sin cambios. Logo PNG921coloresvisibles/píxel: requisito estricto3 parcial/licencia pendiente. PR45carrito por cuenta separado y no validado remotamente.
+
+Docs docs/rubric_review.md matriz completa, arquitectura/manual/wireframe/pseudocódigo/auth_security_review/validation actualizados y originalrubrica2025. Usuario confirma aceptación APIservidor/condiciones y apellidosMarteaenaRuas; preparar ZIP exacto despuéscommit. Progreso global no recalculado; fases auditoría/refactor/documentación local completas, Git/CI/preview/ZIP por completar. Próximo: revisión diff/secret,commit/push/PR sobrePR46, CI exacto, publicar nueva preview aislada rubric-review y QA pública/checkout; mantener Auth/Admin remoto pendiente.
+
 # Admin buscador/imágenes en preview, oficial intacta — 2026-10-13
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.

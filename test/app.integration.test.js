@@ -1,3 +1,257 @@
+// Comprueba resultados observables de: refresh usa cliente aislado; logout revoca local y borra ambas cookies.
+async function verificar_refresh_usa_cliente_aislado_logout_revoca_local_y_bo_21(context) {
+    const database = database_with(() => ({ data: { name: 'Ana', role: 'customer' }, error: null }));
+    database.auth.getUser = async token => ({ data: { user: token === 'new-access' ? { id: 'ana', email: 'ana@example.com' } : null } });
+    database.auth.admin.signOut = async () => assert.fail('logout no usa cliente global');
+    let refreshes = 0, revokes = 0;
+    const create_auth_client = () => ({ auth: {
+            refreshSession: async input => {
+                assert.equal(input.refresh_token, 'old-refresh'); context.refreshes++;
+                return { data: { user: { id: 'ana', email: 'ana@example.com' }, session: { access_token: 'new-access', refresh_token: 'new-refresh', expires_in: 3600 } }, error: null };
+            },
+            admin: { signOut: async (token, scope) => { assert.equal(token, 'new-access'); assert.equal(scope, 'local'); context.revokes++; return { error: null }; } }
+    } });
+    Object.assign(context, { database, refreshes, revokes, create_auth_client });
+}
+
+// Comprueba resultados observables de: refresh usa cliente aislado; logout revoca local y borra ambas cookies.
+async function verificar_refresh_usa_cliente_aislado_logout_revoca_local_y_bo_22(context) {
+    const { database, refreshes, revokes, create_auth_client } = context;
+    await serve(create_app({ database, create_auth_client, disable_request_log: true }), async base => {
+        const restored = await fetch(base + '/api/auth/me', { headers: { Cookie: 'dreams_access_token=expired; dreams_refresh_token=old-refresh' } });
+        assert.equal((await restored.json()).user.id, 'ana');
+        assert.match(restored.headers.get('set-cookie'), /new-access/);
+        const logout = await fetch(base + '/api/auth/logout', { method: 'POST', headers: { Cookie: 'dreams_access_token=new-access', Origin: base } });
+        assert.equal(logout.status, 200);
+        assert.equal(logout.headers.getSetCookie().length, 2);
+        for (const cookie of logout.headers.getSetCookie()) assert.match(cookie, /Max-Age=0/);
+        assert.equal(context.refreshes, 1); assert.equal(context.revokes, 1);
+    });
+}
+
+// Comprueba resultados observables de: login y registro aíslan dos sesiones del cliente privilegiado.
+async function verificar_login_y_registro_aislan_dos_sesiones_del_cliente_pri_18(context) {
+    const database = database_with(() => ({ data: { name: 'Cliente', role: 'customer' }, error: null }));
+    database.auth.signInWithPassword = database.auth.signUp = async () => assert.fail('no autenticar en el cliente privilegiado');
+    const clients = [];
+    Object.assign(context, { database, clients });
+}
+
+// Prepara datos aislados de: login y registro aíslan dos sesiones del cliente privilegiado.
+async function preparar_login_y_registro_aislan_dos_sesiones_del_cliente_pri_19(context) {
+    const { clients } = context;
+    const create_auth_client = () => {
+        const client = { session: null, auth: {} };
+        const sign = async ({ email }) => {
+            client.session = email;
+            return { data: { user: { id: email, email }, session: { access_token: email, refresh_token: `refresh-${email}`, expires_in: 3600 } }, error: null };
+        };
+        client.auth.signInWithPassword = client.auth.signUp = sign;
+        clients.push(client);
+        return client;
+    };
+    Object.assign(context, { create_auth_client });
+}
+
+// Comprueba resultados observables de: login y registro aíslan dos sesiones del cliente privilegiado.
+async function verificar_login_y_registro_aislan_dos_sesiones_del_cliente_pri_20(context) {
+    const { database, clients, create_auth_client } = context;
+    await serve(create_app({ database, create_auth_client, disable_request_log: true }), async base => {
+        const responses = await Promise.all(['ana', 'bea'].map(name => fetch(base + '/api/auth/login', {
+            method: 'POST', headers: { 'Content-Type': 'application/json', Origin: base }, body: JSON.stringify({ email: `${name}@example.com`, password: 'test-password' })
+        })));
+        assert.deepEqual(responses.map(response => response.status), [200, 200]);
+        assert.match(responses[0].headers.get('set-cookie'), /ana%40example.com/);
+        assert.match(responses[1].headers.get('set-cookie'), /bea%40example.com/);
+        const registered = await fetch(base + '/api/auth/register', { method: 'POST', headers: { 'Content-Type': 'application/json', Origin: base }, body: JSON.stringify({ name: 'Cris', email: 'cris@example.com', password: 'test-password' }) });
+        assert.equal(registered.status, 200);
+        assert.equal(new Set(clients).size, 3);
+        assert.deepEqual(clients.map(client => client.session), ['ana@example.com', 'bea@example.com', 'cris@example.com']);
+        assert.equal((await fetch(base + '/api/auth/me').then(response => response.json())).user, null);
+    });
+}
+
+// Comprueba resultados observables de: login válido crea cookies y devuelve una redirección explícita.
+async function verificar_login_valido_crea_cookies_y_devuelve_una_redireccion_15(context) {
+    let profile_reads = 0;
+    const database = database_with(table => {
+        assert.equal(table, 'profiles');
+        context.profile_reads += 1;
+        return { data: { name: 'Administración', role: 'admin' }, error: null };
+    });
+    Object.assign(context, { profile_reads, database });
+}
+
+// Prepara datos aislados de: login válido crea cookies y devuelve una redirección explícita.
+async function preparar_login_valido_crea_cookies_y_devuelve_una_redireccion_16(context) {
+    const { database } = context;
+    database.auth.signInWithPassword = async ({ email }) => ({
+        data: {
+            user: { id: 'admin-user', email, user_metadata: {} },
+            session: { access_token: 'access', refresh_token: 'refresh', expires_in: 3600 }
+        },
+        error: null
+    });
+    const app = create_app({ database, disable_request_log: true });
+    Object.assign(context, { app });
+}
+
+// Comprueba resultados observables de: login válido crea cookies y devuelve una redirección explícita.
+async function verificar_login_valido_crea_cookies_y_devuelve_una_redireccion_17(context) {
+    const { profile_reads, app } = context;
+    await serve(app, async base => {
+        const response = await fetch(`${base}/api/auth/login`, {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: ' ADMIN@EXAMPLE.COM ', password: 'password-segura' })
+        });
+        assert.equal(response.status, 200);
+        const body = await response.json();
+        assert.equal(body.authenticated, true);
+        assert.equal(body.redirect, '/admin');
+        assert.equal(body.user.email, 'admin@example.com');
+        assert.match(response.headers.get('set-cookie'), /dreams_access_token=access/);
+        assert.equal(context.profile_reads, 1);
+    });
+}
+
+// Prepara datos aislados de: modo demo confirma el alta en servidor e inicia sesión sin correo.
+async function preparar_modo_demo_confirma_el_alta_en_servidor_e_inicia_sesi_12(context) {
+    const { auth } = context;
+    const database = database_with(() => ({ data: null, error: null }));
+    let created_payload;
+    database.auth.admin.createUser = async value => {
+        context.created_payload = value;
+        return { data: { user: { id: 'demo-user' } }, error: null };
+    };
+    Object.assign(context, { database, created_payload });
+}
+
+// Prepara datos aislados de: modo demo confirma el alta en servidor e inicia sesión sin correo.
+async function preparar_modo_demo_confirma_el_alta_en_servidor_e_inicia_sesi_13(context) {
+    const { database } = context;
+    const auth = { auth: { signInWithPassword: async ({ email }) => ({
+                data: {
+                    user: { id: 'demo-user', email },
+                    session: { access_token: 'demo-access', refresh_token: 'demo-refresh', expires_in: 3600 }
+                },
+                error: null
+            }) } };
+    const app = create_app({ database, create_auth_client: () => auth, demo_auto_confirm_email: true, disable_request_log: true });
+    Object.assign(context, { auth, app });
+}
+
+// Comprueba resultados observables de: modo demo confirma el alta en servidor e inicia sesión sin correo.
+async function verificar_modo_demo_confirma_el_alta_en_servidor_e_inicia_sesi_14(context) {
+    const { created_payload, app } = context;
+    await serve(app, async base => {
+        const response = await fetch(`${base}/api/auth/register`, {
+            method: 'POST', headers: { 'Content-Type': 'application/json', Origin: base },
+            body: JSON.stringify({ name: 'Ana', email: ' ANA@EXAMPLE.COM ', password: 'password-segura' })
+        });
+        assert.equal(response.status, 201);
+        const body = await response.json();
+        assert.equal(body.authenticated, true);
+        assert.equal(body.demo, true);
+        assert.equal(body.user.is_admin, false);
+        assert.equal(context.created_payload.email_confirm, true);
+        assert.deepEqual(context.created_payload.user_metadata, { name: 'Ana' });
+        assert.match(response.headers.get('set-cookie'), /dreams_access_token=demo-access/);
+        assert.doesNotMatch(JSON.stringify(body), /confirm|correo enviado/i);
+    });
+}
+
+// Prepara datos aislados de: una opinión autenticada se persiste y reaparece al recargar la lista.
+async function preparar_una_opinion_autenticada_se_persiste_y_reaparece_al_r_8(context) {
+    const reviews = [];
+    const database = database_with(table => {
+        if (table === 'profiles') return { data: { name: 'Ana', role: 'customer' }, error: null };
+        if (table === 'reviews') return { data: reviews, error: null };
+        return { data: [], error: null };
+    });
+    database.auth.getUser = async token => ({
+        data: { user: token === 'valid-token' ? { id: 'user-1', email: 'ana@example.com', user_metadata: {} } : null }
+    });
+    Object.assign(context, { reviews, database });
+}
+
+// Prepara datos aislados de: una opinión autenticada se persiste y reaparece al recargar la lista.
+async function preparar_una_opinion_autenticada_se_persiste_y_reaparece_al_r_9(context) {
+    const { reviews, database } = context;
+    database.from = table => {
+        if (table === 'profiles') return query({ data: { name: 'Ana', role: 'customer' }, error: null });
+        if (table === 'reviews') {
+            return {
+                select() { return { order: async () => ({ data: reviews, error: null }) }; },
+                async insert(value) {
+                    reviews.unshift({ id: 1, ...value, created_at: '2026-08-29T00:00:00Z' });
+                    return { error: null };
+                }
+            };
+        }
+        return query({ data: [], error: null });
+    };
+}
+
+// Prepara datos aislados de: una opinión autenticada se persiste y reaparece al recargar la lista.
+async function preparar_una_opinion_autenticada_se_persiste_y_reaparece_al_r_10(context) {
+    const { database } = context;
+    const app = create_app({ database, disable_request_log: true });
+    Object.assign(context, { app });
+}
+
+// Comprueba resultados observables de: una opinión autenticada se persiste y reaparece al recargar la lista.
+async function verificar_una_opinion_autenticada_se_persiste_y_reaparece_al_r_11(context) {
+    const { app } = context;
+    await serve(app, async base => {
+        const created = await fetch(`${base}/api/reviews`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Origin: base, Cookie: 'dreams_access_token=valid-token' },
+            body: JSON.stringify({ rating: 5, comment: 'Una experiencia muy cuidada.' })
+        });
+        assert.equal(created.status, 201);
+
+        const reloaded = await fetch(`${base}/api/reviews`);
+        assert.equal(reloaded.status, 200);
+        const [review] = await reloaded.json();
+        assert.equal(review.comment, 'Una experiencia muy cuidada.');
+        assert.equal(review.user_name, 'Ana');
+        assert.equal(review.user_id, 'user-1');
+    });
+}
+
+// Comprueba resultados observables de: mutaciones rechazan orígenes cruzados y aceptan el mismo origen.
+async function verificar_mutaciones_rechazan_origenes_cruzados_y_aceptan_el_m_6(context) {
+    const { base } = context;
+    const cross_site = await fetch(`${base}/api/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Origin: 'https://evil.example' },
+        body: JSON.stringify({ email: 'ana@example.com', password: 'password-segura' })
+    });
+    assert.equal(cross_site.status, 403);
+    assert.match((await cross_site.json()).error, /Origen/);
+
+    const same_site = await fetch(`${base}/api/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Origin: base },
+        body: JSON.stringify({ email: 'correo-invalido', password: 'password-segura' })
+    });
+    Object.assign(context, { cross_site, same_site });
+}
+
+// Comprueba resultados observables de: mutaciones rechazan orígenes cruzados y aceptan el mismo origen.
+async function verificar_mutaciones_rechazan_origenes_cruzados_y_aceptan_el_m_7(context) {
+    const { base, same_site } = context;
+    assert.equal(same_site.status, 400);
+
+    const fetch_metadata = await fetch(`${base}/api/reviews`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Sec-Fetch-Site': 'cross-site' },
+        body: JSON.stringify({ rating: 5, comment: 'No debe llegar a la ruta.' })
+    });
+    assert.equal(fetch_metadata.status, 403);
+    Object.assign(context, { fetch_metadata });
+}
+
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const { create_app, GENERIC_ERROR } = require('../server/app');
@@ -154,27 +408,9 @@ test('mutaciones rechazan orígenes cruzados y aceptan el mismo origen', async (
     const database = database_with(() => ({ data: [], error: null }));
     const app = create_app({ database, disable_request_log: true });
     await serve(app, async base => {
-        const cross_site = await fetch(`${base}/api/auth/login`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', Origin: 'https://evil.example' },
-            body: JSON.stringify({ email: 'ana@example.com', password: 'password-segura' })
-        });
-        assert.equal(cross_site.status, 403);
-        assert.match((await cross_site.json()).error, /Origen/);
-
-        const same_site = await fetch(`${base}/api/auth/login`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', Origin: base },
-            body: JSON.stringify({ email: 'correo-invalido', password: 'password-segura' })
-        });
-        assert.equal(same_site.status, 400);
-
-        const fetch_metadata = await fetch(`${base}/api/reviews`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'Sec-Fetch-Site': 'cross-site' },
-            body: JSON.stringify({ rating: 5, comment: 'No debe llegar a la ruta.' })
-        });
-        assert.equal(fetch_metadata.status, 403);
+        const context = { base };
+        await verificar_mutaciones_rechazan_origenes_cruzados_y_aceptan_el_m_6(context);
+        await verificar_mutaciones_rechazan_origenes_cruzados_y_aceptan_el_m_7(context);
     });
 });
 
@@ -199,45 +435,11 @@ test('una allowlist configurada no confía en un Host dinámico', async () => {
 });
 
 test('una opinión autenticada se persiste y reaparece al recargar la lista', async () => {
-    const reviews = [];
-    const database = database_with(table => {
-        if (table === 'profiles') return { data: { name: 'Ana', role: 'customer' }, error: null };
-        if (table === 'reviews') return { data: reviews, error: null };
-        return { data: [], error: null };
-    });
-    database.auth.getUser = async token => ({
-        data: { user: token === 'valid-token' ? { id: 'user-1', email: 'ana@example.com', user_metadata: {} } : null }
-    });
-    database.from = table => {
-        if (table === 'profiles') return query({ data: { name: 'Ana', role: 'customer' }, error: null });
-        if (table === 'reviews') {
-            return {
-                select() { return { order: async () => ({ data: reviews, error: null }) }; },
-                async insert(value) {
-                    reviews.unshift({ id: 1, ...value, created_at: '2026-08-29T00:00:00Z' });
-                    return { error: null };
-                }
-            };
-        }
-        return query({ data: [], error: null });
-    };
-
-    const app = create_app({ database, disable_request_log: true });
-    await serve(app, async base => {
-        const created = await fetch(`${base}/api/reviews`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', Origin: base, Cookie: 'dreams_access_token=valid-token' },
-            body: JSON.stringify({ rating: 5, comment: 'Una experiencia muy cuidada.' })
-        });
-        assert.equal(created.status, 201);
-
-        const reloaded = await fetch(`${base}/api/reviews`);
-        assert.equal(reloaded.status, 200);
-        const [review] = await reloaded.json();
-        assert.equal(review.comment, 'Una experiencia muy cuidada.');
-        assert.equal(review.user_name, 'Ana');
-        assert.equal(review.user_id, 'user-1');
-    });
+    const context = {  };
+    await preparar_una_opinion_autenticada_se_persiste_y_reaparece_al_r_8(context);
+    await preparar_una_opinion_autenticada_se_persiste_y_reaparece_al_r_9(context);
+    await preparar_una_opinion_autenticada_se_persiste_y_reaparece_al_r_10(context);
+    await verificar_una_opinion_autenticada_se_persiste_y_reaparece_al_r_11(context);
 });
 
 test('registro pendiente distingue confirmación de correo de una sesión activa', async () => {
@@ -258,35 +460,10 @@ test('registro pendiente distingue confirmación de correo de una sesión activa
 });
 
 test('modo demo confirma el alta en servidor e inicia sesión sin correo', async () => {
-    const database = database_with(() => ({ data: null, error: null }));
-    let created_payload;
-    database.auth.admin.createUser = async value => {
-        created_payload = value;
-        return { data: { user: { id: 'demo-user' } }, error: null };
-    };
-    const auth = { auth: { signInWithPassword: async ({ email }) => ({
-        data: {
-            user: { id: 'demo-user', email },
-            session: { access_token: 'demo-access', refresh_token: 'demo-refresh', expires_in: 3600 }
-        },
-        error: null
-    }) } };
-    const app = create_app({ database, create_auth_client: () => auth, demo_auto_confirm_email: true, disable_request_log: true });
-    await serve(app, async base => {
-        const response = await fetch(`${base}/api/auth/register`, {
-            method: 'POST', headers: { 'Content-Type': 'application/json', Origin: base },
-            body: JSON.stringify({ name: 'Ana', email: ' ANA@EXAMPLE.COM ', password: 'password-segura' })
-        });
-        assert.equal(response.status, 201);
-        const body = await response.json();
-        assert.equal(body.authenticated, true);
-        assert.equal(body.demo, true);
-        assert.equal(body.user.is_admin, false);
-        assert.equal(created_payload.email_confirm, true);
-        assert.deepEqual(created_payload.user_metadata, { name: 'Ana' });
-        assert.match(response.headers.get('set-cookie'), /dreams_access_token=demo-access/);
-        assert.doesNotMatch(JSON.stringify(body), /confirm|correo enviado/i);
-    });
+    const context = {  };
+    await preparar_modo_demo_confirma_el_alta_en_servidor_e_inicia_sesi_12(context);
+    await preparar_modo_demo_confirma_el_alta_en_servidor_e_inicia_sesi_13(context);
+    await verificar_modo_demo_confirma_el_alta_en_servidor_e_inicia_sesi_14(context);
 });
 
 test('modo demo no enumera usuarios mediante errores de confirmación', async () => {
@@ -332,33 +509,10 @@ test('cabeceras defensivas bloquean framing, sniffing y downgrade HTTPS', async 
 });
 
 test('login válido crea cookies y devuelve una redirección explícita', async () => {
-    let profile_reads = 0;
-    const database = database_with(table => {
-        assert.equal(table, 'profiles');
-        profile_reads += 1;
-        return { data: { name: 'Administración', role: 'admin' }, error: null };
-    });
-    database.auth.signInWithPassword = async ({ email }) => ({
-        data: {
-            user: { id: 'admin-user', email, user_metadata: {} },
-            session: { access_token: 'access', refresh_token: 'refresh', expires_in: 3600 }
-        },
-        error: null
-    });
-    const app = create_app({ database, disable_request_log: true });
-    await serve(app, async base => {
-        const response = await fetch(`${base}/api/auth/login`, {
-            method: 'POST', headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email: ' ADMIN@EXAMPLE.COM ', password: 'password-segura' })
-        });
-        assert.equal(response.status, 200);
-        const body = await response.json();
-        assert.equal(body.authenticated, true);
-        assert.equal(body.redirect, '/admin');
-        assert.equal(body.user.email, 'admin@example.com');
-        assert.match(response.headers.get('set-cookie'), /dreams_access_token=access/);
-        assert.equal(profile_reads, 1);
-    });
+    const context = {  };
+    await verificar_login_valido_crea_cookies_y_devuelve_una_redireccion_15(context);
+    await preparar_login_valido_crea_cookies_y_devuelve_una_redireccion_16(context);
+    await verificar_login_valido_crea_cookies_y_devuelve_una_redireccion_17(context);
 });
 
 test('favoritos retirados devuelve 404 en API y redirige la página histórica', async () => {
@@ -384,56 +538,16 @@ test('rutas web inexistentes responden una página 404 real', async () => {
 });
 
 test('login y registro aíslan dos sesiones del cliente privilegiado', async () => {
-    const database = database_with(() => ({ data: { name: 'Cliente', role: 'customer' }, error: null }));
-    database.auth.signInWithPassword = database.auth.signUp = async () => assert.fail('no autenticar en el cliente privilegiado');
-    const clients = [];
-    const create_auth_client = () => {
-        const client = { session: null, auth: {} };
-        const sign = async ({ email }) => {
-            client.session = email;
-            return { data: { user: { id: email, email }, session: { access_token: email, refresh_token: `refresh-${email}`, expires_in: 3600 } }, error: null };
-        };
-        client.auth.signInWithPassword = client.auth.signUp = sign;
-        clients.push(client);
-        return client;
-    };
-    await serve(create_app({ database, create_auth_client, disable_request_log: true }), async base => {
-        const responses = await Promise.all(['ana', 'bea'].map(name => fetch(base + '/api/auth/login', {
-            method: 'POST', headers: { 'Content-Type': 'application/json', Origin: base }, body: JSON.stringify({ email: `${name}@example.com`, password: 'test-password' })
-        })));
-        assert.deepEqual(responses.map(response => response.status), [200, 200]);
-        assert.match(responses[0].headers.get('set-cookie'), /ana%40example.com/);
-        assert.match(responses[1].headers.get('set-cookie'), /bea%40example.com/);
-        const registered = await fetch(base + '/api/auth/register', { method: 'POST', headers: { 'Content-Type': 'application/json', Origin: base }, body: JSON.stringify({ name: 'Cris', email: 'cris@example.com', password: 'test-password' }) });
-        assert.equal(registered.status, 200);
-        assert.equal(new Set(clients).size, 3);
-        assert.deepEqual(clients.map(client => client.session), ['ana@example.com', 'bea@example.com', 'cris@example.com']);
-        assert.equal((await fetch(base + '/api/auth/me').then(response => response.json())).user, null);
-    });
+    const context = {  };
+    await verificar_login_y_registro_aislan_dos_sesiones_del_cliente_pri_18(context);
+    await preparar_login_y_registro_aislan_dos_sesiones_del_cliente_pri_19(context);
+    await verificar_login_y_registro_aislan_dos_sesiones_del_cliente_pri_20(context);
 });
 
 test('refresh usa cliente aislado; logout revoca local y borra ambas cookies', async () => {
-    const database = database_with(() => ({ data: { name: 'Ana', role: 'customer' }, error: null }));
-    database.auth.getUser = async token => ({ data: { user: token === 'new-access' ? { id: 'ana', email: 'ana@example.com' } : null } });
-    database.auth.admin.signOut = async () => assert.fail('logout no usa cliente global');
-    let refreshes = 0, revokes = 0;
-    const create_auth_client = () => ({ auth: {
-        refreshSession: async input => {
-            assert.equal(input.refresh_token, 'old-refresh'); refreshes++;
-            return { data: { user: { id: 'ana', email: 'ana@example.com' }, session: { access_token: 'new-access', refresh_token: 'new-refresh', expires_in: 3600 } }, error: null };
-        },
-        admin: { signOut: async (token, scope) => { assert.equal(token, 'new-access'); assert.equal(scope, 'local'); revokes++; return { error: null }; } }
-    } });
-    await serve(create_app({ database, create_auth_client, disable_request_log: true }), async base => {
-        const restored = await fetch(base + '/api/auth/me', { headers: { Cookie: 'dreams_access_token=expired; dreams_refresh_token=old-refresh' } });
-        assert.equal((await restored.json()).user.id, 'ana');
-        assert.match(restored.headers.get('set-cookie'), /new-access/);
-        const logout = await fetch(base + '/api/auth/logout', { method: 'POST', headers: { Cookie: 'dreams_access_token=new-access', Origin: base } });
-        assert.equal(logout.status, 200);
-        assert.equal(logout.headers.getSetCookie().length, 2);
-        for (const cookie of logout.headers.getSetCookie()) assert.match(cookie, /Max-Age=0/);
-        assert.equal(refreshes, 1); assert.equal(revokes, 1);
-    });
+    const context = {  };
+    await verificar_refresh_usa_cliente_aislado_logout_revoca_local_y_bo_21(context);
+    await verificar_refresh_usa_cliente_aislado_logout_revoca_local_y_bo_22(context);
 });
 
 test('health detecta esquema incompleto, incluye checkout cuando está habilitado', async () => {

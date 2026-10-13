@@ -1,3 +1,45 @@
+function schema_fixture_execute(context, single) {
+    const { rows, table, filters, action, fields, value } = context;
+    if (table === 'profiles') return { data: { name: 'Admin de prueba', role: 'admin' }, error: null };
+    if (table === 'inquiries') return { data: [{ id: 1, product_name: rows[0].name, products: { marca: rows[0].marca, name: rows[0].name } }], error: null };
+    assert.equal(table, 'products');
+    const found = rows.filter(row => filters.every(filter => filter(row)));
+    if (action !== 'select') {
+        assert.equal(Object.hasOwn(value, 'brand'), false);
+        assert.equal(value.marca, 'Marca de prueba');
+        if (action === 'insert') { const row = { id: 2, ...value }; rows.push(row); return { data: row, error: null }; }
+        found.forEach(row => Object.assign(row, value));
+    }
+    const data = fields === 'marca' ? found.map(row => ({ marca: row.marca })) : found;
+    return { data: single ? data[0] || null : data, error: null };
+}
+
+// Responsabilidad schema fixture operations; preserva la secuencia original.
+function schema_fixture_operations(context) {
+    const { calls, table, filters } = context;
+    const q = {
+        select(selected = '*') { context.fields = selected; calls.push(['select', table, selected]); assert.doesNotMatch(selected, /\bbrand\b/); return q; },
+        eq(column, expected) { assert.notEqual(column, 'brand'); filters.push(row => String(row[column]) === String(expected)); return q; },
+        in(column, ids) { filters.push(row => ids.includes(row[column])); return q; },
+        order(column) { assert.notEqual(column, 'brand'); return q; },
+        or(expression) { calls.push(['or', expression]); assert.match(expression, /marca.ilike/); return q; },
+        limit() { return q; },
+        insert(input) { context.action = 'insert'; context.value = input; return q; },
+        update(input) { context.action = 'update'; context.value = input; return q; },
+        maybeSingle() { return Promise.resolve(schema_fixture_execute(context, true)); },
+        single() { return Promise.resolve(schema_fixture_execute(context, true)); },
+        then(resolve, reject) { return Promise.resolve(schema_fixture_execute(context, false)).then(resolve, reject); }
+    };
+    return q;
+}
+
+function schema_fixture_query(rows, calls, table) {
+    const context = { rows, calls, table, filters: [], action: 'select', fields: '*', value: undefined };
+    return schema_fixture_operations(context);
+}
+
+
+
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const { create_app } = require('../server/app');
@@ -8,38 +50,7 @@ function database() {
     return {
         rows, calls,
         auth: { getUser: async () => ({ data: { user: { id: 'admin-test', email: 'test@example.com' } } }) },
-        from(table) {
-            const filters = [];
-            let fields = '*', action = 'select', value;
-            const q = {
-                select(selected = '*') { fields = selected; calls.push(['select', table, selected]); assert.doesNotMatch(selected, /\bbrand\b/); return q; },
-                eq(column, expected) { assert.notEqual(column, 'brand'); filters.push(row => String(row[column]) === String(expected)); return q; },
-                in(column, ids) { filters.push(row => ids.includes(row[column])); return q; },
-                order(column) { assert.notEqual(column, 'brand'); return q; },
-                or(expression) { calls.push(['or', expression]); assert.match(expression, /marca.ilike/); return q; },
-                limit() { return q; },
-                insert(input) { action = 'insert'; value = input; return q; },
-                update(input) { action = 'update'; value = input; return q; },
-                maybeSingle() { return Promise.resolve(execute(true)); },
-                single() { return Promise.resolve(execute(true)); },
-                then(resolve, reject) { return Promise.resolve(execute(false)).then(resolve, reject); }
-            };
-            function execute(single) {
-                if (table === 'profiles') return { data: { name: 'Admin de prueba', role: 'admin' }, error: null };
-                if (table === 'inquiries') return { data: [{ id: 1, product_name: rows[0].name, products: { marca: rows[0].marca, name: rows[0].name } }], error: null };
-                assert.equal(table, 'products');
-                const found = rows.filter(row => filters.every(filter => filter(row)));
-                if (action !== 'select') {
-                    assert.equal(Object.hasOwn(value, 'brand'), false);
-                    assert.equal(value.marca, 'Marca de prueba');
-                    if (action === 'insert') { const row = { id: 2, ...value }; rows.push(row); return { data: row, error: null }; }
-                    found.forEach(row => Object.assign(row, value));
-                }
-                const data = fields === 'marca' ? found.map(row => ({ marca: row.marca })) : found;
-                return { data: single ? data[0] || null : data, error: null };
-            }
-            return q;
-        }
+        from(table) { return schema_fixture_query(rows, calls, table); }
     };
 }
 
