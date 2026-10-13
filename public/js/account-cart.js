@@ -67,7 +67,7 @@
                     if (user) cleanup();
                     user=next;
                 }
-                if (!user) { cleanup(); initialized=true; emit(); return; }
+                if (!user) { if(storage.getItem(KEY)) cleanup(); initialized=true; emit(); return; }
                 const epoch=generation;
                 const data=await request('/api/cart/account');
                 if (!accept(data,epoch)) return;

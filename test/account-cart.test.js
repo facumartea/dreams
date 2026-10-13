@@ -98,3 +98,7 @@ test('session reads used by cart synchronization do not exhaust the mutation log
  const app=create_app({database:db(),disable_request_log:true});const server=app.listen(0,'127.0.0.1');await new Promise(r=>server.once('listening',r));
  try {for(let n=0;n<25;n++)assert.equal((await fetch('http://127.0.0.1:'+server.address().port+'/api/auth/me')).status,200);}finally{await new Promise(r=>server.close(r));}
 });
+test('guest academic confirmation and pending intent survive synchronization initialization without an owner outbox',async()=>{
+ const s=service();s.setOwner(null);const persisted=storage();persisted.setItem('dreams_presentation_receipt','fixture-signed-receipt');persisted.setItem('dreams_presentation_checkout','fixture-pending-intent');const {c}=client(s,[],persisted);await c.initialize();assert.equal(persisted.getItem('dreams_presentation_receipt'),'fixture-signed-receipt');assert.equal(persisted.getItem('dreams_presentation_checkout'),'fixture-pending-intent');
+ persisted.setItem('dreams_account_cart_outbox',JSON.stringify({user_id:A,queue:[]}));await c.initialize();assert.equal(persisted.getItem('dreams_presentation_receipt'),null);assert.equal(persisted.getItem('dreams_account_cart_outbox'),null);
+});

@@ -51,7 +51,7 @@ tab se descartan al logout por privacidad; sólo los confirmados están guardado
 
 ## Verificación realizada
 
-9 pruebas de cliente/API: combinación, segunda instancia, logout/cambio de
+10 pruebas de cliente/API: combinación, segunda instancia, logout/cambio de
 cuenta, respuesta perdida tras commit/reload, cantidades rápidas/vaciado,
 respuesta vieja de dueño anterior, precios/faltantes, Origin/scope/IDs,
 validación payload y lecturas de sesión sin agotar límite de login.
@@ -90,3 +90,9 @@ logout/login/cambio de cuenta, RLS/IDOR real HTTP, error/replay/carreras, precio
 productos no disponibles, consume académico y menús/filtros/contactos/Admin.
 La preview de esta rama permite examinar UI y bloqueo anónimo, no sustituye
 esta matriz. Publicación oficial debe excluir esta rama mientras esté bloqueada.
+
+QA remota visitante inicial detectó que inicializar sin sesión eliminaba
+el recibo académico. Corregido: purgar recibos sólo al salir/cambiar dueño
+o al encontrar outbox privada de una sesión ausente. Nueva regresión del
+visitante conserva intent/receipt. 134tests/check50/builds correctos; nuevo
+deploy/QA remota se registran después. Esa prueba no valida sesiones reales.

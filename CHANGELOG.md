@@ -1,3 +1,8 @@
+# 2026-10-13 — Corrección de recibo visitante en preview de carrito
+
+- QA remota detectó limpieza incorrecta de recibo académico al inicializar visitante; corregida y añadida regresión.
+-134tests/check50/builds pasaron. Oficial excluye este módulo y conserva checkout remoto verificado.
+
 # 2026-10-13 — Carrito por usuario aislado preparado
 
 - API ligada a UUID Auth y scope firmado; SQL atómico/idempotente con RLS, merge max y stock, precios actuales sin órdenes/stock comercial.
