@@ -5,7 +5,7 @@
 - Documentación/API/DB/manual/mapa/pseudocódigo/passwords: COMPLETADOS en repo; logo3colores/aportes/asistencia parcial/no verificable.
 - Tests143/check56/builds/audit/frozen supplychain: COMPLETADOS; QA local390/1440 explícita, no equivale a sesión remota.
 - Commit/push/PR47/CI8988130/nueva preview0e4e08ae/QA remota pública y checkout: COMPLETADOS; oficial y previews anteriores intactas.
-- ZIP Marteaena-Ruas-DREAMS.zip: nombre confirmado, exportar tras commit final.
+- ZIP Marteaena-Ruas-DREAMS.zip: COMPLETADO desde32fc265,157entradas/integridad correcta/sin secretos ni archivos excluidos; no Classroom.
 - Auth/Admin remoto y PR45cuentas: PENDIENTES por acceso legítimo; no promoción oficial ni cambios de permisos/credenciales.
 
 # Resultado de revisión Admin — 2026-10-13

@@ -3,7 +3,7 @@
 - Fuente8988130/PR47/CI38428906880 verde; nueva preview rubric-review deployment0e4e08ae tras firma aislada por stdin seguro, proyecto/origen/SecretText/flags verificados sin valores.
 - QA remota390/1440 carrusel/productos/menús/filtros/carrito/checkoutacadémico/retry/recarga/referencia/tarjeta fuera de red/storage/consola, sinpageerrors/overflow. Admin anónimo403; Auth/Adminreal no acreditados.
 - Supabase46productos/8perfiles/0orders/9RLS conservado, sin datos/stock/roles/passwords cambiados. Logs0eventosmuestra limitada. OficialPagesac755bbe y dos previews anteriores intactas, sin DNS/merge/video.
-- Evidencia y ZIP de apellidos confirmados preparados; documentos académicos no atribuyen asistencia/aportes ni nota no verificada.
+- ZIP Marteaena-Ruas-DREAMS.zip exportado desde32fc265,157entradas/2736246bytes e integridad/ausencia de secretos/dependencias/video verificadas; no Classroom. Documentos no atribuyen asistencia/aportes ni nota no verificada.
 
 # 2026-10-13 — Adecuación de rúbrica y refactor20
 
