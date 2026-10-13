@@ -1,3 +1,11 @@
+# Resultado de revisión Admin — 2026-10-13
+
+- Auditoría/implementación acotada/buscador+imágenes/formulario: COMPLETADOS.
+-139tests/check51/builds/audit/QA local3901440: COMPLETADOS.
+- PR46/CI/push/preview/smoke público y anónimo: COMPLETADOS en cobertura declarada.
+- Admin autenticado remoto/promoción oficial: BLOQUEADOS por falta sesión legítima.401Supabase observado requiere revisión previa; no ampliar permisos.
+- Cinco URLs reales con fallback y control de concurrencia entre Admins: pendientes de intervención específica, sin cambios de datos/esquema.
+
 # Buscador y revisión Admin — 2026-10-13
 
 - Estado/repositorio/fuente Admin/paginación/permisos/deployment: VERIFICADOS.

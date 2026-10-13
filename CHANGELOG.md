@@ -1,3 +1,9 @@
+# 2026-10-13 — Preview de Admin publicada con gate autenticado
+
+- c574696/previewfa8761cd y PR46/CI139tests/check51/builds verdes; QA pública/anónima3901440 pasó, assets iguales y permisos403. Auth Admin real no disponible ni validado, oficial no publicada.
+-139tests/QA fixture3901440 de buscador/imágenes/bloqueo guardar/proveedorerror/retry/persistenciaimagen pasaron. Sin escrituras remotas en productos, roles/creds/esquema/DNS ni video.
+- Logs1Supabase401/api/products documentado con posteriores200, cobertura limitada. Cinco fallback de datos reales pendientes sin reemplazo. docs/admin_search_images.md con evidencia/rollback/pendientes.
+
 # 2026-10-13 — Guardado de producto estable durante preview de imagen
 
 - Formulario bloqueado en PUT/POST, imagen no habilita segundo envío, Editar/Limpiar no cambian contexto pendiente. Regresión y QA fixture3901440 con respuesta demorada pasaron.

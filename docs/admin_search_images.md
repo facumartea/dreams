@@ -133,3 +133,39 @@ de reset para aceptar guard interno, conservando verificaciones de ID/formulario
 El servidor actual usa PUT completo sin revisión optimista; escrituras de dos
 Admins pueden sobrescribirse según último guardado. Es deuda preexistente mayor,
 no alterar esquema ni habilitar escrituras comerciales para eludirla.
+
+## Preview publicada y estado final
+
+Admin: https://admin-search-review-dreams-perfumes.dreams-perfumes.workers.dev/admin
+Login existente: /cuenta.html?admin=1. Fuente
+c5746969f552941e3e7469e57ef32721ed78e8a2, deployment
+fa8761cd-6560-49b5-ac9b-c34d043c37ed, tagc574696. PR46 abierta/basePR44;
+CI38397118296 SUCCESS139tests/check51/audit/builds. Checkpoint posterior sólo
+documentación, sin otro deploy. Nodo/JS del proyecto no define lint ni
+chequeo de tipos separados: se ejecutó el check de sintaxis configurado.
+
+Nueva preview heredó Supabase Secret de base y recibió firma académica propia
+por stdin seguro para conservar checkout académico habilitado; ninguna clave
+existente/Auth/rol fue rotada/cambiada y no se mostró/escribió su valor.
+PREVIEW_READ_ONLYtrue/CHECKOUT_SCHEMA_READYfalse, sin proveedor comercial activo.
+
+QA **remota pública/anónima** Chromium390/1440 del último commit: health200,
+catálogo46, menús/Escape/búsqueda/reset/carrito visitante/persistencia/contador,
+login legacy visible, portada sin video, Admin/APIprivada403. Cuatro assets
+CSS/controller/helpers comparados SHA con fuente y sin literales de secretos.
+Sin pageerrors/overflow en el recorrido público. No se ingresó al Admin con
+una sesión real; no usar estas comprobaciones como QA autenticada.
+Logs filtrados del deployment:1SupabaseHTTP401 en /api/products; causa no
+comprobada, catálogo/health posteriores200 y QA terminó correctamente.
+Invocation logs apagados: muestra limitada, no prometer runtime sin errores.
+Lectura Git remoto tuvo503 de transporte aislado; siguiente lectura SHA
+confirmada, no fallo de aplicación ni nuevo cambio para ocultarlo.
+
+OFICIAL sigue Pagesac755bbe/c83b148, backendd5df723d: NO publicada esta tarea.
+Rollback de oficial conservado, no DNS ni merge. Sin productos/roles/esquema/
+Storage/credenciales/datos comerciales modificados. Cinco imágenes existentes
+con fallback quedan pendientes de diagnóstico/enlace legítimo por producto,
+no reemplazo masivo. Sesión Admin real desde gestor seguro sigue faltando;
+no es suficiente tener Secret de Supabase del Worker para conocer contraseña.
+Próximo: validar búsqueda y revisión de imagen en Admin de preview con sesión
+legítima; sólo entonces evaluar promoción acotada y el401 observado.
