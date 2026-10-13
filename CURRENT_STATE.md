@@ -1,3 +1,13 @@
+# Rúbrica publicada sólo en preview — 2026-10-13
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+PR47/rama codex/rubric-academic-review dependiente PR46/3365e57; fuente898813008f8c0afca8ddddfc2cfb09d3303fc87b, CI38428906880 SUCCESS143tests/check56/builds/audit. Preview https://rubric-review-dreams-perfumes.dreams-perfumes.workers.dev/ nueva2ec920119f6b43dbaa91742304873db2, deployment0e4e08ae-dec5-4c1b-ade5-81756e8b0626 tras firma propia segura; fuente5987bd12/8988130/assets+módulo intactos, Secrets sólo nombres/tipos/proyecto/origen/flags comprobados. Sin valor expuesto.
+
+QA remota390/1440 público/anon/carrusel4escenarios y checkoutdirecto/retry/referencia/envío0/tarjeta fuera de red/storage/consola pasaron; AdminHTML/API403 y loginvisible NO equivalen a Auth/Adminreal. EjemploDREAMS-1475823A93E94359A4EE7DF531CDAB60. SELECT46productos/8perfiles/0orders/9RLS conservado. Logs0eventosobservados/coberturalimitada; no ceroerrores globales. Docs docs/rubric_validation.md y matrix/auth/manual/arquitectura/mapeo actualizados.
+
+OficialPagesac755bbe/c83b148/backendd5df723d, academic-review7c3cd341/d938a97 y admin-searchfa8761cd/c574696 conservados por API. No main/merge/DNS/tráfico/credenciales/roles/DB/video cambiados. JS1265máximo20/SQL4máximo18; programa principal orquestación <40. LogoPNG estricto3colores/licencias/aportes escolares parcial/NV; PR45carritoporcuenta separado/authQApendiente. Usuario confirmó API/condiciones y apellidosMarteaenaRuas; preparar ZIP tras checkpointdocs, no Classroom. Progreso global no recalculado. PUSH:SÍ; DEPLOY PREVIEW:SÍ; DEPLOY OFICIAL:NO. Próximo: revisión profesor/usuario y accesoAuth/Adminseguro en tarea separada, sin adivinar/reset/elevar permisos.
+
 # Adecuación de rúbrica preparada — 2026-10-13
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.

@@ -32,7 +32,17 @@ Capturas locales en `/workspace/dreams-rubric-evidence/local-390-search.png`, `l
 
 ## Preview remota
 
-Publicación aislada/URL/SHA/CI y QA remota se completan después del commit de implementación; no son los resultados locales anteriores. No se reemplaza `academic-review`, `admin-search-review` ni la oficial. SupabaseSecret permanece servidor en base de previews; firma académica nueva sólo para esta preview, ingresada por stdin seguro, sin valores en archivos/args/logs.
+**URL verificada:** https://rubric-review-dreams-perfumes.dreams-perfumes.workers.dev/ · Admin `/admin` (requiere sesión; anónimo403).
+
+Fuente `898813008f8c0afca8ddddfc2cfb09d3303fc87b`, [PR47](https://github.com/facumartea/dreams/pull/47), [CI38428906880 SUCCESS](https://github.com/facumartea/dreams/actions/runs/38428906880). Primera versión `5987bd12-d0e7-42ad-8c65-5228c80cfebb`; actualización sólo firma aislada `0e4e08ae-dec5-4c1b-ade5-81756e8b0626`. Assets/main_module iguales después de configurar firma; secreto Supabase heredado y ambos bindings son secret_text. El proyecto y origen exactos, read_onlytrue/schema_readyfalse/auto_confirmfalse/Googlefalse se verificaron por metadata sin valores secretos. Startup reportado52ms no equivale a medir Core Web Vitals.
+
+QA remota Chromium390/1440: health200/catalogo46, menú/Escape/búsqueda/empty/reset/marca, detalle/recursos, carrito/cantidades/persistencia/contador/WhatsApp-resumen, login legacy visible, AdminHTML/API anónimo403. Cuatro assets críticos igualaron fuente y no tienen literales de secretos; carrusel añade ocho productos distintos, teclado y reduce/no-preference, sin video/autoplay/overflow/pageerror.
+
+Checkout académico remoto: envío0/total, nombre requerido, carrito vacío/cambiado bloqueado, doble clic ignorado, dos fallos de red inyectados antes/después de respuesta conservaron la referencia; confirmación/recarga/vaciado pasaron, sin lecturas/transmisión/storage/consola de tarjeta ni orders/stock/correos/pasarela. Ejemplo real generado en QA: `DREAMS-1475823A93E94359A4EE7DF531CDAB60`. No se envió WhatsApp.
+
+SELECT posterior conserva46productos/8perfiles/0orders/9tablasRLS. Telemetría filtrada a0e4e08ae devolvió0eventos; **cobertura limitada**, no afirmar cero errores de todo el runtime. QA browser sin pageerrors en cobertura ejecutada. Auth/Admin autenticados reales permanecen pendientes.
+
+API Cloudflare confirma oficial Pagesac755bbe/c83b148, preview académica7c3cd341/d938a97 y preview Adminfa8761cd/c574696 intactas. No se publicó Pages, modificó DNS/tráfico ni se hicieron merges. Capturas remotas en `/workspace/dreams-rubric-evidence/remote-390-carousel.png` y `remote-1440-carousel.png` más checkout; se incluyen copias de evidencia en `docs/academico/evidencia/` (local/remote diferenciadas).
 
 ## Pendientes y recuperación
 
