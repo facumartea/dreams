@@ -253,7 +253,8 @@ test('registro pendiente distingue confirmación de correo de una sesión activa
         const body = await response.json();
         assert.equal(body.authenticated, false);
         assert.equal(body.requires_email_confirmation, true);
-        assert.match(body.message, /confirmación/);
+        assert.match(body.message, /no hay una sesión activa/);
+        assert.equal(response.headers.getSetCookie().length, 0);
     });
 });
 
