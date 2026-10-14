@@ -10,7 +10,7 @@ Bindings inspeccionados por nombre/tipo: SUPABASE_URL apunta a `nwsmbemwtexmrtpk
 
 ## Causa y corrección
 
-El frontend envía POST /api/auth/register. El guard oficial no exceptúa esa ruta y emite 403 con “Esta vista de prueba permite consultas; las operaciones comerciales están protegidas” antes de signUp. Causa confirmada por código de origen y bindings remotos; no se reprodujo por HTTP remoto en esta sesión porque el executor todavía no está disponible.
+El frontend envía POST /api/auth/register. El guard oficial no exceptúa esa ruta y emite 403 con “Esta vista de prueba permite consultas; las operaciones comerciales están protegidas” antes de signUp. Causa confirmada por código de origen y bindings remotos; no se reprodujo por HTTP remoto en esta sesión porque el executor falló al iniciar.
 
 La excepción nueva admite solamente POST exacto /api/auth/register. Mantiene PREVIEW_READ_ONLY, middleware de origen, rate limit de Auth 20/15min, protección Admin y bloqueos de pedidos/pagos, productos, stock, roles, opiniones y consultas. Otros bloqueos tienen mensaje propio por acción y código preview_write_blocked.
 
@@ -22,7 +22,7 @@ Los helpers/handlers nuevos y funciones de registro modificadas tienen hasta 20 
 
 ## Validación ejecutada y límites
 
-CI [38598281826](https://github.com/facumartea/dreams/actions/runs/38598281826) SUCCESS en código 301fe075: frozen install, audit prod, sintaxis 51 archivos, 137/137 tests, Workers dry-run 2173.41 KiB/gzip504.57, build Pages correcto. Posterior 9a78cebf sólo refuerza la restauración de sesión tras nuevo login; su CI debe confirmarse antes del cierre.
+CI [38598281826](https://github.com/facumartea/dreams/actions/runs/38598281826) SUCCESS en código 301fe075: frozen install, audit prod, sintaxis 51 archivos, 137/137 tests, Workers dry-run 2173.41 KiB/gzip504.57, build Pages correcto. CI [38598986148](https://github.com/facumartea/dreams/actions/runs/38598986148) SUCCESS en código final 9a78cebf, incluyendo la restauración de sesión tras nuevo login y ambos builds.
 
 Pruebas nuevas usan fixtures locales ejecutados en GitHub Actions: signup normal/cookies, perfil customer, metadata Admin ignorada/rechazada, Admin403, logout/login/sesión, caminos de escritura bloqueados incluso para Admin en suite académica, origen, datos inválidos, cuenta existente, perfil fallido, sesión ausente, rate limit, doble submit, fallo de red y reintento. Un primer CI falló por un test histórico que esperaba bloquear todo registro; se actualizó para conservar la prueba de rechazo de rol admin, sin borrar cobertura.
 
@@ -32,7 +32,7 @@ No se ejecutaron pruebas en el executor de este chat, git status local, QA visua
 
 Supabase está instalado/conectado y permite get_project/SQL. La enumeración real de herramientas NO incluye GET/PATCH Auth config ni un iniciador OAuth para ampliarlas. La descripción genérica del plugin no demuestra esas capacidades. Su permiso ChatGPT sigue el default “Allow low-risk actions”; cambiar ese ajuste no crea herramientas ni scopes OAuth.
 
-No hay SUPABASE_ACCESS_TOKEN configurado en el entorno observado; el executor sigue starting/offline, sin secretos listados. SUPABASE_SECRET_KEY o SQL no autorizan la Management API. No se reutilizan tokens de otras conexiones, se leen secretos del Worker ni se intenta modificar Auth por SQL.
+No hay SUPABASE_ACCESS_TOKEN configurado en el entorno observado; el executor falló: failed to query executor configuration capabilities / environment provisioning failed during container_creation; sin secretos listados. El intento wait_for_environment terminó con error, no hay un comando de reinicio disponible en las herramientas actuales. SUPABASE_SECRET_KEY o SQL no autorizan la Management API. No se reutilizan tokens de otras conexiones, se leen secretos del Worker ni se intenta modificar Auth por SQL.
 
 Mecanismo oficial:
 1. Recuperar acceso de la cuenta propietaria en [sign-in](https://supabase.com/dashboard/sign-in) con su proveedor original (GitHub/ChatGPT/SSO) o [forgot-password](https://supabase.com/dashboard/forgot-password) si usa correo/contraseña. Si no controla ese acceso, recurrir al propietario de la organización o soporte Supabase.
@@ -42,6 +42,8 @@ Mecanismo oficial:
 5. Registrar mailer_autoconfirm anterior. PATCH únicamente {mailer_autoconfirm:true}; esto desactiva Confirm email para nuevos registros, no equivale a verificar control de un buzón. GET posterior para confirmar, conservando política de contraseñas y demás configuración.
 
 Fuentes: [Auth config GET](https://supabase.com/docs/reference/api/v1-get-auth-service-config), [PATCH](https://supabase.com/docs/reference/api/v1-update-auth-service-config), [permisos de tokens](https://supabase.com/docs/guides/platform/personal-access-tokens), [signUp](https://supabase.com/docs/reference/javascript/auth-signup).
+
+Lecturas SQL verificaron el trigger privado create_profile_for_new_user: inserta siempre customer, toma sólo name de metadata, search_path vacío y on conflict do nothing. Perfiles existentes: 1 admin/7 customer. Policies profiles sólo SELECT de perfil propio o Admin; no policy pública de escritura de rol. No se modificó ninguna tabla/policy ni cuenta.
 
 Valor actual de mailer_autoconfirm y uso por aplicaciones ajenas: NO comprobados. No afirmar que Confirm email está desactivado ni que el proyecto sea exclusivo sólo por su nombre.
 
