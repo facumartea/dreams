@@ -10,7 +10,7 @@ function fixture(options = {}) {
     const auth = {
         signUp: async values => signup_fixture(state, user, values, options),
         getUser: async token => ({ data: { user: state.signed && token === 'fixture-access' ? user : null } }),
-        signInWithPassword: async () => ({ data: { user, session: fixture_session() }, error: null }),
+        signInWithPassword: async () => { state.signed = true; return { data: { user, session: fixture_session() }, error: null }; },
         admin: { createUser() { throw new Error('Administrative signup forbidden'); }, signOut: async () => { state.signed = false; return { error: null }; } }
     };
     const database = { auth, from: table => profile_query(table, state, options) };
@@ -76,9 +76,17 @@ async function assert_customer_lifecycle(base, state) {
     assert.equal(logout.status, 200);
     assert.match(logout.headers.getSetCookie()[0], /Max-Age=0/);
     assert.equal((await (await fetch(base + '/api/auth/me', { headers: { Cookie: cookie } })).json()).user, null);
+    await assert_new_login(base);
+}
+
+async function assert_new_login(base) {
     const login = await send(base, '/api/auth/login', input);
     assert.equal(login.status, 200);
+    const cookie = assert_session_cookies(login);
     assert.equal((await login.json()).user.is_admin, false);
+    const me = await (await fetch(base + '/api/auth/me', { headers: { Cookie: cookie } })).json();
+    assert.equal(me.user.is_admin, false);
+    assert.equal(me.user.id, 'customer-fixture');
 }
 
 test('preview admite signup normal, cookies, customer, logout y login sin bypass Admin', async () => {
