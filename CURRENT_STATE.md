@@ -1,3 +1,15 @@
+# Registro customer corregido en PR48; Auth/deploy bloqueados — 2026-10-14
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Branch codex/customer-registration desde PR44/b33a2ee (oficial vigente), sin PR45/46/47/video/merges. Código9a78cebf, CI38598986148 SUCCESS137tests/check51/audit/buildsWorkersPages. PR48 borrador. POST exacto /api/auth/register exceptuado de PREVIEW_READ_ONLY; protecciones comerciales/Admin/origen/límites/customer/cookies conservadas, copy previo retirado y doble submit/red/reintento cubiertos. Helpers nuevos y registro <=20líneas; base conserva funciones largas, no refactor general ajeno. Primer CI falló por expectativa histórica403 de registro, actualizada sin eliminar cobertura.
+
+API confirma oficial Pagesac755bbe/c83b148/backendd5df723d con PREVIEW_READ_ONLY=true/DEMO_AUTO_CONFIRM_EMAIL=false/SUPABASE_URL correcto/Secret sólo tipo servidor. Supabase dreams-project ACTIVE_HEALTHY, trigger privado fuerza customer/no metadata rol; 1admin7customer y policies perfiles sóloSELECT. Sólo lecturas; NO Auth config cambiado ni nuevos usuarios/emails/datos/roles. Causa del403 confirmada por código y binding, petición remota no ejecutada.
+
+Entorno falló al provisionar: failed to query executor configuration capabilities / container_creation. Sin terminal/gitstatus/tests locales/QA visual/deploy; GitHub usado para branch/commits y CI. Conector Supabase conectado pero SIN herramientas Auth config ni iniciadorOAuth. No tokenManagement en gestor observado; user no puede acceder Dashboard. docs/customer_registration.md describe recuperación de cuenta y token scoped sólo proyecto (AuthConfig+ProjectSettings Read-write) vía gestorSecret SUPABASE_ACCESS_TOKEN, nunca chat; executor requiere volver a iniciarse/reconectarse en UI, sin herramienta reinicio aquí. No pedir nuevos secretos de datos ni usarbypassdemo.
+
+Pendiente verificar mailer_autoconfirm/consumidores ajenos, capturar configrollback y aplicar sólo mailer_autoconfirm=true por APIoficial; despuéssignupnormal remoto/sesión/logout/login/customer/Admin403/móvil/desktop, preview y promociónPages acotada. No publicaroficial antes de QAreal. Rollbackcódigo actualac755bbe/d5df retenido porAPI; configuraciónAuth anterior desconocida, procedimiento preparado sin ejecución. PUSH:SÍ/DEPLOY:NO; oficial/DNSintactos, porcentajeglobal no recalculado.
+
 # Oficial checkout directo publicada — 2026-10-13
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.

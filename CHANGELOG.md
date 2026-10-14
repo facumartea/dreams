@@ -1,3 +1,11 @@
+# 2026-10-14 — Registro customer normal y protección de preview
+
+- Branch aislada PR44/b33a2ee, PR48 borrador; sólo POST /api/auth/register atraviesa guard de preview, sin desactivar PREVIEW_READ_ONLY. Rutas comerciales/Admin conservan bloqueos, ahora con mensaje por acción.
+- Normal signUp aislado, customer/no rolesdelcliente, perfil ignoreDuplicates/cookies seguras; demo histórico apagado. Retiradas instrucciones de confirmación y aviso demo, sesión ausente no aparenta éxito, doble submit/red/reintento controlados.
+- CI38598986148 SUCCESS código9a78cebf:137/137, check51/audit/buildsWorkersPages. Testhistórico403 actualizado para rechazar rolAdmin; nuevasregresiones permisos/origen/límites/sesión/errores/customer/cliente. Funciones nuevasregistro <=20; no refactor global ajeno.
+- Conectores verifican Pagesac755bbe/backendd5df/proyecto correcto y triggercustomer/policies sóloSELECT, 1admin7customer. Sin modificarAuth/cuentas/datos/DNS/deployments.
+- ExecutorFAILED/no pruebaslocales o remotas auténticas/deploy. PluginSupabase actual noexpone Auth config/OAuthstarter; accesoManagement y recuperación cuenta pendientes, documentados sin valoressecretos. Preview/oficial no publicadas; rollbackcódigo retenido/configAuth anterior no leído.
+
 # 2026-10-13 — Checkout directo oficial publicado y verificado
 
 - Pagesac755bbe/c83b148 y backendd5df723d/ec04a35 publicados sin video/carrito por cuenta, PR44 abierta y CI verde124tests/check47/builds.

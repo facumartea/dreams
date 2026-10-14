@@ -1,4 +1,6 @@
 const path = require('node:path');
+const { customer_registration } = require('./customer-registration');
+const { preview_write_guard } = require('./preview-write-guard');
 const { auth_cookie, session } = require('./auth-cookies');
 const { google_routes } = require('./google-auth');
 const { presentation_checkout, academic_summary } = require('./presentation-checkout');
@@ -271,11 +273,7 @@ function create_app(options = {}) {
     app.use('/api/payments/webhook', rateLimit({ windowMs: 60000, limit: 120, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiadas notificaciones.' } }));
     const review_limiter = rateLimit({ windowMs: 3600000, limit: 5, standardHeaders: true, legacyHeaders: false, message: { error: 'Publicaste varias opiniones. Probá nuevamente más tarde.' } });
     app.use('/api/reviews', (request, response, next) => request.method === 'POST' ? review_limiter(request, response, next) : next());
-    app.use((request, response, next) => {
-        const safe = ['/api/cart/quote', '/api/auth/google', '/api/auth/login', '/api/auth/logout', '/api/presentation/session', '/api/presentation/payment', '/api/presentation/result'];
-        if (options.preview_read_only && unsafe_methods.has(request.method) && !safe.includes(request.path)) return response.status(403).json({ error: 'Esta vista de prueba permite consultas; las operaciones comerciales están protegidas.' });
-        next();
-    });
+    app.use(preview_write_guard(options.preview_read_only));
     app.use(options.static_middleware || express.static(public_directory));
 
     async function profile_for(user) {
@@ -352,31 +350,7 @@ function create_app(options = {}) {
         return data ? response.json(product(data)) : response.status(404).json({ error: 'Perfume no encontrado.' });
     });
     route('get', '/api/brands', async (request, response) => response.json([...new Set(fail_if(await execute_database_query(() => database.from('products').select(product_brand_column).order(product_brand_column))).map(item => normalize_product_brand(item).brand))]));
-    route('post', '/api/auth/register', async (request, response) => {
-        const name = String(request.body.name || '').trim().slice(0, 80), email = normalize_email(request.body.email), password = String(request.body.password || '');
-        if (!name || !valid_email(email) || password.length < 8 || password.length > 128) return response.status(400).json({ error: 'Completá un nombre, correo válido y una contraseña de 8 a 128 caracteres.' });
-        if (demo_auto_confirm_email) {
-            const created = await database.auth.admin.createUser({ email, password, email_confirm: true, user_metadata: { name } });
-            if (created.error || !created.data?.user) return response.status(400).json({ error: 'No se pudo crear la cuenta con esos datos.' });
-            fail_if(await database.from('profiles').upsert({ id: created.data.user.id, name, role: 'customer' }, { onConflict: 'id', ignoreDuplicates: true }));
-            const auth = create_auth_client();
-            const signed_in = await auth.auth.signInWithPassword({ email, password });
-            if (signed_in.error || !signed_in.data?.session || !signed_in.data?.user) {
-                logger.error?.('La cuenta demo se creó pero no pudo iniciar sesión.', { kind: error_kind(signed_in.error) });
-                return response.status(503).json({ error: 'La cuenta se creó, pero no pudimos iniciar la sesión. Probá ingresar nuevamente.' });
-            }
-            session(response, signed_in.data.session, production);
-            return response.status(201).json({ message: 'Cuenta demo creada. Ya podés usar DREAMS.', authenticated: true, demo: true, user: { id: created.data.user.id, name, email, is_admin: false } });
-        }
-        const result = await create_auth_client().auth.signUp({ email, password, options: { data: { name } } });
-        if (result.error) return response.status(400).json({ error: 'No se pudo crear la cuenta con esos datos.' });
-        if (result.data.user) fail_if(await database.from('profiles').upsert({ id: result.data.user.id, name, role: 'customer' }, { onConflict: 'id', ignoreDuplicates: true }));
-        if (result.data.session) {
-            session(response, result.data.session, production);
-            return response.json({ message: 'Cuenta creada correctamente.', authenticated: true, user: { id: result.data.user.id, name, email, is_admin: false } });
-        }
-        response.status(202).json({ message: 'Te enviamos un correo de confirmación. Abrilo antes de iniciar sesión.', authenticated: false, requires_email_confirmation: true });
-    });
+    route('post', '/api/auth/register', customer_registration({ database, create_auth_client, production, demo_auto_confirm_email, logger }));
     route('post', '/api/auth/login', async (request, response) => {
         const email = normalize_email(request.body.email), password = String(request.body.password || '');
         if (!valid_email(email) || !password || password.length > 128) return response.status(400).json({ error: 'Ingresá un correo válido y tu contraseña.' });

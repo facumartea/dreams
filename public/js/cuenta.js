@@ -45,32 +45,26 @@ function render_account_forms(initial_message = '') {
     });
 }
 
-function render_legacy_forms(initial_message = '', demo = false) {
-    const container = document.getElementById('account-view');
-    container.innerHTML = `
+function legacy_account_markup(initial_message) {
+    return `
         <img class="account-isologo" src="/assets/dreams-isologo-clean.png" alt="DREAMS" width="56" height="79"><h1>Ingresá a DREAMS</h1>
-        <div class="account-tabs" role="tablist" aria-label="Acceso a la cuenta">
-            <button id="login-tab" type="button" role="tab" aria-controls="login-form" aria-selected="true" class="active">Iniciar sesión</button>
-            <button id="register-tab" type="button" role="tab" aria-controls="register-form" aria-selected="false">Crear cuenta</button>
-        </div>
+        <div class="account-tabs" role="tablist" aria-label="Acceso a la cuenta"><button id="login-tab" type="button" role="tab" aria-controls="login-form" aria-selected="true" class="active">Iniciar sesión</button><button id="register-tab" type="button" role="tab" aria-controls="register-form" aria-selected="false">Crear cuenta</button></div>
         <form id="login-form" role="tabpanel" aria-labelledby="login-tab" novalidate>
             <div class="form-field"><label for="login-email">Correo electrónico</label><input id="login-email" name="email" type="email" autocomplete="email" inputmode="email" required></div>
             <div class="form-field"><label for="login-password">Contraseña</label><input id="login-password" name="password" type="password" autocomplete="current-password" minlength="8" maxlength="128" required></div>
-            <div class="form-message" id="login-message" role="status" aria-live="polite">${escape_html(initial_message)}</div>
-            <button class="button button-dark account-submit" type="submit">Ingresar</button>
+            <div class="form-message" id="login-message" role="status" aria-live="polite">${escape_html(initial_message)}</div><button class="button button-dark account-submit" type="submit">Ingresar</button>
         </form>
-        <form id="register-form" role="tabpanel" aria-labelledby="register-tab" hidden novalidate>
-            ${demo ? '<p class="demo-auth-note"><strong>Modo de prueba:</strong> tu cuenta queda activa al instante; no necesitás confirmar el correo.</p>' : '<p>Si recibís un correo de confirmación, abrilo antes de ingresar.</p>'}
-            <div class="form-grid">
-                <div class="form-field full"><label for="register-name">Nombre</label><input id="register-name" name="name" autocomplete="name" maxlength="80" required></div>
-                <div class="form-field full"><label for="register-email">Correo electrónico</label><input id="register-email" name="email" type="email" autocomplete="email" inputmode="email" required></div>
-                <div class="form-field"><label for="register-password">Contraseña</label><input id="register-password" name="password" type="password" autocomplete="new-password" minlength="8" maxlength="128" required><small>Usá entre 8 y 128 caracteres.</small></div>
-                <div class="form-field"><label for="register-confirm">Repetir contraseña</label><input id="register-confirm" name="confirm" type="password" autocomplete="new-password" minlength="8" maxlength="128" required></div>
-            </div>
-            <div class="form-message" id="register-message" role="status" aria-live="polite"></div>
-            <button class="button button-dark account-submit" type="submit">Crear cuenta</button>
-        </form>
+        <form id="register-form" role="tabpanel" aria-labelledby="register-tab" hidden novalidate><div class="form-grid">
+            <div class="form-field full"><label for="register-name">Nombre</label><input id="register-name" name="name" autocomplete="name" maxlength="80" required></div>
+            <div class="form-field full"><label for="register-email">Correo electrónico</label><input id="register-email" name="email" type="email" autocomplete="email" inputmode="email" required></div>
+            <div class="form-field"><label for="register-password">Contraseña</label><input id="register-password" name="password" type="password" autocomplete="new-password" minlength="8" maxlength="128" required><small>Usá entre 8 y 128 caracteres.</small></div>
+            <div class="form-field"><label for="register-confirm">Repetir contraseña</label><input id="register-confirm" name="confirm" type="password" autocomplete="new-password" minlength="8" maxlength="128" required></div>
+        </div><div class="form-message" id="register-message" role="status" aria-live="polite"></div><button class="button button-dark account-submit" type="submit">Crear cuenta</button></form>
     `;
+}
+
+function render_legacy_forms(initial_message = '') {
+    document.getElementById('account-view').innerHTML = legacy_account_markup(initial_message);
     document.getElementById('login-tab').addEventListener('click', () => switch_account_form('login'));
     document.getElementById('register-tab').addEventListener('click', () => switch_account_form('register'));
     document.getElementById('login-form').addEventListener('submit', login);
@@ -111,32 +105,45 @@ async function login(event) {
     }
 }
 
-async function register(event) {
-    event.preventDefault();
-    const form = event.currentTarget;
-    const message = document.getElementById('register-message');
+function registration_body(form, message) {
+    if (!form.reportValidity()) return null;
     const password = document.getElementById('register-password').value;
-    if (!form.reportValidity()) return;
     if (password !== document.getElementById('register-confirm').value) {
         set_message(message, 'Las contraseñas no coinciden.', 'error');
         document.getElementById('register-confirm').focus();
-        return;
+        return null;
     }
+    return { name: document.getElementById('register-name').value.trim(), email: document.getElementById('register-email').value.trim(), password };
+}
+
+async function submit_registration(form, message, body) {
     set_message(message, 'Creando tu cuenta…');
     set_form_busy(form, true);
     try {
         const data = await request_json('/api/auth/register', {
-            method: 'POST', headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name: document.getElementById('register-name').value.trim(), email: document.getElementById('register-email').value.trim(), password })
+            method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body)
         });
-        set_message(message, data.message || 'Cuenta creada correctamente.', 'success');
-        if (data.authenticated) return window.location.assign('/cuenta.html');
-        form.reset();
-        set_form_busy(form, false);
+        if (!data.authenticated) {
+            set_message(message, data.message || 'No pudimos iniciar tu sesión. Probá ingresar nuevamente.', 'error');
+            return;
+        }
+        set_message(message, data.message || 'Cuenta creada correctamente. Ya ingresaste a DREAMS.', 'success');
+        window.location.assign('/cuenta.html');
     } catch (error) {
         set_message(message, error.message, 'error');
+    } finally {
         set_form_busy(form, false);
     }
+}
+
+async function register(event) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    // También bloquear envíos programáticos mientras la petición está pendiente.
+    if (form.getAttribute('aria-busy') === 'true') return;
+    const message = document.getElementById('register-message');
+    const body = registration_body(form, message);
+    if (body) await submit_registration(form, message, body);
 }
 
 function render_logged_user(user) {

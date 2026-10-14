@@ -1,3 +1,13 @@
+# Registro sin confirmación — 2026-10-14
+
+- Origen oficial/PR44/bindings/proyecto/trigger customer/policies: VERIFICADOS por conectores.
+- ExcepciónPOST exacto registro/copy/validaciones/doble submit/mensajes específicos: IMPLEMENTADOS en PR48 dependientePR44, sin video/refactorPR47/merges.
+- CI código9a78cebf: SUCCESS137tests/check51/audit/buildsWorkersPages. Checks en executor: NO ejecutados, entornoFAILED.
+- Auth config/uso ajeno/rollback previo: BLOQUEADOS; sin herramientaManagement/config ni OAuthstarter, sin tokenacotado configurado.
+- Recuperación cuenta/tokenManagement en gestor seguro y executorfuncional: intervención necesaria. NuncaSecret porchat/SQLcomo bypass.
+- Preview/QAreal signup-session-logout-login/customer/Admin403/visual y publicaciónoficial: BLOQUEADOS hasta configuraciónverificada y pruebasremotas. Sitio vigente conservado.
+- docs/customer_registration.md y CURRENT_STATE/CHANGELOG: evidencia/continuidad registradas; sin porcentajes inventados.
+
 # Resultado oficial — 2026-10-13
 
 - Checkout directo aislado/PR44/CI/Workers/staging/Pages oficial: COMPLETADOS.
