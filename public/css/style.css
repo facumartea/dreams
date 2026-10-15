@@ -270,7 +270,7 @@ input,select,textarea{width:100%;min-height:48px;padding:.78rem 0;border:0;borde
 /* Navegación superior: la selección se comunica con fondo, nunca con una línea. */
 .site-header .main-nav a{display:inline-flex;align-items:center;text-decoration:none;border:0;box-shadow:none}
 .site-header .main-nav a::before,.site-header .main-nav a::after{content:none;display:none;border:0;box-shadow:none}
-.site-header .main-nav a:active{box-shadow:none;background:color-mix(in srgb,var(--nav-bg) 82%,black)}
+.site-header .main-nav a:active,.collection-themed .site-header .main-nav a:active{box-shadow:none;background:color-mix(in srgb,var(--nav-bg) 82%,black)}
 @media(max-width:920px){
   .site-header .main-nav{align-items:stretch;justify-content:flex-start;gap:.4rem;padding:6rem clamp(1.5rem,6vw,3rem) 2rem;background:#0b0b0b;max-height:100dvh;min-height:0;height:100dvh;overscroll-behavior:contain}
   .site-header .main-nav a,.collection-themed .site-header .main-nav a{width:100%;min-height:52px;flex:0 0 auto;padding:.75rem 1rem;font:500 1.65rem/1.2 var(--display);letter-spacing:0;text-align:left;color:var(--ivory)}
