@@ -1,0 +1,25 @@
+academic checkout/cookie/reload PASS DREAMS-A6C85E251FB7481B903B14DCFFAC18BD
+auth routes and protected writes PASS (no authenticated credentials)
+mobile PASS {
+  products: 46,
+  videoDuration: 20,
+  end: { time: 20, duration: 20, loop: false, muted: true, controls: false }
+}
+academic checkout/cookie/reload PASS DREAMS-F9B8357CEBB940B68C09EB971ABEB63C
+auth routes and protected writes PASS (no authenticated credentials)
+desktop PASS {
+  products: 46,
+  videoDuration: 20,
+  end: { time: 20, duration: 20, loop: false, muted: true, controls: false }
+}
+reduced motion PASS
+OFFICIAL static PASS
+previous preview preserved PASS
+REMOTE QA PASS https://dreams-preview.pages.dev
+
+OFFICIAL static PASS
+previous animated preview preserved PASS
+preview health PASS { status: 200, data: { status: 'ok', api: true, database: 'ok' } }
+Admin anonymous and foreign Origin rejected PASS
+redirect stays on Pages PASS
+FINAL CHECKS PASS
