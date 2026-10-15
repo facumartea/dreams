@@ -100,6 +100,10 @@ Una fase sólo llega a 100% con alcance implementado, pruebas verdes, documentac
 
 Mínimos futuros: integración de API con Supabase aislado, pruebas de autorización, regresión XSS, E2E de catálogo/cuenta/Admin y QA visual en los seis viewports definidos en `PLAN.md`.
 
+## Destino de publicación
+
+Desde el 2026-10-15, los cambios solicitados por el usuario se destinan a https://dreams-perfumes.pages.dev/ salvo indicación expresa «solo preview». Mantener pruebas, preview de validación y rollback antes de publicar. Esto no promueve experimentos anteriores: el video permanece exclusivamente en preview. No mezclar cambios ajenos, Auth pendiente ni modificar DNS. La preview animada tiene destino separado https://dreams-preview.pages.dev/; verificar su despliegue real antes de declararlo activo.
+
 ## Deploy
 
 Railway ejecuta `node server/server.js`. El healthcheck debe comprobar dependencias críticas; no aceptar un `200` si Supabase está inaccesible. Verificar variables, logs, dominio y smoke test después de cada despliegue importante. Nunca usar credenciales de producción en tests locales.

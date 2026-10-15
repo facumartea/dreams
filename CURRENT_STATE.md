@@ -1,3 +1,9 @@
+# Nueva preview Pages publicada y verificada — 2026-10-15
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Rama codex/animated-preview-pages desde PR43/4c50b01, independiente de PR49 (oficialcd71d12 publicada con navegación/filtros) y PR48/Auth. Nuevo proyecto dreams-preview creado en cuenta correcta sin plan pago. Proxy separado sin secretos ni assets sobre runtime animado d938a97. Configuración preview heredada6e5be7b8 desde7c3cd341 añade origen dreams-preview.pages.dev y conserva Worker anterior; PREVIEW_READ_ONLY=true, secretos heredados secret_text y Supabase nwsmbemwtexmrtpkgxrz comprobados. Sin envío de código/assets; GET con include=modules comprobó módulos y assets idénticos; variables ajenas a origen/base iguales. Pages00bbbec5/644afbb SUCCESS, https://dreams-preview.pages.dev/ verificada en móvil390 y escritorio1440. CI38766575709 SUCCESS130tests/check50/audit/builds. Video20s y final estable, movimiento reducido, catálogo46/búsqueda/marca/menú/carrito persistente/checkout académico/referencia/cookie segura PASS, health200/noindex/redirects/Origin y Admin anónimo rechazados. Login real/refresh/roles autenticados pendientes por ausencia de credenciales seguras en proceso. Worker anterior sigue activo; oficial sin video. Detalle/rollback en docs/animated_pages.md. Preferencia oficial por defecto registrada en AGENTS.md; video sigue sólo preview. PR50 abierta dependiente de PR43, sin merge; PUSH/DEPLOY PREVIEW: SÍ. Próximo: revisión visual en ambas URLs y QA autenticada cuando haya acceso seguro. Sin porcentaje global recalculado.
+
 # Checkout académico directo publicado y verificado — 2026-10-12 America/Buenos_Aires
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.

@@ -48,3 +48,6 @@ jobs:
 
       - name: Build Pages Service binding proxy without deployment
         run: pnpm run build:pages
+
+      - name: Build isolated animated Pages proxy without deployment
+        run: pnpm run build:pages:animated

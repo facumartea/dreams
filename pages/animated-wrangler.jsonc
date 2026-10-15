@@ -1,0 +1,6 @@
+{
+  "$schema": "../node_modules/wrangler/config-schema.json",
+  "name": "dreams-preview",
+  "pages_build_output_dir": "../dist/animated-pages",
+  "compatibility_date": "2026-10-15"
+}

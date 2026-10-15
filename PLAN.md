@@ -1,3 +1,11 @@
+# Preview animada Pages — 2026-10-15
+
+- Estado real/origen/PR43/dependencias, proyecto y configuración heredada: VERIFICADOS.
+- Proxy/build/configuración aislados y tests de seguridad: IMPLEMENTADOS.
+- Checks130/CI38766575709/builds, commit644afbb/push/PR50, Pages00bbbec5 y QA remota móvil/escritorio: COMPLETADOS.
+- Login/refresh/roles autenticados: PENDIENTES por credenciales de prueba no disponibles. Sin cambios Auth para resolverlo.
+- Oficial publicada por PR49, sin video ni Auth; no modificar desde esta rama.
+
 # Simplificación checkout académico — 2026-10-12
 
 - Base preview PR40/8d1b4cd/d3ef4e6, oficial actual y aislamiento: VERIFICADOS.

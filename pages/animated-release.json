@@ -1,0 +1,13 @@
+{
+  "project": "dreams-preview",
+  "production_branch": "codex/animated-preview-pages",
+  "source_commit": "d938a97c6c0006411f3404d68b5fb297a36e52c1",
+  "previous_backend_deployment": "7c3cd341-0ce1-4045-a6ec-9b5d5bdad9c9",
+  "backend_deployment": "6e5be7b8-7166-4605-b25a-372fb5ca509a",
+  "backend_url": "https://6e5be7b8-dreams-perfumes.dreams-perfumes.workers.dev",
+  "origin": "https://dreams-preview.pages.dev",
+  "previous_origin": "https://academic-review-dreams-perfumes.dreams-perfumes.workers.dev",
+  "hero": "video",
+  "checkout": "academic-only",
+  "writes": "protected"
+}
