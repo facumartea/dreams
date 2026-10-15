@@ -1,3 +1,11 @@
+# Navegación y filtros — 2026-10-15
+
+- Versión oficial, Git/PRs y separación de PR48: VERIFICADOS.
+- Navegación móvil/diseño/diálogo/estado/URL/foco/scroll/carreras y empaquetado Pages: IMPLEMENTADOS.
+- Regresiones focalizadas22: PASS. Suite/build/QA local completa: EN VERIFICACIÓN.
+- Commit/push/PR, preview, QA remota y promoción oficial: PENDIENTES; conservar rollback ac755bbe y backend actual.
+- No Auth, DNS, datos, roles, pagos ni video. Sin porcentajes inventados.
+
 # Resultado oficial — 2026-10-13
 
 - Checkout directo aislado/PR44/CI/Workers/staging/Pages oficial: COMPLETADOS.

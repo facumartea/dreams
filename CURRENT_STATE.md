@@ -1,3 +1,15 @@
+# Navegación y panel de filtros — 2026-10-15
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Rama codex/navigation-filter-dialog desde oficial PR44/b33a2ee. Oficial comprobada por API: Pages ac755bbe-f339-422a-91ef-006426abf0bf, fuente c83b148 y backend d5df723d/ec04a35. PR48/052b224 de registro preservada y EXCLUIDA; sin video, carrito por cuenta, otros Admin ni merges.
+
+Implementados menú móvil uniforme dorado/áreas iguales >=44px, navegación superior sin subrayados/pseudoelementos/borde inferior, foco visible y colores por categoría conservados sólo en escritorio. Catálogo y categorías usan un botón Filtros con conteo, diálogo nativo, búsqueda/marcas/radios/precio/orden, borrador separado/aplicar/descartar/limpiar, URL/historial y respuestas atrasadas. Contención de foco explícita, Escape, retorno, scroll interior y restauración del fondo. Pages añade sólo el módulo público de estado; API/roles/Auth/checkout/backend y assets de portada intactos. Helpers nuevos y proxy <=20líneas.
+
+22 pruebas focalizadas actuales PASS; suite completa/check/build en verificación. QA móvil local390 pasó controles/flujos principales; escritorio detectó lectura prematura de scroll al cerrar en el harness, en revisión antes de declarar QA exitosa. Entorno se desconectó y reconectó; archivos conservados. Preview/oficial aún NO publicadas. Capturas de referencia no adjuntas: no declarar comparación literal. WebKit requiere dependencias disponibles antes de validar; sin iPhone/Safari físico.
+
+Próximo: completar QA/checks, checkpoint/push/PR, preview Pages en alias ya autorizado official-direct-checkout.dreams-perfumes.pages.dev (origen permitido en backend), luego sólo si pasa promover oficial. CLI Wrangler4.147 no autenticado; conector Cloudflare sí. API Direct Upload oficial admite _worker.js/manifest y preserva backend/configuración; no hace falta copiar secretos ni alterar orígenes/Auth. Rollback ac755bbe retenido, endpoint/API a comprobar antes de promoción. Evidencia detallada docs/navigation_filters.md. Progreso global no recalculado.
+
 # Oficial checkout directo publicada — 2026-10-13
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.

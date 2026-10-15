@@ -1,5 +1,7 @@
-let catalog_products = [];
-let catalog_request_id = 0;
+const filter_model = window.DreamsCatalogFilters;
+let catalog_products = [], catalog_request_id = 0, brand_request_id = 0;
+let applied_filters = { ...filter_model.defaults }, pending_filters = { ...applied_filters };
+let catalog_brands = [], filter_scroll = null, brands_loading = true, brands_failed = false;
 
 const COLLECTION_VARIANTS = {
     mujer: {
@@ -28,163 +30,260 @@ const COLLECTION_VARIANTS = {
     }
 };
 
-function update_catalog_context(gender) {
+function update_catalog_theme(variant) {
     const page = document.querySelector('.catalog-page');
-    const eyebrow = document.getElementById('catalog-eyebrow');
-    const title = document.getElementById('catalog-title');
-    const description = document.getElementById('catalog-description');
+    const page_classes = Object.values(COLLECTION_VARIANTS).map(item => item.page_class);
+    page.classList.remove(...page_classes);
+    document.body.classList.remove('collection-themed', ...Object.values(COLLECTION_VARIANTS).map(item => item.body_class));
+    if (!variant) return;
+    page.classList.add(variant.page_class);
+    document.body.classList.add('collection-themed', variant.body_class);
+}
+
+function update_catalog_metadata(gender) {
+    const canonical = document.getElementById('canonical-url');
+    if (canonical) canonical.href = `${window.location.origin}/catalogo.html${gender ? `?gender=${encodeURIComponent(gender)}` : ''}`;
+    for (const [key, value] of Object.entries({ title: document.title, description: document.getElementById('catalog-description').textContent, url: canonical?.href })) {
+        const meta = document.querySelector(`meta[property="og:${key}"]`);
+        if (meta && value) meta.content = value;
+    }
+}
+
+function update_catalog_context(gender) {
     const variant = COLLECTION_VARIANTS[gender] || null;
     window.DreamsNavigation?.update(variant ? gender : '');
-    const page_classes = Object.values(COLLECTION_VARIANTS).map(item => item.page_class);
-    const body_classes = Object.values(COLLECTION_VARIANTS).map(item => item.body_class);
-
-    page.classList.remove(...page_classes);
-    document.body.classList.remove(...body_classes);
-    if (variant) {
-        page.classList.add(variant.page_class);
-        document.body.classList.add('collection-themed', variant.body_class);
-    } else {
-        document.body.classList.remove('collection-themed');
-    }
-
-    eyebrow.textContent = variant?.eyebrow || 'COLECCIÓN DREAMS';
-    title.textContent = variant?.title || 'Perfumes';
-    description.textContent = variant?.description || 'Diseñador, algunos nichos seleccionados y una sola idea: encontrar tu firma.';
+    update_catalog_theme(variant);
+    document.getElementById('catalog-eyebrow').textContent = variant?.eyebrow || 'COLECCIÓN DREAMS';
+    document.getElementById('catalog-title').textContent = variant?.title || 'Perfumes';
+    document.getElementById('catalog-description').textContent = variant?.description || 'Diseñador, algunos nichos seleccionados y una sola idea: encontrar tu firma.';
     document.title = variant?.document_title || 'Perfumes | DREAMS';
-    const canonical = document.getElementById('canonical-url');
-    if (canonical) canonical.href = `${window.location.origin}/catalogo.html${variant ? `?gender=${encodeURIComponent(gender)}` : ''}`;
-    const og_title = document.querySelector('meta[property="og:title"]');
-    const og_description = document.querySelector('meta[property="og:description"]');
-    const og_url = document.querySelector('meta[property="og:url"]');
-    if (og_title) og_title.content = document.title;
-    if (og_description) og_description.content = description.textContent;
-    if (og_url && canonical) og_url.content = canonical.href;
+    update_catalog_metadata(variant ? gender : '');
 }
 
-async function load_catalog() {
-    const container = document.getElementById('catalog-products');
-    container.innerHTML = Array.from({ length: 8 }, () => '<div class="skeleton-card" aria-hidden="true"></div>').join('');
-    try {
-        await load_brands();
-        await apply_catalog_filters();
-    } catch (error) {
-        document.getElementById('results-count').textContent = '0';
-        container.innerHTML = '<div class="empty-state"><h2>No pudimos cargar la colección.</h2><p>Revisá tu conexión e intentá nuevamente.</p><button id="retry-catalog" class="button button-dark" type="button">Reintentar</button></div>';
-        document.getElementById('retry-catalog').addEventListener('click', load_catalog);
-    }
+function update_filter_badge() {
+    const count = filter_model.count(applied_filters);
+    const badge = document.getElementById('active-filter-count');
+    badge.hidden = count === 0;
+    badge.textContent = String(count);
+    document.getElementById('open-filters').setAttribute('aria-label', count ? `Filtros, ${count} activos` : 'Filtros');
 }
 
-async function load_brands() {
-    const response = await fetch('/api/brands');
-    const brands = await response.json();
-    if (!response.ok || !Array.isArray(brands)) throw new Error('No se pudieron cargar las marcas.');
-    const select = document.getElementById('brand-filter');
-    // Brand options arrive asynchronously; retain the URL selection on reload.
-    const selected = select.value || new URLSearchParams(window.location.search).get('brand') || '';
-    select.length = 1;
-    brands.forEach(brand => {
-        const option = document.createElement('option');
-        option.value = brand;
-        option.textContent = brand;
-        select.appendChild(option);
-    });
-    select.value = selected;
+function restore_catalog_filters() {
+    applied_filters = filter_model.parse(window.location.search);
+    update_catalog_context(applied_filters.gender);
+    update_filter_badge();
 }
 
 async function apply_catalog_filters(sync_url = true) {
-    const search = document.getElementById('search').value.trim();
-    const brand = document.getElementById('brand-filter').value;
-    const gender = document.getElementById('gender-filter').value;
-    const category = document.getElementById('category-filter').value;
-    const sort = document.getElementById('sort-filter').value;
-    const max_price = document.getElementById('max-price').value;
+    const params = filter_model.params(applied_filters, window.location.search);
+    const target = `/catalogo.html${params.size ? '?' + params.toString() : ''}`;
+    if (sync_url && window.location.pathname + window.location.search !== target) history.pushState(null, '', target);
+    update_catalog_context(applied_filters.gender);
+    update_filter_badge();
+    await load_catalog();
+}
 
-    const params = new URLSearchParams();
-    if (search) params.set('search', search);
-    if (brand) params.set('brand', brand);
-    if (gender) params.set('gender', gender);
-    if (category) params.set('category', category);
-    if (sort && sort !== 'featured') params.set('sort', sort);
-    if (max_price) params.set('max_price', max_price);
+function show_catalog_loading() {
+    const container = document.getElementById('catalog-products');
+    container.setAttribute('aria-busy', 'true');
+    container.innerHTML = Array.from({ length: 8 }, () => '<div class="skeleton-card" aria-hidden="true"></div>').join('');
+    document.getElementById('results-count').textContent = '…';
+}
 
-    if (sync_url) {
-        const target = `/catalogo.html${params.size ? '?' + params.toString() : ''}`;
-        if (window.location.pathname + window.location.search !== target) history.pushState(null, '', target);
-    }
-    window.DreamsNavigation?.update(gender);
-
+async function load_catalog() {
     const request_id = ++catalog_request_id;
+    show_catalog_loading();
     try {
-        const response = await fetch(`/api/products?${params.toString()}`);
+        const response = await fetch(`/api/products?${filter_model.params(applied_filters).toString()}`);
         const data = await response.json();
         if (request_id !== catalog_request_id) return;
-        if (!response.ok || !Array.isArray(data)) throw new Error('No se pudo cargar el catálogo.');
+        if (!response.ok || !Array.isArray(data)) throw new Error('Catálogo no disponible');
         catalog_products = data;
         render_catalog();
     } catch {
-        if (request_id !== catalog_request_id) return;
-        document.getElementById('results-count').textContent = '0';
-        document.getElementById('catalog-products').innerHTML = '<div class="empty-state"><h2>No pudimos cargar la colección.</h2><p>Revisá tu conexión e intentá nuevamente.</p><button id="retry-catalog" class="button button-dark" type="button">Reintentar</button></div>';
-        document.getElementById('retry-catalog').addEventListener('click', apply_catalog_filters);
+        if (request_id === catalog_request_id) catalog_error();
+    } finally {
+        if (request_id === catalog_request_id) document.getElementById('catalog-products').setAttribute('aria-busy', 'false');
     }
+}
+
+function catalog_error() {
+    document.getElementById('results-count').textContent = '0';
+    document.getElementById('catalog-products').innerHTML = '<div class="empty-state" role="alert"><h2>No pudimos cargar la colección.</h2><p>Revisá tu conexión e intentá nuevamente.</p><button id="retry-catalog" class="button button-dark" type="button">Reintentar</button></div>';
+    document.getElementById('retry-catalog').addEventListener('click', load_catalog);
 }
 
 function render_catalog() {
     const container = document.getElementById('catalog-products');
-    const count = document.getElementById('results-count');
     container.innerHTML = '';
-    count.textContent = catalog_products.length;
-
-    if (catalog_products.length === 0) {
+    document.getElementById('results-count').textContent = catalog_products.length;
+    if (!catalog_products.length) {
         container.innerHTML = '<div class="empty-state"><h2>No encontramos ese perfume.</h2><p>Probá con otra marca, familia o nombre.</p></div>';
         return;
     }
-
     catalog_products.forEach(product => container.appendChild(create_product_card(product)));
 }
 
-function restore_catalog_filters() {
-    const params = new URLSearchParams(window.location.search);
-    for (const [key, id] of Object.entries({ search: 'search', brand: 'brand-filter', gender: 'gender-filter', category: 'category-filter', sort: 'sort-filter', max_price: 'max-price' })) {
-        document.getElementById(id).value = params.get(key) || (key === 'sort' ? 'featured' : '');
+function read_pending_filters() {
+    const form = document.getElementById('catalog-filter-form');
+    const state = Object.fromEntries(new FormData(form));
+    if (!Object.hasOwn(state, 'brand')) state.brand = pending_filters.brand;
+    return filter_model.normalize(state);
+}
+
+function write_pending_filters(value) {
+    pending_filters = { ...value };
+    const form = document.getElementById('catalog-filter-form');
+    for (const [key, input] of Object.entries({ search: 'search', max_price: 'max-price' })) document.getElementById(input).value = value[key];
+    for (const key of ['brand', 'gender', 'category', 'sort']) {
+        form.querySelectorAll(`input[name="${key}"]`).forEach(input => { input.checked = input.value === value[key]; });
     }
-    update_catalog_context(document.getElementById('gender-filter').value);
+    document.getElementById('brand-search').value = '';
+    search_brand_choices();
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+function lock_filter_scroll() {
+    const style = document.body.style;
+    filter_scroll = { y: window.scrollY, position: style.position, top: style.top, width: style.width, overflow: style.overflow };
+    Object.assign(style, { position: 'fixed', top: `-${filter_scroll.y}px`, width: '100%', overflow: 'hidden' });
+}
+
+function restore_filter_scroll() {
+    if (!filter_scroll) return;
+    const { y, ...style } = filter_scroll;
+    Object.assign(document.body.style, style);
+    const behavior = document.documentElement.style.scrollBehavior;
+    document.documentElement.style.scrollBehavior = 'auto';
+    window.scrollTo(0, y);
+    document.documentElement.style.scrollBehavior = behavior;
+    filter_scroll = null;
+}
+
+function open_catalog_filters() {
+    const dialog = document.getElementById('catalog-filters');
+    if (dialog.open) return;
+    render_brand_choices(applied_filters.brand);
+    write_pending_filters(applied_filters);
+    lock_filter_scroll();
+    dialog.showModal();
+    document.getElementById('search').focus({ preventScroll: true });
+}
+
+function close_catalog_filters() {
+    document.getElementById('catalog-filters').close();
+}
+
+function filter_dialog_closed() {
+    pending_filters = { ...applied_filters };
+    restore_filter_scroll();
+    document.getElementById('open-filters').focus({ preventScroll: true });
+}
+
+function contain_filter_focus(event) {
+    if (event.key !== 'Tab') return;
+    const controls = [...event.currentTarget.querySelectorAll('button, input')].filter(input => !input.disabled && input.getClientRects().length);
+    const first = controls[0], last = controls.at(-1);
+    const boundary = event.shiftKey ? first : last;
+    if (document.activeElement !== boundary) return;
+    event.preventDefault();
+    (event.shiftKey ? last : first).focus();
+}
+
+function commit_catalog_filters(event) {
+    event.preventDefault();
+    if (!document.getElementById('catalog-filter-form').reportValidity()) return;
+    applied_filters = read_pending_filters();
+    close_catalog_filters();
+    apply_catalog_filters();
+}
+
+function create_brand_choice(brand, selected) {
+    const label = document.createElement('label');
+    label.className = 'filter-choice';
+    const input = document.createElement('input');
+    input.type = 'radio'; input.name = 'brand'; input.value = brand; input.checked = brand === selected;
+    const span = document.createElement('span');
+    span.textContent = brand || 'Todas';
+    label.append(input, span);
+    return label;
+}
+
+function render_brand_choices(selected = '') {
+    const container = document.getElementById('brand-options');
+    const brands = [...new Set(['', ...catalog_brands, ...(selected ? [selected] : [])])];
+    container.replaceChildren(...brands.map(brand => create_brand_choice(brand, selected)));
+    container.setAttribute('aria-busy', String(brands_loading));
+    show_brand_status(container);
+    search_brand_choices();
+}
+
+function show_brand_status(container) {
+    if (!brands_loading && !brands_failed) return;
+    const message = document.createElement('p');
+    message.setAttribute('role', brands_failed ? 'alert' : 'status');
+    message.textContent = brands_failed ? 'No pudimos cargar las marcas.' : 'Cargando marcas…';
+    container.appendChild(message);
+    if (!brands_failed) return;
+    const retry = document.createElement('button');
+    retry.type = 'button'; retry.className = 'small-button'; retry.textContent = 'Reintentar marcas';
+    retry.addEventListener('click', load_brands);
+    container.appendChild(retry);
+}
+
+const fold_brand_name = value => value.normalize('NFD').replace(/\p{M}/gu, '').toLocaleLowerCase('es').trim();
+
+function search_brand_choices() {
+    const search = fold_brand_name(document.getElementById('brand-search').value);
+    let matches = 0;
+    document.querySelectorAll('#brand-options .filter-choice').forEach(label => {
+        const value = label.querySelector('input').value;
+        label.hidden = Boolean(value) && !fold_brand_name(value).includes(search);
+        if (value && !label.hidden) matches++;
+    });
+    document.getElementById('brand-search-status').textContent = search && !matches && !brands_loading && !brands_failed ? 'No se encontraron marcas.' : '';
+}
+
+function begin_brand_load() {
+    const selected = document.getElementById('catalog-filters').open ? read_pending_filters().brand : applied_filters.brand;
+    brands_loading = true; brands_failed = false;
+    render_brand_choices(selected);
+}
+
+async function load_brands() {
+    const request_id = ++brand_request_id;
+    begin_brand_load();
+    try {
+        const response = await fetch('/api/brands');
+        const data = await response.json();
+        if (request_id !== brand_request_id) return;
+        if (!response.ok || !Array.isArray(data)) throw new Error('Marcas no disponibles');
+        brands_loading = false;
+        catalog_brands = data.filter(value => typeof value === 'string' && value.trim());
+        const selected = document.getElementById('catalog-filters').open ? read_pending_filters().brand : applied_filters.brand;
+        render_brand_choices(selected);
+    } catch {
+        if (request_id !== brand_request_id) return;
+        brands_loading = false; brands_failed = true;
+        render_brand_choices(pending_filters.brand);
+    }
+}
+
+function init_catalog_filters() {
     restore_catalog_filters();
+    document.getElementById('open-filters').addEventListener('click', open_catalog_filters);
+    document.getElementById('close-filters').addEventListener('click', close_catalog_filters);
+    document.getElementById('catalog-filters').addEventListener('close', filter_dialog_closed);
+    document.getElementById('catalog-filters').addEventListener('keydown', contain_filter_focus);
+    document.getElementById('catalog-filter-form').addEventListener('submit', commit_catalog_filters);
+    document.getElementById('brand-search').addEventListener('input', search_brand_choices);
+    document.getElementById('reset-filters').addEventListener('click', () => write_pending_filters(filter_model.defaults));
     window.addEventListener('popstate', () => {
+        if (document.getElementById('catalog-filters').open) close_catalog_filters();
         restore_catalog_filters();
-        apply_catalog_filters(false);
+        load_catalog();
     });
-
-    document.getElementById('search').addEventListener('input', debounce(apply_catalog_filters, 300));
-    document.getElementById('brand-filter').addEventListener('change', apply_catalog_filters);
-    document.getElementById('gender-filter').addEventListener('change', event => {
-        update_catalog_context(event.target.value);
-        apply_catalog_filters();
-    });
-    document.getElementById('category-filter').addEventListener('change', apply_catalog_filters);
-    document.getElementById('sort-filter').addEventListener('change', apply_catalog_filters);
-    document.getElementById('max-price').addEventListener('input', debounce(apply_catalog_filters, 350));
-    document.getElementById('reset-filters').addEventListener('click', () => {
-        document.getElementById('search').value = '';
-        document.getElementById('brand-filter').value = '';
-        document.getElementById('gender-filter').value = '';
-        document.getElementById('category-filter').value = '';
-        document.getElementById('sort-filter').value = 'featured';
-        document.getElementById('max-price').value = '';
-        update_catalog_context('');
-        apply_catalog_filters();
-    });
-
+    load_brands();
     load_catalog();
-});
-
-function debounce(function_to_call, delay) {
-    let timeout;
-    return (...args) => {
-        clearTimeout(timeout);
-        timeout = setTimeout(() => function_to_call(...args), delay);
-    };
 }
+
+document.addEventListener('DOMContentLoaded', init_catalog_filters);

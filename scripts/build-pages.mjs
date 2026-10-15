@@ -18,6 +18,7 @@ for (const [pathname, relative, content_type] of [
     ['/js/carrito.js', 'public/js/carrito.js', 'application/javascript; charset=utf-8'],
     ['/js/presentation.js', 'public/js/presentation.js', 'application/javascript; charset=utf-8'],
     ['/js/app.js', 'public/js/app.js', 'application/javascript; charset=utf-8'],
+    ['/js/catalog-filter-state.js', 'public/js/catalog-filter-state.js', 'application/javascript; charset=utf-8'],
     ['/js/catalogo.js', 'public/js/catalogo.js', 'application/javascript; charset=utf-8'],
     ['/js/navigation.js', 'public/js/navigation.js', 'application/javascript; charset=utf-8'],
     ['/css/style.css', 'public/css/style.css', 'text/css; charset=utf-8']

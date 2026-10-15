@@ -1,3 +1,11 @@
+# 2026-10-15 — Navegación uniforme y panel de filtros
+
+- Aislado cambio visual sobre la oficial PR44; PR48/Auth y demás tareas excluidas.
+- Menú móvil con áreas uniformes/dorado; navegación superior sin subrayado, foco con contorno y paletas de escritorio preservadas.
+- Un botón Filtros/conteo abre diálogo modal con borrador separado, radios semánticos, búsqueda de marca, precio/orden, aplicar/limpiar/cancelar, foco/scroll/historial y protección contra respuestas atrasadas.
+- Módulo de estado público añadido a Pages; proxy descompuesto en funciones <=20líneas, conservando pruebas de autorización/cookies/errores/redirects/cache. Tests nuevos de estado, serialización y respuestas atrasadas.
+- Checks focalizados22 PASS; resto de validación y publicación pendientes. Sin datos/Auth/DNS/video modificados.
+
 # 2026-10-13 — Checkout directo oficial publicado y verificado
 
 - Pagesac755bbe/c83b148 y backendd5df723d/ec04a35 publicados sin video/carrito por cuenta, PR44 abierta y CI verde124tests/check47/builds.
