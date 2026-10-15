@@ -1,0 +1,15 @@
+mobile scroll 248 248
+mobile PASS
+desktop scroll 276 276
+desktop PASS
+QA PASS https://dreams-perfumes.pages.dev
+
+mujer pressed distinct PASS
+hombre pressed distinct PASS
+unisex pressed distinct PASS
+
+Preview fault injection:
+brand/product failures and retry PASS
+late real response PASS
+viewports/reduced motion PASS
+navigation pointer/keyboard states PASS
