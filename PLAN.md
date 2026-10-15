@@ -1,3 +1,10 @@
+# Preview animada Pages — 2026-10-15
+
+- Estado real/origen/PR43/dependencias, proyecto y configuración heredada: VERIFICADOS.
+- Proxy/build/configuración aislados y tests de seguridad: IMPLEMENTADOS.
+- Checks completos, CI, commit/push/PR, deployment y QA remota: EN CURSO.
+- Oficial publicada por PR49, sin video ni Auth; no modificar desde esta rama.
+
 # Simplificación checkout académico — 2026-10-12
 
 - Base preview PR40/8d1b4cd/d3ef4e6, oficial actual y aislamiento: VERIFICADOS.

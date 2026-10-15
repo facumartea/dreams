@@ -1,3 +1,9 @@
+# Nueva preview Pages en preparación — 2026-10-15
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Rama codex/animated-preview-pages desde PR43/4c50b01, independiente de PR49 (oficial805fcfc publicada con navegación/filtros) y PR48/Auth. Nuevo proyecto dreams-preview creado en cuenta correcta sin plan pago. Proxy separado sin secretos ni assets sobre runtime animado d938a97. Configuración preview heredada6e5be7b8 desde7c3cd341 añade origen dreams-preview.pages.dev y conserva Worker anterior; PREVIEW_READ_ONLY=true, secretos heredados secret_text y Supabase nwsmbemwtexmrtpkgxrz comprobados. Sin envío de código/assets; assets y variables ajenas a origen/base comparados iguales. El GET no devuelve los módulos: no se afirma un hash de código verificado por esa respuesta. Aún falta publicar y verificar Pages; no declararlo terminado. Detalle/rollback en docs/animated_pages.md. Preferencia oficial por defecto registrada en AGENTS.md; video sigue sólo preview. Próximo: checks, commit/push/PR dependiente, deployment y QA remota sin operaciones comerciales.
+
 # Checkout académico directo publicado y verificado — 2026-10-12 America/Buenos_Aires
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.

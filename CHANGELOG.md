@@ -1,3 +1,10 @@
+# 2026-10-15 — Nuevo origen de preview animada
+
+- Creado proyecto Pages dreams-preview separado, sin contratar plan pago.
+- Runtime animado existente heredado sin cambios de código/assets/secrets; se conserva origen anterior y añade origen Pages exacto.
+- Proxy/build/configuración separados sin copiar assets/secretos, con noindex y preservación de autorización, cookies, streams y redirects.
+- Tests específicos añadidos; publicación y validación remota pendientes en este checkpoint. Oficial y Auth intactos.
+
 # 2026-10-12 — Preview del checkout académico directo verificada
 
 - Publicado d938a97/preview7c3cd341, PR43 y CI38339523102 SUCCESS125tests/check47/audit/builds.
