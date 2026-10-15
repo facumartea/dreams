@@ -2,9 +2,9 @@
 
 - Aislamiento de oficial/PR48 y cambio visual: COMPLETADOS.
 - Tests133/check50/audit/builds/CI, QA local/preview y oficial390/1440: PASS.
-- Commit805fcfc/push/PR49 y Pages oficial e3399fc9: COMPLETADOS. Rollback ac755bbe retenido, no ejecutado.
+- Commitcd71d12/push/PR49 y Pages oficial 82060492: COMPLETADOS. Rollback ac755bbe retenido, no ejecutado.
 - Safari físico/login autenticado/CWV: NO VERIFICADOS; no se cambiaron Auth/Admin.
-- Preferencia oficial registrada. Nueva dirección preview animada en rama separada: EN CURSO; ver docs de esa rama. No video en oficial ni merges.
+- Preferencia oficial registrada. Nueva dirección preview animada en PR50: PUBLICADA y verificada; Auth autenticado pendiente, ver docs de esa rama. No video en oficial ni merges.
 
 # Resultado oficial — 2026-10-13
 

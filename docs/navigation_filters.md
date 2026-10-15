@@ -13,20 +13,22 @@ Branch `codex/navigation-filter-dialog`, dependiente de PR44/b33a2ee. Base ofici
 
 ## Validación y publicación comprobadas
 
-- Commit publicado: `805fcfcb9aa8700fd292252b41b0430e300043b5`; PR49, base PR44/b33a2ee. CI https://github.com/facumartea/dreams/actions/runs/38764353797 SUCCESS.
+- Commit publicado: `cd71d128b6e3d54cea801efd48d45c689f64d6d4`; PR49, base PR44/b33a2ee. CI https://github.com/facumartea/dreams/actions/runs/38767019396 SUCCESS.
 - 133/133 tests, check50 archivos, auditoría producción sin vulnerabilidades conocidas; builds Workers y Pages correctos. Helpers nuevos/modelo/proxy <=20 líneas comprobados con AST. No se declara cobertura global completa.
 - QA local Chromium390x844/1440x900 y remota preview PASS. Oficial PASS en esos dos tamaños: cuatro catálogos, menú/una sección activa, cada filtro y combinaciones, limpieza, orden, vacío, recarga/historial, borrador descartado, Escape/Tab/foco/scroll y carrito visitante persistente/pantalla de acceso. Sin errores JS en la ejecución completa.
 - Primera comprobación oficial agotó espera de carga; SHA256 de HTML/scripts servidos coincide y segunda ejecución completa pasó. Causa transitoria no confirmada; no se atribuye a un fallo corregido sin evidencia.
-- Preview con fallos de red controlados PASS: error/reintento de marcas/productos, selección asíncrona, resultados tardíos reales descartados. Geometría y movimiento reducido PASS en320x640/390x480/844x390/1440x900, estados hover/selección/foco verificados.
+- Preview con fallos de red controlados PASS: error/reintento de marcas/productos, selección asíncrona, resultados tardíos reales descartados. Geometría y movimiento reducido PASS en320x640/390x480/844x390/1440x900, estados hover/selección/foco verificados. Ajuste final de especificidad mantiene pulsación distinta en escritorio dentro de las tres categorías: QA en preview y oficial PASS. Suite focalizada22 y CI del commitcd71d12 verdes; QA oficial completa repetida tras ese cambio PASS.
 - Capturas oficiales en `docs/evidence/navigation/`. Sin Safari/iPhone físico: WebKit descargado pero no ejecutable por bibliotecas del host faltantes. Teclado móvil real, login/Admin autenticados y CWV no verificados; no necesarios para cambios de permisos porque no se modificaron.
 - Referencias visuales mencionadas no estaban adjuntas; comparación con especificación y sistema DREAMS existente.
 
 ## Deployment y recuperación
 
-Cloudflare conector autenticado; Wrangler4.147 sin sesión local. API oficial Direct Upload, manifest vacío y _worker.js módulo con assets públicos embebidos; sin secretos en Pages. SHA256 del artefacto176712bytes: `e09914698fab4787b78a5404d3c0928d28a81ef7de10f281274a29940f4293ae`.
+Cloudflare conector autenticado; Wrangler4.147 sin sesión local. API oficial Direct Upload, manifest vacío y _worker.js módulo con assets públicos embebidos; sin secretos en Pages. SHA256 del artefacto176763bytes: `191f045038b2d40eb437ec01fe5744421cc065b1e02e4f262c2d2eff820ca33a`.
 
-Preview final: b3f28d4a-393e-407b-bcee-da5b9cd83eca SUCCESS, https://b3f28d4a.dreams-perfumes.pages.dev y alias https://official-direct-checkout.dreams-perfumes.pages.dev (origen previamente permitido). Oficial: e3399fc9-bc1d-45d8-949f-9e35a47f1baf SUCCESS, https://dreams-perfumes.pages.dev/. Mismo artefacto805fcfc, backend inmutable d5df723d/ec04a35. Etiquetas branch de Pages son del Direct Upload; SHA identifica la fuente real.
+Preview final: 9703fc6d-ea4e-4230-9704-93abb8d5d6eb SUCCESS, https://9703fc6d.dreams-perfumes.pages.dev y alias https://official-direct-checkout.dreams-perfumes.pages.dev (origen previamente permitido). Oficial: 82060492-8f22-4595-81a0-8cb7dc78d526 SUCCESS, https://dreams-perfumes.pages.dev/. Mismo artefactocd71d12, backend inmutable d5df723d/ec04a35. Etiquetas branch de Pages son del Direct Upload; SHA identifica la fuente real.
 
 Rollback comprobado antes de publicación: deployment anterior ac755bbe-f339-422a-91ef-006426abf0bf SUCCESS, https://ac755bbe.dreams-perfumes.pages.dev/ y health200/databaseOK. Ejecutar con acceso Cloudflare autorizado POST `/accounts/9f3d7af60fcb0c2b4fff8570843588f9/pages/projects/dreams-perfumes/deployments/ac755bbe-f339-422a-91ef-006426abf0bf/rollback`, después verificar canonical_deployment, portada y catálogo. No requiere restaurar Railway ni secretos. Procedimiento disponible, no ejecutado; no se borraron deployments.
 
 Auth/PR48, datos, DNS, roles, checkout y assets del hero intactos respecto a c83b148. Video permanece exclusivamente en la preview animada, cuya nueva dirección se configura en rama separada. Regla duradera de publicación oficial en AGENTS.md.
+
+Preview animada separada: https://dreams-preview.pages.dev/ (PR50, Pages00bbbec5, proxy644afbb, runtime d938a97/config6e5be7b8). URL anterior conservada. No se incorporó su video ni código en esta PR49. Ver docs/animated_pages.md en rama codex/animated-preview-pages para límites de Auth y recuperación.
