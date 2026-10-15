@@ -382,7 +382,11 @@ function setup_menu() {
 function setup_header_scroll() {
     const header = document.querySelector('.site-header');
     if (!header) return;
-    const update = () => header.classList.toggle('is-scrolled', window.scrollY > 18);
+    const update = () => {
+        // El scroll fijo del diálogo no debe cambiar la altura del menú de fondo.
+        if (document.querySelector('.filter-dialog[open]')) return;
+        header.classList.toggle('is-scrolled', window.scrollY > 18);
+    };
     update();
     window.addEventListener('scroll', update, { passive: true });
 }

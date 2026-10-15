@@ -156,3 +156,19 @@ test('New navigation asset inherits same-origin script security headers without 
     assert.equal(response.headers.get('X-Content-Type-Options'), 'nosniff');
     assert.equal(response.headers.get('Content-Type'), 'application/javascript');
 });
+
+test('filter state script inherits security headers and keeps API and mutations upstream', async () => {
+    const asset = { body: 'filter state', content_type: 'application/javascript', etag: '"filters"' };
+    const overlay = create_proxy({ '/js/catalog-filter-state.js': asset });
+    const calls = [];
+    const env = { DREAMS: { fetch: async request => {
+        calls.push(new URL(request.url).pathname);
+        return new Response('original', { headers: { 'X-Content-Type-Options': 'nosniff' } });
+    } } };
+    const response = await overlay.fetch(new Request('https://dreams.example/js/catalog-filter-state.js'), env);
+    assert.equal(await response.text(), 'filter state');
+    assert.equal(response.headers.get('X-Content-Type-Options'), 'nosniff');
+    const post = await overlay.fetch(new Request('https://dreams.example/js/catalog-filter-state.js', { method: 'POST' }), env);
+    assert.equal(await post.text(), 'original');
+    assert.deepEqual(calls, ['/js/app.js', '/js/catalog-filter-state.js']);
+});
