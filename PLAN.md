@@ -2,7 +2,8 @@
 
 - Estado real/origen/PR43/dependencias, proyecto y configuración heredada: VERIFICADOS.
 - Proxy/build/configuración aislados y tests de seguridad: IMPLEMENTADOS.
-- Checks completos, CI, commit/push/PR, deployment y QA remota: EN CURSO.
+- Checks130/CI38766575709/builds, commit644afbb/push/PR50, Pages00bbbec5 y QA remota móvil/escritorio: COMPLETADOS.
+- Login/refresh/roles autenticados: PENDIENTES por credenciales de prueba no disponibles. Sin cambios Auth para resolverlo.
 - Oficial publicada por PR49, sin video ni Auth; no modificar desde esta rama.
 
 # Simplificación checkout académico — 2026-10-12

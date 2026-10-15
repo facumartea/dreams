@@ -3,7 +3,7 @@
 - Creado proyecto Pages dreams-preview separado, sin contratar plan pago.
 - Runtime animado existente heredado sin cambios de código/assets/secrets; se conserva origen anterior y añade origen Pages exacto.
 - Proxy/build/configuración separados sin copiar assets/secretos, con noindex y preservación de autorización, cookies, streams y redirects.
-- Tests específicos añadidos; publicación y validación remota pendientes en este checkpoint. Oficial y Auth intactos.
+- Tests130/check50/audit/builds/CI PASS. Pages00bbbec5/644afbb publicado y validado en móvil/escritorio: video completo, catálogo/carrito/checkout académico, cookies/noindex/redirects/permisos anónimos. Login autenticado pendiente; oficial sin video y Auth intactos.
 
 # 2026-10-12 — Preview del checkout académico directo verificada
 
