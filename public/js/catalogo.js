@@ -159,11 +159,28 @@ function restore_filter_scroll() {
     filter_scroll = null;
 }
 
+function size_filter_viewport() {
+    const viewport = window.visualViewport;
+    const available = viewport?.height || window.innerHeight;
+    const mobile = window.matchMedia('(max-width:640px)').matches;
+    const height = Math.max(0, mobile ? available - 16 : Math.min(available * .9, 900));
+    const style = document.getElementById('catalog-filters').style;
+    style.setProperty('--filter-height', `${height}px`);
+    style.setProperty('--filter-top', `${(viewport?.offsetTop || 0) + Math.max(8, (available - height) / 2)}px`);
+}
+
+function setup_filter_viewport() {
+    window.visualViewport?.addEventListener('resize', size_filter_viewport);
+    window.visualViewport?.addEventListener('scroll', size_filter_viewport);
+    window.addEventListener('resize', size_filter_viewport);
+}
+
 function open_catalog_filters() {
     const dialog = document.getElementById('catalog-filters');
     if (dialog.open) return;
     render_brand_choices(applied_filters.brand);
     write_pending_filters(applied_filters);
+    size_filter_viewport();
     lock_filter_scroll();
     dialog.showModal();
     document.getElementById('search').focus({ preventScroll: true });
@@ -180,6 +197,12 @@ function filter_dialog_closed() {
 }
 
 function contain_filter_focus(event) {
+    // Escape debe cerrar incluso si el buscador nativo intentaría limpiar su texto.
+    if (event.key === 'Escape') {
+        event.preventDefault();
+        close_catalog_filters();
+        return;
+    }
     if (event.key !== 'Tab') return;
     const controls = [...event.currentTarget.querySelectorAll('button, input')].filter(input => !input.disabled && input.getClientRects().length);
     const first = controls[0], last = controls.at(-1);
@@ -270,6 +293,7 @@ async function load_brands() {
 
 function init_catalog_filters() {
     restore_catalog_filters();
+    setup_filter_viewport();
     document.getElementById('open-filters').addEventListener('click', open_catalog_filters);
     document.getElementById('close-filters').addEventListener('click', close_catalog_filters);
     document.getElementById('catalog-filters').addEventListener('close', filter_dialog_closed);

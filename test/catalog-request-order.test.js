@@ -44,3 +44,23 @@ test('un fallo atrasado tampoco borra resultados recientes ni su estado ocupado'
     assert.deepEqual(rendered, [2]);
     assert.deepEqual(busy, ['false']);
 });
+
+test('Escape cierra filtros incluso desde un buscador con texto, sin consumir sólo la limpieza nativa', () => {
+    const { context } = catalog_context([]);
+    let closed = 0, prevented = 0;
+    context.close_catalog_filters = () => { closed++; };
+    context.contain_filter_focus({ key: 'Escape', target: { type: 'search', value: 'Sauvage' }, preventDefault: () => { prevented++; } });
+    assert.equal(closed, 1);
+    assert.equal(prevented, 1);
+});
+
+test('el panel cabe en el viewport visible cuando se reduce el espacio del teclado', () => {
+    const { context } = catalog_context([]);
+    const styles = {};
+    context.window.visualViewport = { height: 400, offsetTop: 100 };
+    context.window.matchMedia = () => ({ matches: true });
+    context.document.getElementById = () => ({ style: { setProperty: (key, value) => { styles[key] = parseFloat(value); } } });
+    context.size_filter_viewport();
+    assert.ok(styles['--filter-top'] >= 100);
+    assert.ok(styles['--filter-top'] + styles['--filter-height'] <= 500);
+});

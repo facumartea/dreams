@@ -320,3 +320,6 @@ input,select,textarea{width:100%;min-height:48px;padding:.78rem 0;border:0;borde
 }
 @media(prefers-reduced-motion:reduce){.filter-dialog,.filter-dialog *{scroll-behavior:auto;transition:none}}
 @media(max-width:920px){.site-header .main-nav{visibility:hidden}.site-header .main-nav.open{visibility:visible}}
+/* Ajustar al viewport visible cuando el teclado móvil reduce el espacio disponible. */
+.filter-dialog{top:var(--filter-top,12px);bottom:auto;margin:0 auto;height:var(--filter-height,min(90dvh,900px));max-height:var(--filter-height,calc(100dvh - 24px))}
+.filter-choice input[type=radio]{min-height:18px;padding:0;border:0;background:none}

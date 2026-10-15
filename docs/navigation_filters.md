@@ -15,7 +15,7 @@ Branch `codex/navigation-filter-dialog`, dependiente de PR44/b33a2ee. Base ofici
 
 22 tests focalizados PASS: modelo/URL/limpieza/serialización/carreras y proxy Pages incluyendo nuevo script, autorización, errores, cookies y mutaciones. Suite completa y builds finales en curso. Los helpers de catálogo/modelo/proxy se revisaron con AST de Node24: máximos18/11/16 líneas respectivamente.
 
-QA local usa Chromium390x844/1440x900 con API pública real a través de un proxy de QA que sólo permite GET y quote del carrito; no se crean cuentas/pedidos ni se modifican datos. Móvil pasó flujos principales. Escritorio pendiente de completar medición correcta del cierre/scroll antes de declarar éxito. No extrapolar resultados locales a remoto.
+QA local usa Chromium390x844/1440x900 con API pública real a través de un proxy de QA que sólo permite GET y quote del carrito; no se crean cuentas/pedidos ni se modifican datos. Móvil y escritorio pasaron flujos principales. QA local390/1440 pasó filtros, URL/historial, carrito/acceso y cierre; scroll300/288 restaurado. Escape explícito evita que search consuma el cierre y el header no cambia altura durante el bloqueo. Viewport visual ajusta el panel al teclado. No extrapolar resultados locales a remoto.
 
 Referencias visuales mencionadas no adjuntas: se implementa especificación y sistema DREAMS existente. No Safari/iPhone físico. Descarga WebKit detectó dependencias del host faltantes; sólo se declarará probado si puede ejecutarse.
 
