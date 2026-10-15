@@ -30,5 +30,3 @@ export function create_animated_proxy(backend, fetch_backend = fetch) {
         }
     } };
 }
-
-
