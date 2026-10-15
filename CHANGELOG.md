@@ -4,7 +4,7 @@
 - Menú móvil con áreas uniformes/dorado; navegación superior sin subrayado, foco con contorno y paletas de escritorio preservadas.
 - Un botón Filtros/conteo abre diálogo modal con borrador separado, radios semánticos, búsqueda de marca, precio/orden, aplicar/limpiar/cancelar, foco/scroll/historial y protección contra respuestas atrasadas.
 - Módulo de estado público añadido a Pages; proxy descompuesto en funciones <=20líneas, conservando pruebas de autorización/cookies/errores/redirects/cache. Tests nuevos de estado, serialización y respuestas atrasadas.
-- Checks focalizados22 PASS; resto de validación y publicación pendientes. Sin datos/Auth/DNS/video modificados.
+- 133 tests, check50, builds Workers/Pages y CI PASS. Preview y oficial publicadas; QA remota móvil/escritorio PASS. Rollback anterior conservado. Preferencia de publicación oficial registrada; configuración de nueva preview en rama independiente. Sin datos/Auth/DNS/video modificados en la oficial.
 
 # 2026-10-13 — Checkout directo oficial publicado y verificado
 

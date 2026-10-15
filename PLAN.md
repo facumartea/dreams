@@ -1,10 +1,10 @@
 # Navegación y filtros — 2026-10-15
 
-- Versión oficial, Git/PRs y separación de PR48: VERIFICADOS.
-- Navegación móvil/diseño/diálogo/estado/URL/foco/scroll/carreras y empaquetado Pages: IMPLEMENTADOS.
-- Regresiones focalizadas22: PASS. Suite/build/QA local completa: EN VERIFICACIÓN.
-- Commit/push/PR, preview, QA remota y promoción oficial: PENDIENTES; conservar rollback ac755bbe y backend actual.
-- No Auth, DNS, datos, roles, pagos ni video. Sin porcentajes inventados.
+- Aislamiento de oficial/PR48 y cambio visual: COMPLETADOS.
+- Tests133/check50/audit/builds/CI, QA local/preview y oficial390/1440: PASS.
+- Commit805fcfc/push/PR49 y Pages oficial e3399fc9: COMPLETADOS. Rollback ac755bbe retenido, no ejecutado.
+- Safari físico/login autenticado/CWV: NO VERIFICADOS; no se cambiaron Auth/Admin.
+- Preferencia oficial registrada. Nueva dirección preview animada en rama separada: EN CURSO; ver docs de esa rama. No video en oficial ni merges.
 
 # Resultado oficial — 2026-10-13
 
