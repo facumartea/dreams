@@ -323,3 +323,6 @@ input,select,textarea{width:100%;min-height:48px;padding:.78rem 0;border:0;borde
 /* Ajustar al viewport visible cuando el teclado móvil reduce el espacio disponible. */
 .filter-dialog{top:var(--filter-top,12px);bottom:auto;margin:0 auto;height:var(--filter-height,min(90dvh,900px));max-height:var(--filter-height,calc(100dvh - 24px))}
 .filter-choice input[type=radio]{min-height:18px;padding:0;border:0;background:none}
+@media(hover:hover) and (pointer:fine){
+  .site-header .main-nav a:hover:not([aria-current]):not(:active):not(:focus-visible),.collection-themed .site-header .main-nav a:hover:not([aria-current]):not(:active):not(:focus-visible){background:color-mix(in srgb,var(--nav-bg) 22%,#0b0b0b);color:var(--ivory)}
+}
