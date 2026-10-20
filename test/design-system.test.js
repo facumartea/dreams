@@ -16,17 +16,11 @@ test('todas las páginas públicas usan el isotipo como favicon', () => {
     assert.equal(asset.subarray(1, 4).toString(), 'PNG');
 });
 
-test('SEO técnico publica canonical, metadatos, sitemap, robots y 404 real', () => {
-    const home = fs.readFileSync(path.join(root, 'public/index.html'), 'utf8');
-    const catalog = fs.readFileSync(path.join(root, 'public/catalogo.html'), 'utf8');
-    const product_page = fs.readFileSync(path.join(root, 'public/producto.html'), 'utf8');
-    const product_script = fs.readFileSync(path.join(root, 'public/js/producto.js'), 'utf8');
-    const catalog_script = fs.readFileSync(path.join(root, 'public/js/catalogo.js'), 'utf8');
-    const robots = fs.readFileSync(path.join(root, 'public/robots.txt'), 'utf8');
-    const sitemap = fs.readFileSync(path.join(root, 'public/sitemap.xml'), 'utf8');
-    const not_found = fs.readFileSync(path.join(root, 'public/404.html'), 'utf8');
-
-    assert.match(home, /rel="canonical" href="https:\/\/dreams-perfumes\.up\.railway\.app\/"/);
+test('SEO conserva metadatos y sitemap compartido; la portada preview tiene canonical propio y noindex', () => {
+    const files = ['public/index.html', 'public/catalogo.html', 'public/producto.html', 'public/js/producto.js', 'public/js/catalogo.js', 'public/robots.txt', 'public/sitemap.xml', 'public/404.html'];
+    const [home, catalog, product_page, product_script, catalog_script, robots, sitemap, not_found] = files.map(file => fs.readFileSync(path.join(root, file), 'utf8'));
+    assert.match(home, /rel="canonical" href="https:\/\/dreams-preview\.pages\.dev\/"/);
+    assert.match(home, /name="robots" content="noindex,nofollow"/);
     assert.match(home, /property="og:title"/);
     assert.match(catalog, /id="canonical-url" rel="canonical"/);
     assert.match(product_page, /property="og:type" content="product"/);
@@ -60,7 +54,7 @@ test('la portada incluye un formulario accesible de opiniones persistentes', () 
 test('el hero preview reserva el encuadre del video y conserva un respaldo real sin superponer lettering al producto', () => {
     const html = fs.readFileSync(path.join(root, 'public/index.html'), 'utf8');
     assert.match(html, /<img src="\/assets\/dreams-hero-video-poster\.webp" width="1280" height="720"/);
-    assert.match(html, /hero-video-layout/);
+    assert.match(html, /class="cinema-hero" aria-labelledby="cinema-title"/);
     assert.doesNotMatch(html, /class="hero-bottle-mark"/);
 });
 

@@ -1,0 +1,19 @@
+mobile movie/scroll/return PASS { t: 20, duration: 20, muted: true, loop: false, controls: false }
+catalogue/filter/cart/access PASS 46
+desktop movie/scroll/return PASS { t: 20, duration: 20, muted: true, loop: false, controls: false }
+catalogue/filter/cart/access PASS 46
+reduced fallback PASS
+blocked fallback PASS
+error fallback PASS
+slow fallback PASS
+geometry PASS 320 640
+geometry PASS 768 1024
+geometry PASS 844 390
+geometry PASS 1920 1080
+CINEMA QA PASS https://dreams-preview.pages.dev REMOTE
+
+Runtime/read-only/academic checkout/Admin PASS {"/api/config":{"status":200,"cache":"no-store","robots":"noindex, nofollow, noarchive","body":{"whatsapp_number":"542944160065","contact_email":"facundo.martearena@dantebariloche.edu.ar","contacts":{"emails":["joaquin.ruas.grane@dantebariloche.edu.ar","facundo.martearena@dantebariloche.edu.ar"],"phone":"+54 294 4160065","phones":["+54 294 4160065","+54 294 4502390"],"whatsapp_number":"542944160065"},"app_name":"DREAMS","demo_auto_confirm_email":false,"preview_read_only":true,"hero_video":true}},"/api/health":{"status":200,"cache":"no-store","robots":"noindex, nofollow, noarchive","body":{"status":"ok","api":true,"database":"ok"}},"/api/checkout/config":{"status":200,"cache":"no-store","robots":"noindex, nofollow, noarchive","body":{"enabled":true,"provider":"presentation_demo","mode":"demo","show_test_data":true}},"/admin":{"status":403,"cache":"no-store","robots":"noindex, nofollow, noarchive","body":null},"POST /api/products":403,"POST /api/orders":403,"POST /api/auth/register":403}
+foreign Origin rejected PASS
+OFFICIAL static, no cinematic overlay PASS
+
+Academic-only checkout, stable reference, same-origin secure cookie and no card/commercial requests PASS DREAMS-B05476E6EC1C4B978F5A64648E59C29E

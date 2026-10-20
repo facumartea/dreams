@@ -1,3 +1,18 @@
+# Lectura editorial de preview — 2026-10-20
+
+- Iluminación secuencial por palabras vinculada al scroll, reversible y con texto único seleccionable.
+- Fotografía completa con movimiento uniforme y bordes integrados, sin deformación ni falso3D.
+- Reducción de movimiento/texto estático, fallback sinJS y actualización por cambios de geometría.
+- Sólo capa visual propia de preview; sin backend, datos, Auth u oficial.
+- Publicado c8439ac/ba6891f4, CI39447183188 y QA remota palabras/móvil/escritorio/reduced/noJS/funciones/fallbacks/geometría PASS; capturas/grabaciones y límites documentados.
+
+# Portada y scroll cinematográficos de preview — 2026-10-20
+
+- Nueva capa visual del inicio con video existente20s, pausa accesible/fallback/movimiento reducido.
+- Secuencia breve de escala/ambiente al scroll, simplificada en móvil, salida a categorías existentes.
+- Proxy Pages visual limitado a inicio y scripts propios; backend y medios conservados.
+-142tests/check54/builds/audit PASS. Final9263d168/472c289 publicado; QA remota completa PASS. Caché privada y ambas cookies conservadas, checkout académico sin tarjeta verificado, grabaciones/capturas guardadas. oficial/Auth/Supabase intactos.
+
 # 2026-10-15 — Nuevo origen de preview animada
 
 - Creado proyecto Pages dreams-preview separado, sin contratar plan pago.

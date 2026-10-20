@@ -1,3 +1,21 @@
+# Ampliación visual de preview — 2026-10-20
+
+- Estado real y continuidad PR51: VERIFICADOS.
+- Lectura por palabras, escena completa integrada y reduced/noJS: IMPLEMENTADOS.
+- QA nueva/revalidación final/CI39447183188/publicación ba6891f4-c8439ac y evidencia remota: COMPLETADOS. Revisión del usuario pendiente.
+- Adjunto mayor32MiB no inspeccionable; versión existente permite completar sin él.
+
+# Preview cinematográfica — 2026-10-20
+
+- Referencias/versiones/aislamiento: VERIFICADOS.
+- Hero/video/scroll/salida catálogo/proxy y pruebas: IMPLEMENTADOS.
+- Checks142/check54/builds/audit: PASS.
+- QA local completa móvil/escritorio, fallbacks y6viewports: PASS.
+- PR51/CI39366033247/deployment final9263d168/472c289 y QA remota completa: PASS.
+- Políticas privadas/cookies, checkout académico seguro, capturas/grabaciones23s y evidencia final: COMPLETADOS.
+- Revisión visual del usuario: PENDIENTE. Login/Admin autenticados/Safari físico no comprobados, sin modificar Auth.
+- Oficial/Auth/datos sin modificaciones; no video en oficial.
+
 # Preview animada Pages — 2026-10-15
 
 - Estado real/origen/PR43/dependencias, proyecto y configuración heredada: VERIFICADOS.
