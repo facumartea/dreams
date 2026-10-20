@@ -1,3 +1,13 @@
+# SEO oficial publicado y validado — 2026-10-20
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+OFICIAL https://dreams-perfumes.pages.dev/, Pages56893d4c-5a55-44ee-90b5-de0464434e89 SUCCESS, commit publicadoe66a4ec643d0744479fdbc10c992d3762fbd5e23 (código1d86468). CI39455015888 y39454098983 SUCCESS144tests/check52/builds Workers-Pages/audit. PR52/rama codex/official-seo-metadata desde PR49/6f9ed42, sin merges; checkpoint posterior sólo documental. Runtime d5df723d/ec04a35 y flags/secretos intactos. Oficial recibe SEO, nunca video/animaciones.
+
+Metadatos iniciales oficiales por página/producto real, imagen social1200×630, noscript, sitemap dinámico52URLs,404/noindex/503 y escape/límites públicos. Públicas oficiales indexables; privadas, filtros de búsqueda, errores y previews noindex. SinJS ficha199 y46 enlaces; QA local/aislada1eb4c3d8/oficial390-1440 PASS: menús/filtros/ficha/acceso legacy/carrito visitante/quote/persistencia/contador/envío gratis, sin erroresJS/overflow. Nu oficial Inicio/ficha sin mensajes, PNG200fuenteidéntica, imagenCDN206JPEG. SharingDebugger pide login: tarjeta real en apps/caché NO verificada. Safari físico, Admin/login/registro autenticados y CWV campo NO probados.
+
+Preview cinematográfica https://dreams-preview.pages.dev/ sigueba6891f4/c8439ac, lectura JS idéntica por hash; MP4oficial404/preview200. Supabase/AuthPR48/roles/credenciales/datos/DNS/enrutamiento/pagos comerciales sin cambios; no envíos de formularios a clientes ni pedidos. Rollback82060492 retenidoSUCCESS/root-health200, procedimiento documentado/no ejecutado. Guía/estilo/evidencia/pendientes docs/seo_y_metadatos.md y docs/evidence/seo. Instagram/Facebook no existen confirmado por usuario; sin enlaces vacíos y WhatsApp conservado.19/46 descripciones muy cortas: deuda de contenido, no inventada ni modificada. PUSH/DEPLOY OFICIAL:SÍ; alcance terminado, porcentaje global no recalculado. Próxima acción: revisión del usuario y completar descripciones sólo con información comprobada en una tarea separada; AuthPR48 sigue independiente.
+
 # SEO validado en despliegue aislado — publicación oficial pendiente — 2026-10-20
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
