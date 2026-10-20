@@ -26,13 +26,13 @@ test('SEO técnico publica canonical, metadatos, sitemap, robots y 404 real', ()
     const sitemap = fs.readFileSync(path.join(root, 'public/sitemap.xml'), 'utf8');
     const not_found = fs.readFileSync(path.join(root, 'public/404.html'), 'utf8');
 
-    assert.match(home, /rel="canonical" href="https:\/\/dreams-perfumes\.up\.railway\.app\/"/);
+    assert.match(home, /(?:id="canonical-url" )?rel="canonical" href="https:\/\/dreams-perfumes\.pages\.dev\/"/);
     assert.match(home, /property="og:title"/);
     assert.match(catalog, /id="canonical-url" rel="canonical"/);
-    assert.match(product_page, /property="og:type" content="product"/);
+    assert.match(product_page, /property="og:type" content="website"/);
     assert.match(catalog_script, /canonical\.href/);
     assert.match(product_script, /function update_product_metadata/);
-    assert.match(robots, /Sitemap: https:\/\/dreams-perfumes\.up\.railway\.app\/sitemap\.xml/);
+    assert.match(robots, /Sitemap: https:\/\/dreams-perfumes\.pages\.dev\/sitemap\.xml/);
     assert.match(sitemap, /<urlset xmlns="http:\/\/www\.sitemaps\.org\/schemas\/sitemap\/0\.9">/);
     assert.match(not_found, /<meta name="robots" content="noindex,follow">/);
 });

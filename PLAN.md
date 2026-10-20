@@ -1,3 +1,10 @@
+# SEO/redacción/metadatos oficial — 2026-10-20
+
+- Auditoría oficial y aislamiento de PR49 frente a video/Auth: COMPLETADOS.
+- Metadatos HTML/OG, lecturas públicas acotadas, noscript, sitemap, imagen social y guía: IMPLEMENTADOS.
+- Checks completos, QA aislada, PR/CI y publicación oficial con rollback: EN CURSO.
+- Perfiles sociales reales/aclaración PWA si el profesor la exige: PENDIENTES, no bloquean SEO independiente.
+
 # Navegación y filtros — 2026-10-15
 
 - Aislamiento de oficial/PR48 y cambio visual: COMPLETADOS.

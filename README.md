@@ -1,4 +1,4 @@
-> Estado vigente: consultar [CURRENT_STATE.md](CURRENT_STATE.md) y [migración Cloudflare](docs/cloudflare_migration.md). Node 24.x, pnpm 11.19.0; puerto Node por defecto 8080. No se ejecuta seed al arrancar. Railway está offline; aún no hay deploy Cloudflare remoto verificado. Las instrucciones históricas siguientes pueden diferir del estado actual.
+> Estado vigente: consultar [CURRENT_STATE.md](CURRENT_STATE.md) y [migración Cloudflare](docs/cloudflare_migration.md). Node 24.x, pnpm 11.19.0; puerto Node por defecto 8080. No se ejecuta seed al arrancar. La oficial se publica en https://dreams-perfumes.pages.dev/; la preview animada independiente en https://dreams-preview.pages.dev/. Verificar los commits vigentes en CURRENT_STATE.md. Las instrucciones históricas siguientes pueden diferir del estado actual.
 
 # DREAMS — Perfumería multimarca
 
@@ -43,3 +43,7 @@ El endpoint `GET /api/health` devuelve 200 sólo cuando la API puede consultar S
 `railway.toml` configura Railpack, `node server/server.js` y el healthcheck real. Railway no necesita un Volume: los datos persisten en Supabase. Antes de desplegar se deben aplicar y verificar las migraciones, RLS y advisors en un entorno controlado, configurar secretos en Railway y ejecutar un smoke test post-deploy.
 
 El estado, los riesgos abiertos y el roadmap verificable están en `CURRENT_STATE.md`, `AUDIT.md` y `PLAN.md`.
+
+## SEO y redacción
+
+Guía académica, metadatos, validaciones y rollback: [SEO y metadatos de DREAMS](docs/seo_y_metadatos.md).

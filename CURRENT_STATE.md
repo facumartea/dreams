@@ -1,3 +1,9 @@
+# SEO oficial en preparación — 2026-10-20
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Rama codex/official-seo-metadata desde6f9ed42/PR49 (oficialcd71d12/Pages82060492, backendd5df723d/ec04a35). Previewvisual PR51 terminada c8439ac/ba6891f4, intacta. AuthPR48 y video EXCLUIDOS. Metadatos iniciales oficiales, producto/noscript y sitemap con API pública acotada;404/noindex/503, imagen social1200×630, caché privada/cookies conservadas. Sólo indexación pública oficial cambia por código; sin flags/backend/Auth/datos.142tests completos/check52/builds Workers- Pages/audit PASS en tanda inicial;47tests focalizados finales y helpers<=20 PASS tras guardas de género y destino HTTPS/puerto. QA local compilada en curso; primer harness Node retenía Content-Encoding al descomprimir y se corrigió sólo en /tmp. No deploy ni commit SEO aún. Docs/pendientes/rollback82060492 en docs/seo_y_metadatos.md. Continuar pruebas/build/QA aislada noindex/PR/CI y sólo después oficial autorizada. Instagram/Facebook solicitados y sin datos confirmados;19/46 descripciones muy cortas documentadas sin inventar contenido.
+
 # Navegación y filtros publicados — 2026-10-15
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
