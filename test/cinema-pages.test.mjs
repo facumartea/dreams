@@ -5,6 +5,18 @@ const backend = 'https://6e5be7b8-dreams-perfumes.dreams-perfumes.workers.dev';
 const origin = 'https://dreams-preview.pages.dev';
 const asset = { body: 'cinema', content_type: 'application/javascript', etag: '"v1"' };
 
+test('homepage overlay preserves private session policies and both refresh cookies', async () => {
+    const headers = new Headers({ 'Cache-Control': 'private, no-store' });
+    headers.append('Set-Cookie', 'dreams_access_token=fixture; HttpOnly; Secure; SameSite=Lax');
+    headers.append('Set-Cookie', 'dreams_refresh_token=fixture; HttpOnly; Secure; SameSite=Lax');
+    const proxy = create_animated_proxy(backend, async () => new Response('original', { headers }), { '/': asset });
+    const response = await proxy.fetch(new Request(origin, { headers: { Cookie: 'dreams_refresh_token=fixture' } }));
+    assert.equal(await response.text(), 'cinema');
+    assert.equal(response.headers.get('cache-control'), 'private, no-store');
+    assert.equal(response.headers.getSetCookie().length, 2);
+    assert.match(response.headers.getSetCookie()[1], /HttpOnly; Secure/);
+});
+
 test('cinematic assets reuse real backend policies while API and other pages stay untouched', async () => {
     const requests = [];
     const fetcher = async request => { requests.push(request); return new Response('original', { headers: { 'Content-Security-Policy': "default-src 'self'", 'Content-Encoding': 'gzip', 'Content-Length': '8' } }); };

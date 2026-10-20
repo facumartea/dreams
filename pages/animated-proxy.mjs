@@ -31,7 +31,7 @@ async function overlay_response(request, upstream, asset) {
     for (const name of ['Content-Length', 'Content-Encoding', 'Last-Modified', 'Content-Range', 'Accept-Ranges']) headers.delete(name);
     headers.set('Content-Type', asset.content_type);
     headers.set('ETag', asset.etag);
-    headers.set('Cache-Control', 'no-cache');
+    if (!/private|no-store/i.test(headers.get('Cache-Control') || '')) headers.set('Cache-Control', 'no-cache');
     const matches = (request.headers.get('If-None-Match') || '').split(',').some(tag => tag.trim() === '*' || tag.trim().replace(/^W\//, '') === asset.etag);
     await upstream.body?.cancel();
     return new Response(request.method === 'HEAD' || matches ? null : asset.body, { status: matches ? 304 : 200, headers });

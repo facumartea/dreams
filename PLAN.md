@@ -2,9 +2,10 @@
 
 - Referencias/versiones/aislamiento: VERIFICADOS.
 - Hero/video/scroll/salida catálogo/proxy y pruebas: IMPLEMENTADOS.
-- Checks141/check54/builds/audit: PASS.
+- Checks142/check54/builds/audit: PASS.
 - QA local completa móvil/escritorio, fallbacks y6viewports: PASS.
-- CI, PR, deployment y QA remota: PENDIENTES.
+- PR51/CI39365546196/primer deployment64bb2db5 y QA remota completa: PASS.
+- Ajuste privado de caché y grabaciones/evidencia final: EN CURSO.
 - Oficial/Auth/datos sin modificaciones; no video en oficial.
 
 # Preview animada Pages — 2026-10-15
