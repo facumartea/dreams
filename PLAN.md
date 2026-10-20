@@ -1,3 +1,12 @@
+# Preview cinematográfica — 2026-10-20
+
+- Referencias/versiones/aislamiento: VERIFICADOS.
+- Hero/video/scroll/salida catálogo/proxy y pruebas: IMPLEMENTADOS.
+- Checks141/check54/builds/audit: PASS.
+- QA local completa móvil/escritorio, fallbacks y6viewports: PASS.
+- CI, PR, deployment y QA remota: PENDIENTES.
+- Oficial/Auth/datos sin modificaciones; no video en oficial.
+
 # Preview animada Pages — 2026-10-15
 
 - Estado real/origen/PR43/dependencias, proyecto y configuración heredada: VERIFICADOS.

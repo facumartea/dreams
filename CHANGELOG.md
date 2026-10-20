@@ -1,3 +1,10 @@
+# Portada y scroll cinematográficos de preview — 2026-10-20
+
+- Nueva capa visual del inicio con video existente20s, pausa accesible/fallback/movimiento reducido.
+- Secuencia breve de escala/ambiente al scroll, simplificada en móvil, salida a categorías existentes.
+- Proxy Pages visual limitado a inicio y scripts propios; backend y medios conservados.
+-141tests/check54/builds/audit PASS. Publicación y QA extendida aún en curso; oficial/Auth/Supabase intactos.
+
 # 2026-10-15 — Nuevo origen de preview animada
 
 - Creado proyecto Pages dreams-preview separado, sin contratar plan pago.

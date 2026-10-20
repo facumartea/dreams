@@ -3,24 +3,26 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex,nofollow">
     <meta name="description" content="Descubrí perfumes de diseñador y nicho en DREAMS, una selección editorial de fragancias para encontrar tu esencia.">
     <title>DREAMS | Los perfumes de tus sueños</title>
-    <link rel="canonical" href="https://dreams-perfumes.up.railway.app/">
+    <link rel="canonical" href="https://dreams-preview.pages.dev/">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="es_AR">
     <meta property="og:site_name" content="DREAMS">
     <meta property="og:title" content="DREAMS | Los perfumes de tus sueños">
     <meta property="og:description" content="Perfumes de diseñador y nicho elegidos con una mirada editorial.">
-    <meta property="og:url" content="https://dreams-perfumes.up.railway.app/">
-    <meta property="og:image" content="https://dreams-perfumes.up.railway.app/assets/dreams-hero-1024.webp">
+    <meta property="og:url" content="https://dreams-preview.pages.dev/">
+    <meta property="og:image" content="https://dreams-preview.pages.dev/assets/dreams-hero-1024.webp">
     <link rel="icon" type="image/png" href="/assets/dreams-isotype.png">
     <link rel="apple-touch-icon" href="/assets/dreams-isotype.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css?v=static-home-1">
+    <link rel="stylesheet" href="/css/cinema.css">
 </head>
-<body>
+<body class="cinema-home">
     <header class="site-header">
         <a class="brand" href="/">DREAMS</a>
         <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="main-navigation"><span class="menu-icon" aria-hidden="true"></span></button>
@@ -39,26 +41,35 @@
     </header>
 
     <main>
-        <section class="hero-static hero-video-layout">
-            <div class="hero-copy">
+        <section class="cinema-hero" aria-labelledby="cinema-title">
+            <div class="cinema-frame" data-cinema-media>
+                <img src="/assets/dreams-hero-video-poster.webp" width="1280" height="720" alt="Frasco DREAMS iluminado sobre una base de piedra" fetchpriority="high" decoding="async" data-cinema-fallback>
+                <video hidden preload="none" muted playsinline aria-label="Presentación del perfume DREAMS" data-cinema-video></video>
+            </div>
+            <div class="cinema-copy">
                 <p class="eyebrow">DREAMS PERFUMES</p>
-                <h1>Los perfumes<br>de tus sueños.</h1>
+                <h1 id="cinema-title">Los perfumes<br>de tus sueños.</h1>
                 <p>Fragancias de diseñador y algunas joyas de nicho, seleccionadas para encontrar esa esencia que te representa.</p>
                 <a class="button button-dark" href="/catalogo.html">Descubrir perfumes</a>
             </div>
-            <div class="hero-image">
-                <div class="hero-product-stage hero-video-stage">
-                    <img src="/assets/dreams-hero-video-poster.webp" width="1280" height="720" alt="Frasco DREAMS iluminado sobre una base de piedra" fetchpriority="high" decoding="async">
+            <button type="button" class="hero-video-control" aria-label="Pausar video" aria-pressed="false" data-cinema-pause hidden></button>
+            <a class="cinema-next" href="#presentacion">Una selección con personalidad</a>
+        </section>
+
+        <section class="cinema-story" id="presentacion" aria-labelledby="cinema-statement">
+            <div class="cinema-scene">
+                <div class="cinema-story-visual">
+                    <img src="/assets/dreams-hero-video-final.webp" width="1280" height="720" alt="El frasco DREAMS sobre una base de piedra, con su etiqueta dorada" loading="lazy" decoding="async">
+                </div>
+                <div class="cinema-story-copy">
+                    <p class="eyebrow">UNA SELECCIÓN CON PERSONALIDAD</p>
+                    <h2 id="cinema-statement">Una fragancia puede decir mucho <span>antes de que digas una palabra.</span></h2>
+                    <a href="#coleccion" class="text-link">Ver perfumes <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a>
                 </div>
             </div>
         </section>
 
-        <section class="brand-statement">
-            <p class="eyebrow">UNA SELECCIÓN CON PERSONALIDAD</p>
-            <h2>Una fragancia puede decir mucho antes de que digas una palabra.</h2>
-        </section>
-
-        <section class="section products-section">
+        <section class="section products-section cinema-collection" id="coleccion">
             <div class="section-heading">
                 <div>
                     <p class="eyebrow">SELECCIÓN DREAMS</p>
@@ -66,6 +77,11 @@
                 </div>
                 <a href="/catalogo.html" class="text-link">Ver todos</a>
             </div>
+            <nav class="cinema-category-links" aria-label="Colecciones de perfumes">
+                <a href="/catalogo.html?gender=mujer">Mujer</a>
+                <a href="/catalogo.html?gender=hombre">Hombre</a>
+                <a href="/catalogo.html?gender=unisex">Unisex</a>
+            </nav>
             <div id="featured-products" class="product-grid"></div>
         </section>
 
@@ -141,6 +157,7 @@
     <script src="/js/safe.js"></script>
     <script src="/js/app.js"></script>
     <script src="/js/motion.js"></script>
-    <script src="/js/hero-video.js"></script>
+    <script src="/js/cinema-video.js"></script>
+    <script src="/js/cinema-scroll.js"></script>
 </body>
 </html>

@@ -1,3 +1,9 @@
+# Preview cinematográfica en preparación — 2026-10-20
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Rama codex/preview-cinematic-scroll desde PR50/277ae1a. Sólo dreams-preview.pages.dev; oficial82060492/cd71d12 intacta, PR48/Auth excluida. Hero full width/scroll breve/categorías con mismos assets; proxy visual de inicio separado conserva backend6e5be7b8 y todos los permisos/datos.141tests/check54/audit/builds PASS; QA local390/1440, fallbacks y4tamaños adicionales PASS sin errores JS; publicación/QA remota pendientes. Docs/referencias/limitaciones/rollback: docs/cinematic_preview.md. No recalcular progreso global. Próximo: commit/push/PR dependiente, CI y publicación/QA remota sólo preview.
+
 # Nueva preview Pages publicada y verificada — 2026-10-15
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
