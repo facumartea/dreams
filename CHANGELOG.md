@@ -4,7 +4,8 @@
 - Fichas y sitemap usan sólo datos públicos reales con escape/límites, sin cookies de visitante ni fetch de imágenes.
 - Respaldo noscript,404/noindex/503, indexación pública acotada y protección de previews/privadas.
 - Imagen social con assets oficiales y guía académica; pendientes de contenido/redes separados.
-- Sin backend, video, Auth, datos comerciales ni DNS modificados; publicación aún pendiente.
+- CI144/check52/builds/audit y QA local/aislada390-1440/HTTP/sitemap/PNG/Nuvalidator PASS; PR52 abierta, publicación oficial pendiente.
+- Sin backend, video, Auth, datos comerciales ni DNS modificados.
 
 # 2026-10-15 — Navegación uniforme y panel de filtros
 

@@ -1,3 +1,11 @@
+# SEO validado en despliegue aislado — publicación oficial pendiente — 2026-10-20
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+PR52/rama codex/official-seo-metadata desde PR49/6f9ed42. Código1d86468, CI39454098983 SUCCESS144tests/check52/builds/audit;47 focalizadas finales PASS. Pages1eb4c3d8-a24a-4426-aac4-8cb0b46f1049 SUCCESS/preview, https://1eb4c3d8.dreams-perfumes.pages.dev/, noindex/robotsDisallowall. QA local y aislada390/1440 metadatos/ficha/menús/filtros/acceso/noJS PASS; carrito real/quote/persistencia local PASS. HTTP404/privadas/Admin403/52URLs sitemap e imagenPNG200bytesidénticos PASS. Nuvalidator ficha199sinmensajes; CDN real206image/jpeg. Sin tarjeta WhatsApp/Facebook observada, Safari físico o login/Admin autenticados.
+
+Oficial continúa82060492/cd71d12, rollbackretenidoSUCCESS. Artefacto530955bytes SHAa68f758060dd7f5e31e114d0218b4cc9e4b155228847c7911e5de6eb6d03058a. Pendiente publicación oficial autorizada con etiqueta técnica codex/cloudflare-hosting-migration y commit Git real del checkpoint, mismo código probado; validar y cerrar evidencia. No AuthPR48, video/animacionesPR51, backend, DNS, roles, datos ni pagos cambiados. dreams-preview c8439ac/ba6891f4 permanece independiente. Instagram/Facebook no existen según usuario: dejar pendientes, sin enlaces vacíos; WhatsApp conservado. Guía real/rollback en docs/seo_y_metadatos.md. Sin porcentaje global inventado.
+
 # SEO oficial en preparación — 2026-10-20
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.

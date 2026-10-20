@@ -2,7 +2,8 @@
 
 - Auditoría oficial y aislamiento de PR49 frente a video/Auth: COMPLETADOS.
 - Metadatos HTML/OG, lecturas públicas acotadas, noscript, sitemap, imagen social y guía: IMPLEMENTADOS.
-- Checks completos, QA aislada, PR/CI y publicación oficial con rollback: EN CURSO.
+- Checks/CI39454098983/PR52/QA aislada1eb4c3d8/noindex: COMPLETADOS.
+- Publicación oficial autorizada/QA final y documentación de cierre: PENDIENTES.
 - Perfiles sociales reales/aclaración PWA si el profesor la exige: PENDIENTES, no bloquean SEO independiente.
 
 # Navegación y filtros — 2026-10-15
