@@ -4,8 +4,9 @@
 - Hero/video/scroll/salida catálogo/proxy y pruebas: IMPLEMENTADOS.
 - Checks142/check54/builds/audit: PASS.
 - QA local completa móvil/escritorio, fallbacks y6viewports: PASS.
-- PR51/CI39365546196/primer deployment64bb2db5 y QA remota completa: PASS.
-- Ajuste privado de caché y grabaciones/evidencia final: EN CURSO.
+- PR51/CI39366033247/deployment final9263d168/472c289 y QA remota completa: PASS.
+- Políticas privadas/cookies, checkout académico seguro, capturas/grabaciones23s y evidencia final: COMPLETADOS.
+- Revisión visual del usuario: PENDIENTE. Login/Admin autenticados/Safari físico no comprobados, sin modificar Auth.
 - Oficial/Auth/datos sin modificaciones; no video en oficial.
 
 # Preview animada Pages — 2026-10-15

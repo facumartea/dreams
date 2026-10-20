@@ -3,7 +3,7 @@
 - Nueva capa visual del inicio con video existente20s, pausa accesible/fallback/movimiento reducido.
 - Secuencia breve de escala/ambiente al scroll, simplificada en móvil, salida a categorías existentes.
 - Proxy Pages visual limitado a inicio y scripts propios; backend y medios conservados.
--142tests/check54/builds/audit PASS. Primer deployment64bb2db5/4aa159c y QA remota completa PASS. Ajuste privado de caché validado con prueba de ambas cookies; su publicación pendiente. oficial/Auth/Supabase intactos.
+-142tests/check54/builds/audit PASS. Final9263d168/472c289 publicado; QA remota completa PASS. Caché privada y ambas cookies conservadas, checkout académico sin tarjeta verificado, grabaciones/capturas guardadas. oficial/Auth/Supabase intactos.
 
 # 2026-10-15 — Nuevo origen de preview animada
 

@@ -1,8 +1,12 @@
-# Preview cinematográfica en preparación — 2026-10-20
+# Preview cinematográfica publicada — 2026-10-20
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
 
-Rama codex/preview-cinematic-scroll desde PR50/277ae1a. Sólo dreams-preview.pages.dev; oficial82060492/cd71d12 intacta, PR48/Auth excluida. Hero full width/scroll breve/categorías con mismos assets; proxy visual de inicio separado conserva backend6e5be7b8 y todos los permisos/datos.142tests/check54/audit/builds PASS; QA local390/1440, fallbacks y4tamaños adicionales PASS sin errores JS; primer deployment64bb2db5/4aa159c SUCCESS y QA remota completa PASS; ajuste de caché privada con prueba de cookies aún pendiente de publicar. Docs/referencias/limitaciones/rollback: docs/cinematic_preview.md. No recalcular progreso global. PR51 abierta sobre PR50, sin merge. Próximo: publicar ajuste de caché y comprobar preview final/oficial intacta; grabaciones remotas en curso.
+https://dreams-preview.pages.dev/ publicada con472c289c540d8f847c05d3bbe3764f04ebf33774, Pages9263d168-f2f3-47d5-9640-1e1c0d30cf02 SUCCESS. Rama codex/preview-cinematic-scroll desde PR50/277ae1a, PR51 abierta, sin merge. Hero con video20s/pausa/fallback, secuencia breve de escala/ambiente al scroll y enlaces al catálogo; mismo producto/textos/contactos/autores. Sólo overlay de inicio/CSS/JS; backend6e5be7b8, APIs, medios, secretos y funciones conservados.
+
+142tests PASS, check54/audit/builds Workers/Pages/Pages animada correctos. CI39366033247 SUCCESS para el commit publicado. QA local y remota final390/1440 y geometría320/768/844landscape/1920 PASS: principio/final/scroll rápido/regreso/pausa/foco, una descargaMP4, reduced/autoplay/error/lento, catálogo46/filtros/carrito persistente/acceso. Checkout académico remoto completado sin tarjeta, referencia estable/cookie segura/POST sólo quote/presentation. Health200, noindex, Admin anónimo/Origin ajeno/escrituras protegidas rechazados. Login/Admin autenticados y Safari físico NO verificados; Auth/registro PR48 pendiente separado. Sin CWV de campo ni progreso global inventado.
+
+Oficial intacta Pages82060492/cd71d12 y HTML idéntico por hash, sin video/cinema. Worker preview anterior también conserva HTML y sigue activo. No DNS, datos, roles, configuración Auth, pagos comerciales ni credenciales modificados. Rollback previo00bbbec5 retenido/SUCCESS, método oficial disponible, no ejecutado. Referencias observadas/material faltante/capturas/recorridos23s y resultados en docs/cinematic_preview.md y docs/evidence/cinema. PUSH/DEPLOY PREVIEW: SÍ. DEPLOY OFICIAL: NO. Próximo: revisión visual del usuario en teléfono; no promover este experimento a oficial.
 
 # Nueva preview Pages publicada y verificada — 2026-10-15
 
