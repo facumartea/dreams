@@ -1,3 +1,13 @@
+# Lectura progresiva publicada y validada — 2026-10-20
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Preview https://dreams-preview.pages.dev/, fuente c8439ac6da65e9871a855095d95e1882694c4e50, Pagesba6891f4-6bae-4c18-b100-9c886ca5a75b SUCCESS, CI39447183188 SUCCESS144tests/check/builds/audit. Rama codex/preview-cinematic-scroll/PR51 abierta dependientePR50, sin merge. Palabras originales con progreso de scroll/reversa, cámara uniforme sobre escena completa y bordes integrados, reduced estático/texto marfil y fallback sinJS. Nuevo adjunto >32MiB no inspeccionable ni incorporado; material existente conservado sin edición.
+
+QA local y remota390/1440: orden/reversa/rápido/recarga media/orientación/texto único/reduced/noJS, catálogo46/búsqueda/marca/carrito persistente/contador/acceso PASS. Fallbacks bloqueado/error/lento y geometría320/768/844landscape/1920 remotos PASS. Grabaciones remotas inicio/fin hero20s estable y lectura; extractos33s/capturas docs/evidence/reading. Harness inicial con timeout y expectativa0s vs0,01ms compartida no se declara verde; pruebas enfocadas finales visibles pasaron. Detalle docs/cinematic_preview.md.
+
+Health200, readonly=true, checkoutpresentation_demo, Admin anónimo403; sin cambios backend/Supabase/Auth/roles/datos/pagos/correos. No credenciales login/Admin ni Safari físico disponibles, no CWV de campo. Oficial82060492/cd71d12 y HTML idéntico por hash, video sólo preview. Rollback9263d168 retenido/SUCCESS, no ejecutado. PUSH/DEPLOY PREVIEW:SÍ; DEPLOY OFICIAL:NO. Porcentaje global no recalculado. Próximo: revisión visual del usuario y comenzar SEO/redacción/metadatos OFICIAL en branch separada desde fuente oficial real, conservando Auth pendiente y sin video/animaciones.
+
 # Lectura progresiva e integración del producto — en validación — 2026-10-20
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.

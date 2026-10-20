@@ -2,7 +2,7 @@
 
 - Estado real y continuidad PR51: VERIFICADOS.
 - Lectura por palabras, escena completa integrada y reduced/noJS: IMPLEMENTADOS.
-- QA nueva/revalidación final/CI/publicación sólo preview: EN CURSO.
+- QA nueva/revalidación final/CI39447183188/publicación ba6891f4-c8439ac y evidencia remota: COMPLETADOS. Revisión del usuario pendiente.
 - Adjunto mayor32MiB no inspeccionable; versión existente permite completar sin él.
 
 # Preview cinematográfica — 2026-10-20

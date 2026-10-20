@@ -4,6 +4,7 @@
 - Fotografía completa con movimiento uniforme y bordes integrados, sin deformación ni falso3D.
 - Reducción de movimiento/texto estático, fallback sinJS y actualización por cambios de geometría.
 - Sólo capa visual propia de preview; sin backend, datos, Auth u oficial.
+- Publicado c8439ac/ba6891f4, CI39447183188 y QA remota palabras/móvil/escritorio/reduced/noJS/funciones/fallbacks/geometría PASS; capturas/grabaciones y límites documentados.
 
 # Portada y scroll cinematográficos de preview — 2026-10-20
 
