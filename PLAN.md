@@ -1,3 +1,13 @@
+# Filtros multiselección y revisión Auth — 2026-10-20
+
+- Git/base oficial PR52/SEO, instrucciones y aislamiento: COMPLETADOS.
+- Paletas compartidas/listas/modelo/API Pages/URL/menú: IMPLEMENTADOS.
+- Suite153/check54/builds y QA LOCAL compilada390-1440: PASS, evidencia guardada.
+- Registro403 anterior a validación y Confirm email activo: COMPROBADOS remotamente; login autenticado y rol customer no verificados.
+- Auth config/corrección PR48: BLOQUEADOS por Management no disponible; no bypass ni cambio global sin revisar consumidores.
+- Commit/push/PR/CI: próximos checkpoints; Cloudflare restablecido tras reconexión del usuario, canónico56893d4c/e66a4ec confirmado; publicación aislada/oficial PENDIENTES de QA.
+- Rollback anterior56893d4c HTTP200 conservado, reconfirmar API antes de promover. Video sólo preview y demás dependencias intactas.
+
 # SEO/redacción/metadatos oficial — 2026-10-20
 
 - Auditoría oficial y aislamiento de PR49 frente a video/Auth: COMPLETADOS.

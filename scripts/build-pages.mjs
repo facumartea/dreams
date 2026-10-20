@@ -34,8 +34,10 @@ for (const [pathname, relative, content_type] of [
 const social = await readFile(new URL('../public/assets/dreams-social.png', import.meta.url));
 assets['/assets/dreams-social.png'] = { body: social.toString('base64'), encoding: 'base64', content_type: 'image/png', etag: `"${createHash('sha256').update(social).digest('hex')}"` };
 assets['/'] = assets['/index.html'];
-const seo = (await readFile(new URL('../pages/seo.mjs', import.meta.url), 'utf8')).replace(/^export /gm, '');
-const proxy = (await readFile(new URL('../pages/proxy.mjs', import.meta.url), 'utf8')).replace(/^import .*?from '\.\/seo\.mjs';/m, seo);
+const seo = (await readFile(new URL('../pages/seo.mjs', import.meta.url), 'utf8')).replace(/^import .*;$/gm, '').replace(/^export /gm, '');
+const model = (await readFile(new URL('../public/js/catalog-filter-state.js', import.meta.url), 'utf8')).replace(/if \(typeof module === 'object'[\s\S]*$/, '');
+const catalog = (await readFile(new URL('../pages/catalog.mjs', import.meta.url), 'utf8')).replace(/^import .*;$/gm, '').replace(/^export /gm, '');
+const proxy = (await readFile(new URL('../pages/proxy.mjs', import.meta.url), 'utf8')).replace(/^import .*?from '\.\/seo\.mjs';/m, seo).replace(/^import .*?from '\.\/catalog\.mjs';/m, model + '\nconst filter_model = catalog_filter_model;\n' + catalog);
 await mkdir(new URL('../dist/pages/', import.meta.url), { recursive: true });
 await writeFile(new URL('../dist/pages/_worker.js', import.meta.url),
     proxy.replace('export default create_proxy();', `export default create_proxy(${JSON.stringify(assets)}, ${JSON.stringify({ backend_url: release.backend_url, seo: true })});`));

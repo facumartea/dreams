@@ -1,3 +1,12 @@
+# 2026-10-20 — Filtros multiselección y paletas, pendiente de publicación
+
+- Reutilizados tokens Mujer/Unisex en un único panel; Hombre/general conservados.
+- Checkboxes Marca/Género, OR/AND, todas/última, selecciones ocultas conservadas, contador por grupos y parámetros URL únicos compatibles con enlaces previos.
+- API Pages de sólo lectura filtra catálogo completo antes de limit, listas acotadas/seguras, errores cerrados; backend/protecciones/credenciales sin cambios.
+- Corregido scroll de cierre tardío y añadido test; 153tests/check54/builds Workers-Pages y QA local390/1440 pasan, capturas guardadas.
+- Diagnóstico remoto: register403 guard antiguo; login inválido400; Supabase mailer_autoconfirm=false. PR48 preservada, no publicada ni declarada resuelta.
+- Cloudflare inicialmente Internal error, restablecido tras reconexión del usuario/canónico confirmado; publicación pendiente; oficial estática e66a4ec sin cambios, rollback56893d4c health200. Sin cambios Auth/datos/roles/DNS ni video promovido.
+
 # SEO oficial en implementación — 2026-10-20
 
 - Metadatos por página con canonical oficial/Open Graph/Twitter, sin keywords.

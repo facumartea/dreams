@@ -1,3 +1,4 @@
+import { filtered_catalog } from './catalog.mjs';
 import { enrich_asset, index_response, preserved_headers } from './seo.mjs';
 
 function unavailable() {
@@ -58,6 +59,8 @@ export function create_proxy(visual_assets = {}, options = {}) {
             if (options.backend_url ? !valid_backend : !env.DREAMS?.fetch) return options.seo ? index_response(request, unavailable()) : unavailable();
             try {
                 const pathname = new URL(request.url).pathname;
+                const catalog = options.backend_url ? await filtered_catalog(request, options) : null;
+                if (catalog) return options.seo ? index_response(request, catalog) : catalog;
                 let asset = visual_paths.has(pathname) && ['GET', 'HEAD'].includes(request.method) ? visual_assets[pathname] : null;
                 const upstream = await forward_request(visual_request(request, pathname, asset), env, options);
                 if (asset && upstream.status === 200 && options.seo) asset = await enrich_asset(request, asset, env, options);

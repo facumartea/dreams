@@ -1,3 +1,4 @@
+import filter_model from '../public/js/catalog-filter-state.js';
 // SEO público de Pages: sólo lecturas acotadas al backend inmutable aprobado.
 export const SITE_ORIGIN = 'https://dreams-perfumes.pages.dev';
 const social_image = `${SITE_ORIGIN}/assets/dreams-social.png`;
@@ -116,11 +117,12 @@ async function product_asset(url, asset, env, options) {
 }
 
 function collection_metadata(url) {
-    const requested = url.searchParams.get('gender');
+    const genders = filter_model.parse(url.search).gender;
+    const requested = genders.length === 1 ? genders[0] : '';
     const gender = Object.hasOwn(collection_names, requested) ? requested : '';
     const meta = page_metadata('/catalogo.html');
     if (gender) Object.assign(meta, { title: `Perfumes ${gender === 'unisex' ? 'unisex' : 'de ' + gender} | DREAMS`, description: `Explorá perfumes ${gender === 'unisex' ? 'unisex' : 'de ' + gender} en DREAMS. Buscá por nombre o marca y descubrí las fragancias del catálogo.`, url: `${meta.url}?gender=${gender}` });
-    if ([...url.searchParams.keys()].some(key => !['gender', 'utm_source', 'utm_medium', 'utm_campaign'].includes(key))) meta.robots = 'noindex,follow';
+    if (genders.length > 1 || [...url.searchParams.keys()].some(key => !['gender', 'utm_source', 'utm_medium', 'utm_campaign'].includes(key))) meta.robots = 'noindex,follow';
     return { meta, gender };
 }
 
