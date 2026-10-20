@@ -92,3 +92,26 @@ test('a delayed first decoded frame keeps the real poster visible instead of a b
     assert.equal(f.fallback.hidden, true); assert.equal(f.video.style.opacity, '1');
     assert.equal(f.assignments(), 1);
 });
+
+test('reading progresses in word order, reverses with scrolling and restores deterministically', () => {
+    const { word_levels } = require('../public/js/cinema-scroll');
+    assert.deepEqual(word_levels(0, 4), [0, 0, 0, 0]);
+    assert.deepEqual(word_levels(.375, 4), [1, .5, 0, 0]);
+    assert.deepEqual(word_levels(1, 4), [1, 1, 1, 1]);
+    assert.deepEqual(word_levels(.125, 4), [.5, 0, 0, 0]);
+    assert.deepEqual(word_levels(.375, 4), word_levels(.375, 4));
+    for (const progress of [-1, NaN, .5, 2]) assert.deepEqual(word_levels(progress, 4, true), [1, 1, 1, 1]);
+    assert.deepEqual(word_levels(.5, 0), []);
+});
+
+test('offscreen scenes do not schedule frames and reentry updates the current position', () => {
+    const viewport = new EventTarget(), reduced = new EventTarget(), frames = [], styles = new Map();
+    let notify, top = 0;
+    Object.assign(viewport, { innerWidth: 1440, innerHeight: 900, requestAnimationFrame: fn => { frames.push(fn); return frames.length; },
+        IntersectionObserver: class { constructor(fn) { notify = fn; } observe() {} } });
+    const section = { getBoundingClientRect: () => ({ top, height: 1400 }), style: { setProperty: (k, v) => styles.set(k, v) } };
+    setup_scroll(section, viewport, reduced); notify([{ isIntersecting: false }]);
+    viewport.dispatchEvent(new Event('scroll')); assert.equal(frames.length, 0);
+    top = -350; notify([{ isIntersecting: true }]); assert.equal(frames.length, 1); frames[0]();
+    assert.equal(styles.get('--cinema-scale'), motion_values(.7).scale.toFixed(4));
+});

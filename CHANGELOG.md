@@ -1,3 +1,10 @@
+# Lectura editorial de preview — 2026-10-20
+
+- Iluminación secuencial por palabras vinculada al scroll, reversible y con texto único seleccionable.
+- Fotografía completa con movimiento uniforme y bordes integrados, sin deformación ni falso3D.
+- Reducción de movimiento/texto estático, fallback sinJS y actualización por cambios de geometría.
+- Sólo capa visual propia de preview; sin backend, datos, Auth u oficial.
+
 # Portada y scroll cinematográficos de preview — 2026-10-20
 
 - Nueva capa visual del inicio con video existente20s, pausa accesible/fallback/movimiento reducido.

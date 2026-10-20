@@ -1,3 +1,9 @@
+# Lectura progresiva e integración del producto — en validación — 2026-10-20
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Misma rama codex/preview-cinematic-scroll y PR51 desde04b7a83, sólo dreams-preview.pages.dev. Palabras de frase existente iluminadas por scroll/reversibles; fotografía completa con cámara suave/bordes integrados;155svh desktop/flujo móvil; reduced estático/texto completo y fallback sinJS. Sin cambios backend/Auth/datos/oficial. Nuevo adjunto excede límite32MiB, no inspeccionado ni usado. Partida/rollback9263d168/472c289; oficial82060492/cd71d12. 144tests/check54/builds PASS; tras ajustes,11tests específicos/check/build animado PASS y QA nueva390/1440 palabras/reversa/recarga/orientación/reduced PASS. Audit sin vulnerabilidades conocidas. Completar QA funcional, commit/push/CI/publicar sólo preview y verificar. Detalle docs/cinematic_preview.md. No merge, DNS ni publicación oficial.
+
 # Preview cinematográfica publicada — 2026-10-20
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.

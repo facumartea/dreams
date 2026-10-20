@@ -1,3 +1,10 @@
+# Ampliación visual de preview — 2026-10-20
+
+- Estado real y continuidad PR51: VERIFICADOS.
+- Lectura por palabras, escena completa integrada y reduced/noJS: IMPLEMENTADOS.
+- QA nueva/revalidación final/CI/publicación sólo preview: EN CURSO.
+- Adjunto mayor32MiB no inspeccionable; versión existente permite completar sin él.
+
 # Preview cinematográfica — 2026-10-20
 
 - Referencias/versiones/aislamiento: VERIFICADOS.

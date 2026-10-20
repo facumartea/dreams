@@ -57,3 +57,16 @@ Las políticas private/no-store y Set-Cookie del upstream se conservan también 
 - Rollback00bbbec5 retenido y SUCCESS comprobado mediante API, endpoint oficial consultado, no ejecutado. Sin merges. PR51 dependiente de PR50; checkpoints posteriores sólo documentan evidencia y no cambian el deployment.
 
 Próxima acción: revisión del recorrido por el usuario en teléfono. Un giro3D real o un encuadre vertical de mayor escala requiere el material específico descrito arriba; no se promete detalle recuperado ni se genera otra marca/perfume.
+
+
+## Ampliación: lectura por palabras — 2026-10-20
+
+Continuación de PR51 en la misma rama desde04b7a83; no se recrea la experiencia ni se mezcla Auth/oficial. Preview de partida9263d168/472c289, rollback inmediato retenido. Oficial82060492/cd71d12 sin cambios.
+
+La frase existente «Una fragancia puede decir mucho antes de que digas una palabra.» se divide en spans de palabras conservando espacios y un único texto DOM seleccionable. Iluminación champagne por progreso geométrico de scroll, secuencial y reversible; no temporizador. Tono atenuado#9a9184 sobre negro conserva contraste. Sin JS el contenido permanece iluminado; movimiento reducido fuerza texto completo y producto estático. IntersectionObserver limita actividad visible, rAF agrupa eventos pasivos, ResizeObserver actualiza geometría ante cambios de fuente/medidas; no loop. No copias accesibles, aria-label duplicado ni role artificioso.
+
+Escena completa —botella, piedra y fondo— conserva el fotograma final original1280x720. Cámara CSS de escala/desplazamiento uniforme y veladuras negras de borde integran el entorno; ambiente dorado sutil ya existente acompaña el progreso. Sticky escritorio155svh, flujo natural móvil. No recorte del producto, deformación, recorte temporal, nuevo video, capas ficticias, giro3D ni iluminación física regenerada. El hero conserva20s completos, pausa discreta, una reproducción/final/fallback.
+
+Adjunto nuevo20261020-1334-08.9380407.mp4: herramienta download_file rechaza transferencia porque supera32MiB y no existe copia local. No se pudieron inspeccionar resolución, duración, codec ni movimientos; no se incorpora ni se afirma haberlo reproducido. No bloquea esta versión viable con material existente. Imagen de referencia del mensaje no se usa como captura completa ni se supone transparente. Para incorporar el adjunto posteriormente se necesita una versión transferible de hasta32MiB conservando secuencia/encuadre; no hay material audiovisual imprescindible faltante para los efectos actuales.
+
+Validación local:144/144 tests/check54/builds Workers/Pages/Pages animada PASS; tras ResizeObserver y encuadre final,11 tests específicos/check/build animado PASS; audit sin vulnerabilidades conocidas. Helpers nuevos máximo20 líneas comprobado por AST. QA nueva móvil390/escritorio1440: orden/progreso/reversa/recarga a mitad/orientación/reduced/texto único PASS. Pruebas de navegador esperan actualización efectiva de fotogramas: aserciones temporales iniciales bajo carga y geometría de fuente no se atribuyen a fallos funcionales. Descarga local MP4 usa bytes=0- y bytes=3932160- para metadatos/final; no se confunde rango parcial con otra descarga completa. QA funcional y publicación remotas pendientes de registrar al completar.
