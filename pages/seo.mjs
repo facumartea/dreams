@@ -1,3 +1,4 @@
+import filter_model from '../public/js/catalog-filter-state.js';
 // SEO público de Pages: sólo lecturas acotadas al backend inmutable aprobado.
 export const SITE_ORIGIN = 'https://dreams-perfumes.pages.dev';
 const social_image = `${SITE_ORIGIN}/assets/dreams-social.png`;
@@ -116,11 +117,12 @@ async function product_asset(url, asset, env, options) {
 }
 
 function collection_metadata(url) {
-    const requested = url.searchParams.get('gender');
+    const genders = filter_model.parse(url.search).gender;
+    const requested = genders.length === 1 ? genders[0] : '';
     const gender = Object.hasOwn(collection_names, requested) ? requested : '';
     const meta = page_metadata('/catalogo.html');
     if (gender) Object.assign(meta, { title: `Perfumes ${gender === 'unisex' ? 'unisex' : 'de ' + gender} | DREAMS`, description: `Explorá perfumes ${gender === 'unisex' ? 'unisex' : 'de ' + gender} en DREAMS. Buscá por nombre o marca y descubrí las fragancias del catálogo.`, url: `${meta.url}?gender=${gender}` });
-    if ([...url.searchParams.keys()].some(key => !['gender', 'utm_source', 'utm_medium', 'utm_campaign'].includes(key))) meta.robots = 'noindex,follow';
+    if (genders.length > 1 || [...url.searchParams.keys()].some(key => !['gender', 'utm_source', 'utm_medium', 'utm_campaign'].includes(key))) meta.robots = 'noindex,follow';
     return { meta, gender };
 }
 
@@ -166,7 +168,7 @@ export function preserved_headers(response) {
 export function index_response(request, response) {
     const url = new URL(request.url), headers = preserved_headers(response);
     const public_response = url.origin === SITE_ORIGIN && (response.status === 200 || response.status === 304) && ['GET', 'HEAD'].includes(request.method) && (public_pages.has(url.pathname) || url.pathname === '/assets/dreams-social.png');
-    const filtered = url.pathname === '/catalogo.html' && [...url.searchParams.keys()].some(key => !['gender', 'utm_source', 'utm_medium', 'utm_campaign'].includes(key));
+    const filtered = url.pathname === '/catalogo.html' && (filter_model.parse(url.search).gender.length > 1 || [...url.searchParams.keys()].some(key => !['gender', 'utm_source', 'utm_medium', 'utm_campaign'].includes(key)));
     headers.set('X-Robots-Tag', public_response && !filtered ? 'index, follow' : 'noindex, follow');
     if (url.origin !== SITE_ORIGIN) headers.set('X-Robots-Tag', 'noindex, nofollow, noarchive');
     return new Response(response.body, { status: response.status, statusText: response.statusText, headers });

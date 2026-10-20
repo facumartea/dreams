@@ -1,3 +1,22 @@
+# Resultado filtros oficiales — 2026-10-20
+
+- PR53/código461c17d/CI39517310148/154tests/check54/audit/builds: COMPLETADOS.
+- Paletas/listas/API Pages/URL/menú/scroll y metadatos coherentes: IMPLEMENTADOS.
+- QA local/aislada/oficial390-1440 y capturas/HTTP finales: PASS en cobertura documentada.
+- Oficialf44a6069/461c17d y rollback56893d4c SUCCESS/health200: COMPLETADOS; no rollback ejecutado.
+- Registro403/Confirm email activo: COMPROBADOS, resolución BLOQUEADA por Auth Management; login autenticado/customer/Admin de cuenta nueva NO VERIFICADOS.
+- PR48/052b224 preservada, no integrada; video y previewcinemática intactos. Próximo: revisión visual y acceso Auth seguro para continuar esa corrección aparte.
+
+# Filtros multiselección y revisión Auth — 2026-10-20
+
+- Git/base oficial PR52/SEO, instrucciones y aislamiento: COMPLETADOS.
+- Paletas compartidas/listas/modelo/API Pages/URL/menú: IMPLEMENTADOS.
+- Suite153/check54/builds y QA LOCAL compilada390-1440: PASS, evidencia guardada.
+- Registro403 anterior a validación y Confirm email activo: COMPROBADOS remotamente; login autenticado y rol customer no verificados.
+- Auth config/corrección PR48: BLOQUEADOS por Management no disponible; no bypass ni cambio global sin revisar consumidores.
+- Commit/push/PR/CI: próximos checkpoints; Cloudflare restablecido tras reconexión del usuario, canónico56893d4c/e66a4ec confirmado; publicación aislada/oficial PENDIENTES de QA.
+- Rollback anterior56893d4c HTTP200 conservado, reconfirmar API antes de promover. Video sólo preview y demás dependencias intactas.
+
 # SEO/redacción/metadatos oficial — 2026-10-20
 
 - Auditoría oficial y aislamiento de PR49 frente a video/Auth: COMPLETADOS.

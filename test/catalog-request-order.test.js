@@ -64,3 +64,14 @@ test('el panel cabe en el viewport visible cuando se reduce el espacio del tecla
     assert.ok(styles['--filter-top'] >= 100);
     assert.ok(styles['--filter-top'] + styles['--filter-height'] <= 500);
 });
+
+test('cerrar restaura el scroll sin esperar el evento nativo; un close antiguo no altera un panel reabierto', () => {
+    const { context } = catalog_context([]);
+    const calls = [];
+    context.restore_filter_scroll = () => calls.push('restore');
+    context.document.getElementById = () => ({ open: true, close: () => calls.push('close') });
+    context.close_catalog_filters();
+    assert.deepEqual(calls, ['restore', 'close']);
+    context.filter_dialog_closed();
+    assert.deepEqual(calls, ['restore', 'close']);
+});

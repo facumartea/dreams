@@ -10,7 +10,8 @@ test('la ruta y el género seleccionan un único destino exacto', () => {
         ['/catalogo.html?gender=hombre', 'hombre'], ['/catalogo.html?gender=unisex', 'unisex'],
         ['/nosotros.html', 'nosotros'], ['/producto.html?id=199', null],
         ['/carrito.html', null], ['/cuenta.html', null], ['/checkout.html', null],
-        ['/catalogo.html?gender=mujeres', 'perfumes'], ['/catalogo.html.extra', null]
+        ['/catalogo.html?gender=mujeres', 'perfumes'], ['/catalogo.html?gender=mujer&gender=unisex', 'perfumes'],
+        ['/catalogo.html?gender=%5B%22mujer%22%2C%22unisex%22%5D', 'perfumes'], ['/catalogo.html?gender=%5B%22mujer%22%5D', 'mujer'], ['/catalogo.html.extra', null]
     ]) assert.equal(navigation.selection(route), expected, route);
 });
 
@@ -57,7 +58,7 @@ test('la marca de la URL se conserva en el estado hasta que llegan las opciones'
     const state = model.parse('?gender=mujer&brand=Byredo');
     const pending = { ...state };
     pending.brand = 'Dior';
-    assert.equal(state.brand, 'Byredo');
+    assert.deepEqual(state.brand, ['Byredo']);
     assert.equal(pending.brand, 'Dior');
-    assert.equal(model.parse(model.params(state).toString()).brand, 'Byredo');
+    assert.deepEqual(model.parse(model.params(state).toString()).brand, ['Byredo']);
 });

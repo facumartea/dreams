@@ -326,3 +326,23 @@ input,select,textarea{width:100%;min-height:48px;padding:.78rem 0;border:0;borde
 @media(hover:hover) and (pointer:fine){
   .site-header .main-nav a:hover:not([aria-current]):not(:active):not(:focus-visible),.collection-themed .site-header .main-nav a:hover:not([aria-current]):not(:active):not(:focus-visible){background:color-mix(in srgb,var(--nav-bg) 22%,#0b0b0b);color:var(--ivory)}
 }
+
+/* Un panel compartido: las colecciones reutilizan sus tokens editoriales existentes. */
+.catalog-page{--filter-bg:var(--ink-soft);--filter-field:var(--surface);--filter-text:var(--ivory);--filter-label:var(--ivory-soft);--filter-accent:var(--accent);--filter-border:var(--border-strong);--filter-selected:#2b251b;--filter-on-accent:var(--ink);--filter-muted:var(--muted)}
+.collection-women .catalog-page,.collection-unisex .catalog-page{--filter-bg:var(--collection-intro);--filter-field:var(--collection-field);--filter-text:var(--collection-heading);--filter-label:var(--collection-heading);--filter-accent:var(--collection-accent);--filter-border:var(--collection-accent);--filter-selected:var(--collection-surface);--filter-on-accent:var(--collection-button-text);--filter-muted:var(--collection-muted)}
+.catalog-page :is(.filter-trigger,.filter-dialog){background:var(--filter-bg);color:var(--filter-text);border-color:var(--filter-border)}
+.filter-count{background:var(--filter-accent);color:var(--filter-on-accent)}
+.filter-dialog :is(.filter-dialog-heading,.filter-dialog-actions){border-color:var(--filter-border);background:var(--filter-bg)}
+.filter-dialog :is(label,legend,.filter-close){color:var(--filter-label)}
+.filter-dialog :is(.filter-close,.filter-choice,input[type=search],input[type=number]){border-color:var(--filter-border);background:var(--filter-field);color:var(--filter-text)}
+.filter-dialog input::placeholder{color:var(--filter-muted);opacity:1}
+.filter-dialog .muted{color:var(--filter-muted)}
+.filter-choice input:is([type=radio],[type=checkbox]){width:18px;height:18px;min-height:18px;margin:0;padding:0;border:0;background:none;accent-color:var(--filter-accent);flex-shrink:0}
+.filter-dialog .filter-choice:has(input:checked){border-color:var(--filter-accent);background:var(--filter-selected);color:var(--filter-text);box-shadow:inset 0 0 0 1px var(--filter-accent);font-weight:600}
+.filter-dialog-actions .button{background:var(--filter-field);border-color:var(--filter-accent);color:var(--filter-text)}
+.filter-dialog-actions .button-dark{background:var(--filter-accent);color:var(--filter-on-accent)}
+.catalog-page :is(.filter-trigger,.filter-close,.filter-dialog-actions .button):focus-visible,.filter-dialog input:focus-visible,.filter-dialog .filter-choice:has(input:focus-visible){outline:2px solid var(--filter-accent);outline-offset:3px}
+.catalog-page :is(.filter-trigger,.filter-close,.filter-dialog-actions .button):active{filter:brightness(.92)}
+@media(hover:hover) and (pointer:fine){.catalog-page :is(.filter-trigger,.filter-close,.filter-dialog-actions .button):hover{border-color:var(--filter-accent);box-shadow:inset 0 0 0 1px var(--filter-accent)}.filter-dialog .filter-choice:hover{border-color:var(--filter-accent)}}
+.filter-dialog-heading h2{color:var(--filter-text)}
+.collection-women .filter-dialog{color-scheme:light}

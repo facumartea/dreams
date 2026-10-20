@@ -1,3 +1,19 @@
+# 2026-10-20 — Filtros oficiales publicados
+
+- Publicados461c17d/Pagesf44a6069 SUCCESS y PR53 sin merge; CI39517310148 verde154tests/check54/audit/builds.
+- QA local/aislada/oficial móvil/escritorio de paletas/multiselección/URL/historial/error-retry/carrito/acceso y capturas finales. Última corrección alinea X-Robots-Tag con HTML noindex de varios géneros; test de regresión añadido.
+- Rollback56893d4c retenido y health200. Cloudflare reconectado por usuario; sin DNS, backend, Auth, datos, roles, credenciales ni video cambiados. Previewcinemática ba6891f4/c8439ac intacta.
+- Registro sigue403 y Confirm email activo; login real no verificado. Pendiente Auth Management y PR48/052b224 preservada, sin presentar ese flujo como resuelto.
+
+# 2026-10-20 — Filtros multiselección y paletas, pendiente de publicación
+
+- Reutilizados tokens Mujer/Unisex en un único panel; Hombre/general conservados.
+- Checkboxes Marca/Género, OR/AND, todas/última, selecciones ocultas conservadas, contador por grupos y parámetros URL únicos compatibles con enlaces previos.
+- API Pages de sólo lectura filtra catálogo completo antes de limit, listas acotadas/seguras, errores cerrados; backend/protecciones/credenciales sin cambios.
+- Corregido scroll de cierre tardío y añadido test; 153tests/check54/builds Workers-Pages y QA local390/1440 pasan, capturas guardadas.
+- Diagnóstico remoto: register403 guard antiguo; login inválido400; Supabase mailer_autoconfirm=false. PR48 preservada, no publicada ni declarada resuelta.
+- Cloudflare inicialmente Internal error, restablecido tras reconexión del usuario/canónico confirmado; publicación pendiente; oficial estática e66a4ec sin cambios, rollback56893d4c health200. Sin cambios Auth/datos/roles/DNS ni video promovido.
+
 # SEO oficial en implementación — 2026-10-20
 
 - Metadatos por página con canonical oficial/Open Graph/Twitter, sin keywords.

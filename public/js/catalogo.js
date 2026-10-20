@@ -43,7 +43,7 @@ function update_catalog_theme(variant) {
 function update_catalog_metadata(gender) {
     const canonical = document.getElementById('canonical-url');
     const description = document.getElementById('catalog-description').textContent;
-    const filtered = [...new URLSearchParams(window.location.search).keys()].some(key => !['gender', 'utm_source', 'utm_medium', 'utm_campaign'].includes(key));
+    const filtered = applied_filters.gender.length > 1 || [...new URLSearchParams(window.location.search).keys()].some(key => !['gender', 'utm_source', 'utm_medium', 'utm_campaign'].includes(key));
     const robots = document.querySelector('meta[name="robots"]');
     if (robots) robots.content = window.location.origin !== 'https://dreams-perfumes.pages.dev' ? 'noindex,nofollow' : filtered ? 'noindex,follow' : 'index,follow';
     document.querySelector('meta[name="description"]').content = description;
@@ -77,7 +77,7 @@ function update_filter_badge() {
 
 function restore_catalog_filters() {
     applied_filters = filter_model.parse(window.location.search);
-    update_catalog_context(applied_filters.gender);
+    update_catalog_context(applied_filters.gender.length === 1 ? applied_filters.gender[0] : '');
     update_filter_badge();
 }
 
@@ -85,7 +85,7 @@ async function apply_catalog_filters(sync_url = true) {
     const params = filter_model.params(applied_filters, window.location.search);
     const target = `/catalogo.html${params.size ? '?' + params.toString() : ''}`;
     if (sync_url && window.location.pathname + window.location.search !== target) history.pushState(null, '', target);
-    update_catalog_context(applied_filters.gender);
+    update_catalog_context(applied_filters.gender.length === 1 ? applied_filters.gender[0] : '');
     update_filter_badge();
     await load_catalog();
 }
@@ -133,8 +133,9 @@ function render_catalog() {
 
 function read_pending_filters() {
     const form = document.getElementById('catalog-filter-form');
-    const state = Object.fromEntries(new FormData(form));
-    if (!Object.hasOwn(state, 'brand')) state.brand = pending_filters.brand;
+    const data = new FormData(form);
+    const state = Object.fromEntries(data);
+    for (const key of ['brand', 'gender']) state[key] = data.getAll(key);
     return filter_model.normalize(state);
 }
 
@@ -143,7 +144,7 @@ function write_pending_filters(value) {
     const form = document.getElementById('catalog-filter-form');
     for (const [key, input] of Object.entries({ search: 'search', max_price: 'max-price' })) document.getElementById(input).value = value[key];
     for (const key of ['brand', 'gender', 'category', 'sort']) {
-        form.querySelectorAll(`input[name="${key}"]`).forEach(input => { input.checked = input.value === value[key]; });
+        form.querySelectorAll(`input[name="${key}"]`).forEach(input => { input.checked = Array.isArray(value[key]) ? (input.value ? value[key].includes(input.value) : !value[key].length) : input.value === value[key]; });
     }
     document.getElementById('brand-search').value = '';
     search_brand_choices();
@@ -194,10 +195,12 @@ function open_catalog_filters() {
 }
 
 function close_catalog_filters() {
+    restore_filter_scroll();
     document.getElementById('catalog-filters').close();
 }
 
 function filter_dialog_closed() {
+    if (document.getElementById('catalog-filters').open) return;
     pending_filters = { ...applied_filters };
     restore_filter_scroll();
     document.getElementById('open-filters').focus({ preventScroll: true });
@@ -231,16 +234,16 @@ function create_brand_choice(brand, selected) {
     const label = document.createElement('label');
     label.className = 'filter-choice';
     const input = document.createElement('input');
-    input.type = 'radio'; input.name = 'brand'; input.value = brand; input.checked = brand === selected;
+    input.type = 'checkbox'; input.name = 'brand'; input.value = brand; input.checked = brand ? selected.includes(brand) : !selected.length;
     const span = document.createElement('span');
     span.textContent = brand || 'Todas';
     label.append(input, span);
     return label;
 }
 
-function render_brand_choices(selected = '') {
+function render_brand_choices(selected = []) {
     const container = document.getElementById('brand-options');
-    const brands = [...new Set(['', ...catalog_brands, ...(selected ? [selected] : [])])];
+    const brands = [...new Set(['', ...catalog_brands, ...selected])];
     container.replaceChildren(...brands.map(brand => create_brand_choice(brand, selected)));
     container.setAttribute('aria-busy', String(brands_loading));
     show_brand_status(container);
@@ -298,6 +301,15 @@ async function load_brands() {
     }
 }
 
+function toggle_filter_group(event) {
+    const input = event.target;
+    if (!['brand', 'gender'].includes(input.name) || input.type !== 'checkbox') return;
+    const group = [...event.currentTarget.querySelectorAll(`input[name="${input.name}"]`)];
+    if (!input.value && input.checked) group.forEach(item => { if (item.value) item.checked = false; });
+    const unrestricted = group.find(item => !item.value);
+    unrestricted.checked = !group.some(item => item.value && item.checked);
+}
+
 function init_catalog_filters() {
     restore_catalog_filters();
     setup_filter_viewport();
@@ -306,6 +318,7 @@ function init_catalog_filters() {
     document.getElementById('catalog-filters').addEventListener('close', filter_dialog_closed);
     document.getElementById('catalog-filters').addEventListener('keydown', contain_filter_focus);
     document.getElementById('catalog-filter-form').addEventListener('submit', commit_catalog_filters);
+    document.getElementById('catalog-filter-form').addEventListener('change', toggle_filter_group);
     document.getElementById('brand-search').addEventListener('input', search_brand_choices);
     document.getElementById('reset-filters').addEventListener('click', () => write_pending_filters(filter_model.defaults));
     window.addEventListener('popstate', () => {

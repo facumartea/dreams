@@ -1,3 +1,27 @@
+# Filtros por colección publicados y validados — 2026-10-20
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+OFICIAL https://dreams-perfumes.pages.dev/ publicada con461c17dcdce6608e7854d9e72bb8eefed4b73935, Pagesf44a6069-a891-4d1b-a035-0e0dc5a00a40 SUCCESS/production/canónico confirmado. PR53/rama codex/collection-multiselect desdePR52/5e56469, dependientePR49/44/42/39/37/34, sin merges. Checkpoint documental posterior no cambia deployment. CI39517310148 SUCCESS154tests/check54/audit/builds; local153completos+18focalizadosfinales PASS, helpers<=20.
+
+Paletas Mujer/Unisex y Hombre/general conservadas, checkboxes Marca/Género OR/AND, contador por grupos, Todos/última/borrador/limpiar/cancelar, URL única compatible/recarga/historial, un menú/colección activo. API Pages sólo GET/HEAD sobre catálogo completo46 antes de limit, listas seguras/acotadas y protección de respuestas viejas. No nuevo backend/secret/permisos. Corregida restauración inmediata de scroll y cabecera noindex multigénero con regresiones. QA local/aislada88d39791/oficialeb3cca0c(0425430) de filtros/error-retry/foco/carrito/acceso PASS390/1440; delta final cabecera en aislada b2f221aa y oficialf44a6069/461c17d verificado por HTTP y browser paletas/selecciones ocultas/historial/capturas. No Safari físico. Logs distinguen etapas, Origin impide quote en alias aislado pero sí PASS local/oficial; no se debilitaron protecciones.
+
+Auth separado: register{}403guardanterior; login{}400validación, no sesión real. Supabaseproyecto correcto ACTIVE_HEALTHY; settings mailer_autoconfirm=false/disable_signup=false. Registro FALLIDO/BLOQUEADO para config; login autenticado/perfil customer/Admin de cuenta nueva NO VERIFICADOS. PR48/052b224 preservada y no publicada: falta Auth Management/revisión otros consumidores/QA real. No cuentas nuevas ni correos. Instrucción segura/scopes oficiales en docs/collection_filters.md; no secretos por chat ni bypass administrativo.
+
+Conexión Cloudflare restablecida tras reconectar usuario. Rollback original56893d4c/e66a4ec retenido SUCCESS/root-health200, endpoint documentado/no ejecutado. Previewcinemática dreams-preview ba6891f4/c8439ac intacta; video sólo allí, oficialHTMLsinvideo/MP4404. Backendd5df723d/ec04a35/Auth/DNS/roles/credenciales/datos comerciales sin cambios. Capturas oficiales de trespaletas móvil/escritorio y evidencia docs/evidence/collection-filters, guía docs/collection_filters.md. PUSH y DEPLOY OFICIAL:SÍ. Progreso global sin porcentaje inventado; filtros terminados, Auth pendiente de acceso externo. Próximo: revisión usuario y resolver Auth sólo por Management seguro más prueba remota antes de promover PR48.
+
+# Filtros por colección implementados; acceso Cloudflare restablecido — 2026-10-20
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Rama codex/collection-multiselect desde5e56469/PR52, sin merges/video/Auth ajeno. Panel compartido con paletas Mujer/Unisex, Hombre/general conservados; Marca/Género multiselección OR dentro/AND entre grupos, Todas/Todos, borrador/aplicar/limpiar/cancelar, contador por grupos, URL única JSON compatible con valores históricos, menú/colección únicos. API Pages GET/HEAD adapta listas sobre catálogo completo46, conserva backendd5df723d/ec04a35 y protecciones; rechaza listas inválidas y datos truncados, sin cookies/secretos nuevos. Ajustada restauración de scroll y regresión.
+
+153tests/check54/builds Workers-Pages PASS; QA LOCAL compilada Chromium390/1440 paletas/listas/4resultados reales/URL/historial/vacíos/error-retry/foco/scroll/carrito/acceso legacy PASS, helpers<=20. Capturas/log/docs: docs/collection_filters.md y docs/evidence/collection-filters. Sin QA remoto de nuevo release ni Safari físico.
+
+Auth real: proyecto correcto ACTIVE_HEALTHY; POSTregister{}403guardgenérico, POSTlogin{}400validación, mailer_autoconfirm=false/disable_signup=false por settings oficial con clave pública no expuesta. PR48/052b224 sigue sin desplegar; preservar/reutilizar, no duplicar ni falsear éxito. Registro FALLIDO/BLOQUEADO por Management; login real/permisos cliente/Admin no verificados. No cuentas nuevas ni correos enviados. No herramienta Auth config ni Secret Management en entorno; scopes oficiales documentados, uso por otras apps pendiente.
+
+Cloudflare inicialmente Internal error; usuario reconectó y GET proyecto confirmó dreams-perfumes/canónico56893d4c/e66a4ec SUCCESS/etiqueta producción codex/cloudflare-hosting-migration. Integración restablecida; Wrangler4.147.0 sigue sin sesión pero no es necesario para la integración. Publicación aislada/oficial pendientes. Cinco assets oficiales iguales a e66a4ec, health200 y hero estático; Canónico actual confirmado por API tras reconexión. Rollback56893d4c raíz/health200 comprobados, preservar y reconfirmar vía API cuando vuelva acceso. Sin DNS/Supabase/Auth/roles/datos/credenciales/previewvideo cambiados. Próximo: stage Pages, QA remota y promover mismo artefacto de filtros autorizado; Auth sólo con Management y QA propia. Avance global sin porcentaje inventado.
+
 # SEO oficial publicado y validado — 2026-10-20
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.

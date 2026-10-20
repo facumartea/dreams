@@ -1,0 +1,22 @@
+Official https://dreams-perfumes.pages.dev
+Published source 461c17dcdce6608e7854d9e72bb8eefed4b73935
+Cloudflare canonical f44a6069-a891-4d1b-a035-0e0dc5a00a40 SUCCESS
+Preview final b2f221aa-0046-4b6d-8c47-eb95246ccddc SUCCESS
+Artifact SHA256804beef201c00e8d78587c948cec433fab58804171baffc80e5aea762d6751f5
+{"path": "/js/catalogo.js", "source_matches": true, "sha256": "cb72f1a01a442a4de3dcb5271db26ebd9c200bb9d05d66eb828c6e1b4174e3c8"}
+{"path": "/js/catalog-filter-state.js", "source_matches": true, "sha256": "5c187c707b8cfb9516cfa3a86663bd726ff452f72796229c9cbadc4c4168e56f"}
+{"path": "/js/navigation.js", "source_matches": true, "sha256": "01088d9d8302c69fb5049429fe51d499d0ba5231c31572b0fc0b43d059950cc6"}
+{"path": "/css/style.css", "source_matches": true, "sha256": "2c87d70cc0417904bee437de07cb1bac972938fabd4eb2d29059ae452a3d4863"}
+{"path": "/js/cuenta.js", "source_matches": true, "sha256": "7270e49f680a901bf507061c517ff5525e89cdd67ed196425e80fec795025cca"}
+/ ['HTTP/1.1 200 OK', 'HTTP/2 200 ', 'cache-control: no-cache', 'x-robots-tag: index, follow']
+/catalogo.html?gender=mujer ['HTTP/1.1 200 OK', 'HTTP/2 200 ', 'cache-control: no-cache', 'x-robots-tag: index, follow']
+/catalogo.html?gender=%5B%22mujer%22,%22unisex%22%5D ['HTTP/1.1 200 OK', 'HTTP/2 200 ', 'cache-control: no-cache', 'x-robots-tag: noindex, follow']
+/api/products?brand=%5B%22Dior%22%5D ['HTTP/1.1 200 OK', 'HTTP/2 200 ', 'cache-control: no-store', 'x-robots-tag: noindex, follow']
+/api/admin/products ['HTTP/1.1 200 OK', 'HTTP/2 403 ', 'cache-control: no-store', 'x-robots-tag: noindex, follow']
+/assets/dreams-hero-video.mp4 ['HTTP/1.1 200 OK', 'HTTP/2 502 ']
+/api/auth/register JSON empty, no identity/password submitted: {"error":"Esta vista de prueba permite consultas; las operaciones comerciales están protegidas."}
+HTTP 403
+/api/auth/login JSON empty, no identity/password submitted: {"error":"Ingresá un correo válido y tu contraseña."}
+HTTP 400
+Supabase project nwsmbemwtexmrtpkgxrz verified ACTIVE_HEALTHY; public Auth settings: disable_signup=false, mailer_autoconfirm=false, email=true. No secret values stored. No authenticated session tested.
+Video URL follow-up (prior probe502): ['HTTP/1.1 200 OK', 'HTTP/2 404 ', 'content-type: text/html; charset=utf-8', 'x-robots-tag: noindex, follow']
