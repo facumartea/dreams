@@ -168,7 +168,7 @@ export function preserved_headers(response) {
 export function index_response(request, response) {
     const url = new URL(request.url), headers = preserved_headers(response);
     const public_response = url.origin === SITE_ORIGIN && (response.status === 200 || response.status === 304) && ['GET', 'HEAD'].includes(request.method) && (public_pages.has(url.pathname) || url.pathname === '/assets/dreams-social.png');
-    const filtered = url.pathname === '/catalogo.html' && [...url.searchParams.keys()].some(key => !['gender', 'utm_source', 'utm_medium', 'utm_campaign'].includes(key));
+    const filtered = url.pathname === '/catalogo.html' && (filter_model.parse(url.search).gender.length > 1 || [...url.searchParams.keys()].some(key => !['gender', 'utm_source', 'utm_medium', 'utm_campaign'].includes(key)));
     headers.set('X-Robots-Tag', public_response && !filtered ? 'index, follow' : 'noindex, follow');
     if (url.origin !== SITE_ORIGIN) headers.set('X-Robots-Tag', 'noindex, nofollow, noarchive');
     return new Response(response.body, { status: response.status, statusText: response.statusText, headers });

@@ -134,3 +134,16 @@ test('local HTTP entrypoints still use HTTPS for the immutable server destinatio
     assert.equal(f.calls[0].url, backend_url + '/'); assert.equal(response.status, 200);
     assert.match(response.headers.get('x-robots-tag'), /noindex/);
 });
+
+
+test('multi-gender catalog keeps general canonical and consistent noindex in HTML and HTTP headers', async () => {
+    const f = setup({ data: [sample] });
+    for (const query of ['gender=%5B%22mujer%22%2C%22unisex%22%5D', 'gender=mujer&gender=unisex']) {
+        const response = await f.get('/catalogo.html?' + query);
+        assert.match(response.headers.get('x-robots-tag'), /noindex/);
+        const html = await response.text();
+        assert.match(html, /name="robots" content="noindex,follow"/);
+        assert.match(html, /rel="canonical" href="https:\/\/dreams-perfumes.pages.dev\/catalogo.html"/);
+        assert.match(html, /<title>Perfumes de mujer, hombre y unisex \| DREAMS<\/title>/);
+    }
+});
