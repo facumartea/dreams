@@ -1,3 +1,12 @@
+# SEO/redacción/metadatos oficial — 2026-10-20
+
+- Auditoría oficial y aislamiento de PR49 frente a video/Auth: COMPLETADOS.
+- Metadatos HTML/OG, lecturas públicas acotadas, noscript, sitemap, imagen social y guía: IMPLEMENTADOS.
+- Checks/CI39454098983/PR52/QA aislada1eb4c3d8/noindex: COMPLETADOS.
+- Oficial56893d4c/e66a4ec, QA HTTP/Chromium390-1440/noJS, validadores y evidencia: COMPLETADOS.
+- Rollback82060492 disponible/SUCCESS/root-health200; revisión usuario y pendientes de contenido/Auth/redes separados.
+- Perfiles sociales reales/aclaración PWA si el profesor la exige: PENDIENTES, no bloquean SEO independiente.
+
 # Navegación y filtros — 2026-10-15
 
 - Aislamiento de oficial/PR48 y cambio visual: COMPLETADOS.

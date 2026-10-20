@@ -1,3 +1,13 @@
+# SEO oficial en implementación — 2026-10-20
+
+- Metadatos por página con canonical oficial/Open Graph/Twitter, sin keywords.
+- Fichas y sitemap usan sólo datos públicos reales con escape/límites, sin cookies de visitante ni fetch de imágenes.
+- Respaldo noscript,404/noindex/503, indexación pública acotada y protección de previews/privadas.
+- Imagen social con assets oficiales y guía académica; pendientes de contenido/redes separados.
+- CI144/check52/builds/audit y QA local/aislada/oficial390-1440/HTTP/sitemap/PNG/Nuvalidator PASS.
+- Oficial56893d4c/e66a4ec publicada, PR52 abierta; rollback82060492 retenido/healthy. Preview animada sin cambios, video sólo allí; documentación/evidencia guardadas.
+- Sin backend, video, Auth, datos comerciales ni DNS modificados.
+
 # 2026-10-15 — Navegación uniforme y panel de filtros
 
 - Aislado cambio visual sobre la oficial PR44; PR48/Auth y demás tareas excluidas.

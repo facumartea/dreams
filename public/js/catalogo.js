@@ -42,10 +42,17 @@ function update_catalog_theme(variant) {
 
 function update_catalog_metadata(gender) {
     const canonical = document.getElementById('canonical-url');
-    if (canonical) canonical.href = `${window.location.origin}/catalogo.html${gender ? `?gender=${encodeURIComponent(gender)}` : ''}`;
-    for (const [key, value] of Object.entries({ title: document.title, description: document.getElementById('catalog-description').textContent, url: canonical?.href })) {
+    const description = document.getElementById('catalog-description').textContent;
+    const filtered = [...new URLSearchParams(window.location.search).keys()].some(key => !['gender', 'utm_source', 'utm_medium', 'utm_campaign'].includes(key));
+    const robots = document.querySelector('meta[name="robots"]');
+    if (robots) robots.content = window.location.origin !== 'https://dreams-perfumes.pages.dev' ? 'noindex,nofollow' : filtered ? 'noindex,follow' : 'index,follow';
+    document.querySelector('meta[name="description"]').content = description;
+    if (canonical) canonical.href = `https://dreams-perfumes.pages.dev/catalogo.html${gender ? `?gender=${encodeURIComponent(gender)}` : ''}`;
+    for (const [key, value] of Object.entries({ title: document.title, description, url: canonical?.href })) {
         const meta = document.querySelector(`meta[property="og:${key}"]`);
         if (meta && value) meta.content = value;
+        const twitter = document.querySelector(`meta[name="twitter:${key}"]`);
+        if (twitter && value) twitter.content = value;
     }
 }
 

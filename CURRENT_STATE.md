@@ -1,3 +1,27 @@
+# SEO oficial publicado y validado — 2026-10-20
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+OFICIAL https://dreams-perfumes.pages.dev/, Pages56893d4c-5a55-44ee-90b5-de0464434e89 SUCCESS, commit publicadoe66a4ec643d0744479fdbc10c992d3762fbd5e23 (código1d86468). CI39455015888 y39454098983 SUCCESS144tests/check52/builds Workers-Pages/audit. PR52/rama codex/official-seo-metadata desde PR49/6f9ed42, sin merges; checkpoint posterior sólo documental. Runtime d5df723d/ec04a35 y flags/secretos intactos. Oficial recibe SEO, nunca video/animaciones.
+
+Metadatos iniciales oficiales por página/producto real, imagen social1200×630, noscript, sitemap dinámico52URLs,404/noindex/503 y escape/límites públicos. Públicas oficiales indexables; privadas, filtros de búsqueda, errores y previews noindex. SinJS ficha199 y46 enlaces; QA local/aislada1eb4c3d8/oficial390-1440 PASS: menús/filtros/ficha/acceso legacy/carrito visitante/quote/persistencia/contador/envío gratis, sin erroresJS/overflow. Nu oficial Inicio/ficha sin mensajes, PNG200fuenteidéntica, imagenCDN206JPEG. SharingDebugger pide login: tarjeta real en apps/caché NO verificada. Safari físico, Admin/login/registro autenticados y CWV campo NO probados.
+
+Preview cinematográfica https://dreams-preview.pages.dev/ sigueba6891f4/c8439ac, lectura JS idéntica por hash; MP4oficial404/preview200. Supabase/AuthPR48/roles/credenciales/datos/DNS/enrutamiento/pagos comerciales sin cambios; no envíos de formularios a clientes ni pedidos. Rollback82060492 retenidoSUCCESS/root-health200, procedimiento documentado/no ejecutado. Guía/estilo/evidencia/pendientes docs/seo_y_metadatos.md y docs/evidence/seo. Instagram/Facebook no existen confirmado por usuario; sin enlaces vacíos y WhatsApp conservado.19/46 descripciones muy cortas: deuda de contenido, no inventada ni modificada. PUSH/DEPLOY OFICIAL:SÍ; alcance terminado, porcentaje global no recalculado. Próxima acción: revisión del usuario y completar descripciones sólo con información comprobada en una tarea separada; AuthPR48 sigue independiente.
+
+# SEO validado en despliegue aislado — publicación oficial pendiente — 2026-10-20
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+PR52/rama codex/official-seo-metadata desde PR49/6f9ed42. Código1d86468, CI39454098983 SUCCESS144tests/check52/builds/audit;47 focalizadas finales PASS. Pages1eb4c3d8-a24a-4426-aac4-8cb0b46f1049 SUCCESS/preview, https://1eb4c3d8.dreams-perfumes.pages.dev/, noindex/robotsDisallowall. QA local y aislada390/1440 metadatos/ficha/menús/filtros/acceso/noJS PASS; carrito real/quote/persistencia local PASS. HTTP404/privadas/Admin403/52URLs sitemap e imagenPNG200bytesidénticos PASS. Nuvalidator ficha199sinmensajes; CDN real206image/jpeg. Sin tarjeta WhatsApp/Facebook observada, Safari físico o login/Admin autenticados.
+
+Oficial continúa82060492/cd71d12, rollbackretenidoSUCCESS. Artefacto530955bytes SHAa68f758060dd7f5e31e114d0218b4cc9e4b155228847c7911e5de6eb6d03058a. Pendiente publicación oficial autorizada con etiqueta técnica codex/cloudflare-hosting-migration y commit Git real del checkpoint, mismo código probado; validar y cerrar evidencia. No AuthPR48, video/animacionesPR51, backend, DNS, roles, datos ni pagos cambiados. dreams-preview c8439ac/ba6891f4 permanece independiente. Instagram/Facebook no existen según usuario: dejar pendientes, sin enlaces vacíos; WhatsApp conservado. Guía real/rollback en docs/seo_y_metadatos.md. Sin porcentaje global inventado.
+
+# SEO oficial en preparación — 2026-10-20
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Rama codex/official-seo-metadata desde6f9ed42/PR49 (oficialcd71d12/Pages82060492, backendd5df723d/ec04a35). Previewvisual PR51 terminada c8439ac/ba6891f4, intacta. AuthPR48 y video EXCLUIDOS. Metadatos iniciales oficiales, producto/noscript y sitemap con API pública acotada;404/noindex/503, imagen social1200×630, caché privada/cookies conservadas. Sólo indexación pública oficial cambia por código; sin flags/backend/Auth/datos.142tests completos/check52/builds Workers- Pages/audit PASS en tanda inicial;47tests focalizados finales y helpers<=20 PASS tras guardas de género y destino HTTPS/puerto. QA local compilada en curso; primer harness Node retenía Content-Encoding al descomprimir y se corrigió sólo en /tmp. No deploy ni commit SEO aún. Docs/pendientes/rollback82060492 en docs/seo_y_metadatos.md. Continuar pruebas/build/QA aislada noindex/PR/CI y sólo después oficial autorizada. Instagram/Facebook solicitados y sin datos confirmados;19/46 descripciones muy cortas documentadas sin inventar contenido.
+
 # Navegación y filtros publicados — 2026-10-15
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.

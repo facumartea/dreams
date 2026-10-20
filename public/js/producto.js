@@ -28,16 +28,20 @@ async function load_product_detail() {
 }
 
 function update_product_metadata(product) {
-    const title = `${product.name} | DREAMS`;
-    const description = `${product.brand} ${product.name}, ${product.size_ml} ml. ${product.family}. Consultá precio, notas e intensidad en DREAMS.`;
-    const canonical_url = `${window.location.origin}/producto.html?id=${encodeURIComponent(product.id)}`;
+    const name = String(product.name).trim(), brand = typeof product.brand === 'string' ? product.brand.trim() : '';
+    const identity = brand && !name.toLocaleLowerCase('es').includes(brand.toLocaleLowerCase('es')) ? `${name} de ${brand}` : name;
+    const title = `${identity} | DREAMS`;
+    const detail = typeof product.description === 'string' ? product.description.trim().replace(/\s+/g, ' ') : '';
+    const description = detail.length > 10 ? detail.slice(0, 200) : `${identity}. Conocé esta fragancia del catálogo de DREAMS.`;
+    const canonical_url = `https://dreams-perfumes.pages.dev/producto.html?id=${encodeURIComponent(product.id)}`;
     document.title = title;
     document.querySelector('meta[name="description"]').content = description;
     document.getElementById('canonical-url').href = canonical_url;
-    document.getElementById('og-title').content = title;
-    document.getElementById('og-description').content = description;
-    document.getElementById('og-url').content = canonical_url;
-    document.getElementById('og-image').content = safe_image_url(product.image_url);
+    for (const [key, value] of Object.entries({ title, description, url: canonical_url, image: new URL(safe_image_url(product.image_url), window.location.origin).href })) {
+        const og = document.querySelector(`meta[property="og:${key}"]`), twitter = document.querySelector(`meta[name="twitter:${key}"]`);
+        if (og) og.content = value;
+        if (twitter) twitter.content = value;
+    }
 }
 
 async function render_product_detail(product) {

@@ -14,6 +14,10 @@ for (const [pathname, relative, content_type] of [
     ['/cuenta.html', 'public/cuenta.html', 'text/html; charset=utf-8'],
     ['/checkout.html', 'public/checkout.html', 'text/html; charset=utf-8'],
     ['/checkout-resultado.html', 'public/checkout-resultado.html', 'text/html; charset=utf-8'],
+    ['/404.html', 'public/404.html', 'text/html; charset=utf-8'],
+    ['/robots.txt', 'public/robots.txt', 'text/plain; charset=utf-8'],
+    ['/sitemap.xml', 'public/sitemap.xml', 'application/xml; charset=utf-8'],
+    ['/js/producto.js', 'public/js/producto.js', 'application/javascript; charset=utf-8'],
     ['/js/motion.js', 'public/js/motion.js', 'application/javascript; charset=utf-8'],
     ['/js/carrito.js', 'public/js/carrito.js', 'application/javascript; charset=utf-8'],
     ['/js/presentation.js', 'public/js/presentation.js', 'application/javascript; charset=utf-8'],
@@ -27,10 +31,13 @@ for (const [pathname, relative, content_type] of [
     if (content_type.startsWith('text/html')) body = body.replace(/<footer class="site-footer">[\s\S]*?<\/footer>/, footer);
     assets[pathname] = { body, content_type, etag: `"${createHash('sha256').update(body).digest('hex')}"` };
 }
+const social = await readFile(new URL('../public/assets/dreams-social.png', import.meta.url));
+assets['/assets/dreams-social.png'] = { body: social.toString('base64'), encoding: 'base64', content_type: 'image/png', etag: `"${createHash('sha256').update(social).digest('hex')}"` };
 assets['/'] = assets['/index.html'];
-const proxy = await readFile(new URL('../pages/proxy.mjs', import.meta.url), 'utf8');
+const seo = (await readFile(new URL('../pages/seo.mjs', import.meta.url), 'utf8')).replace(/^export /gm, '');
+const proxy = (await readFile(new URL('../pages/proxy.mjs', import.meta.url), 'utf8')).replace(/^import .*?from '\.\/seo\.mjs';/m, seo);
 await mkdir(new URL('../dist/pages/', import.meta.url), { recursive: true });
 await writeFile(new URL('../dist/pages/_worker.js', import.meta.url),
-    proxy.replace('export default create_proxy();', `export default create_proxy(${JSON.stringify(assets)}, ${JSON.stringify({ backend_url: release.backend_url })});`));
+    proxy.replace('export default create_proxy();', `export default create_proxy(${JSON.stringify(assets)}, ${JSON.stringify({ backend_url: release.backend_url, seo: true })});`));
 await writeFile(new URL('../dist/pages/_routes.json', import.meta.url), JSON.stringify({ version: 1, include: ['/*'], exclude: [] }));
 console.log(`Pages built: shared public navigation/footer overlay; all other routes pinned to source ${release.source_commit}. Secrets remain server-only.`);
