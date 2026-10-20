@@ -1,5 +1,23 @@
 # Filtros por colección y diagnóstico de acceso — 2026-10-20
 
+## Publicación comprobada
+
+OFICIAL https://dreams-perfumes.pages.dev/ — fuente **461c17dcdce6608e7854d9e72bb8eefed4b73935**, Pages **f44a6069-a891-4d1b-a035-0e0dc5a00a40**, SUCCESS/production confirmado por API y HTTP. PR53 https://github.com/facumartea/dreams/pull/53 abierta, sin merge. CI final [39517310148](https://github.com/facumartea/dreams/actions/runs/39517310148) SUCCESS:154tests/check54/audit/builds Workers-Pages. Artefacto542070bytes SHA256804beef201c00e8d78587c948cec433fab58804171baffc80e5aea762d6751f5, sin secretos ni video.
+
+Primera validación aislada88d39791 y oficialeb3cca0c/0425430 completaron QA funcional390/1440. El HTTP audit encontró X-Robots-Tag index en multigénero aunque el HTML ya era noindex;461c17d corrige únicamente esa cabecera y añade regresión (18tests focalizados PASS). Validación final aislada https://b2f221aa.dreams-perfumes.pages.dev/ SUCCESS; mismo artefacto promovido a la oficial. Una comprobación del MP4 inexistente dio502; la repetición devolvió404, sin atribuir causa no comprobada. HTML/cabecera final noindex coherentes, metadatos canónicos correctos y seis paletas/capturas y recorrido multiselección/selecciones ocultas/URL/historial nuevamente comprobados en la oficial461c17d. Cinco assets remotos iguales al source; health200, Admin403, video404. La fuente publicada sigue461c17d aunque un checkpoint documental posterior avance HEAD.
+
+La preview cinematográfica **no cambió**: dreams-preview.pages.dev/Pagesba6891f4/sourcec8439ac SUCCESS, confirmado por API. Backendd5df723d/ec04a35, Auth, DNS, roles, datos y credenciales intactos. DEPLOY OFICIAL:SÍ; registro NO resuelto y login real NO verificado.
+
+### Capturas de la oficial
+
+| Colección | Celular 390×844 | Escritorio 1440×900 |
+|---|---|---|
+| Mujer | [Captura](evidence/collection-filters/official-mobile-mujer.png) | [Captura](evidence/collection-filters/official-desktop-mujer.png) |
+| Hombre | [Captura](evidence/collection-filters/official-mobile-hombre.png) | [Captura](evidence/collection-filters/official-desktop-hombre.png) |
+| Unisex | [Captura](evidence/collection-filters/official-mobile-unisex.png) | [Captura](evidence/collection-filters/official-desktop-unisex.png) |
+
+Logs distinguen local-browser, staging-browser, official-full-browser(0425430) y official-final-browser(461c17d), más official-http. En el alias aislado, la política Origin del backend protege las cotizaciones POST: allí sólo se verificó persistencia/contador de carrito; cotización/envío gratis/carrito completo sí se comprobaron en local y en la oficial. No se amplió APP_ORIGINS ni se debilitaron protecciones para pasar un test.
+
 ## Alcance y dependencia
 
 Rama `codex/collection-multiselect` desde `5e56469`, PR52 (SEO ya publicado como `e66a4ec`), dependiente de PR49/44/42/39/37/34. Sin merges ni video. No se integra el backend de PR48 ni se reimplementa su corrección: se conserva `052b224` en su rama `codex/customer-registration` para publicarla cuando pueda validarse Auth. No hay cambios en productos, credenciales, roles, datos comerciales o DNS.
@@ -49,14 +67,14 @@ Sólo después de esa revisión: guardar el valor anterior, PATCH únicamente ma
 
 ## Validación y publicación
 
-- Suite local: 153/153 tests; sintaxis de 54 archivos correcta. Regresiones de listas, OR/AND antes del límite, datos hostiles como texto, JSON inválido, errores/truncamiento/red, HEAD, escrituras protegidas, historial/modelo y respuestas atrasadas.
+- Suite local completa:153/153 tests antes del ajuste final exclusivamente HTTP;18tests focalizados finales PASS. CI final461c17d:154/154 tests, sintaxis de54 archivos, audit y ambos builds correctos. Regresiones de listas, OR/AND antes del límite, datos hostiles como texto, JSON inválido, errores/truncamiento/red, HEAD, escrituras protegidas, historial/modelo y respuestas atrasadas.
 - Workers dry-run y build Pages correctos. No hay tipos/lint separados en scripts del proyecto; se ejecutó check y revisión AST de helpers modificados/nuevos, todos de hasta 20 líneas.
 - Chromium local con Worker Pages compilado y lecturas del backend real, 390×844 y 1440×900: tres paletas, multiselección/4 resultados reales Chanel-Dior × mujer-unisex, búsqueda de marcas sin perder selección, borrador/cancelar, Todos/última, radios exclusivos, recarga/historial, vacíos, fallo simulado/reintento, foco/Escape/scroll y carrito visitante/persistencia/acceso legacy. Sin pageerrors ni scroll horizontal en esa cobertura. Primer recorrido detectó el scroll tardío; corregido y recorrido completo repetido con éxito. La inyección de error de catálogo es local y explícita.
 - Capturas **locales**, no de un deployment nuevo: `docs/evidence/collection-filters/{mobile,desktop}-{mujer,hombre,unisex}.png`; log local en el mismo directorio. No Safari/iPhone físico ni autenticación remota verificados.
 - La oficial conserva hero estático y health200. No se modifica la preview cinematográfica.
 
-El primer intento de publicación quedó bloqueado: Cloudflare execute/search devolvían Internal error aun en lecturas; Wrangler4.147.0 no está autenticado. El usuario reconectó Cloudflare y la consulta posterior confirmó cuenta/proyecto dreams-perfumes, canónico56893d4c/e66a4ec SUCCESS y etiqueta de producción codex/cloudflare-hosting-migration. El acceso mediante integración está restaurado. La reconexión no modifica Auth ni concede una sesión Supabase. Preview nueva y promoción oficial están en preparación, todavía no declaradas publicadas. No se piden secretos por chat.
+El primer intento de publicación quedó bloqueado: Cloudflare execute/search devolvían Internal error aun en lecturas; Wrangler4.147.0 no está autenticado. El usuario reconectó Cloudflare y la consulta posterior confirmó cuenta/proyecto dreams-perfumes, canónico56893d4c/e66a4ec SUCCESS y etiqueta de producción codex/cloudflare-hosting-migration. El acceso mediante integración está restaurado. La reconexión no modifica Auth ni concede una sesión Supabase. Preview y promoción oficial se completaron posteriormente como se documenta al inicio. No se piden secretos por chat.
 
-Con acceso: leer proyecto/canónico actual, publicar primero en branch Pages aislada de esta PR, repetir QA remoto, y sólo después promover el mismo artefacto a la etiqueta de producción vigente. No promover video/Auth ni otros branches. La configuración backend aprobada no cambia.
+Procedimiento ejecutado: lectura del canónico, publicación aislada en la branch de esta PR, QA remota y promoción del mismo artefacto a la etiqueta de producción vigente, con comprobación del canónico previa a cada promoción. No promover video/Auth ni otros branches. La configuración backend aprobada no cambia.
 
-Rollback preparado: última oficial informada Pages `56893d4c-5a55-44ee-90b5-de0464434e89`/fuente `e66a4ec`, URL inmutable https://56893d4c.dreams-perfumes.pages.dev/ y health **200 comprobados en esta tarea**. Conservarla, reconfirmar id/canónico/estado por API antes de publicar y usar POST `/accounts/9f3d7af60fcb0c2b4fff8570843588f9/pages/projects/dreams-perfumes/deployments/56893d4c-5a55-44ee-90b5-de0464434e89/rollback` sólo si fuera necesario. No ejecutado, no deployments eliminados. Reversión de código adicional: revertir commits propios mediante nuevo commit, nunca force push.
+Rollback preparado: oficial anterior a esta tarea Pages `56893d4c-5a55-44ee-90b5-de0464434e89`/fuente `e66a4ec`, URL inmutable https://56893d4c.dreams-perfumes.pages.dev/ y health **200 comprobados en esta tarea**. Conservarla, id y estado SUCCESS reconfirmados por API antes y después de publicar y usar POST `/accounts/9f3d7af60fcb0c2b4fff8570843588f9/pages/projects/dreams-perfumes/deployments/56893d4c-5a55-44ee-90b5-de0464434e89/rollback` sólo si fuera necesario. No ejecutado, no deployments eliminados. Reversión de código adicional: revertir commits propios mediante nuevo commit, nunca force push.

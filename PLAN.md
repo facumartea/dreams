@@ -1,3 +1,12 @@
+# Resultado filtros oficiales — 2026-10-20
+
+- PR53/código461c17d/CI39517310148/154tests/check54/audit/builds: COMPLETADOS.
+- Paletas/listas/API Pages/URL/menú/scroll y metadatos coherentes: IMPLEMENTADOS.
+- QA local/aislada/oficial390-1440 y capturas/HTTP finales: PASS en cobertura documentada.
+- Oficialf44a6069/461c17d y rollback56893d4c SUCCESS/health200: COMPLETADOS; no rollback ejecutado.
+- Registro403/Confirm email activo: COMPROBADOS, resolución BLOQUEADA por Auth Management; login autenticado/customer/Admin de cuenta nueva NO VERIFICADOS.
+- PR48/052b224 preservada, no integrada; video y previewcinemática intactos. Próximo: revisión visual y acceso Auth seguro para continuar esa corrección aparte.
+
 # Filtros multiselección y revisión Auth — 2026-10-20
 
 - Git/base oficial PR52/SEO, instrucciones y aislamiento: COMPLETADOS.

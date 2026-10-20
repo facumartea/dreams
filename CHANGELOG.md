@@ -1,3 +1,10 @@
+# 2026-10-20 — Filtros oficiales publicados
+
+- Publicados461c17d/Pagesf44a6069 SUCCESS y PR53 sin merge; CI39517310148 verde154tests/check54/audit/builds.
+- QA local/aislada/oficial móvil/escritorio de paletas/multiselección/URL/historial/error-retry/carrito/acceso y capturas finales. Última corrección alinea X-Robots-Tag con HTML noindex de varios géneros; test de regresión añadido.
+- Rollback56893d4c retenido y health200. Cloudflare reconectado por usuario; sin DNS, backend, Auth, datos, roles, credenciales ni video cambiados. Previewcinemática ba6891f4/c8439ac intacta.
+- Registro sigue403 y Confirm email activo; login real no verificado. Pendiente Auth Management y PR48/052b224 preservada, sin presentar ese flujo como resuelto.
+
 # 2026-10-20 — Filtros multiselección y paletas, pendiente de publicación
 
 - Reutilizados tokens Mujer/Unisex en un único panel; Hombre/general conservados.
