@@ -1,3 +1,7 @@
+# Actualización Admin — 2026-10-21
+
+Rama codex/admin-cards-audit desde PR53/c428daf, selección PR46 sin merge ni Auth55/video. Encabezado, siete tarjetas, buscador, stock bajo, validación de imágenes, guardado protegido y Editar/Eliminar104×44 implementados. Suite279 PASS y QA local documentados en docs/admin_audit.md y matriz por área. Preview read-only en preparación; NO publicación oficial sin sesión Admin real. Auth Management/token y QA A/B siguen bloqueados, PR55 preservada. Oficial461c17d/f44a6069 y backendd5df intactos. Sin porcentaje global inventado; fase implementación/QA local terminada, fase QA autenticada/publicación bloqueada. Próximo: publicar candidato protegido, verificar guardas remotas y completar acceso seguro de QA.
+
 # Resultado filtros oficiales — 2026-10-20
 
 - PR53/código461c17d/CI39517310148/154tests/check54/audit/builds: COMPLETADOS.

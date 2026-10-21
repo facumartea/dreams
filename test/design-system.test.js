@@ -172,13 +172,13 @@ test('carrito usa Comprar y checkout integra cupones persistentes en mayúsculas
     assert.match(checkout, /toUpperCase\(\)/);
     assert.match(checkout, /sessionStorage\.setItem\('dreams_coupon'/);
     assert.match(checkout, /\/api\/coupons\/validate/);
-    assert.match(admin, /data-tab="cupones"/);
+    assert.match(admin, /id="tab-cupones"/);
 });
 
 test('Admin expone pedidos y gestión persistente de opiniones', () => {
     const admin = fs.readFileSync(path.join(root, 'views/admin.html'), 'utf8');
     const script = fs.readFileSync(path.join(root, 'public/js/admin.js'), 'utf8');
-    assert.match(admin, /data-tab="pedidos"/);
+    assert.match(admin, /id="tab-pedidos"/);
     assert.match(admin, /id="review-search"/);
     assert.match(script, /\/api\/admin\/reviews\/\$\{id\}/);
     assert.match(script, /with_pending/);
@@ -206,13 +206,13 @@ test('Admin valida y previsualiza la URL directa antes de guardar', () => {
     assert.match(admin, /id="image-preview-image"/);
     assert.match(admin, /referrerpolicy="no-referrer"/);
     assert.match(admin, /\/js\/admin-console-v3\.js/);
-    assert.match(script, /function reset_form\(\)[\s\S]*editing_product_id = ''[\s\S]*product-form'\)\.reset\(\)[\s\S]*product-id'\)\.value = ''[\s\S]*form-label'\)\.textContent = 'NUEVO PRODUCTO'/);
+    assert.match(script, /function reset_form\(force = false\)[\s\S]*editing_product_id = ''[\s\S]*product-form'\)\.reset\(\)[\s\S]*product-id'\)\.value = ''[\s\S]*form-label'\)\.textContent = 'NUEVO PRODUCTO'/);
     assert.match(script, /preview_product_image/);
-    assert.match(script, /image\.onload/);
-    assert.match(script, /image\.onerror/);
-    assert.match(script, /product_image_preview_state !== 'valid'/);
+    assert.match(script, /probe\.onload/);
+    assert.match(script, /probe\.onerror/);
+    assert.match(script, /!is_current_product_image\(\)/);
     assert.match(script, /product_image_load_timer/);
-    assert.match(script, /}, 6000\);/);
+    assert.match(script, /, 6000\);/);
     assert.match(script, /La URL ingresada no apunta a una imagen válida/);
     assert.match(server, /validate_product_image_url/);
     assert.match(server, /imgSrc: \["'self'", 'data:', 'https:'\]/);
