@@ -70,3 +70,10 @@ Pruebas locales no equivalen a autenticación real remota. No se afirma revocaci
 Conservar Pagesf44a6069/461c17d y backendd5df723d. Antes de promover, reconfirmar SUCCESS/raíz/health y conservar POST Pages deployments/f44a6069-a891-4d1b-a035-0e0dc5a00a40/rollback. El destino Auth es un campo opcional: revertir release/proxy por nuevo commit restablece todas las rutas al backend anterior. No borrar previews/deployments ni usar force push. No rollback ejecutado.
 
 Auth config: registrar snapshot antes de cambiar; rollback sólo mailer_autoconfirm al valor anterior, sin alterar usuarios existentes o sesiones. No se cambiaron Auth global, permisos, datos comerciales, roles, stock, credenciales ni DNS. Video sólo preview anterior, fuera de esta rama. Próximo: publicar/verificar candidato aislado; resolver acceso Auth Management y únicamente después completar signup real y publicación oficial autorizada.
+
+
+## Candidato Auth publicado (no oficial)
+
+Backend aislado de37b97d-005c-4db3-8337-c39ca8b61182, preview5abc3210b94b4f26bf2ecbfe8e356db8 auth-session-review, fuente db726a98115a3b9d2773d03633e6eecd1462701b. CI39521339546 SUCCESS177tests/check61 y builds normal/Auth/Pages. BundleAuth2187535bytes SHA256c60414516a6c4cd82cf06794d9609eef398344295706c1c2b082b15846c8724a, sin valores Secret. La base de previews aporta SUPABASE_SECRET_KEY por herencia implícita: un primer intento con type:inherit explícito devolvió404 porque buscaba una versión de producción; se corrigió omitiendo ese override, sin leer/cambiar el secreto ni configuración base.
+
+El release de esta rama añade sólo auth_backend_url/source para un candidato Pages. backend_url principal d5df723d/ec04a35 no cambia. Publicación oficial sigue bloqueada hasta QA autenticada y Auth Management; conservar el nuevo campo en esta rama no significa que la oficial haya cambiado.
