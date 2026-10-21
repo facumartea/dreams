@@ -1,0 +1,14 @@
+mobile visitor stage
+mobile signup stage
+mobile fresh session stage
+mobile B stage
+mobile reviews stage
+mobile clear stage
+mobile LOCAL FIXTURE PASS: signup/session/customer, guest merge once, second browser recovery, account isolation, quantities/clear, review owner/foreign404/visitor401/delete confirmation, logout/private purge/Admin403/no overflow/JS errors.
+desktop visitor stage
+desktop signup stage
+desktop fresh session stage
+desktop B stage
+desktop reviews stage
+desktop clear stage
+desktop LOCAL FIXTURE PASS: signup/session/customer, guest merge once, second browser recovery, account isolation, quantities/clear, review owner/foreign404/visitor401/delete confirmation, logout/private purge/Admin403/no overflow/JS errors.

@@ -18,6 +18,8 @@ for (const [pathname, relative, content_type] of [
     ['/404.html', 'public/404.html', 'text/html; charset=utf-8'],
     ['/robots.txt', 'public/robots.txt', 'text/plain; charset=utf-8'],
     ['/sitemap.xml', 'public/sitemap.xml', 'application/xml; charset=utf-8'],
+    ['/js/account-cart.js', 'public/js/account-cart.js', 'application/javascript; charset=utf-8'],
+    ['/js/reviews.js', 'public/js/reviews.js', 'application/javascript; charset=utf-8'],
     ['/js/cuenta.js', 'public/js/cuenta.js', 'application/javascript; charset=utf-8'],
     ['/js/producto.js', 'public/js/producto.js', 'application/javascript; charset=utf-8'],
     ['/js/motion.js', 'public/js/motion.js', 'application/javascript; charset=utf-8'],
@@ -42,6 +44,6 @@ const catalog = (await readFile(new URL('../pages/catalog.mjs', import.meta.url)
 const proxy = (await readFile(new URL('../pages/proxy.mjs', import.meta.url), 'utf8')).replace(/^import .*?from '\.\/seo\.mjs';/m, seo).replace(/^import .*?from '\.\/catalog\.mjs';/m, model + '\nconst filter_model = catalog_filter_model;\n' + catalog);
 await mkdir(new URL('../dist/pages/', import.meta.url), { recursive: true });
 await writeFile(new URL('../dist/pages/_worker.js', import.meta.url),
-    proxy.replace('export default create_proxy();', `export default create_proxy(${JSON.stringify(assets)}, ${JSON.stringify({ backend_url: release.backend_url, ...(release.auth_backend_url ? { auth_backend_url: release.auth_backend_url } : {}), seo: true })});`));
+    proxy.replace('export default create_proxy();', `export default create_proxy(${JSON.stringify(assets)}, ${JSON.stringify({ backend_url: release.backend_url, ...(release.auth_backend_url ? { auth_backend_url: release.auth_backend_url, customer_data: release.customer_data === true } : {}), seo: true })});`));
 await writeFile(new URL('../dist/pages/_routes.json', import.meta.url), JSON.stringify({ version: 1, include: ['/*'], exclude: [] }));
 console.log(`Pages built: shared public navigation/footer overlay; all other routes pinned to source ${release.source_commit}. Secrets remain server-only.`);

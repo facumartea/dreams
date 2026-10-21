@@ -28,3 +28,24 @@ test('destinos Auth no aprobados fallan cerrados sin red, sin seguir redirects c
     const proxy = create_proxy({}, { backend_url, auth_backend_url, fetch_backend: async req => { assert.equal(req.redirect, 'manual'); return new Response(null, { status: 302, headers: { Location: 'https://evil.invalid' } }); } });
     assert.equal((await proxy.fetch(new Request('https://dreams-perfumes.pages.dev/api/auth/me'), {})).status, 302);
 });
+
+test('customer data routes are explicit and never route administrative/commercial writes to the isolated backend', async () => {
+    for (const customer_data of [false, true]) {
+        const seen = [];
+        const proxy = create_proxy({}, { backend_url, auth_backend_url, customer_data, fetch_backend: async req => { seen.push(new URL(req.url)); return Response.json({}); } });
+        for (const path of ['/api/cart/account', '/api/cart/config', '/api/reviews', '/api/reviews/123', '/api/reviews/123/extra', '/api/cart/quote', '/api/checkout/config', '/api/presentation/session', '/api/presentation/payment', '/api/presentation/result', '/api/checkout/session', '/api/admin/reviews/123']) {
+            await proxy.fetch(new Request('https://dreams-perfumes.pages.dev' + path), {});
+            const isolated = ['/api/cart/account', '/api/cart/config', '/api/reviews', '/api/reviews/123', '/api/cart/quote', '/api/checkout/config', '/api/presentation/session', '/api/presentation/payment', '/api/presentation/result'].includes(path);
+            assert.equal(seen.at(-1).origin, isolated && customer_data ? auth_backend_url : backend_url);
+        }
+    }
+});
+test('new customer scripts get existing upstream security headers without requiring old backend copies', async () => {
+    for (const path of ['/js/account-cart.js', '/js/reviews.js']) {
+        const proxy = create_proxy({ [path]: { body: '/* fixture */', content_type: 'application/javascript', etag: '"fixture"' } }, {
+            backend_url, fetch_backend: async req => { assert.equal(new URL(req.url).pathname, '/js/app.js'); return new Response('old', { headers: { 'Content-Security-Policy': "default-src 'self'" } }); }
+        });
+        const response = await proxy.fetch(new Request('https://dreams-perfumes.pages.dev' + path), {});
+        assert.equal(response.status, 200); assert.equal(await response.text(), '/* fixture */'); assert.match(response.headers.get('Content-Security-Policy'), /self/);
+    }
+});

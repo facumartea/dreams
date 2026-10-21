@@ -1,3 +1,37 @@
+# Cierre datos por UUID: preview verificada, oficial pendiente Auth — 2026-10-21
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+PR55draft/codex/customer-data-isolation depende PR54/53 y selecciona PR45, sin merges. Preview https://customer-data-review.dreams-perfumes.pages.dev/ Pages6a832bb4/source45d05a7df340d53f3a9ebc76ddc2cb4c5e1049d4; backend9f5d442a/source984d3539529ea0f4a7a9b531ea2e593168d13ce1. CI39632902575 SUCCESS197/check67/audit/tresbuilds;22 tests de ajuste de rutas PASS. No repetir procesos acreditados.
+
+BLOQUEO DE ORIGEN RESUELTO en candidato: cart/quote/config y presentation académicos reutilizados en servicio limitado, firma por propósito/origen derivada en memoria, Secret heredado. Backend productivo d5df723d/orígenes/checkout comercial intactos. QA REMOTA390/1440 menus/filtros/vacío/limpiar/visitante/cantidades/reload/quote200/envío gratis/checkout académico una vez/referencia estable/noerrores/nooverflow PASS. Referencias y capturas final-remote docs/evidence/customer-data. Registro vacío400/origenajeno403, privadas anónimas401/Admin403 ya verificados.
+
+Registro sin correo y A/B auténticos SIGUEN BLOQUEADOS por Confirm email activo, sin Auth Management ni entrada oculta/gestor usable. No solicitar token por chat/comandos/archivos. No signup real ni correos:10 cuentas/5 pendientes conservadas;0carritos/operaciones/opiniones/pedidos comerciales después de QA. Pruebas locales con fixtures de carrito/opiniones/ownDelete/B404/visitor401 NO equivalen a JWT remoto.
+
+BD migración20261021004927 ya aplicada: operation_id/índice, RLSownerDELETE, TRUNCATE anon/authenticated retirado; policies Admin intactas. Sin borrar datos, cambiar credenciales/roles Admin ni stock. Oficial web siguef44a6069/461c17d, sin despliegue de esta tarea. Previewvideo ba6891f4/c8439ac intacta. Rollback retenido. PUSH SÍ; DEPLOY PREVIEW SÍ; DEPLOY OFICIAL NO. Próximo: acceso Management/revisión consumidores/Confirm email autorizado + QA real A/B antes de promover. Guía/matriz docs/customer_data_isolation.md. Sin porcentaje global inventado.
+
+# Candidato de datos por usuario publicado; oficial bloqueada — 2026-10-20
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+PR55 DRAFT/codex/customer-data-isolation depende PR54, selección PR45, sin merges/video. Pages b741d630 SUCCESS/e24d5c54db68c43bc4cb4036c43bad9477517855 en https://customer-data-review.dreams-perfumes.pages.dev/cuenta.html; backend limitado2e099ccd/source9705521/previeweb7558bb. CI39524717095 y39524608689 SUCCESS197/check67/audit/tresbuilds. No secreto en frontend; herencia implícita Secret base, clave contexto derivada en memoria. Otras rutas conservan backendd5df723d/ec04a35.
+
+QA remota ANÓNIMA390/1440: formularios/pestañas/autofill/nooverflow/noerroresJS, register{}400/origenajeno403, me null, privadas401/Admin403, noindex y visitante añadir/persistir PASS. Cotización del nuevo alias BLOQUEADA403 por Origin backend legado; no reescribir ni quitar protección. A/B/login/customer/logout/opiniones propias reales BLOQUEADOS por Confirm email activo y ausencia Auth Management/identidades controladas. No mecanismo de entrada oculta ni gestor usable: no pedir token por chat/comandos/archivos.5 cuentas pendientes conservadas.
+
+BD migración20261021004927 aplicada/verificada: operation_id+índice, DELETE dueño, TRUNCATE excesivo retirado; RLS y políticas Admin intactas, sin borrar filas ni cambiar usuarios/credenciales/stock/pedidos. Código oficial sigue f44a6069/461c17d, registro403/cart/account404. Previewvideo ba6891f4/c8439ac intacta. Rollback retenido. Evidencia/matriz/pendientes docs/customer_data_isolation.md y docs/evidence/customer-data. PUSH SÍ; DEPLOY PREVIEW SÍ; DEPLOY OFICIAL NO. Próximo: acceso Management/revisión consumidores/ajuste autorizado, resolver Origin sólo en candidato y QA auténtica antes de promover. Sin porcentaje inventado.
+
+# Datos por usuario en candidato aislado — 2026-10-20
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Rama codex/customer-data-isolation desde PR54/8548c59, PR53/oficial461c17d preservados. Carrito reutilizado selectivamente de PR45/dc28c23; no merge ni release histórico/video. Signup normal de PR54 intacto; Auth config todavía requiere correo y no hay Auth Management ni entrada oculta/gestor utilizable. No pedir token por chat/comandos/archivos. No cuentas reales nuevas ni correos, credenciales Admin intactas.
+
+Carrito por UUID/idempotencia/firma/outbox por dueño, me fallido oculta privado, logout invalida lecturas pendientes; config/operaciones separadas del presupuesto quote30/15min. Opiniones por UUID/nombre de sesión, API sin UUID/correo/operation_id, publicación idempotente, Eliminar confirmado/JWT+filtro dueño; B404/visitante401 en fixtures. Moderación Admin conserva rutas/policies. Helpers nuevos/carrito/confirmación<=20; monolito legacy no refactorizado globalmente.
+
+BD migración20261021004927_customer_review_ownership APLICADA: operation_id nullable+índice único, RLSownerDELETE; retirado TRUNCATE anon/authenticated por omitirRLS. RLS=true/Adminpoliciesintactas/ambostrunclfalse verificados. Sin filas borradas ni stock/pedidos/comercio modificado. Tablas de PR45 ya estaban aplicadas y vacías;5/10 cuentas pendientes (2 recientes), sólo conteos, no modificadas.
+
+196tests suite PASS, builds normal/Auth/Pages; QA LOCAL Chromium390/1440 con dos cuentas/productos fixtures más visitante PASS: merge/recovery/cantidades/clear/logout/ownreviewdelete/foreign404/visitor401/Admin403. No equivalen a Auth remoto. Guía/matriz/rollback docs/customer_data_isolation.md; capturas/log docs/evidence/customer-data. Preview recurso customer-data-review/eb7558bb62454a92a7a8fadd7065e71c creado, publicación de código y Pages pendiente. Oficial f44a6069/461c17d intacta, rollback retenido. Próximo: commit/push/PR/CI y preview, luego Auth Management+dos identidades controladas y QA auténtica antes de promover oficial. Sin porcentaje inventado.
+
 # Auth: preview publicada; acceso Management bloqueado — 2026-10-21
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.

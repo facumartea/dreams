@@ -13,11 +13,12 @@ function blocked_message(path) {
     return 'Esta operación de escritura no está habilitada en esta preview.';
 }
 
-function preview_write_guard(enabled) {
+function preview_write_guard(enabled, customer_data = false) {
     return (request, response, next) => {
         // La excepción es POST exacto: no habilitar prefijos ni escrituras administrativas.
         if (!enabled || !writes.has(request.method)) return next();
         if (request.method === 'POST' && allowed_posts.has(request.path)) return next();
+        if (customer_data && ((request.method === 'POST' && ['/api/cart/account', '/api/reviews'].includes(request.path)) || (request.method === 'DELETE' && /^\/api\/reviews\/[1-9]\d*$/.test(request.path)))) return next();
         return response.status(403).json({ error: blocked_message(request.path), code: 'preview_write_blocked' });
     };
 }
