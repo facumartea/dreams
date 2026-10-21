@@ -346,3 +346,14 @@ input,select,textarea{width:100%;min-height:48px;padding:.78rem 0;border:0;borde
 @media(hover:hover) and (pointer:fine){.catalog-page :is(.filter-trigger,.filter-close,.filter-dialog-actions .button):hover{border-color:var(--filter-accent);box-shadow:inset 0 0 0 1px var(--filter-accent)}.filter-dialog .filter-choice:hover{border-color:var(--filter-accent)}}
 .filter-dialog-heading h2{color:var(--filter-text)}
 .collection-women .filter-dialog{color-scheme:light}
+
+/* El autocompletado conserva su función y la paleta de la pantalla de acceso. */
+.account-card input{color-scheme:dark;caret-color:var(--ivory)}
+.account-card input:-webkit-autofill,.account-card input:-webkit-autofill:hover,.account-card input:-webkit-autofill:focus{-webkit-text-fill-color:var(--ivory);caret-color:var(--ivory);box-shadow:0 0 0 1000px var(--surface) inset}
+.account-card input:autofill{color:var(--ivory);background:var(--surface);box-shadow:0 0 0 1000px var(--surface) inset}
+.account-card input[aria-invalid=true]{border-color:var(--danger)}
+.account-card .field-error{min-height:0;color:var(--danger);font-size:.8rem;line-height:1.5;text-align:left}
+.account-card .field-error:empty{display:none}
+.account-card .form-message:empty{min-height:0}
+.account-tabs button:disabled{cursor:wait;opacity:.65}
+.account-tabs button:focus-visible{outline:2px solid var(--accent-soft);outline-offset:4px}

@@ -1,3 +1,19 @@
+# 2026-10-21 — Preview Auth publicada y verificada sin identidad real
+
+- Publicados backend Auth db726a9/de37b97d y Pages de236c6/be352ec6 en alias auth-session-review; comercio conserva destino anterior.
+- CI39521612525 SUCCESS177 tests y builds normal/Auth/Pages. QA anónima remota Chromium móvil/escritorio y capturas guardadas; registro vacío atraviesa guard y devuelve400; origen ajeno y Admin rechazados403.
+- Comprobada ausencia de mecanismo de entrada oculta/gestor de secretos utilizable. Auth global y pruebas reales siguen bloqueados; no se crearon cuentas ni se enviaron correos.
+- Oficial f44a6069/461c17d y preview cinematográfica intactas. PR54 continúa draft, sin merge ni publicación oficial.
+
+# 2026-10-20 — Revisión de registro y sesión preparada
+
+- Reutilizados handlers y tests PR48 sin duplicar implementación ni publicar su configuración vieja.
+- Formularios accesibles con errores por campo, autofill oscuro, doble submit/login bloqueado, pestañas/teclado y revalidación BFCache.
+- Aviso de confirmación condicionado al estado real; signup sin sesión no inventa éxito, errores seguros por causa.
+- Se conserva límite20mut/15min y se separan lecturas120/min; fallos transitorios de sesión conservan cookies y permiten reintento503.
+- EntryPoint Auth aislado de rutas limitadas y proxy opcional Pages preservan el backend de checkout/catálogo/Admin.
+- Pruebas locales/fixtures/navegador y builds ejecutados; Auth remoto sin confirmar sigue bloqueado por Management. Oficial, usuarios, roles, credenciales, datos y DNS intactos.
+
 # 2026-10-20 — Filtros oficiales publicados
 
 - Publicados461c17d/Pagesf44a6069 SUCCESS y PR53 sin merge; CI39517310148 verde154tests/check54/audit/builds.

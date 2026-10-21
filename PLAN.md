@@ -1,3 +1,21 @@
+# Auth — cierre independiente y bloqueo externo — 2026-10-21
+
+- Implementación, 177 tests, CI39521612525, tres builds y PR54 draft: COMPLETADOS.
+- Pages/Auth aislados y QA remota anónima móvil/escritorio: COMPLETADOS; no equivalen a login real.
+- Entrada segura de SUPABASE_ACCESS_TOKEN: NO DISPONIBLE en herramientas; usuario no puede acceder al gestor web. No reiterar instrucciones imposibles ni recibir secretos por chat.
+- Auth Management, revisión de consumidores y cambio Confirm email: BLOQUEADOS.
+- Registro real/customer/login/sesión/logout y publicación oficial: PENDIENTES de ese acceso y QA autenticada.
+- Rollback oficial f44a6069 retenido; no se ha modificado producción ni preview cinematográfica.
+
+# Revisión específica de acceso — 2026-10-20
+
+- Oficial/base/PR48 y causa403/Confirm email activo: COMPROBADOS.
+- Reutilización signup/customer/guard y mejoras UI/sesión/autofill: IMPLEMENTADAS localmente.
+- Pruebas177completas+47focalizadas, builds y Chromium390/1440 local con fixtures: PASS.
+- CI/PR/candidato Auth+Pages aislado: EN CURSO.
+- ConfigAuth/sesión real/customer/logout/login: BLOQUEADOS por Auth Management/identidad controlada; pregunta segura enviada.
+- Publicación oficial: PENDIENTE de QA remota real. Mantener rollbackf44a6069, catálogo/filtros/checkout y video fuera de alcance.
+
 # Resultado filtros oficiales — 2026-10-20
 
 - PR53/código461c17d/CI39517310148/154tests/check54/audit/builds: COMPLETADOS.

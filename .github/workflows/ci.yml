@@ -44,5 +44,8 @@ jobs:
       - name: Build Cloudflare preview bundle without deployment
         run: pnpm run build:cloudflare
 
+      - name: Build isolated Auth Worker without deployment
+        run: pnpm run build:auth-review
+
       - name: Build Pages Service binding proxy without deployment
         run: pnpm run build:pages

@@ -1,0 +1,2 @@
+mobile REMOTE candidate anonymous UI: fields/mismatch/zero signup requests/tab reset/keyboard/autofill pseudo/no overflow/no JS errors; me anonymous/config true/Admin403 PASS. No real registration/login performed.
+desktop REMOTE candidate anonymous UI: fields/mismatch/zero signup requests/tab reset/keyboard/autofill pseudo/no overflow/no JS errors; me anonymous/config true/Admin403 PASS. No real registration/login performed.

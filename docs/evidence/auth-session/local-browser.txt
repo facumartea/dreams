@@ -1,0 +1,4 @@
+mobile Chrome autofill pseudo style PASS {"fill":"rgb(242, 238, 230)","shadow":"rgb(22, 21, 18) 0px 0px 0px 1000px inset","auto":"email"}
+mobile LOCAL FIXTURE real browser: form/mismatch/network/retry/double-submit/customer/session/reload/navigation/refresh/logout/back/login/duplicate/Admin403 PASS
+desktop Chrome autofill pseudo style PASS {"fill":"rgb(242, 238, 230)","shadow":"rgb(22, 21, 18) 0px 0px 0px 1000px inset","auto":"email"}
+desktop LOCAL FIXTURE real browser: form/mismatch/network/retry/double-submit/customer/session/reload/navigation/refresh/logout/back/login/duplicate/Admin403 PASS
