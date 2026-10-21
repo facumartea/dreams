@@ -346,3 +346,22 @@ input,select,textarea{width:100%;min-height:48px;padding:.78rem 0;border:0;borde
 @media(hover:hover) and (pointer:fine){.catalog-page :is(.filter-trigger,.filter-close,.filter-dialog-actions .button):hover{border-color:var(--filter-accent);box-shadow:inset 0 0 0 1px var(--filter-accent)}.filter-dialog .filter-choice:hover{border-color:var(--filter-accent)}}
 .filter-dialog-heading h2{color:var(--filter-text)}
 .collection-women .filter-dialog{color-scheme:light}
+
+/* Admin: tarjetas semánticas y marca original, sin alterar la navegación pública. */
+.admin-header img.admin-isotype{display:block;width:80px;height:113px;object-fit:contain;border:0;background:transparent}
+.admin-stats{grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
+button.admin-stat{text-align:left;color:var(--ivory);cursor:pointer;border:1px solid var(--border);font:inherit;min-height:160px;gap:.5rem;transition:background .15s,border-color .15s}
+button.admin-stat.active{border-color:var(--accent);box-shadow:inset 3px 0 var(--accent)}
+button.admin-stat:focus-visible{outline:2px solid var(--accent-soft);outline-offset:4px}
+button.admin-stat:active{background:var(--ink-elevated,#26221b)}
+.admin-card-active{font-size:.62rem!important;color:var(--accent-soft)!important}
+.admin-product-search{display:flex;flex-wrap:wrap;align-items:end;gap:.75rem;margin-bottom:1rem}
+.admin-product-search .form-field{flex:1 1 240px;margin:0}.admin-product-search button{min-height:44px}
+.admin-tab-content{scroll-margin-top:96px;min-width:0}.admin-layout>*{min-width:0}
+@media(hover:hover){button.admin-stat:hover{background:#242018;border-color:var(--accent-soft)}}
+@media(max-width:600px){.admin-brand-lockup{align-items:center}.admin-header img.admin-isotype{width:64px;height:90px}.admin-header h1{font-size:2.1rem}.admin-stats{grid-template-columns:repeat(2,minmax(0,1fr))}button.admin-stat{padding:1rem;min-height:150px}.admin-stat span{overflow-wrap:anywhere}}
+@media(prefers-reduced-motion:reduce){button.admin-stat{transition:none}}
+.admin-table .admin-product-action{display:inline-flex;align-items:center;justify-content:center;flex:0 0 104px;width:104px;min-width:104px;height:44px;min-height:44px;padding:.6rem .75rem;line-height:1.2;text-align:center}
+.admin-table .admin-product-action-danger{border-color:#b7887e;color:#efc9bd}
+.admin-table .admin-product-action:focus-visible{outline:2px solid var(--accent-soft);outline-offset:3px}
+@media(hover:hover){.admin-table .admin-product-action-danger:hover{border-color:#efc9bd;background:#39221f;color:#fff0e9}}

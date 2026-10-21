@@ -1,0 +1,194 @@
+[
+  {
+    "id": "R01",
+    "objective": "GET /api/health",
+    "environment": "Pages remoto, sin sesión; sin escrituras autorizadas",
+    "expected": "200",
+    "actual": "200",
+    "result": "PASS"
+  },
+  {
+    "id": "R02",
+    "objective": "GET /admin",
+    "environment": "Pages remoto, sin sesión; sin escrituras autorizadas",
+    "expected": "403",
+    "actual": "403",
+    "result": "PASS"
+  },
+  {
+    "id": "R03",
+    "objective": "GET /admin.html",
+    "environment": "Pages remoto, sin sesión; sin escrituras autorizadas",
+    "expected": "403",
+    "actual": "403",
+    "result": "PASS"
+  },
+  {
+    "id": "R04",
+    "objective": "GET /api/admin/stats",
+    "environment": "Pages remoto, sin sesión; sin escrituras autorizadas",
+    "expected": "403",
+    "actual": "403",
+    "result": "PASS"
+  },
+  {
+    "id": "R05",
+    "objective": "GET /api/admin/products",
+    "environment": "Pages remoto, sin sesión; sin escrituras autorizadas",
+    "expected": "403",
+    "actual": "403",
+    "result": "PASS"
+  },
+  {
+    "id": "R06",
+    "objective": "GET /api/admin/users",
+    "environment": "Pages remoto, sin sesión; sin escrituras autorizadas",
+    "expected": "403",
+    "actual": "403",
+    "result": "PASS"
+  },
+  {
+    "id": "R07",
+    "objective": "GET /api/admin/inquiries",
+    "environment": "Pages remoto, sin sesión; sin escrituras autorizadas",
+    "expected": "403",
+    "actual": "403",
+    "result": "PASS"
+  },
+  {
+    "id": "R08",
+    "objective": "GET /api/admin/reviews",
+    "environment": "Pages remoto, sin sesión; sin escrituras autorizadas",
+    "expected": "403",
+    "actual": "403",
+    "result": "PASS"
+  },
+  {
+    "id": "R09",
+    "objective": "GET /api/admin/orders",
+    "environment": "Pages remoto, sin sesión; sin escrituras autorizadas",
+    "expected": "403",
+    "actual": "403",
+    "result": "PASS"
+  },
+  {
+    "id": "R10",
+    "objective": "GET /api/admin/coupons",
+    "environment": "Pages remoto, sin sesión; sin escrituras autorizadas",
+    "expected": "403",
+    "actual": "403",
+    "result": "PASS"
+  },
+  {
+    "id": "R11",
+    "objective": "POST /api/admin/products",
+    "environment": "Pages remoto, sin sesión; sin escrituras autorizadas",
+    "expected": "403",
+    "actual": "403",
+    "result": "PASS"
+  },
+  {
+    "id": "R12",
+    "objective": "PUT /api/admin/products/0",
+    "environment": "Pages remoto, sin sesión; sin escrituras autorizadas",
+    "expected": "403",
+    "actual": "403",
+    "result": "PASS"
+  },
+  {
+    "id": "R13",
+    "objective": "DELETE /api/admin/products/0",
+    "environment": "Pages remoto, sin sesión; sin escrituras autorizadas",
+    "expected": "403",
+    "actual": "403",
+    "result": "PASS"
+  },
+  {
+    "id": "R14",
+    "objective": "POST /api/admin/coupons",
+    "environment": "Pages remoto, sin sesión; sin escrituras autorizadas",
+    "expected": "403",
+    "actual": "403",
+    "result": "PASS"
+  },
+  {
+    "id": "R15",
+    "objective": "POST /api/auth/login",
+    "environment": "Pages remoto, sin sesión; sin escrituras autorizadas",
+    "expected": "400",
+    "actual": "400",
+    "result": "PASS"
+  },
+  {
+    "id": "R16",
+    "objective": "POST /api/auth/login",
+    "environment": "Pages remoto, sin sesión; sin escrituras autorizadas",
+    "expected": "403",
+    "actual": "403",
+    "result": "PASS"
+  },
+  {
+    "id": "R17",
+    "objective": "GET /js/admin-console-v3.js",
+    "environment": "Pages remoto, sin sesión; sin escrituras autorizadas",
+    "expected": "200",
+    "actual": "200; fuente idéntica=True",
+    "result": "PASS"
+  },
+  {
+    "id": "R18",
+    "objective": "GET /js/admin-product-search.js",
+    "environment": "Pages remoto, sin sesión; sin escrituras autorizadas",
+    "expected": "200",
+    "actual": "200; fuente idéntica=True",
+    "result": "PASS"
+  },
+  {
+    "id": "R19",
+    "objective": "GET /js/admin-image-url.js",
+    "environment": "Pages remoto, sin sesión; sin escrituras autorizadas",
+    "expected": "200",
+    "actual": "200; fuente idéntica=True",
+    "result": "PASS"
+  },
+  {
+    "id": "R20",
+    "objective": "GET /css/style.css",
+    "environment": "Pages remoto, sin sesión; sin escrituras autorizadas",
+    "expected": "200",
+    "actual": "200; fuente idéntica=True",
+    "result": "PASS"
+  },
+  {
+    "id": "R21",
+    "objective": "GET /api/products",
+    "environment": "Pages remoto, sin sesión; sin escrituras autorizadas",
+    "expected": "200",
+    "actual": "200",
+    "result": "PASS"
+  },
+  {
+    "id": "R22",
+    "objective": "GET /cuenta.html",
+    "environment": "Pages remoto, sin sesión; sin escrituras autorizadas",
+    "expected": "200",
+    "actual": "200",
+    "result": "PASS"
+  },
+  {
+    "id": "R23",
+    "objective": "GET /",
+    "environment": "Pages remoto, sin sesión; sin escrituras autorizadas",
+    "expected": "200",
+    "actual": "200; noindex=True",
+    "result": "PASS"
+  },
+  {
+    "id": "R24",
+    "objective": "Configuración pública igual a oficial",
+    "environment": "HTTP remoto GET /api/config de ambos orígenes",
+    "expected": "sin diferencias",
+    "actual": "0 claves diferentes",
+    "result": "PASS"
+  }
+]

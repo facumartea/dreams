@@ -19,19 +19,7 @@ const unsafe_methods = new Set(['POST', 'PUT', 'PATCH', 'DELETE']);
 
 const IMAGE_URL_ERROR = 'La URL ingresada no apunta a una imagen válida o el servidor no permite mostrarla. Usá una URL HTTPS directa.';
 
-function validate_product_image_url(value) {
-    const image = String(value || '').trim();
-    if (/^\/(?!\/)/.test(image)) return null;
-    try {
-        const parsed = new URL(image);
-        const hostname = parsed.hostname.toLowerCase();
-        const google_page = /(^|\.)google\.[a-z.]+$/.test(hostname) && ['/imgres', '/search'].includes(parsed.pathname);
-        if (parsed.protocol !== 'https:' || parsed.username || parsed.password || google_page) return IMAGE_URL_ERROR;
-        return null;
-    } catch (error) {
-        return IMAGE_URL_ERROR;
-    }
-}
+function validate_product_image_url(value) { return require('../public/js/admin-image-url').supported_image_url(value) ? null : IMAGE_URL_ERROR; }
 
 function normalize_origin(value) {
     try {
@@ -542,7 +530,7 @@ function create_app(options = {}) {
         if (low.error) throw low.error;
         response.json({ products: counts[0], users: counts[1], inquiries: counts[2], reviews: counts[3], orders: orders.count || 0, low_stock: low.count || 0 });
     });
-    route('get', '/api/admin/products', admin, async (request, response) => response.json(fail_if(await admin_database(request).from('products').select('*').order('id', { ascending: false })).map(product)));
+    route('get', '/api/admin/products', admin, async (request, response) => response.json(fail_if(await admin_database(request).from('products').select('*').order('id', { ascending: false })).map(row => ({ ...product(row), stock: typeof row.stock === 'number' && Number.isSafeInteger(row.stock) && row.stock >= 0 ? row.stock : null }))));
     route('post', '/api/admin/products', admin, async (request, response) => {
         const parsed = payload(request.body);
         if (parsed.e) return response.status(400).json({ error: parsed.e });

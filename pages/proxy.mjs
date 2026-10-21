@@ -8,10 +8,12 @@ function unavailable() {
 }
 
 // Sólo se reemplazan assets públicos explícitos; Auth y API conservan su backend.
-const visual_paths = new Set(['/', '/index.html', '/nosotros.html', '/catalogo.html', '/producto.html', '/carrito.html', '/cuenta.html', '/checkout.html', '/checkout-resultado.html', '/css/style.css', '/js/motion.js', '/js/app.js', '/js/catalogo.js', '/js/navigation.js', '/js/catalog-filter-state.js', '/js/carrito.js', '/js/presentation.js', '/js/producto.js', '/robots.txt', '/sitemap.xml', '/404.html', '/assets/dreams-social.png']);
-const header_aliases = new Map([['/js/navigation.js', '/js/app.js'], ['/js/catalog-filter-state.js', '/js/app.js'], ['/assets/dreams-social.png', '/assets/dreams-hero-1024.webp']]);
+const visual_paths = new Set(['/', '/index.html', '/nosotros.html', '/catalogo.html', '/producto.html', '/carrito.html', '/cuenta.html', '/checkout.html', '/checkout-resultado.html', '/css/style.css', '/js/motion.js', '/js/app.js', '/js/catalogo.js', '/js/navigation.js', '/js/catalog-filter-state.js', '/js/carrito.js', '/js/presentation.js', '/js/producto.js', '/robots.txt', '/sitemap.xml', '/404.html', '/assets/dreams-social.png', '/admin', '/admin.html', '/js/admin-console-v3.js', '/js/admin-product-search.js', '/js/admin-image-url.js']);
+const admin_target = path => ['/admin', '/admin.html', '/js/admin-console-v3.js', '/api/auth/me', '/api/auth/login', '/api/auth/logout', '/api/config'].includes(path) || path.startsWith('/api/admin/');
+const header_aliases = new Map([['/js/admin-product-search.js', '/js/admin-console-v3.js'], ['/js/admin-image-url.js', '/js/admin-console-v3.js'], ['/js/navigation.js', '/js/app.js'], ['/js/catalog-filter-state.js', '/js/app.js'], ['/assets/dreams-social.png', '/assets/dreams-hero-1024.webp']]);
 
 function visual_request(request, pathname, asset) {
+    if (pathname === '/admin' || pathname === '/admin.html') return request;
     const upstream = header_aliases.has(pathname) && asset ? new Request(new URL(header_aliases.get(pathname), request.url), request) : request;
     if (!asset) return upstream;
     const headers = new Headers(request.headers);
@@ -22,7 +24,7 @@ function visual_request(request, pathname, asset) {
 async function forward_request(request, env, options) {
     if (!options.backend_url) return env.DREAMS.fetch(request);
     const target = new URL(request.url);
-    const backend = new URL(options.backend_url);
+    const backend = new URL(options.admin_backend_url && admin_target(target.pathname) ? options.admin_backend_url : options.backend_url);
     target.host = backend.host;
     target.protocol = backend.protocol;
     target.port = backend.port;
@@ -52,8 +54,10 @@ async function visual_response(request, upstream, asset) {
     return new Response(matches || request.method === 'HEAD' ? null : body, { status: matches ? 304 : status, headers });
 }
 
+const approved = value => /^https:\/\/[a-f0-9]{8}-dreams-perfumes\.dreams-perfumes\.workers\.dev$/.test(value || '');
+
 export function create_proxy(visual_assets = {}, options = {}) {
-    const valid_backend = /^https:\/\/[a-f0-9]{8}-dreams-perfumes\.dreams-perfumes\.workers\.dev$/.test(options.backend_url || '');
+    const valid_backend = approved(options.backend_url) && (!options.admin_backend_url || approved(options.admin_backend_url));
     return {
         async fetch(request, env) {
             if (options.backend_url ? !valid_backend : !env.DREAMS?.fetch) return options.seo ? index_response(request, unavailable()) : unavailable();
