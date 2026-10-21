@@ -211,3 +211,20 @@ Ejecuciones: {'PASS': 201}. Casos distintos por área: {'A': 28, 'B': 25, 'C': 2
 ## Validación remota pendiente
 
 BLOQUEADA: sesión Admin real, alta/edición persistente de producto de prueba, imagen en catálogo/detalle tras guardar y operaciones de los módulos con usuario real. Sin credenciales de prueba autorizadas disponibles. La preview mantiene escrituras bloqueadas; las cuentas/roles no se cambian para completar QA. Auth/customer A/B: evidencia separada PR55, no duplicada aquí.
+
+## Remoto ejecutado
+
+24 PASS, 0 FAIL. R01–R24 completos en [remote-matrix.json](remote-matrix.json). Verificación anónima/archivos/configuración y guardas; no sustituye pruebas autenticadas.
+
+| ID | Verificación | Estado | Causa |
+|---|---|---|---|
+| AUTH01 | Registro real sin confirmación | BLOQUEADA | Sin Auth Management seguro ni cuentas controladas de QA |
+| AUTH02 | Login, persistencia y renovación reales | BLOQUEADA | Sin Auth Management seguro ni cuentas controladas de QA |
+| AUTH03 | Logout y nuevo login reales | BLOQUEADA | Sin Auth Management seguro ni cuentas controladas de QA |
+| CART01 | Aislamiento remoto entre dos cuentas y combinación visitante | BLOQUEADA | Sin Auth Management seguro ni cuentas controladas de QA |
+| REVIEW01 | Eliminación propia/rechazo ajena con cuentas reales | BLOQUEADA | Sin Auth Management seguro ni cuentas controladas de QA |
+| ADMIN01 | Acceso Admin autenticado real | BLOQUEADA | Sin sesión Admin/customer real autorizada disponible; escrituras protegidas |
+| ADMIN02 | Rechazo customer con sesión real | BLOQUEADA | Sin sesión Admin/customer real autorizada disponible; escrituras protegidas |
+| ADMIN03 | Guardar producto de prueba y persistir | BLOQUEADA | Sin sesión Admin/customer real autorizada disponible; escrituras protegidas |
+| ADMIN04 | Imagen guardada visible en catálogo/detalle | BLOQUEADA | Sin sesión Admin/customer real autorizada disponible; escrituras protegidas |
+| ADMIN05 | Operaciones módulos con sesión Admin real | BLOQUEADA | Sin sesión Admin/customer real autorizada disponible; escrituras protegidas |

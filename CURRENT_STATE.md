@@ -1,3 +1,11 @@
+# Candidato Admin publicado, oficial preservada — 2026-10-21
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+PR56 draft/rama codex/admin-cards-audit, base PR53; selección PR46, sin mezcla PR55/Auth/video. Pagespreviewcb0a3ca6 fuente c0f8bb06540ba9dd1fee8912ad9831c32976eeb2, https://admin-cards-review.dreams-perfumes.pages.dev/admin, requiere Admin real. Backend0ba07603 fuente83c36ca, read-only salvo login/logout. CI39639266639 SUCCESS279tests/check61/audit/tresbuilds. Local201ejecucionesPASS, A28/B25/C25/D27/E30/F24casosdistintos; remoto24PASS/0FAIL y10gruposBLOQUEADOS. Docs/admin_audit.md y matriz/capturas completas. Editar/Eliminar104×44 compartido, confirmación conservada. PrimerCI falló por entrypoint sin versionar, corregido, posteriores verdes.
+
+Oficialf44a6069/461c17d y backendd5df preservados y rollback retenido. NO DEPLOY OFICIAL, NO merge/DNS/DB/roles/credenciales/datos comerciales. Auth token no disponible en ejecución actual y sin vía segura para actualizar binding; conector no administra Auth. PR55/cart/reviews remotos siguen pendientes, TRUNCATE ya retirado/verificado sin repetición. Sin porcentaje global inventado: implementación y QA local terminadas; preview protegida validada; fase autenticada/promoción BLOQUEADA. Próximo exacto: ejecución vinculada al entorno seguro actualizado y sesión real controlada de QA, completar Auth/A-B y prueba Admin de producto exclusivo antes de promover cada PR por separado. No pedir secretos por chat.
+
 # Admin independiente preparado — 2026-10-21
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.

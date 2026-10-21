@@ -32,3 +32,12 @@ PR55 y su preview customer-data-review preservadas. Entorno actual no dispone de
 Candidato aislado `admin-cards-review`, sin promover producción. Principal backend conserva d5df723d; sólo Admin y sesión/config se dirigen al candidato read-only. Secret servidor heredado del previews base config, jamás incorporado a Pages. Antes de promoción: sesión real Admin y customer, prueba autorizada de producto exclusivo, revisión origen/cookies y persistencia, QA y revisión completa del diff desde oficial.
 
 Rollback oficial conservado: Pages f44a6069-a891-4d1b-a035-0e0dc5a00a40, backend d5df723d. Recuperación mediante rollback de Pages a ese deployment, sin DB ni DNS. No ejecutado porque oficial no se modifica. El candidato se puede abandonar sin tocar oficial ni PR55. IDs/commits finales se agregan tras publicación real.
+
+## Deployment comprobado
+
+- Preview: https://admin-cards-review.dreams-perfumes.pages.dev/admin (requiere sesión Admin real). Pages `cb0a3ca6-ae1c-4dd6-b4ea-896978166591`, entorno preview SUCCESS, fuente `c0f8bb06540ba9dd1fee8912ad9831c32976eeb2`.
+- Backend aislado `0ba07603-8d14-41f2-8953-3e8407e7d3de`, código `83c36ca153ccc868f4a82527213d87e49889cf5c`, secret heredado sin leer/copiar valores. Health200/databaseok.
+- PR56 https://github.com/facumartea/dreams/pull/56, draft, sin merge. CI39639266639 SUCCESS sobre c0f8bb0:279 tests, check61, audit sin vulnerabilidades conocidas, tres builds. Primer CI2ab28fb detectó entrypoint aún sin versionar; se corrigió en83c36ca y ambos CI posteriores pasaron.
+- Remoto24 PASS/0 FAIL: Admin anónimo y siete APIs403; escrituras Admin403 antes deDB; login vacío400 y origen ajeno403; cuatro assets idénticos por hash, catálogo/cuenta200, noindex y configuración pública idéntica a oficial. El harness inicialmente buscó una cabecera con mayúsculas; HTTP confirmó noindex y se corrigió sólo la lectura del harness.
+- Matriz local201 ejecuciones PASS; diez grupos remotos BLOQUEADOS enumerados. No sumar279+201:107 casos de matriz están dentro de suite279. Capturas son locales con fixtures, no sesión real remota.
+- Oficial nuevamente confirmada f44a6069/461c17d, sin cambios. Customer preview45d05a7/PR55 y video preview independientes. DEPLOY PREVIEW:SÍ; DEPLOY OFICIAL:NO.
