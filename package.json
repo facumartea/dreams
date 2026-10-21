@@ -2,7 +2,7 @@
   "name": "dreams-perfumeria",
   "version": "1.0.0",
   "packageManager": "pnpm@11.19.0",
-  "description": "DREAMS - perfumería multimarca con Node.js, Express, Supabase y APIs REST",
+  "description": "DREAMS - perfumer\u00eda multimarca con Node.js, Express, Supabase y APIs REST",
   "main": "server/server.js",
   "scripts": {
     "start": "node server/server.js",
@@ -15,7 +15,8 @@
     "deploy:pages": "wrangler pages deploy dist/pages --project-name dreams-perfumes --branch codex/cloudflare-hosting-migration --config pages/wrangler.jsonc",
     "preview:cloudflare": "wrangler dev --ip 127.0.0.1 --port 8787",
     "deploy:cloudflare:preview": "wrangler deploy --env preview",
-    "deploy:cloudflare:production": "wrangler deploy --env production"
+    "deploy:cloudflare:production": "wrangler deploy --env production",
+    "build:auth-review": "wrangler deploy worker/auth-review.mjs --dry-run --env preview --outdir dist/auth-worker"
   },
   "engines": {
     "node": ">=24 <25"

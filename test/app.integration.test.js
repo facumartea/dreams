@@ -253,7 +253,8 @@ test('registro pendiente distingue confirmación de correo de una sesión activa
         const body = await response.json();
         assert.equal(body.authenticated, false);
         assert.equal(body.requires_email_confirmation, true);
-        assert.match(body.message, /confirmación/);
+        assert.match(body.message, /no hay una sesión activa/i);
+        assert.equal(response.headers.getSetCookie().length, 0);
     });
 });
 
@@ -460,4 +461,41 @@ test('home puede limitar productos en servidor sin recortar catálogo completo',
         await fetch(base + '/api/products'); assert.equal(requested, undefined);
         await fetch(base + '/api/products?limit=10000'); assert.equal(requested, 100);
     });
+});
+
+test('un fallo del proveedor al restaurar sesión no aparenta logout ni borra cookies', async () => {
+    const database = database_with(() => ({ data: null, error: null }));
+    database.auth.getUser = async () => { throw new Error('private provider failure'); };
+    await serve(create_app({ database, disable_request_log: true, logger: { warn() {} } }), async base => {
+        const response = await fetch(base + '/api/auth/me', { headers: { Cookie: 'dreams_access_token=fixture' } });
+        assert.equal(response.status, 503);
+        assert.match((await response.json()).error, /comprobar tu sesión/);
+        assert.equal(response.headers.getSetCookie().length, 0);
+    });
+});
+
+test('refresh expirado borra ambas cookies y mantiene Admin cerrado', async () => {
+    const database = database_with(() => ({ data: null, error: null }));
+    const create_auth_client = () => ({ auth: { refreshSession: async () => ({ data: { session: null }, error: { code: 'refresh_token_not_found' } }) } });
+    await serve(create_app({ database, create_auth_client, production: true, disable_request_log: true }), async base => {
+        const headers = { Cookie: 'dreams_refresh_token=expired-fixture' };
+        const response = await fetch(base + '/api/auth/me', { headers });
+        assert.equal((await response.json()).user, null);
+        assert.equal(response.headers.getSetCookie().length, 2);
+        for (const cookie of response.headers.getSetCookie()) assert.match(cookie, /Max-Age=0.*Secure/);
+        assert.equal((await fetch(base + '/admin', { headers })).status, 403);
+    });
+});
+
+test('errores transitorios devueltos por el SDK no destruyen la sesión ni el refresh', async () => {
+    for (const operation of ['getUser', 'refreshSession']) {
+        const database = database_with(() => ({ data: null, error: null }));
+        const transient = async () => ({ data: { user: null, session: null }, error: { status: 503, name: 'AuthRetryableFetchError' } });
+        if (operation === 'getUser') database.auth.getUser = transient;
+        const create_auth_client = () => ({ auth: { refreshSession: transient } });
+        await serve(create_app({ database, create_auth_client, disable_request_log: true, logger: { warn() {} } }), async base => {
+            const response = await fetch(base + '/api/auth/me', { headers: { Cookie: operation === 'getUser' ? 'dreams_access_token=fixture' : 'dreams_refresh_token=fixture' } });
+            assert.equal(response.status, 503); assert.equal(response.headers.getSetCookie().length, 0);
+        });
+    }
 });

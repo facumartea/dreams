@@ -153,11 +153,13 @@ test('el detalle presenta las notas reales como un Scent Trail accesible', () =>
     assert.match(css, /@media\(max-width:720px\).*\.notes-grid\{grid-template-columns:1fr/s);
 });
 
-test('registro comunica claramente el modo demo sin confirmación de correo', () => {
+test('registro conserva gestores de contraseñas y aviso condicionado al proveedor', () => {
     const account = fs.readFileSync(path.join(root, 'public', 'js', 'cuenta.js'), 'utf8');
     const server = fs.readFileSync(path.join(root, 'server', 'server.js'), 'utf8');
-    assert.match(account, /Modo de prueba:/);
-    assert.match(account, /no necesitás confirmar el correo/);
+    assert.match(account, /confirmation_required/);
+    assert.match(account, /autocomplete="new-password"/);
+    assert.match(account, /registration-notice/);
+    assert.doesNotMatch(account, /Modo de prueba:/);
     assert.match(server, /DEMO_AUTO_CONFIRM_EMAIL/);
 });
 

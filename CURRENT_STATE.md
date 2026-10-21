@@ -1,3 +1,15 @@
+# Revisión Auth en implementación aislada — 2026-10-20
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Rama codex/auth-session-review desdec428daf/PR53, oficial461c17d/Pagesf44a6069 y backendd5df723d/ec04a35 confirmados. Reutilizados handlers/tests PR48/052b224 sin merges ni su release viejo. Registro oficial{}403guard y Supabase mailer_autoconfirm=false/disable_signup=false/proyecto esperado ACTIVE_HEALTHY. No cuentas reales ni correos.
+
+Excepción POST exacto signup/customer, UI/autofill/validación accesible/doble submit/pestañas/BFCache, errores SDK sin falsear logout/cookies y límites Auth separados20mut15min/120lectmin preparados. Servicio Auth nuevo worker/auth-review.mjs con rutas cerradas y Secret heredado por referencia; Pages permite destino Auth inmutable opcional, demás rutas a backend anterior. Preview recurso auth-session-review5abc3210 creado, sin deployment aún. Oficial intacta; no video ni cambios comerciales/Auth global.
+
+177tests completos+47focalizadas finales PASS; builds normal/Auth/Pages, check y helpers<=20; QA LOCAL Chromium390/1440 con proveedor simulado: signup/customer/sesión/refresh/logout/login/duplicados/errores/Admin403/autofill PASS. Ninguna prueba autenticada remota. El executor perdió conexión temporal y se recuperó sin pérdida de cambios. AccessManagement falta: herramientas sin Auth config y entorno sin SUPABASE_ACCESS_TOKEN. Pregunta segura enviada para cargar Secret Scoped proyecto con Auth Config/Project Settings Read-write; no secretos por chat. Uso por apps ajenas aún por verificar.
+
+Guía/matriz/rollback docs/auth_session_review.md; capturas/log locales docs/evidence/auth-session. Próximo: suite/CI final/commit/push/PR y candidato Auth/Pages aislado; sólo con Management y QA real sin confirmación promover oficial. No declarar resuelto registro/login/sesión/logout remoto. Oficialrollbackf44a6069/backendd5df conservados, no ejecutado. Sin porcentaje global inventado.
+
 # Filtros por colección publicados y validados — 2026-10-20
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.

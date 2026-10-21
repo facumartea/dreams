@@ -8,7 +8,8 @@ function unavailable() {
 }
 
 // Sólo se reemplazan assets públicos explícitos; Auth y API conservan su backend.
-const visual_paths = new Set(['/', '/index.html', '/nosotros.html', '/catalogo.html', '/producto.html', '/carrito.html', '/cuenta.html', '/checkout.html', '/checkout-resultado.html', '/css/style.css', '/js/motion.js', '/js/app.js', '/js/catalogo.js', '/js/navigation.js', '/js/catalog-filter-state.js', '/js/carrito.js', '/js/presentation.js', '/js/producto.js', '/robots.txt', '/sitemap.xml', '/404.html', '/assets/dreams-social.png']);
+const visual_paths = new Set(['/', '/index.html', '/nosotros.html', '/catalogo.html', '/producto.html', '/carrito.html', '/cuenta.html', '/checkout.html', '/checkout-resultado.html', '/css/style.css', '/js/motion.js', '/js/app.js', '/js/catalogo.js', '/js/navigation.js', '/js/catalog-filter-state.js', '/js/carrito.js', '/js/presentation.js', '/js/producto.js', '/js/cuenta.js', '/robots.txt', '/sitemap.xml', '/404.html', '/assets/dreams-social.png']);
+const auth_paths = new Set(['/api/auth/register', '/api/auth/login', '/api/auth/logout', '/api/auth/me', '/api/auth/config']);
 const header_aliases = new Map([['/js/navigation.js', '/js/app.js'], ['/js/catalog-filter-state.js', '/js/app.js'], ['/assets/dreams-social.png', '/assets/dreams-hero-1024.webp']]);
 
 function visual_request(request, pathname, asset) {
@@ -22,7 +23,7 @@ function visual_request(request, pathname, asset) {
 async function forward_request(request, env, options) {
     if (!options.backend_url) return env.DREAMS.fetch(request);
     const target = new URL(request.url);
-    const backend = new URL(options.backend_url);
+    const backend = new URL(auth_paths.has(target.pathname) && options.auth_backend_url ? options.auth_backend_url : options.backend_url);
     target.host = backend.host;
     target.protocol = backend.protocol;
     target.port = backend.port;
@@ -52,8 +53,12 @@ async function visual_response(request, upstream, asset) {
     return new Response(matches || request.method === 'HEAD' ? null : body, { status: matches ? 304 : status, headers });
 }
 
+function approved_backend(value) {
+    return /^https:\/\/[a-f0-9]{8}-dreams-perfumes\.dreams-perfumes\.workers\.dev$/.test(value || '');
+}
+
 export function create_proxy(visual_assets = {}, options = {}) {
-    const valid_backend = /^https:\/\/[a-f0-9]{8}-dreams-perfumes\.dreams-perfumes\.workers\.dev$/.test(options.backend_url || '');
+    const valid_backend = approved_backend(options.backend_url) && (!options.auth_backend_url || approved_backend(options.auth_backend_url));
     return {
         async fetch(request, env) {
             if (options.backend_url ? !valid_backend : !env.DREAMS?.fetch) return options.seo ? index_response(request, unavailable()) : unavailable();

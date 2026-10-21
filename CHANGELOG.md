@@ -1,3 +1,12 @@
+# 2026-10-20 — Revisión de registro y sesión preparada
+
+- Reutilizados handlers y tests PR48 sin duplicar implementación ni publicar su configuración vieja.
+- Formularios accesibles con errores por campo, autofill oscuro, doble submit/login bloqueado, pestañas/teclado y revalidación BFCache.
+- Aviso de confirmación condicionado al estado real; signup sin sesión no inventa éxito, errores seguros por causa.
+- Se conserva límite20mut/15min y se separan lecturas120/min; fallos transitorios de sesión conservan cookies y permiten reintento503.
+- EntryPoint Auth aislado de rutas limitadas y proxy opcional Pages preservan el backend de checkout/catálogo/Admin.
+- Pruebas locales/fixtures/navegador y builds ejecutados; Auth remoto sin confirmar sigue bloqueado por Management. Oficial, usuarios, roles, credenciales, datos y DNS intactos.
+
 # 2026-10-20 — Filtros oficiales publicados
 
 - Publicados461c17d/Pagesf44a6069 SUCCESS y PR53 sin merge; CI39517310148 verde154tests/check54/audit/builds.

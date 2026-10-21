@@ -3,6 +3,7 @@ import { createHash } from 'node:crypto';
 
 const assets = {};
 const release = JSON.parse(await readFile(new URL('../pages/official-release.json', import.meta.url), 'utf8'));
+if (release.auth_backend_url && !/^https:\/\/[a-f0-9]{8}-dreams-perfumes\.dreams-perfumes\.workers\.dev$/.test(release.auth_backend_url)) throw new Error('Pages requires an approved immutable Auth backend URL');
 if (!/^https:\/\/[a-f0-9]{8}-dreams-perfumes\.dreams-perfumes\.workers\.dev$/.test(release.backend_url)) throw new Error('Pages requires an immutable approved backend URL');
 const footer = (await readFile(new URL('../templates/public-footer.html', import.meta.url), 'utf8')).trim();
 for (const [pathname, relative, content_type] of [
@@ -17,6 +18,7 @@ for (const [pathname, relative, content_type] of [
     ['/404.html', 'public/404.html', 'text/html; charset=utf-8'],
     ['/robots.txt', 'public/robots.txt', 'text/plain; charset=utf-8'],
     ['/sitemap.xml', 'public/sitemap.xml', 'application/xml; charset=utf-8'],
+    ['/js/cuenta.js', 'public/js/cuenta.js', 'application/javascript; charset=utf-8'],
     ['/js/producto.js', 'public/js/producto.js', 'application/javascript; charset=utf-8'],
     ['/js/motion.js', 'public/js/motion.js', 'application/javascript; charset=utf-8'],
     ['/js/carrito.js', 'public/js/carrito.js', 'application/javascript; charset=utf-8'],
@@ -40,6 +42,6 @@ const catalog = (await readFile(new URL('../pages/catalog.mjs', import.meta.url)
 const proxy = (await readFile(new URL('../pages/proxy.mjs', import.meta.url), 'utf8')).replace(/^import .*?from '\.\/seo\.mjs';/m, seo).replace(/^import .*?from '\.\/catalog\.mjs';/m, model + '\nconst filter_model = catalog_filter_model;\n' + catalog);
 await mkdir(new URL('../dist/pages/', import.meta.url), { recursive: true });
 await writeFile(new URL('../dist/pages/_worker.js', import.meta.url),
-    proxy.replace('export default create_proxy();', `export default create_proxy(${JSON.stringify(assets)}, ${JSON.stringify({ backend_url: release.backend_url, seo: true })});`));
+    proxy.replace('export default create_proxy();', `export default create_proxy(${JSON.stringify(assets)}, ${JSON.stringify({ backend_url: release.backend_url, ...(release.auth_backend_url ? { auth_backend_url: release.auth_backend_url } : {}), seo: true })});`));
 await writeFile(new URL('../dist/pages/_routes.json', import.meta.url), JSON.stringify({ version: 1, include: ['/*'], exclude: [] }));
 console.log(`Pages built: shared public navigation/footer overlay; all other routes pinned to source ${release.source_commit}. Secrets remain server-only.`);

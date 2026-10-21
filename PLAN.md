@@ -1,3 +1,12 @@
+# Revisión específica de acceso — 2026-10-20
+
+- Oficial/base/PR48 y causa403/Confirm email activo: COMPROBADOS.
+- Reutilización signup/customer/guard y mejoras UI/sesión/autofill: IMPLEMENTADAS localmente.
+- Pruebas177completas+47focalizadas, builds y Chromium390/1440 local con fixtures: PASS.
+- CI/PR/candidato Auth+Pages aislado: EN CURSO.
+- ConfigAuth/sesión real/customer/logout/login: BLOQUEADOS por Auth Management/identidad controlada; pregunta segura enviada.
+- Publicación oficial: PENDIENTE de QA remota real. Mantener rollbackf44a6069, catálogo/filtros/checkout y video fuera de alcance.
+
 # Resultado filtros oficiales — 2026-10-20
 
 - PR53/código461c17d/CI39517310148/154tests/check54/audit/builds: COMPLETADOS.
