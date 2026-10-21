@@ -5,7 +5,7 @@ import { createClient } from '@supabase/supabase-js';
 import appModule from '../server/app.js';
 
 let server;
-const auth_routes = new Set(['POST /api/auth/register', 'POST /api/auth/login', 'POST /api/auth/logout', 'GET /api/auth/me', 'GET /api/auth/config', 'GET /api/health', 'GET /api/cart/config', 'GET /api/cart/account', 'POST /api/cart/account', 'GET /api/reviews', 'POST /api/reviews']);
+const auth_routes = new Set(['POST /api/auth/register', 'POST /api/auth/login', 'POST /api/auth/logout', 'GET /api/auth/me', 'GET /api/auth/config', 'GET /api/health', 'POST /api/cart/quote', 'GET /api/checkout/config', 'POST /api/presentation/session', 'POST /api/presentation/payment', 'POST /api/presentation/result', 'GET /api/cart/config', 'GET /api/cart/account', 'POST /api/cart/account', 'GET /api/reviews', 'POST /api/reviews']);
 
 function validate_environment(env) {
     const origins = appModule.allowed_origin_set(env.APP_ORIGINS);
@@ -29,7 +29,8 @@ function create_auth_app(env) {
     return appModule.create_app({
         database: client(), create_auth_client: client, production: true, disable_request_log: true,
         preview_read_only: true, demo_auto_confirm_email: false, checkout_schema_ready: false,
-        customer_data_enabled: true, account_cart_enabled: true,
+        customer_data_enabled: true, account_cart_enabled: true, presentation_checkout: true,
+        presentation_signing_key: createHmac('sha256', env.SUPABASE_SECRET_KEY).update(`dreams-academic-preview-v1:${env.APP_BASE_URL}`).digest('hex'),
         account_cart_signing_key: createHmac('sha256', env.SUPABASE_SECRET_KEY).update('dreams-account-cart-signing-v1').digest('hex'),
         email_confirmation_required: () => email_confirmation_required(env), product_brand_column: 'marca',
         allowed_origins: env.APP_ORIGINS, app_base_url: env.APP_BASE_URL,

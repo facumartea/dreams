@@ -33,9 +33,9 @@ test('customer data routes are explicit and never route administrative/commercia
     for (const customer_data of [false, true]) {
         const seen = [];
         const proxy = create_proxy({}, { backend_url, auth_backend_url, customer_data, fetch_backend: async req => { seen.push(new URL(req.url)); return Response.json({}); } });
-        for (const path of ['/api/cart/account', '/api/cart/config', '/api/reviews', '/api/reviews/123', '/api/reviews/123/extra', '/api/cart/quote', '/api/checkout/session', '/api/admin/reviews/123']) {
+        for (const path of ['/api/cart/account', '/api/cart/config', '/api/reviews', '/api/reviews/123', '/api/reviews/123/extra', '/api/cart/quote', '/api/checkout/config', '/api/presentation/session', '/api/presentation/payment', '/api/presentation/result', '/api/checkout/session', '/api/admin/reviews/123']) {
             await proxy.fetch(new Request('https://dreams-perfumes.pages.dev' + path), {});
-            const isolated = ['/api/cart/account', '/api/cart/config', '/api/reviews', '/api/reviews/123'].includes(path);
+            const isolated = ['/api/cart/account', '/api/cart/config', '/api/reviews', '/api/reviews/123', '/api/cart/quote', '/api/checkout/config', '/api/presentation/session', '/api/presentation/payment', '/api/presentation/result'].includes(path);
             assert.equal(seen.at(-1).origin, isolated && customer_data ? auth_backend_url : backend_url);
         }
     }

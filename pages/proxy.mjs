@@ -10,7 +10,7 @@ function unavailable() {
 // Sólo se reemplazan assets públicos explícitos; Auth y API conservan su backend.
 const visual_paths = new Set(['/', '/index.html', '/nosotros.html', '/catalogo.html', '/producto.html', '/carrito.html', '/cuenta.html', '/checkout.html', '/checkout-resultado.html', '/css/style.css', '/js/motion.js', '/js/app.js', '/js/catalogo.js', '/js/navigation.js', '/js/catalog-filter-state.js', '/js/carrito.js', '/js/presentation.js', '/js/producto.js', '/js/cuenta.js', '/js/account-cart.js', '/js/reviews.js', '/robots.txt', '/sitemap.xml', '/404.html', '/assets/dreams-social.png']);
 const auth_paths = new Set(['/api/auth/register', '/api/auth/login', '/api/auth/logout', '/api/auth/me', '/api/auth/config']);
-const customer_paths = new Set(['/api/cart/config', '/api/cart/account', '/api/reviews']);
+const customer_paths = new Set(['/api/cart/config', '/api/cart/account', '/api/reviews', '/api/cart/quote', '/api/checkout/config', '/api/presentation/session', '/api/presentation/payment', '/api/presentation/result']);
 const customer_path = path => customer_paths.has(path) || /^\/api\/reviews\/[1-9]\d*$/.test(path);
 const header_aliases = new Map([['/js/account-cart.js', '/js/app.js'], ['/js/reviews.js', '/js/app.js'], ['/js/navigation.js', '/js/app.js'], ['/js/catalog-filter-state.js', '/js/app.js'], ['/assets/dreams-social.png', '/assets/dreams-hero-1024.webp']]);
 
