@@ -227,7 +227,7 @@ test('una opinión autenticada se persiste y reaparece al recargar la lista', as
         const created = await fetch(`${base}/api/reviews`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', Origin: base, Cookie: 'dreams_access_token=valid-token' },
-            body: JSON.stringify({ rating: 5, comment: 'Una experiencia muy cuidada.' })
+            body: JSON.stringify({ rating: 5, comment: 'Una experiencia muy cuidada.', operation_id: require('node:crypto').randomUUID() })
         });
         assert.equal(created.status, 201);
 
@@ -236,7 +236,9 @@ test('una opinión autenticada se persiste y reaparece al recargar la lista', as
         const [review] = await reloaded.json();
         assert.equal(review.comment, 'Una experiencia muy cuidada.');
         assert.equal(review.user_name, 'Ana');
-        assert.equal(review.user_id, 'user-1');
+        assert.equal(review.user_id, undefined);
+        assert.equal(review.can_delete, false);
+        assert.equal(reviews[0].user_id, 'user-1');
     });
 });
 

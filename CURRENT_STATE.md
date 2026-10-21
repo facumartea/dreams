@@ -1,3 +1,15 @@
+# Datos por usuario en candidato aislado — 2026-10-20
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Rama codex/customer-data-isolation desde PR54/8548c59, PR53/oficial461c17d preservados. Carrito reutilizado selectivamente de PR45/dc28c23; no merge ni release histórico/video. Signup normal de PR54 intacto; Auth config todavía requiere correo y no hay Auth Management ni entrada oculta/gestor utilizable. No pedir token por chat/comandos/archivos. No cuentas reales nuevas ni correos, credenciales Admin intactas.
+
+Carrito por UUID/idempotencia/firma/outbox por dueño, me fallido oculta privado, logout invalida lecturas pendientes; config/operaciones separadas del presupuesto quote30/15min. Opiniones por UUID/nombre de sesión, API sin UUID/correo/operation_id, publicación idempotente, Eliminar confirmado/JWT+filtro dueño; B404/visitante401 en fixtures. Moderación Admin conserva rutas/policies. Helpers nuevos/carrito/confirmación<=20; monolito legacy no refactorizado globalmente.
+
+BD migración20261021004927_customer_review_ownership APLICADA: operation_id nullable+índice único, RLSownerDELETE; retirado TRUNCATE anon/authenticated por omitirRLS. RLS=true/Adminpoliciesintactas/ambostrunclfalse verificados. Sin filas borradas ni stock/pedidos/comercio modificado. Tablas de PR45 ya estaban aplicadas y vacías;5/10 cuentas pendientes (2 recientes), sólo conteos, no modificadas.
+
+196tests suite PASS, builds normal/Auth/Pages; QA LOCAL Chromium390/1440 con dos cuentas/productos fixtures más visitante PASS: merge/recovery/cantidades/clear/logout/ownreviewdelete/foreign404/visitor401/Admin403. No equivalen a Auth remoto. Guía/matriz/rollback docs/customer_data_isolation.md; capturas/log docs/evidence/customer-data. Preview recurso customer-data-review/eb7558bb62454a92a7a8fadd7065e71c creado, publicación de código y Pages pendiente. Oficial f44a6069/461c17d intacta, rollback retenido. Próximo: commit/push/PR/CI y preview, luego Auth Management+dos identidades controladas y QA auténtica antes de promover oficial. Sin porcentaje inventado.
+
 # Auth: preview publicada; acceso Management bloqueado — 2026-10-21
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.

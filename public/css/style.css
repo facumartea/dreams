@@ -357,3 +357,5 @@ input,select,textarea{width:100%;min-height:48px;padding:.78rem 0;border:0;borde
 .account-card .form-message:empty{min-height:0}
 .account-tabs button:disabled{cursor:wait;opacity:.65}
 .account-tabs button:focus-visible{outline:2px solid var(--accent-soft);outline-offset:4px}
+
+.review-card button.text-button { min-height: 44px; padding-block: 10px; }

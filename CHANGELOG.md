@@ -1,3 +1,11 @@
+# 2026-10-20 — Carrito por UUID y eliminación de opiniones propias preparados
+
+- Reutilizados módulos/tests de PR45 sobre PR54 sin mezclar release histórico ni video.
+- Corregidos presupuesto de config frente a quote, ocultación ante identidad fallida, invalidación de respuestas de sesión al logout y scope UTF-8 seguro.
+- Autor/UUID de opinión desde sesión, publicación idempotente, botón Eliminar con confirmación y autorización JWT+dueño; moderación Admin conservada.
+- Aplicada migración20261021004927: índice de operación, DELETE sólo dueño y retirada de TRUNCATE excesivo. RLS/policies/grants comprobados, sin borrar datos.
+- Suite196 y navegador local390/1440 fixtures A/B/visitante PASS. Registro remoto sin confirmar sigue bloqueado por Auth Management; no correos/cuentas reales ni publicación oficial.
+
 # 2026-10-21 — Preview Auth publicada y verificada sin identidad real
 
 - Publicados backend Auth db726a9/de37b97d y Pages de236c6/be352ec6 en alias auth-session-review; comercio conserva destino anterior.

@@ -1,10 +1,11 @@
 import { createServer } from 'node:http';
+import { createHmac } from 'node:crypto';
 import { handleAsNodeRequest } from 'cloudflare:node';
 import { createClient } from '@supabase/supabase-js';
 import appModule from '../server/app.js';
 
 let server;
-const auth_routes = new Set(['POST /api/auth/register', 'POST /api/auth/login', 'POST /api/auth/logout', 'GET /api/auth/me', 'GET /api/auth/config', 'GET /api/health']);
+const auth_routes = new Set(['POST /api/auth/register', 'POST /api/auth/login', 'POST /api/auth/logout', 'GET /api/auth/me', 'GET /api/auth/config', 'GET /api/health', 'GET /api/cart/config', 'GET /api/cart/account', 'POST /api/cart/account', 'GET /api/reviews', 'POST /api/reviews']);
 
 function validate_environment(env) {
     const origins = appModule.allowed_origin_set(env.APP_ORIGINS);
@@ -28,6 +29,8 @@ function create_auth_app(env) {
     return appModule.create_app({
         database: client(), create_auth_client: client, production: true, disable_request_log: true,
         preview_read_only: true, demo_auto_confirm_email: false, checkout_schema_ready: false,
+        customer_data_enabled: true, account_cart_enabled: true,
+        account_cart_signing_key: createHmac('sha256', env.SUPABASE_SECRET_KEY).update('dreams-account-cart-signing-v1').digest('hex'),
         email_confirmation_required: () => email_confirmation_required(env), product_brand_column: 'marca',
         allowed_origins: env.APP_ORIGINS, app_base_url: env.APP_BASE_URL,
         logger: { warn: () => console.warn('DREAMS Auth session unavailable'), error: () => console.error('DREAMS Auth request failed') },
@@ -47,7 +50,7 @@ function verified_request(request) {
 export default {
     async fetch(request, env) {
         const path = new URL(request.url).pathname;
-        if (!auth_routes.has(`${request.method} ${path}`)) return Response.json({ error: 'Esta ruta no está habilitada en el servicio de acceso.' }, { status: 403, headers: { 'Cache-Control': 'no-store' } });
+        if (!auth_routes.has(`${request.method} ${path}`) && !(request.method === 'DELETE' && /^\/api\/reviews\/[1-9]\d*$/.test(path))) return Response.json({ error: 'Esta ruta no está habilitada en el servicio de acceso.' }, { status: 403, headers: { 'Cache-Control': 'no-store' } });
         try {
             if (!server) { server = createServer(create_auth_app(env)); server.listen(8080); }
             return await handleAsNodeRequest(8080, verified_request(request));

@@ -1,3 +1,5 @@
+const { install_account_cart } = require('./account-cart');
+const { install_reviews } = require('./reviews');
 const path = require('node:path');
 const { auth_limiters } = require('./auth-limits');
 const { customer_registration } = require('./customer-registration');
@@ -268,14 +270,16 @@ function create_app(options = {}) {
     });
     app.use('/api/auth', auth_limiters());
     app.use('/api/inquiries', rateLimit({ windowMs: 900000, limit: 10, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiadas consultas. Probá nuevamente en unos minutos.' } }));
-    app.use('/api/cart', rateLimit({ windowMs: 900000, limit: 30, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiadas verificaciones del carrito. Probá nuevamente en unos minutos.' } }));
+    app.use('/api/cart/config', rateLimit({ windowMs: 60000, limit: 120, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiadas consultas. Probá nuevamente en un minuto.' } }));
+    app.use('/api/cart/account', rateLimit({ windowMs: 900000, limit: 180, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiados cambios del carrito. Probá nuevamente en unos minutos.' } }));
+    app.use('/api/cart', rateLimit({ skip: request => ['/account', '/config'].includes(request.path), windowMs: 900000, limit: 30, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiadas verificaciones del carrito. Probá nuevamente en unos minutos.' } }));
     app.use('/api/presentation', rateLimit({ windowMs: 900000, limit: 60, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiados intentos. Probá nuevamente en unos minutos.' } }));
     app.use('/api/checkout', rateLimit({ skip: request => !unsafe_methods.has(request.method), windowMs: 900000, limit: 15, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiados intentos de pago. Probá nuevamente en unos minutos.' } }));
     app.use('/api/coupons', rateLimit({ windowMs: 900000, limit: 30, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiados intentos. Probá nuevamente en unos minutos.' } }));
     app.use('/api/payments/webhook', rateLimit({ windowMs: 60000, limit: 120, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiadas notificaciones.' } }));
     const review_limiter = rateLimit({ windowMs: 3600000, limit: 5, standardHeaders: true, legacyHeaders: false, message: { error: 'Publicaste varias opiniones. Probá nuevamente más tarde.' } });
     app.use('/api/reviews', (request, response, next) => request.method === 'POST' ? review_limiter(request, response, next) : next());
-    app.use(preview_write_guard(options.preview_read_only));
+    app.use(preview_write_guard(options.preview_read_only, options.customer_data_enabled));
     app.use(options.static_middleware || express.static(public_directory));
 
     async function profile_for(user) {
@@ -329,6 +333,9 @@ function create_app(options = {}) {
     const route = (method, url, ...handlers) => app[method](url, ...handlers.map(handler => handler === login || handler === admin ? handler : async_route(handler)));
     const fail_if = result => { if (result.error) throw result.error; return result.data; };
 
+    install_account_cart({ route, login, database, enabled: options.account_cart_enabled, signing_key: options.account_cart_signing_key || options.presentation_signing_key, product_brand_column });
+    install_reviews({ route, login, database, create_auth_client });
+    route('get', '/api/cart/config', async (_request, response) => response.json({ account_cart: options.account_cart_enabled === true }));
     presentation.install(app, route);
     google_routes(app, { create_oauth_client: options.create_oauth_client, provider_enabled: async () => options.google_access_ready === true && await (options.google_provider_enabled || (async () => false))(), app_base_url, production, profile_for, logger });
     route('get', '/api/auth/google/config', async (request, response) => response.json({ enabled: Boolean(options.google_access_ready === true && options.create_oauth_client && app_base_url && await (options.google_provider_enabled || (async () => false))()) }));
@@ -361,6 +368,7 @@ function create_app(options = {}) {
         const email = normalize_email(request.body.email), password = String(request.body.password || '');
         if (!valid_email(email) || !password || password.length > 128) return response.status(400).json({ error: 'Ingresá un correo válido y tu contraseña.' });
         const result = await create_auth_client().auth.signInWithPassword({ email, password });
+        if (auth_transient_error(result.error)) return response.status(503).json({ error: 'No pudimos iniciar tu sesión. Reintentá más tarde.' });
         if (result.error || !result.data.session || !result.data.user) {
             const confirmation_required = !demo_auto_confirm_email && result.error?.code === 'email_not_confirmed';
             return response.status(401).json({ error: confirmation_required ? 'Primero confirmá tu cuenta desde el correo que te enviamos.' : 'Correo o contraseña incorrectos.' });
@@ -380,13 +388,6 @@ function create_app(options = {}) {
     });
     route('get', '/api/auth/me', async (request, response) => request.auth_unavailable
         ? response.status(503).json({ error: 'No pudimos comprobar tu sesión. Reintentá más tarde.' }) : response.json({ user: request.user || null }));
-    route('get', '/api/reviews', async (request, response) => response.json(fail_if(await execute_database_query(() => database.from('reviews').select('id,user_name,rating,comment,created_at').order('id', { ascending: false })))));
-    route('post', '/api/reviews', login, async (request, response) => {
-        const rating = +request.body.rating, comment = String(request.body.comment || '').trim().slice(0, 1000);
-        if (!Number.isInteger(rating) || rating < 1 || rating > 5 || !comment) return response.status(400).json({ error: 'Completá una puntuación y una opinión.' });
-        fail_if(await database.from('reviews').insert({ user_id: request.user.id, user_name: request.user.name, rating, comment }));
-        response.status(201).json({ message: 'Opinión publicada.' });
-    });
     route('post', '/api/cart/quote', async (request, response) => {
         const quote = await quote_cart(database, request.body.items, presentation.ready ? '' : request.body.coupon_code, product_brand_column);
         if (quote.error) return response.status(400).json({ error: quote.error });

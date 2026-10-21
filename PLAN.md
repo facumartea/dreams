@@ -1,3 +1,13 @@
+# Registro y datos por UUID — 2026-10-20
+
+- Auditoría PR54/45/oficial/Supabase y preservación de dependencias: COMPLETADA.
+- Carrito por UUID y opiniones propias con idempotencia/autorización: IMPLEMENTADOS.
+- Migración aditiva/RLS/retirada de TRUNCATE y revisión advisors: COMPLETADOS, sin eliminar datos.
+- Suite196 y QA navegador LOCAL fixtures móvil/escritorio: PASS; captura y evidencia documentadas.
+- Publicación candidato/CI/PR y QA anónima remota: EN CURSO.
+- Auth Management, revisión de apps compartidas, registro normal sin correo y QA real A/B: BLOQUEADOS por acceso/identidades.
+- Oficial: NO publicar hasta completar QA auténtica. Mantener rollback, sin video/DNS/cuentas Admin cambiadas.
+
 # Auth — cierre independiente y bloqueo externo — 2026-10-21
 
 - Implementación, 177 tests, CI39521612525, tres builds y PR54 draft: COMPLETADOS.

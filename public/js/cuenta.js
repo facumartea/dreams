@@ -1,3 +1,5 @@
+function notify_account_change() { try { localStorage.setItem('dreams_account_changed', crypto.randomUUID()); } catch {} }
+
 let account_request_id = 0;
 
 async function request_json(url, options = {}) {
@@ -100,6 +102,7 @@ async function submit_login(form, message, body) {
     try {
         const data = await request_json('/api/auth/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
         if (!data.authenticated) throw new Error('No pudimos iniciar la sesión. Intentá nuevamente.');
+        notify_account_change();
         window.location.replace(data.redirect || '/cuenta.html');
     } catch (error) {
         set_message(message, error.message, 'error');
@@ -140,6 +143,7 @@ async function submit_registration(form, message, body) {
             return;
         }
         set_message(message, data.message || 'Cuenta creada correctamente. Ya ingresaste a DREAMS.', 'success');
+        notify_account_change();
         window.location.replace('/cuenta.html');
     } catch (error) {
         set_message(message, error.message, 'error');
@@ -173,7 +177,11 @@ async function logout_account(event) {
     button.disabled = true;
     const message = document.getElementById('logout-message');
     set_message(message, 'Cerrando sesión…');
-    try { await request_json('/api/auth/logout', { method: 'POST' }); window.location.replace('/cuenta.html'); }
+    try {
+        await request_json('/api/auth/logout', { method: 'POST' });
+        if (typeof account_cart !== 'undefined') account_cart?.logout();
+        notify_account_change(); window.location.replace('/cuenta.html');
+    }
     catch (error) { set_message(message, error.message, 'error'); button.disabled = false; }
 }
 
