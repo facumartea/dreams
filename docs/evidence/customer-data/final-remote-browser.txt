@@ -1,0 +1,2 @@
+mobile REMOTE PASS: menus/filters empty+clear, visitor add/reload/quantities, quote200/free shipping, academic checkout once/reference stable after reload, no commercial calls/no JS errors/no overflow. Reference: DREAMS-B11F17132676474F82AF482624AC8404
+desktop REMOTE PASS: menus/filters empty+clear, visitor add/reload/quantities, quote200/free shipping, academic checkout once/reference stable after reload, no commercial calls/no JS errors/no overflow. Reference: DREAMS-0386F49551004BF6837213E610E9D408

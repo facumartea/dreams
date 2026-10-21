@@ -1,3 +1,21 @@
+# Cierre vigente — datos por cuenta — 2026-10-21
+
+- Implementación/PR55/CI197/builds/preview: COMPLETADOS.
+- Cotización antes403: CORREGIDA sólo en candidato reutilizando rutas académicas aisladas; no pendiente actual.
+- QA local A/B simulado y remota visitante/móvil/escritorio/checkout académico: COMPLETADOS según matriz.
+- Auth Management, revisar otros consumidores, Confirm email y dos identidades controladas: BLOQUEADOS.
+- Registro/login/sesión/logout/customer/A-B reales y publicación oficial: PENDIENTES de ese acceso; no sustituir por fixtures.
+- BD aditiva de seguridad aplicada/verificada, sin eliminación; oficial web y rollback conservados.
+
+# Resultado de candidato de datos por cuenta — 2026-10-20
+
+- PR55/commits9705521,e24d5c5/CI197tresbuilds/previewPages+Worker: COMPLETADOS.
+- QA local A/B/visitante simulados y remota anónima390/1440: PASS en matriz documentada.
+- Configuración de origen para quote en candidato: BLOQUEADA403 legado, mantener protección/checkout destino anterior.
+- Auth Management, otros consumidores y dos identidades controladas: BLOQUEADOS; Confirm email sigue activo.
+- Signup real sin correo/login/sesión/customer/logout y A/B remoto: PENDIENTES de ese acceso.
+- Publicación oficial: NO realizada, condicionada a QA real. BD aditiva ya aplicada y verificada, sin borrar datos; rollback código retenido.
+
 # Registro y datos por UUID — 2026-10-20
 
 - Auditoría PR54/45/oficial/Supabase y preservación de dependencias: COMPLETADA.

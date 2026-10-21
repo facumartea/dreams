@@ -1,3 +1,18 @@
+# 2026-10-21 — Candidato final verificado con checkout académico aislado
+
+- Corregido403 de quote del candidato reutilizando rutas académicas en servicio limitado y firma derivada por propósito/origen; producción y sus orígenes intactos.
+- Worker9f5d442a/984d353 y Pages6a832bb4/45d05a7 publicados sólo preview. CI39632902575 SUCCESS197 y tresbuilds,22 tests pertinentes PASS.
+- QA remota390/1440 de menús/filtros/visitante/cantidades/persistencia/quote200/envío gratis/checkout simulado una vez/referencia estable PASS; cero llamadas comerciales/erroresJS/overflow. Evidencia final-remote guardada.
+- No cuentas reales ni correos,0carritos/operaciones/opiniones/pedidos comerciales tras QA;5 cuentas pendientes conservadas. Auth sin confirmación y A/B reales siguen bloqueados por acceso Management.
+- Oficialf44a6069/461c17d reconfirmada, sin nuevo deploy/merge/DNS; rollback conservado. BD aditiva de seguridad del checkpoint anterior permanece aplicada, sin borrar datos.
+
+# 2026-10-20 — Preview de datos por UUID publicada
+
+- Backend2e099ccd/9705521 y Pagesb741d630/e24d5c5 publicados en customer-data-review; PR55draft dependientePR54. CI197/check67/audit y tresbuilds PASS.
+- QA remota anónima390/1440 de UI/catálogo/carrito visitante/privadas401/Admin403/noindex y artefacto sin secreto/video. Registro vacío400/origen ajeno403. No cuentas reales creadas ni correos.
+- Cotización del alias rechazada por Origin legado403; se conserva protección y oficial sin despliegue. Auth remoto sin correo y A/B siguen bloqueados por Management/identidades.
+- Oficialf44a6069/461c17d y previewvideo intactos. Sólo BD aditiva de seguridad indicada en checkpoint anterior aplicada; no datos comerciales ni credenciales cambiados. Evidencia y recuperación documentadas.
+
 # 2026-10-20 — Carrito por UUID y eliminación de opiniones propias preparados
 
 - Reutilizados módulos/tests de PR45 sobre PR54 sin mezclar release histórico ni video.
