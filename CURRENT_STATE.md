@@ -1,3 +1,13 @@
+# Auth: preview publicada; acceso Management bloqueado — 2026-10-21
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+PR54 DRAFT/rama codex/auth-session-review depende de PR53, reutiliza PR48/052b224 sin merges. Pages preview be352ec6-fce8-41a1-b0bc-068675c89251 sirve de236c6b10580e552311e47119096ab86f776032 en https://auth-session-review.dreams-perfumes.pages.dev/cuenta.html. Backend Auth aislado de37b97d/db726a9 hereda Secret existente sin leer valores. Otras rutas conservan backend d5df723d/ec04a35. CI39521612525 SUCCESS177tests/check61/audit y tres builds. QA remota anónima Chromium390/1440 PASS: validaciones, pestañas, autofill pseudoestado, sin overflow/errores JS; register vacío400, origen ajeno403, me anónimo200, Admin403. No registro/login real realizado.
+
+OFICIAL intacta f44a6069/461c17d: register403; Confirm email activo en Supabase (mailer_autoconfirm=false). Registro sin confirmación y ciclo autenticado remoto BLOQUEADOS. Usuario no puede abrir gestor web; herramientas NO ofrecen entrada oculta, setter de secretos ni Auth Management. No solicitar token por chat/comandos/archivos ni improvisar receptor. Estado del entorno sin SUPABASE_ACCESS_TOKEN; permisos SQL/Secret servidor no sustituyen Management. Conexión con capacidad real de Auth config y revisión de otros consumidores son requisitos pendientes; no basta autorización. No Auth global, cuentas, roles, credenciales, datos ni DNS cambiados.
+
+Evidencia/matriz/rollback: docs/auth_session_review.md y docs/evidence/auth-session. Oficial sólo tras configurar Auth y verificar signup normal/customer/sesión/logout/login remoto con identidad controlada. Video sigue sólo preview cinematográfica, intacta. Avance: implementación/CI/preview completados; Auth remoto/publicación oficial pendientes, sin porcentaje inventado. PUSH SÍ; DEPLOY PREVIEW SÍ; DEPLOY OFICIAL NO.
+
 # Revisión Auth en implementación aislada — 2026-10-20
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.

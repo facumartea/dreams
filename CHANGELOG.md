@@ -1,3 +1,10 @@
+# 2026-10-21 — Preview Auth publicada y verificada sin identidad real
+
+- Publicados backend Auth db726a9/de37b97d y Pages de236c6/be352ec6 en alias auth-session-review; comercio conserva destino anterior.
+- CI39521612525 SUCCESS177 tests y builds normal/Auth/Pages. QA anónima remota Chromium móvil/escritorio y capturas guardadas; registro vacío atraviesa guard y devuelve400; origen ajeno y Admin rechazados403.
+- Comprobada ausencia de mecanismo de entrada oculta/gestor de secretos utilizable. Auth global y pruebas reales siguen bloqueados; no se crearon cuentas ni se enviaron correos.
+- Oficial f44a6069/461c17d y preview cinematográfica intactas. PR54 continúa draft, sin merge ni publicación oficial.
+
 # 2026-10-20 — Revisión de registro y sesión preparada
 
 - Reutilizados handlers y tests PR48 sin duplicar implementación ni publicar su configuración vieja.

@@ -26,7 +26,7 @@ La oficial no se publica hasta verificar registro real sin correo, sesión/custo
 
 ## Intervención externa necesaria
 
-Habilitar acceso seguro a Auth Management. La documentación oficial consultada [personal access tokens](https://supabase.com/docs/guides/platform/personal-access-tokens) distingue tokens Legacy y Scoped; PATCH Auth config exige **Auth Config Read-write y Project Settings Read-write**. Se solicitó cargar únicamente un Secret SUPABASE_ACCESS_TOKEN Scoped al proyecto nwsmbemwtexmrtpkgxrz en el gestor del entorno, nunca en chat, argumentos ni archivos. Página oficial: https://supabase.com/dashboard/account/tokens (acceso propietario por GitHub). No se pide generar/rotar API keys ni leer secretos del Worker.
+Habilitar acceso seguro a Auth Management. La documentación oficial consultada [personal access tokens](https://supabase.com/docs/guides/platform/personal-access-tokens) distingue tokens Legacy y Scoped; PATCH Auth config exige **Auth Config Read-write y Project Settings Read-write**. La instrucción previa de cargar SUPABASE_ACCESS_TOKEN en el gestor del entorno quedó bloqueada: el usuario no puede abrir ese gestor y las herramientas actuales no ofrecen entrada oculta ni setter de secretos. No reiterar esa solicitud ni recibir el token por chat, comandos o archivos. La documentación de permisos no implica que exista un canal de carga disponible. Página oficial: https://supabase.com/dashboard/account/tokens (acceso propietario por GitHub). No se pide generar/rotar API keys ni leer secretos del Worker.
 
 Con acceso: consultar config Auth proyectando sólo site_url/uri_allow_list/mailer_autoconfirm/política de contraseña, revisar otros consumidores del proyecto (su nombre no prueba exclusividad), guardar valor anterior y, si no hay apps ajenas afectadas, PATCH sólo mailer_autoconfirm=true y reconsultar. No confirmar cuentas previas masivamente. Luego usar identidad exclusiva controlada/autorizada y signup normal; nunca creación administrativa ni correo de la captura.
 
@@ -36,7 +36,7 @@ Suite completa final177tests PASS;47 pruebas focalizadas finales PASS después d
 
 Chromium real con backend Express del proyecto y proveedor **simulado local**,390×844/1440×900: errores de formulario/mismatch, submit, aborto de red/reintento, doble submit, customer, cookies HttpOnly/Lax, sesión/reload/navegación, renovación al retirar cookie access, logout/back/reload, login incorrecto/correcto, cuenta existente segura y Admin403. Autofill probado con pseudoestado forzado de Chromium (color marfil y sombra interior de superficie); no gestor de contraseñas/Safari/dispositivo físico reales. Cookies Secure se verifican en integración producción con fixtures; no se afirman observadas en una cuenta remota. Capturas locales y log sin valores sensibles en docs/evidence/auth-session.
 
-### Matriz de pruebas (estado antes de preview)
+### Matriz de pruebas: local frente a la oficial vigente
 
 | Prueba | Local (fixtures/navegador según corresponde) | Oficial remota |
 |---|---|---|
@@ -77,3 +77,31 @@ Auth config: registrar snapshot antes de cambiar; rollback sólo mailer_autoconf
 Backend aislado de37b97d-005c-4db3-8337-c39ca8b61182, preview5abc3210b94b4f26bf2ecbfe8e356db8 auth-session-review, fuente db726a98115a3b9d2773d03633e6eecd1462701b. CI39521339546 SUCCESS177tests/check61 y builds normal/Auth/Pages. BundleAuth2187535bytes SHA256c60414516a6c4cd82cf06794d9609eef398344295706c1c2b082b15846c8724a, sin valores Secret. La base de previews aporta SUPABASE_SECRET_KEY por herencia implícita: un primer intento con type:inherit explícito devolvió404 porque buscaba una versión de producción; se corrigió omitiendo ese override, sin leer/cambiar el secreto ni configuración base.
 
 El release de esta rama añade sólo auth_backend_url/source para un candidato Pages. backend_url principal d5df723d/ec04a35 no cambia. Publicación oficial sigue bloqueada hasta QA autenticada y Auth Management; conservar el nuevo campo en esta rama no significa que la oficial haya cambiado.
+
+
+## Resultado de Pages y QA remota anónima — 2026-10-21
+
+Preview: https://auth-session-review.dreams-perfumes.pages.dev/cuenta.html. Pages deployment be352ec6-fce8-41a1-b0bc-068675c89251 SUCCESS/preview, fuente de236c6b10580e552311e47119096ab86f776032. Artefacto560732bytes, SHA256a59f331a10146226e843b9e61739633fb22873d484e0eca62fde3f55dc49017a. CI39521612525 SUCCESS al mismo commit:177 tests, check61, auditoría y builds Workers normal/Auth/Pages.
+
+| Verificación del candidato remoto | Resultado |
+|---|---|
+| GET cuenta/config/me | PASS:200, confirmación requerida true, usuario null |
+| POST register vacío con Origin del alias | PASS:400 validación, sin403 comercial |
+| POST register vacío con origen ajeno | PASS:403 |
+| Admin y API Admin anónimos | PASS:403 |
+| UI390×844 y1440×900: vacíos/mismatch, pestañas/teclado, foco, autofill pseudoestado | PASS |
+| Scroll horizontal y errores JavaScript en ese recorrido | PASS: ausentes |
+| Registro válido sin confirmación y perfil customer reales | BLOQUEADA: Auth config y cuenta controlada pendientes |
+| Login, sesión, renovación, expiración y logout reales | BLOQUEADA: sin cuenta legítima de prueba |
+| Cookies de sesión remota | BLOQUEADA: no se emitió sesión real |
+| Safari/iPhone físico/gestor real de contraseñas | BLOQUEADA: sólo Chromium con viewports y pseudoestado |
+
+Capturas remote-mobile-register/remote-desktop-register y autofill, más remote-anonymous-browser.txt en docs/evidence/auth-session. QA de formularios bloqueó preventivamente POST de signup; se observaron cero solicitudes de alta durante las validaciones inválidas. La comprobación HTTP register vacío se ejecutó por separado, sin identidad ni contraseña. No se afirma que esto pruebe una cuenta real.
+
+## Acceso seguro: limitación concreta
+
+No existe herramienta disponible de entrada enmascarada, carga de secretos al entorno, reconexión con ampliación de permisos Auth ni ejecución de OAuth Management. El estado del entorno no contiene SUPABASE_ACCESS_TOKEN. Un terminal de herramientas o request_user_input de texto no son una entrada secreta para el usuario. No crear un formulario receptor ni usar otra aplicación como depósito de credenciales. No hace falta repetir la clave en ningún canal.
+
+Para continuar hace falta un canal seguro que efectivamente entregue acceso a Auth Management (o recuperar el acceso propietario al panel de Supabase mediante GitHub). Recuperación oficial GitHub: https://github.com/password_reset y guía2FA https://docs.github.com/en/authentication/securing-your-account-with-two-factor-authentication-2fa/recovering-your-account-if-you-lose-your-2fa-credentials. Supabase: https://supabase.com/dashboard/sign-in. No se puede eludir esa autenticación ni completar el ajuste sólo con autorización escrita.
+
+Oficial sigue f44a6069/461c17d, no publicada esta corrección. No cambio de Auth global, datos, usuarios, roles, credenciales, DNS ni video. Rollback retenido, no ejecutado. Próxima acción dependiente: habilitar acceso Management real, revisar consumidores, aplicar el ajuste autorizado y validar el ciclo auténtico antes de publicar oficial.
