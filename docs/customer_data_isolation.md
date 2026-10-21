@@ -55,3 +55,9 @@ Candidato sólo aislado; oficial no se promoverá antes del ciclo real A/B sin c
 Rollback de código: conservar oficial f44a6069/461c17d y backendd5df723d; restaurar versión Pages por endpoint rollback si se promueve en otra sesión. No borrar deployments. La BD es aditiva: mantener columna/índice sin borrar datos y, si se revierte la función de eliminación propia, retirar sólo reviews_owner_delete mediante migración revisada. No devolver TRUNCATE a clientes. Auth aún sin cambios: guardar estado previo antes del futuro ajuste y revertir sólo mailer_autoconfirm si corresponde. No rollback ejecutado.
 
 Próxima acción dependiente: acceso seguro a Auth Management y control de dos identidades de prueba; no creación administrativa/SQL como sustituto del signup normal ni atribución por correo. Sin ese acceso, registro real y publicación oficial siguen bloqueados.
+
+## Backend candidato publicado
+
+Worker preview customer-data-review/eb7558bb62454a92a7a8fadd7065e71c, deployment2e099ccd-3d34-44bd-af49-c4ba7b147c7e, fuente9705521eccd5d59d7b686ae7662fa501d6b5636c. Inmutable https://2e099ccd-dreams-perfumes.dreams-perfumes.workers.dev; health200/databaseok, cart/config200 habilitado y reviews200 lista vacía. Bundle2197973bytes SHA2566812adf23bce494c2d19994043a58420b415c626632b0fe8e6a7709b496cbe86. SUPABASE_SECRET_KEY heredado implícitamente de previews_base_config (único Secret por nombre/tipo comprobados), sin lectura ni transferencia de valor. Logs de invocación apagados y query redacted. No configuración comercial/producción modificada.
+
+El release candidato sólo cambia auth_backend_url/source/preview y customer_data=true. Backend principal d5df723d/ec04a35 no cambia. Pages aún pendiente de publicación en este checkpoint. PR55 draft, dependiente PR54, CI en curso; alta real sin correo y datos autenticados siguen bloqueados.
