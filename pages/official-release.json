@@ -6,8 +6,8 @@
   "hero": "static",
   "checkout": "academic-only",
   "writes": "protected",
-  "auth_backend_url": "https://2e099ccd-dreams-perfumes.dreams-perfumes.workers.dev",
-  "auth_source_commit": "9705521eccd5d59d7b686ae7662fa501d6b5636c",
+  "auth_backend_url": "https://9f5d442a-dreams-perfumes.dreams-perfumes.workers.dev",
+  "auth_source_commit": "984d3539529ea0f4a7a9b531ea2e593168d13ce1",
   "auth_preview_id": "eb7558bb62454a92a7a8fadd7065e71c",
   "customer_data": true
 }
