@@ -146,9 +146,13 @@ test('el detalle presenta las notas reales como un Scent Trail accesible', () =>
     const css = fs.readFileSync(path.join(root, 'public/css/style.css'), 'utf8');
     assert.match(product, /class="scent-trail" aria-labelledby="scent-trail-title"/);
     assert.match(product, /<ol class="notes-grid" aria-label="Etapas olfativas">/);
-    assert.match(product, /product\.notes\.salida\.join/);
-    assert.match(product, /product\.notes\.corazon\.join/);
-    assert.match(product, /product\.notes\.fondo\.join/);
+    const vm = require('node:vm'), context = vm.createContext({ document: { addEventListener() {} } });
+    vm.runInContext(fs.readFileSync(path.join(root, 'public/js/safe.js'), 'utf8'), context);
+    vm.runInContext(product, context);
+    const rendered = vm.runInContext("product_scent_trail({notes:{salida:['Salida real'],corazon:['Corazón real'],fondo:['<Fondo real>']}})", context);
+    assert.match(rendered, /<h3>Salida<\/h3><p>Salida real<\/p>/);
+    assert.match(rendered, /<h3>Corazón<\/h3><p>Corazón real<\/p>/);
+    assert.match(rendered, /<h3>Fondo<\/h3><p>&lt;Fondo real&gt;<\/p>/);
     assert.match(css, /\.scent-trail-header/);
     assert.match(css, /@media\(max-width:720px\).*\.notes-grid\{grid-template-columns:1fr/s);
 });
