@@ -8,8 +8,10 @@
   "writes": "protected",
   "official_service": "dreams-official-backend",
   "official_worker_id": "f4f560d2e4b947c18d8a06b9e4a24961",
-  "deployment_ready": true,
+  "deployment_ready": false,
   "official_source_commit": "d8fec8ffa50f5d8dcb72bfba1e75b4cd28e7e134",
   "official_version": "2ef6be90-b8d8-4e03-8bc4-58b36718e6f1",
-  "official_deployment": "43a8bd54-658a-4240-9327-66e4885c6f78"
+  "official_deployment": "43a8bd54-658a-4240-9327-66e4885c6f78",
+  "failed_pages_deployment": "1e881ec8-7c32-4a2e-9857-ef63bf091c4f",
+  "publication_blocker": "Supabase rejects inherited backend key: HTTP401 UNAUTHORIZED_INVALID_API_KEY / bad_length"
 }

@@ -1,3 +1,19 @@
+# Resultado vigente: oficial restaurada; candidato bloqueado por rechazo upstream — 2026-10-27
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Entorno de ejecución RECUPERADO. Código funcional reconstruido y pusheado en PR56; CI203/d8fec8f y CI204/232d2dd SUCCESS (346tests,81check,audit y cuatrobuilds). Publicado sólo en la oficial como Pages1e881ec8-7c32-4a2e-9857-ef63bf091c4f desde232d2dd; backend privado2ef6be90/deployment43a8bd54 heredó Secret del MISMO Worker939c179c. No se leyó/copió su valor ni se reconfiguró Auth.
+
+**Smoke FALLÓ**: /api/health503, /api/products500, /api/reviews500. Logs Supabase16:58–17:02UTC: REST401, UNAUTHORIZED_INVALID_API_KEY; apikey_error y authorization_error=bad_length. Esto es validación de uso fallida, distinta de existencia/tipo del Secret ya comprobados. No atribuir al SDK o a Confirm email sin evidencia. No volver a cargar ni solicitar secretos por instrucción del usuario. El bootstrap anterior nunca había acreditado acceso DB real.
+
+**ROLLBACK REALIZADO** a Pagesa3184576-4390-4a71-9205-d9269bd7dfe7/fuente7b302cf. Canónico confirmado y HTTP health200/databaseok, catálogo200/46productos, config200 sin capacidad nueva. El candidato NO queda en tráfico oficial. deployment_ready=false impide publicación CLI hasta resolver y acreditar acceso real. Binding producción DREAMS_OFFICIAL permanece preparado junto a DREAMS; rollback sólo usa DREAMS. Worker privado sigue sin workers.dev/previews.
+
+DB antes/después idéntica:46productos/0orders/0reviews/2inquiries/10usuarios; stockdigest7a58615dd40e0dcfd898a52aa108b820, rolAdmin originaladmin. Ninguna cuentaQA llegó a crearse: el harness abortó en health. Auth/cartA-B/reviews/Admin reales NO ACREDITADOS. No credenciales/correo/rolAdmin, productos, stock, pagos, DNS u otros sitios modificados; sin merge.
+
+Fases: recuperación/composición/local/CI COMPLETADAS; backend privado DESPLEGADO pero accesoDB FALLA; promoción oficial REVERTIDA y restauración VERIFICADA; QA autenticada cliente/Admin BLOQUEADA por acceso del privado. Diseño/accesibilidad completa/performance avanzada sin nueva auditoría; no porcentaje global inventado ni cierre funcional. Evidencia en docs/evidence/functional-backend-20261027/verification.md.
+
+Próxima acción exacta dentro de restricciones: mantener oficial sana y comparar diagnóstico seguro de autorización del backend privado con su proveedor, sin imprimir ni reemplazar credenciales; sólo volver a publicar después de acreditar acceso DB correcto. No repetir configuración Auth ni pedir secretos. Sesión Admin existente sigue pendiente para QA, sin cambiar contraseña. PUSH REALIZADO:SÍ. DEPLOY REALIZADO:SÍ, REVERTIDO; release funcional oficial:NO.
+
 # Backend privado desplegado; publicación Pages preparada — 2026-10-27
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
