@@ -1,3 +1,11 @@
+# 2026-10-27 — Backend privado y configuración Auth; interrupción de ejecución
+
+- Usuario desactivó Confirm email; comprobado HTTP200/mailer_autoconfirm=true/disable_signup=false. No se modificaron cuentas anteriores.
+- Creado dreams-official-backend interno autorizado (f4f560d2e4b947c18d8a06b9e4a24961), hostname y previews deshabilitados; sólo bootstrap503. Usuario añadió Secret servidor, versión939c179c/deployment4e35d8e5 verificados por tipo/nombre sin leer valor.
+- Integración local selecciona PR54/55 preservando Admin y WhatsApp oficiales. Nuevas políticas/binding/compatibilidad:29 pruebas fixture PASS; composición Auth/cart/reviews:43 PASS. No suite completa/build final acreditados, ni pruebas autenticadas remotas.
+- Entorno seleccionado dejó de admitir comandos; continuidad se preservó por GitHub, no se publicó código incompleto ni se tocó oficial a3184576/7b302cf.
+- Detalles, causas, recursos, fuentes y recuperación sin secretos: docs/continuity-functional-backend-20261027.md. No nueva página/preview pública, DNS, pagos, roles/credencialesAdmin o datos comerciales cambiados.
+
 # Publicación oficial parcial y QA comprobadas — 2026-10-27
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
