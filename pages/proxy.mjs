@@ -64,11 +64,12 @@ function compressed_api_request(request) {
         ? Response.json({ error: 'Enviá la solicitud sin compresión.' }, { status: 415, headers: { 'Cache-Control': 'no-store' } }) : null;
 }
 
+const approved_release = options => approved(options.backend_url) && (!options.admin_backend_url || approved(options.admin_backend_url));
+
 export function create_proxy(visual_assets = {}, options = {}) {
-    const valid_backend = approved(options.backend_url) && (!options.admin_backend_url || approved(options.admin_backend_url));
     return {
         async fetch(request, env) {
-            if (options.backend_url ? !valid_backend : !env.DREAMS?.fetch) return options.seo ? index_response(request, unavailable()) : unavailable();
+            if (options.backend_url ? !approved_release(options) : !env.DREAMS?.fetch) return options.seo ? index_response(request, unavailable()) : unavailable();
             try {
                 const rejected = compressed_api_request(request);
                 if (rejected) return options.seo ? index_response(request, rejected) : rejected;
