@@ -446,7 +446,7 @@ function setup_product_controls() {
 async function init_admin() {
     if (!(await verify_admin())) return;
     const config = await admin_fetch('/api/config').catch(() => ({}));
-    if (config.preview_read_only) {
+    if (config.preview_read_only && !config.admin_writes_enabled) {
         const notice = document.createElement('p'); notice.className = 'form-message'; notice.setAttribute('role', 'status');
         notice.textContent = 'Vista de revisión: las escrituras están protegidas. Los datos se consultan sin modificarlos.';
         document.querySelector('main')?.prepend(notice);

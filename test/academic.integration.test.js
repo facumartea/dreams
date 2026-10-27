@@ -83,7 +83,8 @@ test('all admin modules reject anonymous and user-editable admin metadata; previ
             if (role === 'customer') assert.equal((await fetch(base + path, { headers: { Cookie: 'dreams_access_token=verified' } })).status, 403, path);
         }
         assert.equal((await post(base, '/api/admin/products', {}, 'dreams_access_token=verified')).status, 403);
-        assert.equal((await post(base, '/api/auth/register', { email: 'no-write@example.com', password: 'not-used', name: 'Test' })).status, 403);
+        // Registro customer ahora llega a validación; no se habilitan roles ni escrituras Admin.
+        assert.equal((await post(base, '/api/auth/register', { email: 'no-write@example.invalid', password: 'not-used', name: 'Test', role: 'admin' })).status, 400);
     });
 });
 test('Google fails clearly while unconfigured and callbacks without PKCE cannot create sessions', async () => {

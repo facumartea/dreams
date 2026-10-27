@@ -1,4 +1,10 @@
+const { official_enabled } = require('./official-policy');
+const { install_account_cart } = require('./account-cart');
+const { install_reviews } = require('./reviews');
 const path = require('node:path');
+const { auth_limiters } = require('./auth-limits');
+const { customer_registration } = require('./customer-registration');
+const { preview_write_guard } = require('./preview-write-guard');
 const { auth_cookie, session } = require('./auth-cookies');
 const { google_routes } = require('./google-auth');
 const { presentation_checkout, academic_summary } = require('./presentation-checkout');
@@ -16,6 +22,7 @@ const normalize_email = value => String(value || '').trim().toLowerCase();
 const valid_email = value => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) && value.length <= 254;
 const delay = milliseconds => new Promise(resolve => setTimeout(resolve, milliseconds));
 const unsafe_methods = new Set(['POST', 'PUT', 'PATCH', 'DELETE']);
+const auth_transient_error = error => error && (error.status >= 500 || error.name === 'AuthRetryableFetchError');
 
 const IMAGE_URL_ERROR = 'La URL ingresada no apunta a una imagen válida o el servidor no permite mostrarla. Usá una URL HTTPS directa.';
 
@@ -234,7 +241,7 @@ function create_app(options = {}) {
     const app_base_url = normalize_origin(options.app_base_url);
     const checkout_enabled = Boolean(payment_provider?.configured && app_base_url && options.checkout_schema_ready);
     const show_test_data = checkout_mode === 'demo' || (checkout_mode === 'sandbox' && Boolean(options.show_checkout_test_data));
-    const presentation = presentation_checkout({ enabled: options.presentation_checkout, signing_key: options.presentation_signing_key, quote_cart, database, product_brand_column, production });
+    const presentation = presentation_checkout({ enabled: options.presentation_checkout, signing_key: options.presentation_signing_key, issuer: options.presentation_issuer, quote_cart, database, product_brand_column, production });
     const public_directory = options.public_directory || path.join(__dirname, '..', 'public');
     const views_directory = options.views_directory || path.join(__dirname, '..', 'views');
     const app = express();
@@ -250,20 +257,18 @@ function create_app(options = {}) {
         if (request.path === '/api' || request.path.startsWith('/api/') || ['/admin', '/admin.html'].includes(request.path) || /dreams_(access|refresh)_token=/.test(request.headers.cookie || '')) response.setHeader('Cache-Control', 'no-store');
         next();
     });
-    app.use('/api/auth', rateLimit({ windowMs: 900000, limit: 20, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiados intentos. Probá nuevamente en unos minutos.' } }));
+    app.use('/api/auth', auth_limiters());
     app.use('/api/inquiries', rateLimit({ windowMs: 900000, limit: 10, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiadas consultas. Probá nuevamente en unos minutos.' } }));
-    app.use('/api/cart', rateLimit({ windowMs: 900000, limit: 30, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiadas verificaciones del carrito. Probá nuevamente en unos minutos.' } }));
+    app.use('/api/cart/config', rateLimit({ windowMs: 60000, limit: 120, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiadas consultas. Probá nuevamente en un minuto.' } }));
+    app.use('/api/cart/account', rateLimit({ windowMs: 900000, limit: 180, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiados cambios del carrito. Probá nuevamente en unos minutos.' } }));
+    app.use('/api/cart', rateLimit({ skip: request => ['/account', '/config'].includes(request.path), windowMs: 900000, limit: 30, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiadas verificaciones del carrito. Probá nuevamente en unos minutos.' } }));
     app.use('/api/presentation', rateLimit({ windowMs: 900000, limit: 60, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiados intentos. Probá nuevamente en unos minutos.' } }));
     app.use('/api/checkout', rateLimit({ skip: request => !unsafe_methods.has(request.method), windowMs: 900000, limit: 15, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiados intentos de pago. Probá nuevamente en unos minutos.' } }));
     app.use('/api/coupons', rateLimit({ windowMs: 900000, limit: 30, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiados intentos. Probá nuevamente en unos minutos.' } }));
     app.use('/api/payments/webhook', rateLimit({ windowMs: 60000, limit: 120, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiadas notificaciones.' } }));
     const review_limiter = rateLimit({ windowMs: 3600000, limit: 5, standardHeaders: true, legacyHeaders: false, message: { error: 'Publicaste varias opiniones. Probá nuevamente más tarde.' } });
     app.use('/api/reviews', (request, response, next) => request.method === 'POST' ? review_limiter(request, response, next) : next());
-    app.use((request, response, next) => {
-        const safe = ['/api/cart/quote', '/api/auth/google', '/api/auth/login', '/api/auth/logout', '/api/presentation/session', '/api/presentation/payment', '/api/presentation/result'];
-        if (options.preview_read_only && unsafe_methods.has(request.method) && !safe.includes(request.path)) return response.status(403).json({ error: 'Esta vista de prueba permite consultas; las operaciones comerciales están protegidas.' });
-        next();
-    });
+    app.use(preview_write_guard(options.preview_read_only, options.customer_data_enabled, official_enabled(options)));
     app.use(options.static_middleware || express.static(public_directory));
 
     async function profile_for(user) {
@@ -284,12 +289,14 @@ function create_app(options = {}) {
             let token = cookies.dreams_access_token, user = null;
             if (token) {
                 const result = await database.auth.getUser(token);
-                user = result.data.user;
+                if (auth_transient_error(result.error)) throw result.error;
+                user = result.data?.user || null;
             }
             if (!user && cookies.dreams_refresh_token) {
                 const auth = create_auth_client();
                 const refreshed = await auth.auth.refreshSession({ refresh_token: cookies.dreams_refresh_token });
-                if (refreshed.data.session) {
+                if (auth_transient_error(refreshed.error)) throw refreshed.error;
+                if (refreshed.data?.session) {
                     session(response, refreshed.data.session, production);
                     token = refreshed.data.session.access_token;
                     user = refreshed.data.user;
@@ -303,6 +310,7 @@ function create_app(options = {}) {
             request.user = { id: user.id, name: profile?.name || user.email, email: user.email, is_admin: profile?.role === 'admin' };
             next();
         } catch (error) {
+            request.auth_unavailable = true;
             logger.warn?.('No se pudo restaurar la sesión.', { kind: error_kind(error) });
             next();
         }
@@ -314,10 +322,14 @@ function create_app(options = {}) {
     const route = (method, url, ...handlers) => app[method](url, ...handlers.map(handler => handler === login || handler === admin ? handler : async_route(handler)));
     const fail_if = result => { if (result.error) throw result.error; return result.data; };
 
+    install_account_cart({ route, login, database, enabled: options.account_cart_enabled, signing_key: options.account_cart_signing_key || options.presentation_signing_key, product_brand_column });
+    install_reviews({ route, login, database, create_auth_client });
+    route('get', '/api/cart/config', async (_request, response) => response.json({ account_cart: options.account_cart_enabled === true }));
     presentation.install(app, route);
     google_routes(app, { create_oauth_client: options.create_oauth_client, provider_enabled: async () => options.google_access_ready === true && await (options.google_provider_enabled || (async () => false))(), app_base_url, production, profile_for, logger });
     route('get', '/api/auth/google/config', async (request, response) => response.json({ enabled: Boolean(options.google_access_ready === true && options.create_oauth_client && app_base_url && await (options.google_provider_enabled || (async () => false))()) }));
-    route('get', '/api/config', async (request, response) => response.json({ whatsapp_number, contact_email, contacts, app_name: 'DREAMS', demo_auto_confirm_email, preview_read_only: options.preview_read_only === true }));
+    route('get', '/api/auth/config', async (request, response) => response.json({ email_confirmation_required: options.email_confirmation_required ? await options.email_confirmation_required() : true }));
+    route('get', '/api/config', async (request, response) => response.json({ whatsapp_number, contact_email, contacts, app_name: 'DREAMS', demo_auto_confirm_email, preview_read_only: options.preview_read_only === true, admin_writes_enabled: official_enabled(options) }));
     route('get', '/api/checkout/config', async (request, response) => response.json({ enabled: presentation.ready || checkout_enabled, provider: presentation.ready ? 'presentation_demo' : checkout_enabled ? payment_provider.name : null, mode: presentation.ready ? 'demo' : checkout_mode, show_test_data: presentation.ready || show_test_data }));
     route('get', '/api/products', async (request, response) => {
         const search = String(request.query.search || '').trim().replace(/[^\p{L}\p{N}\s'-]/gu, '').slice(0, 80);
@@ -340,35 +352,12 @@ function create_app(options = {}) {
         return data ? response.json(product(data)) : response.status(404).json({ error: 'Perfume no encontrado.' });
     });
     route('get', '/api/brands', async (request, response) => response.json([...new Set(fail_if(await execute_database_query(() => database.from('products').select(product_brand_column).order(product_brand_column))).map(item => normalize_product_brand(item).brand))]));
-    route('post', '/api/auth/register', async (request, response) => {
-        const name = String(request.body.name || '').trim().slice(0, 80), email = normalize_email(request.body.email), password = String(request.body.password || '');
-        if (!name || !valid_email(email) || password.length < 8 || password.length > 128) return response.status(400).json({ error: 'Completá un nombre, correo válido y una contraseña de 8 a 128 caracteres.' });
-        if (demo_auto_confirm_email) {
-            const created = await database.auth.admin.createUser({ email, password, email_confirm: true, user_metadata: { name } });
-            if (created.error || !created.data?.user) return response.status(400).json({ error: 'No se pudo crear la cuenta con esos datos.' });
-            fail_if(await database.from('profiles').upsert({ id: created.data.user.id, name, role: 'customer' }, { onConflict: 'id', ignoreDuplicates: true }));
-            const auth = create_auth_client();
-            const signed_in = await auth.auth.signInWithPassword({ email, password });
-            if (signed_in.error || !signed_in.data?.session || !signed_in.data?.user) {
-                logger.error?.('La cuenta demo se creó pero no pudo iniciar sesión.', { kind: error_kind(signed_in.error) });
-                return response.status(503).json({ error: 'La cuenta se creó, pero no pudimos iniciar la sesión. Probá ingresar nuevamente.' });
-            }
-            session(response, signed_in.data.session, production);
-            return response.status(201).json({ message: 'Cuenta demo creada. Ya podés usar DREAMS.', authenticated: true, demo: true, user: { id: created.data.user.id, name, email, is_admin: false } });
-        }
-        const result = await create_auth_client().auth.signUp({ email, password, options: { data: { name } } });
-        if (result.error) return response.status(400).json({ error: 'No se pudo crear la cuenta con esos datos.' });
-        if (result.data.user) fail_if(await database.from('profiles').upsert({ id: result.data.user.id, name, role: 'customer' }, { onConflict: 'id', ignoreDuplicates: true }));
-        if (result.data.session) {
-            session(response, result.data.session, production);
-            return response.json({ message: 'Cuenta creada correctamente.', authenticated: true, user: { id: result.data.user.id, name, email, is_admin: false } });
-        }
-        response.status(202).json({ message: 'Te enviamos un correo de confirmación. Abrilo antes de iniciar sesión.', authenticated: false, requires_email_confirmation: true });
-    });
+    route('post', '/api/auth/register', customer_registration({ database, create_auth_client, production, demo_auto_confirm_email, logger, email_confirmation_required: options.email_confirmation_required }));
     route('post', '/api/auth/login', async (request, response) => {
         const email = normalize_email(request.body.email), password = String(request.body.password || '');
         if (!valid_email(email) || !password || password.length > 128) return response.status(400).json({ error: 'Ingresá un correo válido y tu contraseña.' });
         const result = await create_auth_client().auth.signInWithPassword({ email, password });
+        if (auth_transient_error(result.error)) return response.status(503).json({ error: 'No pudimos iniciar tu sesión. Reintentá más tarde.' });
         if (result.error || !result.data.session || !result.data.user) {
             const confirmation_required = !demo_auto_confirm_email && result.error?.code === 'email_not_confirmed';
             return response.status(401).json({ error: confirmation_required ? 'Primero confirmá tu cuenta desde el correo que te enviamos.' : 'Correo o contraseña incorrectos.' });
@@ -386,14 +375,8 @@ function create_app(options = {}) {
         clear_session(response, production);
         response.json({ message: 'Sesión cerrada.' });
     });
-    route('get', '/api/auth/me', async (request, response) => response.json({ user: request.user || null }));
-    route('get', '/api/reviews', async (request, response) => response.json(fail_if(await execute_database_query(() => database.from('reviews').select('id,user_name,rating,comment,created_at').order('id', { ascending: false })))));
-    route('post', '/api/reviews', login, async (request, response) => {
-        const rating = +request.body.rating, comment = String(request.body.comment || '').trim().slice(0, 1000);
-        if (!Number.isInteger(rating) || rating < 1 || rating > 5 || !comment) return response.status(400).json({ error: 'Completá una puntuación y una opinión.' });
-        fail_if(await database.from('reviews').insert({ user_id: request.user.id, user_name: request.user.name, rating, comment }));
-        response.status(201).json({ message: 'Opinión publicada.' });
-    });
+    route('get', '/api/auth/me', async (request, response) => request.auth_unavailable
+        ? response.status(503).json({ error: 'No pudimos comprobar tu sesión. Reintentá más tarde.' }) : response.json({ user: request.user || null }));
     route('post', '/api/cart/quote', async (request, response) => {
         const quote = await quote_cart(database, request.body.items, presentation.ready ? '' : request.body.coupon_code, product_brand_column);
         if (quote.error) return response.status(400).json({ error: quote.error });

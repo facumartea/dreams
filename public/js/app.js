@@ -71,36 +71,43 @@ function format_price(value) {
     }).format(value);
 }
 
-function get_cart() {
-    try {
-        const stored = JSON.parse(localStorage.getItem('dreams_cart'));
-        if (!Array.isArray(stored)) return [];
-        return stored.flatMap(item => {
-            const id = Number(item?.id);
-            const price = Number(item?.price);
-            const quantity = Number(item?.quantity);
-            const stock = Number(item?.stock);
-            if (!Number.isSafeInteger(id) || id <= 0 || !Number.isFinite(price) || price < 0 || !Number.isSafeInteger(quantity) || quantity <= 0) return [];
-            return [{
-                id,
-                name: String(item.name ?? '').slice(0, 160),
-                brand: String(item.brand ?? '').slice(0, 120),
-                price,
-                image_url: safe_image_url(item.image_url),
-                quantity: Math.min(quantity, 99),
-                size_ml: Number.isFinite(Number(item.size_ml)) ? Number(item.size_ml) : null,
-                stock: Number.isSafeInteger(stock) && stock >= 0 ? stock : null
-            }];
-        });
-    } catch (error) {
-        return [];
-    }
+function guest_cart_item(item) {
+    const id = Number(item?.id), price = Number(item?.price), quantity = Number(item?.quantity), stock = Number(item?.stock);
+    if (!Number.isSafeInteger(id) || id <= 0 || !Number.isFinite(price) || price < 0 || !Number.isSafeInteger(quantity) || quantity <= 0) return [];
+    return [{ id, name: String(item.name ?? '').slice(0, 160), brand: String(item.brand ?? '').slice(0, 120), price,
+        image_url: safe_image_url(item.image_url), quantity: Math.min(quantity, 99),
+        size_ml: Number.isFinite(Number(item.size_ml)) ? Number(item.size_ml) : null,
+        stock: Number.isSafeInteger(stock) && stock >= 0 ? stock : null }];
+}
+function read_guest_cart() {
+    try { const stored = JSON.parse(localStorage.getItem('dreams_cart')); return Array.isArray(stored) ? stored.flatMap(guest_cart_item) : []; }
+    catch { return []; }
 }
 
-function save_cart(cart) {
-    localStorage.setItem('dreams_cart', JSON.stringify(cart));
+function get_cart() { return account_cart ? account_cart.get() : read_guest_cart(); }
+function save_cart(cart, options = {}) {
+    if (account_cart) account_cart.save(cart, options);
+    else localStorage.setItem('dreams_cart', JSON.stringify(cart));
     update_cart_count();
 }
+function clear_cart() { save_cart([]); }
+var account_cart = window.create_account_cart?.({
+    request: async (path, body) => {
+        const response = await fetch(path, body ? { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body) } : {});
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error || 'No se pudo guardar el carrito.');
+        return data;
+    },
+    storage: sessionStorage,
+    read_guest: read_guest_cart,
+    write_guest: cart => { if(cart.length) localStorage.setItem('dreams_cart', JSON.stringify(cart)); else localStorage.removeItem('dreams_cart'); },
+    emit: message => { update_cart_count(); window.dispatchEvent(new Event('dreams:cart')); if(message) show_toast(message); }
+});
+account_cart?.initialize().catch(()=>show_toast('No se pudo recuperar el carrito. Volvé a intentar.'));
+window.addEventListener('online', ()=>account_cart?.ready().catch(()=>{}));
+window.addEventListener('focus', ()=>account_cart?.initialize().catch(()=>{}));
+window.addEventListener('pageshow', event=>{if(event.persisted)account_cart?.initialize().catch(()=>{});});
+window.addEventListener('storage', event=>{if(event.key==='dreams_account_changed'){account_cart?.logout();account_cart?.initialize().catch(()=>{});}});
 
 function update_cart_count() {
     const count_element = document.getElementById('cart-count');
@@ -112,69 +119,36 @@ function update_cart_count() {
     count_element.textContent = total;
 }
 
-function add_to_cart(product) {
-    if (Number(product.stock) === 0) {
-        show_toast('Este perfume está agotado.');
-        return;
-    }
-    const cart = get_cart();
-    const existing = cart.find(item => item.id === product.id);
-
+function animate_cart_link() {
+    const link = document.querySelector('.cart-link');
+    if (!link) return;
+    link.classList.remove('is-updated'); void link.offsetWidth; link.classList.add('is-updated');
+    setTimeout(() => link.classList.remove('is-updated'), 560);
+}
+async function add_to_cart(product) {
+    try { await account_cart?.ready(); } catch { show_toast('No se pudo sincronizar el carrito. Reintentá.'); return; }
+    if (Number(product.stock) === 0) { show_toast('Este perfume está agotado.'); return; }
+    const cart = get_cart(), existing = cart.find(item => item.id === product.id);
     if (existing) {
-        if (Number.isSafeInteger(existing.stock) && existing.quantity >= existing.stock) {
-            show_toast('No hay más unidades disponibles.');
-            return;
-        }
+        if (Number.isSafeInteger(existing.stock) && existing.quantity >= existing.stock) { show_toast('No hay más unidades disponibles.'); return; }
         existing.quantity += 1;
-    } else {
-        cart.push({
-            id: product.id,
-            name: product.name,
-            brand: product.brand,
-            price: product.price,
-            image_url: product.image_url,
-            quantity: 1,
-            size_ml: product.size_ml,
-            stock: product.stock
-        });
-    }
-
-    save_cart(cart);
-    const cart_link = document.querySelector('.cart-link');
-    if (cart_link) {
-        cart_link.classList.remove('is-updated');
-        void cart_link.offsetWidth;
-        cart_link.classList.add('is-updated');
-        setTimeout(() => cart_link.classList.remove('is-updated'), 560);
-    }
-    show_toast(`${product.name} fue agregado al carrito.`);
+    } else cart.push({ id: product.id, name: product.name, brand: product.brand, price: product.price, image_url: product.image_url, quantity: 1, size_ml: product.size_ml, stock: product.stock });
+    save_cart(cart); animate_cart_link(); show_toast(`${product.name} fue agregado al carrito.`);
 }
 
-function remove_from_cart(product_id) {
+async function remove_from_cart(product_id) {
+    try { await account_cart?.ready(); } catch { show_toast('No se pudo sincronizar el carrito. Reintentá.'); return; }
     const cart = get_cart().filter(item => item.id !== product_id);
     save_cart(cart);
 }
 
-function change_quantity(product_id, change) {
-    const cart = get_cart();
-    const item = cart.find(product => product.id === product_id);
-
-    if (!item) {
-        return;
-    }
-
+async function change_quantity(product_id, change) {
+    try { await account_cart?.ready(); } catch { show_toast('No se pudo sincronizar el carrito. Reintentá.'); return; }
+    const cart = get_cart(), item = cart.find(product => product.id === product_id);
+    if (!item) return;
     item.quantity += change;
-
-    if (Number.isSafeInteger(item.stock) && item.quantity > item.stock) {
-        item.quantity = item.stock;
-        show_toast('Alcanzaste el stock disponible.');
-    }
-
-    if (item.quantity <= 0) {
-        remove_from_cart(product_id);
-        return;
-    }
-
+    if (Number.isSafeInteger(item.stock) && item.quantity > item.stock) { item.quantity = item.stock; show_toast('Alcanzaste el stock disponible.'); }
+    if (item.quantity <= 0) { await remove_from_cart(product_id); return; }
     save_cart(cart);
 }
 
@@ -243,92 +217,6 @@ async function load_featured_products() {
     } catch (error) {
         container.innerHTML = '<p>No se pudieron cargar los perfumes.</p>';
     }
-}
-
-async function load_reviews() {
-    const container = document.getElementById('reviews');
-    if (!container) {
-        return;
-    }
-
-    try {
-        const response = await fetch(`${api}/reviews`);
-        const reviews = await response.json();
-        if (!response.ok || !Array.isArray(reviews)) throw new Error('No se pudieron cargar las opiniones.');
-        container.innerHTML = '';
-
-        if (!reviews.length) {
-            container.innerHTML = '<div class="empty-state"><h2>La comunidad recién empieza.</h2><p>Las primeras opiniones verificadas van a aparecer acá.</p></div>';
-            return;
-        }
-
-        reviews.slice(0, 3).forEach(review => {
-            const card = document.createElement('article');
-            card.className = 'review-card';
-            card.innerHTML = `
-                <div class="review-stars">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</div>
-                <p>“${escape_html(review.comment)}”</p>
-                <div class="review-author">${escape_html(review.user_name)}</div>
-            `;
-            container.appendChild(card);
-        });
-    } catch (error) {
-        container.innerHTML = '<p>No se pudieron cargar las opiniones.</p>';
-    }
-}
-
-async function setup_review_form() {
-    const form = document.getElementById('review-form');
-    const access = document.getElementById('review-access');
-    const status = document.getElementById('review-status');
-    if (!form || !access || !status) return;
-
-    try {
-        const response = await fetch(`${api}/auth/me`);
-        const data = await response.json();
-        if (!response.ok) throw new Error('No se pudo comprobar la sesión.');
-        if (!data.user) {
-            access.innerHTML = 'Para publicar necesitás <a href="/cuenta.html">iniciar sesión o crear una cuenta</a>.';
-            return;
-        }
-        access.textContent = `Publicás como ${data.user.name}.`;
-        form.hidden = false;
-    } catch (error) {
-        access.textContent = 'No se pudo comprobar tu sesión. Recargá la página para volver a intentar.';
-        return;
-    }
-
-    form.addEventListener('submit', async event => {
-        event.preventDefault();
-        const button = form.querySelector('button[type="submit"]');
-        const rating = Number(form.elements.rating.value);
-        const comment = String(form.elements.comment.value || '').trim();
-        if (!Number.isInteger(rating) || rating < 1 || rating > 5 || !comment) {
-            status.textContent = 'Elegí una puntuación y escribí tu opinión.';
-            return;
-        }
-
-        button.disabled = true;
-        button.setAttribute('aria-busy', 'true');
-        status.textContent = 'Publicando…';
-        try {
-            const response = await fetch(`${api}/reviews`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ rating, comment })
-            });
-            const data = await response.json();
-            if (!response.ok) throw new Error(data.error || 'No se pudo publicar la opinión.');
-            form.reset();
-            status.textContent = 'Tu opinión fue publicada y guardada.';
-            await load_reviews();
-        } catch (error) {
-            status.textContent = interface_error(error);
-        } finally {
-            button.disabled = false;
-            button.removeAttribute('aria-busy');
-        }
-    });
 }
 
 function get_recent_products() {
@@ -408,6 +296,5 @@ setup_header_scroll();
 window.DreamsNavigation?.update();
 apply_public_config();
 load_featured_products();
-load_reviews();
-setup_review_form();
+if (typeof dreams_reviews !== 'undefined') dreams_reviews.start();
 render_recent_products();

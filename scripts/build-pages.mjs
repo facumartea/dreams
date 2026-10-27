@@ -27,6 +27,9 @@ for (const [pathname, relative, content_type] of [
     ['/js/motion.js', 'public/js/motion.js', 'application/javascript; charset=utf-8'],
     ['/js/carrito.js', 'public/js/carrito.js', 'application/javascript; charset=utf-8'],
     ['/js/presentation.js', 'public/js/presentation.js', 'application/javascript; charset=utf-8'],
+    ['/js/cuenta.js', 'public/js/cuenta.js', 'application/javascript; charset=utf-8'],
+    ['/js/account-cart.js', 'public/js/account-cart.js', 'application/javascript; charset=utf-8'],
+    ['/js/reviews.js', 'public/js/reviews.js', 'application/javascript; charset=utf-8'],
     ['/js/app.js', 'public/js/app.js', 'application/javascript; charset=utf-8'],
     ['/js/catalog-filter-state.js', 'public/js/catalog-filter-state.js', 'application/javascript; charset=utf-8'],
     ['/js/catalogo.js', 'public/js/catalogo.js', 'application/javascript; charset=utf-8'],
@@ -43,9 +46,10 @@ assets['/'] = assets['/index.html'];
 const seo = (await readFile(new URL('../pages/seo.mjs', import.meta.url), 'utf8')).replace(/^import .*;$/gm, '').replace(/^export /gm, '');
 const model = (await readFile(new URL('../public/js/catalog-filter-state.js', import.meta.url), 'utf8')).replace(/if \(typeof module === 'object'[\s\S]*$/, '');
 const catalog = (await readFile(new URL('../pages/catalog.mjs', import.meta.url), 'utf8')).replace(/^import .*;$/gm, '').replace(/^export /gm, '');
+const official = (await readFile(new URL('../pages/official-backend.mjs', import.meta.url), 'utf8')).replace(/^export /gm, '');
 const proxy = (await readFile(new URL('../pages/proxy.mjs', import.meta.url), 'utf8')).replace(/^import .*?from '\.\/seo\.mjs';/m, seo).replace(/^import .*?from '\.\/catalog\.mjs';/m, model + '\nconst filter_model = catalog_filter_model;\n' + catalog);
 await mkdir(new URL('../dist/pages/', import.meta.url), { recursive: true });
 await writeFile(new URL('../dist/pages/_worker.js', import.meta.url),
-    proxy.replace('export default create_proxy();', `export default create_proxy(${JSON.stringify(assets)}, ${JSON.stringify({ backend_url: release.backend_url, ...(release.admin_backend_url ? { admin_backend_url: release.admin_backend_url } : {}), seo: true })});`));
+    (official + '\n' + proxy.replace(/^import .*?from '\.\/official-backend\.mjs';/m, '')).replace('export default create_proxy();', `export default create_proxy(${JSON.stringify(assets)}, ${JSON.stringify({ backend_url: release.backend_url, ...(release.admin_backend_url ? { admin_backend_url: release.admin_backend_url } : {}), seo: true, ...(release.official_service ? { official_service: release.official_service } : {}) })});`));
 await writeFile(new URL('../dist/pages/_routes.json', import.meta.url), JSON.stringify({ version: 1, include: ['/*'], exclude: [] }));
 console.log(`Pages built: shared public navigation/footer overlay; all other routes pinned to source ${release.source_commit}. Secrets remain server-only.`);

@@ -2,8 +2,11 @@
   "source_commit": "ec04a35812d044e57196c6a1ca55232e723ff60c",
   "backend_url": "https://d5df723d-dreams-perfumes.dreams-perfumes.workers.dev",
   "backend_deployment": "d5df723d-e1f1-4889-ae5b-e79ebfd131cd",
-  "previous_pages_deployment": "f44a6069-a891-4d1b-a035-0e0dc5a00a40",
+  "previous_pages_deployment": "a3184576-4390-4a71-9205-d9269bd7dfe7",
   "hero": "static",
   "checkout": "academic-only",
-  "writes": "protected"
+  "writes": "protected",
+  "official_service": "dreams-official-backend",
+  "official_worker_id": "f4f560d2e4b947c18d8a06b9e4a24961",
+  "deployment_ready": false
 }

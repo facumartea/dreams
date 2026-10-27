@@ -48,13 +48,13 @@ test('el sistema visual conserva los tokens y la reducción de movimiento', () =
 
 test('la portada incluye un formulario accesible de opiniones persistentes', () => {
     const html = fs.readFileSync(path.join(root, 'public/index.html'), 'utf8');
-    const script = fs.readFileSync(path.join(root, 'public/js/app.js'), 'utf8');
+    const script = fs.readFileSync(path.join(root, 'public/js/reviews.js'), 'utf8');
     assert.match(html, /<form id="review-form"[^>]*hidden>/);
     assert.match(html, /<label for="review-rating">/);
     assert.match(html, /<label for="review-comment">/);
     assert.match(html, /id="review-status" role="status" aria-live="polite"/);
     assert.match(script, /method: 'POST'/);
-    assert.match(script, /await load_reviews\(\)/);
+    assert.match(script, /await this.load\(\)/);
 });
 
 test('el hero usa una imagen responsive de alta resolución y lettering HTML', () => {
@@ -157,11 +157,13 @@ test('el detalle presenta las notas reales como un Scent Trail accesible', () =>
     assert.match(css, /@media\(max-width:720px\).*\.notes-grid\{grid-template-columns:1fr/s);
 });
 
-test('registro comunica claramente el modo demo sin confirmación de correo', () => {
+test('registro conserva gestores de contraseñas y aviso condicionado al proveedor', () => {
     const account = fs.readFileSync(path.join(root, 'public', 'js', 'cuenta.js'), 'utf8');
     const server = fs.readFileSync(path.join(root, 'server', 'server.js'), 'utf8');
-    assert.match(account, /Modo de prueba:/);
-    assert.match(account, /no necesitás confirmar el correo/);
+    assert.match(account, /confirmation_required/);
+    assert.match(account, /autocomplete="new-password"/);
+    assert.match(account, /registration-notice/);
+    assert.doesNotMatch(account, /Modo de prueba:/);
     assert.match(server, /DEMO_AUTO_CONFIRM_EMAIL/);
 });
 

@@ -48,3 +48,6 @@ jobs:
         run: pnpm run build:pages
       - name: Build isolated read-only Admin candidate
         run: pnpm run build:admin-review
+
+      - name: Build private official backend without deployment
+        run: pnpm run build:official

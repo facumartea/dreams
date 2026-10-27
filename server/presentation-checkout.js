@@ -5,7 +5,7 @@ const valid_intent = value => /^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0
 const COOKIE = 'dreams_presentation';
 
 // Signed, expiring demonstrations. No order table, stock mutation or payment API.
-function presentation_checkout({ enabled, signing_key, quote_cart, database, product_brand_column, production }) {
+function presentation_checkout({ enabled, signing_key, quote_cart, database, product_brand_column, production, issuer }) {
     const ready = enabled === true && typeof signing_key === 'string' && signing_key.length >= 32;
     const key = ready ? createHmac('sha256', signing_key).update('DREAMS presentation checkout v2').digest() : null;
     const sign = payload => { const body = Buffer.from(JSON.stringify(payload)).toString('base64url'); return `${body}.${createHmac('sha256', key).update(body).digest('base64url')}`; };
@@ -16,7 +16,7 @@ function presentation_checkout({ enabled, signing_key, quote_cart, database, pro
         const expected = createHmac('sha256', key).update(parts[0]).digest();
         const supplied = Buffer.from(parts[1], 'base64url');
         if (supplied.length !== expected.length || !timingSafeEqual(supplied, expected)) return null;
-        try { const value = JSON.parse(Buffer.from(parts[0], 'base64url')); return value.version === 2 && value.kind === kind && value.owner === owner && value.expires > Date.now() ? value : null; } catch { return null; }
+        try { const value = JSON.parse(Buffer.from(parts[0], 'base64url')); return value.version === 2 && value.issuer === issuer && value.kind === kind && value.owner === owner && value.expires > Date.now() ? value : null; } catch { return null; }
     }
     const owner_for = request => {
         const cookie = String(request.headers.cookie || '').split(';').find(part => part.trim().startsWith(`${COOKIE}=`));
@@ -32,7 +32,7 @@ function presentation_checkout({ enabled, signing_key, quote_cart, database, pro
             if (quote.error || !quote.items.length || !Number.isFinite(quote.subtotal) || quote.subtotal <= 0 || quote.warnings.length) return response.status(409).json({ error: quote.error || 'La disponibilidad cambió. Volvé al carrito para revisarlo.' });
             const owner = owner_for(request) || randomUUID();
             response.append('Set-Cookie', auth_cookie(COOKIE, owner, 3600, production));
-            const payload = { version: 2, kind: 'ticket', owner, intent_id: request.body.intent_id.toLowerCase(), items: quote.items.map(({ id, quantity, price, brand, name }) => ({ id, quantity, price, brand, name })), ...academic_summary(quote.subtotal), expires: Date.now() + 1200000 };
+            const payload = { ...(issuer ? { issuer } : {}), version: 2, kind: 'ticket', owner, intent_id: request.body.intent_id.toLowerCase(), items: quote.items.map(({ id, quantity, price, brand, name }) => ({ id, quantity, price, brand, name })), ...academic_summary(quote.subtotal), expires: Date.now() + 1200000 };
             response.json({ ticket: sign(payload), ...academic_summary(quote.subtotal) });
         });
         route('post', '/api/presentation/payment', gate, async (request, response) => {

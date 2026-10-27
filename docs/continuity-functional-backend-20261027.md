@@ -1,3 +1,15 @@
+# Recuperación de ejecución y composición — 2026-10-27
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Entorno operativo comprobado; branch PR56 codex/admin-cards-audit recuperada desde a6e97d0. El checkout inicial no contenía continuidad y se informó antes de recuperarla del remoto. Worktree anterior perdido: reconstruida composición selectiva PR55/0dbfbbaf, preservando Admin/WhatsApp/stock/lockfile actuales; sin merge ni force-push.
+
+346/346 pruebas PASS; sintaxis81 JS/MJS, audit sin vulnerabilidades, builds privado/Pages PASS.48 navegaciones Chromium locales/seis tamaños sin pageerrors/overflow;8 comprobaciones del bundle privado en workerd local con Supabase simulado PASS (compatibilidad local máxima10-08, smoke remoto pendiente). Evidencia: docs/evidence/functional-backend-20261027/verification.md.
+
+Auth config y Secret privado ya resueltos: no se reconfiguraron ni solicitaron. No credenciales Admin cambiadas; la variable destinada a nueva contraseña no se usa para reset ni se asume actual. No DDL/seeds, productos, stock, pedidos o DNS modificados. Oficial aún a3184576. deployment_ready=false hasta verificar código privado y CI.
+
+Próximo exacto: push/CI del código reconstruido → privado con Secret heredado del mismo Worker → conservar binding existente y añadir DREAMS_OFFICIAL sólo producción oficial → publicación y QA remoto controlado. Admin real continúa sin sesión acreditada; no declarar persistencia Admin probada por fixtures. Progreso por fases sin porcentaje inventado: recuperación y composición/pruebas locales completas; CI/publicación/QA remoto pendientes; diseño/performance avanzada/accesibilidad completa no reevaluados.
+
 # Continuidad funcional DREAMS — 2026-10-27 — BLOQUEADO por entorno
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
