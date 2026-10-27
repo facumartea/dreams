@@ -1,3 +1,9 @@
+# Diagnóstico seguro del candidato en curso — 2026-10-27
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Continuación desde fd53b15. Oficiala3184576 conservada; ningún nuevo deployPages. Identidad/binding/URL/SDK auditados en docs/evidence/functional-backend-20261027/credential-diagnosis.md. Se prepara una versión interna de diagnóstico con scheduled temporal opt-in, sin endpoint ni URL pública, para comprobar formato y una lectura mínima desde el binding real. No se modifica Secret/Auth/Admin. Cuatro regresiones nuevasPASS; suite/build/CI y ejecución remota se informan al completarse. No atribuir bad_length a truncamiento o a otro proyecto sin evidencia runtime. deployment_ready=false.
+
 # Resultado vigente: oficial restaurada; candidato bloqueado por rechazo upstream — 2026-10-27
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.

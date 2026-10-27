@@ -1,7 +1,8 @@
 import { createServer } from 'node:http';
 import { createHmac } from 'node:crypto';
 import { handleAsNodeRequest } from 'cloudflare:node';
-import { createClient } from '@supabase/supabase-js';
+import { create_official_database } from './official-client.mjs';
+import { scheduled_diagnostic } from './supabase-diagnostic.mjs';
 import appModule from '../server/app.js';
 import policy from '../server/official-policy.js';
 import { legacy_presentation } from './official-legacy.mjs';
@@ -14,7 +15,7 @@ function expected_environment(env) {
 }
 function create_official_app(env) {
     expected_environment(env);
-    const client = access => createClient(env.SUPABASE_URL, env.SUPABASE_SECRET_KEY, { auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false }, ...(access ? { global: { headers: { Authorization: `Bearer ${access}` } } } : {}) });
+    const client = access => create_official_database(env, access);
     const signing_key = purpose => createHmac('sha256', env.SUPABASE_SECRET_KEY).update(purpose).digest('hex');
     return appModule.create_app({ database: client(), create_auth_client: client, production: true,
         official_api: true, preview_read_only: true, customer_data_enabled: true, account_cart_enabled: true,
@@ -36,6 +37,7 @@ function trusted_request(request) {
     headers.set('x-forwarded-proto', 'https'); return new Request(request, { headers });
 }
 export default {
+    async scheduled(_event, env) { await scheduled_diagnostic(env); },
     async fetch(request, env) {
         const url = new URL(request.url);
         if (url.origin !== policy.OFFICIAL_ORIGIN || !policy.official_route(request.method, url.pathname)) return Response.json({ error: 'Esta operación no está habilitada.' }, { status: 403, headers: { 'Cache-Control': 'no-store' } });
