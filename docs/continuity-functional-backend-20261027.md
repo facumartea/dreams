@@ -15,6 +15,20 @@ SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
 - No claves de capturas, ninguna contraseña/rol/correo Admin cambiado. Admin esperado a88d8d4e-ada3-4bfa-a6f5-db39d2dc9c19. Credenciales Admin para QA **todavía no disponibles**; usuario no confirmó ese punto de la pregunta agrupada.
 - No nuevos usuarios/productos/opiniones ni pruebas autenticadas remotas en este tramo. No nuevo deployment oficial. Las288 pruebas/38checks remotos del release7b302cf siguen acreditados para el código anterior, no para la composición pendiente.
 
+## Tabla de causas y soluciones
+
+| Síntoma | Capa responsable | Evidencia | Solución preparada o necesaria | Dependencia actual |
+|---|---|---|---|---|
+| Registro403 | Middleware del backend legacy, antes de signUp | API oficial devuelve protección comercial; fuenteec04a35 no exceptúa register | Backend oficial con excepción POST exacta y validación normal de cliente | Compilar/desplegar privado y conectar Service binding |
+| Confirmación de correo | Configuración de Supabase Auth | Antes false; ahora API200/mailer_autoconfirm=true | Usuario ya desactivó Confirm email | RESUELTA, no repetir |
+| Guardar producto/imágenes403 | Mismo guard legacy para rutas Admin | PREVIEW_READ_ONLY=true bloquea antes del handler Admin | Excepción sólo oficial para handlers existentes, roles/RLS/origen conservados | Runtime operativo y QA Admin real |
+| Login/sesión sin acreditar | Código Auth nuevo aún fuera del backend oficial | Oficial sigueec04a35; PR54 prepara errores/refresh/avisos | Composición existente, clientes por operación/cookies/QA real | Runtime; cuenta Admin por canal seguro |
+| Carrito por UUID no disponible | Backend/frontend desplegados no incorporan PR55 | Release oficial no tiene servicio de cuenta, fuente original | Instalar account_cart + RPC ya existente, coordinador y pruebasA-B | Backend nuevo + dos registros normales de QA |
+| Eliminación propia ausente | Ruta nueva PR55 no desplegada | Política RLS ya preparada, endpoint legacy no incorpora controlador | install_reviews con UUID de sesión y DELETEpropio/JWT | Backend nuevo + QA con dos clientes |
+| Dependencias backend antiguas | Bundle ec04a35, aunque lockfile GitHub está parchado | Patch lock body-parser2.4/ip-address10.7.5 no cambió bundle live | Compilar backend privado con lockfile actual; guard compresión Pages ya activo | Runtime/build/CI/deploy |
+| No se ejecutan builds ni QA | Ejecutor de esta tarea | No usable execution environment is available; selecciónunavailable | Reabrir/reseleccionar entorno operativo; guardar trabajo local antes de actualizar rama | Intervención de la aplicación, no claves |
+| Secret del nuevo backend | Configuración segura Cloudflare | v939c179c tiene SUPABASE_SECRET_KEY secret_text | Usuario ya configuró y desplegó; herencia dentro del mismo Worker | RESUELTA, no recargar |
+
 ## Fallo exacto de ejecución
 
 Entorno ccarenv_b64_Y2NhcmVudl9hM2ExMDlkMDhiYzA4MTkxOTRmYWM3MmJmOWE3MzMzZQ, spec141, desired/observed running pero connectivity offline. No secretos/identidades/runtime_variables en ese entorno. Primer error exec-server transport disconnected; failed to resume exec-server session. Un segundo intento devuelve No usable execution environment is available. Diagnósticos retenidos:not_found. Sin herramienta restart/reconnect/create para este runtime; no usar Railway para arreglarlo ni wait_for_environment salvo que el estado cambie a starting.
