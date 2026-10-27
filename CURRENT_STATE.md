@@ -1,3 +1,19 @@
+# Continuación funcional: Auth configurado; ejecutor indisponible — 2026-10-27
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+**NO repetir configuración:** usuario desactivó Confirm email y dejó signup habilitado; API Auth confirmó200/mailer_autoconfirm=true/disable_signup=false. Usuario configuró SUPABASE_SECRET_KEY en nuevo Worker privado dreams-official-backend (IDf4f560d2e4b947c18d8a06b9e4a24961), versión939c179c-f0d1-448c-9803-e757c47ea318 Secret tipo secret_text verificado sin leer valor, deployment4e35d8e5 activo100%. Workers.dev y preview URLs desactivados; no binding Pages todavía. Sólo bootstrap503, aplicación final NO desplegada.
+
+Oficial conserva a3184576/7b302cf y API legacyd5df/ec04a35; register403 sigue por middleware, NO por Confirm email ya desactivado. Sin nuevos usuarios/productos/opiniones, sin roles/credencialesAdmin/stock/pagos/DNS/video/otros sitios alterados. Admin UUID esperado a88d8d4e-ada3-4bfa-a6f5-db39d2dc9c19; acceso real no disponible aún.
+
+Composición LOCAL pendiente de preservar en /workspace/dreams-admin-review desde68702c8: selección PR54/55 + backend interno con política oficial exacta, cart/reviews, binding privado y compatibilidad académica.43 pruebas focalizadas de composición PASS y29 política/binding PASS; suite completa y último build NO acreditados. No atribuirles los288tests del release anterior. No publicar hasta terminar checks/CI y validación real.
+
+El ejecutor perdió disponibilidad: entorno seleccionado unavailable, comandos devuelven No usable execution environment is available. El gestor reportó offline y luego connected, pero el ejecutor sigue rechazando comandos; diagnósticos retenidos not_found. No herramienta de reinicio ni autorización para esperar un entorno que no está starting. Necesita reapertura/reselección de entorno operativo o nueva tarea, SIN volver a cargar claves ni reconfigurar Auth.
+
+Continuidad autosuficiente y pasos/refs exactos en [docs/continuity-functional-backend-20261027.md](docs/continuity-functional-backend-20261027.md), checkpoint inicial4113a4e. Si vuelve el disco, guardar staged/unstaged/untracked ANTES de actualizar esta rama documental remota. No reset/force-push. Si se pierde el disco, reconstruir desde refs allí descritas; no depender de /tmp. Primero recuperar trabajo, completar pruebas/build y subir código privado heredando Secret de su MISMO Workerv939c179c; después conectar sólo Pagesoficial y QA con cuentas de prueba controladas. Falta además canal seguro Admin real, sin cambiar su contraseña ni usar sesiones ajenas.
+
+ESTADO GLOBAL:BLOQUEADO por entorno. DEPLOY OFICIAL NUEVO:NO. Auth config y Secret privado:RESUELTOS. Recurso backend interno creado autorizado, ninguna nueva página/preview pública. Este checkpoint es documental, no reemplaza validación ni código pendiente.
+
 # Publicación oficial parcial y QA comprobadas — 2026-10-27
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
