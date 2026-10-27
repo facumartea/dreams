@@ -1,3 +1,13 @@
+# Continuación funcional — 2026-10-27
+
+- Confirm email/signup: RESUELTOS por usuario y verificados HTTP200/mailer_autoconfirm=true.
+- Secret privado: RESUELTO; SUPABASE_SECRET_KEY secret_text versión939c179c en dreams-official-backend privado, sin leer valor.
+- Composición PR54/55/Admin56 y nuevo backend: LOCAL, pendiente de preservar/validar/commit;43+29 focalizadas PASS, suite final/build no acreditados.
+- Ejecutor: BLOQUEADO, entorno seleccionado unavailable; no herramientas de reinicio. Reapertura de entorno o nueva tarea necesaria, SIN recargar claves.
+- Continuidad remota completa: docs/continuity-functional-backend-20261027.md. Guardar diff/untracked antes de sincronizar rama documental.
+- Oficial conserva a3184576/7b302cf y backendlegacy; no nueva publicación funcional, ni usuarios/datos/roles/DNS alterados.
+- Próximo exacto: entorno operativo → recuperar cambios → completar checks/CI → código privado con Secret heredado del mismo Worker → binding Pagesoficial y QA real. Admin requiere acceso seguro existente, sin cambiar credenciales.
+
 # Publicación oficial parcial y QA comprobadas — 2026-10-27
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
