@@ -19,17 +19,23 @@ function get_public_config() {
     return public_config_promise;
 }
 
-async function apply_public_config() {
-    try {
-        const config = await get_public_config();
-        document.querySelectorAll('[data-whatsapp-link]').forEach(link => {
-            if (/^\d{8,15}$/.test(config.whatsapp_number || '')) link.href = `https://wa.me/${config.whatsapp_number}`;
-            else link.removeAttribute('href');
-            if (link.hasAttribute('data-whatsapp-number') && /^\d{8,15}$/.test(config.whatsapp_number || '')) {
-                const phone = config.contacts?.phones?.find(value => String(value).replace(/\D/g, '') === config.whatsapp_number);
-                link.textContent = `WhatsApp · ${phone || '+' + config.whatsapp_number}`;
-            }
-        });
+function whatsapp_link(number, message = '') {
+    const value = String(number ?? '').trim();
+    if (!/^\d{8,15}$/.test(value)) return null;
+    return `https://wa.me/${value}${message ? '?text=' + encodeURIComponent(message) : ''}`;
+}
+function update_whatsapp_links(config) {
+    const href = whatsapp_link(config.whatsapp_number);
+    document.querySelectorAll('[data-whatsapp-link]').forEach(link => {
+        if (href) { link.href = href; link.removeAttribute('aria-disabled'); }
+        else { link.removeAttribute('href'); link.setAttribute('aria-disabled', 'true'); }
+        if (href && link.hasAttribute('data-whatsapp-number')) {
+            const phone = config.contacts?.phones?.find(value => String(value).replace(/\D/g, '') === config.whatsapp_number);
+            link.textContent = `WhatsApp · ${phone || '+' + config.whatsapp_number}`;
+        }
+    });
+}
+function update_contact_emails(config) {
         document.querySelectorAll('[data-dreams-contacts]').forEach(container => {
             if (!Array.isArray(config.contacts?.emails)) return;
             container.querySelectorAll('a[href^="mailto:"]').forEach((link, index) => {
@@ -37,6 +43,8 @@ async function apply_public_config() {
                 if (typeof email === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { link.textContent = email; link.href = `mailto:${email}`; }
             });
         });
+}
+function update_contact_phones(config) {
         document.querySelectorAll('[data-contact-phones]').forEach(container => {
             if (!Array.isArray(config.contacts?.phones)) return;
             const phones = [...new Set(config.contacts.phones)].filter(value => typeof value === 'string' && /^\+?[\d ()-]+$/.test(value) && /^\d{8,15}$/.test(value.replace(/\D/g, '')));
@@ -44,13 +52,15 @@ async function apply_public_config() {
             const links = phones.map(phone => { const link = document.createElement('a'); link.textContent = phone; link.href = `tel:+${phone.replace(/\D/g, '')}`; return link; });
             container.replaceChildren(...links);
         });
+}
+async function apply_public_config() {
+    try {
+        const config = await get_public_config();
+        update_whatsapp_links(config); update_contact_emails(config); update_contact_phones(config);
         document.querySelectorAll('[data-contact-email]').forEach(link => {
-            link.textContent = config.contact_email;
-            link.href = `mailto:${config.contact_email}`;
+            link.textContent = config.contact_email; link.href = `mailto:${config.contact_email}`;
         });
-    } catch (error) {
-        document.querySelectorAll('[data-whatsapp-link]').forEach(link => link.removeAttribute('href'));
-    }
+    } catch { update_whatsapp_links({}); }
 }
 
 function format_price(value) {

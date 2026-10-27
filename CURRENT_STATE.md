@@ -1,3 +1,11 @@
+# Continuación limitada a la OFICIAL — 2026-10-27
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+PR56/misma rama codex/admin-cards-audit, sin merges/otras webs/previews nuevas. Oficial f44a6069/461c17d y backendd5df/ec04a35 reconfirmados. ConfigAuth actual: mailer_autoconfirm=false/disable_signup=false, registro403 middleware; entorno141 sin SUPABASE_ACCESS_TOKEN ni canal seguro de carga. AdminUUID/rol confirmados; sin sesión QA real, no activar escrituras. PR54/55 preservadas.
+
+Publicación parcial independiente preparada: Admin UI existente (matriz201 reutilizada), pin de todas las APIs al backend oficial (no candidato), WhatsApp nativo sin esperar consultas y teléfono validado, autofill acotado. Nueva QA local12PASS móvil/escritorio y23tests focalizados PASS; guardas de release y builds en curso. No se atribuyen correcciones servidor a backendec04a35. Docs/evidencia docs/official_review_20261027.md. Próximo: CI/build/revisión final, publicar sólo Pagesoficial autorizado y verificar alcance, conservando rollbackf44a6069. Auth/sesiones/guardado/cartUUID/reviews siguen bloqueados por acceso real; no porcentaje global inventado.
+
 # Candidato Admin publicado, oficial preservada — 2026-10-21
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.

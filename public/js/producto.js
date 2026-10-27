@@ -44,62 +44,43 @@ function update_product_metadata(product) {
     }
 }
 
+function product_whatsapp_url(product, number) {
+    const identity = [product.brand, product.name].filter(Boolean).join(' ');
+    const size = product.size_ml ? ` de ${product.size_ml} ml` : '';
+    return whatsapp_link(number, `Hola DREAMS, quiero consultar por 1 × ${identity}${size}.\nPrecio: ${format_price(product.price)}.`);
+}
+function product_detail_image(product) {
+    return `<div class="detail-image"><img src="${escape_html(safe_image_url(product.image_url))}" alt="${escape_html([product.brand, product.name].filter(Boolean).join(' '))}"></div>`;
+}
+function product_detail_intro(product) {
+    return `<p class="eyebrow">${escape_html(product.category)} · ${escape_html(product.gender)} · ${escape_html(product.size_ml)} ml</p>
+        <h1>${escape_html(product.name)}</h1><p class="product-meta">${escape_html(product.brand)} · ${escape_html(product.family)}</p>
+        <div class="detail-price">${format_price(product.price)}</div><p class="detail-description">${escape_html(product.description)}</p>
+        <div class="intensity" title="Intensidad ${escape_html(product.intensity)} de 5">${[1,2,3,4,5].map(number => `<span class="${number <= product.intensity ? 'active' : ''}"></span>`).join('')}</div>
+        <p class="product-meta">Intensidad: ${escape_html(product.intensity)}/5 · Disponibilidad: ${product.stock > 0 ? escape_html(product.stock) + ' unidades' : 'Agotado'}</p>`;
+}
+function product_detail_actions(product, href) {
+    return `<div class="detail-actions"><button id="detail-add" class="button button-dark" ${Number(product.stock) === 0 ? 'disabled' : ''}>${Number(product.stock) === 0 ? 'Agotado' : 'Agregar al carrito'}</button>
+        ${href ? `<a class="button" href="${escape_html(href)}" target="_blank" rel="noopener noreferrer" data-whatsapp-inquiry>Consultar por WhatsApp</a>` : '<p class="muted" role="status">WhatsApp no está disponible en este momento.</p>'}</div>`;
+}
+function product_scent_trail(product) {
+    const steps = [['Salida','salida'],['Corazón','corazon'],['Fondo','fondo']];
+    const notes = steps.map(([title,key], index) => `<li class="note-block scent-step"><span class="scent-step-index" aria-hidden="true">0${index + 1}</span><h3>${title}</h3><p>${escape_html(product.notes[key].join(' · '))}</p></li>`).join('');
+    return `<section class="scent-trail" aria-labelledby="scent-trail-title"><div class="scent-trail-header"><div><p class="eyebrow">DREAMS Scent Trail</p><h2 id="scent-trail-title">La evolución de la fragancia</h2></div><p>De la primera impresión a la estela final, descubrí cómo se despliegan sus notas.</p></div><ol class="notes-grid" aria-label="Etapas olfativas">${notes}</ol></section>`;
+}
+function setup_product_actions(product) {
+    document.getElementById('detail-add').addEventListener('click', () => add_to_cart(product));
+    document.querySelector('[data-whatsapp-inquiry]')?.addEventListener('click', () => {
+        // El enlace nativo abre durante el gesto; la consulta registrada no debe bloquearlo.
+        fetch('/api/inquiries', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ product_id: product.id }), keepalive: true }).catch(() => {});
+    });
+}
 async function render_product_detail(product) {
     const container = document.getElementById('product-detail');
-    const config = await get_public_config();
-    const whatsapp_text = encodeURIComponent(`Hola DREAMS, quiero consultar por ${product.brand} ${product.name} de ${product.size_ml} ml.`);
-    const whatsapp_url = `https://wa.me/${encodeURIComponent(config.whatsapp_number)}?text=${whatsapp_text}`;
-
-    container.innerHTML = `
-        <section class="detail-layout">
-            <div class="detail-image">
-                <img src="${escape_html(safe_image_url(product.image_url))}" alt="${escape_html(`${product.brand} ${product.name}`)}">
-            </div>
-            <div class="detail-info">
-                <p class="eyebrow">${escape_html(product.category)} · ${escape_html(product.gender)} · ${escape_html(product.size_ml)} ml</p>
-                <h1>${escape_html(product.name)}</h1>
-                <p class="product-meta">${escape_html(product.brand)} · ${escape_html(product.family)}</p>
-                <div class="detail-price">${format_price(product.price)}</div>
-                <p class="detail-description">${escape_html(product.description)}</p>
-                <div class="intensity" title="Intensidad ${product.intensity} de 5">
-                    ${[1, 2, 3, 4, 5].map(number => `<span class="${number <= product.intensity ? 'active' : ''}"></span>`).join('')}
-                </div>
-                <p class="product-meta">Intensidad: ${product.intensity}/5 · Disponibilidad: ${product.stock > 0 ? product.stock + " unidades" : "Agotado"}</p>
-                <div class="detail-actions">
-                    <button id="detail-add" class="button button-dark" ${Number(product.stock) === 0 ? 'disabled' : ''}>${Number(product.stock) === 0 ? 'Agotado' : 'Agregar al carrito'}</button>
-                    <a class="button" href="${whatsapp_url}" target="_blank" rel="noreferrer" data-whatsapp-inquiry>Consultar por WhatsApp</a>
-                </div>
-                <section class="scent-trail" aria-labelledby="scent-trail-title">
-                    <div class="scent-trail-header">
-                        <div>
-                            <p class="eyebrow">DREAMS Scent Trail</p>
-                            <h2 id="scent-trail-title">La evolución de la fragancia</h2>
-                        </div>
-                        <p>De la primera impresión a la estela final, descubrí cómo se despliegan sus notas.</p>
-                    </div>
-                    <ol class="notes-grid" aria-label="Etapas olfativas">
-                        <li class="note-block scent-step"><span class="scent-step-index" aria-hidden="true">01</span><h3>Salida</h3><p>${escape_html(product.notes.salida.join(' · '))}</p></li>
-                        <li class="note-block scent-step"><span class="scent-step-index" aria-hidden="true">02</span><h3>Corazón</h3><p>${escape_html(product.notes.corazon.join(' · '))}</p></li>
-                        <li class="note-block scent-step"><span class="scent-step-index" aria-hidden="true">03</span><h3>Fondo</h3><p>${escape_html(product.notes.fondo.join(' · '))}</p></li>
-                    </ol>
-                </section>
-            </div>
-        </section>
-    `;
-
-    attach_image_fallback(container.querySelector('.detail-image img'));
-
-    document.getElementById('detail-add').addEventListener('click', () => add_to_cart(product));
-    document.querySelector('[data-whatsapp-inquiry]').addEventListener('click', async event => {
-        event.preventDefault();
-        try {
-            const response = await fetch('/api/inquiries', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ product_id: product.id }) });
-            const data = await response.json();
-            window.open(data.whatsapp_url || whatsapp_url, '_blank');
-        } catch (error) {
-            window.open(whatsapp_url, '_blank');
-        }
-    });
+    const config = await get_public_config().catch(() => ({}));
+    const href = product_whatsapp_url(product, config.whatsapp_number);
+    container.innerHTML = `<section class="detail-layout">${product_detail_image(product)}<div class="detail-info">${product_detail_intro(product)}${product_detail_actions(product, href)}${product_scent_trail(product)}</div></section>`;
+    attach_image_fallback(container.querySelector('.detail-image img')); setup_product_actions(product);
 }
 
 document.addEventListener('DOMContentLoaded', load_product_detail);

@@ -365,3 +365,7 @@ button.admin-stat:active{background:var(--ink-elevated,#26221b)}
 .admin-table .admin-product-action-danger{border-color:#b7887e;color:#efc9bd}
 .admin-table .admin-product-action:focus-visible{outline:2px solid var(--accent-soft);outline-offset:3px}
 @media(hover:hover){.admin-table .admin-product-action-danger:hover{border-color:#efc9bd;background:#39221f;color:#fff0e9}}
+
+/* Autofill conserva contraste y permite gestores de contraseñas. */
+.account-card input:-webkit-autofill,.account-card input:-webkit-autofill:hover,.account-card input:-webkit-autofill:focus{-webkit-text-fill-color:var(--ivory);caret-color:var(--ivory);box-shadow:0 0 0 1000px var(--surface) inset}
+.account-card input:autofill{color:var(--ivory);background:var(--surface);box-shadow:0 0 0 1000px var(--surface) inset}
