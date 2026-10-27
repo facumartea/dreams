@@ -1,3 +1,13 @@
+# Backend privado desplegado; publicación Pages preparada — 2026-10-27
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Código d8fec8ffa50f5d8dcb72bfba1e75b4cd28e7e134 pusheado en PR56 sin merge. CI40543798417/#203 SUCCESS:346tests, sintaxis81/audit y cuatrobuilds. Worker privado versión2ef6be90-b8d8-4e03-8bc4-58b36718e6f1, deployment43a8bd54-658a-4240-9327-66e4885c6f78 activo100%; Secret heredado de939c179c del MISMO Worker por API moderna, sin leer/copiar valor. Startup53ms. Workers.dev/previews=false reconfirmados.
+
+Añadido sólo binding producción DREAMS_OFFICIAL=dreams-official-backend, conservando DREAMS y demás configuración. Pages canónico continúa a3184576; ninguna preview nueva. deployment_ready=true tras CI/código privado/binding verificados, para publicación autorizada sólo https://dreams-perfumes.pages.dev/. Requiere CI del checkpoint de release y smoke real; si fallo material usar rollbacka3184576.
+
+Ticket académico legacy capturado antes del cambio para probar continuidad, sin datos financieros ni orders. QA autenticada remota todavía pendiente. Admin real sin sesión acreditada; credenciales originales sin cambios y no se solicitan secretos.
+
 # Recuperación de ejecución y composición — 2026-10-27
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
