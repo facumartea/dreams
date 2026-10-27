@@ -1,3 +1,15 @@
+# Publicación oficial parcial y QA comprobadas — 2026-10-27
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+OFICIAL https://dreams-perfumes.pages.dev/ Pagesa3184576-4390-4a71-9205-d9269bd7dfe7 SUCCESS/production/canónico, fuente7b302cf6b1896cfe500a0643290646b3086cb082. PR56/rama codex/admin-cards-audit abierta/draft sin merge, basePR53; PR54/55/video excluidos. Backendec04a35/d5df sin cambio; release retira destino Adminpreview. UI Admin/search/stock/acciones104×44 e imágenes/formulario local acreditados, WhatsApp nativo seguro/teléfono validado, autofill y guardcompressedAPI415 publicados. Actualización lockfileparches pero NO backendruntime. CI40530812778 exacto SUCCESS288tests/check63/audit/tresbuilds;40focalizadosfinalesPASS/12QA localnueva/201matrizAdminreutilizada.
+
+Remoto oficial26HTTP+10browser+2académico=38PASS/0FAIL en comprobaciones; objetivo registroFAIL y8objetivosBLOQUEADOS separados en docs/evidence/official-review-20261027/matrix.md. Checkoutacadémico sin datos financieros, dobleclic1operación/referenciareloestable/carritolimpiadotrasresultado/0pasarela. DBantes-después46productos/0pedidos/0reviews/2consultas/10usuarios y stockdigestidéntico. Ninguna cuenta/rol/credencial/stock comercial modificada.
+
+Bloqueos:register403 por PREVIEW_READ_ONLY heredado y Confirm email activo (settings200/mailer_autoconfirmfalse), entorno141 sin SUPABASE_ACCESS_TOKEN ni canal seguro/Management Auth; no sesiónQA Admin/customer real. Guardado y nuevas imágenes reales, sesión/login/logout autenticados, carritoUUID/reviewspropias y parche runtime backend pendientes; no activar sin QA real. AdminUUID y rol confirmados,5cuentaspendientes/1sinperfil/0adminspendientes sólo inspeccionadas. No bypass ni secretos en chat.
+
+Rollback anteriorf44a6069/461c17d SUCCESS/raíz200 retenido, no ejecutado. Otros sitios/previews intactos (animadaba6891f4/c8439ac); NO nuevos proyectos/previews/DNS/video/merge/DDL. Documentación y capturas:docs/official_review_20261027.md. Progreso sin porcentaje inventado:antesUI sólo candidato; ahoraUI/WhatsApp mitigaciones oficiales verificadas, Auth/guardado siguen bloqueados. Próxima acciónexacta:acceso seguro a GET/PATCH Auth config del proyecto y sesión controlada Admin/customer, revisar consumidores/Confirm email y validar persistencia antes de habilitar escritura/PR54/55. PUSH y DEPLOY OFICIAL:SÍ, alcanceparcialexplicitado.
+
 # Seguridad detectada durante CI — 2026-10-27
 
 CI39c656c falló en audit por body-parser/ip-address nuevos, antes de tests. Lockfile actualizado sólo a body-parser2.4.0/ip-address10.7.5/qs6.16.1, audit sin vulnerabilidades conocidas. Mitigación Pages oficial rechaza cuerpos API comprimidos415 antes del parser legacy, JSON normal intacto. Backendd5df no se modifica; falta parche runtime, no confundir lockfile con deploybackend. Ningún otro sitio/preview tocado. Repetir sólo validaciones afectadas y CI de nuevo commit antes de publicar Pages.
