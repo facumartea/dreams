@@ -56,12 +56,22 @@ async function visual_response(request, upstream, asset) {
 
 const approved = value => /^https:\/\/[a-f0-9]{8}-dreams-perfumes\.dreams-perfumes\.workers\.dev$/.test(value || '');
 
+// La interfaz envía JSON sin compresión; no entregar cuerpos comprimidos al parser legacy.
+function compressed_api_request(request) {
+    const path = new URL(request.url).pathname;
+    const encoding = request.headers.get('Content-Encoding')?.trim().toLowerCase();
+    return (path === '/api' || path.startsWith('/api/')) && encoding && encoding !== 'identity'
+        ? Response.json({ error: 'Enviá la solicitud sin compresión.' }, { status: 415, headers: { 'Cache-Control': 'no-store' } }) : null;
+}
+
 export function create_proxy(visual_assets = {}, options = {}) {
     const valid_backend = approved(options.backend_url) && (!options.admin_backend_url || approved(options.admin_backend_url));
     return {
         async fetch(request, env) {
             if (options.backend_url ? !valid_backend : !env.DREAMS?.fetch) return options.seo ? index_response(request, unavailable()) : unavailable();
             try {
+                const rejected = compressed_api_request(request);
+                if (rejected) return options.seo ? index_response(request, rejected) : rejected;
                 const pathname = new URL(request.url).pathname;
                 const catalog = options.backend_url ? await filtered_catalog(request, options) : null;
                 if (catalog) return options.seo ? index_response(request, catalog) : catalog;

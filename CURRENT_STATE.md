@@ -1,3 +1,7 @@
+# Seguridad detectada durante CI — 2026-10-27
+
+CI39c656c falló en audit por body-parser/ip-address nuevos, antes de tests. Lockfile actualizado sólo a body-parser2.4.0/ip-address10.7.5/qs6.16.1, audit sin vulnerabilidades conocidas. Mitigación Pages oficial rechaza cuerpos API comprimidos415 antes del parser legacy, JSON normal intacto. Backendd5df no se modifica; falta parche runtime, no confundir lockfile con deploybackend. Ningún otro sitio/preview tocado. Repetir sólo validaciones afectadas y CI de nuevo commit antes de publicar Pages.
+
 # Continuación limitada a la OFICIAL — 2026-10-27
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
