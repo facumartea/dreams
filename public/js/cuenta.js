@@ -131,6 +131,16 @@ function registration_body(form, message) {
     return { name: document.getElementById('register-name').value.trim(), email: document.getElementById('register-email').value.trim(), password };
 }
 
+function complete_registration(message, data) {
+    if (!data.authenticated) {
+        set_message(message, data.message || 'No pudimos iniciar tu sesión. Probá ingresar nuevamente.', 'error');
+        return;
+    }
+    set_message(message, data.message || 'Cuenta creada correctamente. Ya ingresaste a DREAMS.', 'success');
+    notify_account_change();
+    window.location.replace('/cuenta.html');
+}
+
 async function submit_registration(form, message, body) {
     set_message(message, 'Creando tu cuenta…');
     set_form_busy(form, true);
@@ -138,13 +148,7 @@ async function submit_registration(form, message, body) {
         const data = await request_json('/api/auth/register', {
             method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body)
         });
-        if (!data.authenticated) {
-            set_message(message, data.message || 'No pudimos iniciar tu sesión. Probá ingresar nuevamente.', 'error');
-            return;
-        }
-        set_message(message, data.message || 'Cuenta creada correctamente. Ya ingresaste a DREAMS.', 'success');
-        notify_account_change();
-        window.location.replace('/cuenta.html');
+        complete_registration(message, data);
     } catch (error) {
         set_message(message, error.message, 'error');
         if (['name', 'email', 'password'].includes(error.field)) set_field_error(form.elements.namedItem(error.field), error.message);

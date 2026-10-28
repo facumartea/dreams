@@ -1,3 +1,15 @@
+# Continuación desde 6f54b08; reparación automática preparada — 2026-10-28
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+CI #207 de9192d32 ya corregido en6f54b08: CI #208 SUCCESS/355 tests/cuatro builds. Metadatos actuales: frontend oficial7b302cf/Pagesa3184576, backend servido ec04a35/d5df723d; privado62f6bd7c/82492c72 sin cambios de Secret ni cron. No se repitió sonda ni deployment fallido.
+
+Usuario pidió que el agente reemplace el Secret. Autorizado, pero falta capacidad de gestión: Supabase conectado sólo entrega claves públicas; credencial del entorno permite lectura200 por inyección y no es exportable; Cloudflare CLI sin token. Se preparó scripts/repair-official-secret.mjs (transferencia sólo en memoria al privado, sin borrar claves ni publicar Pages) y cinco tests PASS. Intento seguro detenido antes de IO por missing_secure_management_credentials. Se solicitaron por canal protegido del entorno SUPABASE_ACCESS_TOKEN y CLOUDFLARE_API_TOKEN, con enlaces/permisos/destinos exactos en docs/evidence/pr56-current-20261028/status.md. No pedir tokens por chat ni extraerlos de las integraciones. La clave dañada no se reconstruye quitando espacios.
+
+Trabajo independiente: función submit_registration de21 líneas descompuesta sin alterar comportamiento; siete tests de registro PASS. AuditoríaAST19 archivos/284 funciones relevantes sin exceder20 líneas; buildPages PASS. MatrizAdmin previa201 y mínimos A28/B25/C25/D27/E30/F24 conservados, no repetidos. QAAdmin real requiere mecanismo seguro de contraseña actual; se ofreció Secret temporal DREAMS_QA_ADMIN_PASSWORD sólo en el privado, sin cambiar credenciales. No asumir cargado.
+
+Próximo: comprobar readiness de accesos de gestión si el usuario informa carga, ejecutar reparador autorizado, probar desde candidato privado, completar QA real y sólo después publicar oficial. Si no hay accesos, mantener oficial sana y explicar limitación concreta. Registro oficial FAIL en evidencia403; candidato, sesiones y guardado Admin BLOQUEADOS. Auth configuración ya resuelta, no repetir. DEPLOY OFICIAL EN ESTA TANDA:NO; OTROS SITIOS:NO. Estado completo y matriz vigente en docs/evidence/pr56-current-20261028/status.md.
+
 # Diagnóstico confirmado; requiere corrección segura del valor del Secret — 2026-10-28
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
