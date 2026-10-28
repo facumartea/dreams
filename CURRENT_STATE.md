@@ -1,3 +1,15 @@
+# Diagnóstico confirmado; requiere corrección segura del valor del Secret — 2026-10-28
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Se retomó desde29ee9ea sin repetir eldeployment fallido. Logs de sonda interna62f6bd7c/deployment82492c72 recuperados: SecretSUPABASE_SECRET_KEY de dreams-official-backend/Production-default contiene espaciosINTERNOS. SDK lo envía íntegro (apikey_unchanged=true); HEADmínimo directo sóloapikey401 y mismoHEADporSDK401. Sin whitespaceexterior/comillas/asignación/enmascarado. Causa comprobada: valor almacenado malformado/rechazado, no truncamiento delSDK ni sóloBearer. No se reconstruye quitando caracteres. URLdelproyecto correcta; pertenencia de claveopaca aún noacreditada por ausencia de lectura200.
+
+Cron temporal retirado y schedules=[] confirmado; sonda ya estaba vencida. Privado sigue62f6bd7c, sin workers.dev/previews. Oficiala3184576 conserva sóloDREAMSlegacy efectivo, sin nueva publicación/conexión ni cambiosAuth/Admin/DB/Secrets. deployment_ready=false. Evidencia y pasos exactos de carga segura desdecelular: docs/evidence/functional-backend-20261027/credential-diagnosis.md y credential-diagnostic-result.json. No pedir valorporchat ni eliminarclaves; usuario autorizó pedir reemplazo seguro si es necesario.
+
+Próxima acción: usuario copia SecretAPIkey completa del proyecto nwsmbemwtexmrtpkgxrz al bindingSUPABASE_SECRET_KEY delWorker dreams-official-backend/Production-default, tipoSecret, guardando/desplegando sóloelprivado. Luego probar lectura mínima en nueva versión antesdeQA autenticada y cualquier publicaciónPages. Rollbacka3184576 disponible. QAAdmin existente sigue pendiente, sin cambiarcontraseña.
+
+Fases: identidad/binding/SDK/formato/lectura remota de diagnóstico COMPLETADOS con rechazo401; corrección delvalor PENDIENTEusuario; QAautenticada y promoción BLOQUEADAS. Guardpublicación reforzado exige lectura200 reciente yQAexactaversión. Sin porcentajesglobalesinventados. No nueva revisiónUI/responsive/accesibilidad/performance porque no se modificaron. PUSHdelcódigo diagnóstico:SÍ; DEPLOYsólointerno diagnóstico:SÍ; DEPLOYoficialnuevo:NO.
+
 # Diagnóstico seguro del candidato en curso — 2026-10-27
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.

@@ -37,3 +37,17 @@ test('diagnostic distinguishes provider refusal from SDK compatibility, and neve
     const skipped = await diagnose_supabase({ ...env, SUPABASE_URL: 'https://other.invalid' }, () => { throw new Error('must not run'); }); assert.equal(skipped.skipped, true);
     await scheduled_diagnostic(env); await scheduled_diagnostic({ ...env, DIAGNOSTIC_RUN_ID: 'expired', DIAGNOSTIC_EXPIRES_AT: '1' });
 });
+test('quote/whitespace probes diagnose a repair without changing the stored binding', async () => {
+    const supplied = ' "'+fixture+'" ';
+    const result = await diagnose_supabase({ ...env, SUPABASE_SECRET_KEY: supplied }, async (_url, init) => new Response(null, { status: new Headers(init.headers).get('apikey') === fixture ? 200 : 401 }));
+    assert.equal(result.shape.surrounding_whitespace, true); assert.equal(result.shape.wrapped_quotes, true);
+    assert.equal(result.raw_apikey_only.status, 401); assert.equal(result.trimmed_probe.status, 401); assert.equal(result.unquoted_probe.status, 200);
+    assert.equal(result.project_key_pair, 'not_verified'); assert.ok(!JSON.stringify(result).includes(fixture));
+});
+test('decoded legacy claims are only format evidence, not proof of authentication or project pairing', async () => {
+    const token = payload => 'e30.'+Buffer.from(JSON.stringify(payload)).toString('base64url')+'.fixture-signature';
+    assert.equal(credential_shape(token({ ref: 'nwsmbemwtexmrtpkgxrz', role: 'service_role' })).jwt_project, 'expected_service_role_claims');
+    assert.equal(credential_shape(token({ ref: 'other', role: 'service_role' })).jwt_project, 'different_or_missing_claims');
+    const report = await diagnose_supabase({ ...env, SUPABASE_SECRET_KEY: token({ ref: 'nwsmbemwtexmrtpkgxrz', role: 'service_role' }) }, async () => new Response(null, { status: 401 }));
+    assert.equal(report.project_key_pair, 'not_verified');
+});
