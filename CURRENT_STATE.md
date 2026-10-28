@@ -1,3 +1,7 @@
+# Parche de audit del checkpoint — 2026-10-28
+
+CI #207 se detuvo antes de los tests por GHSA-6pq8-jhm2-2vcw en qs 6.16.0. Se actualizó sólo la resolución transitiva de Express a qs 6.16.1, que ya estaba presente para body-parser. Instalación frozen y audit sin vulnerabilidades comprobados. No se desplegó ningún backend ni se repitió la sonda. El diagnóstico de espacios internos en el Secret sigue vigente; corrección segura del valor y QA autenticada continúan pendientes. La suite final se acredita por CI del nuevo SHA.
+
 # Diagnóstico confirmado; requiere corrección segura del valor del Secret — 2026-10-28
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.

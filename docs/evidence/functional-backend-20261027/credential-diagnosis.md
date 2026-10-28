@@ -1,51 +1,66 @@
-# Diagnóstico de credencial del candidato — 2026-10-27
+# Diagnóstico del Secret del backend candidato
 
-Se continúa desde fd53b15 sin reconectar Pages ni repetir el despliegue fallido.
+Resultado recuperado el 28 de octubre de 2026. Se continúa desde `fd53b15` y `29ee9ea`; no se repitió la publicación fallida.
 
-## Identidad y binding confirmados
+## Identidad y recorrido efectivos
 
-- Sitio canónico restaurado: Pagesa3184576; sus bindings efectivos sólo incluyen DREAMS=dreams-perfumes. La configuración de próximos deploys conserva DREAMS_OFFICIAL, pero el canónico restaurado no lo usa.
-- Fallo histórico: Pages1e881ec8 → bindingDREAMS_OFFICIAL, servicio dreams-official-backend, entorno API vacío (Worker Production/default, sin entorno nombrado), versión2ef6be90-b8d8-4e03-8bc4-58b36718e6f1, deployment43a8bd54-658a-4240-9327-66e4885c6f78 al100%.
-- Clave efectiva: env.SUPABASE_SECRET_KEY, bindingsecret_text en versión2ef6be90. Heredada de939c179c-f0d1-448c-9803-e757c47ea318 del MISMO Worker privado; no del backendlegacy. La versión939c179c se creó desde Dashboard con anotación Add secret:SUPABASE_SECRET_KEY. No se consultó su valor por API.
-- SUPABASE_URL plain_text exacta https://nwsmbemwtexmrtpkgxrz.supabase.co; coincide con get_project_url del conector Supabase. La procedencia de una clave opaca sólo se acredita con una lectura aceptada por ese proyecto.
+| Recurso | Versión / deployment | Función |
+|---|---|---|
+| Worker `dreams-official-backend`, Production/default | `2ef6be90-b8d8-4e03-8bc4-58b36718e6f1` / `43a8bd54-658a-4240-9327-66e4885c6f78` | Backend que recibió las solicitudes fallidas |
+| Pages producción fallida | `1e881ec8-7c32-4a2e-9857-ef63bf091c4f` | Usaba `DREAMS_OFFICIAL` para llegar al Worker privado |
+| Worker candidato con diagnóstico interno | `62f6bd7c-52a0-4ebb-861d-cfc9116b6286` / `82492c72-295f-412e-82c0-11285034bd67` | Ejecutó la consulta mínima sin pasar por Pages |
+| Pages oficial restaurada | `a3184576-4390-4a71-9205-d9269bd7dfe7` | Conserva sólo `DREAMS` hacia el backend legacy como binding efectivo |
 
-## Código y SDK comprobados
+El binding de la credencial es `SUPABASE_SECRET_KEY`, tipo `secret_text`, del Worker privado en Production/default (sin entorno nombrado). La versión fallida lo heredó de `939c179c-f0d1-448c-9803-e757c47ea318` del MISMO Worker. El diagnóstico heredó el binding de la versión fallida. No se usó una credencial del backend legacy ni una clave del entorno de ejecución local.
 
-worker/official.mjs pasaba directamente env.SUPABASE_SECRET_KEY como segundo argumento de createClient, sin slice/substr/trim/JSON/atob, comillas añadidas ni fallback a process.env/uotra clave. Clientes independientes por operación, persistSession/autorefresh/detectSessionInUrl=false.
+`SUPABASE_URL` es `https://nwsmbemwtexmrtpkgxrz.supabase.co`. Coincide con el proyecto devuelto por el conector Supabase y con el destino real de las consultas. Una clave opaca no codifica el identificador del proyecto: su pertenencia sigue sin acreditarse hasta obtener una lectura aceptada por ese destino.
 
-SDK fijado por lockfile2.112.4: RESTfetchWithAuth asigna apikey a la clave completa; sin JWT de usuario, utiliza también esa clave como Bearer por defecto. Con usuario, sólo el Bearer cambia a su JWT; apikey permanece. Nuevo helper official-client.mjs conserva exactamente esta construcción y permite observarla mediante transporte de prueba, sin emitir headers.
+## Causa comprobada
 
-Los401 históricos del proyecto muestran UNAUTHORIZED_INVALID_API_KEY/bad_length enapikey yauthorization. No prueban por sí solos que el valor se truncó ni que venga de otro proyecto. Tampoco permiten culpar al SDK: se compara una lecturaHEAD mínima con apikey solamente y la misma lectura por el SDK real.
+El valor efectivo almacenado contiene espacios internos. No tiene whitespace exterior, comillas envolventes, una asignación de variable, prefijo Bearer añadido, enmascarado ni caracteres fuera de ASCII imprimible. Los logs históricos del proveedor registran `401 UNAUTHORIZED_INVALID_API_KEY`, con `bad_length` para apikey y authorization.
 
-## Diagnóstico interno preparado
+El candidato realizó exclusivamente `HEAD /rest/v1/products?select=id&limit=1`, con timeout de ocho segundos:
 
-Sin endpointHTTP ni URL pública: handler scheduled opt-in con identificador y vencimiento máximo de una hora; sólo HEAD /rest/v1/products?select=id&limit=1, timeout8s. Usa binding real del privado y constructor compartido del candidato. Informa únicamente tipo/longitud/flags de formato, igualdad de transporte y statusHTTP; nunca valor, fragmentos, huellas, cuerpos de error ni headersdeauth.
+| Prueba desde el candidato | Resultado |
+|---|---|
+| Petición directa con apikey solamente | 401; proveedor identifica API key inválida |
+| Misma lectura por el SDK real | 401 |
+| Comparación interna entre el binding y apikey emitido por SDK | Coinciden íntegramente |
 
-Sonda adicionaltrim/unquote únicamente si el formato lo requiere, sin cambiar el Secret almacenado. Proyecto incorrecto bloquea toda solicitud. Cron temporal se restaura a su estado inicial (lista vacía) al obtener evidencia. Oficial/Secrets/Auth/Admin intactos.
+El SDK no trunca ni sustituye el valor. El rechazo no depende únicamente de enviar también Bearer. El valor almacenado está malformado y es rechazado directamente por el proveedor. No se puede inferir dónde se introdujeron los espacios, reconstruir la clave quitando caracteres, ni afirmar que ocurrió truncamiento al copiar. La prueba no demuestra que la clave pertenezca a otro proyecto; la pertenencia queda sin verificar.
 
-Cuatro pruebas nuevas verifican privacidad, formato, transporte sin truncar, JWT limitado, consultas exclusivamente mínimas y negativa de proyecto. Resultado remoto pendiente; no se declara conexión resuelta.
+Evidencia sin credenciales: `credential-diagnostic-result.json`. No se imprimieron valores, fragmentos, hashes, cuerpos de error ni headers de autenticación.
 
-## Resultado recuperado — 2026-10-28
+## Código y límites de la comprobación
 
-La comprobación scheduled se ejecutó en el candidato62f6bd7c-52a0-4ebb-861d-cfc9116b6286/deployment82492c72-295f-412e-82c0-11285034bd67; código29ee9ea/CI206SUCCESS. Hereda exactamente el binding de2ef6be90 (el fallido), a su vez heredado de939c179c del mismo Worker. No se heredó una credencial del backendlegacy.
+El código pasa `env.SUPABASE_SECRET_KEY` directamente como segundo argumento de `createClient`, sin slice, trim, JSON, decodificación ni fallback a otra variable. El helper compartido `worker/official-client.mjs` conserva esa construcción para la aplicación y para la sonda. Los clientes son independientes por operación; persistSession, autoRefreshToken y detectSessionInUrl están desactivados.
 
-Evidencia runtime sanitizada en credential-diagnostic-result.json: clave presente, tipo modern_secret,42caracteresASCII, espacios INTERNOS; sin whitespace exterior, comillas envolventes, asignación, prefijoBearer, enmascarado o caracteresnoASCII. apikey_unchanged=true confirma que el SDK no la trunca ni sustituye. HEADmínimo directo conapikey solamente401/invalid_api_key=true; mismoHEAD porSDK401. Por tanto el rechazo no depende de añadirBearer. No se imprime clave/fragmentos/headers/huellas.
+El SDK resuelto por el lockfile es 2.112.4. Para REST asigna apikey a la clave completa y, sin sesión, también la usa como Bearer. Cuando existe un JWT de usuario, sólo cambia Bearer; apikey permanece. Los tests verifican este comportamiento sin usar credenciales reales.
 
-**Causa comprobada:** el valor almacenado y heredado contiene espacios internos incompatibles con una Secret API key íntegra y Supabase lo rechaza directamente. No se puede reconstruir la clave correcta quitando caracteres ni afirmar dónde se introdujeron los espacios. El bad_length del proveedor también está acreditado en logs históricos; truncamiento al copiar es una posibilidad, no un hecho demostrado.
+La sonda se ejecutó por un handler scheduled opt-in en el Worker privado, con vencimiento automático de una hora como máximo y sin endpoint HTTP. Durante la interrupción del chat venció y dejó de consultar. Al recuperar los resultados se retiró el cron temporal; la API confirmó `schedules=[]`. No se repitió el deployment ni se rearmó la sonda. Workers.dev y previews permanecen deshabilitados.
 
-SUPABASE_URL coincide con el proyecto esperado por configuración, conector y destino real de las consultas. La pertenencia de esta clave opaca al proyecto permanece NO VERIFICADA porque ambaslecturas401; no contiene refJWT que permita ni siquiera una comprobación de claims. La solución requiere cargar el valor completo correcto desde el proyecto esperado; no modificarAuth/RLS ni cambiarSDK a ciegas.
+## Corrección requerida por canal seguro
 
-La comprobación tenía vencimiento automático. Tras interrupción del chat se recuperaron sus logs; no se repitió deployment/sonda. El28-10 se retiró elCron temporal: API confirmó schedules=[]. No hubo nuevas lecturas después delvencimiento. Oficial sigue canónicaa3184576 conDREAMSlegacy únicamente; candidato62f privado, workers.dev/previews=false. No se publicóPages.
+- Servicio: Worker `dreams-official-backend` en Cloudflare.
+- Entorno: **Production/default del Worker**, no Pages ni Preview.
+- Nombre del Secret: `SUPABASE_SECRET_KEY`; tipo **Secret / secret_text**.
+- Tipo de clave: **Secret API key de servidor**, completa, del proyecto Supabase `nwsmbemwtexmrtpkgxrz`. No publishable, anon, Management token ni contraseña del administrador.
 
-## Corrección segura pendiente del usuario
+Desde el celular:
 
-- Servicio: Worker dreams-official-backend, cuentaCloudflare9f3d7af60fcb0c2b4fff8570843588f9.
-- Entorno: Production/default delWorker; no Pages ni Preview.
-- Secret: SUPABASE_SECRET_KEY, tiposecret_text/Secret.
-- Valor requerido: Secret API key completa de servidor del proyectoSupabase nwsmbemwtexmrtpkgxrz; no publishable/anon, Management token ni contraseñaAdmin.
-- Desde celular: Supabase→proyecto correcto→Settings→API Keys→Secret keys→Copiar. Si no es recuperable, crear una adicional conservando todas las claves existentes. Cloudflare→Workers&Pages→dreams-official-backend→Settings→VariablesandSecrets→Production→editarSUPABASE_SECRET_KEY comoSecret→pegar sólo elvalor copiado→Save/Deploy. No comillas, asignación, espacios añadidos, capturas ni chat. No eliminar/revocar claves.
-- Después: lectura mínima desde la nueva versión privada, confirmar proyecto/clave con200 y clienteSDK; despuésQA autenticadaAdmin/customer/cartA-B/reviews/compatibilidad. Publicación oficial sólo con esas pruebas,rollbacka3184576 conservado.
+1. Abrir el proyecto correcto en Supabase → Settings → API Keys → Secret keys y usar **Copiar** sobre una clave de servidor. Si no puede recuperarse, crear una adicional conservando todas las existentes.
+2. Abrir Cloudflare → Workers & Pages → `dreams-official-backend` → Settings → Variables and Secrets → Production.
+3. Editar `SUPABASE_SECRET_KEY` como Secret. Pegar únicamente el valor completo copiado, sin comillas, asignaciones ni espacios añadidos. Guardar y desplegar sólo ese Worker privado.
+4. Avisar que quedó cargada, sin enviar el valor, fragmentos ni capturas al chat. No eliminar ni revocar claves existentes.
 
-## Protección adicional de publicación
+Después de la carga se debe comprobar una lectura mínima desde la nueva versión privada. Sólo si funciona corresponde completar QA autenticada de cliente y administrador, carrito A/B, opiniones y compatibilidad académica. No se modifican Auth, RLS ni credenciales del administrador. El rollback oficial `a3184576` permanece disponible.
 
-Se completa el guard pendiente official-release-gate.mjs: cambiar deployment_ready atrue ya no basta. Exige lectura200 de la versión/proyecto exactos de menos deuna hora y evidenciaQA de registro/sesiones/cartA-B/reviews/Admin/compatibilidad para esa misma versión. Tresregresiones delguard y dosadicionales de formato/claims ya pasaron; resultado final de suite enCI se informa enGitHub. No se repiten QA visual/performance/accesibilidad noafectadas.
+## Verificación y protección de publicación
+
+Código de diagnóstico `29ee9ea`: 350 tests locales y CI #206 aprobado. Nueve tests focalizados posteriores del diagnóstico y guard de publicación pasaron. La suite final se verifica en CI del checkpoint actual; no se repiten manualmente pruebas ya acreditadas sin un cambio que lo justifique.
+
+El guard `scripts/official-release-gate.mjs` impide publicar cambiando solamente deployment_ready. Exige lectura 200 del proyecto y versión exactos de menos de una hora, además de QA de registro, sesiones, carrito A/B, opiniones, persistencia Admin y compatibilidad académica en esa misma versión.
+
+CI #207 detectó el aviso GHSA-6pq8-jhm2-2vcw en qs 6.16.0 antes de ejecutar tests. Se consolidó únicamente esa dependencia transitiva en qs 6.16.1, ya presente para body-parser. Instalación frozen y audit se verifican; no se desplegó el parche en ningún backend. Esto es independiente del rechazo de la credencial.
+
+La conexión del candidato sigue SIN RESOLVER. No hay nuevo deploy oficial, cambios de datos, Auth, RLS, contraseñas, roles, DNS ni otros sitios. Diseño, responsive, accesibilidad completa y performance no se reevaluaron porque no se modificaron. El progreso se registra por estos estados, sin porcentajes inventados.
