@@ -1,5 +1,9 @@
 import { create_official_database, official_project_url } from './official-client.mjs';
 
+function header_value_valid(value) {
+    try { new Headers({ apikey: value }); return true; }
+    catch { return false; }
+}
 export function credential_shape(value) {
     const key = typeof value === 'string' ? value : '';
     const trimmed = key.trim();
@@ -7,6 +11,7 @@ export function credential_shape(value) {
     return { present: Boolean(key), characters: key.length, bytes: new TextEncoder().encode(key).length,
         kind: key.startsWith('sb_secret_') ? 'modern_secret' : key.startsWith('sb_publishable_') ? 'publishable' : key.split('.').length === 3 ? 'jwt_candidate' : 'unrecognized',
         surrounding_whitespace: key !== key.trim(), any_whitespace: /\s/.test(key), wrapped_quotes: wrapped,
+        ascii_controls: /[\x00-\x1f\x7f]/.test(key), internal_whitespace: /\s/.test(trimmed), header_value_valid: header_value_valid(key),
         assignment_instead_of_value: /^\s*[A-Z_][A-Z_0-9]*\s*=/.test(key),
         bearer_prefix_present: /^\s*Bearer\s/i.test(key), masked_or_ellipsis: /[•…]|\*{3,}/.test(key), non_ascii: /[^\x20-\x7e]/.test(key),
         jwt_project: jwt_project(key) };

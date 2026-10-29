@@ -37,7 +37,7 @@ Fuente: [PDF 2026 adjunto](rubrica-2026.pdf), 3 páginas; [texto extraído](rubr
 | O05 | «Link a la API. Explicación de su uso» | api.md con documentación pública, recorrido y ejemplo | CUMPLE | WhatsApp identificado como enlace, no API. |
 | M01 | «programa principal y… funciones no supera las 40 líneas… modularizado» | Inventario AST y comando sin.git, funciones.md | CUMPLE | Refactorización con callbacks/métodos; alcance e interpretación de main explícitos. |
 | M02 | «Indentado correctamente… comentarios… claro y legible… Frontend / Backend» | Módulos, validación y comentarios de responsabilidades | PARCIAL | Refactorizaciones nuevas legibles; tests históricos compactos no reescritos por estética. Revisión docente pendiente. |
-| E01 | «Correcto funcionamiento sin errores… conecta correctamente» | candidato401; pruebas remotas bloqueadas | NO CUMPLE | Reemplazo seguro de Secret, lectura/SDK y QA completa antes de publicar. |
+| E01 | «Correcto funcionamiento sin errores… conecta correctamente» | última lectura del candidato falla transporte/SDK0;401 histórico separado; pruebas remotas bloqueadas | NO CUMPLE | Reemplazo seguro de Secret, lectura/SDK y QA completa antes de publicar. |
 | E02 | «Todos los integrantes poseen… documentación… justificar y explicar» | Carpeta descargable y defensa.md | NO VERIFICABLE | Accesibilidad del repositorio no demuestra posesión ni dominio individual. |
 | E03 | «IA… complemento… registro completo… muchos agregados…» | Bitácora parcial, autoría no inventada | PARCIAL | Faltan registros e intervención propia acreditada; no se asigna puntaje. |
 | E04 | «Se entrega en tiempo y forma sin mayores correcciones» | ZIP candidato y bloqueos | NO VERIFICABLE | No hay entrega Classroom realizada por el agente. |

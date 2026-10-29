@@ -51,3 +51,14 @@ test('decoded legacy claims are only format evidence, not proof of authenticatio
     const report = await diagnose_supabase({ ...env, SUPABASE_SECRET_KEY: token({ ref: 'nwsmbemwtexmrtpkgxrz', role: 'service_role' }) }, async () => new Response(null, { status: 401 }));
     assert.equal(report.project_key_pair, 'not_verified');
 });
+
+test('diagnóstico distingue caracteres de control y validez de header sin reconstruir la clave', () => {
+    const source = fixture.slice(0, 20) + '\n' + fixture.slice(20);
+    const report = credential_shape(source);
+    assert.equal(report.ascii_controls, true);
+    assert.equal(report.internal_whitespace, true);
+    assert.equal(report.header_value_valid, false);
+    assert.equal(credential_shape(fixture).header_value_valid, true);
+    assert.equal(credential_shape(fixture).ascii_controls, false);
+    assert.ok(!JSON.stringify(report).includes(source));
+});

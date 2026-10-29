@@ -1,3 +1,7 @@
+# Estado vigente posterior al reemplazo ·29/10/2026
+
+El usuario reemplazó el Secret Supabase en0968d006. Sonda36319df7: persisten espacios internos/controlASCII, lectura directa sin respuestaHTTP ySDK0; no llamarlo otro401. [Reporte nuevo](../functional-backend-20261027/credential-replacement-20261029.md). Cron retirado, sinQAreal ni publicación. Se añadió después SecretAdmin y desplegó4e3d734f/0b571bac; presencia comprobada sin leer ni usar. Usuario autorizó retirarlo junto con mecanismo temporal al terminarQA. Prioridad: reemplazo íntegro correcto de SUPABASE_SECRET_KEY, luego lectura200 yQA. No pedir nuevamente SecretAdmin ni generarZIP. Las entradas siguientes son históricas.
+
 # Acceso existente revisado; intervención mínima — 2026-10-29
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.

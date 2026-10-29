@@ -1,3 +1,25 @@
+# Secret Admin cargado; Supabase sigue bloqueando la QA — 2026-10-29
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Usuario confirmó carga y autorizó usar DREAMS_QA_ADMIN_PASSWORD sólo para QA interna del Adminexistente, sin cambiarla; AL TERMINAR cerrar sesiones y retirar mecanismo temporal y ese Secret. Presencia secret_text comprobada SIN leer valor. Versión activa4e3d734f-a839-4c5c-9b45-afc2dad88741, deployment0b571bac-d239-4482-a167-0c5e32a18936,100%, creada16:15:23UTC al añadir SecretAdmin. No hay otro reemplazo de SUPABASE_SECRET_KEY posterior a0968d006 en el historial consultado: conserva el valor que falló en la sonda36319df7. No repetir sonda por agregar sólo SecretAdmin; no solicitarle de nuevo ese Secret ni usar contraseña de reset.
+
+QAreal todavía NO ejecutada: la lectura directa/SDK del valorSupabaseprobado sigue fallando; no se consumió contraseñaAdmin ni se crearon cuentas/productos remotos. Cron sigue vacío, oficiala3184576conservada, candidato sinURLpública. Prioridad: copia completa segura de Secretkeyservidor a SUPABASE_SECRET_KEY; luego heredar AMBOS Secrets de la nueva versión del mismoWorker. RunnerQA interno preparado conguardas, caducidad, limpieza y comparación de negocio; aún NO desplegado. No crearZIP, modificarAuth, roles o contraseñaAdmin ni publicar antesdeQA.
+
+Validación local del código nuevo: suite395PASS trasprimerasguardas,12tests focalizadosPASS tras endurecer constructor y tipo de clave pública; inventario109archivos/1936registros/cero>40. Check95JS y buildoficialPASS. CI delcheckpoint acredita suitefinal397 y demáschecks cuando termine, no confundir eltotalesperado conresultadoaúnnoobservado. Controles/validezdeheader nuevos en código NO están medidos en la sonda anterior. Fases: preparaciónlocal/documentalavanzada; conexión yQAremotaBLOQUEADAS; publicación/mainpendientes, sinporcentajeficticio.
+
+# Reemplazo del Secret recibido; nuevo valor todavía inutilizable — 2026-10-29
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Usuario informó «ya la cambie». Confirmada versión0968d006/deployment7f754fe2 actualizada por Secret15:53:52UTC. Sonda privada heredó EXACTAMENTE ese binding nuevo del mismoWorker, no el antiguo: versión2f3178eb y luego36319df7/deploymentd7305b8f, extensión acotada por propagaciónCron. Resultado recuperado16:09:32UTC: modern_secret presente, URLproyecto esperada, espaciosINTERNOS y controlASCII (non_ascii histórico incluye controles;42caracteres/42bytes). Directo falla transporte sinHTTP;SDKstatus0/succeededfalse. NO afirmar401nuevo ni clave/proyecto verificados. No quitar caracteres ni mostrar claves/fragmentos/headers. Evidencia docs/evidence/functional-backend-20261027/credential-replacement-20261029.md/.json.
+
+Cron temporal retirado y schedules=[] confirmado; URLs públicas del privado siguen desactivadas. Oficial conserva a3184576/7b302cf y sóloDREAMSlegacy efectivo. No QA autenticada remota iniciada ni cuentas/productos/stock/orders/Auth/Admin/DNS/otros sitios modificados. Se pidió repetir la copia por botón del valor Secretkey existente de Supabase y cargarlo sólo en SUPABASE_SECRET_KEY del privado, sinchat ni capturas. No otra sonda hasta cambio real. Falta además sesiónAdminlegítima: solicitud asíncrona de Secret temporalDREAMS_QA_ADMIN_PASSWORD, contraseñaACTUAL sin cambios; no asumir cargado ni usar variable destinada a reset.
+
+Trabajo independiente: worker/official-qa.mjs prepara runner interno scheduled opt-in, con vencimiento≤30min, sin endpointpúblico ni credenciales enreportes; exige lecturadirecta/SDK200 antesdealta normalA/B. Incluye rolescustomer, login/logout/refresh, aislamiento/mergecart, autoríayborradoopiniones, académico/WhatsApp sinenvío, Adminexistente con Secretopcional, móduloslectura y productos/cuponesQAconlimpieza; compara stockcomercial yorders. No declarar QAreal por existir elrunner. worker/official.mjs comparte fetchconrunner sin habilitarrutasQA. Diagnóstico local ahora distingue controles/whitespaceinterno/header válido; esas nuevasbanderas aún NO desplegadas ni medidas en la muestra citada. Pruebasguardas/scheduledPASS; suite/build/CI final se acreditan encheckpoint.
+
+Supabase aceptado porprofesor segúnusuario; integrantesMartearena/Ruas. NoSQLite niZIPnuevo. Mantener PR56 hasta conexión/QA necesarias; merge/main ypublicación autorizados cuando se resuelvan. Próximo: detectar versión nueva trascopia→readprivado→QAautenticada→oficialúnica conrollback. No repetir matrices previas201/390tests como proceso sin cambio; regresión actual justificada por códigoQA nuevo.
+
 # Supabase aceptado e integrantes confirmados — 2026-10-29
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.

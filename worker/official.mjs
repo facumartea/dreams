@@ -3,6 +3,7 @@ import { createHmac } from 'node:crypto';
 import { handleAsNodeRequest } from 'cloudflare:node';
 import { create_official_database } from './official-client.mjs';
 import { scheduled_diagnostic } from './supabase-diagnostic.mjs';
+import { run_official_qa } from './official-qa.mjs';
 import appModule from '../server/app.js';
 import policy from '../server/official-policy.js';
 import { legacy_presentation } from './official-legacy.mjs';
@@ -36,17 +37,22 @@ function trusted_request(request) {
     if (headers.get('cf-connecting-ip')) headers.set('x-forwarded-for', headers.get('cf-connecting-ip'));
     headers.set('x-forwarded-proto', 'https'); return new Request(request, { headers });
 }
+export async function fetch_official(request, env) {
+    const url = new URL(request.url);
+    if (url.origin !== policy.OFFICIAL_ORIGIN || !policy.official_route(request.method, url.pathname)) return Response.json({ error: 'Esta operación no está habilitada.' }, { status: 403, headers: { 'Cache-Control': 'no-store' } });
+    try {
+        expected_environment(env);
+        const legacy = await legacy_presentation(request);
+        if (legacy) return legacy;
+        if (!server) { server = createServer(create_official_app(env)); server.listen(8080); }
+        return await handleAsNodeRequest(8080, trusted_request(request));
+    } catch { console.error('DREAMS official runtime unavailable'); return Response.json({ error: 'El servicio no está disponible temporalmente.' }, { status: 503, headers: { 'Cache-Control': 'no-store' } }); }
+}
+
 export default {
-    async scheduled(_event, env) { await scheduled_diagnostic(env); },
-    async fetch(request, env) {
-        const url = new URL(request.url);
-        if (url.origin !== policy.OFFICIAL_ORIGIN || !policy.official_route(request.method, url.pathname)) return Response.json({ error: 'Esta operación no está habilitada.' }, { status: 403, headers: { 'Cache-Control': 'no-store' } });
-        try {
-            expected_environment(env);
-            const legacy = await legacy_presentation(request);
-            if (legacy) return legacy;
-            if (!server) { server = createServer(create_official_app(env)); server.listen(8080); }
-            return await handleAsNodeRequest(8080, trusted_request(request));
-        } catch { console.error('DREAMS official runtime unavailable'); return Response.json({ error: 'El servicio no está disponible temporalmente.' }, { status: 503, headers: { 'Cache-Control': 'no-store' } }); }
+    fetch: fetch_official,
+    async scheduled(_event, env) {
+        if (env.QA_RUN_ID) await run_official_qa(env, request => fetch_official(request, env));
+        else await scheduled_diagnostic(env);
     }
 };

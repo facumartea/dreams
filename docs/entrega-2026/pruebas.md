@@ -1,3 +1,7 @@
+# Actualización posterior al reemplazo del Secret
+
+El29/10/2026 el usuario reemplazó el Secret y se confirmó0968d006. La sonda36319df7 todavía encontró valor malformado con espacios internos/controlASCII: lectura directa sin respuesta HTTP válida ySDKstatus0. No confundirlo con el401 histórico de la versión anterior. Ver [evidencia nueva](../evidence/functional-backend-20261027/credential-replacement-20261029.md). Cron retirado; candidato aislado, ninguna cuentaQAremota creada. El usuario cargó luego el SecretAdmin en4e3d734f; presencia verificada, aún no usado. Retirarlo junto con el mecanismo temporal al terminar QA, según autorización expresa. El runner deQA está preparado localmente y NO acredita un resultado real hasta ejecutarse con lectura200.
+
 # Pruebas reales y pendientes · 29/10/2026
 
 ## Identidad remota observada, sin nueva publicación
@@ -56,3 +60,9 @@ No hubo deployment, conexión del candidato a la oficial, DNS ni otros sitios. R
 ## Aclaraciones y footer posteriores al checkpoint
 
 Tras confirmar el usuario aceptación docente de Supabase y apellidos Martearena/Ruas, se actualizaron documentos, wireframe y footer compartido. Pasaron22tests pertinentes de navegación/diseño y buildPageslocal. No cambió JavaScript ni el inventario; no se repitieron las matrices o la sonda remota y no se generó otro ZIP. El pipeline del commit nuevo acredita sus propios checks.
+
+## Guardas del runner privado preparadas
+
+Nuevo código aún no desplegado: runner scheduled con opt-in y vencimiento≤30min, sin rutaQA pública. Requiere lectura directa/SDK200 y clave de servidor antes de crear dos cuentas por signUp normal. Prepara sesiones/refresh/logout, aislamiento y mergecart, autoría de opiniones, checkoutacadémico/WhatsApp, Adminexistente y recursosQA de productos/cupones con limpieza. Los snapshots comparan stock comercial y cantidad de pedidos antes/después. Todo ello es preparación, no resultados remotos.
+
+Guardas probadas: opt-in/caducidad, bloqueo ante lectura fallida, rechazo de clave pública aunque lea catálogo, errores de proveedor/constructor sin credenciales en reporte y rutaQA bloqueada. Runtime local usa fecha compatible08/10, producción conserva27/10. Inventario actual109archivos/1936registros/cero>40. Los resultados finales de suite y CI se acreditan por SHA en la PR.
