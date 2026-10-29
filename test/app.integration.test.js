@@ -198,7 +198,7 @@ test('una allowlist configurada no confía en un Host dinámico', async () => {
     });
 });
 
-test('una opinión autenticada se persiste y reaparece al recargar la lista', async () => {
+function persisted_reviews_fixture() {
     const reviews = [];
     const database = database_with(table => {
         if (table === 'profiles') return { data: { name: 'Ana', role: 'customer' }, error: null };
@@ -222,6 +222,11 @@ test('una opinión autenticada se persiste y reaparece al recargar la lista', as
         return query({ data: [], error: null });
     };
 
+    return { database, reviews };
+}
+
+test('una opinión autenticada se persiste y reaparece al recargar la lista', async () => {
+    const { database, reviews } = persisted_reviews_fixture();
     const app = create_app({ database, disable_request_log: true });
     await serve(app, async base => {
         const created = await fetch(`${base}/api/reviews`, {

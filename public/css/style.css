@@ -369,3 +369,11 @@ button.admin-stat:active{background:var(--ink-elevated,#26221b)}
 /* Autofill conserva contraste y permite gestores de contraseñas. */
 .account-card input:-webkit-autofill,.account-card input:-webkit-autofill:hover,.account-card input:-webkit-autofill:focus{-webkit-text-fill-color:var(--ivory);caret-color:var(--ivory);box-shadow:0 0 0 1000px var(--surface) inset}
 .account-card input:autofill{color:var(--ivory);background:var(--surface);box-shadow:0 0 0 1000px var(--surface) inset}
+
+/* Carrusel editorial manual: la portada conserva su imagen estática. */
+.collection-carousel { border-block: 1px solid var(--line, #d8d0c2); }
+.carousel-controls { display: flex; flex-wrap: wrap; gap: .75rem; }
+.carousel-controls[hidden], [data-carousel-slide][hidden] { display: none; }
+[data-carousel-slide] { max-width: 52rem; padding-block: 1rem; }
+.carousel-status { margin-top: 1rem; font-size: .9rem; }
+@media (max-width: 640px) { .collection-carousel .section-heading { align-items: flex-start; flex-direction: column; } }

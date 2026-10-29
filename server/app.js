@@ -225,7 +225,8 @@ async function database_health(database, product_brand_column = 'brand', checkou
     return true;
 }
 
-function create_app(options = {}) {
+// Contexto por aplicación: no comparte sesiones ni clientes entre cuentas.
+function application_context(options) {
     const database = options.database;
     const product_brand_column = brand_column(options.product_brand_column || 'brand');
     if (!database) throw new TypeError('create_app requiere una base de datos.');
@@ -247,7 +248,17 @@ function create_app(options = {}) {
     const app = express();
     const async_route = handler => (request, response, next) => Promise.resolve(handler(request, response, next)).catch(next);
     const content_security_policy = { directives: { defaultSrc: ["'self'"], scriptSrc: ["'self'"], styleSrc: ["'self'", 'https://fonts.googleapis.com'], fontSrc: ["'self'", 'https://fonts.gstatic.com'], imgSrc: ["'self'", 'data:', 'https:'], connectSrc: ["'self'"], objectSrc: ["'none'"], baseUri: ["'self'"], formAction: ["'self'"], frameAncestors: ["'none'"], upgradeInsecureRequests: production ? [] : null } };
+    return {
+        options, database, product_brand_column, production, logger,
+        create_auth_client, contact_email, whatsapp_number, payment_provider, demo_auto_confirm_email,
+        checkout_mode, app_base_url, checkout_enabled, show_test_data, presentation,
+        public_directory, views_directory, app, async_route, content_security_policy,
+    };
+}
 
+function install_http_middleware({
+    options, app, content_security_policy,
+}) {
     app.set('trust proxy', 1);
     app.use(helmet({ contentSecurityPolicy: content_security_policy, crossOriginEmbedderPolicy: false }));
     if (!options.disable_request_log) app.use(morgan((tokens, request, response) => `${request.method} ${request.path} ${response.statusCode}`));
@@ -257,6 +268,11 @@ function create_app(options = {}) {
         if (request.path === '/api' || request.path.startsWith('/api/') || ['/admin', '/admin.html'].includes(request.path) || /dreams_(access|refresh)_token=/.test(request.headers.cookie || '')) response.setHeader('Cache-Control', 'no-store');
         next();
     });
+}
+
+function install_limits_and_static({
+    options, presentation, public_directory, app,
+}) {
     app.use('/api/auth', auth_limiters());
     app.use('/api/inquiries', rateLimit({ windowMs: 900000, limit: 10, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiadas consultas. Probá nuevamente en unos minutos.' } }));
     app.use('/api/cart/config', rateLimit({ windowMs: 60000, limit: 120, standardHeaders: true, legacyHeaders: false, message: { error: 'Demasiadas consultas. Probá nuevamente en un minuto.' } }));
@@ -270,7 +286,9 @@ function create_app(options = {}) {
     app.use('/api/reviews', (request, response, next) => request.method === 'POST' ? review_limiter(request, response, next) : next());
     app.use(preview_write_guard(options.preview_read_only, options.customer_data_enabled, official_enabled(options)));
     app.use(options.static_middleware || express.static(public_directory));
+}
 
+function profile_loader(database) {
     async function profile_for(user) {
         let result = await database.from('profiles').select('name,role').eq('id', user.id).maybeSingle();
         if (result.error) throw result.error;
@@ -283,6 +301,13 @@ function create_app(options = {}) {
         return result.data;
     }
 
+    return profile_for;
+}
+
+function install_session_middleware({
+    database, production, logger, create_auth_client, app,
+    async_route, profile_for,
+}) {
     app.use(async_route(async (request, response, next) => {
         try {
             const cookies = parse_cookie_header(request.headers.cookie);
@@ -315,22 +340,73 @@ function create_app(options = {}) {
             next();
         }
     }));
+}
 
+function configure_router(context) {
+    const { app, create_auth_client, async_route } = context;
     const login = (request, response, next) => request.user ? next() : response.status(401).json({ error: 'Necesitás iniciar sesión.' });
     const admin = (request, response, next) => request.user?.is_admin ? next() : response.status(403).json({ error: 'Acceso reservado al administrador.' });
     const admin_database = request => create_auth_client(request.access_token);
     const route = (method, url, ...handlers) => app[method](url, ...handlers.map(handler => handler === login || handler === admin ? handler : async_route(handler)));
     const fail_if = result => { if (result.error) throw result.error; return result.data; };
+    Object.assign(context, { login, admin, admin_database, route, fail_if });
+}
 
+function install_customer_modules({
+    options, database, product_brand_column, create_auth_client, route,
+    login,
+}) {
     install_account_cart({ route, login, database, enabled: options.account_cart_enabled, signing_key: options.account_cart_signing_key || options.presentation_signing_key, product_brand_column });
     install_reviews({ route, login, database, create_auth_client });
+}
+
+function install_get_api_cart_config({
+    options, route,
+}) {
     route('get', '/api/cart/config', async (_request, response) => response.json({ account_cart: options.account_cart_enabled === true }));
+}
+
+function install_presentation_routes({
+    presentation, app, route,
+}) {
     presentation.install(app, route);
+}
+
+function install_google_routes({
+    options, production, logger, app_base_url, app,
+    profile_for,
+}) {
     google_routes(app, { create_oauth_client: options.create_oauth_client, provider_enabled: async () => options.google_access_ready === true && await (options.google_provider_enabled || (async () => false))(), app_base_url, production, profile_for, logger });
+}
+
+function install_get_api_auth_google_config({
+    options, app_base_url, route,
+}) {
     route('get', '/api/auth/google/config', async (request, response) => response.json({ enabled: Boolean(options.google_access_ready === true && options.create_oauth_client && app_base_url && await (options.google_provider_enabled || (async () => false))()) }));
+}
+
+function install_get_api_auth_config({
+    options, route,
+}) {
     route('get', '/api/auth/config', async (request, response) => response.json({ email_confirmation_required: options.email_confirmation_required ? await options.email_confirmation_required() : true }));
+}
+
+function install_get_api_config({
+    options, contact_email, whatsapp_number, demo_auto_confirm_email, route,
+}) {
     route('get', '/api/config', async (request, response) => response.json({ whatsapp_number, contact_email, contacts, app_name: 'DREAMS', demo_auto_confirm_email, preview_read_only: options.preview_read_only === true, admin_writes_enabled: official_enabled(options) }));
+}
+
+function install_get_api_checkout_config({
+    payment_provider, checkout_mode, checkout_enabled, show_test_data, presentation,
+    route,
+}) {
     route('get', '/api/checkout/config', async (request, response) => response.json({ enabled: presentation.ready || checkout_enabled, provider: presentation.ready ? 'presentation_demo' : checkout_enabled ? payment_provider.name : null, mode: presentation.ready ? 'demo' : checkout_mode, show_test_data: presentation.ready || show_test_data }));
+}
+
+function install_get_api_products({
+    database, product_brand_column, route, fail_if,
+}) {
     route('get', '/api/products', async (request, response) => {
         const search = String(request.query.search || '').trim().replace(/[^\p{L}\p{N}\s'-]/gu, '').slice(0, 80);
         const sort = String(request.query.sort || 'featured');
@@ -345,14 +421,36 @@ function create_app(options = {}) {
         });
         response.json(fail_if(result).map(product));
     });
+}
+
+function install_get_api_products_id({
+    database, route, fail_if,
+}) {
     route('get', '/api/products/:id', async (request, response) => {
         const id = parse_id(request.params.id);
         if (!id) return response.status(400).json({ error: 'ID de producto inválido.' });
         const data = fail_if(await execute_database_query(() => database.from('products').select('*').eq('id', id).maybeSingle()));
         return data ? response.json(product(data)) : response.status(404).json({ error: 'Perfume no encontrado.' });
     });
+}
+
+function install_get_api_brands({
+    database, product_brand_column, route, fail_if,
+}) {
     route('get', '/api/brands', async (request, response) => response.json([...new Set(fail_if(await execute_database_query(() => database.from('products').select(product_brand_column).order(product_brand_column))).map(item => normalize_product_brand(item).brand))]));
+}
+
+function install_post_api_auth_register({
+    options, database, production, logger, create_auth_client,
+    demo_auto_confirm_email, route,
+}) {
     route('post', '/api/auth/register', customer_registration({ database, create_auth_client, production, demo_auto_confirm_email, logger, email_confirmation_required: options.email_confirmation_required }));
+}
+
+function install_post_api_auth_login({
+    production, create_auth_client, demo_auto_confirm_email, profile_for, login,
+    admin, route,
+}) {
     route('post', '/api/auth/login', async (request, response) => {
         const email = normalize_email(request.body.email), password = String(request.body.password || '');
         if (!valid_email(email) || !password || password.length > 128) return response.status(400).json({ error: 'Ingresá un correo válido y tu contraseña.' });
@@ -367,6 +465,11 @@ function create_app(options = {}) {
         const user = { id: result.data.user.id, name: profile?.name || email, email, is_admin: profile?.role === 'admin' };
         response.json({ message: 'Sesión iniciada.', authenticated: true, redirect: user.is_admin ? '/admin' : '/cuenta.html', user });
     });
+}
+
+function install_post_api_auth_logout({
+    production, logger, create_auth_client, admin, route,
+}) {
     route('post', '/api/auth/logout', async (request, response) => {
         if (request.access_token) {
             const result = await create_auth_client().auth.admin.signOut(request.access_token, 'local');
@@ -375,8 +478,18 @@ function create_app(options = {}) {
         clear_session(response, production);
         response.json({ message: 'Sesión cerrada.' });
     });
+}
+
+function install_get_api_auth_me({
+    route,
+}) {
     route('get', '/api/auth/me', async (request, response) => request.auth_unavailable
         ? response.status(503).json({ error: 'No pudimos comprobar tu sesión. Reintentá más tarde.' }) : response.json({ user: request.user || null }));
+}
+
+function install_post_api_cart_quote({
+    database, product_brand_column, whatsapp_number, presentation, route,
+}) {
     route('post', '/api/cart/quote', async (request, response) => {
         const quote = await quote_cart(database, request.body.items, presentation.ready ? '' : request.body.coupon_code, product_brand_column);
         if (quote.error) return response.status(400).json({ error: quote.error });
@@ -385,12 +498,44 @@ function create_app(options = {}) {
         const text = ['Hola DREAMS, quiero consultar por este carrito:', ...lines, summary ? `Total: ${summary.total} ARS. ${summary.shipping_label}.` : `Subtotal de productos: ${quote.total} ARS. Envío a consultar, no incluido.`].join('\n');
         response.json({ ...quote, ...(summary || {}), whatsapp_url: quote.items.length && /^\d{8,15}$/.test(whatsapp_number) ? `https://wa.me/${whatsapp_number}?text=${encodeURIComponent(text)}` : null });
     });
+}
+
+function install_post_api_coupons_validate({
+    database, product_brand_column, route,
+}) {
     route('post', '/api/coupons/validate', async (request, response) => {
         const quote = await quote_cart(database, request.body.items, request.body.code, product_brand_column);
         if (quote.error) return response.status(400).json({ error: quote.error });
         if (!quote.coupon) return response.status(404).json({ error: 'Cupón inválido.', subtotal: quote.subtotal, discount: 0, total: quote.total });
         response.json({ coupon: quote.coupon, subtotal: quote.subtotal, discount: quote.discount, total: quote.total });
     });
+}
+
+function commercial_order(order_id, request, payment_provider, quote) {
+    return {
+        id: order_id,
+        user_id: request.user.id,
+        provider: payment_provider.name,
+        provider_preference_id: null,
+        provider_payment_id: null,
+        status: 'created',
+        status_detail: null,
+        currency: 'ARS',
+        subtotal: quote.subtotal,
+        discount: quote.discount,
+        total: quote.total,
+        coupon_id: quote.coupon?.id || null,
+        coupon_code: quote.coupon?.code || null,
+        coupon_percent: quote.coupon?.discount_percent || null,
+        items: quote.items.map(item => ({ id: item.id, brand: item.brand, name: item.name, size_ml: item.size_ml, price: item.price, quantity: item.quantity })),
+        paid_at: null
+    };
+}
+
+function install_post_api_checkout_session({
+    database, product_brand_column, logger, payment_provider, checkout_mode,
+    app_base_url, checkout_enabled, login, route, fail_if,
+}) {
     route('post', '/api/checkout/session', login, async (request, response) => {
         if (!checkout_enabled || !app_base_url) return response.status(503).json({ error: 'El pago online todavía no está disponible.' });
         const quote = await quote_cart(database, request.body.items, request.body.coupon_code, product_brand_column);
@@ -399,24 +544,7 @@ function create_app(options = {}) {
         if (!quote.items.length || quote.total <= 0) return response.status(409).json({ error: 'No hay productos disponibles para pagar.' });
 
         const order_id = randomUUID();
-        const order = {
-            id: order_id,
-            user_id: request.user.id,
-            provider: payment_provider.name,
-            provider_preference_id: null,
-            provider_payment_id: null,
-            status: 'created',
-            status_detail: null,
-            currency: 'ARS',
-            subtotal: quote.subtotal,
-            discount: quote.discount,
-            total: quote.total,
-            coupon_id: quote.coupon?.id || null,
-            coupon_code: quote.coupon?.code || null,
-            coupon_percent: quote.coupon?.discount_percent || null,
-            items: quote.items.map(item => ({ id: item.id, brand: item.brand, name: item.name, size_ml: item.size_ml, price: item.price, quantity: item.quantity })),
-            paid_at: null
-        };
+        const order = commercial_order(order_id, request, payment_provider, quote);
         fail_if(await database.from('orders').insert(order));
         try {
             const checkout = await payment_provider.create_checkout({ order_id, items: quote.items, total: quote.total, discount: quote.discount, payer_email: request.user.email, app_base_url });
@@ -435,6 +563,12 @@ function create_app(options = {}) {
             throw error;
         }
     });
+}
+
+function install_post_api_checkout_demo_payment({
+    database, payment_provider, checkout_enabled, login, route,
+    fail_if,
+}) {
     route('post', '/api/checkout/demo-payment', login, async (request, response) => {
         if (!checkout_enabled || payment_provider?.name !== 'demo' || typeof payment_provider.process_payment !== 'function') {
             return response.status(404).json({ error: 'El pago de prueba no está disponible.' });
@@ -464,6 +598,12 @@ function create_app(options = {}) {
         if (!updated) return response.status(409).json({ error: 'Este pedido de prueba ya fue procesado.' });
         response.json({ order_id: order.id, order_number: order_number(order), status: payment.status, status_detail: payment.status_detail });
     });
+}
+
+function install_post_api_checkout_confirm({
+    database, payment_provider, checkout_mode, checkout_enabled, login,
+    route, fail_if,
+}) {
     route('post', '/api/checkout/confirm', login, async (request, response) => {
         if (!checkout_enabled || payment_provider?.name !== 'mercado_pago') return response.status(503).json({ error: 'La confirmación de Mercado Pago no está disponible.' });
         const order_id = String(request.body.order_id || '');
@@ -478,12 +618,23 @@ function create_app(options = {}) {
         fail_if(await database.from('orders').update({ provider_payment_id: payment.id, status: payment.status, status_detail: payment.status_detail, paid_at: payment.status === 'approved' ? payment.paid_at : null }).eq('id', order.id));
         response.json({ order_id: order.id, order_number: order_number(order), status: payment.status, status_detail: payment.status_detail });
     });
+}
+
+function install_get_api_orders_id({
+    database, login, route, fail_if,
+}) {
     route('get', '/api/orders/:id', login, async (request, response) => {
         const order_id = String(request.params.id || '');
         if (!/^[0-9a-f-]{36}$/i.test(order_id)) return response.status(400).json({ error: 'ID de pedido inválido.' });
         const order = fail_if(await database.from('orders').select('id,status,status_detail,currency,total,items,created_at,paid_at').eq('id', order_id).eq('user_id', request.user.id).maybeSingle());
         return order ? response.json({ ...order, order_number: order_number(order) }) : response.status(404).json({ error: 'Pedido no encontrado.' });
     });
+}
+
+function install_post_api_payments_webhook({
+    database, payment_provider, checkout_mode, checkout_enabled, route,
+    fail_if,
+}) {
     route('post', '/api/payments/webhook', async (request, response) => {
         if (!checkout_enabled || payment_provider?.name !== 'mercado_pago' || request.body?.type !== 'payment') return response.status(200).json({ received: true });
         const payment_id = String(request.body?.data?.id || request.query['data.id'] || '');
@@ -495,6 +646,11 @@ function create_app(options = {}) {
         fail_if(await database.from('orders').update({ provider_payment_id: payment.id, status: payment.status, status_detail: payment.status_detail, paid_at: payment.status === 'approved' ? payment.paid_at : null }).eq('id', order.id));
         response.json({ received: true });
     });
+}
+
+function install_post_api_inquiries({
+    database, whatsapp_number, route, fail_if,
+}) {
     route('post', '/api/inquiries', async (request, response) => {
         const id = parse_id(request.body.product_id);
         if (!id) return response.status(400).json({ error: 'ID de producto inválido.' });
@@ -503,6 +659,11 @@ function create_app(options = {}) {
         fail_if(await database.from('inquiries').insert({ user_id: request.user?.id || null, product_id: found.id, product_name: found.name, user_name: request.user?.name || null, user_email: request.user?.email || null }));
         response.json({ message: 'Consulta registrada.', whatsapp_url: `https://wa.me/${whatsapp_number}?text=${encodeURIComponent(`Hola DREAMS, quiero consultar por ${found.name}. ¿Está disponible?`)}` });
     });
+}
+
+function install_get_api_admin_stats({
+    admin, admin_database, route,
+}) {
     route('get', '/api/admin/stats', admin, async (request, response) => {
         const db = admin_database(request);
         const tables = ['products', 'profiles', 'inquiries', 'reviews'];
@@ -513,12 +674,27 @@ function create_app(options = {}) {
         if (low.error) throw low.error;
         response.json({ products: counts[0], users: counts[1], inquiries: counts[2], reviews: counts[3], orders: orders.count || 0, low_stock: low.count || 0 });
     });
+}
+
+function install_get_api_admin_products({
+    admin, admin_database, route, fail_if,
+}) {
     route('get', '/api/admin/products', admin, async (request, response) => response.json(fail_if(await admin_database(request).from('products').select('*').order('id', { ascending: false })).map(row => ({ ...product(row), stock: typeof row.stock === 'number' && Number.isSafeInteger(row.stock) && row.stock >= 0 ? row.stock : null }))));
+}
+
+function install_post_api_admin_products({
+    product_brand_column, admin, admin_database, route, fail_if,
+}) {
     route('post', '/api/admin/products', admin, async (request, response) => {
         const parsed = payload(request.body);
         if (parsed.e) return response.status(400).json({ error: parsed.e });
         response.status(201).json(product(fail_if(await admin_database(request).from('products').insert(product_write_payload(parsed.o, product_brand_column)).select().single())));
     });
+}
+
+function install_put_api_admin_products_id({
+    product_brand_column, admin, admin_database, route, fail_if,
+}) {
     route('put', '/api/admin/products/:id', admin, async (request, response) => {
         const id = parse_id(request.params.id);
         if (!id) return response.status(400).json({ error: 'ID de producto inválido.' });
@@ -530,6 +706,11 @@ function create_app(options = {}) {
         const data = fail_if(await db.from('products').update(product_write_payload(parsed.o, product_brand_column)).eq('id', id).select().maybeSingle());
         return data ? response.json(product(data)) : response.status(503).json({ error: 'El producto existe, pero no pudo actualizarse por la configuración de permisos.' });
     });
+}
+
+function install_delete_api_admin_products_id({
+    admin, admin_database, route, fail_if,
+}) {
     route('delete', '/api/admin/products/:id', admin, async (request, response) => {
         const id = parse_id(request.params.id);
         if (!id) return response.status(400).json({ error: 'ID de producto inválido.' });
@@ -539,9 +720,29 @@ function create_app(options = {}) {
         const data = fail_if(await db.from('products').delete().eq('id', id).select('id').maybeSingle());
         return data ? response.json({ message: 'Producto eliminado.' }) : response.status(503).json({ error: 'El producto existe, pero no pudo eliminarse por la configuración de permisos.' });
     });
+}
+
+function install_get_api_admin_users({
+    admin, admin_database, route, fail_if,
+}) {
     route('get', '/api/admin/users', admin, async (request, response) => response.json(fail_if(await admin_database(request).from('profiles').select('id,name,role,created_at').order('created_at', { ascending: false })).map(value => ({ ...value, email: null, is_admin: value.role === 'admin' }))));
+}
+
+function install_get_api_admin_inquiries({
+    product_brand_column, admin, admin_database, route, fail_if,
+}) {
     route('get', '/api/admin/inquiries', admin, async (request, response) => response.json(fail_if(await admin_database(request).from('inquiries').select(`*,products(${product_brand_column},name)`).order('id', { ascending: false }).limit(100)).map(value => ({ ...value, brand: value.products ? normalize_product_brand(value.products).brand : null, name: value.products?.name || value.product_name }))));
+}
+
+function install_get_api_admin_reviews({
+    admin, admin_database, route, fail_if,
+}) {
     route('get', '/api/admin/reviews', admin, async (request, response) => response.json(fail_if(await admin_database(request).from('reviews').select('*').order('id', { ascending: false }))));
+}
+
+function install_put_api_admin_reviews_id({
+    admin, admin_database, route, fail_if,
+}) {
     route('put', '/api/admin/reviews/:id', admin, async (request, response) => {
         const id = parse_id(request.params.id);
         if (!id) return response.status(400).json({ error: 'ID de opinión inválido.' });
@@ -550,14 +751,34 @@ function create_app(options = {}) {
         const updated = fail_if(await admin_database(request).from('reviews').update(parsed.data).eq('id', id).select('*').maybeSingle());
         return updated ? response.json(updated) : response.status(404).json({ error: 'Opinión no encontrada.' });
     });
+}
+
+function install_delete_api_admin_reviews_id({
+    admin, admin_database, route, fail_if,
+}) {
     route('delete', '/api/admin/reviews/:id', admin, async (request, response) => {
         const id = parse_id(request.params.id);
         if (!id) return response.status(400).json({ error: 'ID de opinión inválido.' });
         const deleted = fail_if(await admin_database(request).from('reviews').delete().eq('id', id).select('id').maybeSingle());
         return deleted ? response.json({ message: 'Opinión eliminada.' }) : response.status(404).json({ error: 'Opinión no encontrada.' });
     });
+}
+
+function install_get_api_admin_orders({
+    admin, admin_database, route, fail_if,
+}) {
     route('get', '/api/admin/orders', admin, async (request, response) => response.json(fail_if(await admin_database(request).from('orders').select('id,user_id,provider,status,status_detail,currency,subtotal,discount,total,coupon_code,items,created_at,paid_at').order('created_at', { ascending: false }).limit(100)).map(value => ({ ...value, order_number: order_number(value) }))));
+}
+
+function install_get_api_admin_coupons({
+    admin, admin_database, route, fail_if,
+}) {
     route('get', '/api/admin/coupons', admin, async (request, response) => response.json(fail_if(await admin_database(request).from('coupons').select('id,code,discount_percent,active,created_at,updated_at').order('created_at', { ascending: false }))));
+}
+
+function install_post_api_admin_coupons({
+    admin, admin_database, route, fail_if,
+}) {
     route('post', '/api/admin/coupons', admin, async (request, response) => {
         const parsed = coupon_payload(request.body);
         if (parsed.error) return response.status(400).json({ error: parsed.error });
@@ -567,6 +788,11 @@ function create_app(options = {}) {
         const created = fail_if(await db.from('coupons').insert(parsed.data).select('id,code,discount_percent,active,created_at,updated_at').single());
         response.status(201).json(created);
     });
+}
+
+function install_put_api_admin_coupons_id({
+    admin, admin_database, route, fail_if,
+}) {
     route('put', '/api/admin/coupons/:id', admin, async (request, response) => {
         const id = parse_id(request.params.id);
         if (!id) return response.status(400).json({ error: 'ID de cupón inválido.' });
@@ -578,15 +804,40 @@ function create_app(options = {}) {
         const updated = fail_if(await db.from('coupons').update(parsed.data).eq('id', id).select('id,code,discount_percent,active,created_at,updated_at').maybeSingle());
         return updated ? response.json(updated) : response.status(404).json({ error: 'Cupón no encontrado.' });
     });
+}
+
+function install_delete_api_admin_coupons_id({
+    admin, admin_database, route, fail_if,
+}) {
     route('delete', '/api/admin/coupons/:id', admin, async (request, response) => {
         const id = parse_id(request.params.id);
         if (!id) return response.status(400).json({ error: 'ID de cupón inválido.' });
         const deleted = fail_if(await admin_database(request).from('coupons').delete().eq('id', id).select('id').maybeSingle());
         return deleted ? response.json({ message: 'Cupón eliminado.' }) : response.status(404).json({ error: 'Cupón no encontrado.' });
     });
+}
+
+function install_get_js_admin_console_v3_js({
+    options, public_directory, admin, route,
+}) {
     route('get', '/js/admin-console-v3.js', async (request, response) => options.admin_script ? response.type('application/javascript').send(options.admin_script) : response.sendFile(path.join(public_directory, 'js', 'admin.js')));
+}
+
+function install_get_admin_page({
+    options, views_directory, admin, route,
+}) {
     route('get', ['/admin', '/admin.html'], admin, async (request, response) => options.admin_html ? response.type('html').send(options.admin_html) : response.sendFile(path.join(views_directory, 'admin.html')));
+}
+
+function install_get_legacy_redirect({
+    route,
+}) {
     route('get', ['/favoritos', '/favoritos.html'], async (request, response) => response.redirect(301, '/catalogo.html'));
+}
+
+function install_get_api_health({
+    options, database, product_brand_column, logger, route,
+}) {
     route('get', '/api/health', async (request, response) => {
         try {
             await database_health(database, product_brand_column, options.checkout_schema_ready === true);
@@ -596,7 +847,11 @@ function create_app(options = {}) {
             response.status(503).json({ status: 'unavailable', api: true, database: 'unavailable' });
         }
     });
+}
 
+function install_final_handlers({
+    options, logger, public_directory, app,
+}) {
     app.use((request, response) => request.path.startsWith('/api/')
         ? response.status(404).json({ error: 'Ruta API no encontrada.' })
         : options.not_found_html ? response.status(404).type('html').send(options.not_found_html) : response.status(404).sendFile(path.join(public_directory, '404.html')));
@@ -605,7 +860,63 @@ function create_app(options = {}) {
         logger.error?.('Error inesperado de API.', { method: request.method, path: request.path, kind: error_kind(error) });
         response.status(500).json({ error: GENERIC_ERROR });
     });
-    return app;
+}
+
+const application_installers = [
+    install_http_middleware,
+    install_limits_and_static,
+    install_session_middleware,
+    configure_router,
+    install_customer_modules,
+    install_get_api_cart_config,
+    install_presentation_routes,
+    install_google_routes,
+    install_get_api_auth_google_config,
+    install_get_api_auth_config,
+    install_get_api_config,
+    install_get_api_checkout_config,
+    install_get_api_products,
+    install_get_api_products_id,
+    install_get_api_brands,
+    install_post_api_auth_register,
+    install_post_api_auth_login,
+    install_post_api_auth_logout,
+    install_get_api_auth_me,
+    install_post_api_cart_quote,
+    install_post_api_coupons_validate,
+    install_post_api_checkout_session,
+    install_post_api_checkout_demo_payment,
+    install_post_api_checkout_confirm,
+    install_get_api_orders_id,
+    install_post_api_payments_webhook,
+    install_post_api_inquiries,
+    install_get_api_admin_stats,
+    install_get_api_admin_products,
+    install_post_api_admin_products,
+    install_put_api_admin_products_id,
+    install_delete_api_admin_products_id,
+    install_get_api_admin_users,
+    install_get_api_admin_inquiries,
+    install_get_api_admin_reviews,
+    install_put_api_admin_reviews_id,
+    install_delete_api_admin_reviews_id,
+    install_get_api_admin_orders,
+    install_get_api_admin_coupons,
+    install_post_api_admin_coupons,
+    install_put_api_admin_coupons_id,
+    install_delete_api_admin_coupons_id,
+    install_get_js_admin_console_v3_js,
+    install_get_admin_page,
+    install_get_legacy_redirect,
+    install_get_api_health,
+    install_final_handlers,
+];
+
+function create_app(options = {}) {
+    const context = application_context(options);
+    context.profile_for = profile_loader(context.database);
+    for (const install of application_installers) install(context);
+    return context.app;
 }
 
 module.exports = { create_app, validate, validate_product_image_url, IMAGE_URL_ERROR, payload, coupon_payload, review_payload, normalize_coupon_code, discounted_totals, resolve_coupon, order_number, database_health, auth_cookie, session, parse_id, normalize_cart_items, quote_cart, execute_database_query, normalize_origin, allowed_origin_set, mutation_origin_guard, GENERIC_ERROR };

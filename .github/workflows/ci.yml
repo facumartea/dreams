@@ -38,6 +38,9 @@ jobs:
       - name: Check syntax
         run: pnpm run check
 
+      - name: Check 40-line functions and executable entry blocks
+        run: pnpm run check:functions
+
       - name: Run tests
         run: pnpm test
 

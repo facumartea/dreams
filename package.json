@@ -2,7 +2,7 @@
   "name": "dreams-perfumeria",
   "version": "1.0.0",
   "packageManager": "pnpm@11.19.0",
-  "description": "DREAMS - perfumer\u00eda multimarca con Node.js, Express, Supabase y APIs REST",
+  "description": "DREAMS - perfumería multimarca con Node.js, Express, Supabase y APIs REST",
   "main": "server/server.js",
   "scripts": {
     "start": "node server/server.js",
@@ -17,7 +17,8 @@
     "deploy:cloudflare:preview": "wrangler deploy --env preview",
     "deploy:cloudflare:production": "wrangler deploy --env production",
     "build:admin-review": "wrangler deploy worker/admin-review.mjs --dry-run --env preview --outdir dist/admin-worker",
-    "build:official": "wrangler deploy --dry-run --config wrangler.official.jsonc --outdir dist/official-worker"
+    "build:official": "wrangler deploy --dry-run --config wrangler.official.jsonc --outdir dist/official-worker",
+    "check:functions": "node scripts/function-inventory.mjs ."
   },
   "engines": {
     "node": ">=24 <25"
@@ -32,6 +33,7 @@
     "ws": "^8.18.3"
   },
   "devDependencies": {
+    "acorn": "8.15.0",
     "nodemon": "^3.1.10",
     "wrangler": "^4.147.0"
   }

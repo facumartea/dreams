@@ -131,13 +131,17 @@ function remove_coupon() {
     }
 }
 
-async function setup_checkout() {
-    const button = document.getElementById('checkout-submit');
-    const status = document.getElementById('checkout-status');
+function render_initial_coupon(quote) {
+    if (applied_coupon) {
+        document.getElementById('coupon-code').value = applied_coupon.code;
+        document.getElementById('coupon-status').textContent = `${applied_coupon.code} aplicado: ${applied_coupon.discount_percent}% de descuento.`;
+        document.getElementById('coupon-status').classList.add('is-valid');
+        document.getElementById('coupon-remove').hidden = false;
+    } else if (quote.coupon_error) sessionStorage.removeItem('dreams_coupon');
+}
+
+async function load_checkout(button, status) {
     try {
-        const initial_config = await fetch('/api/checkout/config');
-        const initial = await initial_config.json();
-        if (initial_config.ok && initial.enabled && initial.provider === 'presentation_demo') return PresentationCheckout.setup(initial);
         const [config_response, user_response, quote_response] = await Promise.all([
             fetch('/api/checkout/config'),
             fetch('/api/auth/me'),
@@ -158,12 +162,7 @@ async function setup_checkout() {
         save_cart(quote.items);
         applied_coupon = quote.coupon || null;
         render_checkout(quote.items, quote.subtotal, quote.discount, quote.total);
-        if (applied_coupon) {
-            document.getElementById('coupon-code').value = applied_coupon.code;
-            document.getElementById('coupon-status').textContent = `${applied_coupon.code} aplicado: ${applied_coupon.discount_percent}% de descuento.`;
-            document.getElementById('coupon-status').classList.add('is-valid');
-            document.getElementById('coupon-remove').hidden = false;
-        } else if (quote.coupon_error) sessionStorage.removeItem('dreams_coupon');
+        render_initial_coupon(quote);
         document.getElementById('sandbox-banner').hidden = !['sandbox', 'demo'].includes(config.mode);
         document.getElementById('sandbox-help').hidden = !config.show_test_data;
         button.disabled = false;
@@ -172,8 +171,10 @@ async function setup_checkout() {
         status.textContent = interface_error(error);
         button.disabled = true;
     }
+}
 
-    button.addEventListener('click', async () => {
+function checkout_payment_handler(button, status) {
+    return async () => {
         if (!checkout_quote || button.disabled) return;
         const is_demo = checkout_config?.provider === 'demo';
         const scenario = is_demo ? demo_card_scenario() : null;
@@ -208,8 +209,10 @@ async function setup_checkout() {
             button.disabled = false;
             button.textContent = is_demo ? 'Pagar de prueba' : 'Continuar a Mercado Pago';
         }
-    });
+    };
+}
 
+function install_checkout_fields(button) {
     document.querySelectorAll('.copy-test-data').forEach(copy => copy.addEventListener('click', async () => {
         const card_input = document.getElementById('demo-card-number');
         if (checkout_config?.provider === 'demo') {
@@ -243,6 +246,25 @@ async function setup_checkout() {
     coupon_input.addEventListener('keydown', event => { if (event.key === 'Enter') { event.preventDefault(); apply_coupon(); } });
     document.getElementById('coupon-apply').addEventListener('click', apply_coupon);
     document.getElementById('coupon-remove').addEventListener('click', remove_coupon);
+}
+
+async function setup_checkout() {
+    const button = document.getElementById('checkout-submit');
+    const status = document.getElementById('checkout-status');
+    try {
+        const config_response = await fetch('/api/checkout/config');
+        if (config_response?.ok) {
+            const config = await config_response.json();
+            if (config.enabled && config.provider === 'presentation_demo') return PresentationCheckout.setup(config);
+        }
+    } catch (error) {
+        status.textContent = interface_error(error);
+        button.disabled = true;
+        return;
+    }
+    await load_checkout(button, status);
+    button.addEventListener('click', checkout_payment_handler(button, status));
+    install_checkout_fields(button);
 }
 
 document.addEventListener('DOMContentLoaded', setup_checkout);

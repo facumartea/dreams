@@ -1,0 +1,92 @@
+[
+  {
+    "id": "CAR-390",
+    "environment": "Chromium local; Express y BD/Auth fixture, sin Supabase remoto",
+    "result": "PASS",
+    "actual": "Controles, contenido distinto, flechas, wrap y ausencia de overflow"
+  },
+  {
+    "id": "CAR-430",
+    "environment": "Chromium local; Express y BD/Auth fixture, sin Supabase remoto",
+    "result": "PASS",
+    "actual": "Controles, contenido distinto, flechas, wrap y ausencia de overflow"
+  },
+  {
+    "id": "CAR-768",
+    "environment": "Chromium local; Express y BD/Auth fixture, sin Supabase remoto",
+    "result": "PASS",
+    "actual": "Controles, contenido distinto, flechas, wrap y ausencia de overflow"
+  },
+  {
+    "id": "CAR-1024",
+    "environment": "Chromium local; Express y BD/Auth fixture, sin Supabase remoto",
+    "result": "PASS",
+    "actual": "Controles, contenido distinto, flechas, wrap y ausencia de overflow"
+  },
+  {
+    "id": "CAR-1440",
+    "environment": "Chromium local; Express y BD/Auth fixture, sin Supabase remoto",
+    "result": "PASS",
+    "actual": "Controles, contenido distinto, flechas, wrap y ausencia de overflow"
+  },
+  {
+    "id": "CAR-1920",
+    "environment": "Chromium local; Express y BD/Auth fixture, sin Supabase remoto",
+    "result": "PASS",
+    "actual": "Controles, contenido distinto, flechas, wrap y ausencia de overflow"
+  },
+  {
+    "id": "CAP-CUENTA",
+    "environment": "Chromium local; Express y BD/Auth fixture, sin Supabase remoto",
+    "result": "PASS",
+    "actual": "Captura local; no registro real"
+  },
+  {
+    "id": "ADM-SAVE",
+    "environment": "Chromium local; Express y BD/Auth fixture, sin Supabase remoto",
+    "result": "PASS",
+    "actual": "Edición nombre/precio/imagen real por HTTP local, readback antes del mensaje"
+  },
+  {
+    "id": "ADM-RELOAD",
+    "environment": "Chromium local; Express y BD/Auth fixture, sin Supabase remoto",
+    "result": "PASS",
+    "actual": "Recarga conserva nombre e imagen en fixture"
+  },
+  {
+    "id": "ADM-BUTTONS",
+    "environment": "Chromium local; Express y BD/Auth fixture, sin Supabase remoto",
+    "result": "PASS",
+    "actual": "Editar y Eliminar conservan dimensiones iguales"
+  },
+  {
+    "id": "ADM-DETAIL",
+    "environment": "Chromium local; Express y BD/Auth fixture, sin Supabase remoto",
+    "result": "PASS",
+    "actual": "Detalle muestra nombre e imagen persistidos localmente"
+  },
+  {
+    "id": "ADM-CATALOG",
+    "environment": "Chromium local; Express y BD/Auth fixture, sin Supabase remoto",
+    "result": "PASS",
+    "actual": "Catálogo muestra edición local"
+  },
+  {
+    "id": "CAR-NOJS",
+    "environment": "Chromium local; Express y BD/Auth fixture, sin Supabase remoto",
+    "result": "PASS",
+    "actual": "Las tres colecciones siguen visibles sin JS"
+  },
+  {
+    "id": "BROWSER-ERRORS",
+    "environment": "Chromium local; Express y BD/Auth fixture, sin Supabase remoto",
+    "result": "PASS",
+    "actual": "Cero pageerrors durante recorridos"
+  },
+  {
+    "id": "WIREFRAME",
+    "environment": "Chromium local; Express y BD/Auth fixture, sin Supabase remoto",
+    "result": "PASS",
+    "actual": "SVG editable renderizado a PNG1800x1240"
+  }
+]

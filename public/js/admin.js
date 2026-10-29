@@ -234,10 +234,27 @@ function set_product_save_pending(busy) {
     }
 }
 
+function product_field_value(key, value) {
+    if (['price', 'stock', 'size_ml', 'intensity'].includes(key)) return Number(value);
+    if (key === 'featured') return value === true;
+    return String(value ?? '').trim();
+}
+
+async function confirm_product_persistence(saved, expected) {
+    if (!Number.isSafeInteger(Number(saved?.id)) || Number(saved.id) < 1) throw new Error('El servidor no confirmó el identificador del producto.');
+    const products = await admin_fetch('/api/admin/products');
+    const stored = Array.isArray(products) && products.find(product => Number(product.id) === Number(saved.id));
+    const keys = Object.keys(expected);
+    if (!stored || !keys.every(key => product_field_value(key, stored[key]) === product_field_value(key, expected[key]))) {
+        throw new Error('No pudimos confirmar todos los cambios guardados. El formulario conserva tus datos.');
+    }
+}
+
 async function commit_product(id, data) {
     set_product_save_pending(true);
     try {
-        await admin_fetch(id ? `/api/admin/products/${id}` : '/api/admin/products', { method: id ? 'PUT' : 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+        const saved = await admin_fetch(id ? `/api/admin/products/${id}` : '/api/admin/products', { method: id ? 'PUT' : 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+        await confirm_product_persistence(saved, data);
         reset_form(true);
         document.getElementById('admin-message').textContent = id ? 'Producto actualizado correctamente.' : 'Producto creado correctamente.';
         await Promise.all([load_dashboard(), load_admin_products()]);

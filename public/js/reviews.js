@@ -1,5 +1,5 @@
 /* Los permisos llegan del servidor; nunca se deducen de nombres o correos. */
-const dreams_reviews = new class {
+class DreamsReviews {
     constructor() { this.load_id = 0; this.pending = null; }
     async request(path, options) {
         const response = await fetch('/api/reviews' + path, options);
@@ -67,4 +67,5 @@ const dreams_reviews = new class {
         } catch (error) { access.textContent = interface_error(error); }
     }
     start() { this.load(); this.setup(); }
-};
+}
+const dreams_reviews = new DreamsReviews();

@@ -1,12 +1,16 @@
 const api = '/api';
 let public_config_promise;
 
-if (!document.querySelector('script[src="/js/motion.js"]')) {
+function load_motion_script() {
+    // Esperar el HTML completo evita duplicar el script explícito del footer.
+    if (document.querySelector('script[src="/js/motion.js"]')) return;
     const motion_script = document.createElement('script');
     motion_script.src = '/js/motion.js';
     motion_script.defer = true;
     document.head.appendChild(motion_script);
 }
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', load_motion_script, { once: true });
+else load_motion_script();
 
 function get_public_config() {
     if (!public_config_promise) {
@@ -289,6 +293,31 @@ function setup_header_scroll() {
     window.addEventListener('scroll', update, { passive: true });
 }
 
+
+// Control manual: sin reproducción automática ni movimiento obligatorio.
+function setup_collection_carousel() {
+    const root = document.querySelector('[data-collection-carousel]');
+    if (!root) return;
+    const slides = [...root.querySelectorAll('[data-carousel-slide]')];
+    if (slides.length < 2) return;
+    let current = 0;
+    const show = index => {
+        current = (index + slides.length) % slides.length;
+        slides.forEach((slide, position) => { slide.hidden = position !== current; });
+        root.querySelector('.carousel-status').textContent = `${current + 1} de ${slides.length}: ${slides[current].querySelector('h3').textContent}`;
+    };
+    root.querySelector('.carousel-controls').hidden = false;
+    root.querySelector('[data-carousel-previous]').addEventListener('click', () => show(current - 1));
+    root.querySelector('[data-carousel-next]').addEventListener('click', () => show(current + 1));
+    root.addEventListener('keydown', event => {
+        if (!['ArrowLeft', 'ArrowRight'].includes(event.key) || !event.target.matches('button[data-carousel-previous], button[data-carousel-next]')) return;
+        event.preventDefault();
+        show(current + (event.key === 'ArrowRight' ? 1 : -1));
+    });
+    show(0);
+}
+
+setup_collection_carousel();
 
 update_cart_count();
 setup_menu();

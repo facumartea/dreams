@@ -1,3 +1,17 @@
+# Entrega2026 preparada; conexión y QA remota bloqueadas — 2026-10-29
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Retomado desde be57610 (posterior a2b8dcc1); PR56 abierta/draft sobre codex/collection-multiselect, predeterminada main4655b0c. GETCloudflare confirma oficial restaurada a3184576/frontend7b302cf con sóloDREAMSlegacy; candidato62f6bd7c/deployment82492c72 sin reemplazo de Secret, bindingProduction/default correcto yURLproyecto esperado. No se repitió sonda401 acreditada ni deployment fallido; noAuth/Admin/DB mutaciones. Se pidió temprano la única intervención: cargar SecretAPIkey existente íntegra en SUPABASE_SECRET_KEY del privado; no tokens adicionales/chat/capturas. QAAdmin requiere sesión legítima existente aún no disponible, sin cambiar credenciales.
+
+Usuario amplió alcance: rúbrica2026 PDF leída y versionada, límite40 sustituye20. Se preguntó aceptación explícita deSQLite y apellidos, sin respuesta todavía. docs/entrega-2026 incluye matriz completa con SQLiteNO CUMPLE, wireframePNG/SVG adaptado de imagen adjunta, manualMD/PDF4p con capturasLOCALES, BD/Mermaid/columnas reales sin filas privadas, API, bitácora honesta, guía defensa, diseño e inventario. README corregido Node24/pnpm11.19/8080/sinseed y hosting real. No se atribuyen aportes/dominio a alumnos ni preentregas sin evidencia.
+
+Implementación: factoriesExpress/Node/Workers/checkout/firmas/helpers y fixtures divididos conservando orden/seguridad; inventarioAcorn8.15fijado recorre sin.git106 archivos/1873registros/cero>40. Programa principal explícito separado de archivo y datos declarativos. Admin confirma lectura posterior de todos los campos antesdeéxito, conservaformulario antefallo;25casos nuevosPASS. Carruselmanual3colecciones accesible sinvideo/autoplay,3testsPASS; doblecarga motion corregida trasdetecciónbrowser. MatrizAdminprevia201 preservada; nuevaáreaD25 casos distintos adicionalessinrepetirinventario completo.
+
+Validación local: suite387PASS antesdetrescasos nuevosdelcarrusel, éstos3PASS; sintaxis91antesdelúltimotest; inventariofinal0>40,auditlimpio,cuatrobuildsPASS. Chromium15comprobacioneslocalesPASS,6anchos,guardadoconimagen/recarga/catálogo/detalle,botones104x44,sinJS,ceroerrors. FixturesnoequivalenQAremota. ZIPexacto/instalaciónlimpia/CI delcheckpoint se acreditarán al concluir. Sin nuevaauditoríaperformance/WCAGcompleta; sinmigración ni escriturascomerciales.
+
+Fases: recuperación/lecturaPDF/local/documentaciónPREPARADAS; conexiónvalorPENDIENTEusuario; registro/login/Adminremotos/carrito/opinionesfinalesBLOQUEADOS; SQLiteyapellidosPENDIENTES; ZIP/CIenverificación; merge/publicaciónBLOQUEADOSporrequisitosnoresueltos. Avance documental y local real; sin porcentaje global inventado ni cierrefuncional. No conectar candidato hasta lectura200directa/SDK yQAnecesaria; rollbacka3184576disponible. DEPLOY:NO. OTROS SITIOS:NO.
+
 # Acceso existente revisado; intervención mínima — 2026-10-29
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
