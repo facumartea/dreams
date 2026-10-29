@@ -1,3 +1,15 @@
+# Supabase aceptado e integrantes confirmados — 2026-10-29
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+El usuario confirmó que el profesor aceptó Supabase y los apellidos Martearena y Ruas. Se registra como aceptación docente comunicada por el usuario, sin inventar comprobante adjunto ni equivalencia PostgreSQL/SQLite. SQLite ya no es bloqueo ni requiere migración. Se actualizaron matriz/README/entrega y footer compartido con los apellidos confirmados, sin deducir nombres de pila.
+
+Nueva instrucción: subir todo a GitHub y corregir pendientes; NO generar otro ZIP final. Conservar evidencia histórica de extracción: df70b9c/CI212SUCCESS,390tests, inventario106/1873/cero>40 y cuatrobuilds, ZIP limpio305entradas. No repetir esos procesos por rutina. La actualización actual no cambia Auth, DB, credenciales Admin, Secret ni backend desplegado.
+
+Siguen pendientes conexión del candidato y QA autenticada real: no hay aviso de reemplazo del Secret; no repetir la sonda401 ni conectar candidato a oficial. Mantener rollbacka3184576. Main4655b0c no contiene la entrega; cambios en PR56/codex/admin-cards-audit, con integración autorizada condicionada a resolver dependencias funcionales. Próximo: cargar el valor correcto sólo en dreams-official-backend/Production-default/SUPABASE_SECRET_KEY, lectura directa/SDK desde nueva versión y QA; luego promoción oficial. No nuevos ZIP, otros sitios, DNS, pagos, seeds o resets.
+
+Validación de esta aclaración y footer:22tests de navegación/diseñoPASS y buildPageslocalPASS. No se repitió la suite ni se generó ZIP.
+
 # Checkpoint de entrega verificado en CI y ZIP — 2026-10-29
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.

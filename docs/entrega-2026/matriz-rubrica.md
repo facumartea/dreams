@@ -18,11 +18,11 @@ Fuente: [PDF 2026 adjunto](rubrica-2026.pdf), 3 páginas; [texto extraído](rubr
 | P03 | «resolución y autonomía» | Git/continuidad técnica; defensa.md | NO VERIFICABLE | No atribuir al grupo las resoluciones hechas por IA. |
 | P04 | «continuidad y proceso de trabajo» | Git, CHANGELOG, bitacora-ia.md | PARCIAL | Hay historia técnica; faltan registros completos de clase/preentrega. |
 | P05 | «en cada etapa… uso de IA… complementario» | bitacora-ia.md distingue autoría | NO VERIFICABLE | No hay evidencia de agregados propios y defensa por etapa. |
-| R01 | «grupo… no… mayor a 2 alumnos»; «Los grupos NO pueden rotar» | Dos autores históricos con nombres contradictorios | NO VERIFICABLE | Confirmación de integrantes/apellidos y permanencia pendiente. |
+| R01 | «grupo… no… mayor a 2 alumnos»; «Los grupos NO pueden rotar» | Dos integrantes confirmados por usuario: Martearena y Ruas | PARCIAL | Apellidos resueltos; permanencia del grupo y participación histórica no verificadas. |
 | R02 | «Fecha de entrega previa 2 de octubre» | No hay comprobante de entrega adjunto | NO VERIFICABLE | Solicitar evidencia que conserven los alumnos; no inventar fecha. |
 | R03 | «Fecha de entrega final 6 de noviembre» | Preparación al29/10; no envío | PARCIAL | Falta cierre y entrega por usuario antes de fecha. |
 | R04 | «app web o sitio HTML/CSS/JS aplicando/consumiendo una API» | HTML/CSS/JS y Supabase; api.md | CUMPLE | Recorrido documentado; conexión candidata pendiente por separado. |
-| R05 | «Mostrar productos… de una base de datos… backend… SQLlite… Flask… Node.js» | Real: Supabase/PostgreSQL, no SQLite | NO CUMPLE | sqlite.md con alternativas; aceptación explícita aún no acreditada. No base decorativa. |
+| R05 | «Mostrar productos… de una base de datos… backend… SQLlite… Flask… Node.js» | Real: Supabase/PostgreSQL; el usuario confirmó aceptación docente el29/10/2026, registrada en sqlite.md | PARCIAL | Excepción comunicada por usuario resuelve motor, sin afirmar equivalencia ni comprobante docente adjunto. Conexión/QA remota siguen pendientes. |
 | R06 | «Node.js… registro de las versiones usando Git (github)» | Historial de facumartea/dreams, PR56 | CUMPLE | Checkpoints sin reescritura; ZIP exacto identifica commit. |
 | R07 | «pantalla de login… y de registro» | `public/cuenta.html`, `cuenta.js`, registro/signIn | PARCIAL | Pantallas y tests locales; real candidato bloqueado y oficial403 previo. |
 | R08 | «productos… editarse… interfaz específica… usuario autorizado» | Admin, guard rol, JWT, readback de persistencia | PARCIAL | Implementado y probado con fixtures; falta Admin real/guardado remoto. |
@@ -44,11 +44,13 @@ Fuente: [PDF 2026 adjunto](rubrica-2026.pdf), 3 páginas; [texto extraído](rubr
 | E05 | «Trabajo en clase… todos… aportan… constantemente» | Sin evidencia de asistencia/participación | NO VERIFICABLE | Evidencia de integrantes/profesor, fuera de inferencia técnica. |
 | E06 | «Autonomía… una o dos consultas por clase… vías alternativas» | Sin observación de clase | NO VERIFICABLE | No inferir autonomía de alumnos a partir de trabajo IA. |
 | E07 | «Todos los documentos… accesibles… al momento de la corrección» | INDICE, relativos, Markdown/PDF/PNG/JSON en PR | PARCIAL | Falta integrar branch predeterminada al resolver dependencias. |
-| E08 | «Nombre archivo… formato solicitado» | ZIP provisional con commit | PARCIAL | Confirmar apellidos, no suponerlos del footer. |
-| F01 | «Carpeta comprimida… [apellido1-apellido2-apellido3-nombreproducto].zip» | zip.md y extracción sin.git | PARCIAL | Nombre provisional y versión candidata; final pendiente. Ejemplo del PDF no obliga a tres integrantes contra límite2. |
+| E08 | «Nombre archivo… formato solicitado» | Apellidos confirmados: Martearena y Ruas | PARCIAL | Nombre previsto Martearena-Ruas-DREAMS.zip; usuario pidió no generar otro ZIP final. No se afirma entrega de un archivo con ese nombre. |
+| F01 | «Carpeta comprimida… [apellido1-apellido2-apellido3-nombreproducto].zip» | zip.md y extracción sin.git | PARCIAL | Usuario prioriza actualización de GitHub y no generar otro ZIP final; extracción anterior acreditada. Ejemplo del PDF no obliga a tres integrantes contra límite2. |
 | F02 | «solo… aula virtual (classroom) de INFORMÁTICA» | No se envía nada automáticamente | NO VERIFICABLE | Entrega final debe realizarla usuario; conservar comprobante. |
-| A01 | «puntaje… superar los 30… criterios fundamentales» | Esta matriz no asigna nota | NO VERIFICABLE | Sólo el profesor puede evaluar; SQLite/funcionamiento bloquean cierre. |
+| A01 | «puntaje… superar los 30… criterios fundamentales» | Esta matriz no asigna nota | NO VERIFICABLE | Sólo el profesor puede evaluar; El funcionamiento remoto pendiente bloquea el cierre; SQLite resuelto por excepción comunicada por usuario. |
 | A02 | «nota grupal y… individual… puede coincidir o no» | Defensa/participación individual pendiente | NO VERIFICABLE | No garantizar aprobación ni puntaje. |
 | A03 | «no… completar… período de diciembre» | Condición docente, sin resultado anticipado | NO VERIFICABLE | Registrar si se aplica; no anticipar decisión. |
 
 La escala completa 5/3/2/1 y sus descriptores quedan preservados literalmente en el PDF y el texto adjuntos, incluidos Diseño visual, Modularidad, Documentación, Uso de IA, Programa/Sitio, Codificación, Entregas, Trabajo en clase, Autonomía, Presentación y Nombre de archivo. Esta matriz audita requisitos; no transforma esas escalas en una calificación automática.
+
+Aclaración vigente del29/10/2026: el usuario confirmó aceptación docente de Supabase y los apellidos Martearena/Ruas. No se solicita otra prueba de aceptación para continuar ni se migra la base. La referencia al comprobante no adjunto describe la procedencia de la evidencia, no un nuevo bloqueo.

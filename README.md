@@ -4,7 +4,7 @@ Sitio HTML/CSS/JavaScript con API Node.js/Express y Supabase (Auth y PostgreSQL)
 
 **Oficial:** https://dreams-perfumes.pages.dev/ · [Entrega 2026](docs/entrega-2026/INDICE.md) · [Estado real y bloqueos](CURRENT_STATE.md).
 
-La oficial restaurada y el candidato de PR #56 son versiones distintas. El backend candidato no está conectado a producción porque su Secret fue rechazado; registro/login/Admin remotos no se declaran resueltos. PostgreSQL no satisface por sí solo el requisito SQLite de la rúbrica: ver [alternativas](docs/entrega-2026/sqlite.md).
+La oficial restaurada y el candidato de PR #56 son versiones distintas. El backend candidato no está conectado a producción porque su Secret fue rechazado; registro/login/Admin remotos no se declaran resueltos. El usuario confirmó que el profesor aceptó Supabase: se conserva PostgreSQL por esa excepción comunicada, sin presentarlo como SQLite. Ver [registro de la decisión](docs/entrega-2026/sqlite.md).
 
 ## Requisitos y verificación sin secretos
 
@@ -37,4 +37,4 @@ Auth usa el proveedor; hashing permanece en Supabase. Cookies HttpOnly/SameSite 
 
 Cloudflare Pages sirve la oficial y actúa como proxy hacia backend aprobado. El candidato privado `dreams-official-backend` requiere lectura Supabase y QA autenticada antes de promoción. Secret sólo en el backend. [Rollback y proxy](docs/pages_frontdoor.md), [manual](docs/entrega-2026/manual.md), [API](docs/entrega-2026/api.md) y [defensa](docs/entrega-2026/defensa.md).
 
-Railway y los módulos de previews son antecedentes conservados; no son destinos autorizados para esta entrega. Publicación y merge a branch predeterminada siguen pendientes de checks y bloqueos funcionales. Ver [ZIP exacto y extracción](docs/entrega-2026/zip.md); no afirmar que el ZIP predeterminado contiene una PR sin integrar.
+Railway y los módulos de previews son antecedentes conservados; no son destinos autorizados para esta entrega. Publicación y merge a branch predeterminada siguen pendientes de checks y bloqueos funcionales. Integrantes confirmados: Martearena y Ruas. La entrega se actualiza en GitHub; por pedido del usuario no se genera otro ZIP final. Ver [branch y extracción histórica](docs/entrega-2026/zip.md); la descarga predeterminada no contiene una PR sin integrar.

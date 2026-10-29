@@ -51,4 +51,8 @@ Intervención mínima ya solicitada: reemplazar únicamente `SUPABASE_SECRET_KEY
 
 ## Publicación y entrega
 
-No hubo deployment, conexión del candidato a la oficial, DNS ni otros sitios. Rollback canónico conservado. PR56 sigue draft sobre `codex/collection-multiselect`; no se integró `main` porque las dependencias funcionales siguen abiertas. Los archivos de entrega están en `codex/admin-cards-audit`, no aún en el ZIP predeterminado de GitHub. Ver [ZIP](zip.md) para commit y comprobación de extracción.
+No hubo deployment, conexión del candidato a la oficial, DNS ni otros sitios. Rollback canónico conservado. PR56 sigue draft sobre `codex/collection-multiselect`; no se integró `main` porque las dependencias funcionales siguen abiertas. SQLite deja de ser bloqueo: el usuario confirmó aceptación docente de Supabase. Los apellidos son Martearena y Ruas; no generar otro ZIP final, por instrucción vigente. Los archivos de entrega están en `codex/admin-cards-audit`, no aún en el ZIP predeterminado de GitHub. Ver [ZIP](zip.md) para commit y comprobación de extracción.
+
+## Aclaraciones y footer posteriores al checkpoint
+
+Tras confirmar el usuario aceptación docente de Supabase y apellidos Martearena/Ruas, se actualizaron documentos, wireframe y footer compartido. Pasaron22tests pertinentes de navegación/diseño y buildPageslocal. No cambió JavaScript ni el inventario; no se repitieron las matrices o la sonda remota y no se generó otro ZIP. El pipeline del commit nuevo acredita sus propios checks.

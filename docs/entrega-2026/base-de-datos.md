@@ -1,6 +1,6 @@
 # Base de datos real e histórico
 
-Motor real: **PostgreSQL en Supabase**, proyecto `nwsmbemwtexmrtpkgxrz`. Auth es un servicio del proveedor, no una tabla de contraseñas propia. La discrepancia SQLite está en [sqlite.md](sqlite.md). No se incluyen datos personales, hashes de contraseñas ni filas de clientes.
+Motor real: **PostgreSQL en Supabase**, proyecto `nwsmbemwtexmrtpkgxrz`. Auth es un servicio del proveedor, no una tabla de contraseñas propia. La excepción docente para usar Supabase, confirmada por el usuario, está en [sqlite.md](sqlite.md). No se incluyen datos personales, hashes de contraseñas ni filas de clientes.
 
 El 29/10/2026 se consultó sólo `information_schema.columns` mediante la integración autorizada. [Metadatos de columnas reales](esquema-columnas-real.json) contiene nombres, tipos y nulabilidad, sin filas de negocio. Las relaciones y permisos siguientes se contrastan con las migraciones versionadas; esta lectura no certifica por sí sola todos los grants remotos actuales. No hubo DDL ni escritura de datos.
 

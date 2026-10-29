@@ -6,7 +6,7 @@ Material de estudio; no demuestra que los integrantes ya comprendan o puedan def
 2. Seguir registro normal desde `public/js/cuenta.js` a `server/customer-registration.js`: validación, rate limiting, signUp, perfil customer y sesión real. Explicar por qué no se inventa una sesión si Supabase no devuelve una.
 3. En `server/app.js`, explicar contexto por aplicación e instaladores ordenados. Identificar guard de origen, restauración de sesión y guard de rol. Cambiar localmente una validación y demostrar su test.
 4. Editar un producto de prueba: distinguir preview de imagen, escritura, lectura posterior de todos los campos y mensaje de éxito. Simular fallo de red posterior y explicar por qué no repetir un alta automáticamente.
-5. Explicar `marca` real vs `brand` HTTP. Mostrar esquema, claves, relaciones y diferencia entre constraints y RLS. Admitir explícitamente que PostgreSQL no es SQLite y presentar la decisión docente pendiente.
+5. Explicar `marca` real vs `brand` HTTP. Mostrar esquema, claves, relaciones y diferencia entre constraints y RLS. Explicar que PostgreSQL no es SQLite y que el usuario confirmó la aceptación docente de Supabase; distinguir esa declaración de un documento docente adjunto.
 6. Dibujar el cambio de cuenta A→B del carrito. Explicar UUID, revisión, operation_id, merge de visitante e idempotencia. Mostrar por qué el precio se calcula en servidor.
 7. Demostrar autoría de opinión y rechazo de borrado ajeno por API. Explicar por qué ocultar un botón no protege una ruta.
 8. Checkout académico: tarjeta ficticia sólo navegador, ticket/receipt firmados y referencia estable. Distinguir simulación de un cobro y de una orden comercial. WhatsApp sólo abre un enlace con resumen.

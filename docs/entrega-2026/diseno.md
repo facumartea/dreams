@@ -9,3 +9,5 @@ La navegación incluye botones/enlaces visibles; HTML usa header/nav/main/sectio
 Las imágenes de producto se guardan como URL, con preview y fallback. [Fuentes históricas](../image_sources.md) son una lista de procedencia orientativa, no licencias verificadas por imagen. La licencia individual y derechos de fotos externas siguen **NO VERIFICABLES**; no se declara autorización comercial por ser un trabajo académico.
 
 Las capturas de la entrega provienen del candidato local y datos sintéticos. La matriz anterior conserva pruebas de móvil/escritorio de Admin; las verificaciones nuevas del carrusel y las regresiones se separan en `pruebas.md`. No se afirma accesibilidad completa WCAG ni performance avanzada sólo por pasar tests o tener diseño responsive.
+
+Integrantes confirmados por el usuario el29/10/2026: **Martearena y Ruas**. Se usa esa identificación en el footer compartido, sin deducir nombres de pila de variantes históricas. Esto identifica el grupo; no atribuye automáticamente a sus integrantes los cambios de código realizados por IA.
