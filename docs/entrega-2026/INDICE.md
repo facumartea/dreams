@@ -13,7 +13,7 @@ Estado de preparación: **BLOQUEADO** para entrega funcional completa. El Secret
 - [Inventario de funciones y alcance](funciones.md) y [detalle JSON](inventario-funciones.json).
 - [Resultados y bloqueos de pruebas](pruebas.md).
 - [Identidad visual](diseno.md).
-- [Preparación, extracción y comprobación del ZIP](zip.md).
+- [Preparación, extracción y comprobación del ZIP](zip.md) y [resultado versionado](verificacion-zip.json).
 - [README de instalación](../../README.md), [dependencias](../../package.json), [lockfile](../../pnpm-lock.yaml) y [variables de ejemplo](../../.env.example).
 
 Sólo está autorizada la publicación en https://dreams-perfumes.pages.dev/. No se entrega automáticamente en Classroom. Apellidos y nombre final del ZIP pendientes de confirmación; no usar los autores contradictorios del footer como identificación definitiva.

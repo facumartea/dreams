@@ -4,7 +4,7 @@ Branch de entrega: **`codex/admin-cards-audit`**, PR https://github.com/facumart
 
 Nombre provisional: `dreams-PR56-<commit>.zip`. Los apellidos exactos están preguntados y pendientes; no se usaron las variantes contradictorias del footer. No se envió nada a Classroom.
 
-El ZIP se crea con `git archive` del commit exacto, prefijo `dreams/`. Así incluye sólo archivos versionados: código, rúbrica2026, wireframe PNG y SVG, manual MD/PDF con capturas locales, BD y Mermaid, bitácora, matrices, tests, scripts, package y lockfile, `.env.example`. No incluye `.git`, node_modules, `.env` real ni credenciales de ejecución. El resultado de extracción se añadirá al checkpoint final; no declarar versión final sin comprobarlo.
+El ZIP se crea con `git archive` del commit exacto, prefijo `dreams/`. Así incluye sólo archivos versionados: código, rúbrica2026, wireframe PNG y SVG, manual MD/PDF con capturas locales, BD y Mermaid, bitácora, matrices, tests, scripts, package y lockfile, `.env.example`. No incluye `.git`, node_modules, `.env` real ni credenciales de ejecución. La extracción limpia del commit `633aec35ce0bb05ad24e29d3c954b6d59b3ff651` pasó instalación frozen, sintaxis92 archivosJS, inventario106/1873 sin exceder40,390 tests y cuatro builds. [Resultado versionado](verificacion-zip.json). Las credenciales reales se excluyeron del entorno de ejecución de esa comprobación. Un checkpoint posterior de documentación no altera ese código; el ZIP descargable final se identifica por SHA en el cierre y se comprueba también sin `.git`.
 
 Después de extraer en carpeta nueva, sin `.git` ni secretos:
 

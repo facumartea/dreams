@@ -1,0 +1,56 @@
+{
+  "source_commit": "633aec35ce0bb05ad24e29d3c954b6d59b3ff651",
+  "github_zip": "https://github.com/facumartea/dreams/archive/633aec35ce0bb05ad24e29d3c954b6d59b3ff651.zip",
+  "archive_entries": 304,
+  "local_archive_sha256": "db174454106fdb7c540b327c1d412059b1faaacd0d6d1433d711f347e32d5ef9",
+  "without_git": true,
+  "without_real_secrets": true,
+  "forbidden_paths": [],
+  "checks": [
+    {
+      "command": "corepack pnpm install --frozen-lockfile",
+      "exit_code": 0
+    },
+    {
+      "command": "corepack pnpm run check",
+      "exit_code": 0
+    },
+    {
+      "command": "corepack pnpm run check:functions",
+      "exit_code": 0
+    },
+    {
+      "command": "corepack pnpm test",
+      "exit_code": 0
+    },
+    {
+      "command": "corepack pnpm run build:pages",
+      "exit_code": 0
+    },
+    {
+      "command": "corepack pnpm run build:official",
+      "exit_code": 0
+    },
+    {
+      "command": "corepack pnpm run build:cloudflare",
+      "exit_code": 0
+    },
+    {
+      "command": "corepack pnpm run build:admin-review",
+      "exit_code": 0
+    }
+  ],
+  "tests": {
+    "pass": 390,
+    "fail": 0,
+    "skipped": 0
+  },
+  "functions": {
+    "files": 106,
+    "records": 1873,
+    "functions_and_callbacks": 1848,
+    "explicit_main_blocks": 25,
+    "over_40": 0
+  },
+  "status": "PASS (reproducción local; no acredita conexión o QA remota)"
+}

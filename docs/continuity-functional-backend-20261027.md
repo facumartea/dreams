@@ -1,3 +1,11 @@
+# Checkpoint de entrega verificado en CI y ZIP — 2026-10-29
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Código y entrega en633aec35ce0bb05ad24e29d3c954b6d59b3ff651 pusheados. CI211/40903937335SUCCESS: install,audit,sintaxis,inventario390tests ycuatrobuilds. ZIPextraído limpio sin.git ni secretos reales: installfrozenPASS,sintaxis92PASS,inventario106archivos/1848funciones+25bloques/0>40,390testsPASS0skip,cuatrobuildsPASS. Resultado versionado docs/entrega-2026/verificacion-zip.json; contenidos304entradas sin.env real/node_modules/.git. El checkpoint siguiente sólo acredita documentos/evidencia; archivo final se genera desde eseSHAexacto y se verifica de nuevo. PUSH:SÍ. DEPLOY:NO.
+
+No cambió bloqueo funcional: candidato62f6bd7c mismoSecretmalformado401, oficiala3184576conservada, no merge amain4655b0c porqueSecret/QAreal/SQLitependientes. Apellidos preguntados sinrespuesta; nombreZIPprovisional porSHA. ManualPDF4p y wireframePNG/SVGinspeccionados, capturaslocalesindicadas; ninguna sesiónAdminreal ni autoríaalumnos inventada. Documentación preparada no significa entregaCOMPLETA. Continuar trasreemplazosegurodelSecret sinotraautorización; obtenerlecturadirecta/SDK200 yQAantesdepromover. No otros sitios/Auth/Admin/stock/clientes/pagos/DNSmodificados.
+
 # Entrega2026 preparada; conexión y QA remota bloqueadas — 2026-10-29
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.

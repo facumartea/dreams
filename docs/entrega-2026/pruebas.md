@@ -11,8 +11,8 @@
 
 ## Regresión local de esta tanda
 
-- Suite completa: **387/387 PASS**, sin skips. Después se agregaron y pasaron **3/3** casos del carrusel. La suite conjunta y el ZIP exacto se acreditan en el resultado de extracción, no por sumar estos números como si fuera una sola ejecución.
-- Sintaxis: 91 archivos JS al ejecutar el check anterior al último test del carrusel. El ZIP vuelve a ejecutar el comando sobre el conjunto final.
+- Suite completa inicial387PASS y carrusel3PASS; ejecución conjunta final desde ZIP limpio: **390/390 PASS**,0fallos/0skips, sin.git ni secretos reales. Ver verificacion-zip.json. CI #211 /40903937335 del commit633aec3SUCCESS en instalación, audit, sintaxis, inventario, tests y cuatrobuilds.
+- Sintaxis final desde extracción: **92 archivos JS** PASS.
 - Inventario final: **106 archivos JS/MJS/CJS/HTML**, **1873 registros** de funciones/callbacks/métodos/bloques, **0 exceden40**. Alcance en funciones.md y detalle JSON; no se requiere `.git`.
 - Audit producción: sin vulnerabilidades conocidas.
 - Cuatro builds locales PASS: Pages, oficial privado, Worker y Admin read-only dry-run. Ninguno publica un sitio.
