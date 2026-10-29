@@ -1,6 +1,6 @@
 {
   "limit": 40,
-  "files": 109,
+  "files": 110,
   "records": [
     {
       "file": "pages/catalog.mjs",
@@ -12643,6 +12643,22 @@
       "lines": 1
     },
     {
+      "file": "test/official-scheduled.integration.test.mjs",
+      "name": "callback:test",
+      "kind": "ArrowFunctionExpression",
+      "start": 28,
+      "end": 48,
+      "lines": 21
+    },
+    {
+      "file": "test/official-scheduled.integration.test.mjs",
+      "name": "callback:after",
+      "kind": "ArrowFunctionExpression",
+      "start": 34,
+      "end": 34,
+      "lines": 1
+    },
+    {
       "file": "test/pages-proxy.test.mjs",
       "name": "callback:test",
       "kind": "ArrowFunctionExpression",
@@ -15071,8 +15087,8 @@
       "name": "call",
       "kind": "FunctionDeclaration",
       "start": 17,
-      "end": 33,
-      "lines": 17
+      "end": 38,
+      "lines": 22
     },
     {
       "file": "worker/official-qa.mjs",
@@ -15086,248 +15102,288 @@
       "file": "worker/official-qa.mjs",
       "name": "callback:every",
       "kind": "ArrowFunctionExpression",
-      "start": 25,
-      "end": 25,
+      "start": 30,
+      "end": 30,
       "lines": 1
     },
     {
       "file": "worker/official-qa.mjs",
       "name": "request",
       "kind": "FunctionDeclaration",
-      "start": 35,
-      "end": 39,
+      "start": 40,
+      "end": 44,
       "lines": 5
     },
     {
       "file": "worker/official-qa.mjs",
       "name": "register",
       "kind": "FunctionDeclaration",
-      "start": 41,
-      "end": 48,
+      "start": 46,
+      "end": 53,
       "lines": 8
     },
     {
       "file": "worker/official-qa.mjs",
       "name": "sessions",
       "kind": "FunctionDeclaration",
-      "start": 50,
-      "end": 65,
+      "start": 55,
+      "end": 70,
       "lines": 16
     },
     {
       "file": "worker/official-qa.mjs",
       "name": "cart_operation",
       "kind": "FunctionDeclaration",
-      "start": 67,
-      "end": 69,
+      "start": 72,
+      "end": 74,
       "lines": 3
     },
     {
       "file": "worker/official-qa.mjs",
       "name": "carts",
       "kind": "FunctionDeclaration",
-      "start": 71,
-      "end": 87,
+      "start": 76,
+      "end": 92,
       "lines": 17
     },
     {
       "file": "worker/official-qa.mjs",
       "name": "reviews",
       "kind": "FunctionDeclaration",
-      "start": 89,
-      "end": 102,
+      "start": 94,
+      "end": 107,
       "lines": 14
     },
     {
       "file": "worker/official-qa.mjs",
       "name": "callback:filter",
       "kind": "ArrowFunctionExpression",
-      "start": 94,
-      "end": 94,
+      "start": 99,
+      "end": 99,
       "lines": 1
     },
     {
       "file": "worker/official-qa.mjs",
       "name": "callback:some",
       "kind": "ArrowFunctionExpression",
-      "start": 100,
-      "end": 100,
+      "start": 105,
+      "end": 105,
       "lines": 1
     },
     {
       "file": "worker/official-qa.mjs",
       "name": "academic",
       "kind": "FunctionDeclaration",
-      "start": 104,
-      "end": 116,
+      "start": 109,
+      "end": 121,
       "lines": 13
     },
     {
       "file": "worker/official-qa.mjs",
       "name": "admin_actor",
       "kind": "FunctionDeclaration",
-      "start": 118,
-      "end": 128,
-      "lines": 11
+      "start": 123,
+      "end": 134,
+      "lines": 12
     },
     {
       "file": "worker/official-qa.mjs",
       "name": "product_payload",
       "kind": "FunctionDeclaration",
-      "start": 130,
-      "end": 134,
+      "start": 136,
+      "end": 140,
       "lines": 5
     },
     {
       "file": "worker/official-qa.mjs",
       "name": "admin_stock_and_featured",
       "kind": "FunctionDeclaration",
-      "start": 136,
-      "end": 145,
+      "start": 142,
+      "end": 151,
       "lines": 10
     },
     {
       "file": "worker/official-qa.mjs",
       "name": "callback:find",
       "kind": "ArrowFunctionExpression",
-      "start": 140,
-      "end": 140,
+      "start": 146,
+      "end": 146,
       "lines": 1
     },
     {
       "file": "worker/official-qa.mjs",
       "name": "callback:some",
       "kind": "ArrowFunctionExpression",
-      "start": 144,
-      "end": 144,
+      "start": 150,
+      "end": 150,
       "lines": 1
     },
     {
       "file": "worker/official-qa.mjs",
       "name": "admin_coupons",
       "kind": "FunctionDeclaration",
-      "start": 147,
-      "end": 156,
+      "start": 153,
+      "end": 162,
       "lines": 10
     },
     {
       "file": "worker/official-qa.mjs",
       "name": "callback:some",
       "kind": "ArrowFunctionExpression",
-      "start": 153,
-      "end": 153,
+      "start": 159,
+      "end": 159,
+      "lines": 1
+    },
+    {
+      "file": "worker/official-qa.mjs",
+      "name": "admin_review_moderation",
+      "kind": "FunctionDeclaration",
+      "start": 164,
+      "end": 176,
+      "lines": 13
+    },
+    {
+      "file": "worker/official-qa.mjs",
+      "name": "callback:find",
+      "kind": "ArrowFunctionExpression",
+      "start": 168,
+      "end": 168,
+      "lines": 1
+    },
+    {
+      "file": "worker/official-qa.mjs",
+      "name": "callback:some",
+      "kind": "ArrowFunctionExpression",
+      "start": 173,
+      "end": 173,
       "lines": 1
     },
     {
       "file": "worker/official-qa.mjs",
       "name": "admin_products",
       "kind": "FunctionDeclaration",
-      "start": 158,
-      "end": 183,
+      "start": 178,
+      "end": 203,
       "lines": 26
     },
     {
       "file": "worker/official-qa.mjs",
       "name": "callback:find",
       "kind": "ArrowFunctionExpression",
-      "start": 170,
-      "end": 170,
+      "start": 190,
+      "end": 190,
       "lines": 1
     },
     {
       "file": "worker/official-qa.mjs",
       "name": "callback:some",
       "kind": "ArrowFunctionExpression",
-      "start": 178,
-      "end": 178,
+      "start": 198,
+      "end": 198,
       "lines": 1
     },
     {
       "file": "worker/official-qa.mjs",
       "name": "cleanup",
       "kind": "FunctionDeclaration",
-      "start": 185,
-      "end": 201,
+      "start": 205,
+      "end": 221,
       "lines": 17
     },
     {
       "file": "worker/official-qa.mjs",
       "name": "customer_qa",
       "kind": "FunctionDeclaration",
-      "start": 203,
-      "end": 221,
-      "lines": 19
+      "start": 223,
+      "end": 244,
+      "lines": 22
     },
     {
       "file": "worker/official-qa.mjs",
       "name": "callback:find",
       "kind": "ArrowFunctionExpression",
-      "start": 210,
-      "end": 210,
+      "start": 230,
+      "end": 230,
       "lines": 1
     },
     {
       "file": "worker/official-qa.mjs",
       "name": "callback:catch",
       "kind": "ArrowFunctionExpression",
-      "start": 219,
-      "end": 219,
+      "start": 242,
+      "end": 242,
       "lines": 1
     },
     {
       "file": "worker/official-qa.mjs",
       "name": "business_snapshot",
       "kind": "FunctionDeclaration",
-      "start": 223,
-      "end": 228,
+      "start": 246,
+      "end": 251,
       "lines": 6
     },
     {
       "file": "worker/official-qa.mjs",
       "name": "confirm_business_unchanged",
       "kind": "FunctionDeclaration",
-      "start": 230,
-      "end": 234,
+      "start": 253,
+      "end": 257,
       "lines": 5
+    },
+    {
+      "file": "worker/official-qa.mjs",
+      "name": "qa_name",
+      "kind": "FunctionDeclaration",
+      "start": 259,
+      "end": 259,
+      "lines": 1
+    },
+    {
+      "file": "worker/official-qa.mjs",
+      "name": "execute_once",
+      "kind": "FunctionDeclaration",
+      "start": 261,
+      "end": 273,
+      "lines": 13
+    },
+    {
+      "file": "worker/official-qa.mjs",
+      "name": "callback:some",
+      "kind": "ArrowFunctionExpression",
+      "start": 272,
+      "end": 272,
+      "lines": 1
+    },
+    {
+      "file": "worker/official-qa.mjs",
+      "name": "callback:some",
+      "kind": "ArrowFunctionExpression",
+      "start": 272,
+      "end": 272,
+      "lines": 1
     },
     {
       "file": "worker/official-qa.mjs",
       "name": "run_official_qa",
       "kind": "FunctionDeclaration",
-      "start": 236,
-      "end": 258,
-      "lines": 23
-    },
-    {
-      "file": "worker/official-qa.mjs",
-      "name": "callback:some",
-      "kind": "ArrowFunctionExpression",
-      "start": 251,
-      "end": 251,
-      "lines": 1
-    },
-    {
-      "file": "worker/official-qa.mjs",
-      "name": "callback:some",
-      "kind": "ArrowFunctionExpression",
-      "start": 251,
-      "end": 251,
-      "lines": 1
+      "start": 275,
+      "end": 294,
+      "lines": 20
     },
     {
       "file": "worker/official-qa.mjs",
       "name": "callback:find",
       "kind": "ArrowFunctionExpression",
-      "start": 252,
-      "end": 252,
+      "start": 288,
+      "end": 288,
       "lines": 1
     },
     {
       "file": "worker/official-qa.mjs",
       "name": "callback:catch",
       "kind": "ArrowFunctionExpression",
-      "start": 253,
-      "end": 253,
+      "start": 289,
+      "end": 289,
       "lines": 1
     },
     {
@@ -15489,6 +15545,22 @@
       "start": 61,
       "end": 65,
       "lines": 5
+    },
+    {
+      "file": "worker/test-fixtures/synthetic-registration.mjs",
+      "name": "anónima",
+      "kind": "ArrowFunctionExpression",
+      "start": 6,
+      "end": 18,
+      "lines": 13
+    },
+    {
+      "file": "worker/test-fixtures/synthetic-registration.mjs",
+      "name": "fetch",
+      "kind": "FunctionExpression",
+      "start": 21,
+      "end": 30,
+      "lines": 10
     }
   ],
   "violations": []

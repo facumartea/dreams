@@ -1,3 +1,7 @@
+# Conexión Supabase acreditada tras nueva copia ·29/10/2026
+
+El Secret nuevo8fcb56e1 ya está verificado desde4d32d704: directo200,SDK200,clave íntegra,sinwhitespace/controles yproyecto esperado. [Evidencia](../evidence/functional-backend-20261027/new-secret-read-20261029.json). La primeraQA se detuvo en400porJSON no parseado de la invocaciónsintética sinContent-Length; reproducciónlocal exacta confirmó la causa yeltransporte delharness se corrigió sin cambiarAuth. No hubo peticionesAuth ni cuentasQA creadas enese intento. Stock/órdenes sin cambios. Lectura resuelta NO equivale a QAautenticada completada; reintento pendiente.
+
 # Actualización posterior al reemplazo del Secret
 
 El29/10/2026 el usuario reemplazó el Secret y se confirmó0968d006. La sonda36319df7 todavía encontró valor malformado con espacios internos/controlASCII: lectura directa sin respuesta HTTP válida ySDKstatus0. No confundirlo con el401 histórico de la versión anterior. Ver [evidencia nueva](../evidence/functional-backend-20261027/credential-replacement-20261029.md). Cron retirado; candidato aislado, ninguna cuentaQAremota creada. El usuario cargó luego el SecretAdmin en4e3d734f; presencia verificada, aún no usado. Retirarlo junto con el mecanismo temporal al terminar QA, según autorización expresa. El runner deQA está preparado localmente y NO acredita un resultado real hasta ejecutarse con lectura200.

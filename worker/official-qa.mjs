@@ -17,9 +17,14 @@ function actor_for(env, run, label) {
 async function call(context, actor, method, path, body) {
     const headers = new Headers({ Origin: origin, 'cf-connecting-ip': '192.0.2.56' });
     if (actor) headers.set('Cookie', [...actor.cookies].map(([key, value]) => `${key}=${value}`).join('; '));
-    if (body !== undefined) headers.set('Content-Type', 'application/json');
+    const payload = body === undefined ? undefined : JSON.stringify(body);
+    if (payload !== undefined) {
+        headers.set('Content-Type', 'application/json');
+        // La llamada interna evita la red: Express necesita esta longitud explícita.
+        headers.set('Content-Length', String(new TextEncoder().encode(payload).length));
+    }
     const response = await context.dispatch(new Request(origin + path, { method, headers,
-        ...(body === undefined ? {} : { body: JSON.stringify(body) }), signal: AbortSignal.timeout(20000) }));
+        ...(payload === undefined ? {} : { body: payload }), signal: AbortSignal.timeout(20000) }));
     const set = response.headers.getSetCookie();
     if (actor && set.length) {
         check(context, `${actor.label}-secure-cookies`, set.every(c => /; HttpOnly/i.test(c) && /; Secure/i.test(c) && /; SameSite=Lax/i.test(c)));
@@ -40,7 +45,7 @@ async function request(context, actor, id, method, path, body, status = 200) {
 
 async function register(context, actor) {
     const data = await request(context, actor, `${actor.label}-registration`, 'POST', '/api/auth/register',
-        { name: `QA DREAMS ${actor.label}`, email: actor.email, password: actor.password });
+        { name: qa_name(context.run, actor.label), email: actor.email, password: actor.password });
     check(context, `${actor.label}-registration-session`, data.authenticated === true && data.user?.is_admin === false && Boolean(data.user?.id));
     actor.id = data.user.id;
     const profile = await context.db.from('profiles').select('role').eq('id', actor.id).single();
@@ -120,6 +125,7 @@ async function admin_actor(context, env) {
     const found = await context.db.auth.admin.getUserById('a88d8d4e-ada3-4bfa-a6f5-db39d2dc9c19');
     check(context, 'existing-admin-identity', !found.error && Boolean(found.data?.user?.email));
     const actor = { label: 'admin', cookies: new Map() };
+    context.admin = actor;
     const data = await request(context, actor, 'existing-admin-login', 'POST', '/api/auth/login',
         { email: found.data.user.email, password: env.DREAMS_QA_ADMIN_PASSWORD });
     check(context, 'existing-admin-role', data.user?.is_admin === true && data.user.id === found.data.user.id);
@@ -153,6 +159,20 @@ async function admin_coupons(context, actor) {
     check(context, 'admin-coupon-persisted', rows.some(row => row.id === saved.id && Number(row.discount_percent) === 7 && row.active === false));
     await request(context, actor, 'admin-coupon-delete-qa', 'DELETE', `/api/admin/coupons/${saved.id}`);
     context.coupon_id = null;
+}
+
+async function admin_review_moderation(context, admin, owner) {
+    const comment = `QA moderación ${context.run}`;
+    await request(context, owner, 'moderation-qa-review-create', 'POST', '/api/reviews', { rating: 4, comment, operation_id: randomUUID() }, 201);
+    const rows = await request(context, admin, 'moderation-qa-review-read', 'GET', '/api/admin/reviews');
+    const own = rows.find(row => row.comment === comment && row.user_id === owner.id);
+    check(context, 'moderation-qa-identity', Boolean(own));
+    context.review_id = own.id;
+    await request(context, admin, 'admin-review-edit', 'PUT', `/api/admin/reviews/${own.id}`, { rating: 3, comment: `${comment} editada` });
+    const changed = await request(context, admin, 'admin-review-reload', 'GET', '/api/admin/reviews');
+    check(context, 'admin-review-persisted', changed.some(row => row.id === own.id && row.rating === 3 && row.comment === `${comment} editada`));
+    await request(context, admin, 'admin-review-delete', 'DELETE', `/api/admin/reviews/${own.id}`);
+    context.review_id = null;
 }
 
 async function admin_products(context, actor) {
@@ -213,7 +233,10 @@ async function customer_qa(context, env) {
         await reviews(context, a, b);
         await academic(context, a, product);
         const admin = await admin_actor(context, env);
-        if (admin) await admin_products(context, admin);
+        if (admin) {
+            await admin_products(context, admin);
+            await admin_review_moderation(context, admin, a);
+        }
         else context.checks.push({ id: 'admin-persistence', result: 'BLOCKED', reason: 'existing_admin_session_required' });
     } finally {
         await cleanup(context, a, b).catch(() => context.checks.push({ id: 'qa-cleanup', result: 'FAIL' }));
@@ -233,6 +256,22 @@ async function confirm_business_unchanged(context) {
     check(context, 'commercial-orders-unchanged', context.before.orders === after.orders);
 }
 
+function qa_name(run, label) { return `QA DREAMS ${run} ${label}`; }
+
+async function execute_once(context, env, report) {
+    // Evitar repetir altas si otro isolate ejecuta el mismo Cron.
+    const previous = await context.db.from('profiles').select('id').eq('name', qa_name(context.run, 'a')).limit(1);
+    check(context, 'qa-run-marker-readable', !previous.error);
+    if (previous.data?.length) {
+        context.checks.push({ id: 'qa-run-already-provisioned', result: 'SKIP' });
+        report.status = 'SKIPPED_DUPLICATE';
+        return;
+    }
+    context.before = await business_snapshot(context);
+    await customer_qa(context, env);
+    report.status = context.checks.some(c => c.result === 'FAIL') ? 'FAIL' : context.checks.some(c => c.result === 'BLOCKED') ? 'PARTIAL' : 'PASS';
+}
+
 export async function run_official_qa(env, dispatch, services = {}) {
     const run = String(env.QA_RUN_ID || ''), expires = Number(env.QA_EXPIRES_AT);
     if (!/^pr56-[a-z0-9-]{1,32}$/.test(run) || !Number.isFinite(expires) || Date.now() >= expires || expires - Date.now() > 1800000 || attempted_run === run) return null;
@@ -245,10 +284,7 @@ export async function run_official_qa(env, dispatch, services = {}) {
         report.candidate_read = { raw_status: read.raw_apikey_only?.status, sdk_status: read.candidate_sdk?.status, project_key_pair: read.project_key_pair, project_url_matches: read.project_url_matches, key_format: read.shape, apikey_unchanged: read.candidate_sdk?.apikey_unchanged, checked_at: new Date().toISOString() };
         check(context, 'candidate-direct-sdk-read', read.raw_apikey_only?.status === 200 && read.candidate_sdk?.succeeded === true && read.project_key_pair === 'verified_by_read');
         check(context, 'server-key-type', read.shape?.kind === 'modern_secret' || read.shape?.jwt_project === 'expected_service_role_claims');
-        context.before = await business_snapshot(context);
-        await customer_qa(context, env);
-
-        report.status = context.checks.some(c => c.result === 'FAIL') ? 'FAIL' : context.checks.some(c => c.result === 'BLOCKED') ? 'PARTIAL' : 'PASS';
+        await execute_once(context, env, report);
     } catch (error) { report.status = 'FAIL'; report.failed_check = context.checks.find(c => c.result === 'FAIL')?.id || 'runtime_or_provider_failure'; }
     if (context.before) await confirm_business_unchanged(context).catch(() => { report.status = 'FAIL'; });
     report.completed_at = new Date().toISOString();

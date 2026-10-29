@@ -1,3 +1,13 @@
+# Nueva clave verificada200; corregir transporte de QA — 2026-10-29
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+ConexiónRESUELTA para el Secret del usuario8fcb56e1. WorkerQA4d32d704-61bf-467a-aeee-bb78045ecf1a/deployment55c0ba9b heredó AMBOS Secrets explícitamente de8fcb56e1 delMISMO Worker. Reporte16:49:57UTC acredita sourcecommit99ef199, secret_source_version8fcb56e1 y metadatareal4d32d704: directo200/SDK200,apikey_unchanged=true,project_key_pair=verified_by_read,URLesperada ysinwhitespace/controles/comillas. NO pedir copiarclaveotra vez. Evidencia docs/evidence/functional-backend-20261027/new-secret-read-20261029.json.
+
+PrimerQAreal se detuvo enregistro400 ANTESdeAuth: gatewaySupabase mostró sólo lecturas productos/orders, ninguna peticiónAuth. CausaREPRODUCIDA enworkerdlocal: Request sintética interna sinContent-Length no es parseada porExpress; alañadirlongitudJSONUTF8exacta, mismo flujo leeJSON, llamaAuthfixture ydevuelve200/sesión. Se corrige SÓLOtransportedelharness; noAuthconfig/validaciones/roles. Cron retirado al recuperar reporte; snapshotsstock/órdenesunchangedPASS, nocuentascreadasenesaintento. No confundir este400conotrofalloSecret.
+
+Runnercorregido añade Content-Length, marcador de perfilQAporrun paraevitarrepetiraltasdesdeotroisolate, limpieza de sesiónAdmininclusosi fallaantesdecrearproducto ymoderaciónreal sobreopiniónQA. Reintento sóloprivado conSecret8fcbverificado yAdminya disponible; nootrospromptscredenciales. TrasQAcompleta,publicaciónoficialautorizada,smokeycierre/retiradaSecretAdmin/mecanismotemporal. Oficial siguea3184576hastaQA. SinZIP,otros sitios,DNS,pagos,seeds/roles/passwordAdmincambiados. CI215/99ef199397PASS previo; suite/build/CI deesta corrección seacreditanalterminar.
+
 # Segunda copia del Secret recibida; verificar nueva versión — 2026-10-29
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
