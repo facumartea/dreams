@@ -238,11 +238,11 @@ export async function run_official_qa(env, dispatch, services = {}) {
     if (!/^pr56-[a-z0-9-]{1,32}$/.test(run) || !Number.isFinite(expires) || Date.now() >= expires || expires - Date.now() > 1800000 || attempted_run === run) return null;
     attempted_run = run;
     const context = { run, dispatch, checks: [] };
-    const report = { type: 'dreams-private-authenticated-qa-v1', run, source_commit: env.QA_SOURCE_COMMIT, backend_version: env.CF_VERSION_METADATA?.id, started_at: new Date().toISOString(), checks: context.checks };
+    const report = { type: 'dreams-private-authenticated-qa-v1', run, source_commit: env.QA_SOURCE_COMMIT, secret_source_version: env.QA_SECRET_SOURCE_VERSION, backend_version: env.CF_VERSION_METADATA?.id, started_at: new Date().toISOString(), checks: context.checks };
     try {
         context.db = (services.create_database || create_official_database)(env);
         const read = await (services.diagnose || diagnose_supabase)(env);
-        report.candidate_read = { raw_status: read.raw_apikey_only?.status, sdk_status: read.candidate_sdk?.status, project_key_pair: read.project_key_pair, checked_at: new Date().toISOString() };
+        report.candidate_read = { raw_status: read.raw_apikey_only?.status, sdk_status: read.candidate_sdk?.status, project_key_pair: read.project_key_pair, project_url_matches: read.project_url_matches, key_format: read.shape, apikey_unchanged: read.candidate_sdk?.apikey_unchanged, checked_at: new Date().toISOString() };
         check(context, 'candidate-direct-sdk-read', read.raw_apikey_only?.status === 200 && read.candidate_sdk?.succeeded === true && read.project_key_pair === 'verified_by_read');
         check(context, 'server-key-type', read.shape?.kind === 'modern_secret' || read.shape?.jwt_project === 'expected_service_role_claims');
         context.before = await business_snapshot(context);

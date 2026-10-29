@@ -1,3 +1,13 @@
+# Segunda copia del Secret recibida; verificar nueva versión — 2026-10-29
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Usuario volvió a copiar mediante Copy de Secret keys/default y desplegó sólo el Worker privado. Confirmado nuevo SUPABASE_SECRET_KEY en8fcb56e1-b2a5-4cd7-832a-e084b5aab0e1, deployment7cc9abf0-3ebd-4d1a-b991-22d035c41849,100%,16:36:22UTC. Historial y bindingProduction/default/proyecto esperados comprobados sin leer valores. SecretAdmin siguepresente. NO atribuirle el fallo anterior de36319df7: necesita nueva prueba de este binding. No pedir otra copia antes de acreditar identidad y prueba nueva.
+
+Se prepara activación deQAinterna acotada con ambosSecrets heredados EXPLÍCITAMENTE de8fcb56e1 delMISMO Worker; metadata deversion y referencia deSecretorigen incluidas enreporteescalar. Primero lectura directa ySDK ytipo servidor; sólo si200, sigue registroA/Bnormal, sesiones, Adminlegítimo yrecursosQA, carrito/opiniones/académico. NoendpointQA público ni impresión de claves/headers/contraseña. Alterminar cerrar sesiones, retirar mecanismo y SecretAdmin según autorización. Oficial aúnrestaurada hastaQA necesaria. No cambiosAuth/roles/contraseñaAdmin, nootros sitios/ZIP/DNS/pagos/seeds.
+
+Código397tests/CI214 previo conservado; nueva modificación sólo añade formato/URL/identidad de binding al reporte para evitar confusión de versiones.12tests focalizadosPASS, inventarioPASS ybuildoficialPASS. CI delnuevo checkpoint acredita esa modificación; no repetir matrices previas. Resultado remoto de8fcb56e1 todavíaPENDIENTE, no afirmar conexión.
+
 # Secret Admin cargado; Supabase sigue bloqueando la QA — 2026-10-29
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
