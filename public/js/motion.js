@@ -1,8 +1,6 @@
-(() => {
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
-
-    function setup_reveals(root = document) {
+// Factories separadas conservan el ámbito privado de la inicialización.
+function motion_reveals(reduced) {
+    return function setup_reveals(root = document) {
         const elements = root.querySelectorAll('.section-heading,.about-preview>*,.page-intro>*,.checkout-layout>*,.review-compose>*,.product-card,.review-card,.detail-layout>*,.scent-trail-header,.scent-step');
         if (reduced.matches || !('IntersectionObserver' in window)) {
             elements.forEach(element => element.classList.add('is-revealed'));
@@ -23,9 +21,11 @@
             element.style.setProperty('--reveal-delay', `${Math.min(index % 4, 3) * 45}ms`);
             observer.observe(element);
         });
-    }
+    };
+}
 
-    function setup_scroll_depth() {
+function motion_scroll(reduced, clamp) {
+    return function setup_scroll_depth() {
         if (reduced.matches) return;
         const editorial = [...document.querySelectorAll('.detail-layout')];
         if (!editorial.length) return;
@@ -47,7 +47,15 @@
         render();
         window.addEventListener('scroll', queue, { passive: true });
         window.addEventListener('resize', queue, { passive: true });
-    }
+    };
+}
+
+(() => {
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
+
+    const setup_reveals = motion_reveals(reduced);
+    const setup_scroll_depth = motion_scroll(reduced, clamp);
 
     function setup_dynamic_content() {
         if (!('MutationObserver' in window)) return;

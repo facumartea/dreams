@@ -10,15 +10,8 @@ import adminScript from '../public/js/admin.js';
 
 let server;
 
-function createWorkerApp(env) {
-    if (env.NODE_ENV !== 'development') {
-        const base = appModule.normalize_origin(env.APP_BASE_URL);
-        const origins = appModule.allowed_origin_set(env.APP_ORIGINS);
-        const entries = String(env.APP_ORIGINS || '').split(',').map(value => value.trim()).filter(Boolean);
-        if (!base?.startsWith('https://') || !origins.has(base) || !entries.length || entries.some(value => !appModule.normalize_origin(value)?.startsWith('https://'))) throw new Error('Missing exact HTTPS application origins');
-    }
-    if (!env.SUPABASE_URL || !env.SUPABASE_SECRET_KEY) throw new Error('Missing server Supabase configuration');
-    const createDatabase = (accessToken, authOptions = {}) => createClient(env.SUPABASE_URL, env.SUPABASE_SECRET_KEY, {
+function databaseFactory(env) {
+    return (accessToken, authOptions = {}) => createClient(env.SUPABASE_URL, env.SUPABASE_SECRET_KEY, {
         auth: { autoRefreshToken: false, persistSession: false, detectSessionInUrl: false, ...authOptions },
         global: {
             fetch: async (...args) => {
@@ -29,10 +22,28 @@ function createWorkerApp(env) {
             ...(accessToken ? { headers: { Authorization: `Bearer ${accessToken}` } } : {})
         }
     });
-    const paymentProvider = env.CHECKOUT_PROVIDER === 'demo'
-        ? new demoPayments.DemoPaymentProvider()
-        : new payments.MercadoPagoProvider({ access_token: env.MERCADO_PAGO_ACCESS_TOKEN, webhook_secret: env.MERCADO_PAGO_WEBHOOK_SECRET, mode: env.MERCADO_PAGO_MODE });
-    return appModule.create_app({
+}
+
+function staticMiddleware(env) {
+    return async (request, response, next) => {
+            if (!['GET', 'HEAD'].includes(request.method) || request.path.startsWith('/api/') || ['/admin', '/admin.html', '/favoritos', '/favoritos.html'].includes(request.path)) return next();
+            try {
+                const assetUrl = new URL(request.originalUrl, 'https://assets.internal');
+                if (assetUrl.pathname === '/') assetUrl.pathname = '/index.html';
+                const asset = await env.ASSETS.fetch(new Request(assetUrl, { method: request.method }));
+                if (asset.status === 404) return next();
+                response.status(asset.status);
+                for (const [name, value] of asset.headers) {
+                    if (name === 'cache-control' && response.getHeader('Cache-Control') === 'no-store') continue;
+                    if (!['content-security-policy', 'set-cookie'].includes(name)) response.setHeader(name, value);
+                }
+                response.send(request.method === 'HEAD' ? undefined : Buffer.from(await asset.arrayBuffer()));
+            } catch (error) { next(error); }
+        };
+}
+
+function workerOptions(env, createDatabase, paymentProvider) {
+    return {
         database: createDatabase(), create_auth_client: createDatabase,
         preview_read_only: env.PREVIEW_READ_ONLY === 'true',
         presentation_checkout: env.PRESENTATION_CHECKOUT_ENABLED === 'true',
@@ -57,22 +68,23 @@ function createWorkerApp(env) {
         payment_provider: paymentProvider,
         public_directory: '/virtual/public', views_directory: '/virtual/views',
         admin_html: adminHtml, not_found_html: notFoundHtml, admin_script: adminScript,
-        static_middleware: async (request, response, next) => {
-            if (!['GET', 'HEAD'].includes(request.method) || request.path.startsWith('/api/') || ['/admin', '/admin.html', '/favoritos', '/favoritos.html'].includes(request.path)) return next();
-            try {
-                const assetUrl = new URL(request.originalUrl, 'https://assets.internal');
-                if (assetUrl.pathname === '/') assetUrl.pathname = '/index.html';
-                const asset = await env.ASSETS.fetch(new Request(assetUrl, { method: request.method }));
-                if (asset.status === 404) return next();
-                response.status(asset.status);
-                for (const [name, value] of asset.headers) {
-                    if (name === 'cache-control' && response.getHeader('Cache-Control') === 'no-store') continue;
-                    if (!['content-security-policy', 'set-cookie'].includes(name)) response.setHeader(name, value);
-                }
-                response.send(request.method === 'HEAD' ? undefined : Buffer.from(await asset.arrayBuffer()));
-            } catch (error) { next(error); }
-        }
-    });
+        static_middleware: staticMiddleware(env)
+    };
+}
+
+function createWorkerApp(env) {
+    if (env.NODE_ENV !== 'development') {
+        const base = appModule.normalize_origin(env.APP_BASE_URL);
+        const origins = appModule.allowed_origin_set(env.APP_ORIGINS);
+        const entries = String(env.APP_ORIGINS || '').split(',').map(value => value.trim()).filter(Boolean);
+        if (!base?.startsWith('https://') || !origins.has(base) || !entries.length || entries.some(value => !appModule.normalize_origin(value)?.startsWith('https://'))) throw new Error('Missing exact HTTPS application origins');
+    }
+    if (!env.SUPABASE_URL || !env.SUPABASE_SECRET_KEY) throw new Error('Missing server Supabase configuration');
+    const createDatabase = databaseFactory(env);
+    const paymentProvider = env.CHECKOUT_PROVIDER === 'demo'
+        ? new demoPayments.DemoPaymentProvider()
+        : new payments.MercadoPagoProvider({ access_token: env.MERCADO_PAGO_ACCESS_TOKEN, webhook_secret: env.MERCADO_PAGO_WEBHOOK_SECRET, mode: env.MERCADO_PAGO_MODE });
+    return appModule.create_app(workerOptions(env, createDatabase, paymentProvider));
 }
 
 export default {

@@ -1,0 +1,642 @@
+[
+  {
+    "id": "A01",
+    "objective": "isologo original limpio visible y sin deformación",
+    "environment": "Chromium desktop 1440x1000; Express/Auth/BD fixtures locales",
+    "expected": "isologo original limpio visible y sin deformación",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "A02",
+    "objective": "frase técnica eliminada",
+    "environment": "Chromium desktop 1440x1000; Express/Auth/BD fixtures locales",
+    "expected": "frase técnica eliminada",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "A03",
+    "objective": "siete tarjetas semánticas",
+    "environment": "Chromium desktop 1440x1000; Express/Auth/BD fixtures locales",
+    "expected": "siete tarjetas semánticas",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "A04",
+    "objective": "sin navegación inferior duplicada",
+    "environment": "Chromium desktop 1440x1000; Express/Auth/BD fixtures locales",
+    "expected": "sin navegación inferior duplicada",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "A05",
+    "objective": "tarjetas controlan módulos existentes",
+    "environment": "Chromium desktop 1440x1000; Express/Auth/BD fixtures locales",
+    "expected": "tarjetas controlan módulos existentes",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "A06",
+    "objective": "tarjeta abre Productos",
+    "environment": "Chromium desktop 1440x1000; Express/Auth/BD fixtures locales",
+    "expected": "tarjeta abre Productos",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "A07",
+    "objective": "tarjeta abre Usuarios",
+    "environment": "Chromium desktop 1440x1000; Express/Auth/BD fixtures locales",
+    "expected": "tarjeta abre Usuarios",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "A08",
+    "objective": "tarjeta abre Consultas",
+    "environment": "Chromium desktop 1440x1000; Express/Auth/BD fixtures locales",
+    "expected": "tarjeta abre Consultas",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "A09",
+    "objective": "tarjeta abre Opiniones",
+    "environment": "Chromium desktop 1440x1000; Express/Auth/BD fixtures locales",
+    "expected": "tarjeta abre Opiniones",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "A10",
+    "objective": "tarjeta abre Pedidos",
+    "environment": "Chromium desktop 1440x1000; Express/Auth/BD fixtures locales",
+    "expected": "tarjeta abre Pedidos",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "A11",
+    "objective": "tarjeta abre Cupones",
+    "environment": "Chromium desktop 1440x1000; Express/Auth/BD fixtures locales",
+    "expected": "tarjeta abre Cupones",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "A12",
+    "objective": "tarjeta baja abre listado filtrado",
+    "environment": "Chromium desktop 1440x1000; Express/Auth/BD fixtures locales",
+    "expected": "tarjeta baja abre listado filtrado",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "A13",
+    "objective": "una sola tarjeta activa y aria-pressed",
+    "environment": "Chromium desktop 1440x1000; Express/Auth/BD fixtures locales",
+    "expected": "una sola tarjeta activa y aria-pressed",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "A14",
+    "objective": "Enter activa tarjeta",
+    "environment": "Chromium desktop 1440x1000; Express/Auth/BD fixtures locales",
+    "expected": "Enter activa tarjeta",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "A15",
+    "objective": "Espacio activa tarjeta",
+    "environment": "Chromium desktop 1440x1000; Express/Auth/BD fixtures locales",
+    "expected": "Espacio activa tarjeta",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "A16",
+    "objective": "foco vuelve al contenido al abrir módulo",
+    "environment": "Chromium desktop 1440x1000; Express/Auth/BD fixtures locales",
+    "expected": "foco vuelve al contenido al abrir módulo",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "A17",
+    "objective": "conteos productos/baja coherentes",
+    "environment": "Chromium desktop 1440x1000; Express/Auth/BD fixtures locales",
+    "expected": "conteos productos/baja coherentes",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "A18",
+    "objective": "conteo de Cupones real",
+    "environment": "Chromium desktop 1440x1000; Express/Auth/BD fixtures locales",
+    "expected": "conteo de Cupones real",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "A19",
+    "objective": "foco de teclado visible",
+    "environment": "Chromium desktop 1440x1000; Express/Auth/BD fixtures locales",
+    "expected": "foco de teclado visible",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "A20",
+    "objective": "fallo de módulo muestra reintento y recupera",
+    "environment": "Chromium desktop 1440x1000; Express/Auth/BD fixtures locales",
+    "expected": "fallo de módulo muestra reintento y recupera",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "A21",
+    "objective": "respuesta atrasada no cambia módulo/foco actual",
+    "environment": "Chromium desktop 1440x1000; Express/Auth/BD fixtures locales",
+    "expected": "respuesta atrasada no cambia módulo/foco actual",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "A22",
+    "objective": "áreas táctiles y sin scroll horizontal",
+    "environment": "Chromium desktop 1440x1000; Express/Auth/BD fixtures locales",
+    "expected": "áreas táctiles y sin scroll horizontal",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "B22",
+    "objective": "escribir no aplica antes de Buscar/Enter",
+    "environment": "Chromium desktop 1440x1000; Express/Auth/BD fixtures locales",
+    "expected": "escribir no aplica antes de Buscar/Enter",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "B23",
+    "objective": "Enter aplica nombre sin tildes",
+    "environment": "Chromium desktop 1440x1000; Express/Auth/BD fixtures locales",
+    "expected": "Enter aplica nombre sin tildes",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "B24",
+    "objective": "Buscar aplica marca y Limpiar restaura con foco",
+    "environment": "Chromium desktop 1440x1000; Express/Auth/BD fixtures locales",
+    "expected": "Buscar aplica marca y Limpiar restaura con foco",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "B25",
+    "objective": "sin resultados muestra mensaje y limpieza recupera",
+    "environment": "Chromium desktop 1440x1000; Express/Auth/BD fixtures locales",
+    "expected": "sin resultados muestra mensaje y limpieza recupera",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "C22",
+    "objective": "sin stock y stock bajo diferenciados",
+    "environment": "Chromium desktop 1440x1000; Express/Auth/BD fixtures locales",
+    "expected": "sin stock y stock bajo diferenciados",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "C23",
+    "objective": "combinar baja con búsqueda y conservar al editar",
+    "environment": "Chromium desktop 1440x1000; Express/Auth/BD fixtures locales",
+    "expected": "combinar baja con búsqueda y conservar al editar",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "C24",
+    "objective": "volver a todos conserva búsqueda y permite limpiar",
+    "environment": "Chromium desktop 1440x1000; Express/Auth/BD fixtures locales",
+    "expected": "volver a todos conserva búsqueda y permite limpiar",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "D23",
+    "objective": "cambiar producto descarta sólo con confirmación",
+    "environment": "Chromium desktop 1440x1000; Express/Auth/BD fixtures locales",
+    "expected": "cambiar producto descarta sólo con confirmación",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "E23",
+    "objective": "vista previa local carga imagen real",
+    "environment": "Chromium desktop 1440x1000; Express/Auth/BD fixtures locales",
+    "expected": "vista previa local carga imagen real",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "E24",
+    "objective": "URL HTTP bloquea guardar con mensaje claro",
+    "environment": "Chromium desktop 1440x1000; Express/Auth/BD fixtures locales",
+    "expected": "URL HTTP bloquea guardar con mensaje claro",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "E25",
+    "objective": "HTTPS sin extensión valida sin HEAD",
+    "environment": "Chromium desktop 1440x1000; Express/Auth/BD fixtures locales",
+    "expected": "HTTPS sin extensión valida sin HEAD",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "E26",
+    "objective": "página HTML no se guarda como imagen",
+    "environment": "Chromium desktop 1440x1000; Express/Auth/BD fixtures locales",
+    "expected": "página HTML no se guarda como imagen",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "E27",
+    "objective": "404 permite reintentar sin romper formulario",
+    "environment": "Chromium desktop 1440x1000; Express/Auth/BD fixtures locales",
+    "expected": "404 permite reintentar sin romper formulario",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "E28",
+    "objective": "URL vacía bloquea guardar",
+    "environment": "Chromium desktop 1440x1000; Express/Auth/BD fixtures locales",
+    "expected": "URL vacía bloquea guardar",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "D24",
+    "objective": "guardar precio conserva imagen y persiste al recargar",
+    "environment": "Chromium desktop 1440x1000; Express/Auth/BD fixtures locales",
+    "expected": "guardar precio conserva imagen y persiste al recargar",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "D25",
+    "objective": "doble envío ignorado y contexto bloqueado",
+    "environment": "Chromium desktop 1440x1000; Express/Auth/BD fixtures locales",
+    "expected": "doble envío ignorado y contexto bloqueado",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "D26",
+    "objective": "fallo de red conserva datos y permite reintentar",
+    "environment": "Chromium desktop 1440x1000; Express/Auth/BD fixtures locales",
+    "expected": "fallo de red conserva datos y permite reintentar",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "A23",
+    "objective": "sin errores JavaScript ni overflow tras editar",
+    "environment": "Chromium desktop 1440x1000; Express/Auth/BD fixtures locales",
+    "expected": "sin errores JavaScript ni overflow tras editar",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "A01",
+    "objective": "isologo original limpio visible y sin deformación",
+    "environment": "Chromium mobile 390x844; Express/Auth/BD fixtures locales",
+    "expected": "isologo original limpio visible y sin deformación",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "A02",
+    "objective": "frase técnica eliminada",
+    "environment": "Chromium mobile 390x844; Express/Auth/BD fixtures locales",
+    "expected": "frase técnica eliminada",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "A03",
+    "objective": "siete tarjetas semánticas",
+    "environment": "Chromium mobile 390x844; Express/Auth/BD fixtures locales",
+    "expected": "siete tarjetas semánticas",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "A04",
+    "objective": "sin navegación inferior duplicada",
+    "environment": "Chromium mobile 390x844; Express/Auth/BD fixtures locales",
+    "expected": "sin navegación inferior duplicada",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "A05",
+    "objective": "tarjetas controlan módulos existentes",
+    "environment": "Chromium mobile 390x844; Express/Auth/BD fixtures locales",
+    "expected": "tarjetas controlan módulos existentes",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "A06",
+    "objective": "tarjeta abre Productos",
+    "environment": "Chromium mobile 390x844; Express/Auth/BD fixtures locales",
+    "expected": "tarjeta abre Productos",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "A07",
+    "objective": "tarjeta abre Usuarios",
+    "environment": "Chromium mobile 390x844; Express/Auth/BD fixtures locales",
+    "expected": "tarjeta abre Usuarios",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "A08",
+    "objective": "tarjeta abre Consultas",
+    "environment": "Chromium mobile 390x844; Express/Auth/BD fixtures locales",
+    "expected": "tarjeta abre Consultas",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "A09",
+    "objective": "tarjeta abre Opiniones",
+    "environment": "Chromium mobile 390x844; Express/Auth/BD fixtures locales",
+    "expected": "tarjeta abre Opiniones",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "A10",
+    "objective": "tarjeta abre Pedidos",
+    "environment": "Chromium mobile 390x844; Express/Auth/BD fixtures locales",
+    "expected": "tarjeta abre Pedidos",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "A11",
+    "objective": "tarjeta abre Cupones",
+    "environment": "Chromium mobile 390x844; Express/Auth/BD fixtures locales",
+    "expected": "tarjeta abre Cupones",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "A12",
+    "objective": "tarjeta baja abre listado filtrado",
+    "environment": "Chromium mobile 390x844; Express/Auth/BD fixtures locales",
+    "expected": "tarjeta baja abre listado filtrado",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "A13",
+    "objective": "una sola tarjeta activa y aria-pressed",
+    "environment": "Chromium mobile 390x844; Express/Auth/BD fixtures locales",
+    "expected": "una sola tarjeta activa y aria-pressed",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "A14",
+    "objective": "Enter activa tarjeta",
+    "environment": "Chromium mobile 390x844; Express/Auth/BD fixtures locales",
+    "expected": "Enter activa tarjeta",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "A15",
+    "objective": "Espacio activa tarjeta",
+    "environment": "Chromium mobile 390x844; Express/Auth/BD fixtures locales",
+    "expected": "Espacio activa tarjeta",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "A16",
+    "objective": "foco vuelve al contenido al abrir módulo",
+    "environment": "Chromium mobile 390x844; Express/Auth/BD fixtures locales",
+    "expected": "foco vuelve al contenido al abrir módulo",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "A17",
+    "objective": "conteos productos/baja coherentes",
+    "environment": "Chromium mobile 390x844; Express/Auth/BD fixtures locales",
+    "expected": "conteos productos/baja coherentes",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "A18",
+    "objective": "conteo de Cupones real",
+    "environment": "Chromium mobile 390x844; Express/Auth/BD fixtures locales",
+    "expected": "conteo de Cupones real",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "A19",
+    "objective": "foco de teclado visible",
+    "environment": "Chromium mobile 390x844; Express/Auth/BD fixtures locales",
+    "expected": "foco de teclado visible",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "A20",
+    "objective": "fallo de módulo muestra reintento y recupera",
+    "environment": "Chromium mobile 390x844; Express/Auth/BD fixtures locales",
+    "expected": "fallo de módulo muestra reintento y recupera",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "A21",
+    "objective": "respuesta atrasada no cambia módulo/foco actual",
+    "environment": "Chromium mobile 390x844; Express/Auth/BD fixtures locales",
+    "expected": "respuesta atrasada no cambia módulo/foco actual",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "A22",
+    "objective": "áreas táctiles y sin scroll horizontal",
+    "environment": "Chromium mobile 390x844; Express/Auth/BD fixtures locales",
+    "expected": "áreas táctiles y sin scroll horizontal",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "B22",
+    "objective": "escribir no aplica antes de Buscar/Enter",
+    "environment": "Chromium mobile 390x844; Express/Auth/BD fixtures locales",
+    "expected": "escribir no aplica antes de Buscar/Enter",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "B23",
+    "objective": "Enter aplica nombre sin tildes",
+    "environment": "Chromium mobile 390x844; Express/Auth/BD fixtures locales",
+    "expected": "Enter aplica nombre sin tildes",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "B24",
+    "objective": "Buscar aplica marca y Limpiar restaura con foco",
+    "environment": "Chromium mobile 390x844; Express/Auth/BD fixtures locales",
+    "expected": "Buscar aplica marca y Limpiar restaura con foco",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "B25",
+    "objective": "sin resultados muestra mensaje y limpieza recupera",
+    "environment": "Chromium mobile 390x844; Express/Auth/BD fixtures locales",
+    "expected": "sin resultados muestra mensaje y limpieza recupera",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "C22",
+    "objective": "sin stock y stock bajo diferenciados",
+    "environment": "Chromium mobile 390x844; Express/Auth/BD fixtures locales",
+    "expected": "sin stock y stock bajo diferenciados",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "C23",
+    "objective": "combinar baja con búsqueda y conservar al editar",
+    "environment": "Chromium mobile 390x844; Express/Auth/BD fixtures locales",
+    "expected": "combinar baja con búsqueda y conservar al editar",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "C24",
+    "objective": "volver a todos conserva búsqueda y permite limpiar",
+    "environment": "Chromium mobile 390x844; Express/Auth/BD fixtures locales",
+    "expected": "volver a todos conserva búsqueda y permite limpiar",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "D23",
+    "objective": "cambiar producto descarta sólo con confirmación",
+    "environment": "Chromium mobile 390x844; Express/Auth/BD fixtures locales",
+    "expected": "cambiar producto descarta sólo con confirmación",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "E23",
+    "objective": "vista previa local carga imagen real",
+    "environment": "Chromium mobile 390x844; Express/Auth/BD fixtures locales",
+    "expected": "vista previa local carga imagen real",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "E24",
+    "objective": "URL HTTP bloquea guardar con mensaje claro",
+    "environment": "Chromium mobile 390x844; Express/Auth/BD fixtures locales",
+    "expected": "URL HTTP bloquea guardar con mensaje claro",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "E25",
+    "objective": "HTTPS sin extensión valida sin HEAD",
+    "environment": "Chromium mobile 390x844; Express/Auth/BD fixtures locales",
+    "expected": "HTTPS sin extensión valida sin HEAD",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "E26",
+    "objective": "página HTML no se guarda como imagen",
+    "environment": "Chromium mobile 390x844; Express/Auth/BD fixtures locales",
+    "expected": "página HTML no se guarda como imagen",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "E27",
+    "objective": "404 permite reintentar sin romper formulario",
+    "environment": "Chromium mobile 390x844; Express/Auth/BD fixtures locales",
+    "expected": "404 permite reintentar sin romper formulario",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "E28",
+    "objective": "URL vacía bloquea guardar",
+    "environment": "Chromium mobile 390x844; Express/Auth/BD fixtures locales",
+    "expected": "URL vacía bloquea guardar",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "D24",
+    "objective": "guardar precio conserva imagen y persiste al recargar",
+    "environment": "Chromium mobile 390x844; Express/Auth/BD fixtures locales",
+    "expected": "guardar precio conserva imagen y persiste al recargar",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "D25",
+    "objective": "doble envío ignorado y contexto bloqueado",
+    "environment": "Chromium mobile 390x844; Express/Auth/BD fixtures locales",
+    "expected": "doble envío ignorado y contexto bloqueado",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "D26",
+    "objective": "fallo de red conserva datos y permite reintentar",
+    "environment": "Chromium mobile 390x844; Express/Auth/BD fixtures locales",
+    "expected": "fallo de red conserva datos y permite reintentar",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  },
+  {
+    "id": "A23",
+    "objective": "sin errores JavaScript ni overflow tras editar",
+    "environment": "Chromium mobile 390x844; Express/Auth/BD fixtures locales",
+    "expected": "sin errores JavaScript ni overflow tras editar",
+    "actual": "Comprobado con assertions de DOM/red/API",
+    "result": "PASS"
+  }
+]

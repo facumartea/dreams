@@ -3,12 +3,8 @@ import assert from 'node:assert/strict';
 import { createServer } from 'node:http';
 import { createTestHarness } from 'wrangler';
 
-// HTTP fixtures only: the real Worker, Express and Supabase SDK run in workerd.
-// No credentials or requests to the real Supabase project are used here.
-test('Workers preserva rutas, sesiones aisladas, Admin, errores y caché privada', { timeout: 60000 }, async t => {
-    const calls = [];
-    const tokens = new Map();
-    const fixture = createServer(async (req, res) => {
+function supabase_fixture(calls, tokens) {
+    return createServer(async (req, res) => {
         const url = new URL(req.url, 'http://fixture');
         calls.push({ path: url.pathname, authorization: req.headers.authorization, query: url.search });
         res.setHeader('Content-Type', 'application/json');
@@ -27,12 +23,9 @@ test('Workers preserva rutas, sesiones aisladas, Admin, errores y caché privada
         if (url.pathname.endsWith('/products')) return res.end(JSON.stringify([{ id: 1, marca: 'Fixture', name: 'Fixture', price: 10, stock: 1, size_ml: 50 }]));
         return res.end('[]');
     });
-    fixture.listen(0, '127.0.0.1');
-    await new Promise(resolve => fixture.once('listening', resolve));
-    t.after(() => new Promise(resolve => fixture.close(resolve)));
-    const harness = createTestHarness({ workers: [{ configPath: './wrangler.jsonc', vars: { NODE_ENV: 'production', APP_BASE_URL: 'https://preview.example', APP_ORIGINS: 'https://preview.example', GOOGLE_ACCESS_READY: 'true' }, secrets: { SUPABASE_URL: `http://127.0.0.1:${fixture.address().port}`, SUPABASE_SECRET_KEY: 'sb_secret_WORKER_FIXTURE' } }] });
-    t.after(() => harness.close());
-    const { url } = await harness.listen();
+}
+
+async function verify_public_worker_routes(harness) {
     for (const [path, status] of [['/', 200], ['/catalogo.html', 200], ['/js/admin-console-v3.js', 200], ['/admin', 403], ['/api/missing', 404], ['/missing', 404], ['/favoritos.html', 301]]) {
         const response = await harness.fetch(path, { redirect: 'manual' });
         assert.equal(response.status, status, path);
@@ -43,7 +36,10 @@ test('Workers preserva rutas, sesiones aisladas, Admin, errores y caché privada
     assert.equal(google.status, 200);
     assert.match((await google.json()).url, /provider=google/);
     assert.match(google.headers.getSetCookie()[0], /dreams_google_pkce=.*HttpOnly.*Secure/);
-    const login = async email => {
+}
+
+function worker_login(harness) {
+    return async email => {
         const response = await harness.fetch('/api/auth/login', { method: 'POST', headers: { 'Content-Type': 'application/json', Origin: 'https://preview.example' }, body: JSON.stringify({ email, password: 'fixture-password' }) });
         assert.equal(response.status, 200);
         assert.equal(response.headers.get('cache-control'), 'no-store');
@@ -51,6 +47,22 @@ test('Workers preserva rutas, sesiones aisladas, Admin, errores y caché privada
         for (const cookie of cookies) { assert.match(cookie, /HttpOnly/); assert.match(cookie, /SameSite=Lax/); assert.match(cookie, /; Secure/); }
         return cookies.map(cookie => cookie.split(';')[0]).join('; ');
     };
+}
+
+// HTTP fixtures only: the real Worker, Express and Supabase SDK run in workerd.
+// No credentials or requests to the real Supabase project are used here.
+test('Workers preserva rutas, sesiones aisladas, Admin, errores y caché privada', { timeout: 60000 }, async t => {
+    const calls = [];
+    const tokens = new Map();
+    const fixture = supabase_fixture(calls, tokens);
+    fixture.listen(0, '127.0.0.1');
+    await new Promise(resolve => fixture.once('listening', resolve));
+    t.after(() => new Promise(resolve => fixture.close(resolve)));
+    const harness = createTestHarness({ workers: [{ configPath: './wrangler.jsonc', vars: { NODE_ENV: 'production', APP_BASE_URL: 'https://preview.example', APP_ORIGINS: 'https://preview.example', GOOGLE_ACCESS_READY: 'true' }, secrets: { SUPABASE_URL: `http://127.0.0.1:${fixture.address().port}`, SUPABASE_SECRET_KEY: 'sb_secret_WORKER_FIXTURE' } }] });
+    t.after(() => harness.close());
+    const { url } = await harness.listen();
+    await verify_public_worker_routes(harness);
+    const login = worker_login(harness);
     const cookie = await login('ana@example.com');
     await login('bea@example.com');
     const products = await harness.fetch('/api/products?limit=8');

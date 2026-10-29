@@ -1,0 +1,65 @@
+{
+  "GET /api/health": {
+    "status": 200,
+    "body": {
+      "status": "ok",
+      "api": true,
+      "database": "ok"
+    }
+  },
+  "GET /api/config": {
+    "status": 200,
+    "body": {
+      "whatsapp_number": "542944160065",
+      "contact_email": "facundo.martearena@dantebariloche.edu.ar",
+      "contacts": {
+        "emails": [
+          "joaquin.ruas.grane@dantebariloche.edu.ar",
+          "facundo.martearena@dantebariloche.edu.ar"
+        ],
+        "phone": "+54 294 4160065",
+        "phones": [
+          "+54 294 4160065",
+          "+54 294 4502390"
+        ],
+        "whatsapp_number": "542944160065"
+      },
+      "app_name": "DREAMS",
+      "demo_auto_confirm_email": false,
+      "preview_read_only": true
+    }
+  },
+  "GET /api/checkout/config": {
+    "status": 200,
+    "body": {
+      "enabled": true,
+      "provider": "presentation_demo",
+      "mode": "demo",
+      "show_test_data": true
+    }
+  },
+  "POST /api/auth/register": {
+    "status": 403,
+    "body": {
+      "error": "Esta vista de prueba permite consultas; las operaciones comerciales están protegidas."
+    }
+  },
+  "POST /api/auth/login": {
+    "status": 400,
+    "body": {
+      "error": "Ingresá un correo válido y tu contraseña."
+    }
+  },
+  "GET /api/auth/me": {
+    "status": 200,
+    "body": {
+      "user": null
+    }
+  },
+  "GET /api/admin/products": {
+    "status": 403,
+    "body": {
+      "error": "Acceso reservado al administrador."
+    }
+  }
+}

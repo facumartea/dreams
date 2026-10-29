@@ -1,0 +1,74 @@
+[
+  {
+    "id": "T01",
+    "objective": "Registro sin confirmación",
+    "environment": "Objetivo funcional oficial",
+    "expected": "Operativo y verificado",
+    "actual": "POST register403 y mailer_autoconfirm=false; falta Auth Management seguro",
+    "result": "FAIL"
+  },
+  {
+    "id": "T02",
+    "objective": "Login y persistencia de sesión real",
+    "environment": "Objetivo funcional oficial",
+    "expected": "Operativo y verificado",
+    "actual": "Sin credenciales controladas disponibles; no se prueba con hashes ni sesiones ajenas",
+    "result": "BLOQUEADA"
+  },
+  {
+    "id": "T03",
+    "objective": "Logout de sesión autenticada",
+    "environment": "Objetivo funcional oficial",
+    "expected": "Operativo y verificado",
+    "actual": "Sin sesión real; sólo logout anónimo y expiración de cookies verificados",
+    "result": "BLOQUEADA"
+  },
+  {
+    "id": "T04",
+    "objective": "Admin completo con sesión real",
+    "environment": "Objetivo funcional oficial",
+    "expected": "Operativo y verificado",
+    "actual": "Sin acceso Admin real disponible; validación local y guardas anónimas remotas",
+    "result": "BLOQUEADA"
+  },
+  {
+    "id": "T05",
+    "objective": "Guardar producto/imagen y comprobar persistencia real",
+    "environment": "Objetivo funcional oficial",
+    "expected": "Operativo y verificado",
+    "actual": "Backend legacy read-only; no habilitar escrituras sin QA autenticada",
+    "result": "BLOQUEADA"
+  },
+  {
+    "id": "T06",
+    "objective": "Carrito por cuenta e intercambio A–B",
+    "environment": "Objetivo funcional oficial",
+    "expected": "Operativo y verificado",
+    "actual": "PR55 no promovida; visitante sí comprobado",
+    "result": "BLOQUEADA"
+  },
+  {
+    "id": "T07",
+    "objective": "Opiniones propias y rechazo de eliminación ajena remoto",
+    "environment": "Objetivo funcional oficial",
+    "expected": "Operativo y verificado",
+    "actual": "PR55 preservada, faltan sesiones reales",
+    "result": "BLOQUEADA"
+  },
+  {
+    "id": "T08",
+    "objective": "Actualizar dependencias en backend antiguo",
+    "environment": "Objetivo funcional oficial",
+    "expected": "Operativo y verificado",
+    "actual": "Lockfile corregido y proxy oficial mitigado; runtime legacy sin actualizar, no se modifican otros sitios",
+    "result": "BLOQUEADA"
+  },
+  {
+    "id": "T09",
+    "objective": "Permisos con JWT customer real",
+    "environment": "Objetivo funcional oficial",
+    "expected": "Operativo y verificado",
+    "actual": "RLS/server inspeccionados y fixtures válidos; falta cliente real controlado",
+    "result": "BLOQUEADA"
+  }
+]

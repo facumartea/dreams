@@ -3,5 +3,14 @@
   "name": "dreams-perfumes",
   "pages_build_output_dir": "../dist/pages",
   "compatibility_date": "2026-10-06",
-  "services": [{ "binding": "DREAMS", "service": "dreams-perfumes" }]
+  "services": [
+    {
+      "binding": "DREAMS",
+      "service": "dreams-perfumes"
+    },
+    {
+      "binding": "DREAMS_OFFICIAL",
+      "service": "dreams-official-backend"
+    }
+  ]
 }

@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1240" viewBox="0 0 1800 1240">
+<rect width="1800" height="1240" fill="#f6f3ed"/>
+<style>text{font-family:DejaVu Sans,sans-serif;fill:#292722}.title{font-size:30px;font-weight:bold}.heading{font-size:19px;font-weight:bold}.body{font-size:17px}.route{font-size:15px;fill:#695a3c}</style>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#a07b35"/></marker></defs>
+<text x="42" y="50" class="title">DREAMS · Wireframe y conexiones — entrega 2026</text>
+<text x="42" y="82" class="body">Adaptación de la propuesta adjunta a las rutas del candidato. No acredita QA remota ni publicación.</text>
+<rect x="42" y="125" width="402" height="265" rx="10" fill="white" stroke="#bdb4a7"/>
+<rect x="43" y="137" width="400" height="43" fill="#eae4da"/>
+<text x="57" y="166" class="heading">01 · INICIO</text>
+<text x="57" y="207" class="route">/</text>
+<text x="57" y="245" class="body">Logo · Menú · Cuenta · Carrito</text>
+<text x="57" y="279" class="body">Portada estática · Ver perfumes</text>
+<text x="57" y="313" class="body">Destacados · Carrusel de colecciones</text>
+<text x="57" y="347" class="body">Opiniones · Recientes · Footer</text>
+<rect x="480" y="125" width="402" height="265" rx="10" fill="white" stroke="#bdb4a7"/>
+<rect x="481" y="137" width="400" height="43" fill="#eae4da"/>
+<text x="495" y="166" class="heading">02 · CATÁLOGO</text>
+<text x="495" y="207" class="route">/catalogo.html</text>
+<text x="495" y="245" class="body">Buscar · Filtrar · Ordenar</text>
+<text x="495" y="279" class="body">Mujer / Hombre / Unisex</text>
+<text x="495" y="313" class="body">Marca · Tipo · Precio</text>
+<text x="495" y="347" class="body">Tarjetas → Detalle</text>
+<rect x="918" y="125" width="402" height="265" rx="10" fill="white" stroke="#bdb4a7"/>
+<rect x="919" y="137" width="400" height="43" fill="#eae4da"/>
+<text x="933" y="166" class="heading">03 · PRODUCTO</text>
+<text x="933" y="207" class="route">/producto.html?id=…</text>
+<text x="933" y="245" class="body">Imagen · Marca · Nombre</text>
+<text x="933" y="279" class="body">Precio · Tamaño · Notas · Stock</text>
+<text x="933" y="313" class="body">Agregar al carrito</text>
+<text x="933" y="347" class="body">Consultar por WhatsApp</text>
+<rect x="1356" y="125" width="402" height="265" rx="10" fill="white" stroke="#bdb4a7"/>
+<rect x="1357" y="137" width="400" height="43" fill="#eae4da"/>
+<text x="1371" y="166" class="heading">04 · CARRITO</text>
+<text x="1371" y="207" class="route">/carrito.html</text>
+<text x="1371" y="245" class="body">Productos · Cantidades · Eliminar</text>
+<text x="1371" y="279" class="body">Visitante o cuenta UUID</text>
+<text x="1371" y="313" class="body">Resumen · Envío gratis académico</text>
+<text x="1371" y="347" class="body">Comprar → Checkout / WhatsApp</text>
+<rect x="42" y="460" width="402" height="265" rx="10" fill="white" stroke="#bdb4a7"/>
+<rect x="43" y="472" width="400" height="43" fill="#eae4da"/>
+<text x="57" y="501" class="heading">05 · NOSOTROS</text>
+<text x="57" y="542" class="route">/nosotros.html</text>
+<text x="57" y="580" class="body">Identidad de la marca</text>
+<text x="57" y="614" class="body">Contactos · Teléfonos · Correos</text>
+<text x="57" y="648" class="body">WhatsApp: enlace externo</text>
+<text x="57" y="682" class="body">Martearena y Ruas</text>
+<rect x="480" y="460" width="402" height="265" rx="10" fill="white" stroke="#bdb4a7"/>
+<rect x="481" y="472" width="400" height="43" fill="#eae4da"/>
+<text x="495" y="501" class="heading">06 · CUENTA</text>
+<text x="495" y="542" class="route">/cuenta.html</text>
+<text x="495" y="580" class="body">Registro · Login · Logout</text>
+<text x="495" y="614" class="body">Nombre · Correo · Contraseña</text>
+<text x="495" y="648" class="body">Sesión → carrito y opiniones</text>
+<text x="495" y="682" class="body">Rol Admin → Panel privado</text>
+<rect x="918" y="460" width="402" height="265" rx="10" fill="white" stroke="#bdb4a7"/>
+<rect x="919" y="472" width="400" height="43" fill="#eae4da"/>
+<text x="933" y="501" class="heading">07 · ADMIN PRIVADO</text>
+<text x="933" y="542" class="route">/admin</text>
+<text x="933" y="580" class="body">Tarjetas · Estadísticas · Stock ≤ 2</text>
+<text x="933" y="614" class="body">Productos · Imagen · Guardar</text>
+<text x="933" y="648" class="body">Pedidos · Cupones · Usuarios</text>
+<text x="933" y="682" class="body">Consultas · Opiniones</text>
+<rect x="1356" y="460" width="402" height="265" rx="10" fill="white" stroke="#bdb4a7"/>
+<rect x="1357" y="472" width="400" height="43" fill="#eae4da"/>
+<text x="1371" y="501" class="heading">08 · CHECKOUT ACADÉMICO</text>
+<text x="1371" y="542" class="route">/checkout.html</text>
+<text x="1371" y="580" class="body">Resumen · Comprador</text>
+<text x="1371" y="614" class="body">Tarjeta ficticia validada en navegador</text>
+<text x="1371" y="648" class="body">Ticket firmado · Doble envío protegido</text>
+<text x="1371" y="682" class="body">Sin cobro ni alteración de stock</text>
+<rect x="1356" y="795" width="402" height="265" rx="10" fill="white" stroke="#bdb4a7"/>
+<rect x="1357" y="807" width="400" height="43" fill="#eae4da"/>
+<text x="1371" y="836" class="heading">09 · RESULTADO</text>
+<text x="1371" y="877" class="route">/checkout-resultado.html</text>
+<text x="1371" y="915" class="body">Referencia estable · Resumen</text>
+<text x="1371" y="949" class="body">Resultado de simulación</text>
+<text x="1371" y="983" class="body">Volver al catálogo</text>
+<text x="1371" y="1017" class="body">Sin pedido comercial</text>
+<path d="M444 250H480" fill="none" stroke="#a07b35" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M882 250H918" fill="none" stroke="#a07b35" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M1320 250H1356" fill="none" stroke="#a07b35" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M1557 390V460" fill="none" stroke="#a07b35" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M882 590H918" fill="none" stroke="#a07b35" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M1557 725V795" fill="none" stroke="#a07b35" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="42" y="850" class="heading">CONEXIONES TRANSVERSALES</text>
+<text x="42" y="890" class="body">Menú global → Inicio · Catálogo · Colecciones · Nosotros · Cuenta · Carrito.</text>
+<text x="42" y="930" class="body">Cuenta → Carrito UUID y opiniones propias; Admin sólo con autorización del servidor.</text>
+<text x="42" y="970" class="body">Footer → Contactos y navegación. WhatsApp abre un servicio externo, sin envío automático.</text>
+<text x="42" y="1085" class="heading">ALCANCE Y VALIDACIÓN</text>
+<text x="42" y="1123" class="body">La oficial restaurada y el candidato son versiones distintas. Consultar matriz-rubrica.md y pruebas.md.</text>
+<text x="42" y="1160" class="body">Fuente editable: wireframe.svg. Base: propuesta suministrada por el usuario, adaptada por IA el 29/10/2026.</text>
+</svg>

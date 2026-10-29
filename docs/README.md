@@ -1,3 +1,5 @@
+> Entrega2026 vigente: [índice completo](entrega-2026/INDICE.md). Este documento anterior es histórico y puede contener rutas, versiones o funciones retiradas.
+
 Documentación vigente de hosting: [Cloudflare: migración y rollback](cloudflare_migration.md) y [evidencias y pendientes](cloudflare_validation.md). El estado de sesión está en ../CURRENT_STATE.md. Los documentos Railway se conservan como referencia histórica.
 
 # Guía rápida DREAMS

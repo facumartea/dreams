@@ -1,3 +1,5 @@
+> Entrega2026 vigente: [índice completo](entrega-2026/INDICE.md). Este documento anterior es histórico y puede contener rutas, versiones o funciones retiradas.
+
 # Manual de uso DREAMS
 
 ## Usuario

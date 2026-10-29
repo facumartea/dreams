@@ -1,0 +1,210 @@
+[
+  {
+    "id": "H01",
+    "objective": "GET /api/health",
+    "environment": "HTTP oficial anónimo",
+    "expected": "200",
+    "actual": "200",
+    "result": "PASS"
+  },
+  {
+    "id": "H02",
+    "objective": "GET /admin",
+    "environment": "HTTP oficial anónimo",
+    "expected": "403",
+    "actual": "403",
+    "result": "PASS"
+  },
+  {
+    "id": "H03",
+    "objective": "GET /admin.html",
+    "environment": "HTTP oficial anónimo",
+    "expected": "403",
+    "actual": "403",
+    "result": "PASS"
+  },
+  {
+    "id": "H04",
+    "objective": "GET /api/admin/products",
+    "environment": "HTTP oficial anónimo",
+    "expected": "403",
+    "actual": "403",
+    "result": "PASS"
+  },
+  {
+    "id": "H05",
+    "objective": "GET /api/admin/users",
+    "environment": "HTTP oficial anónimo",
+    "expected": "403",
+    "actual": "403",
+    "result": "PASS"
+  },
+  {
+    "id": "H06",
+    "objective": "GET /api/admin/stats",
+    "environment": "HTTP oficial anónimo",
+    "expected": "403",
+    "actual": "403",
+    "result": "PASS"
+  },
+  {
+    "id": "H07",
+    "objective": "GET /api/admin/inquiries",
+    "environment": "HTTP oficial anónimo",
+    "expected": "403",
+    "actual": "403",
+    "result": "PASS"
+  },
+  {
+    "id": "H08",
+    "objective": "GET /api/admin/reviews",
+    "environment": "HTTP oficial anónimo",
+    "expected": "403",
+    "actual": "403",
+    "result": "PASS"
+  },
+  {
+    "id": "H09",
+    "objective": "GET /api/admin/orders",
+    "environment": "HTTP oficial anónimo",
+    "expected": "403",
+    "actual": "403",
+    "result": "PASS"
+  },
+  {
+    "id": "H10",
+    "objective": "GET /api/admin/coupons",
+    "environment": "HTTP oficial anónimo",
+    "expected": "403",
+    "actual": "403",
+    "result": "PASS"
+  },
+  {
+    "id": "H11",
+    "objective": "POST /api/auth/register",
+    "environment": "HTTP oficial anónimo",
+    "expected": "403",
+    "actual": "403",
+    "result": "PASS"
+  },
+  {
+    "id": "H12",
+    "objective": "POST /api/auth/login",
+    "environment": "HTTP oficial anónimo",
+    "expected": "400",
+    "actual": "400",
+    "result": "PASS"
+  },
+  {
+    "id": "H13",
+    "objective": "GET /api/account/cart",
+    "environment": "HTTP oficial anónimo",
+    "expected": "404",
+    "actual": "404",
+    "result": "PASS"
+  },
+  {
+    "id": "H14",
+    "objective": "GET /assets/dreams-hero.mp4",
+    "environment": "HTTP oficial anónimo",
+    "expected": "404",
+    "actual": "404",
+    "result": "PASS"
+  },
+  {
+    "id": "H15",
+    "objective": "Fuente /js/admin-console-v3.js",
+    "environment": "HTTP oficial",
+    "expected": "200 y hash igual al commit",
+    "actual": "200; hash igual=True",
+    "result": "PASS"
+  },
+  {
+    "id": "H16",
+    "objective": "Fuente /js/admin-product-search.js",
+    "environment": "HTTP oficial",
+    "expected": "200 y hash igual al commit",
+    "actual": "200; hash igual=True",
+    "result": "PASS"
+  },
+  {
+    "id": "H17",
+    "objective": "Fuente /js/admin-image-url.js",
+    "environment": "HTTP oficial",
+    "expected": "200 y hash igual al commit",
+    "actual": "200; hash igual=True",
+    "result": "PASS"
+  },
+  {
+    "id": "H18",
+    "objective": "Fuente /css/style.css",
+    "environment": "HTTP oficial",
+    "expected": "200 y hash igual al commit",
+    "actual": "200; hash igual=True",
+    "result": "PASS"
+  },
+  {
+    "id": "H19",
+    "objective": "Fuente /js/app.js",
+    "environment": "HTTP oficial",
+    "expected": "200 y hash igual al commit",
+    "actual": "200; hash igual=True",
+    "result": "PASS"
+  },
+  {
+    "id": "H20",
+    "objective": "Fuente /js/producto.js",
+    "environment": "HTTP oficial",
+    "expected": "200 y hash igual al commit",
+    "actual": "200; hash igual=True",
+    "result": "PASS"
+  },
+  {
+    "id": "H21",
+    "objective": "Cuerpo API comprimido rechazado antes de backend",
+    "environment": "HTTP oficial anónimo, payload mínimo no comercial",
+    "expected": "415/no-store",
+    "actual": "415/no-store",
+    "result": "PASS"
+  },
+  {
+    "id": "H22",
+    "objective": "Logout anónimo y expiración segura de cookies",
+    "environment": "HTTP oficial sin sesión real, datos inválidos/exclusivos de QA",
+    "expected": "200",
+    "actual": "200; cookies expiradas con HttpOnly/Secure/SameSiteLax=True",
+    "result": "PASS"
+  },
+  {
+    "id": "H23",
+    "objective": "Origen ajeno rechazado",
+    "environment": "HTTP oficial sin sesión real, datos inválidos/exclusivos de QA",
+    "expected": "403",
+    "actual": "403",
+    "result": "PASS"
+  },
+  {
+    "id": "H24",
+    "objective": "Carrito vacío rechazado por servidor académico",
+    "environment": "HTTP oficial sin sesión real, datos inválidos/exclusivos de QA",
+    "expected": "409",
+    "actual": "409",
+    "result": "PASS"
+  },
+  {
+    "id": "H25",
+    "objective": "Ticket inválido rechazado",
+    "environment": "HTTP oficial sin sesión real, datos inválidos/exclusivos de QA",
+    "expected": "400",
+    "actual": "400",
+    "result": "PASS"
+  },
+  {
+    "id": "H26",
+    "objective": "Alta Admin anónima rechazada sin datos de producto",
+    "environment": "HTTP oficial sin sesión real, datos inválidos/exclusivos de QA",
+    "expected": "403",
+    "actual": "403",
+    "result": "PASS"
+  }
+]

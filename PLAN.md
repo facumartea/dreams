@@ -1,3 +1,217 @@
+# Continuidad vigente: clave válida y QA dividida por límites del plan — 2026-10-29
+
+La versión privada `4862a658-f541-40b1-b03a-88327c54579d` (fuente `09ee61a`, CI 216 aprobada, 398 tests) heredó ambos Secrets de `8fcb56e1-b2a5-4cd7-832a-e084b5aab0e1`. Lectura directa y SDK: 200, proyecto esperado, clave sin transformación. No solicitar otra copia ni modificar Auth.
+
+QA remota real: registro normal de A/B con sesión inmediata y perfil customer; logout, login, contraseña incorrecta, renovación y persistencia; Admin denegado a anónimo/customer; combinación idempotente y aislamiento de carrito: PASS. La ejecución completa agotó los 50 subrequests del plan Free antes de terminar. No es un fallo de la clave. Se retiró el Cron. No hubo escrituras comerciales ni pruebas Admin todavía.
+
+Se divide la QA en nueve fases cortas, con marcadores en operaciones del carrito exclusivo QA. Reutilizar las cuentas del run `pr56-09ee61a-r1` mediante `QA_CREDENTIAL_RUN_ID`; limpiar esos carritos y revocar únicamente sus sesiones QA. No cambiar el plan. Cada fase compara stock y pedidos comerciales, limpia sus recursos y cierra las sesiones. Admin usa exclusivamente el Secret temporal autorizado, con login normal y logout local; nunca cambia credenciales/roles.
+
+Oficial conservada en `a3184576`; no conectar candidato antes de completar QA. Al finalizar: publicar sólo la oficial autorizada, verificar y retirar Cron, mecanismo temporal y `DREAMS_QA_ADMIN_PASSWORD`. Conservar rollback. Documentación en GitHub, sin generar ZIP final. Los registros anteriores debajo son históricos.
+
+# Nueva clave verificada200; corregir transporte de QA — 2026-10-29
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+ConexiónRESUELTA para el Secret del usuario8fcb56e1. WorkerQA4d32d704-61bf-467a-aeee-bb78045ecf1a/deployment55c0ba9b heredó AMBOS Secrets explícitamente de8fcb56e1 delMISMO Worker. Reporte16:49:57UTC acredita sourcecommit99ef199, secret_source_version8fcb56e1 y metadatareal4d32d704: directo200/SDK200,apikey_unchanged=true,project_key_pair=verified_by_read,URLesperada ysinwhitespace/controles/comillas. NO pedir copiarclaveotra vez. Evidencia docs/evidence/functional-backend-20261027/new-secret-read-20261029.json.
+
+PrimerQAreal se detuvo enregistro400 ANTESdeAuth: gatewaySupabase mostró sólo lecturas productos/orders, ninguna peticiónAuth. CausaREPRODUCIDA enworkerdlocal: Request sintética interna sinContent-Length no es parseada porExpress; alañadirlongitudJSONUTF8exacta, mismo flujo leeJSON, llamaAuthfixture ydevuelve200/sesión. Se corrige SÓLOtransportedelharness; noAuthconfig/validaciones/roles. Cron retirado al recuperar reporte; snapshotsstock/órdenesunchangedPASS, nocuentascreadasenesaintento. No confundir este400conotrofalloSecret.
+
+Runnercorregido añade Content-Length, marcador de perfilQAporrun paraevitarrepetiraltasdesdeotroisolate, limpieza de sesiónAdmininclusosi fallaantesdecrearproducto ymoderaciónreal sobreopiniónQA. Reintento sóloprivado conSecret8fcbverificado yAdminya disponible; nootrospromptscredenciales. TrasQAcompleta,publicaciónoficialautorizada,smokeycierre/retiradaSecretAdmin/mecanismotemporal. Oficial siguea3184576hastaQA. SinZIP,otros sitios,DNS,pagos,seeds/roles/passwordAdmincambiados. CI215/99ef199397PASS previo; suite/build/CI deesta corrección seacreditanalterminar.
+
+# Segunda copia del Secret recibida; verificar nueva versión — 2026-10-29
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Usuario volvió a copiar mediante Copy de Secret keys/default y desplegó sólo el Worker privado. Confirmado nuevo SUPABASE_SECRET_KEY en8fcb56e1-b2a5-4cd7-832a-e084b5aab0e1, deployment7cc9abf0-3ebd-4d1a-b991-22d035c41849,100%,16:36:22UTC. Historial y bindingProduction/default/proyecto esperados comprobados sin leer valores. SecretAdmin siguepresente. NO atribuirle el fallo anterior de36319df7: necesita nueva prueba de este binding. No pedir otra copia antes de acreditar identidad y prueba nueva.
+
+Se prepara activación deQAinterna acotada con ambosSecrets heredados EXPLÍCITAMENTE de8fcb56e1 delMISMO Worker; metadata deversion y referencia deSecretorigen incluidas enreporteescalar. Primero lectura directa ySDK ytipo servidor; sólo si200, sigue registroA/Bnormal, sesiones, Adminlegítimo yrecursosQA, carrito/opiniones/académico. NoendpointQA público ni impresión de claves/headers/contraseña. Alterminar cerrar sesiones, retirar mecanismo y SecretAdmin según autorización. Oficial aúnrestaurada hastaQA necesaria. No cambiosAuth/roles/contraseñaAdmin, nootros sitios/ZIP/DNS/pagos/seeds.
+
+Código397tests/CI214 previo conservado; nueva modificación sólo añade formato/URL/identidad de binding al reporte para evitar confusión de versiones.12tests focalizadosPASS, inventarioPASS ybuildoficialPASS. CI delnuevo checkpoint acredita esa modificación; no repetir matrices previas. Resultado remoto de8fcb56e1 todavíaPENDIENTE, no afirmar conexión.
+
+# Secret Admin cargado; Supabase sigue bloqueando la QA — 2026-10-29
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Usuario confirmó carga y autorizó usar DREAMS_QA_ADMIN_PASSWORD sólo para QA interna del Adminexistente, sin cambiarla; AL TERMINAR cerrar sesiones y retirar mecanismo temporal y ese Secret. Presencia secret_text comprobada SIN leer valor. Versión activa4e3d734f-a839-4c5c-9b45-afc2dad88741, deployment0b571bac-d239-4482-a167-0c5e32a18936,100%, creada16:15:23UTC al añadir SecretAdmin. No hay otro reemplazo de SUPABASE_SECRET_KEY posterior a0968d006 en el historial consultado: conserva el valor que falló en la sonda36319df7. No repetir sonda por agregar sólo SecretAdmin; no solicitarle de nuevo ese Secret ni usar contraseña de reset.
+
+QAreal todavía NO ejecutada: la lectura directa/SDK del valorSupabaseprobado sigue fallando; no se consumió contraseñaAdmin ni se crearon cuentas/productos remotos. Cron sigue vacío, oficiala3184576conservada, candidato sinURLpública. Prioridad: copia completa segura de Secretkeyservidor a SUPABASE_SECRET_KEY; luego heredar AMBOS Secrets de la nueva versión del mismoWorker. RunnerQA interno preparado conguardas, caducidad, limpieza y comparación de negocio; aún NO desplegado. No crearZIP, modificarAuth, roles o contraseñaAdmin ni publicar antesdeQA.
+
+Validación local del código nuevo: suite395PASS trasprimerasguardas,12tests focalizadosPASS tras endurecer constructor y tipo de clave pública; inventario109archivos/1936registros/cero>40. Check95JS y buildoficialPASS. CI delcheckpoint acredita suitefinal397 y demáschecks cuando termine, no confundir eltotalesperado conresultadoaúnnoobservado. Controles/validezdeheader nuevos en código NO están medidos en la sonda anterior. Fases: preparaciónlocal/documentalavanzada; conexión yQAremotaBLOQUEADAS; publicación/mainpendientes, sinporcentajeficticio.
+
+# Reemplazo del Secret recibido; nuevo valor todavía inutilizable — 2026-10-29
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Usuario informó «ya la cambie». Confirmada versión0968d006/deployment7f754fe2 actualizada por Secret15:53:52UTC. Sonda privada heredó EXACTAMENTE ese binding nuevo del mismoWorker, no el antiguo: versión2f3178eb y luego36319df7/deploymentd7305b8f, extensión acotada por propagaciónCron. Resultado recuperado16:09:32UTC: modern_secret presente, URLproyecto esperada, espaciosINTERNOS y controlASCII (non_ascii histórico incluye controles;42caracteres/42bytes). Directo falla transporte sinHTTP;SDKstatus0/succeededfalse. NO afirmar401nuevo ni clave/proyecto verificados. No quitar caracteres ni mostrar claves/fragmentos/headers. Evidencia docs/evidence/functional-backend-20261027/credential-replacement-20261029.md/.json.
+
+Cron temporal retirado y schedules=[] confirmado; URLs públicas del privado siguen desactivadas. Oficial conserva a3184576/7b302cf y sóloDREAMSlegacy efectivo. No QA autenticada remota iniciada ni cuentas/productos/stock/orders/Auth/Admin/DNS/otros sitios modificados. Se pidió repetir la copia por botón del valor Secretkey existente de Supabase y cargarlo sólo en SUPABASE_SECRET_KEY del privado, sinchat ni capturas. No otra sonda hasta cambio real. Falta además sesiónAdminlegítima: solicitud asíncrona de Secret temporalDREAMS_QA_ADMIN_PASSWORD, contraseñaACTUAL sin cambios; no asumir cargado ni usar variable destinada a reset.
+
+Trabajo independiente: worker/official-qa.mjs prepara runner interno scheduled opt-in, con vencimiento≤30min, sin endpointpúblico ni credenciales enreportes; exige lecturadirecta/SDK200 antesdealta normalA/B. Incluye rolescustomer, login/logout/refresh, aislamiento/mergecart, autoríayborradoopiniones, académico/WhatsApp sinenvío, Adminexistente con Secretopcional, móduloslectura y productos/cuponesQAconlimpieza; compara stockcomercial yorders. No declarar QAreal por existir elrunner. worker/official.mjs comparte fetchconrunner sin habilitarrutasQA. Diagnóstico local ahora distingue controles/whitespaceinterno/header válido; esas nuevasbanderas aún NO desplegadas ni medidas en la muestra citada. Pruebasguardas/scheduledPASS; suite/build/CI final se acreditan encheckpoint.
+
+Supabase aceptado porprofesor segúnusuario; integrantesMartearena/Ruas. NoSQLite niZIPnuevo. Mantener PR56 hasta conexión/QA necesarias; merge/main ypublicación autorizados cuando se resuelvan. Próximo: detectar versión nueva trascopia→readprivado→QAautenticada→oficialúnica conrollback. No repetir matrices previas201/390tests como proceso sin cambio; regresión actual justificada por códigoQA nuevo.
+
+# Supabase aceptado e integrantes confirmados — 2026-10-29
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+El usuario confirmó que el profesor aceptó Supabase y los apellidos Martearena y Ruas. Se registra como aceptación docente comunicada por el usuario, sin inventar comprobante adjunto ni equivalencia PostgreSQL/SQLite. SQLite ya no es bloqueo ni requiere migración. Se actualizaron matriz/README/entrega y footer compartido con los apellidos confirmados, sin deducir nombres de pila.
+
+Nueva instrucción: subir todo a GitHub y corregir pendientes; NO generar otro ZIP final. Conservar evidencia histórica de extracción: df70b9c/CI212SUCCESS,390tests, inventario106/1873/cero>40 y cuatrobuilds, ZIP limpio305entradas. No repetir esos procesos por rutina. La actualización actual no cambia Auth, DB, credenciales Admin, Secret ni backend desplegado.
+
+Siguen pendientes conexión del candidato y QA autenticada real: no hay aviso de reemplazo del Secret; no repetir la sonda401 ni conectar candidato a oficial. Mantener rollbacka3184576. Main4655b0c no contiene la entrega; cambios en PR56/codex/admin-cards-audit, con integración autorizada condicionada a resolver dependencias funcionales. Próximo: cargar el valor correcto sólo en dreams-official-backend/Production-default/SUPABASE_SECRET_KEY, lectura directa/SDK desde nueva versión y QA; luego promoción oficial. No nuevos ZIP, otros sitios, DNS, pagos, seeds o resets.
+
+# Checkpoint de entrega verificado en CI y ZIP — 2026-10-29
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Código y entrega en633aec35ce0bb05ad24e29d3c954b6d59b3ff651 pusheados. CI211/40903937335SUCCESS: install,audit,sintaxis,inventario390tests ycuatrobuilds. ZIPextraído limpio sin.git ni secretos reales: installfrozenPASS,sintaxis92PASS,inventario106archivos/1848funciones+25bloques/0>40,390testsPASS0skip,cuatrobuildsPASS. Resultado versionado docs/entrega-2026/verificacion-zip.json; contenidos304entradas sin.env real/node_modules/.git. El checkpoint siguiente sólo acredita documentos/evidencia; archivo final se genera desde eseSHAexacto y se verifica de nuevo. PUSH:SÍ. DEPLOY:NO.
+
+No cambió bloqueo funcional: candidato62f6bd7c mismoSecretmalformado401, oficiala3184576conservada, no merge amain4655b0c porqueSecret/QAreal/SQLitependientes. Apellidos preguntados sinrespuesta; nombreZIPprovisional porSHA. ManualPDF4p y wireframePNG/SVGinspeccionados, capturaslocalesindicadas; ninguna sesiónAdminreal ni autoríaalumnos inventada. Documentación preparada no significa entregaCOMPLETA. Continuar trasreemplazosegurodelSecret sinotraautorización; obtenerlecturadirecta/SDK200 yQAantesdepromover. No otros sitios/Auth/Admin/stock/clientes/pagos/DNSmodificados.
+
+# Entrega2026 preparada; conexión y QA remota bloqueadas — 2026-10-29
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Retomado desde be57610 (posterior a2b8dcc1); PR56 abierta/draft sobre codex/collection-multiselect, predeterminada main4655b0c. GETCloudflare confirma oficial restaurada a3184576/frontend7b302cf con sóloDREAMSlegacy; candidato62f6bd7c/deployment82492c72 sin reemplazo de Secret, bindingProduction/default correcto yURLproyecto esperado. No se repitió sonda401 acreditada ni deployment fallido; noAuth/Admin/DB mutaciones. Se pidió temprano la única intervención: cargar SecretAPIkey existente íntegra en SUPABASE_SECRET_KEY del privado; no tokens adicionales/chat/capturas. QAAdmin requiere sesión legítima existente aún no disponible, sin cambiar credenciales.
+
+Usuario amplió alcance: rúbrica2026 PDF leída y versionada, límite40 sustituye20. Se preguntó aceptación explícita deSQLite y apellidos, sin respuesta todavía. docs/entrega-2026 incluye matriz completa con SQLiteNO CUMPLE, wireframePNG/SVG adaptado de imagen adjunta, manualMD/PDF4p con capturasLOCALES, BD/Mermaid/columnas reales sin filas privadas, API, bitácora honesta, guía defensa, diseño e inventario. README corregido Node24/pnpm11.19/8080/sinseed y hosting real. No se atribuyen aportes/dominio a alumnos ni preentregas sin evidencia.
+
+Implementación: factoriesExpress/Node/Workers/checkout/firmas/helpers y fixtures divididos conservando orden/seguridad; inventarioAcorn8.15fijado recorre sin.git106 archivos/1873registros/cero>40. Programa principal explícito separado de archivo y datos declarativos. Admin confirma lectura posterior de todos los campos antesdeéxito, conservaformulario antefallo;25casos nuevosPASS. Carruselmanual3colecciones accesible sinvideo/autoplay,3testsPASS; doblecarga motion corregida trasdetecciónbrowser. MatrizAdminprevia201 preservada; nuevaáreaD25 casos distintos adicionalessinrepetirinventario completo.
+
+Validación local: suite387PASS antesdetrescasos nuevosdelcarrusel, éstos3PASS; sintaxis91antesdelúltimotest; inventariofinal0>40,auditlimpio,cuatrobuildsPASS. Chromium15comprobacioneslocalesPASS,6anchos,guardadoconimagen/recarga/catálogo/detalle,botones104x44,sinJS,ceroerrors. FixturesnoequivalenQAremota. ZIPexacto/instalaciónlimpia/CI delcheckpoint se acreditarán al concluir. Sin nuevaauditoríaperformance/WCAGcompleta; sinmigración ni escriturascomerciales.
+
+Fases: recuperación/lecturaPDF/local/documentaciónPREPARADAS; conexiónvalorPENDIENTEusuario; registro/login/Adminremotos/carrito/opinionesfinalesBLOQUEADOS; SQLiteyapellidosPENDIENTES; ZIP/CIenverificación; merge/publicaciónBLOQUEADOSporrequisitosnoresueltos. Avance documental y local real; sin porcentaje global inventado ni cierrefuncional. No conectar candidato hasta lectura200directa/SDK yQAnecesaria; rollbacka3184576disponible. DEPLOY:NO. OTROS SITIOS:NO.
+
+# Acceso existente revisado; intervención mínima — 2026-10-29
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Continuación desde 2b8dcc1, sin repetir CI, matrices, sonda fallida ni publicaciones. Ejecutor operativo y checkout limpio comprobados. Cloudflare conectado respondió GET secrets 200: SUPABASE_SECRET_KEY/secret_text presente en dreams-official-backend. La integración ofrece PUT del Secret creando versión; no hace falta pedir token Cloudflare para esa operación. No se probó escritura con un valor ficticio ni se cambió ningún binding.
+
+Entorno observado actual/ready: SUPABASE_SECRET_KEY protegido y limitado a nwsmbemwtexmrtpkgxrz.supabase.co; su representación local no es una clave servidor exportable (ni modern secret ni JWT). SUPABASE_ACCESS_TOKEN, CLOUDFLARE_API_TOKEN y DREAMS_QA_ADMIN_PASSWORD ausentes. No se mostraron valores, fragmentos ni headers. Supabase conectado sólo expone claves públicas, no lectura de claves servidor; no hay herramienta de navegador autenticado para copiar desde el dashboard. No usar la contraseña destinada a reset como contraseña Admin actual.
+
+La petición anterior de DOS tokens queda reemplazada por UNA intervención concreta: desde Supabase del proyecto nwsmbemwtexmrtpkgxrz copiar una Secret API key de servidor existente completa y cargarla directamente en Cloudflare > Workers & Pages > dreams-official-backend > Settings > Variables and Secrets > Production/default > SUPABASE_SECRET_KEY, tipo Secret; guardar/desplegar sólo ese Worker privado. Nunca pegarla en chat ni reutilizar capturas. No crear/rotar/revocar claves. No ejecutar el reparador de gestión preparado, cuya creación aditiva requiere explicar primero su necesidad.
+
+Después de que el usuario indique carga terminada, continuar sin nueva autorización: observar versión nueva, ejecutar lectura directa y SDK desde candidato, confirmar proyecto, registro normal A/B sin confirmar email, login/sesión/logout, carrito y ownership de opiniones; QA Admin sólo con sesión legítima del Admin existente, sin creación ni cambio de contraseña. No afirmar acceso Admin disponible. Mantener candidato desconectado de oficial hasta QA necesaria acreditada. Rollback a3184576 conservado; ninguna publicación ni otro sitio modificado en esta tanda. Pruebas nuevas: sólo presencia y capacidades; CI209/360 tests previo conservado. Progreso funcional sin variación: reparación de valor pendiente, QA remota/publicación bloqueadas.
+
+# Continuación desde 6f54b08; reparación automática preparada — 2026-10-28
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+CI #207 de9192d32 ya corregido en6f54b08: CI #208 SUCCESS/355 tests/cuatro builds. Metadatos actuales: frontend oficial7b302cf/Pagesa3184576, backend servido ec04a35/d5df723d; privado62f6bd7c/82492c72 sin cambios de Secret ni cron. No se repitió sonda ni deployment fallido.
+
+Usuario pidió que el agente reemplace el Secret. Autorizado, pero falta capacidad de gestión: Supabase conectado sólo entrega claves públicas; credencial del entorno permite lectura200 por inyección y no es exportable; Cloudflare CLI sin token. Se preparó scripts/repair-official-secret.mjs (transferencia sólo en memoria al privado, sin borrar claves ni publicar Pages) y cinco tests PASS. Intento seguro detenido antes de IO por missing_secure_management_credentials. Se solicitaron por canal protegido del entorno SUPABASE_ACCESS_TOKEN y CLOUDFLARE_API_TOKEN, con enlaces/permisos/destinos exactos en docs/evidence/pr56-current-20261028/status.md. No pedir tokens por chat ni extraerlos de las integraciones. La clave dañada no se reconstruye quitando espacios.
+
+Trabajo independiente: función submit_registration de21 líneas descompuesta sin alterar comportamiento; siete tests de registro PASS. AuditoríaAST19 archivos/284 funciones relevantes sin exceder20 líneas; buildPages PASS. MatrizAdmin previa201 y mínimos A28/B25/C25/D27/E30/F24 conservados, no repetidos. QAAdmin real requiere mecanismo seguro de contraseña actual; se ofreció Secret temporal DREAMS_QA_ADMIN_PASSWORD sólo en el privado, sin cambiar credenciales. No asumir cargado.
+
+Próximo: comprobar readiness de accesos de gestión si el usuario informa carga, ejecutar reparador autorizado, probar desde candidato privado, completar QA real y sólo después publicar oficial. Si no hay accesos, mantener oficial sana y explicar limitación concreta. Registro oficial FAIL en evidencia403; candidato, sesiones y guardado Admin BLOQUEADOS. Auth configuración ya resuelta, no repetir. DEPLOY OFICIAL EN ESTA TANDA:NO; OTROS SITIOS:NO. Estado completo y matriz vigente en docs/evidence/pr56-current-20261028/status.md.
+
+# Parche de audit del checkpoint — 2026-10-28
+
+CI #207 se detuvo antes de los tests por GHSA-6pq8-jhm2-2vcw en qs 6.16.0. Se actualizó sólo la resolución transitiva de Express a qs 6.16.1, que ya estaba presente para body-parser. Instalación frozen y audit sin vulnerabilidades comprobados. No se desplegó ningún backend ni se repitió la sonda. El diagnóstico de espacios internos en el Secret sigue vigente; corrección segura del valor y QA autenticada continúan pendientes. La suite final se acredita por CI del nuevo SHA.
+
+# Diagnóstico confirmado; requiere corrección segura del valor del Secret — 2026-10-28
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Se retomó desde29ee9ea sin repetir eldeployment fallido. Logs de sonda interna62f6bd7c/deployment82492c72 recuperados: SecretSUPABASE_SECRET_KEY de dreams-official-backend/Production-default contiene espaciosINTERNOS. SDK lo envía íntegro (apikey_unchanged=true); HEADmínimo directo sóloapikey401 y mismoHEADporSDK401. Sin whitespaceexterior/comillas/asignación/enmascarado. Causa comprobada: valor almacenado malformado/rechazado, no truncamiento delSDK ni sóloBearer. No se reconstruye quitando caracteres. URLdelproyecto correcta; pertenencia de claveopaca aún noacreditada por ausencia de lectura200.
+
+Cron temporal retirado y schedules=[] confirmado; sonda ya estaba vencida. Privado sigue62f6bd7c, sin workers.dev/previews. Oficiala3184576 conserva sóloDREAMSlegacy efectivo, sin nueva publicación/conexión ni cambiosAuth/Admin/DB/Secrets. deployment_ready=false. Evidencia y pasos exactos de carga segura desdecelular: docs/evidence/functional-backend-20261027/credential-diagnosis.md y credential-diagnostic-result.json. No pedir valorporchat ni eliminarclaves; usuario autorizó pedir reemplazo seguro si es necesario.
+
+Próxima acción: usuario copia SecretAPIkey completa del proyecto nwsmbemwtexmrtpkgxrz al bindingSUPABASE_SECRET_KEY delWorker dreams-official-backend/Production-default, tipoSecret, guardando/desplegando sóloelprivado. Luego probar lectura mínima en nueva versión antesdeQA autenticada y cualquier publicaciónPages. Rollbacka3184576 disponible. QAAdmin existente sigue pendiente, sin cambiarcontraseña.
+
+Fases: identidad/binding/SDK/formato/lectura remota de diagnóstico COMPLETADOS con rechazo401; corrección delvalor PENDIENTEusuario; QAautenticada y promoción BLOQUEADAS. Guardpublicación reforzado exige lectura200 reciente yQAexactaversión. Sin porcentajesglobalesinventados. No nueva revisiónUI/responsive/accesibilidad/performance porque no se modificaron. PUSHdelcódigo diagnóstico:SÍ; DEPLOYsólointerno diagnóstico:SÍ; DEPLOYoficialnuevo:NO.
+
+# Diagnóstico seguro del candidato en curso — 2026-10-27
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Continuación desde fd53b15. Oficiala3184576 conservada; ningún nuevo deployPages. Identidad/binding/URL/SDK auditados en docs/evidence/functional-backend-20261027/credential-diagnosis.md. Se prepara una versión interna de diagnóstico con scheduled temporal opt-in, sin endpoint ni URL pública, para comprobar formato y una lectura mínima desde el binding real. No se modifica Secret/Auth/Admin. Cuatro regresiones nuevasPASS; suite/build/CI y ejecución remota se informan al completarse. No atribuir bad_length a truncamiento o a otro proyecto sin evidencia runtime. deployment_ready=false.
+
+# Resultado vigente: oficial restaurada; candidato bloqueado por rechazo upstream — 2026-10-27
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Entorno de ejecución RECUPERADO. Código funcional reconstruido y pusheado en PR56; CI203/d8fec8f y CI204/232d2dd SUCCESS (346tests,81check,audit y cuatrobuilds). Publicado sólo en la oficial como Pages1e881ec8-7c32-4a2e-9857-ef63bf091c4f desde232d2dd; backend privado2ef6be90/deployment43a8bd54 heredó Secret del MISMO Worker939c179c. No se leyó/copió su valor ni se reconfiguró Auth.
+
+**Smoke FALLÓ**: /api/health503, /api/products500, /api/reviews500. Logs Supabase16:58–17:02UTC: REST401, UNAUTHORIZED_INVALID_API_KEY; apikey_error y authorization_error=bad_length. Esto es validación de uso fallida, distinta de existencia/tipo del Secret ya comprobados. No atribuir al SDK o a Confirm email sin evidencia. No volver a cargar ni solicitar secretos por instrucción del usuario. El bootstrap anterior nunca había acreditado acceso DB real.
+
+**ROLLBACK REALIZADO** a Pagesa3184576-4390-4a71-9205-d9269bd7dfe7/fuente7b302cf. Canónico confirmado y HTTP health200/databaseok, catálogo200/46productos, config200 sin capacidad nueva. El candidato NO queda en tráfico oficial. deployment_ready=false impide publicación CLI hasta resolver y acreditar acceso real. Binding producción DREAMS_OFFICIAL permanece preparado junto a DREAMS; rollback sólo usa DREAMS. Worker privado sigue sin workers.dev/previews.
+
+DB antes/después idéntica:46productos/0orders/0reviews/2inquiries/10usuarios; stockdigest7a58615dd40e0dcfd898a52aa108b820, rolAdmin originaladmin. Ninguna cuentaQA llegó a crearse: el harness abortó en health. Auth/cartA-B/reviews/Admin reales NO ACREDITADOS. No credenciales/correo/rolAdmin, productos, stock, pagos, DNS u otros sitios modificados; sin merge.
+
+Fases: recuperación/composición/local/CI COMPLETADAS; backend privado DESPLEGADO pero accesoDB FALLA; promoción oficial REVERTIDA y restauración VERIFICADA; QA autenticada cliente/Admin BLOQUEADA por acceso del privado. Diseño/accesibilidad completa/performance avanzada sin nueva auditoría; no porcentaje global inventado ni cierre funcional. Evidencia en docs/evidence/functional-backend-20261027/verification.md.
+
+Próxima acción exacta dentro de restricciones: mantener oficial sana y comparar diagnóstico seguro de autorización del backend privado con su proveedor, sin imprimir ni reemplazar credenciales; sólo volver a publicar después de acreditar acceso DB correcto. No repetir configuración Auth ni pedir secretos. Sesión Admin existente sigue pendiente para QA, sin cambiar contraseña. PUSH REALIZADO:SÍ. DEPLOY REALIZADO:SÍ, REVERTIDO; release funcional oficial:NO.
+
+# Backend privado desplegado; publicación Pages preparada — 2026-10-27
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Código d8fec8ffa50f5d8dcb72bfba1e75b4cd28e7e134 pusheado en PR56 sin merge. CI40543798417/#203 SUCCESS:346tests, sintaxis81/audit y cuatrobuilds. Worker privado versión2ef6be90-b8d8-4e03-8bc4-58b36718e6f1, deployment43a8bd54-658a-4240-9327-66e4885c6f78 activo100%; Secret heredado de939c179c del MISMO Worker por API moderna, sin leer/copiar valor. Startup53ms. Workers.dev/previews=false reconfirmados.
+
+Añadido sólo binding producción DREAMS_OFFICIAL=dreams-official-backend, conservando DREAMS y demás configuración. Pages canónico continúa a3184576; ninguna preview nueva. deployment_ready=true tras CI/código privado/binding verificados, para publicación autorizada sólo https://dreams-perfumes.pages.dev/. Requiere CI del checkpoint de release y smoke real; si fallo material usar rollbacka3184576.
+
+Ticket académico legacy capturado antes del cambio para probar continuidad, sin datos financieros ni orders. QA autenticada remota todavía pendiente. Admin real sin sesión acreditada; credenciales originales sin cambios y no se solicitan secretos.
+
+# Recuperación de ejecución y composición — 2026-10-27
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Entorno operativo comprobado; branch PR56 codex/admin-cards-audit recuperada desde a6e97d0. El checkout inicial no contenía continuidad y se informó antes de recuperarla del remoto. Worktree anterior perdido: reconstruida composición selectiva PR55/0dbfbbaf, preservando Admin/WhatsApp/stock/lockfile actuales; sin merge ni force-push.
+
+346/346 pruebas PASS; sintaxis81 JS/MJS, audit sin vulnerabilidades, builds privado/Pages PASS.48 navegaciones Chromium locales/seis tamaños sin pageerrors/overflow;8 comprobaciones del bundle privado en workerd local con Supabase simulado PASS (compatibilidad local máxima10-08, smoke remoto pendiente). Evidencia: docs/evidence/functional-backend-20261027/verification.md.
+
+Auth config y Secret privado ya resueltos: no se reconfiguraron ni solicitaron. No credenciales Admin cambiadas; la variable destinada a nueva contraseña no se usa para reset ni se asume actual. No DDL/seeds, productos, stock, pedidos o DNS modificados. Oficial aún a3184576. deployment_ready=false hasta verificar código privado y CI.
+
+Próximo exacto: push/CI del código reconstruido → privado con Secret heredado del mismo Worker → conservar binding existente y añadir DREAMS_OFFICIAL sólo producción oficial → publicación y QA remoto controlado. Admin real continúa sin sesión acreditada; no declarar persistencia Admin probada por fixtures. Progreso por fases sin porcentaje inventado: recuperación y composición/pruebas locales completas; CI/publicación/QA remoto pendientes; diseño/performance avanzada/accesibilidad completa no reevaluados.
+
+# Continuación funcional — 2026-10-27
+
+- Confirm email/signup: RESUELTOS por usuario y verificados HTTP200/mailer_autoconfirm=true.
+- Secret privado: RESUELTO; SUPABASE_SECRET_KEY secret_text versión939c179c en dreams-official-backend privado, sin leer valor.
+- Composición PR54/55/Admin56 y nuevo backend: LOCAL, pendiente de preservar/validar/commit;43+29 focalizadas PASS, suite final/build no acreditados.
+- Ejecutor: BLOQUEADO, entorno seleccionado unavailable; no herramientas de reinicio. Reapertura de entorno o nueva tarea necesaria, SIN recargar claves.
+- Continuidad remota completa: docs/continuity-functional-backend-20261027.md. Guardar diff/untracked antes de sincronizar rama documental.
+- Oficial conserva a3184576/7b302cf y backendlegacy; no nueva publicación funcional, ni usuarios/datos/roles/DNS alterados.
+- Próximo exacto: entorno operativo → recuperar cambios → completar checks/CI → código privado con Secret heredado del mismo Worker → binding Pagesoficial y QA real. Admin requiere acceso seguro existente, sin cambiar credenciales.
+
+# Publicación oficial parcial y QA comprobadas — 2026-10-27
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+OFICIAL https://dreams-perfumes.pages.dev/ Pagesa3184576-4390-4a71-9205-d9269bd7dfe7 SUCCESS/production/canónico, fuente7b302cf6b1896cfe500a0643290646b3086cb082. PR56/rama codex/admin-cards-audit abierta/draft sin merge, basePR53; PR54/55/video excluidos. Backendec04a35/d5df sin cambio; release retira destino Adminpreview. UI Admin/search/stock/acciones104×44 e imágenes/formulario local acreditados, WhatsApp nativo seguro/teléfono validado, autofill y guardcompressedAPI415 publicados. Actualización lockfileparches pero NO backendruntime. CI40530812778 exacto SUCCESS288tests/check63/audit/tresbuilds;40focalizadosfinalesPASS/12QA localnueva/201matrizAdminreutilizada.
+
+Remoto oficial26HTTP+10browser+2académico=38PASS/0FAIL en comprobaciones; objetivo registroFAIL y8objetivosBLOQUEADOS separados en docs/evidence/official-review-20261027/matrix.md. Checkoutacadémico sin datos financieros, dobleclic1operación/referenciareloestable/carritolimpiadotrasresultado/0pasarela. DBantes-después46productos/0pedidos/0reviews/2consultas/10usuarios y stockdigestidéntico. Ninguna cuenta/rol/credencial/stock comercial modificada.
+
+Bloqueos:register403 por PREVIEW_READ_ONLY heredado y Confirm email activo (settings200/mailer_autoconfirmfalse), entorno141 sin SUPABASE_ACCESS_TOKEN ni canal seguro/Management Auth; no sesiónQA Admin/customer real. Guardado y nuevas imágenes reales, sesión/login/logout autenticados, carritoUUID/reviewspropias y parche runtime backend pendientes; no activar sin QA real. AdminUUID y rol confirmados,5cuentaspendientes/1sinperfil/0adminspendientes sólo inspeccionadas. No bypass ni secretos en chat.
+
+Rollback anteriorf44a6069/461c17d SUCCESS/raíz200 retenido, no ejecutado. Otros sitios/previews intactos (animadaba6891f4/c8439ac); NO nuevos proyectos/previews/DNS/video/merge/DDL. Documentación y capturas:docs/official_review_20261027.md. Progreso sin porcentaje inventado:antesUI sólo candidato; ahoraUI/WhatsApp mitigaciones oficiales verificadas, Auth/guardado siguen bloqueados. Próxima acciónexacta:acceso seguro a GET/PATCH Auth config del proyecto y sesión controlada Admin/customer, revisar consumidores/Confirm email y validar persistencia antes de habilitar escritura/PR54/55. PUSH y DEPLOY OFICIAL:SÍ, alcanceparcialexplicitado.
+
+# Seguridad detectada durante CI — 2026-10-27
+
+CI39c656c falló en audit por body-parser/ip-address nuevos, antes de tests. Lockfile actualizado sólo a body-parser2.4.0/ip-address10.7.5/qs6.16.1, audit sin vulnerabilidades conocidas. Mitigación Pages oficial rechaza cuerpos API comprimidos415 antes del parser legacy, JSON normal intacto. Backendd5df no se modifica; falta parche runtime, no confundir lockfile con deploybackend. Ningún otro sitio/preview tocado. Repetir sólo validaciones afectadas y CI de nuevo commit antes de publicar Pages.
+
+# Continuación limitada a la OFICIAL — 2026-10-27
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+PR56/misma rama codex/admin-cards-audit, sin merges/otras webs/previews nuevas. Oficial f44a6069/461c17d y backendd5df/ec04a35 reconfirmados. ConfigAuth actual: mailer_autoconfirm=false/disable_signup=false, registro403 middleware; entorno141 sin SUPABASE_ACCESS_TOKEN ni canal seguro de carga. AdminUUID/rol confirmados; sin sesión QA real, no activar escrituras. PR54/55 preservadas.
+
+Publicación parcial independiente preparada: Admin UI existente (matriz201 reutilizada), pin de todas las APIs al backend oficial (no candidato), WhatsApp nativo sin esperar consultas y teléfono validado, autofill acotado. Nueva QA local12PASS móvil/escritorio y23tests focalizados PASS; guardas de release y builds en curso. No se atribuyen correcciones servidor a backendec04a35. Docs/evidencia docs/official_review_20261027.md. Próximo: CI/build/revisión final, publicar sólo Pagesoficial autorizado y verificar alcance, conservando rollbackf44a6069. Auth/sesiones/guardado/cartUUID/reviews siguen bloqueados por acceso real; no porcentaje global inventado.
+
+# Candidato Admin publicado, oficial preservada — 2026-10-21
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+PR56 draft/rama codex/admin-cards-audit, base PR53; selección PR46, sin mezcla PR55/Auth/video. Pagespreviewcb0a3ca6 fuente c0f8bb06540ba9dd1fee8912ad9831c32976eeb2, https://admin-cards-review.dreams-perfumes.pages.dev/admin, requiere Admin real. Backend0ba07603 fuente83c36ca, read-only salvo login/logout. CI39639266639 SUCCESS279tests/check61/audit/tresbuilds. Local201ejecucionesPASS, A28/B25/C25/D27/E30/F24casosdistintos; remoto24PASS/0FAIL y10gruposBLOQUEADOS. Docs/admin_audit.md y matriz/capturas completas. Editar/Eliminar104×44 compartido, confirmación conservada. PrimerCI falló por entrypoint sin versionar, corregido, posteriores verdes.
+
+Oficialf44a6069/461c17d y backendd5df preservados y rollback retenido. NO DEPLOY OFICIAL, NO merge/DNS/DB/roles/credenciales/datos comerciales. Auth token no disponible en ejecución actual y sin vía segura para actualizar binding; conector no administra Auth. PR55/cart/reviews remotos siguen pendientes, TRUNCATE ya retirado/verificado sin repetición. Sin porcentaje global inventado: implementación y QA local terminadas; preview protegida validada; fase autenticada/promoción BLOQUEADA. Próximo exacto: ejecución vinculada al entorno seguro actualizado y sesión real controlada de QA, completar Auth/A-B y prueba Admin de producto exclusivo antes de promover cada PR por separado. No pedir secretos por chat.
+
+# Actualización Admin — 2026-10-21
+
+Rama codex/admin-cards-audit desde PR53/c428daf, selección PR46 sin merge ni Auth55/video. Encabezado, siete tarjetas, buscador, stock bajo, validación de imágenes, guardado protegido y Editar/Eliminar104×44 implementados. Suite279 PASS y QA local documentados en docs/admin_audit.md y matriz por área. Preview read-only en preparación; NO publicación oficial sin sesión Admin real. Auth Management/token y QA A/B siguen bloqueados, PR55 preservada. Oficial461c17d/f44a6069 y backendd5df intactos. Sin porcentaje global inventado; fase implementación/QA local terminada, fase QA autenticada/publicación bloqueada. Próximo: publicar candidato protegido, verificar guardas remotas y completar acceso seguro de QA.
+
 # Resultado filtros oficiales — 2026-10-20
 
 - PR53/código461c17d/CI39517310148/154tests/check54/audit/builds: COMPLETADOS.

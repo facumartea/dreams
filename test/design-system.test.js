@@ -48,13 +48,13 @@ test('el sistema visual conserva los tokens y la reducción de movimiento', () =
 
 test('la portada incluye un formulario accesible de opiniones persistentes', () => {
     const html = fs.readFileSync(path.join(root, 'public/index.html'), 'utf8');
-    const script = fs.readFileSync(path.join(root, 'public/js/app.js'), 'utf8');
+    const script = fs.readFileSync(path.join(root, 'public/js/reviews.js'), 'utf8');
     assert.match(html, /<form id="review-form"[^>]*hidden>/);
     assert.match(html, /<label for="review-rating">/);
     assert.match(html, /<label for="review-comment">/);
     assert.match(html, /id="review-status" role="status" aria-live="polite"/);
     assert.match(script, /method: 'POST'/);
-    assert.match(script, /await load_reviews\(\)/);
+    assert.match(script, /await this.load\(\)/);
 });
 
 test('el hero usa una imagen responsive de alta resolución y lettering HTML', () => {
@@ -146,18 +146,24 @@ test('el detalle presenta las notas reales como un Scent Trail accesible', () =>
     const css = fs.readFileSync(path.join(root, 'public/css/style.css'), 'utf8');
     assert.match(product, /class="scent-trail" aria-labelledby="scent-trail-title"/);
     assert.match(product, /<ol class="notes-grid" aria-label="Etapas olfativas">/);
-    assert.match(product, /product\.notes\.salida\.join/);
-    assert.match(product, /product\.notes\.corazon\.join/);
-    assert.match(product, /product\.notes\.fondo\.join/);
+    const vm = require('node:vm'), context = vm.createContext({ document: { addEventListener() {} } });
+    vm.runInContext(fs.readFileSync(path.join(root, 'public/js/safe.js'), 'utf8'), context);
+    vm.runInContext(product, context);
+    const rendered = vm.runInContext("product_scent_trail({notes:{salida:['Salida real'],corazon:['Corazón real'],fondo:['<Fondo real>']}})", context);
+    assert.match(rendered, /<h3>Salida<\/h3><p>Salida real<\/p>/);
+    assert.match(rendered, /<h3>Corazón<\/h3><p>Corazón real<\/p>/);
+    assert.match(rendered, /<h3>Fondo<\/h3><p>&lt;Fondo real&gt;<\/p>/);
     assert.match(css, /\.scent-trail-header/);
     assert.match(css, /@media\(max-width:720px\).*\.notes-grid\{grid-template-columns:1fr/s);
 });
 
-test('registro comunica claramente el modo demo sin confirmación de correo', () => {
+test('registro conserva gestores de contraseñas y aviso condicionado al proveedor', () => {
     const account = fs.readFileSync(path.join(root, 'public', 'js', 'cuenta.js'), 'utf8');
     const server = fs.readFileSync(path.join(root, 'server', 'server.js'), 'utf8');
-    assert.match(account, /Modo de prueba:/);
-    assert.match(account, /no necesitás confirmar el correo/);
+    assert.match(account, /confirmation_required/);
+    assert.match(account, /autocomplete="new-password"/);
+    assert.match(account, /registration-notice/);
+    assert.doesNotMatch(account, /Modo de prueba:/);
     assert.match(server, /DEMO_AUTO_CONFIRM_EMAIL/);
 });
 
@@ -172,13 +178,13 @@ test('carrito usa Comprar y checkout integra cupones persistentes en mayúsculas
     assert.match(checkout, /toUpperCase\(\)/);
     assert.match(checkout, /sessionStorage\.setItem\('dreams_coupon'/);
     assert.match(checkout, /\/api\/coupons\/validate/);
-    assert.match(admin, /data-tab="cupones"/);
+    assert.match(admin, /id="tab-cupones"/);
 });
 
 test('Admin expone pedidos y gestión persistente de opiniones', () => {
     const admin = fs.readFileSync(path.join(root, 'views/admin.html'), 'utf8');
     const script = fs.readFileSync(path.join(root, 'public/js/admin.js'), 'utf8');
-    assert.match(admin, /data-tab="pedidos"/);
+    assert.match(admin, /id="tab-pedidos"/);
     assert.match(admin, /id="review-search"/);
     assert.match(script, /\/api\/admin\/reviews\/\$\{id\}/);
     assert.match(script, /with_pending/);
@@ -206,13 +212,13 @@ test('Admin valida y previsualiza la URL directa antes de guardar', () => {
     assert.match(admin, /id="image-preview-image"/);
     assert.match(admin, /referrerpolicy="no-referrer"/);
     assert.match(admin, /\/js\/admin-console-v3\.js/);
-    assert.match(script, /function reset_form\(\)[\s\S]*editing_product_id = ''[\s\S]*product-form'\)\.reset\(\)[\s\S]*product-id'\)\.value = ''[\s\S]*form-label'\)\.textContent = 'NUEVO PRODUCTO'/);
+    assert.match(script, /function reset_form\(force = false\)[\s\S]*editing_product_id = ''[\s\S]*product-form'\)\.reset\(\)[\s\S]*product-id'\)\.value = ''[\s\S]*form-label'\)\.textContent = 'NUEVO PRODUCTO'/);
     assert.match(script, /preview_product_image/);
-    assert.match(script, /image\.onload/);
-    assert.match(script, /image\.onerror/);
-    assert.match(script, /product_image_preview_state !== 'valid'/);
+    assert.match(script, /probe\.onload/);
+    assert.match(script, /probe\.onerror/);
+    assert.match(script, /!is_current_product_image\(\)/);
     assert.match(script, /product_image_load_timer/);
-    assert.match(script, /}, 6000\);/);
+    assert.match(script, /, 6000\);/);
     assert.match(script, /La URL ingresada no apunta a una imagen válida/);
     assert.match(server, /validate_product_image_url/);
     assert.match(server, /imgSrc: \["'self'", 'data:', 'https:'\]/);
