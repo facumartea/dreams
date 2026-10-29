@@ -2,7 +2,8 @@ import { createHmac, randomUUID } from 'node:crypto';
 import { create_official_database } from './official-client.mjs';
 import { diagnose_supabase } from './supabase-diagnostic.mjs';
 const origin = 'https://dreams-perfumes.pages.dev';
-let attempted_run;
+let active_run;
+const phase_names = ['registration_sessions', 'cart_isolation', 'review_ownership', 'academic_compatibility', 'admin_modules', 'admin_persistence', 'admin_stock_featured', 'admin_coupons', 'admin_moderation'];
 
 function check(context, id, condition, details = {}) {
     context.checks.push({ id, result: condition ? 'PASS' : 'FAIL', ...details });
@@ -10,12 +11,12 @@ function check(context, id, condition, details = {}) {
 }
 
 function actor_for(env, run, label) {
-    return { label, cookies: new Map(), email: `qa-dreams-${run}-${label}@example.com`,
+    return { label, qa_run: run, cookies: new Map(), email: `qa-dreams-${run}-${label}@example.com`,
         password: createHmac('sha256', env.SUPABASE_SECRET_KEY).update(`qa:${run}:${label}`).digest('base64url') + '!Aa1' };
 }
 
 async function call(context, actor, method, path, body) {
-    const headers = new Headers({ Origin: origin, 'cf-connecting-ip': '192.0.2.56' });
+    const headers = new Headers({ Origin: origin, 'cf-connecting-ip': actor?.label === 'a' ? '192.0.2.56' : actor?.label === 'b' ? '192.0.2.57' : actor?.label === 'admin' ? '192.0.2.58' : '192.0.2.59' });
     if (actor) headers.set('Cookie', [...actor.cookies].map(([key, value]) => `${key}=${value}`).join('; '));
     const payload = body === undefined ? undefined : JSON.stringify(body);
     if (payload !== undefined) {
@@ -45,7 +46,7 @@ async function request(context, actor, id, method, path, body, status = 200) {
 
 async function register(context, actor) {
     const data = await request(context, actor, `${actor.label}-registration`, 'POST', '/api/auth/register',
-        { name: qa_name(context.run, actor.label), email: actor.email, password: actor.password });
+        { name: qa_name(actor.qa_run || context.run, actor.label), email: actor.email, password: actor.password });
     check(context, `${actor.label}-registration-session`, data.authenticated === true && data.user?.is_admin === false && Boolean(data.user?.id));
     actor.id = data.user.id;
     const profile = await context.db.from('profiles').select('role').eq('id', actor.id).single();
@@ -129,7 +130,6 @@ async function admin_actor(context, env) {
     const data = await request(context, actor, 'existing-admin-login', 'POST', '/api/auth/login',
         { email: found.data.user.email, password: env.DREAMS_QA_ADMIN_PASSWORD });
     check(context, 'existing-admin-role', data.user?.is_admin === true && data.user.id === found.data.user.id);
-    await request(context, actor, 'existing-admin-page', 'GET', '/admin');
     return actor;
 }
 
@@ -176,9 +176,6 @@ async function admin_review_moderation(context, admin, owner) {
 }
 
 async function admin_products(context, actor) {
-    for (const module of ['stats', 'products', 'users', 'inquiries', 'reviews', 'orders', 'coupons']) {
-        await request(context, actor, `admin-${module}-read`, 'GET', `/api/admin/${module}`);
-    }
     const original = product_payload(context.run);
     const saved = await request(context, actor, 'admin-product-create', 'POST', '/api/admin/products', original, 201);
     check(context, 'qa-created-product-identity', saved.name === original.name && saved.brand === original.brand);
@@ -192,8 +189,6 @@ async function admin_products(context, actor) {
     await request(context, actor, 'admin-product-edit-preserves-image', 'PUT', `/api/admin/products/${saved.id}`, { ...changed, price: 175 });
     const detail = await request(context, actor, 'admin-product-detail', 'GET', `/api/products/${saved.id}`);
     check(context, 'admin-image-persistence', detail.image_url === changed.image_url && Number(detail.price) === 175);
-    await admin_stock_and_featured(context, actor, saved.id, { ...changed, price: 175 });
-    await admin_coupons(context, actor);
     const catalog = await request(context, actor, 'admin-product-catalog', 'GET', '/api/products');
     check(context, 'admin-catalog-persistence', catalog.some(p => p.id === saved.id && p.image_url === changed.image_url));
     await request(context, actor, 'admin-product-delete-qa', 'DELETE', `/api/admin/products/${saved.id}`);
@@ -203,44 +198,103 @@ async function admin_products(context, actor) {
 }
 
 async function cleanup(context, a, b) {
-    if (context.review_id && a.id) {
+    if (context.review_id && a.id && a.cookies.get('dreams_access_token')) {
         const deleted = await call(context, a, 'DELETE', `/api/reviews/${context.review_id}`, {});
         check(context, 'review-cleanup-qa', [200, 404].includes(deleted.status));
     }
-    if (context.product_id && context.admin) {
-        await request(context, context.admin, 'product-cleanup-qa', 'DELETE', `/api/admin/products/${context.product_id}`);
-    }
-    if (context.coupon_id && context.admin) {
-        await request(context, context.admin, 'coupon-cleanup-qa', 'DELETE', `/api/admin/coupons/${context.coupon_id}`);
-    }
-    for (const actor of [a, b, context.admin].filter(Boolean)) {
-        if (!actor.id && actor.label !== 'admin') continue;
-        if (actor.scope) await cart_operation(context, actor, `${actor.label}-cart-clear-qa`, { type: 'clear' });
+    if (context.product_id && context.admin) await request(context, context.admin, 'product-cleanup-qa', 'DELETE', `/api/admin/products/${context.product_id}`);
+    if (context.coupon_id && context.admin) await request(context, context.admin, 'coupon-cleanup-qa', 'DELETE', `/api/admin/coupons/${context.coupon_id}`);
+    for (const actor of [a, b, context.extra, context.admin].filter(Boolean)) {
+        const token = actor.cookies.get('dreams_access_token');
+        if (!token) continue;
+        // Sólo las cuentas QA: revocar también sesiones de un intento previo interrumpido.
+        if (actor.label !== 'admin') {
+            const revoked = await context.db.auth.admin.signOut(decodeURIComponent(token), 'global');
+            check(context, `${actor.label}-qa-refresh-sessions-revoked`, !revoked.error);
+        }
         await request(context, actor, `${actor.label}-final-logout`, 'POST', '/api/auth/logout', {});
     }
 }
 
-async function customer_qa(context, env) {
-    const a = actor_for(env, context.run, 'a'), b = actor_for(env, context.run, 'b');
-    try {
-        await register(context, a);
-        await register(context, b);
-        await sessions(context, a, b);
-        const products = await request(context, a, 'catalog-read', 'GET', '/api/products');
-        const product = products.find(p => Number(p.stock) > 0);
-        check(context, 'available-readonly-product', Boolean(product));
-        await carts(context, a, b, product);
-        await reviews(context, a, b);
-        await academic(context, a, product);
-        const admin = await admin_actor(context, env);
-        if (admin) {
-            await admin_products(context, admin);
-            await admin_review_moderation(context, admin, a);
-        }
-        else context.checks.push({ id: 'admin-persistence', result: 'BLOCKED', reason: 'existing_admin_session_required' });
-    } finally {
-        await cleanup(context, a, b).catch(() => context.checks.push({ id: 'qa-cleanup', result: 'FAIL' }));
+async function login_actor(context, actor) {
+    const data = await request(context, actor, `${actor.label}-qa-login`, 'POST', '/api/auth/login', { email: actor.email, password: actor.password });
+    check(context, `${actor.label}-qa-customer-identity`, data.user?.id === actor.id && data.user?.is_admin === false);
+}
+
+async function registration_phase(context, env, state) {
+    const existed = state.a.id && state.b.id;
+    for (const actor of [state.a, state.b]) {
+        if (actor.id) await login_actor(context, actor);
+        else await register(context, actor);
     }
+    if (existed) {
+        context.extra = actor_for(env, context.run, 'c');
+        await register(context, context.extra);
+    }
+    // Recuperar sólo carritos QA de un intento que alcanzó el límite de Free.
+    for (const actor of [state.a, state.b]) {
+        const result = await context.db.rpc('dreams_cart_operation', { p_user_id: actor.id, p_operation_id: randomUUID(), p_operation: { type: 'clear' } });
+        check(context, `${actor.label}-prior-qa-cart-cleared`, !result.error);
+    }
+    await sessions(context, state.a, state.b);
+}
+
+async function available_product(context, actor) {
+    const rows = await request(context, actor, 'catalog-read', 'GET', '/api/products');
+    const product = rows.find(p => Number(p.stock) > 0);
+    check(context, 'available-readonly-product', Boolean(product));
+    return product;
+}
+
+async function admin_module_reads(context, admin) {
+    await request(context, admin, 'existing-admin-page', 'GET', '/admin');
+    for (const module of ['stats', 'products', 'users', 'inquiries', 'reviews', 'orders', 'coupons']) {
+        await request(context, admin, `admin-${module}-read`, 'GET', `/api/admin/${module}`);
+    }
+}
+
+async function admin_stock_phase(context, admin) {
+    const fields = { ...product_payload(context.run), name: `QA stock ${context.run}` };
+    const saved = await request(context, admin, 'stock-qa-product-create', 'POST', '/api/admin/products', fields, 201);
+    check(context, 'stock-qa-product-identity', saved.name === fields.name && saved.brand === fields.brand);
+    context.product_id = saved.id;
+    await admin_stock_and_featured(context, admin, saved.id, fields);
+    await request(context, admin, 'stock-qa-product-delete', 'DELETE', `/api/admin/products/${saved.id}`);
+    context.product_id = null;
+}
+
+async function customer_phase(context, state, phase) {
+    await login_actor(context, state.a);
+    if (phase !== 'academic_compatibility') await login_actor(context, state.b);
+    if (phase === 'review_ownership') return reviews(context, state.a, state.b);
+    const product = await available_product(context, state.a);
+    return phase === 'cart_isolation' ? carts(context, state.a, state.b, product) : academic(context, state.a, product);
+}
+
+async function admin_phase(context, env, state, phase) {
+    const admin = await admin_actor(context, env);
+    check(context, 'existing-admin-secret-available', Boolean(admin));
+    if (phase === 'admin_modules') return admin_module_reads(context, admin);
+    if (phase === 'admin_persistence') return admin_products(context, admin);
+    if (phase === 'admin_stock_featured') return admin_stock_phase(context, admin);
+    if (phase === 'admin_coupons') return admin_coupons(context, admin);
+    await login_actor(context, state.a);
+    return admin_review_moderation(context, admin, state.a);
+}
+
+async function execute_phase(context, env, state, phase) {
+    context.before = await business_snapshot(context);
+    try {
+        if (phase === 'registration_sessions') await registration_phase(context, env, state);
+        else if (phase.startsWith('admin_')) await admin_phase(context, env, state, phase);
+        else await customer_phase(context, state, phase);
+    } finally { await cleanup(context, state.a, state.b); }
+    await confirm_business_unchanged(context);
+    // Marcador en operaciones del carrito exclusivo QA; no requiere nueva tabla.
+    const marked = await context.db.rpc('dreams_cart_operation', { p_user_id: state.a.id,
+        p_operation_id: phase_id(context, phase), p_operation: { type: 'clear' } });
+    check(context, 'phase-recorded', !marked.error);
+    state.completed.add(phase);
 }
 
 async function business_snapshot(context) {
@@ -258,37 +312,56 @@ async function confirm_business_unchanged(context) {
 
 function qa_name(run, label) { return `QA DREAMS ${run} ${label}`; }
 
-async function execute_once(context, env, report) {
-    // Evitar repetir altas si otro isolate ejecuta el mismo Cron.
-    const previous = await context.db.from('profiles').select('id').eq('name', qa_name(context.run, 'a')).limit(1);
-    check(context, 'qa-run-marker-readable', !previous.error);
-    if (previous.data?.length) {
-        context.checks.push({ id: 'qa-run-already-provisioned', result: 'SKIP' });
-        report.status = 'SKIPPED_DUPLICATE';
-        return;
+function phase_id(context, phase) {
+    const h = createHmac('sha256', context.secret).update(`qa-phase:${context.run}:${context.version}:${phase}`).digest('hex');
+    return `${h.slice(0, 8)}-${h.slice(8, 12)}-4${h.slice(13, 16)}-8${h.slice(17, 20)}-${h.slice(20, 32)}`;
+}
+
+async function phase_state(context, env) {
+    const run = env.QA_CREDENTIAL_RUN_ID || context.run;
+    const a = actor_for(env, run, 'a'), b = actor_for(env, run, 'b');
+    const rows = await context.db.from('profiles').select('id,name,role').in('name', [qa_name(run, 'a'), qa_name(run, 'b')]);
+    check(context, 'qa-identity-marker-readable', !rows.error);
+    for (const actor of [a, b]) {
+        const matches = rows.data.filter(row => row.name === qa_name(run, actor.label));
+        check(context, `${actor.label}-qa-profile-unambiguous`, matches.length <= 1 && matches.every(row => row.role === 'customer'));
+        actor.id = matches[0]?.id;
     }
-    context.before = await business_snapshot(context);
-    await customer_qa(context, env);
-    report.status = context.checks.some(c => c.result === 'FAIL') ? 'FAIL' : context.checks.some(c => c.result === 'BLOCKED') ? 'PARTIAL' : 'PASS';
+    const ids = phase_names.map(phase => phase_id(context, phase));
+    const operations = a.id ? await context.db.from('account_cart_operations').select('operation_id').eq('user_id', a.id).in('operation_id', ids) : { data: [] };
+    check(context, 'qa-phases-readable', !operations.error);
+    return { a, b, completed: new Set(phase_names.filter((phase, index) => operations.data.some(row => row.operation_id === ids[index]))) };
 }
 
 export async function run_official_qa(env, dispatch, services = {}) {
     const run = String(env.QA_RUN_ID || ''), expires = Number(env.QA_EXPIRES_AT);
-    if (!/^pr56-[a-z0-9-]{1,32}$/.test(run) || !Number.isFinite(expires) || Date.now() >= expires || expires - Date.now() > 1800000 || attempted_run === run) return null;
-    attempted_run = run;
-    const context = { run, dispatch, checks: [] };
-    const report = { type: 'dreams-private-authenticated-qa-v1', run, source_commit: env.QA_SOURCE_COMMIT, secret_source_version: env.QA_SECRET_SOURCE_VERSION, backend_version: env.CF_VERSION_METADATA?.id, started_at: new Date().toISOString(), checks: context.checks };
+    if (!/^pr56-[a-z0-9-]{1,32}$/.test(run) || !Number.isFinite(expires) || Date.now() >= expires || expires - Date.now() > 1800000 || active_run === run) return null;
+    active_run = run;
+    const context = { run, dispatch, secret: env.SUPABASE_SECRET_KEY, version: env.CF_VERSION_METADATA?.id, checks: [] };
+    const report = { type: 'dreams-private-authenticated-qa-v2', run, source_commit: env.QA_SOURCE_COMMIT, secret_source_version: env.QA_SECRET_SOURCE_VERSION, backend_version: context.version, started_at: new Date().toISOString(), checks: context.checks };
     try {
         context.db = (services.create_database || create_official_database)(env);
-        const read = await (services.diagnose || diagnose_supabase)(env);
-        report.candidate_read = { raw_status: read.raw_apikey_only?.status, sdk_status: read.candidate_sdk?.status, project_key_pair: read.project_key_pair, project_url_matches: read.project_url_matches, key_format: read.shape, apikey_unchanged: read.candidate_sdk?.apikey_unchanged, checked_at: new Date().toISOString() };
-        check(context, 'candidate-direct-sdk-read', read.raw_apikey_only?.status === 200 && read.candidate_sdk?.succeeded === true && read.project_key_pair === 'verified_by_read');
-        check(context, 'server-key-type', read.shape?.kind === 'modern_secret' || read.shape?.jwt_project === 'expected_service_role_claims');
-        await execute_once(context, env, report);
-    } catch (error) { report.status = 'FAIL'; report.failed_check = context.checks.find(c => c.result === 'FAIL')?.id || 'runtime_or_provider_failure'; }
-    if (context.before) await confirm_business_unchanged(context).catch(() => { report.status = 'FAIL'; });
+        check(context, 'expected-project-url', env.SUPABASE_URL === 'https://nwsmbemwtexmrtpkgxrz.supabase.co');
+        const state = await (services.read_state || phase_state)(context, env);
+        const phase = phase_names.find(name => !state.completed.has(name));
+        report.phase = phase || 'complete';
+        if (phase === 'registration_sessions') await verify_initial_read(context, env, report, services);
+        if (phase) await execute_phase(context, env, state, phase);
+        report.completed_phases = [...state.completed];
+        report.status = state.completed.size === phase_names.length ? 'PASS' : 'PHASE_PASS';
+    } catch { report.status = 'FAIL'; report.failed_check = context.checks.find(c => c.result === 'FAIL')?.id || 'runtime_or_provider_failure'; }
     report.completed_at = new Date().toISOString();
-    // Nunca incluir usuarios, correos, contraseñas, cookies, tickets ni headers.
+    // Ningún usuario, correo, contraseña, cookie, ticket ni header se registra.
     (services.log || console.log)('DREAMS private QA', report);
+    active_run = null;
     return report;
+}
+
+async function verify_initial_read(context, env, report, services) {
+    const read = await (services.diagnose || diagnose_supabase)(env);
+    report.candidate_read = { raw_status: read.raw_apikey_only?.status, sdk_status: read.candidate_sdk?.status,
+        project_key_pair: read.project_key_pair, project_url_matches: read.project_url_matches,
+        key_format: read.shape, apikey_unchanged: read.candidate_sdk?.apikey_unchanged, checked_at: new Date().toISOString() };
+    check(context, 'candidate-direct-sdk-read', read.raw_apikey_only?.status === 200 && read.candidate_sdk?.succeeded === true && read.project_key_pair === 'verified_by_read');
+    check(context, 'server-key-type', read.shape?.kind === 'modern_secret' || read.shape?.jwt_project === 'expected_service_role_claims');
 }

@@ -1,3 +1,13 @@
+# Continuidad vigente: clave válida y QA dividida por límites del plan — 2026-10-29
+
+La versión privada `4862a658-f541-40b1-b03a-88327c54579d` (fuente `09ee61a`, CI 216 aprobada, 398 tests) heredó ambos Secrets de `8fcb56e1-b2a5-4cd7-832a-e084b5aab0e1`. Lectura directa y SDK: 200, proyecto esperado, clave sin transformación. No solicitar otra copia ni modificar Auth.
+
+QA remota real: registro normal de A/B con sesión inmediata y perfil customer; logout, login, contraseña incorrecta, renovación y persistencia; Admin denegado a anónimo/customer; combinación idempotente y aislamiento de carrito: PASS. La ejecución completa agotó los 50 subrequests del plan Free antes de terminar. No es un fallo de la clave. Se retiró el Cron. No hubo escrituras comerciales ni pruebas Admin todavía.
+
+Se divide la QA en nueve fases cortas, con marcadores en operaciones del carrito exclusivo QA. Reutilizar las cuentas del run `pr56-09ee61a-r1` mediante `QA_CREDENTIAL_RUN_ID`; limpiar esos carritos y revocar únicamente sus sesiones QA. No cambiar el plan. Cada fase compara stock y pedidos comerciales, limpia sus recursos y cierra las sesiones. Admin usa exclusivamente el Secret temporal autorizado, con login normal y logout local; nunca cambia credenciales/roles.
+
+Oficial conservada en `a3184576`; no conectar candidato antes de completar QA. Al finalizar: publicar sólo la oficial autorizada, verificar y retirar Cron, mecanismo temporal y `DREAMS_QA_ADMIN_PASSWORD`. Conservar rollback. Documentación en GitHub, sin generar ZIP final. Los registros anteriores debajo son históricos.
+
 # Nueva clave verificada200; corregir transporte de QA — 2026-10-29
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
