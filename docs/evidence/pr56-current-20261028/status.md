@@ -1,3 +1,15 @@
+# Acceso existente revisado; intervención mínima — 2026-10-29
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Continuación desde 2b8dcc1, sin repetir CI, matrices, sonda fallida ni publicaciones. Ejecutor operativo y checkout limpio comprobados. Cloudflare conectado respondió GET secrets 200: SUPABASE_SECRET_KEY/secret_text presente en dreams-official-backend. La integración ofrece PUT del Secret creando versión; no hace falta pedir token Cloudflare para esa operación. No se probó escritura con un valor ficticio ni se cambió ningún binding.
+
+Entorno observado actual/ready: SUPABASE_SECRET_KEY protegido y limitado a nwsmbemwtexmrtpkgxrz.supabase.co; su representación local no es una clave servidor exportable (ni modern secret ni JWT). SUPABASE_ACCESS_TOKEN, CLOUDFLARE_API_TOKEN y DREAMS_QA_ADMIN_PASSWORD ausentes. No se mostraron valores, fragmentos ni headers. Supabase conectado sólo expone claves públicas, no lectura de claves servidor; no hay herramienta de navegador autenticado para copiar desde el dashboard. No usar la contraseña destinada a reset como contraseña Admin actual.
+
+La petición anterior de DOS tokens queda reemplazada por UNA intervención concreta: desde Supabase del proyecto nwsmbemwtexmrtpkgxrz copiar una Secret API key de servidor existente completa y cargarla directamente en Cloudflare > Workers & Pages > dreams-official-backend > Settings > Variables and Secrets > Production/default > SUPABASE_SECRET_KEY, tipo Secret; guardar/desplegar sólo ese Worker privado. Nunca pegarla en chat ni reutilizar capturas. No crear/rotar/revocar claves. No ejecutar el reparador de gestión preparado, cuya creación aditiva requiere explicar primero su necesidad.
+
+Después de que el usuario indique carga terminada, continuar sin nueva autorización: observar versión nueva, ejecutar lectura directa y SDK desde candidato, confirmar proyecto, registro normal A/B sin confirmar email, login/sesión/logout, carrito y ownership de opiniones; QA Admin sólo con sesión legítima del Admin existente, sin creación ni cambio de contraseña. No afirmar acceso Admin disponible. Mantener candidato desconectado de oficial hasta QA necesaria acreditada. Rollback a3184576 conservado; ninguna publicación ni otro sitio modificado en esta tanda. Pruebas nuevas: sólo presencia y capacidades; CI209/360 tests previo conservado. Progreso funcional sin variación: reparación de valor pendiente, QA remota/publicación bloqueadas.
+
 # Estado real y pendientes de PR #56
 
 Actualizado el 28 de octubre de 2026. No se ejecutaron nuevamente las matrices acreditadas ni la sonda remota del Secret sin un cambio de versión.
@@ -32,11 +44,11 @@ Actualizado el 28 de octubre de 2026. No se ejecutaron nuevamente las matrices a
 - Se verificaron las herramientas disponibles y se buscó capacidad de gestión mediante Plugin Management. Supabase conectado sólo expone lectura de claves públicas; no entrega ni crea claves secretas de servidor. Cloudflare conectado puede escribir Secrets, pero la CLI no dispone de su token. No se extrajeron tokens de las integraciones ni se utilizaron hashes, Vault, archivos secretos o sesiones ajenas como alternativa.
 - Intento del reparador con el entorno actual: `missing_secure_management_credentials`, detenido antes de requests o cambios. No se afirma que el Secret haya sido corregido.
 
-## Intervención mínima para que el agente haga el reemplazo
+## Alternativa anterior de gestión — REEMPLAZADA por carga directa en panel
 
 El usuario indicó que el agente debe hacer el reemplazo, en lugar de copiar él la clave entre dashboards. Queda autorizado; la limitación actual es de capacidades y credenciales de gestión, no de permiso del usuario.
 
-En los **Secrets protegidos de este entorno**, sin chat ni repositorio:
+No solicitar estos dos tokens como intervención mínima. La instrucción vigente es la carga directa descrita arriba. La alternativa histórica era, en los **Secrets protegidos de este entorno**, sin chat ni repositorio:
 
 1. `SUPABASE_ACCESS_TOKEN`: token de https://supabase.com/dashboard/account/tokens con acceso al proyecto y gestión de claves (API `secrets:read` / `secrets:write`); destino autorizado `api.supabase.com`.
 2. `CLOUDFLARE_API_TOKEN`: token de https://dash.cloudflare.com/profile/api-tokens con Workers Scripts: Edit para la cuenta `9f3d7af60fcb0c2b4fff8570843588f9`; destino `api.cloudflare.com`.

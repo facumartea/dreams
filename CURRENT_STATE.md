@@ -1,3 +1,15 @@
+# Acceso existente revisado; intervención mínima — 2026-10-29
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Continuación desde 2b8dcc1, sin repetir CI, matrices, sonda fallida ni publicaciones. Ejecutor operativo y checkout limpio comprobados. Cloudflare conectado respondió GET secrets 200: SUPABASE_SECRET_KEY/secret_text presente en dreams-official-backend. La integración ofrece PUT del Secret creando versión; no hace falta pedir token Cloudflare para esa operación. No se probó escritura con un valor ficticio ni se cambió ningún binding.
+
+Entorno observado actual/ready: SUPABASE_SECRET_KEY protegido y limitado a nwsmbemwtexmrtpkgxrz.supabase.co; su representación local no es una clave servidor exportable (ni modern secret ni JWT). SUPABASE_ACCESS_TOKEN, CLOUDFLARE_API_TOKEN y DREAMS_QA_ADMIN_PASSWORD ausentes. No se mostraron valores, fragmentos ni headers. Supabase conectado sólo expone claves públicas, no lectura de claves servidor; no hay herramienta de navegador autenticado para copiar desde el dashboard. No usar la contraseña destinada a reset como contraseña Admin actual.
+
+La petición anterior de DOS tokens queda reemplazada por UNA intervención concreta: desde Supabase del proyecto nwsmbemwtexmrtpkgxrz copiar una Secret API key de servidor existente completa y cargarla directamente en Cloudflare > Workers & Pages > dreams-official-backend > Settings > Variables and Secrets > Production/default > SUPABASE_SECRET_KEY, tipo Secret; guardar/desplegar sólo ese Worker privado. Nunca pegarla en chat ni reutilizar capturas. No crear/rotar/revocar claves. No ejecutar el reparador de gestión preparado, cuya creación aditiva requiere explicar primero su necesidad.
+
+Después de que el usuario indique carga terminada, continuar sin nueva autorización: observar versión nueva, ejecutar lectura directa y SDK desde candidato, confirmar proyecto, registro normal A/B sin confirmar email, login/sesión/logout, carrito y ownership de opiniones; QA Admin sólo con sesión legítima del Admin existente, sin creación ni cambio de contraseña. No afirmar acceso Admin disponible. Mantener candidato desconectado de oficial hasta QA necesaria acreditada. Rollback a3184576 conservado; ninguna publicación ni otro sitio modificado en esta tanda. Pruebas nuevas: sólo presencia y capacidades; CI209/360 tests previo conservado. Progreso funcional sin variación: reparación de valor pendiente, QA remota/publicación bloqueadas.
+
 # Continuación desde 6f54b08; reparación automática preparada — 2026-10-28
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
