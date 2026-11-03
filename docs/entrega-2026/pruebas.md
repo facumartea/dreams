@@ -1,3 +1,7 @@
+# Cambio posterior: Inicio sin carrusel —03/11/2026
+
+El usuario autorizó retirar íntegramente el único carrusel después de cerrar PR57. Los resultados históricos del carrusel que siguen describen versiones previas. R10 ahoraNO CUMPLE/PENDIENTE, sin reemplazo. [Auditoría de retirada](../evidence/home-removal-20261103/README.md):489tests y Chromiumlocal390/1440PASS, menúcolecciones intacto; publicación/QAoficial390/1440PASS acreditadas en esa carpeta (gap0, sin consola/overflow, tres colecciones accesibles).
+
 # Cierre comprobado — 03/11/2026 UTC
 
 **89 casos remotos distintos PASS** (92 registros históricos), nueve fases privadas PASS/281 assertions,476tests locales PASS y extracción limpia sin.git/secretos PASS. [Matriz por caso](../evidence/admin-audit-20261102/matriz-remota.md). Backend final29b843a0/e86f434: Admin alta/edición/imagen/borrado/logout y cliente login/recarga/logout PASS después de retirar QA. SecretAdmin, Cron y KV retirados; recursosQA0, sesionescustomerQA0. Sin stock/pedidos comerciales cambiados. [Estado final](../evidence/admin-audit-20261102/final-state.json).

@@ -1,9 +1,7 @@
-# Wireframe y conexiones
+# Wireframe y conexiones vigentes
 
-La imagen adjunta por el usuario es una propuesta, no evidencia de ejecución. Se reconstruyó como [SVG editable](wireframe.svg) y [PNG versionado](wireframe.png), conservando sus nueve pantallas y las conexiones transversales. Esta es una adaptación por IA, no un dibujo atribuido a los alumnos.
+La propuesta del usuario se adapta en [SVG editable](wireframe.svg) y [PNG](wireframe.png), ambos versionados. Inicio conserva portada estática, destacados, Sobre DREAMS, opiniones, recientes y footer. El bloque «Explorá la selección / Tres formas de empezar» se eliminó completamente por solicitud expresa del03/11/2026, sin reemplazo ni contenido oculto.
 
-Se agregaron las rutas reales (`producto.html?id=…`, `checkout-resultado.html`, `/admin`), opiniones en Inicio y el carrusel de colecciones. Se aclaró que el checkout académico no crea pedidos comerciales ni modifica stock. La tarjeta de Cuenta no otorga roles: el servidor autoriza cada acceso.
+Mujer/Hombre/Unisex siguen accesibles desde el menú y son filtros de /catalogo.html. Se conservan producto.html?id=…, cuenta.html, carrito.html, checkout.html, checkout-resultado.html y /admin. Cuenta controla sesión, carrito porUUID y opiniones propias. El cupón se valida en servidor; el checkout permanece académico con Envío$0 y no crea pedidos comerciales ni descuenta stock. WhatsApp es un enlace externo sin envío automático.
 
-Inicio, Nosotros y footer conectan por navegación global; el usuario puede volver al catálogo desde cualquier pantalla. Los enlaces de colecciones son filtros de `/catalogo.html`, no sitios independientes. Cuenta controla sesión, carrito por UUID y opiniones propias. WhatsApp abre un enlace externo; no es una API de mensajería integrada. No hay Favoritos en la navegación final.
-
-Las rutas están contrastadas con `public/*.html`, `views/admin.html`, `server/app.js` y `pages/official-backend.mjs`. El dibujo representa las rutas publicadas; registro, sesiones, carrito y checkout tienen pruebas de navegador oficial. El detalle y cierre Admin se registran en pruebas.md. El wireframe histórico `docs/wireframe.md` queda sustituido por éste para la entrega 2026.
+Este era el único carrusel implementado; el requisito de carrusel queda PENDIENTE/NO CUMPLE en la matriz. No se agregó un reemplazo. El dibujo describe la navegación, no acredita por sí mismo pruebas ni autoría manual de alumnos.

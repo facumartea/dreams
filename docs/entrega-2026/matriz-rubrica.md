@@ -27,7 +27,7 @@ Fuente: [PDF 2026 adjunto](rubrica-2026.pdf), 3 páginas; [texto extraído](rubr
 | R07 | «pantalla de login… y de registro» | `public/cuenta.html`, `cuenta.js`, registro/signIn | CUMPLE | PASS en navegador oficial: registro normal sin confirmación, doble envío, sesión, login/logout, renovación, contraseña incorrecta y recuperación de fallo de red. |
 | R08 | «productos… editarse… interfaz específica… usuario autorizado» | Admin, guard rol, JWT, readback de persistencia | CUMPLE | Admin real: todos los módulos, alta/edición/imagen/persistencia, cupones y moderación PASS; origen/rol protegidos. |
 | R09 | «si o si Javascript» | Código propio de navegador y servidor | CUMPLE | Uso real, no sólo librería. |
-| R10 | «carousel» | Carrusel manual de colecciones en Inicio oficial | CUMPLE | Contenidos distintos y controles comprobados en390/1440px, además de la matriz local. |
+| R10 | «carousel» | Único carrusel de Inicio eliminado íntegramente por instrucción expresa del usuario03/11/2026 | NO CUMPLE | Requisito pendiente: no queda otro carrusel funcional; no se oculta ni se agrega reemplazo. |
 | R11 | «web semántica» | HTML header/nav/main/section/article/footer y labels | CUMPLE | Evidencia de fuente; auditoría WCAG completa no realizada. |
 | R12 | «diseño adaptable… (responsive)» | CSS media queries, matriz previa y capturas oficiales | CUMPLE | Portada sin overflow en390/1440px; otros tamaños y Admin se distinguen en pruebas.md. |
 | O01 | «Wireframe… conexiones de las páginas… herramienta ad-hoc» | wireframe.png y SVG editable, wireframe.md | CUMPLE | Adaptado de propuesta suministrada, realmente versionado. |

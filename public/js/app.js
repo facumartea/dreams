@@ -294,31 +294,6 @@ function setup_header_scroll() {
 }
 
 
-// Control manual: sin reproducción automática ni movimiento obligatorio.
-function setup_collection_carousel() {
-    const root = document.querySelector('[data-collection-carousel]');
-    if (!root) return;
-    const slides = [...root.querySelectorAll('[data-carousel-slide]')];
-    if (slides.length < 2) return;
-    let current = 0;
-    const show = index => {
-        current = (index + slides.length) % slides.length;
-        slides.forEach((slide, position) => { slide.hidden = position !== current; });
-        root.querySelector('.carousel-status').textContent = `${current + 1} de ${slides.length}: ${slides[current].querySelector('h3').textContent}`;
-    };
-    root.querySelector('.carousel-controls').hidden = false;
-    root.querySelector('[data-carousel-previous]').addEventListener('click', () => show(current - 1));
-    root.querySelector('[data-carousel-next]').addEventListener('click', () => show(current + 1));
-    root.addEventListener('keydown', event => {
-        if (!['ArrowLeft', 'ArrowRight'].includes(event.key) || !event.target.matches('button[data-carousel-previous], button[data-carousel-next]')) return;
-        event.preventDefault();
-        show(current + (event.key === 'ArrowRight' ? 1 : -1));
-    });
-    show(0);
-}
-
-setup_collection_carousel();
-
 update_cart_count();
 setup_menu();
 setup_header_scroll();

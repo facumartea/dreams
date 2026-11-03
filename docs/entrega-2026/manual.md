@@ -4,7 +4,7 @@
 
 ## Inicio, catálogo y detalle
 
-Abrir Inicio y usar el menú para entrar a Perfumes, colecciones Mujer/Hombre/Unisex, Nosotros, Cuenta y Carrito. En móvil, desplegar el menú; con teclado usar Tab y Enter. La portada es una imagen estática. El carrusel de colecciones se mueve con Anterior/Siguiente o flechas cuando el foco está en esos controles; no avanza solo. Sin JavaScript conserva las tres opciones visibles.
+Abrir Inicio y usar el menú para entrar a Perfumes, colecciones Mujer/Hombre/Unisex, Nosotros, Cuenta y Carrito. En móvil, desplegar el menú; con teclado usar Tab y Enter. La portada es una imagen estática. Las colecciones Mujer, Hombre y Unisex se abren desde el menú. El bloque de carrusel del Inicio fue eliminado por solicitud del usuario; no quedan botones ni contador de ese bloque.
 
 En catálogo, escribir nombre o marca y aplicar la búsqueda. Combinar filtros disponibles de marca, género, tipo y precio, y ordenar por los criterios del selector. Limpiar filtros para volver a todo el catálogo. Abrir una tarjeta para ver imagen, tamaño, precio, stock, intensidad y notas. Una imagen rota muestra un fallback; no prueba que se haya perdido su URL en base.
 
