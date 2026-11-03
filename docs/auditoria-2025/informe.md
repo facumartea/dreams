@@ -75,13 +75,13 @@ La guía de defensa ayuda a practicar, pero no prueba dominio individual. Git y 
 
 **A. Incumplimiento confirmado frente al listado del pedido:** carrusel ausente. Hallazgos técnicos confirmados: función SQL de 53 líneas y función del asset remoto de 113 líneas. Su valoración exacta bajo la rúbrica queda pendiente de su fuente original.
 
-**B. Cumplimientos parciales:** originales/licencias del logo y las imágenes; alineación de runtime y repositorio; revisión Admin autenticada; interpretación del límite sobre SQL; reproducción del Worker fijado a `marca` frente al baseline que crea `brand`.
+**B. Cumplimientos parciales:** alineación de runtime y repositorio; revisión Admin autenticada; interpretación del límite sobre SQL; reproducción del Worker fijado a `marca` frente al baseline que crea `brand`.
 
 **C. Evidencia faltante:** PDF 2025, comprobantes de entregas, nómina y aportes individuales, participación y defensa. Una nueva revisión Admin, si se requiere, debe hacerse con una sesión supervisada, sin pedir secretos por chat.
 
 **D. Documentación contradictoria u obsoleta:** la carpeta `entrega-2026` no sustituye esta consigna; bloques históricos de CURRENT_STATE/PLAN/CHANGELOG y PRs abiertas describen Auth bloqueada, carrusel y hosting de versiones anteriores. El contador documentado en `funciones.md` revisa JavaScript, no SQL. El D.E.R. anterior hacía obligatorio el perfil para todo usuario Auth. `schema.sql` es histórico y usa `brand`; el remoto usa `marca`. Todo se conserva y se señala.
 
-**E. Elementos útiles adicionales:** tests, CI, seguridad, RLS, rollback, guía de defensa y bitácora transparente. No se convierten en prueba de asistencia ni en requisitos inventados.
+**E. Elementos útiles adicionales:** tests, CI, seguridad, RLS, rollback, guía de defensa, bitácora transparente y documentación de procedencia/licencias. No se exige un original vectorial para dar por válido un logo cuyo formato requerido es PNG. No se convierten en prueba de asistencia ni en requisitos inventados.
 
 **F. Elementos para revisar al preparar la entrega, sin eliminarlos aquí:** capturas históricas redundantes, matrices de distintas ediciones, configuraciones de preview/Railway y módulos preparados o retirados de Mercado Pago/demo/favorites. «No exigido» no significa «hay que borrarlo». No hay `node_modules` ni `.env` real versionados; el escaneo acotado de patrones PEM no encontró claves privadas. Esto no certifica toda la historia Git libre de secretos.
 

@@ -13,10 +13,10 @@
     "D02",
     "Logo simple PNG, máximo3colores de diseño",
     "public/assets/dreams-isologo-clean.png; public/cuenta.html",
-    "PARCIAL",
-    "PNG56×79 inspeccionado: símbolo dorado con transparencia y antialias. No contar píxeles como tintas. Original vectorial/proceso no acreditado.",
-    "Aportar original apropiado y aclaración docente si considera los tonos del raster colores de diseño.",
-    "P2",
+    "CUMPLE",
+    "PNG56×79 inspeccionado: símbolo simple dorado con transparencia y antialias; intención cromática compatible con máximo3colores. No contar tonos de suavizado como tintas distintas.",
+    "Original de mayor resolución y proceso de autoría son recomendaciones; no se exige vector como requisito inventado. Aclarar sólo si el docente interpreta distinto las tintas del raster.",
+    "P3",
     "Integrantes/profesor"
   ],
   [
@@ -53,10 +53,10 @@
     "D06",
     "Imágenes e íconos pertinentes",
     "public/index.html:53–62; public/producto.html; public/assets",
-    "PARCIAL",
-    "Fotografía de frasco ySVG de cuenta/carrito pertinentes; licencias individuales de imágenes de productos no acreditadas.",
-    "Aportar procedencia/licencias/originales, sin inventarlas.",
-    "P2",
+    "CUMPLE",
+    "Fotografía de frasco y SVG de cuenta/carrito pertinentes. La licencia individual no está acreditada, pero no se convierte en un requisito de rúbrica no leído.",
+    "Como recomendación adicional, documentar procedencia y licencias si están disponibles, sin inventarlas.",
+    "P3",
     "Integrantes"
   ],
   [
