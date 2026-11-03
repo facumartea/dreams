@@ -1,5 +1,7 @@
 // Academic-only signed snapshots. Card fields are never read, sent or stored.
 const PRESENTATION_KEY = 'dreams_presentation_checkout';
+let presentation_expected_totals = null;
+const presentation_totals = value => JSON.stringify([value.subtotal, value.discount || 0, value.total, value.coupon?.code || '']);
 const PRESENTATION_RECEIPT = 'dreams_presentation_receipt';
 const presentation_snapshot = items => JSON.stringify([sessionStorage.getItem('dreams_coupon') || '', items.map(item => [Number(item.id), Number(item.quantity)]).sort((a, b) => a[0] - b[0])]);
 async function presentation_request(path, body) {
@@ -40,6 +42,7 @@ async function presentation_quote(button, status, initial_snapshot) {
             const response = await fetch('/api/cart/quote', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ items: checkout_items_payload(), coupon_code: sessionStorage.getItem('dreams_coupon') || '' }) });
             const quote = await response.json();
             if (!response.ok || !quote.items?.length || quote.warnings?.length || quote.shipping !== 0 || quote.coupon_error || quote.total !== Math.round((quote.subtotal - (quote.discount || 0)) * 100) / 100 || !Number.isFinite(quote.subtotal) || quote.subtotal <= 0 || presentation_snapshot(get_cart()) !== initial_snapshot) throw new Error(quote.error || 'Revisá los productos del carrito antes de continuar.');
+            presentation_expected_totals = presentation_totals(quote);
             render_checkout(quote.items, quote.subtotal, quote.discount || 0, quote.total);
             const shipping = document.createElement('div');
             shipping.id = 'checkout-shipping'; shipping.className = 'summary-line';
@@ -65,6 +68,7 @@ function presentation_intent(cart) {
 async function presentation_complete(saved) {
                 if (!saved.ticket) {
                     const data = await presentation_request('session', { items: checkout_items_payload(), intent_id: saved.intent_id, coupon_code: sessionStorage.getItem('dreams_coupon') || '' });
+                    if (presentation_totals(data) !== presentation_expected_totals) throw new Error('Los importes cambiaron. Volvé al carrito para revisarlos.');
                     saved.ticket = data.ticket;
                     sessionStorage.setItem(PRESENTATION_KEY, JSON.stringify(saved));
                 }

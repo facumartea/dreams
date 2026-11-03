@@ -54,3 +54,13 @@ test('límite por cuenta permite otra cuenta con usos disponibles sin consumirlo
     const q = await resolve_coupon(fixture({per_user_limit: 1}, [{user_id:'A'}]), 'QA_ONLY', 20.02, 'B');
     assert.equal(q.discount, 2.5); assert.equal(q.coupon_error, null);
 });
+
+test('validación local distingue mes, longitud y ceros sin verificación bancaria', () => {
+    const nodes = Object.fromEntries(['number','expiry','cvv'].map(id => ['demo-card-'+id, {value:''}]));
+    const c = vm.createContext({document:{addEventListener(){},getElementById:id=>nodes[id]}});
+    vm.runInContext(readFileSync(require.resolve('../public/js/academic-inputs.js'),'utf8'),c);
+    for (const [number, expiry, cvv, expected] of [['0000 0000 0000 0000','12/30','001',true],['0000 0000 0000 0000','00/30','001',false],['0000 0000 0000 0000','13/30','001',false],['123','12/30','001',false],['0000 0000 0000 0000','1/30','001',false],['0000 0000 0000 0000','01/30','01',false]]) {
+        nodes['demo-card-number'].value=number;nodes['demo-card-expiry'].value=expiry;nodes['demo-card-cvv'].value=cvv;
+        assert.equal(c.academic_input_valid(),expected);
+    }
+});

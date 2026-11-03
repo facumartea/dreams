@@ -31,7 +31,7 @@ function harness(fetch_session) {
             const body = JSON.parse(options.body); calls.push({ url, body });
             let data;
             if (url === '/api/cart/quote') data = { items, subtotal: 240, total: 240, shipping: 0, shipping_label: 'Envío gratis' };
-            else if (url.endsWith('/session')) data = await fetch_session(body);
+            else if (url.endsWith('/session')) data = { ...(await fetch_session(body)), subtotal: 240, discount: 0, total: 240 };
             else data = { receipt: 'signed-fixture' };
             return { ok: true, json: async () => data };
         }

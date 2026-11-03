@@ -3852,7 +3852,7 @@
     },
     {
       "file": "public/js/presentation.js",
-      "name": "presentation_snapshot",
+      "name": "presentation_totals",
       "kind": "ArrowFunctionExpression",
       "start": 4,
       "end": 4,
@@ -3860,122 +3860,130 @@
     },
     {
       "file": "public/js/presentation.js",
+      "name": "presentation_snapshot",
+      "kind": "ArrowFunctionExpression",
+      "start": 6,
+      "end": 6,
+      "lines": 1
+    },
+    {
+      "file": "public/js/presentation.js",
       "name": "callback:map",
       "kind": "ArrowFunctionExpression",
-      "start": 4,
-      "end": 4,
+      "start": 6,
+      "end": 6,
       "lines": 1
     },
     {
       "file": "public/js/presentation.js",
       "name": "callback:sort",
       "kind": "ArrowFunctionExpression",
-      "start": 4,
-      "end": 4,
+      "start": 6,
+      "end": 6,
       "lines": 1
     },
     {
       "file": "public/js/presentation.js",
       "name": "presentation_request",
       "kind": "FunctionDeclaration",
-      "start": 5,
-      "end": 15,
+      "start": 7,
+      "end": 17,
       "lines": 11
     },
     {
       "file": "public/js/presentation.js",
       "name": "callback:catch",
       "kind": "ArrowFunctionExpression",
-      "start": 9,
-      "end": 9,
+      "start": 11,
+      "end": 11,
       "lines": 1
     },
     {
       "file": "public/js/presentation.js",
       "name": "presentation_layout",
       "kind": "FunctionDeclaration",
-      "start": 16,
-      "end": 27,
+      "start": 18,
+      "end": 29,
       "lines": 12
     },
     {
       "file": "public/js/presentation.js",
       "name": "presentation_labels",
       "kind": "FunctionDeclaration",
-      "start": 28,
-      "end": 37,
+      "start": 30,
+      "end": 39,
       "lines": 10
     },
     {
       "file": "public/js/presentation.js",
       "name": "presentation_quote",
       "kind": "FunctionDeclaration",
-      "start": 38,
-      "end": 52,
-      "lines": 15
+      "start": 40,
+      "end": 55,
+      "lines": 16
     },
     {
       "file": "public/js/presentation.js",
       "name": "presentation_intent",
       "kind": "FunctionDeclaration",
-      "start": 53,
-      "end": 64,
+      "start": 56,
+      "end": 67,
       "lines": 12
     },
     {
       "file": "public/js/presentation.js",
       "name": "presentation_complete",
       "kind": "FunctionDeclaration",
-      "start": 65,
-      "end": 75,
-      "lines": 11
+      "start": 68,
+      "end": 79,
+      "lines": 12
     },
     {
       "file": "public/js/presentation.js",
       "name": "presentation_submit",
       "kind": "FunctionDeclaration",
-      "start": 76,
-      "end": 92,
+      "start": 80,
+      "end": 96,
       "lines": 17
     },
     {
       "file": "public/js/presentation.js",
       "name": "setup",
       "kind": "FunctionExpression",
-      "start": 94,
-      "end": 102,
+      "start": 98,
+      "end": 106,
       "lines": 9
     },
     {
       "file": "public/js/presentation.js",
       "name": "callback:addEventListener",
       "kind": "ArrowFunctionExpression",
-      "start": 100,
-      "end": 100,
+      "start": 104,
+      "end": 104,
       "lines": 1
     },
     {
       "file": "public/js/presentation.js",
       "name": "callback:addEventListener",
       "kind": "ArrowFunctionExpression",
-      "start": 101,
-      "end": 101,
+      "start": 105,
+      "end": 105,
       "lines": 1
     },
     {
       "file": "public/js/presentation.js",
       "name": "result",
       "kind": "FunctionExpression",
-      "start": 103,
-      "end": 117,
+      "start": 107,
+      "end": 121,
       "lines": 15
     },
     {
       "file": "public/js/presentation.js",
       "name": "callback:map",
       "kind": "ArrowFunctionExpression",
-      "start": 110,
-      "end": 110,
+      "start": 114,
+      "end": 114,
       "lines": 1
     },
     {
@@ -6436,130 +6444,146 @@
     },
     {
       "file": "server/presentation-checkout.js",
+      "name": "item_amounts",
+      "kind": "ArrowFunctionExpression",
+      "start": 6,
+      "end": 6,
+      "lines": 1
+    },
+    {
+      "file": "server/presentation-checkout.js",
+      "name": "callback:map",
+      "kind": "ArrowFunctionExpression",
+      "start": 6,
+      "end": 6,
+      "lines": 1
+    },
+    {
+      "file": "server/presentation-checkout.js",
       "name": "owner_for",
       "kind": "ArrowFunctionExpression",
-      "start": 8,
-      "end": 12,
+      "start": 9,
+      "end": 13,
       "lines": 5
     },
     {
       "file": "server/presentation-checkout.js",
       "name": "callback:find",
       "kind": "ArrowFunctionExpression",
-      "start": 9,
-      "end": 9,
+      "start": 10,
+      "end": 10,
       "lines": 1
     },
     {
       "file": "server/presentation-checkout.js",
       "name": "valid_body",
       "kind": "ArrowFunctionExpression",
-      "start": 13,
-      "end": 13,
+      "start": 14,
+      "end": 14,
       "lines": 1
     },
     {
       "file": "server/presentation-checkout.js",
       "name": "callback:every",
       "kind": "ArrowFunctionExpression",
-      "start": 13,
-      "end": 13,
+      "start": 14,
+      "end": 14,
       "lines": 1
     },
     {
       "file": "server/presentation-checkout.js",
       "name": "presentation_checkout",
       "kind": "FunctionDeclaration",
-      "start": 16,
-      "end": 31,
+      "start": 17,
+      "end": 32,
       "lines": 16
     },
     {
       "file": "server/presentation-checkout.js",
       "name": "sign",
       "kind": "ArrowFunctionExpression",
-      "start": 19,
-      "end": 19,
+      "start": 20,
+      "end": 20,
       "lines": 1
     },
     {
       "file": "server/presentation-checkout.js",
       "name": "read",
       "kind": "FunctionDeclaration",
-      "start": 20,
-      "end": 28,
+      "start": 21,
+      "end": 29,
       "lines": 9
     },
     {
       "file": "server/presentation-checkout.js",
       "name": "install",
       "kind": "ArrowFunctionExpression",
-      "start": 29,
-      "end": 29,
+      "start": 30,
+      "end": 30,
       "lines": 1
     },
     {
       "file": "server/presentation-checkout.js",
       "name": "install_presentation",
       "kind": "FunctionDeclaration",
-      "start": 32,
-      "end": 61,
+      "start": 33,
+      "end": 62,
       "lines": 30
     },
     {
       "file": "server/presentation-checkout.js",
       "name": "gate",
       "kind": "ArrowFunctionExpression",
-      "start": 33,
-      "end": 33,
+      "start": 34,
+      "end": 34,
       "lines": 1
     },
     {
       "file": "server/presentation-checkout.js",
       "name": "callback:route",
       "kind": "ArrowFunctionExpression",
-      "start": 34,
-      "end": 43,
+      "start": 35,
+      "end": 44,
       "lines": 10
     },
     {
       "file": "server/presentation-checkout.js",
       "name": "callback:some",
       "kind": "ArrowFunctionExpression",
-      "start": 35,
-      "end": 35,
+      "start": 36,
+      "end": 36,
       "lines": 1
     },
     {
       "file": "server/presentation-checkout.js",
       "name": "callback:map",
       "kind": "ArrowFunctionExpression",
-      "start": 41,
-      "end": 41,
+      "start": 42,
+      "end": 42,
       "lines": 1
     },
     {
       "file": "server/presentation-checkout.js",
       "name": "callback:route",
       "kind": "ArrowFunctionExpression",
-      "start": 44,
-      "end": 54,
+      "start": 45,
+      "end": 55,
       "lines": 11
     },
     {
       "file": "server/presentation-checkout.js",
       "name": "callback:map",
       "kind": "ArrowFunctionExpression",
-      "start": 49,
-      "end": 49,
+      "start": 50,
+      "end": 50,
       "lines": 1
     },
     {
       "file": "server/presentation-checkout.js",
       "name": "callback:route",
       "kind": "ArrowFunctionExpression",
-      "start": 55,
-      "end": 60,
+      "start": 56,
+      "end": 61,
       "lines": 6
     },
     {
@@ -7209,6 +7233,38 @@
       "start": 53,
       "end": 56,
       "lines": 4
+    },
+    {
+      "file": "test/academic-coupon.test.js",
+      "name": "callback:test",
+      "kind": "ArrowFunctionExpression",
+      "start": 58,
+      "end": 66,
+      "lines": 9
+    },
+    {
+      "file": "test/academic-coupon.test.js",
+      "name": "callback:map",
+      "kind": "ArrowFunctionExpression",
+      "start": 59,
+      "end": 59,
+      "lines": 1
+    },
+    {
+      "file": "test/academic-coupon.test.js",
+      "name": "addEventListener",
+      "kind": "FunctionExpression",
+      "start": 60,
+      "end": 60,
+      "lines": 1
+    },
+    {
+      "file": "test/academic-coupon.test.js",
+      "name": "getElementById",
+      "kind": "ArrowFunctionExpression",
+      "start": 60,
+      "end": 60,
+      "lines": 1
     },
     {
       "file": "test/academic-coupon.test.js",
