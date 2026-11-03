@@ -21,3 +21,5 @@ Sólo está autorizada la publicación en https://dreams-perfumes.pages.dev/. No
 - [Matriz remota final](../evidence/admin-audit-20261102/matriz-remota.md), [estado y limpieza](../evidence/admin-audit-20261102/final-state.json), [nueve fases privadas](../evidence/admin-audit-20261102/private-qa-types.json).
 
 - [Actualización de cupón y formulario académico, con capturas oficiales](../evidence/coupon-academic-20261103/README.md).
+
+Actualización03/11/2026 posterior a PR57: [retirada autorizada del carrusel de Inicio](../evidence/home-removal-20261103/README.md). R10 queda NO CUMPLE/PENDIENTE; no hay otro carrusel ni reemplazo. Documentación y capturas describen la versión resultante.

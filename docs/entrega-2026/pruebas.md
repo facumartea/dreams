@@ -1,6 +1,6 @@
 # Cambio posterior: Inicio sin carrusel —03/11/2026
 
-El usuario autorizó retirar íntegramente el único carrusel después de cerrar PR57. Los resultados históricos del carrusel que siguen describen versiones previas. R10 ahoraNO CUMPLE/PENDIENTE, sin reemplazo. [Auditoría de retirada](../evidence/home-removal-20261103/README.md):489tests y Chromiumlocal390/1440PASS, menúcolecciones intacto; publicación/QAoficial se acreditan en esa carpeta al cerrar.
+El usuario autorizó retirar íntegramente el único carrusel después de cerrar PR57. Los resultados históricos del carrusel que siguen describen versiones previas. R10 ahoraNO CUMPLE/PENDIENTE, sin reemplazo. [Auditoría de retirada](../evidence/home-removal-20261103/README.md):489tests y Chromiumlocal390/1440PASS, menúcolecciones intacto; publicación/QAoficial390/1440PASS acreditadas en esa carpeta (gap0, sin consola/overflow, tres colecciones accesibles).
 
 # Cierre comprobado — 03/11/2026 UTC
 
