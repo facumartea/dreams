@@ -53,8 +53,11 @@ export async function fetch_official(request, env) {
 export default {
     fetch: fetch_official,
     async scheduled(_event, env) {
-        try { if (await prepare_browser_qa(env)) return; }
-        catch { console.warn('DREAMS private browser QA unavailable'); return; }
+        try { if (await prepare_browser_qa(env, { fetch: (url, init) => fetch_official(new Request(url, init), env) })) return; }
+        catch (error) {
+            const code = /^(admin_identity|admin_login_[0-9]{3}|secure_session|private_encryption_or_vault)$/.test(error.message) ? error.message : 'private_browser_runtime';
+            console.warn('DREAMS private browser QA unavailable', { type: 'dreams-private-browser-qa-state', status: 'FAIL', code }); return;
+        }
         if (env.QA_RUN_ID) await run_official_qa(env, request => fetch_official(request, env));
         else await scheduled_diagnostic(env);
     }

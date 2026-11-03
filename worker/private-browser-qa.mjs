@@ -18,11 +18,11 @@ async function normal_admin_session(env, services) {
     const db = (services.create_database || create_official_database)(env);
     const found = await db.auth.admin.getUserById(admin_id);
     if (found.error || found.data?.user?.id !== admin_id || !found.data.user.email) throw new Error('admin_identity');
+    const payload = JSON.stringify({ email: found.data.user.email, password: env.DREAMS_QA_ADMIN_PASSWORD });
     const response = await (services.fetch || fetch)(origin + '/api/auth/login', { method: 'POST', redirect: 'error',
-        headers: { Origin: origin, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: found.data.user.email, password: env.DREAMS_QA_ADMIN_PASSWORD }) });
+        headers: { Origin: origin, 'Content-Type': 'application/json', 'Content-Length': String(new TextEncoder().encode(payload).length) }, body: payload });
     const data = await response.json();
-    if (response.status !== 200 || data.user?.id !== admin_id || data.user?.is_admin !== true) throw new Error('admin_login');
+    if (response.status !== 200 || data.user?.id !== admin_id || data.user?.is_admin !== true) throw new Error('admin_login_' + response.status);
     const cookies = response.headers.getSetCookie();
     if (cookies.length < 2 || !cookies.every(c => /; HttpOnly/i.test(c) && /; Secure/i.test(c))) throw new Error('secure_session');
     return { origin, run: env.QA_RUN_ID, expires_at: Number(env.QA_EXPIRES_AT), cookies };
@@ -37,9 +37,10 @@ export async function prepare_browser_qa(env, services = {}) {
     if (!/^pr56-[a-z0-9-]{1,32}$/.test(env.QA_RUN_ID || '') || !Number.isFinite(expires) || expires <= Date.now() || expires - Date.now() > 1800000) return false;
     if (await env.QA_BROWSER_VAULT.get(env.QA_RUN_ID)) return false;
     const session = await normal_admin_session(env, services);
-    const encrypted = await encrypt_browser_session(env.QA_BROWSER_PUBLIC_KEY, session);
-    try { await env.QA_BROWSER_VAULT.put(env.QA_RUN_ID, JSON.stringify(encrypted), { expirationTtl: 1800 }); }
-    catch { await close_untransferred_session(session, services); throw new Error('private_vault_unavailable'); }
+    try {
+        const encrypted = await encrypt_browser_session(env.QA_BROWSER_PUBLIC_KEY, session);
+        await env.QA_BROWSER_VAULT.put(env.QA_RUN_ID, JSON.stringify(encrypted), { expirationTtl: 1800 });
+    } catch { await close_untransferred_session(session, services); throw new Error('private_encryption_or_vault'); }
     return true;
 }
 

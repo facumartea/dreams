@@ -1,3 +1,13 @@
+# Correcciones Admin preparadas; publicación todavía pendiente
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Auditoría retomada el02/11 (fecha del cliente). Nuevo checkpoint anterior `2233567`, CI218 aprobada/404 tests. Oficial sigue `a3184576`/`7b302cf` → legacy `d5df723d`; candidato temporal `69298e34`/`77ef7eb9` sólo privado. El intento de traspasar sesión contra login legacy no produjo grant ni sesiones Admin nuevas (consulta agregada auth.sessions: cero desde inicio de sonda); Cron retirado. Se corrige el mecanismo para login NORMAL dentro del candidato mediante fetch_official y Content-Length explícito; no se cambian Auth ni credenciales.
+
+Preparadas correcciones frontend de alcance Admin: lectura antes del alta; recuperación de respuesta perdida sin segundo POST; si hay cambios nuevos usa PUT al ID recuperado, y si hay discrepancias/ambigüedad no sobrescribe. Cupones y opiniones requieren readback de campos antes de anunciar éxito. Borrados requieren ausencia confirmada y se reconcilian tras respuesta perdida. Guardar/eliminar productos se excluyen mutuamente; borrar el producto editado limpia su ID y borrar otro conserva el borrador. No esquema remoto ni datos comerciales modificados. Nuevos DR12/FR25 locales +25 previos de persistencia pasan; suite completa siguiente y CI se acreditan al terminar.
+
+KV privado temporal `2440c640ebd6493d83b39dddba3cbdb2`, título dreams-private-admin-qa-temporary: aún sin grant al último chequeo. Clave privada sólo RAM del proceso navegador QA; nunca archivo/argumentos/logs. Reemplazar binding público efímero al próximo deploy con la clave pública del proceso activo, sin exponer valores servidor. Retirar KV, Cron, mecanismo y SecretAdmin al cerrar. Antes de conectar: lectura fresca directa/SDK y QA de versión vigente. Reproducir oficial403 usando UI y comprobar ausencia del producto antes/después de la solicitud.
+
 # Auditoría Admin retomada: QA histórica completa, oficial aún legacy
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.

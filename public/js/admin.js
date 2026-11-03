@@ -10,9 +10,11 @@ let dashboard_request = 0;
 let admin_products_state = 'loading';
 let admin_products_request_id = 0;
 let admin_coupons = [];
+let uncertain_coupon_create = null;
 let admin_reviews = [];
 let editing_product_id = '';
 let product_save_pending = false;
+let uncertain_product_create = null;
 let product_disabled_controls = new Map();
 let product_image_preview_state = 'empty';
 let product_image_preview_url = '';
@@ -146,6 +148,7 @@ function may_replace_product() { return !product_form_dirty() || confirm('Tenés
 function fill_form(product) {
     if (product_save_pending) { show_toast('Esperá a que termine el guardado.'); return; }
     if (!may_replace_product()) return;
+    uncertain_product_create = null;
     editing_product_id = String(product.id);
     document.getElementById('form-label').textContent = `EDITAR PRODUCTO #${product.id}`;
     document.getElementById('product-id').value = editing_product_id;
@@ -250,13 +253,35 @@ async function confirm_product_persistence(saved, expected) {
     }
 }
 
+function product_matches(stored, expected) {
+    return Object.keys(expected).every(key => product_field_value(key, stored[key]) === product_field_value(key, expected[key]));
+}
+async function prepare_product_creation(data) {
+    const rows = await admin_fetch('/api/admin/products');
+    if (!Array.isArray(rows)) throw new Error('No pudimos revisar el listado antes del alta. Reintentá la consulta.');
+    const previous = uncertain_product_create;
+    const identity = previous || data;
+    const matches = rows.filter(row => String(row.brand).trim() === identity.brand.trim() && String(row.name).trim() === identity.name.trim());
+    if (matches.length && (!previous || matches.length !== 1 || !product_matches(matches[0], previous))) {
+        throw new Error('Ya existe un producto con esa marca y nombre. Revisá el listado y editalo desde allí.');
+    }
+    if (matches.length === 1) return matches[0].id;
+    uncertain_product_create = { ...data };
+    return '';
+}
+async function write_product_record(id, data) {
+    if (id && uncertain_product_create && product_matches(data, uncertain_product_create)) return { id };
+    return admin_fetch(id ? `/api/admin/products/${id}` : '/api/admin/products', { method: id ? 'PUT' : 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+}
 async function commit_product(id, data) {
     set_product_save_pending(true);
     try {
-        const saved = await admin_fetch(id ? `/api/admin/products/${id}` : '/api/admin/products', { method: id ? 'PUT' : 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+        const resolved = id || await prepare_product_creation(data);
+        const saved = await write_product_record(resolved, data);
         await confirm_product_persistence(saved, data);
+        uncertain_product_create = null;
         reset_form(true);
-        document.getElementById('admin-message').textContent = id ? 'Producto actualizado correctamente.' : 'Producto creado correctamente.';
+        document.getElementById('admin-message').textContent = id ? 'Producto actualizado correctamente.' : resolved ? 'Alta anterior recuperada y cambios confirmados.' : 'Producto creado correctamente.';
         await Promise.all([load_dashboard(), load_admin_products()]);
     } catch (error) { document.getElementById('admin-message').textContent = `${error.message} Revisá el listado antes de repetir un alta si no pudimos confirmar el guardado.`; }
     finally { set_product_save_pending(false); }
@@ -270,9 +295,17 @@ async function save_product(event) {
 }
 
 async function delete_product(id, button) {
+    if (product_save_pending) { show_toast('Esperá a que termine la operación del producto.'); return; }
     if (!confirm('¿Seguro que querés eliminar este perfume? Esta acción es permanente.')) return;
     await with_pending(button, 'Eliminando…', async () => {
-        try { await admin_fetch(`/api/admin/products/${id}`, { method: 'DELETE' }); show_toast('Producto eliminado.'); await Promise.all([load_dashboard(), load_admin_products()]); } catch (error) { show_toast(error.message); }
+        set_product_save_pending(true);
+        try {
+            await delete_admin_record('products', id);
+            if (String(editing_product_id) === String(id)) reset_form(true);
+            await Promise.all([load_dashboard(), load_admin_products()]);
+            show_toast('Producto eliminado.');
+        } catch (error) { show_toast(error.message); }
+        finally { set_product_save_pending(false); }
     });
 }
 
@@ -282,6 +315,7 @@ function reset_form(force = false) {
     editing_product_id = '';
     document.getElementById('product-form').reset();
     document.getElementById('product-id').value = '';
+    uncertain_product_create = null;
     document.getElementById('form-label').textContent = 'NUEVO PRODUCTO';
     document.getElementById('admin-message').textContent = '';
     product_image_preview_token += 1;
@@ -322,11 +356,39 @@ function render_admin_reviews() {
     });
 }
 
+function admin_record_value(key, value) {
+    if (['rating', 'discount_percent'].includes(key)) return Number(value);
+    if (key === 'active') return value === true;
+    return String(value ?? '').trim();
+}
+async function confirm_admin_record(kind, saved, expected) {
+    const id = Number(saved?.id);
+    if (!['coupons', 'reviews'].includes(kind) || !Number.isSafeInteger(id) || id < 1) throw new Error('No se confirmó el identificador guardado.');
+    const rows = await admin_fetch(`/api/admin/${kind}`);
+    const matches = Array.isArray(rows) ? rows.filter(row => Number(row.id) === id) : [];
+    if (matches.length !== 1 || !Object.keys(expected).every(key => admin_record_value(key, matches[0][key]) === admin_record_value(key, expected[key]))) {
+        throw new Error('No pudimos confirmar los cambios guardados. Los datos del formulario se conservan.');
+    }
+    return matches[0];
+}
+async function confirm_admin_absent(kind, id) {
+    const rows = await admin_fetch(`/api/admin/${kind}`);
+    if (!Array.isArray(rows) || rows.some(row => String(row.id) === String(id))) throw new Error('No pudimos confirmar la eliminación. Revisá el listado antes de reintentar.');
+}
+async function delete_admin_record(kind, id) {
+    try { await admin_fetch(`/api/admin/${kind}/${id}`, { method: 'DELETE' }); }
+    catch { await confirm_admin_absent(kind, id); return; }
+    await confirm_admin_absent(kind, id);
+}
+
+
 async function save_review(id, card, button) {
     await with_pending(button, 'Guardando…', async () => {
         const message = card.querySelector('.review-message');
         try {
-            const updated = await admin_fetch(`/api/admin/reviews/${id}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ rating: card.querySelector('.review-rating').value, comment: card.querySelector('.review-comment').value }) });
+            const data = { rating: card.querySelector('.review-rating').value, comment: card.querySelector('.review-comment').value };
+            const saved = await admin_fetch(`/api/admin/reviews/${id}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+            const updated = await confirm_admin_record('reviews', saved, data);
             admin_reviews = admin_reviews.map(review => String(review.id) === String(id) ? updated : review);
             message.textContent = 'Opinión actualizada.';
         } catch (error) { message.textContent = error.message; }
@@ -337,7 +399,7 @@ async function delete_review(id, button) {
     if (!confirm('¿Seguro que querés eliminar esta opinión? Esta acción es permanente.')) return;
     await with_pending(button, 'Eliminando…', async () => {
         try {
-            await admin_fetch(`/api/admin/reviews/${id}`, { method: 'DELETE' });
+            await delete_admin_record('reviews', id);
             admin_reviews = admin_reviews.filter(review => String(review.id) !== String(id));
             render_admin_reviews();
             show_toast('Opinión eliminada.');
@@ -377,6 +439,7 @@ async function load_admin_coupons() {
 }
 
 function fill_coupon_form(coupon) {
+    uncertain_coupon_create = null;
     document.getElementById('coupon-form-label').textContent = `EDITAR CUPÓN ${coupon.code}`;
     document.getElementById('coupon-id').value = coupon.id;
     document.getElementById('admin-coupon-code').value = coupon.code;
@@ -386,6 +449,7 @@ function fill_coupon_form(coupon) {
 }
 
 function reset_coupon_form() {
+    uncertain_coupon_create = null;
     document.getElementById('coupon-form').reset();
     document.getElementById('coupon-id').value = '';
     document.getElementById('coupon-active').checked = true;
@@ -395,10 +459,30 @@ function reset_coupon_form() {
 
 async function save_coupon_value(current, value) {
     try {
-        await admin_fetch(`/api/admin/coupons/${current.id}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ code: value.code, discount_percent: value.discount_percent, active: value.active }) });
-        show_toast(value.active ? 'Cupón activado.' : 'Cupón desactivado.');
+        const data = { code: value.code, discount_percent: value.discount_percent, active: value.active };
+        const saved = await admin_fetch(`/api/admin/coupons/${current.id}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+        await confirm_admin_record('coupons', saved, data);
         await load_admin_coupons();
+        show_toast(value.active ? 'Cupón activado.' : 'Cupón desactivado.');
     } catch (error) { show_toast(error.message); }
+}
+
+async function prepare_coupon_creation(data) {
+    const rows = await admin_fetch('/api/admin/coupons');
+    if (!Array.isArray(rows)) throw new Error('No pudimos revisar los cupones antes del alta.');
+    const previous = uncertain_coupon_create, identity = previous || data;
+    const matches = rows.filter(row => row.code === identity.code.trim());
+    if (matches.length && (!previous || matches.length !== 1 || !Object.keys(previous).every(key => admin_record_value(key, matches[0][key]) === admin_record_value(key, previous[key])))) {
+        throw new Error('Ya existe un cupón con ese código. Revisá el listado antes de repetir el alta.');
+    }
+    if (matches.length === 1) return matches[0].id;
+    uncertain_coupon_create = { ...data };
+    return '';
+}
+async function write_coupon_record(id, data) {
+    const resolved = id || await prepare_coupon_creation(data);
+    if (resolved && uncertain_coupon_create && Object.keys(data).every(key => admin_record_value(key, data[key]) === admin_record_value(key, uncertain_coupon_create[key]))) return { id: resolved };
+    return admin_fetch(resolved ? `/api/admin/coupons/${resolved}` : '/api/admin/coupons', { method: resolved ? 'PUT' : 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
 }
 
 async function save_coupon(event) {
@@ -407,18 +491,19 @@ async function save_coupon(event) {
         const id = document.getElementById('coupon-id').value;
         const data = { code: document.getElementById('admin-coupon-code').value.toUpperCase(), discount_percent: document.getElementById('coupon-percent').value, active: document.getElementById('coupon-active').checked };
         try {
-            await admin_fetch(id ? `/api/admin/coupons/${id}` : '/api/admin/coupons', { method: id ? 'PUT' : 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+            const saved = await write_coupon_record(id, data);
+            await confirm_admin_record('coupons', saved, data);
+            await load_admin_coupons();
             const message = id ? 'Cupón actualizado.' : 'Cupón creado.';
             reset_coupon_form();
             document.getElementById('coupon-message').textContent = message;
-            await load_admin_coupons();
         } catch (error) { document.getElementById('coupon-message').textContent = error.message; }
     });
 }
 
 async function delete_coupon(id) {
     if (!confirm('¿Seguro que querés eliminar este cupón? Los pedidos anteriores conservarán el código y descuento aplicado.')) return;
-    try { await admin_fetch(`/api/admin/coupons/${id}`, { method: 'DELETE' }); show_toast('Cupón eliminado.'); reset_coupon_form(); await load_admin_coupons(); } catch (error) { show_toast(error.message); }
+    try { await delete_admin_record('coupons', id); show_toast('Cupón eliminado.'); reset_coupon_form(); await load_admin_coupons(); } catch (error) { show_toast(error.message); }
 }
 
 function module_selected(id) {

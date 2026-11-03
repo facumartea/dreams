@@ -50,7 +50,8 @@ test('caída de lectura posterior conserva el formulario y no anuncia éxito ni 
     let resets = 0, writes = 0;
     h.reset_form = () => { resets++; };
     h.set_product_save_pending = () => {};
-    h.admin_fetch = async (_path, options) => { if (options) { writes++; return { id: 7 }; } throw new Error('lectura interrumpida'); };
+    let reads = 0;
+    h.admin_fetch = async (_path, options) => { if (options) { writes++; return { id: 7 }; } if (reads++ === 0) return []; throw new Error('lectura interrumpida'); };
     await h.commit_product('', expected);
     assert.equal(writes, 1);
     assert.equal(resets, 0);

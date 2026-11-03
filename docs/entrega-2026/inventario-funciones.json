@@ -1,6 +1,6 @@
 {
   "limit": 40,
-  "files": 112,
+  "files": 113,
   "records": [
     {
       "file": "pages/catalog.mjs",
@@ -910,165 +910,149 @@
       "file": "public/js/admin.js",
       "name": "show_toast",
       "kind": "FunctionDeclaration",
-      "start": 24,
-      "end": 33,
+      "start": 26,
+      "end": 35,
       "lines": 10
     },
     {
       "file": "public/js/admin.js",
       "name": "callback:setTimeout",
       "kind": "ArrowFunctionExpression",
-      "start": 32,
-      "end": 32,
+      "start": 34,
+      "end": 34,
       "lines": 1
     },
     {
       "file": "public/js/admin.js",
       "name": "admin_fetch",
       "kind": "FunctionDeclaration",
-      "start": 35,
-      "end": 42,
+      "start": 37,
+      "end": 44,
       "lines": 8
     },
     {
       "file": "public/js/admin.js",
       "name": "callback:catch",
       "kind": "ArrowFunctionExpression",
-      "start": 39,
-      "end": 39,
+      "start": 41,
+      "end": 41,
       "lines": 1
     },
     {
       "file": "public/js/admin.js",
       "name": "with_pending",
       "kind": "FunctionDeclaration",
-      "start": 44,
-      "end": 56,
+      "start": 46,
+      "end": 58,
       "lines": 13
     },
     {
       "file": "public/js/admin.js",
       "name": "verify_admin",
       "kind": "FunctionDeclaration",
-      "start": 58,
-      "end": 64,
+      "start": 60,
+      "end": 66,
       "lines": 7
     },
     {
       "file": "public/js/admin.js",
       "name": "stat_card",
       "kind": "FunctionDeclaration",
-      "start": 71,
-      "end": 74,
+      "start": 73,
+      "end": 76,
       "lines": 4
     },
     {
       "file": "public/js/admin.js",
       "name": "render_dashboard",
       "kind": "FunctionDeclaration",
-      "start": 75,
-      "end": 80,
+      "start": 77,
+      "end": 82,
       "lines": 6
     },
     {
       "file": "public/js/admin.js",
       "name": "callback:map",
       "kind": "ArrowFunctionExpression",
-      "start": 77,
-      "end": 77,
+      "start": 79,
+      "end": 79,
       "lines": 1
     },
     {
       "file": "public/js/admin.js",
       "name": "load_dashboard",
       "kind": "FunctionDeclaration",
-      "start": 81,
-      "end": 92,
+      "start": 83,
+      "end": 94,
       "lines": 12
     },
     {
       "file": "public/js/admin.js",
       "name": "refresh_product_counts",
       "kind": "FunctionDeclaration",
-      "start": 94,
-      "end": 99,
+      "start": 96,
+      "end": 101,
       "lines": 6
     },
     {
       "file": "public/js/admin.js",
       "name": "callback:filter",
       "kind": "ArrowFunctionExpression",
-      "start": 96,
-      "end": 96,
+      "start": 98,
+      "end": 98,
       "lines": 1
     },
     {
       "file": "public/js/admin.js",
       "name": "load_admin_products",
       "kind": "FunctionDeclaration",
-      "start": 100,
-      "end": 116,
+      "start": 102,
+      "end": 118,
       "lines": 17
     },
     {
       "file": "public/js/admin.js",
       "name": "product_message_row",
       "kind": "FunctionDeclaration",
-      "start": 118,
-      "end": 121,
+      "start": 120,
+      "end": 123,
       "lines": 4
     },
     {
       "file": "public/js/admin.js",
       "name": "admin_product_row",
       "kind": "FunctionDeclaration",
-      "start": 122,
-      "end": 128,
+      "start": 124,
+      "end": 130,
       "lines": 7
     },
     {
       "file": "public/js/admin.js",
       "name": "callback:addEventListener",
       "kind": "ArrowFunctionExpression",
-      "start": 125,
-      "end": 125,
+      "start": 127,
+      "end": 127,
       "lines": 1
     },
     {
       "file": "public/js/admin.js",
       "name": "callback:addEventListener",
       "kind": "ArrowFunctionExpression",
-      "start": 126,
-      "end": 126,
+      "start": 128,
+      "end": 128,
       "lines": 1
     },
     {
       "file": "public/js/admin.js",
       "name": "render_admin_products",
       "kind": "FunctionDeclaration",
-      "start": 129,
-      "end": 140,
+      "start": 131,
+      "end": 142,
       "lines": 12
     },
     {
       "file": "public/js/admin.js",
       "name": "apply_product_search",
-      "kind": "FunctionDeclaration",
-      "start": 141,
-      "end": 141,
-      "lines": 1
-    },
-    {
-      "file": "public/js/admin.js",
-      "name": "clear_product_search",
-      "kind": "FunctionDeclaration",
-      "start": 142,
-      "end": 142,
-      "lines": 1
-    },
-    {
-      "file": "public/js/admin.js",
-      "name": "product_form_dirty",
       "kind": "FunctionDeclaration",
       "start": 143,
       "end": 143,
@@ -1076,7 +1060,7 @@
     },
     {
       "file": "public/js/admin.js",
-      "name": "may_replace_product",
+      "name": "clear_product_search",
       "kind": "FunctionDeclaration",
       "start": 144,
       "end": 144,
@@ -1084,79 +1068,79 @@
     },
     {
       "file": "public/js/admin.js",
-      "name": "fill_form",
+      "name": "product_form_dirty",
+      "kind": "FunctionDeclaration",
+      "start": 145,
+      "end": 145,
+      "lines": 1
+    },
+    {
+      "file": "public/js/admin.js",
+      "name": "may_replace_product",
       "kind": "FunctionDeclaration",
       "start": 146,
-      "end": 158,
-      "lines": 13
+      "end": 146,
+      "lines": 1
+    },
+    {
+      "file": "public/js/admin.js",
+      "name": "fill_form",
+      "kind": "FunctionDeclaration",
+      "start": 148,
+      "end": 161,
+      "lines": 14
     },
     {
       "file": "public/js/admin.js",
       "name": "is_supported_image_url",
       "kind": "FunctionDeclaration",
-      "start": 160,
-      "end": 160,
+      "start": 163,
+      "end": 163,
       "lines": 1
     },
     {
       "file": "public/js/admin.js",
       "name": "is_current_product_image",
       "kind": "FunctionDeclaration",
-      "start": 162,
-      "end": 164,
+      "start": 165,
+      "end": 167,
       "lines": 3
     },
     {
       "file": "public/js/admin.js",
       "name": "set_product_image_preview",
       "kind": "FunctionDeclaration",
-      "start": 166,
-      "end": 180,
+      "start": 169,
+      "end": 183,
       "lines": 15
     },
     {
       "file": "public/js/admin.js",
       "name": "complete_product_image",
       "kind": "FunctionDeclaration",
-      "start": 182,
-      "end": 188,
+      "start": 185,
+      "end": 191,
       "lines": 7
     },
     {
       "file": "public/js/admin.js",
       "name": "fail_product_image",
       "kind": "FunctionDeclaration",
-      "start": 189,
-      "end": 193,
+      "start": 192,
+      "end": 196,
       "lines": 5
     },
     {
       "file": "public/js/admin.js",
       "name": "preview_product_image",
       "kind": "FunctionDeclaration",
-      "start": 194,
-      "end": 206,
+      "start": 197,
+      "end": 209,
       "lines": 13
     },
     {
       "file": "public/js/admin.js",
       "name": "anónima",
-      "kind": "ArrowFunctionExpression",
-      "start": 202,
-      "end": 202,
-      "lines": 1
-    },
-    {
-      "file": "public/js/admin.js",
-      "name": "anónima",
-      "kind": "ArrowFunctionExpression",
-      "start": 203,
-      "end": 203,
-      "lines": 1
-    },
-    {
-      "file": "public/js/admin.js",
-      "name": "callback:setTimeout",
       "kind": "ArrowFunctionExpression",
       "start": 205,
       "end": 205,
@@ -1164,227 +1148,179 @@
     },
     {
       "file": "public/js/admin.js",
+      "name": "anónima",
+      "kind": "ArrowFunctionExpression",
+      "start": 206,
+      "end": 206,
+      "lines": 1
+    },
+    {
+      "file": "public/js/admin.js",
+      "name": "callback:setTimeout",
+      "kind": "ArrowFunctionExpression",
+      "start": 208,
+      "end": 208,
+      "lines": 1
+    },
+    {
+      "file": "public/js/admin.js",
       "name": "schedule_product_image_preview",
       "kind": "FunctionDeclaration",
-      "start": 208,
-      "end": 214,
+      "start": 211,
+      "end": 217,
       "lines": 7
     },
     {
       "file": "public/js/admin.js",
       "name": "get_form_data",
       "kind": "FunctionDeclaration",
-      "start": 216,
-      "end": 221,
+      "start": 219,
+      "end": 224,
       "lines": 6
     },
     {
       "file": "public/js/admin.js",
       "name": "set_product_save_pending",
       "kind": "FunctionDeclaration",
-      "start": 223,
-      "end": 235,
+      "start": 226,
+      "end": 238,
       "lines": 13
     },
     {
       "file": "public/js/admin.js",
       "name": "callback:map",
       "kind": "ArrowFunctionExpression",
-      "start": 228,
-      "end": 228,
+      "start": 231,
+      "end": 231,
       "lines": 1
     },
     {
       "file": "public/js/admin.js",
       "name": "product_field_value",
       "kind": "FunctionDeclaration",
-      "start": 237,
-      "end": 241,
+      "start": 240,
+      "end": 244,
       "lines": 5
     },
     {
       "file": "public/js/admin.js",
       "name": "confirm_product_persistence",
       "kind": "FunctionDeclaration",
-      "start": 243,
-      "end": 251,
+      "start": 246,
+      "end": 254,
       "lines": 9
     },
     {
       "file": "public/js/admin.js",
       "name": "callback:find",
       "kind": "ArrowFunctionExpression",
-      "start": 246,
-      "end": 246,
+      "start": 249,
+      "end": 249,
       "lines": 1
     },
     {
       "file": "public/js/admin.js",
       "name": "callback:every",
       "kind": "ArrowFunctionExpression",
-      "start": 248,
-      "end": 248,
+      "start": 251,
+      "end": 251,
       "lines": 1
+    },
+    {
+      "file": "public/js/admin.js",
+      "name": "product_matches",
+      "kind": "FunctionDeclaration",
+      "start": 256,
+      "end": 258,
+      "lines": 3
+    },
+    {
+      "file": "public/js/admin.js",
+      "name": "callback:every",
+      "kind": "ArrowFunctionExpression",
+      "start": 257,
+      "end": 257,
+      "lines": 1
+    },
+    {
+      "file": "public/js/admin.js",
+      "name": "prepare_product_creation",
+      "kind": "FunctionDeclaration",
+      "start": 259,
+      "end": 271,
+      "lines": 13
+    },
+    {
+      "file": "public/js/admin.js",
+      "name": "callback:filter",
+      "kind": "ArrowFunctionExpression",
+      "start": 264,
+      "end": 264,
+      "lines": 1
+    },
+    {
+      "file": "public/js/admin.js",
+      "name": "write_product_record",
+      "kind": "FunctionDeclaration",
+      "start": 272,
+      "end": 275,
+      "lines": 4
     },
     {
       "file": "public/js/admin.js",
       "name": "commit_product",
       "kind": "FunctionDeclaration",
-      "start": 253,
-      "end": 263,
-      "lines": 11
+      "start": 276,
+      "end": 288,
+      "lines": 13
     },
     {
       "file": "public/js/admin.js",
       "name": "save_product",
       "kind": "FunctionDeclaration",
-      "start": 264,
-      "end": 270,
+      "start": 289,
+      "end": 295,
       "lines": 7
     },
     {
       "file": "public/js/admin.js",
       "name": "callback:with_pending",
       "kind": "ArrowFunctionExpression",
-      "start": 269,
-      "end": 269,
+      "start": 294,
+      "end": 294,
       "lines": 1
     },
     {
       "file": "public/js/admin.js",
       "name": "delete_product",
       "kind": "FunctionDeclaration",
-      "start": 272,
-      "end": 277,
-      "lines": 6
+      "start": 297,
+      "end": 310,
+      "lines": 14
     },
     {
       "file": "public/js/admin.js",
       "name": "callback:with_pending",
       "kind": "ArrowFunctionExpression",
-      "start": 274,
-      "end": 276,
-      "lines": 3
+      "start": 300,
+      "end": 309,
+      "lines": 10
     },
     {
       "file": "public/js/admin.js",
       "name": "reset_form",
       "kind": "FunctionDeclaration",
-      "start": 279,
-      "end": 292,
-      "lines": 14
+      "start": 312,
+      "end": 326,
+      "lines": 15
     },
     {
       "file": "public/js/admin.js",
       "name": "load_users",
       "kind": "FunctionDeclaration",
-      "start": 294,
-      "end": 297,
+      "start": 328,
+      "end": 331,
       "lines": 4
-    },
-    {
-      "file": "public/js/admin.js",
-      "name": "callback:map",
-      "kind": "ArrowFunctionExpression",
-      "start": 296,
-      "end": 296,
-      "lines": 1
-    },
-    {
-      "file": "public/js/admin.js",
-      "name": "load_inquiries",
-      "kind": "FunctionDeclaration",
-      "start": 299,
-      "end": 302,
-      "lines": 4
-    },
-    {
-      "file": "public/js/admin.js",
-      "name": "callback:map",
-      "kind": "ArrowFunctionExpression",
-      "start": 301,
-      "end": 301,
-      "lines": 1
-    },
-    {
-      "file": "public/js/admin.js",
-      "name": "load_admin_reviews",
-      "kind": "FunctionDeclaration",
-      "start": 304,
-      "end": 307,
-      "lines": 4
-    },
-    {
-      "file": "public/js/admin.js",
-      "name": "render_admin_reviews",
-      "kind": "FunctionDeclaration",
-      "start": 309,
-      "end": 323,
-      "lines": 15
-    },
-    {
-      "file": "public/js/admin.js",
-      "name": "callback:filter",
-      "kind": "ArrowFunctionExpression",
-      "start": 311,
-      "end": 311,
-      "lines": 1
-    },
-    {
-      "file": "public/js/admin.js",
-      "name": "callback:map",
-      "kind": "ArrowFunctionExpression",
-      "start": 317,
-      "end": 317,
-      "lines": 1
-    },
-    {
-      "file": "public/js/admin.js",
-      "name": "callback:map",
-      "kind": "ArrowFunctionExpression",
-      "start": 317,
-      "end": 317,
-      "lines": 1
-    },
-    {
-      "file": "public/js/admin.js",
-      "name": "callback:forEach",
-      "kind": "ArrowFunctionExpression",
-      "start": 318,
-      "end": 322,
-      "lines": 5
-    },
-    {
-      "file": "public/js/admin.js",
-      "name": "callback:addEventListener",
-      "kind": "ArrowFunctionExpression",
-      "start": 320,
-      "end": 320,
-      "lines": 1
-    },
-    {
-      "file": "public/js/admin.js",
-      "name": "callback:addEventListener",
-      "kind": "ArrowFunctionExpression",
-      "start": 321,
-      "end": 321,
-      "lines": 1
-    },
-    {
-      "file": "public/js/admin.js",
-      "name": "save_review",
-      "kind": "FunctionDeclaration",
-      "start": 325,
-      "end": 334,
-      "lines": 10
-    },
-    {
-      "file": "public/js/admin.js",
-      "name": "callback:with_pending",
-      "kind": "ArrowFunctionExpression",
-      "start": 326,
-      "end": 333,
-      "lines": 8
     },
     {
       "file": "public/js/admin.js",
@@ -1396,322 +1332,522 @@
     },
     {
       "file": "public/js/admin.js",
-      "name": "delete_review",
+      "name": "load_inquiries",
       "kind": "FunctionDeclaration",
-      "start": 336,
-      "end": 347,
+      "start": 333,
+      "end": 336,
+      "lines": 4
+    },
+    {
+      "file": "public/js/admin.js",
+      "name": "callback:map",
+      "kind": "ArrowFunctionExpression",
+      "start": 335,
+      "end": 335,
+      "lines": 1
+    },
+    {
+      "file": "public/js/admin.js",
+      "name": "load_admin_reviews",
+      "kind": "FunctionDeclaration",
+      "start": 338,
+      "end": 341,
+      "lines": 4
+    },
+    {
+      "file": "public/js/admin.js",
+      "name": "render_admin_reviews",
+      "kind": "FunctionDeclaration",
+      "start": 343,
+      "end": 357,
+      "lines": 15
+    },
+    {
+      "file": "public/js/admin.js",
+      "name": "callback:filter",
+      "kind": "ArrowFunctionExpression",
+      "start": 345,
+      "end": 345,
+      "lines": 1
+    },
+    {
+      "file": "public/js/admin.js",
+      "name": "callback:map",
+      "kind": "ArrowFunctionExpression",
+      "start": 351,
+      "end": 351,
+      "lines": 1
+    },
+    {
+      "file": "public/js/admin.js",
+      "name": "callback:map",
+      "kind": "ArrowFunctionExpression",
+      "start": 351,
+      "end": 351,
+      "lines": 1
+    },
+    {
+      "file": "public/js/admin.js",
+      "name": "callback:forEach",
+      "kind": "ArrowFunctionExpression",
+      "start": 352,
+      "end": 356,
+      "lines": 5
+    },
+    {
+      "file": "public/js/admin.js",
+      "name": "callback:addEventListener",
+      "kind": "ArrowFunctionExpression",
+      "start": 354,
+      "end": 354,
+      "lines": 1
+    },
+    {
+      "file": "public/js/admin.js",
+      "name": "callback:addEventListener",
+      "kind": "ArrowFunctionExpression",
+      "start": 355,
+      "end": 355,
+      "lines": 1
+    },
+    {
+      "file": "public/js/admin.js",
+      "name": "admin_record_value",
+      "kind": "FunctionDeclaration",
+      "start": 359,
+      "end": 363,
+      "lines": 5
+    },
+    {
+      "file": "public/js/admin.js",
+      "name": "confirm_admin_record",
+      "kind": "FunctionDeclaration",
+      "start": 364,
+      "end": 373,
+      "lines": 10
+    },
+    {
+      "file": "public/js/admin.js",
+      "name": "callback:filter",
+      "kind": "ArrowFunctionExpression",
+      "start": 368,
+      "end": 368,
+      "lines": 1
+    },
+    {
+      "file": "public/js/admin.js",
+      "name": "callback:every",
+      "kind": "ArrowFunctionExpression",
+      "start": 369,
+      "end": 369,
+      "lines": 1
+    },
+    {
+      "file": "public/js/admin.js",
+      "name": "confirm_admin_absent",
+      "kind": "FunctionDeclaration",
+      "start": 374,
+      "end": 377,
+      "lines": 4
+    },
+    {
+      "file": "public/js/admin.js",
+      "name": "callback:some",
+      "kind": "ArrowFunctionExpression",
+      "start": 376,
+      "end": 376,
+      "lines": 1
+    },
+    {
+      "file": "public/js/admin.js",
+      "name": "delete_admin_record",
+      "kind": "FunctionDeclaration",
+      "start": 378,
+      "end": 382,
+      "lines": 5
+    },
+    {
+      "file": "public/js/admin.js",
+      "name": "save_review",
+      "kind": "FunctionDeclaration",
+      "start": 385,
+      "end": 396,
       "lines": 12
     },
     {
       "file": "public/js/admin.js",
       "name": "callback:with_pending",
       "kind": "ArrowFunctionExpression",
-      "start": 338,
-      "end": 346,
+      "start": 386,
+      "end": 395,
+      "lines": 10
+    },
+    {
+      "file": "public/js/admin.js",
+      "name": "callback:map",
+      "kind": "ArrowFunctionExpression",
+      "start": 392,
+      "end": 392,
+      "lines": 1
+    },
+    {
+      "file": "public/js/admin.js",
+      "name": "delete_review",
+      "kind": "FunctionDeclaration",
+      "start": 398,
+      "end": 409,
+      "lines": 12
+    },
+    {
+      "file": "public/js/admin.js",
+      "name": "callback:with_pending",
+      "kind": "ArrowFunctionExpression",
+      "start": 400,
+      "end": 408,
       "lines": 9
     },
     {
       "file": "public/js/admin.js",
       "name": "callback:filter",
       "kind": "ArrowFunctionExpression",
-      "start": 341,
-      "end": 341,
+      "start": 403,
+      "end": 403,
       "lines": 1
     },
     {
       "file": "public/js/admin.js",
       "name": "order_status_label",
       "kind": "FunctionDeclaration",
-      "start": 349,
-      "end": 351,
+      "start": 411,
+      "end": 413,
       "lines": 3
     },
     {
       "file": "public/js/admin.js",
       "name": "order_provider_label",
       "kind": "FunctionDeclaration",
-      "start": 353,
-      "end": 355,
+      "start": 415,
+      "end": 417,
       "lines": 3
     },
     {
       "file": "public/js/admin.js",
       "name": "load_orders",
       "kind": "FunctionDeclaration",
-      "start": 357,
-      "end": 361,
+      "start": 419,
+      "end": 423,
       "lines": 5
     },
     {
       "file": "public/js/admin.js",
       "name": "callback:map",
       "kind": "ArrowFunctionExpression",
-      "start": 360,
-      "end": 360,
+      "start": 422,
+      "end": 422,
       "lines": 1
     },
     {
       "file": "public/js/admin.js",
       "name": "callback:reduce",
       "kind": "ArrowFunctionExpression",
-      "start": 360,
-      "end": 360,
+      "start": 422,
+      "end": 422,
       "lines": 1
     },
     {
       "file": "public/js/admin.js",
       "name": "load_admin_coupons",
       "kind": "FunctionDeclaration",
-      "start": 363,
-      "end": 377,
+      "start": 425,
+      "end": 439,
       "lines": 15
     },
     {
       "file": "public/js/admin.js",
       "name": "callback:forEach",
       "kind": "ArrowFunctionExpression",
-      "start": 369,
-      "end": 376,
+      "start": 431,
+      "end": 438,
       "lines": 8
     },
     {
       "file": "public/js/admin.js",
       "name": "callback:addEventListener",
       "kind": "ArrowFunctionExpression",
-      "start": 372,
-      "end": 372,
+      "start": 434,
+      "end": 434,
       "lines": 1
     },
     {
       "file": "public/js/admin.js",
       "name": "callback:with_pending",
       "kind": "ArrowFunctionExpression",
-      "start": 372,
-      "end": 372,
+      "start": 434,
+      "end": 434,
       "lines": 1
     },
     {
       "file": "public/js/admin.js",
       "name": "callback:addEventListener",
       "kind": "ArrowFunctionExpression",
-      "start": 373,
-      "end": 373,
+      "start": 435,
+      "end": 435,
       "lines": 1
     },
     {
       "file": "public/js/admin.js",
       "name": "callback:addEventListener",
       "kind": "ArrowFunctionExpression",
-      "start": 374,
-      "end": 374,
+      "start": 436,
+      "end": 436,
       "lines": 1
     },
     {
       "file": "public/js/admin.js",
       "name": "callback:with_pending",
       "kind": "ArrowFunctionExpression",
-      "start": 374,
-      "end": 374,
+      "start": 436,
+      "end": 436,
       "lines": 1
     },
     {
       "file": "public/js/admin.js",
       "name": "fill_coupon_form",
       "kind": "FunctionDeclaration",
-      "start": 379,
-      "end": 386,
-      "lines": 8
+      "start": 441,
+      "end": 449,
+      "lines": 9
     },
     {
       "file": "public/js/admin.js",
       "name": "reset_coupon_form",
       "kind": "FunctionDeclaration",
-      "start": 388,
-      "end": 394,
-      "lines": 7
+      "start": 451,
+      "end": 458,
+      "lines": 8
     },
     {
       "file": "public/js/admin.js",
       "name": "save_coupon_value",
       "kind": "FunctionDeclaration",
-      "start": 396,
-      "end": 402,
-      "lines": 7
+      "start": 460,
+      "end": 468,
+      "lines": 9
+    },
+    {
+      "file": "public/js/admin.js",
+      "name": "prepare_coupon_creation",
+      "kind": "FunctionDeclaration",
+      "start": 470,
+      "end": 481,
+      "lines": 12
+    },
+    {
+      "file": "public/js/admin.js",
+      "name": "callback:filter",
+      "kind": "ArrowFunctionExpression",
+      "start": 474,
+      "end": 474,
+      "lines": 1
+    },
+    {
+      "file": "public/js/admin.js",
+      "name": "callback:every",
+      "kind": "ArrowFunctionExpression",
+      "start": 475,
+      "end": 475,
+      "lines": 1
+    },
+    {
+      "file": "public/js/admin.js",
+      "name": "write_coupon_record",
+      "kind": "FunctionDeclaration",
+      "start": 482,
+      "end": 486,
+      "lines": 5
+    },
+    {
+      "file": "public/js/admin.js",
+      "name": "callback:every",
+      "kind": "ArrowFunctionExpression",
+      "start": 484,
+      "end": 484,
+      "lines": 1
     },
     {
       "file": "public/js/admin.js",
       "name": "save_coupon",
       "kind": "FunctionDeclaration",
-      "start": 404,
-      "end": 417,
-      "lines": 14
+      "start": 488,
+      "end": 502,
+      "lines": 15
     },
     {
       "file": "public/js/admin.js",
       "name": "callback:with_pending",
       "kind": "ArrowFunctionExpression",
-      "start": 406,
-      "end": 416,
-      "lines": 11
+      "start": 490,
+      "end": 501,
+      "lines": 12
     },
     {
       "file": "public/js/admin.js",
       "name": "delete_coupon",
       "kind": "FunctionDeclaration",
-      "start": 419,
-      "end": 422,
+      "start": 504,
+      "end": 507,
       "lines": 4
     },
     {
       "file": "public/js/admin.js",
       "name": "module_selected",
       "kind": "FunctionDeclaration",
-      "start": 424,
-      "end": 430,
+      "start": 509,
+      "end": 515,
       "lines": 7
     },
     {
       "file": "public/js/admin.js",
       "name": "callback:forEach",
       "kind": "ArrowFunctionExpression",
-      "start": 426,
-      "end": 428,
+      "start": 511,
+      "end": 513,
       "lines": 3
     },
     {
       "file": "public/js/admin.js",
       "name": "callback:forEach",
       "kind": "ArrowFunctionExpression",
-      "start": 429,
-      "end": 429,
+      "start": 514,
+      "end": 514,
       "lines": 1
     },
     {
       "file": "public/js/admin.js",
       "name": "open_admin_module",
       "kind": "FunctionDeclaration",
-      "start": 431,
-      "end": 443,
+      "start": 516,
+      "end": 528,
       "lines": 13
     },
     {
       "file": "public/js/admin.js",
       "name": "callback:some",
       "kind": "ArrowFunctionExpression",
-      "start": 432,
-      "end": 432,
+      "start": 517,
+      "end": 517,
       "lines": 1
     },
     {
       "file": "public/js/admin.js",
       "name": "setup_tabs",
       "kind": "FunctionDeclaration",
-      "start": 444,
-      "end": 449,
+      "start": 529,
+      "end": 534,
       "lines": 6
     },
     {
       "file": "public/js/admin.js",
       "name": "callback:addEventListener",
       "kind": "ArrowFunctionExpression",
-      "start": 446,
-      "end": 446,
+      "start": 531,
+      "end": 531,
       "lines": 1
     },
     {
       "file": "public/js/admin.js",
       "name": "callback:addEventListener",
       "kind": "ArrowFunctionExpression",
-      "start": 447,
-      "end": 447,
+      "start": 532,
+      "end": 532,
       "lines": 1
     },
     {
       "file": "public/js/admin.js",
       "name": "callback:addEventListener",
       "kind": "ArrowFunctionExpression",
-      "start": 448,
-      "end": 448,
+      "start": 533,
+      "end": 533,
       "lines": 1
     },
     {
       "file": "public/js/admin.js",
       "name": "setup_product_controls",
       "kind": "FunctionDeclaration",
-      "start": 450,
-      "end": 461,
+      "start": 535,
+      "end": 546,
       "lines": 12
     },
     {
       "file": "public/js/admin.js",
       "name": "callback:addEventListener",
       "kind": "ArrowFunctionExpression",
-      "start": 452,
-      "end": 452,
+      "start": 537,
+      "end": 537,
       "lines": 1
     },
     {
       "file": "public/js/admin.js",
       "name": "callback:addEventListener",
       "kind": "ArrowFunctionExpression",
-      "start": 458,
-      "end": 458,
+      "start": 543,
+      "end": 543,
       "lines": 1
     },
     {
       "file": "public/js/admin.js",
       "name": "callback:addEventListener",
       "kind": "ArrowFunctionExpression",
-      "start": 460,
-      "end": 460,
+      "start": 545,
+      "end": 545,
       "lines": 1
     },
     {
       "file": "public/js/admin.js",
       "name": "init_admin",
       "kind": "FunctionDeclaration",
-      "start": 463,
-      "end": 475,
+      "start": 548,
+      "end": 560,
       "lines": 13
     },
     {
       "file": "public/js/admin.js",
       "name": "callback:catch",
       "kind": "ArrowFunctionExpression",
-      "start": 465,
-      "end": 465,
+      "start": 550,
+      "end": 550,
       "lines": 1
     },
     {
       "file": "public/js/admin.js",
       "name": "setup_other_admin_controls",
       "kind": "FunctionDeclaration",
-      "start": 476,
-      "end": 486,
+      "start": 561,
+      "end": 571,
       "lines": 11
     },
     {
       "file": "public/js/admin.js",
       "name": "callback:addEventListener",
       "kind": "ArrowFunctionExpression",
-      "start": 480,
-      "end": 480,
+      "start": 565,
+      "end": 565,
       "lines": 1
     },
     {
       "file": "public/js/admin.js",
       "name": "callback:addEventListener",
       "kind": "ArrowFunctionExpression",
-      "start": 482,
-      "end": 485,
+      "start": 567,
+      "end": 570,
       "lines": 4
     },
     {
       "file": "public/js/admin.js",
       "name": "callback:with_pending",
       "kind": "ArrowFunctionExpression",
-      "start": 482,
-      "end": 485,
+      "start": 567,
+      "end": 570,
       "lines": 4
     },
     {
@@ -8335,8 +8471,8 @@
       "name": "callback:test",
       "kind": "ArrowFunctionExpression",
       "start": 46,
-      "end": 59,
-      "lines": 14
+      "end": 60,
+      "lines": 15
     },
     {
       "file": "test/admin-persistence.test.js",
@@ -8374,8 +8510,8 @@
       "file": "test/admin-persistence.test.js",
       "name": "anónima",
       "kind": "ArrowFunctionExpression",
-      "start": 53,
-      "end": 53,
+      "start": 54,
+      "end": 54,
       "lines": 1
     },
     {
@@ -8729,6 +8865,478 @@
       "start": 20,
       "end": 20,
       "lines": 1
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "harness",
+      "kind": "FunctionDeclaration",
+      "start": 8,
+      "end": 13,
+      "lines": 6
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "addEventListener",
+      "kind": "FunctionExpression",
+      "start": 9,
+      "end": 9,
+      "lines": 1
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "uncertain",
+      "kind": "FunctionDeclaration",
+      "start": 14,
+      "end": 14,
+      "lines": 1
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "callback:test",
+      "kind": "ArrowFunctionExpression",
+      "start": 16,
+      "end": 19,
+      "lines": 4
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "callback:harness",
+      "kind": "ArrowFunctionExpression",
+      "start": 17,
+      "end": 17,
+      "lines": 1
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "callback:test",
+      "kind": "ArrowFunctionExpression",
+      "start": 20,
+      "end": 23,
+      "lines": 4
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "callback:harness",
+      "kind": "ArrowFunctionExpression",
+      "start": 21,
+      "end": 21,
+      "lines": 1
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "callback:test",
+      "kind": "ArrowFunctionExpression",
+      "start": 24,
+      "end": 26,
+      "lines": 3
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "callback:harness",
+      "kind": "ArrowFunctionExpression",
+      "start": 25,
+      "end": 25,
+      "lines": 1
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "callback:test",
+      "kind": "ArrowFunctionExpression",
+      "start": 27,
+      "end": 36,
+      "lines": 10
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "callback:harness",
+      "kind": "ArrowFunctionExpression",
+      "start": 29,
+      "end": 29,
+      "lines": 1
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "callback:test",
+      "kind": "ArrowFunctionExpression",
+      "start": 37,
+      "end": 43,
+      "lines": 7
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "callback:harness",
+      "kind": "ArrowFunctionExpression",
+      "start": 39,
+      "end": 39,
+      "lines": 1
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "callback:test",
+      "kind": "ArrowFunctionExpression",
+      "start": 44,
+      "end": 47,
+      "lines": 4
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "callback:harness",
+      "kind": "ArrowFunctionExpression",
+      "start": 45,
+      "end": 45,
+      "lines": 1
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "callback:test",
+      "kind": "ArrowFunctionExpression",
+      "start": 48,
+      "end": 51,
+      "lines": 4
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "callback:harness",
+      "kind": "ArrowFunctionExpression",
+      "start": 49,
+      "end": 49,
+      "lines": 1
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "callback:test",
+      "kind": "ArrowFunctionExpression",
+      "start": 52,
+      "end": 58,
+      "lines": 7
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "callback:harness",
+      "kind": "ArrowFunctionExpression",
+      "start": 54,
+      "end": 54,
+      "lines": 1
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "callback:test",
+      "kind": "ArrowFunctionExpression",
+      "start": 62,
+      "end": 65,
+      "lines": 4
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "callback:harness",
+      "kind": "ArrowFunctionExpression",
+      "start": 64,
+      "end": 64,
+      "lines": 1
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "callback:test",
+      "kind": "ArrowFunctionExpression",
+      "start": 68,
+      "end": 70,
+      "lines": 3
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "callback:harness",
+      "kind": "ArrowFunctionExpression",
+      "start": 69,
+      "end": 69,
+      "lines": 1
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "callback:test",
+      "kind": "ArrowFunctionExpression",
+      "start": 72,
+      "end": 74,
+      "lines": 3
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "callback:harness",
+      "kind": "ArrowFunctionExpression",
+      "start": 73,
+      "end": 73,
+      "lines": 1
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "callback:test",
+      "kind": "ArrowFunctionExpression",
+      "start": 75,
+      "end": 78,
+      "lines": 4
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "callback:harness",
+      "kind": "ArrowFunctionExpression",
+      "start": 76,
+      "end": 76,
+      "lines": 1
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "callback:test",
+      "kind": "ArrowFunctionExpression",
+      "start": 80,
+      "end": 83,
+      "lines": 4
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "callback:harness",
+      "kind": "ArrowFunctionExpression",
+      "start": 82,
+      "end": 82,
+      "lines": 1
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "callback:test",
+      "kind": "ArrowFunctionExpression",
+      "start": 84,
+      "end": 86,
+      "lines": 3
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "callback:harness",
+      "kind": "ArrowFunctionExpression",
+      "start": 85,
+      "end": 85,
+      "lines": 1
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "callback:test",
+      "kind": "ArrowFunctionExpression",
+      "start": 87,
+      "end": 90,
+      "lines": 4
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "callback:harness",
+      "kind": "ArrowFunctionExpression",
+      "start": 88,
+      "end": 88,
+      "lines": 1
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "callback:test",
+      "kind": "ArrowFunctionExpression",
+      "start": 91,
+      "end": 93,
+      "lines": 3
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "callback:harness",
+      "kind": "ArrowFunctionExpression",
+      "start": 92,
+      "end": 92,
+      "lines": 1
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "callback:test",
+      "kind": "ArrowFunctionExpression",
+      "start": 94,
+      "end": 96,
+      "lines": 3
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "callback:harness",
+      "kind": "ArrowFunctionExpression",
+      "start": 95,
+      "end": 95,
+      "lines": 1
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "callback:test",
+      "kind": "ArrowFunctionExpression",
+      "start": 97,
+      "end": 99,
+      "lines": 3
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "callback:harness",
+      "kind": "ArrowFunctionExpression",
+      "start": 98,
+      "end": 98,
+      "lines": 1
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "callback:test",
+      "kind": "ArrowFunctionExpression",
+      "start": 100,
+      "end": 105,
+      "lines": 6
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "callback:harness",
+      "kind": "ArrowFunctionExpression",
+      "start": 102,
+      "end": 102,
+      "lines": 1
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "callback:test",
+      "kind": "ArrowFunctionExpression",
+      "start": 106,
+      "end": 109,
+      "lines": 4
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "callback:harness",
+      "kind": "ArrowFunctionExpression",
+      "start": 107,
+      "end": 107,
+      "lines": 1
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "callback:test",
+      "kind": "ArrowFunctionExpression",
+      "start": 111,
+      "end": 115,
+      "lines": 5
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "callback:harness",
+      "kind": "ArrowFunctionExpression",
+      "start": 112,
+      "end": 112,
+      "lines": 1
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "anónima",
+      "kind": "ArrowFunctionExpression",
+      "start": 112,
+      "end": 112,
+      "lines": 1
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "anónima",
+      "kind": "ArrowFunctionExpression",
+      "start": 112,
+      "end": 112,
+      "lines": 1
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "deletion_harness",
+      "kind": "FunctionDeclaration",
+      "start": 116,
+      "end": 124,
+      "lines": 9
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "callback:harness",
+      "kind": "ArrowFunctionExpression",
+      "start": 117,
+      "end": 117,
+      "lines": 1
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "anónima",
+      "kind": "ArrowFunctionExpression",
+      "start": 118,
+      "end": 118,
+      "lines": 1
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "anónima",
+      "kind": "ArrowFunctionExpression",
+      "start": 118,
+      "end": 118,
+      "lines": 1
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "anónima",
+      "kind": "ArrowFunctionExpression",
+      "start": 119,
+      "end": 119,
+      "lines": 1
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "anónima",
+      "kind": "ArrowFunctionExpression",
+      "start": 120,
+      "end": 120,
+      "lines": 1
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "anónima",
+      "kind": "ArrowFunctionExpression",
+      "start": 121,
+      "end": 121,
+      "lines": 1
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "anónima",
+      "kind": "ArrowFunctionExpression",
+      "start": 121,
+      "end": 121,
+      "lines": 1
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "callback:test",
+      "kind": "ArrowFunctionExpression",
+      "start": 125,
+      "end": 128,
+      "lines": 4
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "callback:test",
+      "kind": "ArrowFunctionExpression",
+      "start": 129,
+      "end": 132,
+      "lines": 4
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "callback:test",
+      "kind": "ArrowFunctionExpression",
+      "start": 133,
+      "end": 136,
+      "lines": 4
+    },
+    {
+      "file": "test/admin-recovery.test.js",
+      "name": "bloque ejecutable superior",
+      "kind": "ProgramBlock",
+      "start": 60,
+      "end": 79,
+      "lines": 20
     },
     {
       "file": "test/admin.integration.test.js",
@@ -13227,6 +13835,94 @@
       "lines": 1
     },
     {
+      "file": "test/private-browser-qa.test.mjs",
+      "name": "session_fixture",
+      "kind": "FunctionDeclaration",
+      "start": 43,
+      "end": 58,
+      "lines": 16
+    },
+    {
+      "file": "test/private-browser-qa.test.mjs",
+      "name": "anónima",
+      "kind": "ArrowFunctionExpression",
+      "start": 46,
+      "end": 46,
+      "lines": 1
+    },
+    {
+      "file": "test/private-browser-qa.test.mjs",
+      "name": "create_database",
+      "kind": "ArrowFunctionExpression",
+      "start": 49,
+      "end": 49,
+      "lines": 1
+    },
+    {
+      "file": "test/private-browser-qa.test.mjs",
+      "name": "getUserById",
+      "kind": "ArrowFunctionExpression",
+      "start": 49,
+      "end": 49,
+      "lines": 1
+    },
+    {
+      "file": "test/private-browser-qa.test.mjs",
+      "name": "fetch",
+      "kind": "ArrowFunctionExpression",
+      "start": 50,
+      "end": 56,
+      "lines": 7
+    },
+    {
+      "file": "test/private-browser-qa.test.mjs",
+      "name": "logouts",
+      "kind": "ArrowFunctionExpression",
+      "start": 57,
+      "end": 57,
+      "lines": 1
+    },
+    {
+      "file": "test/private-browser-qa.test.mjs",
+      "name": "callback:test",
+      "kind": "ArrowFunctionExpression",
+      "start": 59,
+      "end": 67,
+      "lines": 9
+    },
+    {
+      "file": "test/private-browser-qa.test.mjs",
+      "name": "anónima",
+      "kind": "ArrowFunctionExpression",
+      "start": 61,
+      "end": 61,
+      "lines": 1
+    },
+    {
+      "file": "test/private-browser-qa.test.mjs",
+      "name": "callback:test",
+      "kind": "ArrowFunctionExpression",
+      "start": 68,
+      "end": 72,
+      "lines": 5
+    },
+    {
+      "file": "test/private-browser-qa.test.mjs",
+      "name": "anónima",
+      "kind": "ArrowFunctionExpression",
+      "start": 69,
+      "end": 69,
+      "lines": 1
+    },
+    {
+      "file": "test/private-browser-qa.test.mjs",
+      "name": "callback:test",
+      "kind": "ArrowFunctionExpression",
+      "start": 73,
+      "end": 77,
+      "lines": 5
+    },
+    {
       "file": "test/product-schema.integration.test.js",
       "name": "database",
       "kind": "FunctionDeclaration",
@@ -15799,15 +16495,23 @@
       "name": "scheduled",
       "kind": "FunctionExpression",
       "start": 55,
-      "end": 60,
-      "lines": 6
+      "end": 63,
+      "lines": 9
+    },
+    {
+      "file": "worker/official.mjs",
+      "name": "fetch",
+      "kind": "ArrowFunctionExpression",
+      "start": 56,
+      "end": 56,
+      "lines": 1
     },
     {
       "file": "worker/official.mjs",
       "name": "callback:run_official_qa",
       "kind": "ArrowFunctionExpression",
-      "start": 58,
-      "end": 58,
+      "start": 61,
+      "end": 61,
       "lines": 1
     },
     {
@@ -15863,23 +16567,23 @@
       "name": "prepare_browser_qa",
       "kind": "FunctionDeclaration",
       "start": 33,
-      "end": 44,
-      "lines": 12
+      "end": 45,
+      "lines": 13
     },
     {
       "file": "worker/private-browser-qa.mjs",
       "name": "close_untransferred_session",
       "kind": "FunctionDeclaration",
-      "start": 46,
-      "end": 49,
+      "start": 47,
+      "end": 50,
       "lines": 4
     },
     {
       "file": "worker/private-browser-qa.mjs",
       "name": "callback:map",
       "kind": "ArrowFunctionExpression",
-      "start": 47,
-      "end": 47,
+      "start": 48,
+      "end": 48,
       "lines": 1
     },
     {

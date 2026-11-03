@@ -39,3 +39,39 @@ test('identidad distinta no puede iniciar sesión ni persistir un grant', async 
         fetch: () => assert.fail()
     }), /admin_identity/);
 });
+
+async function session_fixture() {
+    const pair = await crypto.subtle.generateKey({ name: 'RSA-OAEP', modulusLength: 2048, publicExponent: new Uint8Array([1, 0, 1]), hash: 'SHA-256' }, true, ['encrypt', 'decrypt']);
+    const configured = env(); configured.QA_BROWSER_PUBLIC_KEY = Buffer.from(await crypto.subtle.exportKey('spki', pair.publicKey)).toString('base64');
+    configured.QA_BROWSER_VAULT.get = async () => null;
+    const admin = 'a88d8d4e-ada3-4bfa-a6f5-db39d2dc9c19';
+    let logouts = 0;
+    const services = { create_database: () => ({ auth: { admin: { getUserById: async () => ({ data: { user: { id: admin, email: 'qa-fixture@example.com' } } }) } } }),
+        fetch: async (url, init) => {
+            if (url.endsWith('/logout')) { logouts++; return Response.json({}); }
+            assert.equal(init.headers['Content-Length'], String(new TextEncoder().encode(init.body).length));
+            const headers = new Headers();
+            for (const name of ['dreams_access_token', 'dreams_refresh_token']) headers.append('Set-Cookie', `${name}=fixture-private-cookie; HttpOnly; Secure; SameSite=Lax`);
+            return Response.json({ user: { id: admin, is_admin: true } }, { headers });
+        } };
+    return { configured, services, logouts: () => logouts };
+}
+test('grant válido almacena únicamente el sobre cifrado y TTL, nunca contraseña o cookies', async () => {
+    const fixture = await session_fixture(); let stored;
+    fixture.configured.QA_BROWSER_VAULT.put = async (key, data, options) => { stored = { key, data, options }; };
+    assert.equal(await prepare_browser_qa(fixture.configured, fixture.services), true);
+    assert.equal(stored.options.expirationTtl, 1800);
+    assert.ok(!stored.data.includes('fixture-private-cookie'));
+    assert.ok(!stored.data.includes(fixture.configured.DREAMS_QA_ADMIN_PASSWORD));
+    assert.equal(JSON.parse(stored.data).version, 1);
+});
+test('fallo de vault cierra la sesión antes de informar error sanitizado', async () => {
+    const fixture = await session_fixture(); fixture.configured.QA_BROWSER_VAULT.put = async () => { throw Error('provider-private-detail'); };
+    await assert.rejects(prepare_browser_qa(fixture.configured, fixture.services), /^Error: private_encryption_or_vault$/);
+    assert.equal(fixture.logouts(), 1);
+});
+test('fallo de cifrado también revoca la sesión aún no transferida', async () => {
+    const fixture = await session_fixture(); fixture.configured.QA_BROWSER_PUBLIC_KEY = 'invalid';
+    await assert.rejects(prepare_browser_qa(fixture.configured, fixture.services), /private_encryption_or_vault/);
+    assert.equal(fixture.logouts(), 1);
+});

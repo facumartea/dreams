@@ -52,18 +52,22 @@ Usar una URL HTTPS directa a imagen o un asset local permitido. No pegar una pá
 
 Editar carga el producto existente, incluida su URL. Cambiar otro campo conserva esa imagen. Cancelar/Limpiar permite salir de la edición con aviso de cambios sin guardar. Editar y Eliminar conservan las mismas dimensiones. Eliminar es permanente y pide confirmación; para practicar sólo usar productos exclusivos de prueba.
 
-Guardar espera la escritura y una lectura posterior que confirme todos los campos. Si esa lectura falla, el formulario conserva los datos y no anuncia éxito: revisar el listado antes de repetir un alta. Después de confirmar, recargar y comprobar Admin, catálogo, detalle y conteos. La persistencia remota de esta versión está pendiente de sesión y conexión válidas; no basta la captura local.
+Antes de una nueva alta se revisa el listado. Si la respuesta de un alta se pierde, Reintentar consulta su marca/nombre y sus campos antes de crear: recupera el ID existente sin otro POST; si hay discrepancias o ambigüedad no sobrescribe. Guardar espera la escritura y una lectura posterior que confirme todos los campos. Si esa lectura falla, el formulario conserva los datos y no anuncia éxito: revisar el listado antes de repetir un alta. Después de confirmar, recargar y comprobar Admin, catálogo, detalle y conteos. La persistencia remota de esta versión está pendiente de sesión y conexión válidas; no basta la captura local.
 
 ## Otros módulos Admin
 
 - **Pedidos:** listar y revisar referencia, fecha, estado y totales existentes. No generar una compra comercial para poblarlo. La simulación académica no crea filas aquí.
-- **Cupones:** crear/editar código, porcentaje y activo, guardar o limpiar; el código se normaliza en mayúsculas. No se presenta un cupón comercial como activo en el checkout académico.
+- **Cupones:** crear/editar código, porcentaje y activo, guardar o limpiar; el código se normaliza en mayúsculas. No se presenta un cupón comercial como activo en el checkout académico. La confirmación incluye una lectura posterior de código, porcentaje y activo; un alta incierta se recupera sin duplicar el código.
 - **Usuarios:** lectura de perfiles y roles; esta UI no permite crear Admin ni cambiar contraseñas/roles.
 - **Consultas:** lectura de consultas existentes y producto asociado, sin enviar WhatsApp automáticamente.
-- **Opiniones:** buscar, editar puntuación/comentario o eliminar con confirmación. No hay ocultamiento/publicación por estado en el modelo y no se simula.
+- **Opiniones:** buscar, editar puntuación/comentario o eliminar con confirmación. No hay ocultamiento/publicación por estado en el modelo y no se simula. Guardar confirma puntuación y comentario con una lectura posterior; eliminar confirma ausencia en el listado.
 
 ## Errores y recuperación
 
 Un 401 indica sesión/credencial no válida; un 403 indica operación no autorizada; un 503 puede indicar dependencia no disponible. No pegar valores de claves ni headers en capturas. Si el catálogo funciona pero el registro falla, no dar por sana toda la aplicación. Ante fallo de imagen revisar URL, permisos y disponibilidad del hosting de la foto; ante guardado dudoso revisar listado antes de repetir.
 
 El operador conserva rollback del frontend restaurado y mantiene el backend candidato aislado hasta verificarlo. Los usuarios no tienen que reconfigurar Supabase ni Cloudflare. Los requisitos técnicos pendientes están documentados en la matriz; no se ocultan con el manual.
+
+## Auditoría Admin en curso
+
+Inventario completo y procedencia de pruebas: [controles](../evidence/admin-audit-20261102/inventario.md). Las correcciones nuevas se publicarán sólo después de QA privada y se repetirán en la oficial; no atribuir estas instrucciones todavía a una publicación terminada.
