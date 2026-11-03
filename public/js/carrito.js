@@ -139,7 +139,7 @@ window.addEventListener('dreams:cart', load_cart);
 
 let cart_coupon_message = '';
 function cart_coupon_markup(state) {
-    return `<form id="cart-coupon-form" class="coupon-box"><label for="cart-coupon">Cupón de descuento</label><div class="coupon-control"><input id="cart-coupon" maxlength="40" placeholder="Ingresá tu cupón" value="${escape_html(cart_coupon_code())}"><button type="submit" ${state === 'loading' ? 'disabled aria-busy="true"' : ''}>${state === 'loading' ? 'Verificando…' : 'Aplicar'}</button></div><p role="status" aria-live="polite">${escape_html(cart_coupon_message)}</p>${sessionStorage.getItem('dreams_coupon') ? '<button id="cart-coupon-remove" type="button" class="text-button">Quitar cupón</button>' : ''}</form>`;
+    return `<form id="cart-coupon-form" class="coupon-box"><label for="cart-coupon">Cupón de descuento</label><div class="coupon-control"><input id="cart-coupon" ${state === 'loading' ? 'disabled' : ''} maxlength="40" placeholder="Ingresá tu cupón" value="${escape_html(cart_coupon_code())}"><button type="submit" ${state === 'loading' ? 'disabled aria-busy="true"' : ''}>${state === 'loading' ? 'Verificando…' : 'Aplicar'}</button></div><p role="status" aria-live="polite">${escape_html(cart_coupon_message)}</p>${sessionStorage.getItem('dreams_coupon') ? '<button id="cart-coupon-remove" type="button" class="text-button">Quitar cupón</button>' : ''}</form>`;
 }
 function bind_cart_coupon() {
     document.getElementById('cart-coupon-form')?.addEventListener('submit', event => {
