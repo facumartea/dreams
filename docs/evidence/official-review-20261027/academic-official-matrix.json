@@ -1,0 +1,18 @@
+[
+  {
+    "id": "P01",
+    "environment": "Chromium desktop oficial",
+    "objective": "Flujo académico sin tarjeta/pasarela, envío0 y referencia estable tras reload",
+    "expected": "completed simulado, referencia estable, carrito vacío tras éxito, sin datos financieros en POST",
+    "actual": "PASS; referencia DREAMS-2928FC75FEA54ED5ACFFCA83865EB713; 4 POST académicos;0 POST comerciales;0 pageerrors",
+    "result": "PASS"
+  },
+  {
+    "id": "P01",
+    "environment": "Chromium mobile oficial",
+    "objective": "Flujo académico sin tarjeta/pasarela, envío0 y referencia estable tras reload",
+    "expected": "completed simulado, referencia estable, carrito vacío tras éxito, sin datos financieros en POST",
+    "actual": "PASS; referencia DREAMS-AE1905CD207A450EA077CFEF6E285FAB; 4 POST académicos;0 POST comerciales;0 pageerrors",
+    "result": "PASS"
+  }
+]

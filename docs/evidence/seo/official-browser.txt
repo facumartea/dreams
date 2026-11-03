@@ -1,0 +1,5 @@
+mobile visitor cart/quote/reload PASS
+mobile initial HTML/product/menu/filter/access/layout/no JS errors PASS https://dreams-perfumes.pages.dev
+desktop visitor cart/quote/reload PASS
+desktop initial HTML/product/menu/filter/access/layout/no JS errors PASS https://dreams-perfumes.pages.dev
+noJS product and46 discovery links PASS https://dreams-perfumes.pages.dev

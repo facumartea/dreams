@@ -1,0 +1,39 @@
+{
+  "source_commit": "ec04a35812d044e57196c6a1ca55232e723ff60c",
+  "backend_url": "https://d5df723d-dreams-perfumes.dreams-perfumes.workers.dev",
+  "backend_deployment": "d5df723d-e1f1-4889-ae5b-e79ebfd131cd",
+  "previous_pages_deployment": "a3184576-4390-4a71-9205-d9269bd7dfe7",
+  "hero": "static",
+  "checkout": "academic-only",
+  "writes": "protected",
+  "official_service": "dreams-official-backend",
+  "official_worker_id": "f4f560d2e4b947c18d8a06b9e4a24961",
+  "deployment_ready": false,
+  "official_source_commit": "643c348283ea6639cc1fbb0645597f6a6057b71e",
+  "official_version": "2300a05a-b179-4ee2-b3ed-bfe017a801d8",
+  "official_deployment": "bafb761a-06dd-4962-a2fe-6bf85fd281a2",
+  "failed_pages_deployment": "1e881ec8-7c32-4a2e-9857-ef63bf091c4f",
+  "candidate_read": {
+    "status": 200,
+    "project_url": "https://nwsmbemwtexmrtpkgxrz.supabase.co",
+    "backend_version": "2300a05a-b179-4ee2-b3ed-bfe017a801d8",
+    "checked_at": "2026-11-03T03:30:04.006Z"
+  },
+  "authenticated_qa": {
+    "backend_version": "2300a05a-b179-4ee2-b3ed-bfe017a801d8",
+    "registration": true,
+    "sessions": true,
+    "cart_isolation": true,
+    "review_ownership": true,
+    "admin_persistence": true,
+    "academic_compatibility": true
+  },
+  "qa_evidence": "docs/evidence/admin-audit-20261102/private-qa.json",
+  "next_deployment_note": "Publicación actual ya comprobada; este gate protege una NUEVA publicación. Renovar lectura y QA de la versión elegida antes de publicar otra vez. No repetir deployment fallido.",
+  "active_backend": {
+    "backend_version": "29b843a0-d04e-4631-8d52-627d5f598654",
+    "backend_deployment": "31aef453-abc3-44ff-8dc1-659e84553dd3",
+    "backend_commit": "e86f4343851d9810623996d2b7d13504163340c0"
+  },
+  "live_evidence": "docs/evidence/admin-audit-20261102/final-state.json"
+}

@@ -1,0 +1,34 @@
+[
+  {
+    "id": "F21",
+    "objective": "crear cupón actualiza listado y conteo real de tarjeta",
+    "environment": "Chromium escritorio, servidor/BD fixtures locales",
+    "expected": "crear cupón actualiza listado y conteo real de tarjeta",
+    "actual": "Comprobado en UI/API fixture",
+    "result": "PASS"
+  },
+  {
+    "id": "F22",
+    "objective": "editar porcentaje conserva conteo",
+    "environment": "Chromium escritorio, servidor/BD fixtures locales",
+    "expected": "editar porcentaje conserva conteo",
+    "actual": "Comprobado en UI/API fixture",
+    "result": "PASS"
+  },
+  {
+    "id": "F23",
+    "objective": "error de lectura y reintento recuperan módulo Cupones",
+    "environment": "Chromium escritorio, servidor/BD fixtures locales",
+    "expected": "error de lectura y reintento recuperan módulo Cupones",
+    "actual": "Comprobado en UI/API fixture",
+    "result": "PASS"
+  },
+  {
+    "id": "F24",
+    "objective": "cancelar eliminación no envía DELETE",
+    "environment": "Chromium escritorio, servidor/BD fixtures locales",
+    "expected": "cancelar eliminación no envía DELETE",
+    "actual": "Comprobado en UI/API fixture",
+    "result": "PASS"
+  }
+]

@@ -1,0 +1,858 @@
+[
+  {
+    "id": "B01",
+    "objective": "parcial nombre",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "[1]",
+    "actual": "[1]",
+    "result": "PASS"
+  },
+  {
+    "id": "B02",
+    "objective": "parcial marca",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "[1]",
+    "actual": "[1]",
+    "result": "PASS"
+  },
+  {
+    "id": "B03",
+    "objective": "mayúsculas nombre",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "[1]",
+    "actual": "[1]",
+    "result": "PASS"
+  },
+  {
+    "id": "B04",
+    "objective": "marca minúsculas",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "[2]",
+    "actual": "[2]",
+    "result": "PASS"
+  },
+  {
+    "id": "B05",
+    "objective": "tildes nombre",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "[2]",
+    "actual": "[2]",
+    "result": "PASS"
+  },
+  {
+    "id": "B06",
+    "objective": "tildes consulta",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "[1]",
+    "actual": "[1]",
+    "result": "PASS"
+  },
+  {
+    "id": "B07",
+    "objective": "espacios exteriores",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "[1]",
+    "actual": "[1]",
+    "result": "PASS"
+  },
+  {
+    "id": "B08",
+    "objective": "vacío",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "[1,2,3,4]",
+    "actual": "[1,2,3,4]",
+    "result": "PASS"
+  },
+  {
+    "id": "B09",
+    "objective": "sólo espacios",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "[1,2,3,4]",
+    "actual": "[1,2,3,4]",
+    "result": "PASS"
+  },
+  {
+    "id": "B10",
+    "objective": "sin resultados",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "[]",
+    "actual": "[]",
+    "result": "PASS"
+  },
+  {
+    "id": "B11",
+    "objective": "marca ausente",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "[3]",
+    "actual": "[3]",
+    "result": "PASS"
+  },
+  {
+    "id": "B12",
+    "objective": "campo familia excluido",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "[]",
+    "actual": "[]",
+    "result": "PASS"
+  },
+  {
+    "id": "B13",
+    "objective": "categoría excluida",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "[]",
+    "actual": "[]",
+    "result": "PASS"
+  },
+  {
+    "id": "B14",
+    "objective": "ID excluido",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "[]",
+    "actual": "[]",
+    "result": "PASS"
+  },
+  {
+    "id": "B15",
+    "objective": "texto hostil literal",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "[]",
+    "actual": "[]",
+    "result": "PASS"
+  },
+  {
+    "id": "B16",
+    "objective": "Unicode descompuesto",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "[2]",
+    "actual": "[2]",
+    "result": "PASS"
+  },
+  {
+    "id": "B17",
+    "objective": "substring central",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "[1]",
+    "actual": "[1]",
+    "result": "PASS"
+  },
+  {
+    "id": "B18",
+    "objective": "marca con tilde",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "[2]",
+    "actual": "[2]",
+    "result": "PASS"
+  },
+  {
+    "id": "B19",
+    "objective": "nombre null no falla",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "[]",
+    "actual": "[]",
+    "result": "PASS"
+  },
+  {
+    "id": "B20",
+    "objective": "sin reordenar",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "[1,2,3]",
+    "actual": "[1,2,3]",
+    "result": "PASS"
+  },
+  {
+    "id": "B21",
+    "objective": "busca más allá de una primera página",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "ID99 encontrado",
+    "actual": "ID99 encontrado",
+    "result": "PASS"
+  },
+  {
+    "id": "C01",
+    "objective": "clasificación de stock 0",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "true / Sin stock",
+    "actual": "true / Sin stock",
+    "result": "PASS"
+  },
+  {
+    "id": "C02",
+    "objective": "clasificación de stock 1",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "true / Stock bajo",
+    "actual": "true / Stock bajo",
+    "result": "PASS"
+  },
+  {
+    "id": "C03",
+    "objective": "clasificación de stock 2",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "true / Stock bajo",
+    "actual": "true / Stock bajo",
+    "result": "PASS"
+  },
+  {
+    "id": "C04",
+    "objective": "clasificación de stock 3",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "false / Disponible",
+    "actual": "false / Disponible",
+    "result": "PASS"
+  },
+  {
+    "id": "C05",
+    "objective": "clasificación de stock 99",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "false / Disponible",
+    "actual": "false / Disponible",
+    "result": "PASS"
+  },
+  {
+    "id": "C06",
+    "objective": "clasificación de stock null",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "false / Stock no válido",
+    "actual": "false / Stock no válido",
+    "result": "PASS"
+  },
+  {
+    "id": "C07",
+    "objective": "clasificación de stock undefined",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "false / Stock no válido",
+    "actual": "false / Stock no válido",
+    "result": "PASS"
+  },
+  {
+    "id": "C08",
+    "objective": "clasificación de stock ",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "false / Stock no válido",
+    "actual": "false / Stock no válido",
+    "result": "PASS"
+  },
+  {
+    "id": "C09",
+    "objective": "clasificación de stock 2",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "false / Stock no válido",
+    "actual": "false / Stock no válido",
+    "result": "PASS"
+  },
+  {
+    "id": "C10",
+    "objective": "clasificación de stock NaN",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "false / Stock no válido",
+    "actual": "false / Stock no válido",
+    "result": "PASS"
+  },
+  {
+    "id": "C11",
+    "objective": "clasificación de stock Infinity",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "false / Stock no válido",
+    "actual": "false / Stock no válido",
+    "result": "PASS"
+  },
+  {
+    "id": "C12",
+    "objective": "clasificación de stock -1",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "false / Stock no válido",
+    "actual": "false / Stock no válido",
+    "result": "PASS"
+  },
+  {
+    "id": "C13",
+    "objective": "clasificación de stock 1.5",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "false / Stock no válido",
+    "actual": "false / Stock no válido",
+    "result": "PASS"
+  },
+  {
+    "id": "C14",
+    "objective": "clasificación de stock [object Object]",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "false / Stock no válido",
+    "actual": "false / Stock no válido",
+    "result": "PASS"
+  },
+  {
+    "id": "C15",
+    "objective": "clasificación de stock ",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "false / Stock no válido",
+    "actual": "false / Stock no válido",
+    "result": "PASS"
+  },
+  {
+    "id": "C16",
+    "objective": "clasificación de stock true",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "false / Stock no válido",
+    "actual": "false / Stock no válido",
+    "result": "PASS"
+  },
+  {
+    "id": "C17",
+    "objective": "clasificación de stock false",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "false / Stock no válido",
+    "actual": "false / Stock no válido",
+    "result": "PASS"
+  },
+  {
+    "id": "C18",
+    "objective": "clasificación de stock 9007199254740992",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "false / Stock no válido",
+    "actual": "false / Stock no válido",
+    "result": "PASS"
+  },
+  {
+    "id": "C19",
+    "objective": "baja y búsqueda combinadas",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "sólo2",
+    "actual": "sólo2",
+    "result": "PASS"
+  },
+  {
+    "id": "C20",
+    "objective": "baja incluye0/2 y descarta3/null",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "1,2",
+    "actual": "1,2",
+    "result": "PASS"
+  },
+  {
+    "id": "C21",
+    "objective": "vuelta a listado completo",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "cuatro filas",
+    "actual": "cuatro filas",
+    "result": "PASS"
+  },
+  {
+    "id": "E01",
+    "objective": "HTTPS con extensión",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "true validación sintáctica",
+    "actual": "true validación sintáctica",
+    "result": "PASS"
+  },
+  {
+    "id": "E02",
+    "objective": "HTTPS sin extensión",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "true validación sintáctica",
+    "actual": "true validación sintáctica",
+    "result": "PASS"
+  },
+  {
+    "id": "E03",
+    "objective": "ruta local",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "true validación sintáctica",
+    "actual": "true validación sintáctica",
+    "result": "PASS"
+  },
+  {
+    "id": "E04",
+    "objective": "vacío",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "false validación sintáctica",
+    "actual": "false validación sintáctica",
+    "result": "PASS"
+  },
+  {
+    "id": "E05",
+    "objective": "espacios",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "false validación sintáctica",
+    "actual": "false validación sintáctica",
+    "result": "PASS"
+  },
+  {
+    "id": "E06",
+    "objective": "HTTP",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "false validación sintáctica",
+    "actual": "false validación sintáctica",
+    "result": "PASS"
+  },
+  {
+    "id": "E07",
+    "objective": "javascript",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "false validación sintáctica",
+    "actual": "false validación sintáctica",
+    "result": "PASS"
+  },
+  {
+    "id": "E08",
+    "objective": "data",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "false validación sintáctica",
+    "actual": "false validación sintáctica",
+    "result": "PASS"
+  },
+  {
+    "id": "E09",
+    "objective": "relativa insegura",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "false validación sintáctica",
+    "actual": "false validación sintáctica",
+    "result": "PASS"
+  },
+  {
+    "id": "E10",
+    "objective": "credenciales",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "false validación sintáctica",
+    "actual": "false validación sintáctica",
+    "result": "PASS"
+  },
+  {
+    "id": "E11",
+    "objective": "página Google",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "false validación sintáctica",
+    "actual": "false validación sintáctica",
+    "result": "PASS"
+  },
+  {
+    "id": "E12",
+    "objective": "Google imgres",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "false validación sintáctica",
+    "actual": "false validación sintáctica",
+    "result": "PASS"
+  },
+  {
+    "id": "E13",
+    "objective": "barra inversa",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "false validación sintáctica",
+    "actual": "false validación sintáctica",
+    "result": "PASS"
+  },
+  {
+    "id": "E14",
+    "objective": "control",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "false validación sintáctica",
+    "actual": "false validación sintáctica",
+    "result": "PASS"
+  },
+  {
+    "id": "E15",
+    "objective": "trim exterior",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "true validación sintáctica",
+    "actual": "true validación sintáctica",
+    "result": "PASS"
+  },
+  {
+    "id": "E16",
+    "objective": "FTP",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "false validación sintáctica",
+    "actual": "false validación sintáctica",
+    "result": "PASS"
+  },
+  {
+    "id": "E17",
+    "objective": "query legítima",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "true validación sintáctica",
+    "actual": "true validación sintáctica",
+    "result": "PASS"
+  },
+  {
+    "id": "E18",
+    "objective": "hash",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "true validación sintáctica",
+    "actual": "true validación sintáctica",
+    "result": "PASS"
+  },
+  {
+    "id": "E19",
+    "objective": "firma Supabase detectada",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "aviso temporal",
+    "actual": "aviso temporal",
+    "result": "PASS"
+  },
+  {
+    "id": "E20",
+    "objective": "firma AWS detectada",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "aviso temporal",
+    "actual": "aviso temporal",
+    "result": "PASS"
+  },
+  {
+    "id": "E21",
+    "objective": "firma GCP detectada",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "aviso temporal",
+    "actual": "aviso temporal",
+    "result": "PASS"
+  },
+  {
+    "id": "E22",
+    "objective": "HTTPS permanente",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "sin aviso temporal",
+    "actual": "sin aviso temporal",
+    "result": "PASS"
+  },
+  {
+    "id": "D01",
+    "objective": "nombre",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "200 y persistencia sólo si válido",
+    "actual": "200 y persistencia sólo si válido",
+    "result": "PASS"
+  },
+  {
+    "id": "D02",
+    "objective": "marca",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "200 y persistencia sólo si válido",
+    "actual": "200 y persistencia sólo si válido",
+    "result": "PASS"
+  },
+  {
+    "id": "D03",
+    "objective": "precio cero",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "200 y persistencia sólo si válido",
+    "actual": "200 y persistencia sólo si válido",
+    "result": "PASS"
+  },
+  {
+    "id": "D04",
+    "objective": "precio negativo",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "400 y persistencia sólo si válido",
+    "actual": "400 y persistencia sólo si válido",
+    "result": "PASS"
+  },
+  {
+    "id": "D05",
+    "objective": "precio decimal",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "200 y persistencia sólo si válido",
+    "actual": "200 y persistencia sólo si válido",
+    "result": "PASS"
+  },
+  {
+    "id": "D06",
+    "objective": "stock cero",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "200 y persistencia sólo si válido",
+    "actual": "200 y persistencia sólo si válido",
+    "result": "PASS"
+  },
+  {
+    "id": "D07",
+    "objective": "stock negativo",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "400 y persistencia sólo si válido",
+    "actual": "400 y persistencia sólo si válido",
+    "result": "PASS"
+  },
+  {
+    "id": "D08",
+    "objective": "stock decimal",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "400 y persistencia sólo si válido",
+    "actual": "400 y persistencia sólo si válido",
+    "result": "PASS"
+  },
+  {
+    "id": "D09",
+    "objective": "tamaño cero",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "400 y persistencia sólo si válido",
+    "actual": "400 y persistencia sólo si válido",
+    "result": "PASS"
+  },
+  {
+    "id": "D10",
+    "objective": "tamaño válido",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "200 y persistencia sólo si válido",
+    "actual": "200 y persistencia sólo si válido",
+    "result": "PASS"
+  },
+  {
+    "id": "D11",
+    "objective": "intensidad cero",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "400 y persistencia sólo si válido",
+    "actual": "400 y persistencia sólo si válido",
+    "result": "PASS"
+  },
+  {
+    "id": "D12",
+    "objective": "intensidad máxima",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "200 y persistencia sólo si válido",
+    "actual": "200 y persistencia sólo si válido",
+    "result": "PASS"
+  },
+  {
+    "id": "D13",
+    "objective": "imagen trim",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "200 y persistencia sólo si válido",
+    "actual": "200 y persistencia sólo si válido",
+    "result": "PASS"
+  },
+  {
+    "id": "D14",
+    "objective": "imagen HTTP",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "400 y persistencia sólo si válido",
+    "actual": "400 y persistencia sólo si válido",
+    "result": "PASS"
+  },
+  {
+    "id": "D15",
+    "objective": "destacado true",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "200 y persistencia sólo si válido",
+    "actual": "200 y persistencia sólo si válido",
+    "result": "PASS"
+  },
+  {
+    "id": "D16",
+    "objective": "destacado false",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "200 y persistencia sólo si válido",
+    "actual": "200 y persistencia sólo si válido",
+    "result": "PASS"
+  },
+  {
+    "id": "D17",
+    "objective": "customer no modifica",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "403",
+    "actual": "403",
+    "result": "PASS"
+  },
+  {
+    "id": "D18",
+    "objective": "anónimo no modifica",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "403",
+    "actual": "403",
+    "result": "PASS"
+  },
+  {
+    "id": "D19",
+    "objective": "origen ajeno no modifica",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "403",
+    "actual": "403",
+    "result": "PASS"
+  },
+  {
+    "id": "D20",
+    "objective": "ID ausente no crea",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "404",
+    "actual": "404",
+    "result": "PASS"
+  },
+  {
+    "id": "D21",
+    "objective": "preview conserva protección",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "403",
+    "actual": "403",
+    "result": "PASS"
+  },
+  {
+    "id": "D22",
+    "objective": "editar precio conserva imagen",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "imagen idéntica",
+    "actual": "imagen idéntica",
+    "result": "PASS"
+  },
+  {
+    "id": "F01",
+    "objective": "cupón normal",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "válido",
+    "actual": "válido",
+    "result": "PASS"
+  },
+  {
+    "id": "F02",
+    "objective": "cupón minúsculas",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "válido",
+    "actual": "válido",
+    "result": "PASS"
+  },
+  {
+    "id": "F03",
+    "objective": "cupón trim",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "válido",
+    "actual": "válido",
+    "result": "PASS"
+  },
+  {
+    "id": "F04",
+    "objective": "cupón vacío",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "inválido",
+    "actual": "inválido",
+    "result": "PASS"
+  },
+  {
+    "id": "F05",
+    "objective": "cupón corto",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "inválido",
+    "actual": "inválido",
+    "result": "PASS"
+  },
+  {
+    "id": "F06",
+    "objective": "cupón largo",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "inválido",
+    "actual": "inválido",
+    "result": "PASS"
+  },
+  {
+    "id": "F07",
+    "objective": "cupón caracter ilegal",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "inválido",
+    "actual": "inválido",
+    "result": "PASS"
+  },
+  {
+    "id": "F08",
+    "objective": "cupón porcentaje0",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "inválido",
+    "actual": "inválido",
+    "result": "PASS"
+  },
+  {
+    "id": "F09",
+    "objective": "cupón porcentaje100",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "válido",
+    "actual": "válido",
+    "result": "PASS"
+  },
+  {
+    "id": "F10",
+    "objective": "cupón mayor100",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "inválido",
+    "actual": "inválido",
+    "result": "PASS"
+  },
+  {
+    "id": "F11",
+    "objective": "cupón negativo",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "inválido",
+    "actual": "inválido",
+    "result": "PASS"
+  },
+  {
+    "id": "F12",
+    "objective": "cupón NaN",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "inválido",
+    "actual": "inválido",
+    "result": "PASS"
+  },
+  {
+    "id": "F13",
+    "objective": "cupón infinito",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "inválido",
+    "actual": "inválido",
+    "result": "PASS"
+  },
+  {
+    "id": "F14",
+    "objective": "cupón decimal",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "válido",
+    "actual": "válido",
+    "result": "PASS"
+  },
+  {
+    "id": "F15",
+    "objective": "cupón activo",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "válido",
+    "actual": "válido",
+    "result": "PASS"
+  },
+  {
+    "id": "F16",
+    "objective": "cupón inactivo",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "válido",
+    "actual": "válido",
+    "result": "PASS"
+  },
+  {
+    "id": "F17",
+    "objective": "cupón guion",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "válido",
+    "actual": "válido",
+    "result": "PASS"
+  },
+  {
+    "id": "F18",
+    "objective": "cupón underscore",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "válido",
+    "actual": "válido",
+    "result": "PASS"
+  },
+  {
+    "id": "F19",
+    "objective": "cupón número",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "válido",
+    "actual": "válido",
+    "result": "PASS"
+  },
+  {
+    "id": "F20",
+    "objective": "cupón borde3",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "válido",
+    "actual": "válido",
+    "result": "PASS"
+  },
+  {
+    "id": "C25",
+    "objective": "Admin conserva stock null sin convertirlo en cero",
+    "environment": "Node/HTTP local con fixtures, sin Supabase remoto",
+    "expected": "null",
+    "actual": "null",
+    "result": "PASS"
+  }
+]

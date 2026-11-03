@@ -1,0 +1,34 @@
+[
+  {
+    "id": "A27",
+    "objective": "Editar/Eliminar con ancho/alto/padding/alineación iguales y mínimo44px; destructivo distinto",
+    "environment": "Chromium desktop 1440x900",
+    "expected": "104x44 y estilo destructivo distinguible",
+    "actual": "104x44 ambos",
+    "result": "PASS"
+  },
+  {
+    "id": "D27",
+    "objective": "confirmación de borrado conservada, cancelar no envía DELETE; foco y sin overflow",
+    "environment": "Chromium desktop",
+    "expected": "0 DELETE, foco visible y ancho de documento estable",
+    "actual": "comprobado",
+    "result": "PASS"
+  },
+  {
+    "id": "A27",
+    "objective": "Editar/Eliminar con ancho/alto/padding/alineación iguales y mínimo44px; destructivo distinto",
+    "environment": "Chromium mobile 390x844",
+    "expected": "104x44 y estilo destructivo distinguible",
+    "actual": "104x44 ambos",
+    "result": "PASS"
+  },
+  {
+    "id": "D27",
+    "objective": "confirmación de borrado conservada, cancelar no envía DELETE; foco y sin overflow",
+    "environment": "Chromium mobile",
+    "expected": "0 DELETE, foco visible y ancho de documento estable",
+    "actual": "comprobado",
+    "result": "PASS"
+  }
+]

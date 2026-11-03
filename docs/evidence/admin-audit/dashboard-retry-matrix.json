@@ -1,0 +1,10 @@
+[
+  {
+    "id": "A28",
+    "objective": "Fallo de conteos conserva navegación y permite recuperar conteos reales",
+    "environment": "Chromium escritorio, API/BD fixtures locales",
+    "expected": "7 módulos utilizables, error específico, reintento recupera conteos",
+    "actual": "7 módulos; error y reintento visibles; respuesta posterior restaura conteos",
+    "result": "PASS"
+  }
+]

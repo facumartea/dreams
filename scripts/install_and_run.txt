@@ -1,25 +1,33 @@
-DREAMS - INSTALACION LOCAL
+DREAMS - INSTALACION Y VERIFICACION LOCAL (ENTREGA 2026)
 
-1. Instalar Node.js 20 o superior y habilitar Corepack.
-2. Copiar .env.example como .env y completar un Supabase de desarrollo.
-3. Aplicar supabase/migrations con Supabase CLI en ese entorno.
-4. Ejecutar: pnpm install --frozen-lockfile
-5. Ejecutar: pnpm start
-6. Abrir: http://localhost:3000
+Requisitos: Node.js 24.x y pnpm 11.19.0 mediante Corepack.
+Desde la raiz, tambien en una extraccion sin .git:
 
-VERIFICACION
-- pnpm run check
-- pnpm test
-- pnpm audit --prod
+corepack pnpm install --frozen-lockfile
+corepack pnpm run check
+corepack pnpm run check:functions
+corepack pnpm test
+corepack pnpm run build:pages
+corepack pnpm run build:official
+
+Estos checks y builds usan fixtures y no requieren secretos reales ni publican.
+
+ARRANQUE CONECTADO DE DESARROLLO
+1. Copiar .env.example como .env y completar un Supabase de desarrollo.
+2. Revisar/aplicar supabase/migrations solo en ese proyecto, sin resets/seeds.
+3. Ejecutar: corepack pnpm start
+4. Abrir http://localhost:8080 (o el PORT configurado).
 
 ADMIN
-- Correo y clave: ADMIN_EMAIL y ADMIN_PASSWORD del entorno.
-- Panel: http://localhost:3000/admin
-- No existe una clave predeterminada en el repositorio.
+Panel: http://localhost:8080/admin
+Usar una cuenta autorizada existente. El arranque no crea administradores.
+No existe una clave predeterminada y no se cambia ninguna credencial para QA.
 
-RAILWAY
-- Usar las variables de .env.example como secretos del servicio.
-- No crear Volume: Supabase conserva los datos.
-- Verificar /api/health y los flujos críticos después del deploy.
+HOSTING
+Unica oficial autorizada: https://dreams-perfumes.pages.dev/
+Pages y backend privado Cloudflare; no desplegar previews u otros sitios.
+La publicacion requiere las guardas y QA descritas en CURRENT_STATE.md.
+Railway es un antecedente historico, no un destino de esta entrega.
 
-Nunca subir .env, node_modules ni SUPABASE_SECRET_KEY.
+Documentacion completa: docs/entrega-2026/INDICE.md y README.md.
+Nunca subir .env real, node_modules, claves, contraseñas o datos de clientes.

@@ -1,0 +1,639 @@
+{
+  "note": "Ejecución privada real anterior a la división en fases; fallo final por límite de subrequests Free, no por clave. No acredita QA Admin ni limpieza final.",
+  "schedules_removed": true,
+  "events": [
+    {
+      "timestamp": 1793294182804,
+      "version": "4862a658-f541-40b1-b03a-88327c54579d",
+      "source": {
+        "candidate_read": {
+          "project_url_matches": true,
+          "key_format": {
+            "present": true,
+            "surrounding_whitespace": false,
+            "any_whitespace": false,
+            "wrapped_quotes": false,
+            "ascii_controls": false,
+            "internal_whitespace": false,
+            "header_value_valid": true,
+            "assignment_instead_of_value": false,
+            "bearer_prefix_present": false,
+            "masked_or_ellipsis": false,
+            "non_ascii": false,
+            "kind": "modern_secret",
+            "jwt_project": "not_encoded",
+            "characters": 41,
+            "bytes": 41
+          },
+          "apikey_unchanged": true,
+          "project_key_pair": "verified_by_read",
+          "checked_at": "2026-10-29T17:16:22.732Z",
+          "raw_status": 200,
+          "sdk_status": 200
+        },
+        "message": "DREAMS private QA",
+        "type": "dreams-private-authenticated-qa-v1",
+        "run": "pr56-09ee61a-r1",
+        "source_commit": "09ee61a2d53f2d1b74dbb8afccf5ae22656717d1",
+        "secret_source_version": "8fcb56e1-b2a5-4cd7-832a-e084b5aab0e1",
+        "backend_version": "4862a658-f541-40b1-b03a-88327c54579d",
+        "started_at": "2026-10-29T17:16:22.300Z",
+        "checks": [
+          {
+            "id": "candidate-direct-sdk-read",
+            "result": "PASS"
+          },
+          {
+            "id": "server-key-type",
+            "result": "PASS"
+          },
+          {
+            "id": "qa-run-marker-readable",
+            "result": "PASS"
+          },
+          {
+            "id": "qa-run-already-provisioned",
+            "result": "SKIP"
+          }
+        ],
+        "status": "SKIPPED_DUPLICATE",
+        "completed_at": "2026-10-29T17:16:22.804Z"
+      }
+    },
+    {
+      "timestamp": 1793294122918,
+      "version": "4862a658-f541-40b1-b03a-88327c54579d",
+      "source": {
+        "candidate_read": {
+          "project_url_matches": true,
+          "key_format": {
+            "present": true,
+            "surrounding_whitespace": false,
+            "any_whitespace": false,
+            "wrapped_quotes": false,
+            "ascii_controls": false,
+            "internal_whitespace": false,
+            "header_value_valid": true,
+            "assignment_instead_of_value": false,
+            "bearer_prefix_present": false,
+            "masked_or_ellipsis": false,
+            "non_ascii": false,
+            "kind": "modern_secret",
+            "jwt_project": "not_encoded",
+            "characters": 41,
+            "bytes": 41
+          },
+          "apikey_unchanged": true,
+          "project_key_pair": "verified_by_read",
+          "checked_at": "2026-10-29T17:15:22.773Z",
+          "raw_status": 200,
+          "sdk_status": 200
+        },
+        "message": "DREAMS private QA",
+        "type": "dreams-private-authenticated-qa-v1",
+        "run": "pr56-09ee61a-r1",
+        "source_commit": "09ee61a2d53f2d1b74dbb8afccf5ae22656717d1",
+        "secret_source_version": "8fcb56e1-b2a5-4cd7-832a-e084b5aab0e1",
+        "backend_version": "4862a658-f541-40b1-b03a-88327c54579d",
+        "started_at": "2026-10-29T17:15:21.929Z",
+        "checks": [
+          {
+            "id": "candidate-direct-sdk-read",
+            "result": "PASS"
+          },
+          {
+            "id": "server-key-type",
+            "result": "PASS"
+          },
+          {
+            "id": "qa-run-marker-readable",
+            "result": "PASS"
+          },
+          {
+            "id": "qa-run-already-provisioned",
+            "result": "SKIP"
+          }
+        ],
+        "status": "SKIPPED_DUPLICATE",
+        "completed_at": "2026-10-29T17:15:22.918Z"
+      }
+    },
+    {
+      "timestamp": 1793294063271,
+      "version": "4862a658-f541-40b1-b03a-88327c54579d",
+      "source": {
+        "candidate_read": {
+          "project_url_matches": true,
+          "key_format": {
+            "present": true,
+            "surrounding_whitespace": false,
+            "any_whitespace": false,
+            "wrapped_quotes": false,
+            "ascii_controls": false,
+            "internal_whitespace": false,
+            "header_value_valid": true,
+            "assignment_instead_of_value": false,
+            "bearer_prefix_present": false,
+            "masked_or_ellipsis": false,
+            "non_ascii": false,
+            "kind": "modern_secret",
+            "jwt_project": "not_encoded",
+            "characters": 41,
+            "bytes": 41
+          },
+          "apikey_unchanged": true,
+          "project_key_pair": "verified_by_read",
+          "checked_at": "2026-10-29T17:14:23.083Z",
+          "raw_status": 200,
+          "sdk_status": 200
+        },
+        "message": "DREAMS private QA",
+        "type": "dreams-private-authenticated-qa-v1",
+        "run": "pr56-09ee61a-r1",
+        "source_commit": "09ee61a2d53f2d1b74dbb8afccf5ae22656717d1",
+        "secret_source_version": "8fcb56e1-b2a5-4cd7-832a-e084b5aab0e1",
+        "backend_version": "4862a658-f541-40b1-b03a-88327c54579d",
+        "started_at": "2026-10-29T17:14:22.126Z",
+        "checks": [
+          {
+            "id": "candidate-direct-sdk-read",
+            "result": "PASS"
+          },
+          {
+            "id": "server-key-type",
+            "result": "PASS"
+          },
+          {
+            "id": "qa-run-marker-readable",
+            "result": "PASS"
+          },
+          {
+            "id": "qa-run-already-provisioned",
+            "result": "SKIP"
+          }
+        ],
+        "status": "SKIPPED_DUPLICATE",
+        "completed_at": "2026-10-29T17:14:23.271Z"
+      }
+    },
+    {
+      "timestamp": 1793294004103,
+      "version": "4862a658-f541-40b1-b03a-88327c54579d",
+      "source": {
+        "candidate_read": {
+          "project_url_matches": true,
+          "key_format": {
+            "present": true,
+            "surrounding_whitespace": false,
+            "any_whitespace": false,
+            "wrapped_quotes": false,
+            "ascii_controls": false,
+            "internal_whitespace": false,
+            "header_value_valid": true,
+            "assignment_instead_of_value": false,
+            "bearer_prefix_present": false,
+            "masked_or_ellipsis": false,
+            "non_ascii": false,
+            "kind": "modern_secret",
+            "jwt_project": "not_encoded",
+            "characters": 41,
+            "bytes": 41
+          },
+          "apikey_unchanged": true,
+          "project_key_pair": "verified_by_read",
+          "checked_at": "2026-10-29T17:13:23.842Z",
+          "raw_status": 200,
+          "sdk_status": 200
+        },
+        "message": "DREAMS private QA",
+        "type": "dreams-private-authenticated-qa-v1",
+        "run": "pr56-09ee61a-r1",
+        "source_commit": "09ee61a2d53f2d1b74dbb8afccf5ae22656717d1",
+        "secret_source_version": "8fcb56e1-b2a5-4cd7-832a-e084b5aab0e1",
+        "backend_version": "4862a658-f541-40b1-b03a-88327c54579d",
+        "started_at": "2026-10-29T17:13:22.947Z",
+        "checks": [
+          {
+            "id": "candidate-direct-sdk-read",
+            "result": "PASS"
+          },
+          {
+            "id": "server-key-type",
+            "result": "PASS"
+          },
+          {
+            "id": "qa-run-marker-readable",
+            "result": "PASS"
+          },
+          {
+            "id": "qa-run-already-provisioned",
+            "result": "SKIP"
+          }
+        ],
+        "status": "SKIPPED_DUPLICATE",
+        "completed_at": "2026-10-29T17:13:24.103Z"
+      }
+    },
+    {
+      "timestamp": 1793293944788,
+      "version": "4862a658-f541-40b1-b03a-88327c54579d",
+      "source": {
+        "candidate_read": {
+          "project_url_matches": true,
+          "key_format": {
+            "present": true,
+            "surrounding_whitespace": false,
+            "any_whitespace": false,
+            "wrapped_quotes": false,
+            "ascii_controls": false,
+            "internal_whitespace": false,
+            "header_value_valid": true,
+            "assignment_instead_of_value": false,
+            "bearer_prefix_present": false,
+            "masked_or_ellipsis": false,
+            "non_ascii": false,
+            "kind": "modern_secret",
+            "jwt_project": "not_encoded",
+            "characters": 41,
+            "bytes": 41
+          },
+          "apikey_unchanged": true,
+          "project_key_pair": "verified_by_read",
+          "checked_at": "2026-10-29T17:12:24.053Z",
+          "raw_status": 200,
+          "sdk_status": 200
+        },
+        "message": "DREAMS private QA",
+        "type": "dreams-private-authenticated-qa-v1",
+        "run": "pr56-09ee61a-r1",
+        "source_commit": "09ee61a2d53f2d1b74dbb8afccf5ae22656717d1",
+        "secret_source_version": "8fcb56e1-b2a5-4cd7-832a-e084b5aab0e1",
+        "backend_version": "4862a658-f541-40b1-b03a-88327c54579d",
+        "started_at": "2026-10-29T17:12:22.558Z",
+        "checks": [
+          {
+            "id": "candidate-direct-sdk-read",
+            "result": "PASS"
+          },
+          {
+            "id": "server-key-type",
+            "result": "PASS"
+          },
+          {
+            "id": "qa-run-marker-readable",
+            "result": "PASS"
+          },
+          {
+            "id": "qa-run-already-provisioned",
+            "result": "SKIP"
+          }
+        ],
+        "status": "SKIPPED_DUPLICATE",
+        "completed_at": "2026-10-29T17:12:24.788Z"
+      }
+    },
+    {
+      "timestamp": 1793293884079,
+      "version": "4862a658-f541-40b1-b03a-88327c54579d",
+      "source": {
+        "candidate_read": {
+          "project_url_matches": true,
+          "key_format": {
+            "present": true,
+            "surrounding_whitespace": false,
+            "any_whitespace": false,
+            "wrapped_quotes": false,
+            "ascii_controls": false,
+            "internal_whitespace": false,
+            "header_value_valid": true,
+            "assignment_instead_of_value": false,
+            "bearer_prefix_present": false,
+            "masked_or_ellipsis": false,
+            "non_ascii": false,
+            "kind": "modern_secret",
+            "jwt_project": "not_encoded",
+            "characters": 41,
+            "bytes": 41
+          },
+          "apikey_unchanged": true,
+          "project_key_pair": "verified_by_read",
+          "checked_at": "2026-10-29T17:11:23.926Z",
+          "raw_status": 200,
+          "sdk_status": 200
+        },
+        "message": "DREAMS private QA",
+        "type": "dreams-private-authenticated-qa-v1",
+        "run": "pr56-09ee61a-r1",
+        "source_commit": "09ee61a2d53f2d1b74dbb8afccf5ae22656717d1",
+        "secret_source_version": "8fcb56e1-b2a5-4cd7-832a-e084b5aab0e1",
+        "backend_version": "4862a658-f541-40b1-b03a-88327c54579d",
+        "started_at": "2026-10-29T17:11:22.798Z",
+        "checks": [
+          {
+            "id": "candidate-direct-sdk-read",
+            "result": "PASS"
+          },
+          {
+            "id": "server-key-type",
+            "result": "PASS"
+          },
+          {
+            "id": "qa-run-marker-readable",
+            "result": "PASS"
+          },
+          {
+            "id": "qa-run-already-provisioned",
+            "result": "SKIP"
+          }
+        ],
+        "status": "SKIPPED_DUPLICATE",
+        "completed_at": "2026-10-29T17:11:24.079Z"
+      }
+    },
+    {
+      "timestamp": 1793293845686,
+      "version": "4862a658-f541-40b1-b03a-88327c54579d",
+      "source": {
+        "candidate_read": {
+          "project_url_matches": true,
+          "key_format": {
+            "present": true,
+            "surrounding_whitespace": false,
+            "any_whitespace": false,
+            "wrapped_quotes": false,
+            "ascii_controls": false,
+            "internal_whitespace": false,
+            "header_value_valid": true,
+            "assignment_instead_of_value": false,
+            "bearer_prefix_present": false,
+            "masked_or_ellipsis": false,
+            "non_ascii": false,
+            "kind": "modern_secret",
+            "jwt_project": "not_encoded",
+            "characters": 41,
+            "bytes": 41
+          },
+          "apikey_unchanged": true,
+          "project_key_pair": "verified_by_read",
+          "checked_at": "2026-10-29T17:10:23.314Z",
+          "raw_status": 200,
+          "sdk_status": 200
+        },
+        "message": "DREAMS private QA",
+        "type": "dreams-private-authenticated-qa-v1",
+        "run": "pr56-09ee61a-r1",
+        "source_commit": "09ee61a2d53f2d1b74dbb8afccf5ae22656717d1",
+        "secret_source_version": "8fcb56e1-b2a5-4cd7-832a-e084b5aab0e1",
+        "backend_version": "4862a658-f541-40b1-b03a-88327c54579d",
+        "started_at": "2026-10-29T17:10:22.262Z",
+        "checks": [
+          {
+            "id": "candidate-direct-sdk-read",
+            "result": "PASS"
+          },
+          {
+            "id": "server-key-type",
+            "result": "PASS"
+          },
+          {
+            "id": "qa-run-marker-readable",
+            "result": "PASS"
+          },
+          {
+            "id": "business-snapshot-readable",
+            "result": "PASS"
+          },
+          {
+            "id": "a-secure-cookies",
+            "result": "PASS"
+          },
+          {
+            "id": "a-registration",
+            "result": "PASS",
+            "observed_status": 200,
+            "expected_status": 200
+          },
+          {
+            "id": "a-registration-session",
+            "result": "PASS"
+          },
+          {
+            "id": "a-customer-profile",
+            "result": "PASS"
+          },
+          {
+            "id": "b-secure-cookies",
+            "result": "PASS"
+          },
+          {
+            "id": "b-registration",
+            "result": "PASS",
+            "observed_status": 200,
+            "expected_status": 200
+          },
+          {
+            "id": "b-registration-session",
+            "result": "PASS"
+          },
+          {
+            "id": "b-customer-profile",
+            "result": "PASS"
+          },
+          {
+            "id": "a-secure-cookies",
+            "result": "PASS"
+          },
+          {
+            "id": "logout-real",
+            "result": "PASS",
+            "observed_status": 200,
+            "expected_status": 200
+          },
+          {
+            "id": "logout-session-read",
+            "result": "PASS",
+            "observed_status": 200,
+            "expected_status": 200
+          },
+          {
+            "id": "logout-cleared-session",
+            "result": "PASS"
+          },
+          {
+            "id": "a-secure-cookies",
+            "result": "PASS"
+          },
+          {
+            "id": "login-real",
+            "result": "PASS",
+            "observed_status": 200,
+            "expected_status": 200
+          },
+          {
+            "id": "login-same-user",
+            "result": "PASS"
+          },
+          {
+            "id": "wrong-password",
+            "result": "PASS",
+            "observed_status": 401,
+            "expected_status": 401
+          },
+          {
+            "id": "a-secure-cookies",
+            "result": "PASS"
+          },
+          {
+            "id": "refresh-real",
+            "result": "PASS",
+            "observed_status": 200,
+            "expected_status": 200
+          },
+          {
+            "id": "refresh-same-user",
+            "result": "PASS"
+          },
+          {
+            "id": "session-reload",
+            "result": "PASS",
+            "observed_status": 200,
+            "expected_status": 200
+          },
+          {
+            "id": "session-persisted",
+            "result": "PASS"
+          },
+          {
+            "id": "anonymous-admin-denied",
+            "result": "PASS",
+            "observed_status": 403,
+            "expected_status": 403
+          },
+          {
+            "id": "customer-admin-denied",
+            "result": "PASS",
+            "observed_status": 403,
+            "expected_status": 403
+          },
+          {
+            "id": "customer-admin-write-denied",
+            "result": "PASS",
+            "observed_status": 403,
+            "expected_status": 403
+          },
+          {
+            "id": "catalog-read",
+            "result": "PASS",
+            "observed_status": 200,
+            "expected_status": 200
+          },
+          {
+            "id": "available-readonly-product",
+            "result": "PASS"
+          },
+          {
+            "id": "a-cart-read",
+            "result": "PASS",
+            "observed_status": 200,
+            "expected_status": 200
+          },
+          {
+            "id": "a-cart-owner",
+            "result": "PASS"
+          },
+          {
+            "id": "b-cart-read",
+            "result": "PASS",
+            "observed_status": 200,
+            "expected_status": 200
+          },
+          {
+            "id": "b-cart-owner",
+            "result": "PASS"
+          },
+          {
+            "id": "visitor-cart-merge",
+            "result": "PASS",
+            "observed_status": 200,
+            "expected_status": 200
+          },
+          {
+            "id": "visitor-cart-replay",
+            "result": "PASS",
+            "observed_status": 200,
+            "expected_status": 200
+          },
+          {
+            "id": "visitor-cart-no-duplicate",
+            "result": "PASS"
+          },
+          {
+            "id": "b-cart-isolation-read",
+            "result": "PASS",
+            "observed_status": 200,
+            "expected_status": 200
+          },
+          {
+            "id": "cart-isolation",
+            "result": "PASS"
+          },
+          {
+            "id": "a-cart-reload",
+            "result": "PASS",
+            "observed_status": 200,
+            "expected_status": 200
+          },
+          {
+            "id": "cart-persistence",
+            "result": "PASS"
+          },
+          {
+            "id": "cart-cross-account-scope-denied",
+            "result": "FAIL",
+            "observed_status": 401,
+            "expected_status": 409
+          },
+          {
+            "id": "a-cart-clear-qa",
+            "result": "FAIL",
+            "observed_status": 401,
+            "expected_status": 200
+          },
+          {
+            "id": "qa-cleanup",
+            "result": "FAIL"
+          },
+          {
+            "id": "business-snapshot-readable",
+            "result": "FAIL"
+          }
+        ],
+        "status": "FAIL",
+        "failed_check": "cart-cross-account-scope-denied",
+        "completed_at": "2026-10-29T17:10:45.686Z"
+      }
+    },
+    {
+      "timestamp": 1793293831686,
+      "version": "4862a658-f541-40b1-b03a-88327c54579d",
+      "source": {
+        "message_type": "string",
+        "source_keys": [
+          "level",
+          "message"
+        ]
+      }
+    },
+    {
+      "timestamp": 1793293831686,
+      "version": "4862a658-f541-40b1-b03a-88327c54579d",
+      "source": {
+        "message_type": "string",
+        "source_keys": [
+          "level",
+          "message"
+        ]
+      }
+    }
+  ]
+}

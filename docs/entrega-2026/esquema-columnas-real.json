@@ -1,0 +1,458 @@
+[
+  {
+    "table_name": "account_cart_operations",
+    "column_name": "user_id",
+    "data_type": "uuid",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "account_cart_operations",
+    "column_name": "operation_id",
+    "data_type": "uuid",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "account_cart_operations",
+    "column_name": "operation",
+    "data_type": "jsonb",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "account_cart_operations",
+    "column_name": "created_at",
+    "data_type": "timestamp with time zone",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "account_carts",
+    "column_name": "user_id",
+    "data_type": "uuid",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "account_carts",
+    "column_name": "items",
+    "data_type": "jsonb",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "account_carts",
+    "column_name": "revision",
+    "data_type": "bigint",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "account_carts",
+    "column_name": "updated_at",
+    "data_type": "timestamp with time zone",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "coupons",
+    "column_name": "id",
+    "data_type": "bigint",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "coupons",
+    "column_name": "code",
+    "data_type": "text",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "coupons",
+    "column_name": "discount_percent",
+    "data_type": "numeric",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "coupons",
+    "column_name": "active",
+    "data_type": "boolean",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "coupons",
+    "column_name": "expires_at",
+    "data_type": "timestamp with time zone",
+    "is_nullable": "YES"
+  },
+  {
+    "table_name": "coupons",
+    "column_name": "max_uses",
+    "data_type": "integer",
+    "is_nullable": "YES"
+  },
+  {
+    "table_name": "coupons",
+    "column_name": "per_user_limit",
+    "data_type": "integer",
+    "is_nullable": "YES"
+  },
+  {
+    "table_name": "coupons",
+    "column_name": "minimum_purchase",
+    "data_type": "numeric",
+    "is_nullable": "YES"
+  },
+  {
+    "table_name": "coupons",
+    "column_name": "conditions",
+    "data_type": "jsonb",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "coupons",
+    "column_name": "created_at",
+    "data_type": "timestamp with time zone",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "coupons",
+    "column_name": "updated_at",
+    "data_type": "timestamp with time zone",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "favorites",
+    "column_name": "user_id",
+    "data_type": "uuid",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "favorites",
+    "column_name": "product_id",
+    "data_type": "bigint",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "favorites",
+    "column_name": "created_at",
+    "data_type": "timestamp with time zone",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "inquiries",
+    "column_name": "id",
+    "data_type": "bigint",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "inquiries",
+    "column_name": "user_id",
+    "data_type": "uuid",
+    "is_nullable": "YES"
+  },
+  {
+    "table_name": "inquiries",
+    "column_name": "product_id",
+    "data_type": "bigint",
+    "is_nullable": "YES"
+  },
+  {
+    "table_name": "inquiries",
+    "column_name": "product_name",
+    "data_type": "text",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "inquiries",
+    "column_name": "user_name",
+    "data_type": "text",
+    "is_nullable": "YES"
+  },
+  {
+    "table_name": "inquiries",
+    "column_name": "user_email",
+    "data_type": "text",
+    "is_nullable": "YES"
+  },
+  {
+    "table_name": "inquiries",
+    "column_name": "created_at",
+    "data_type": "timestamp with time zone",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "orders",
+    "column_name": "id",
+    "data_type": "uuid",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "orders",
+    "column_name": "user_id",
+    "data_type": "uuid",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "orders",
+    "column_name": "provider",
+    "data_type": "text",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "orders",
+    "column_name": "provider_preference_id",
+    "data_type": "text",
+    "is_nullable": "YES"
+  },
+  {
+    "table_name": "orders",
+    "column_name": "provider_payment_id",
+    "data_type": "text",
+    "is_nullable": "YES"
+  },
+  {
+    "table_name": "orders",
+    "column_name": "status",
+    "data_type": "text",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "orders",
+    "column_name": "status_detail",
+    "data_type": "text",
+    "is_nullable": "YES"
+  },
+  {
+    "table_name": "orders",
+    "column_name": "currency",
+    "data_type": "text",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "orders",
+    "column_name": "subtotal",
+    "data_type": "numeric",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "orders",
+    "column_name": "discount",
+    "data_type": "numeric",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "orders",
+    "column_name": "total",
+    "data_type": "numeric",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "orders",
+    "column_name": "coupon_id",
+    "data_type": "bigint",
+    "is_nullable": "YES"
+  },
+  {
+    "table_name": "orders",
+    "column_name": "coupon_code",
+    "data_type": "text",
+    "is_nullable": "YES"
+  },
+  {
+    "table_name": "orders",
+    "column_name": "coupon_percent",
+    "data_type": "numeric",
+    "is_nullable": "YES"
+  },
+  {
+    "table_name": "orders",
+    "column_name": "items",
+    "data_type": "jsonb",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "orders",
+    "column_name": "paid_at",
+    "data_type": "timestamp with time zone",
+    "is_nullable": "YES"
+  },
+  {
+    "table_name": "orders",
+    "column_name": "created_at",
+    "data_type": "timestamp with time zone",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "orders",
+    "column_name": "updated_at",
+    "data_type": "timestamp with time zone",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "products",
+    "column_name": "id",
+    "data_type": "bigint",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "products",
+    "column_name": "marca",
+    "data_type": "text",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "products",
+    "column_name": "name",
+    "data_type": "text",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "products",
+    "column_name": "gender",
+    "data_type": "text",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "products",
+    "column_name": "category",
+    "data_type": "text",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "products",
+    "column_name": "size_ml",
+    "data_type": "integer",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "products",
+    "column_name": "price",
+    "data_type": "numeric",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "products",
+    "column_name": "stock",
+    "data_type": "integer",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "products",
+    "column_name": "intensity",
+    "data_type": "integer",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "products",
+    "column_name": "family",
+    "data_type": "text",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "products",
+    "column_name": "top_notes",
+    "data_type": "text",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "products",
+    "column_name": "heart_notes",
+    "data_type": "text",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "products",
+    "column_name": "base_notes",
+    "data_type": "text",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "products",
+    "column_name": "description",
+    "data_type": "text",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "products",
+    "column_name": "image_url",
+    "data_type": "text",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "products",
+    "column_name": "featured",
+    "data_type": "boolean",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "products",
+    "column_name": "created_at",
+    "data_type": "timestamp with time zone",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "products",
+    "column_name": "updated_at",
+    "data_type": "timestamp with time zone",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "profiles",
+    "column_name": "id",
+    "data_type": "uuid",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "profiles",
+    "column_name": "name",
+    "data_type": "text",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "profiles",
+    "column_name": "role",
+    "data_type": "text",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "profiles",
+    "column_name": "created_at",
+    "data_type": "timestamp with time zone",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "reviews",
+    "column_name": "id",
+    "data_type": "bigint",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "reviews",
+    "column_name": "user_id",
+    "data_type": "uuid",
+    "is_nullable": "YES"
+  },
+  {
+    "table_name": "reviews",
+    "column_name": "user_name",
+    "data_type": "text",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "reviews",
+    "column_name": "rating",
+    "data_type": "integer",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "reviews",
+    "column_name": "comment",
+    "data_type": "text",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "reviews",
+    "column_name": "created_at",
+    "data_type": "timestamp with time zone",
+    "is_nullable": "NO"
+  },
+  {
+    "table_name": "reviews",
+    "column_name": "operation_id",
+    "data_type": "uuid",
+    "is_nullable": "YES"
+  }
+]

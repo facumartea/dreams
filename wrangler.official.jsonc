@@ -1,0 +1,17 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "dreams-official-backend",
+  "main": "worker/official.mjs",
+  "compatibility_date": "2026-10-27",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": false,
+  "preview_urls": false,
+  "keep_vars": true,
+  "rules": [{"type": "Text", "globs": ["**/*.html", "**/public/js/admin.js"], "fallthrough": true}],
+  "observability": {"enabled": true, "logs": {"invocation_logs": false}},
+  "vars": {
+    "SUPABASE_URL": "https://nwsmbemwtexmrtpkgxrz.supabase.co",
+    "APP_BASE_URL": "https://dreams-perfumes.pages.dev",
+    "APP_ORIGINS": "https://dreams-perfumes.pages.dev"
+  }
+}

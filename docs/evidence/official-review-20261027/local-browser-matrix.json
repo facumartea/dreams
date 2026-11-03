@@ -1,0 +1,98 @@
+[
+  {
+    "id": "W01",
+    "objective": "WhatsApp nativo abre con API lenta/fallida y resumen correcto",
+    "environment": "desktop http://127.0.0.1:4185",
+    "expected": "WhatsApp nativo abre con API lenta/fallida y resumen correcto",
+    "actual": "wa.me interceptado, ningún mensaje; API interceptada",
+    "result": "PASS"
+  },
+  {
+    "id": "W02",
+    "objective": "Carrito conserva producto al recargar; sin overflow",
+    "environment": "desktop http://127.0.0.1:4185",
+    "expected": "Carrito conserva producto al recargar; sin overflow",
+    "actual": "producto persistido",
+    "result": "PASS"
+  },
+  {
+    "id": "W03",
+    "objective": "Teléfono ausente no crea enlace inválido y mantiene producto/carrito",
+    "environment": "desktop http://127.0.0.1:4185",
+    "expected": "Teléfono ausente no crea enlace inválido y mantiene producto/carrito",
+    "actual": "config interceptada sin destino; agregar utilizable",
+    "result": "PASS"
+  },
+  {
+    "id": "W04",
+    "objective": "Acceso mantiene labels/autofill y validación de formulario sin alta real",
+    "environment": "desktop http://127.0.0.1:4185",
+    "expected": "Acceso mantiene labels/autofill y validación de formulario sin alta real",
+    "actual": "registro vacío rechazado en cliente, sin crear cuenta",
+    "result": "PASS"
+  },
+  {
+    "id": "A29",
+    "objective": "Admin existente: siete módulos, búsqueda y acciones104×44",
+    "environment": "desktop fixture local",
+    "expected": "Admin existente: siete módulos, búsqueda y acciones104×44",
+    "actual": "7 tarjetas,8 resultados, acciones iguales",
+    "result": "PASS"
+  },
+  {
+    "id": "W05",
+    "objective": "Sin errores JS durante el recorrido afectado",
+    "environment": "desktop http://127.0.0.1:4185",
+    "expected": "Sin errores JS durante el recorrido afectado",
+    "actual": "0 pageerrors",
+    "result": "PASS"
+  },
+  {
+    "id": "W01",
+    "objective": "WhatsApp nativo abre con API lenta/fallida y resumen correcto",
+    "environment": "mobile http://127.0.0.1:4185",
+    "expected": "WhatsApp nativo abre con API lenta/fallida y resumen correcto",
+    "actual": "wa.me interceptado, ningún mensaje; API interceptada",
+    "result": "PASS"
+  },
+  {
+    "id": "W02",
+    "objective": "Carrito conserva producto al recargar; sin overflow",
+    "environment": "mobile http://127.0.0.1:4185",
+    "expected": "Carrito conserva producto al recargar; sin overflow",
+    "actual": "producto persistido",
+    "result": "PASS"
+  },
+  {
+    "id": "W03",
+    "objective": "Teléfono ausente no crea enlace inválido y mantiene producto/carrito",
+    "environment": "mobile http://127.0.0.1:4185",
+    "expected": "Teléfono ausente no crea enlace inválido y mantiene producto/carrito",
+    "actual": "config interceptada sin destino; agregar utilizable",
+    "result": "PASS"
+  },
+  {
+    "id": "W04",
+    "objective": "Acceso mantiene labels/autofill y validación de formulario sin alta real",
+    "environment": "mobile http://127.0.0.1:4185",
+    "expected": "Acceso mantiene labels/autofill y validación de formulario sin alta real",
+    "actual": "registro vacío rechazado en cliente, sin crear cuenta",
+    "result": "PASS"
+  },
+  {
+    "id": "A29",
+    "objective": "Admin existente: siete módulos, búsqueda y acciones104×44",
+    "environment": "mobile fixture local",
+    "expected": "Admin existente: siete módulos, búsqueda y acciones104×44",
+    "actual": "7 tarjetas,8 resultados, acciones iguales",
+    "result": "PASS"
+  },
+  {
+    "id": "W05",
+    "objective": "Sin errores JS durante el recorrido afectado",
+    "environment": "mobile http://127.0.0.1:4185",
+    "expected": "Sin errores JS durante el recorrido afectado",
+    "actual": "0 pageerrors",
+    "result": "PASS"
+  }
+]

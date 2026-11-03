@@ -1,0 +1,57 @@
+{
+  "official_url": "https://dreams-perfumes.pages.dev/",
+  "pages_deployment": "b169918f-ce14-4588-a006-6099afba06aa",
+  "frontend_commit": "e544c6ca8f00927cbe2c92f8c7fa225fff18e4d9",
+  "backend_commit": "e86f4343851d9810623996d2b7d13504163340c0",
+  "backend_version": "29b843a0-d04e-4631-8d52-627d5f598654",
+  "backend_deployment": "31aef453-abc3-44ff-8dc1-659e84553dd3",
+  "verified_header_version": true,
+  "health": {
+    "http": 200,
+    "database": "ok"
+  },
+  "private_qa_parent_version": "11477c4f-0a90-4a71-86a1-2e9a7bfdbd4a",
+  "private_qa_phases": 9,
+  "private_qa_assertions": 281,
+  "private_qa_failures": 0,
+  "final_browser_admin": [
+    "create",
+    "edit/image/persist",
+    "delete/absence",
+    "logout/access denied"
+  ],
+  "final_customer_smoke": "login/reload/logout PASS",
+  "secret_names_present": [
+    "SUPABASE_SECRET_KEY"
+  ],
+  "temporary_admin_secret_removed": true,
+  "scheduled_jobs": [],
+  "public_worker_url_enabled": false,
+  "preview_urls_enabled": false,
+  "temporary_kv_deleted": true,
+  "qa_products_remaining": 0,
+  "qa_coupons_remaining": 0,
+  "qa_reviews_remaining": 0,
+  "qa_customer_sessions_remaining": 0,
+  "original_admin_role_preserved": true,
+  "admin_password_changed": false,
+  "commercial_stock_unchanged": true,
+  "commercial_orders_unchanged": true,
+  "qa_customer_accounts": "Retenidas como customer; no administradores nuevos; sesiones cerradas.",
+  "rollback": "Pages b169918f + backend final limpio29b843a0 conservado para futuros cambios; versiones probadas con la misma firma disponibles. a3184576 sólo emergencia legacy, sin garantizar tickets nuevos.",
+  "note": "El código final conserva HTTP idéntico y retira imports/dispatcher QA; las nueve fases corresponden al padre0368, y el navegador acredita Admin/cliente sobre la versión final limpia.",
+  "remote_cases": {
+    "historical_records": 92,
+    "distinct_latest_pass": 89,
+    "distinct_latest_fail": 0
+  },
+  "checks": {
+    "tests": 476,
+    "failures": 0,
+    "ci_run": 41579735626,
+    "ci_number": 224,
+    "function_files": 115,
+    "function_records": 2111,
+    "function_violations": 0
+  }
+}

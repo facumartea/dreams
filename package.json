@@ -9,7 +9,16 @@
     "dev": "nodemon server/server.js",
     "check": "node scripts/check.js",
     "test": "node --test",
-    "ci": "pnpm run check && pnpm test"
+    "ci": "pnpm run check && pnpm test",
+    "build:cloudflare": "wrangler deploy --dry-run --env preview --outdir dist/worker",
+    "build:pages": "node scripts/build-pages.mjs",
+    "deploy:pages": "node scripts/deploy-pages.mjs",
+    "preview:cloudflare": "wrangler dev --ip 127.0.0.1 --port 8787",
+    "deploy:cloudflare:preview": "wrangler deploy --env preview",
+    "deploy:cloudflare:production": "wrangler deploy --env production",
+    "build:admin-review": "wrangler deploy worker/admin-review.mjs --dry-run --env preview --outdir dist/admin-worker",
+    "build:official": "wrangler deploy --dry-run --config wrangler.official.jsonc --outdir dist/official-worker",
+    "check:functions": "node scripts/function-inventory.mjs ."
   },
   "engines": {
     "node": ">=24 <25"
@@ -24,6 +33,8 @@
     "ws": "^8.18.3"
   },
   "devDependencies": {
-    "nodemon": "^3.1.10"
+    "acorn": "8.15.0",
+    "nodemon": "^3.1.10",
+    "wrangler": "^4.147.0"
   }
 }

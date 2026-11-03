@@ -1,0 +1,19 @@
+/ 200 DREAMS | Los perfumes de tus sueños https://dreams-perfumes.pages.dev/ index, follow
+/catalogo.html 200 Perfumes de mujer, hombre y unisex | DREAMS https://dreams-perfumes.pages.dev/catalogo.html index, follow
+/catalogo.html?gender=mujer 200 Perfumes de mujer | DREAMS https://dreams-perfumes.pages.dev/catalogo.html?gender=mujer index, follow
+/catalogo.html?gender=hombre 200 Perfumes de hombre | DREAMS https://dreams-perfumes.pages.dev/catalogo.html?gender=hombre index, follow
+/catalogo.html?gender=unisex 200 Perfumes unisex | DREAMS https://dreams-perfumes.pages.dev/catalogo.html?gender=unisex index, follow
+/nosotros.html 200 Nosotros y contacto | DREAMS https://dreams-perfumes.pages.dev/nosotros.html index, follow
+/producto.html?id=199 200 Ombre Leather Parfum de Tom Ford | DREAMS https://dreams-perfumes.pages.dev/producto.html?id=199 index, follow
+/producto.html?id=999999999 404 noindex PASS
+/producto.html 404 noindex PASS
+/404.html 404 noindex PASS
+/ruta-que-no-existe-seo 404 noindex PASS
+/cuenta.html 200 noindex PASS
+/carrito.html 200 noindex PASS
+/checkout.html 200 noindex PASS
+/checkout-resultado.html 200 noindex PASS
+/admin 403 noindex PASS
+Sitemap52 unique public canonical URLs PASS
+Social PNG1200x630 public200 and source bytes identical PASS
+SEO INITIAL HTTP AUDIT PASS https://dreams-perfumes.pages.dev

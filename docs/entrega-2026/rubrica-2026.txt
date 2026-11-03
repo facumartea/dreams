@@ -1,0 +1,153 @@
+          Trabajo práctico de Integración – TP Final
+Consigna General:
+Se debe desarrollar un sitio y la imagen corporativa de una marca de producto y producto a elección,
+la marca debe ser de fantasía, su objetivo es presentar los productos de forma que estos sean
+vendibles y que se apliquen herramientas de programación y diseño. El sitio debe ser atractivo y
+funcional.
+
+Objetivo:
+El objetivo del trabajo es el de poder aplicar los conceptos de diseño web, programación Javascript , API
+y SQL trabajados durante el año, así como ciclos, funciones, condicionales, operadores lógicos, etc
+incorporados en un sitio web o app específico. Así como herramientas de diseño gráfico y editorial.
+​
+Criterios de Diseño:
+Además de la programación y la documentación, el trabajo deberá reflejar los principios básicos de
+diseño vistos durante el año.​
+Diseño de un logo: Simple, como máximo 3 colores en PNG.​
+Coherencia visual: uso de una paleta cromática definida y constante en todas las páginas o pantallas.​
+Tipografía: aplicación de jerarquías tipográficas claras (títulos, subtítulos, cuerpo de texto) y
+combinación de fuentes acorde al tema del sitio o app.​
+Navegación clara: botones y enlaces visibles, menús.​
+Identidad visual: el diseño debe reflejar el tema del sitio o app de forma atractiva y creativa.​
+Elementos visuales: integración de imágenes, íconos, o ilustraciones con criterio estético y funcional.
+
+Criterios de Programación:
+Los estudiantes deben poder:
+     ●​ Leer y escribir código adecuadamente.
+     ●​ Utilizar adecuadamente la documentación.
+     ●​ Mostrar capacidad de resolución y autonomía
+     ●​ Mostrar continuidad y proceso de trabajo.
+     ●​ Demostrar en cada etapa que el uso de IA, fue complementario al trabajo.
+
+Especificación de requerimientos:
+●​ El grupo de trabajo no puede ser mayor a 2 alumnos, pudiendo interrogar el profesor al /los
+    alumno/s de los que no quede claro su aporte al trabajo. Los grupos NO pueden rotar.
+●​ Fecha de entrega previa 2 de octubre.
+●​ Fecha de entrega final 6 de noviembre.
+●​ Se debe desarrollar , una app web o sitio HTML/CSS/JS aplicando/consumiendo una API o una app
+    desde un servidor Flak
+●​ A nivel funcional (no diseño, eso está definido en la rúbrica de diseño) se debe poder:
+         o​ Mostrar productos o entradas de una base de datos en el frontend que provengan de un
+             backend básico donde se implemente una base de datos SQLlite, se sugiere el uso de Flask
+             aunque también se puede usar Node.js.
+         o​ En caso de usar Node.js, se debe dejar registro de las versiones usando Git (github)
+         o​ Se debe implementar una pantalla de login de usuarios y de registro de usuarios.
+         o​ Los productos/entradas deben poder editarse desde una interfaz específica para
+             administrar los productos/entradas. Para ello debe validarse que sea un usuario autorizado.
+
+●​ Debe implementarse si o si Javascript, carousel, web semántica y diseño adaptable a las pantallas
+   (responsive)
+
+Documentación:
+●​ Wireframe (diseño de las conexiones de las páginas, utilizando una herramienta ad-hoc o en mano
+   muy prolijo - foto).
+●​ Manual de uso (Como se usa el software que diseñaron y construyeron)
+●​ Diseño de base de datos
+●​ Bitácora de uso de IA, en cada preentrega, debe incluir fecha, prompts, resultado
+●​ Link a la API. Explicación de su uso (más allá de la implementación)
+
+Ítem                 5                      3                       2                       1
+Diseño visual        Diseño coherente,      Diseño visual que       Diseño incompleto,      Diseño muy
+                     consistente,           está integrado, pero    con errores de          incompleto,
+                     atractivo, con         no en todos los         coherencia visual y     desordenado o sin
+                     tipografía y colores   aspectos de la          tipografía poco         criterios aplicados.
+                     bien aplicados.        interfaz.               clara.
+Modularidad          El código del          Se aplican al menos     Se aplica una           No se aplican
+                     programa principal     2 funciones             función en el           funciones
+                     y de las funciones                             programa
+                     no supera las 40
+                     líneas o renglones,
+                     lo demás se
+                     encuentra
+                     modularizado en
+                     funciones
+Documentación        Todos los              Los integrantes         Solo uno de los         No hay
+                     integrantes poseen     poseen                  integrantes entrega     documentación
+                     la documentación       documentación           la documentación o
+                     (aunque sea en         completa pero           la documentación
+                     borrador, no           alguno no la puede      parcial.
+                     fotocopias) y tienen   justificar o explicar
+                     que poder justificar
+                     y explicar. .
+Uso de IA            IA, se utiliza como    El registro de uso de   No hay registro de      No se puede
+                     complemento y          IA es poco, o está      uso de IA.              justificar el código,
+                     queda el registro      incompleto.                                     ni se puede
+                     completo de su                                                         defender lo
+                     utilización. La app                                                    implementado. Los
+                     tiene muchos                                                           estudiantes no
+                     agregados a las                                                        pueden arreglar
+                     salidas de los                                                         problemas básicos
+                     prompts                                                                sin IA , al momento
+                                                                                            de la defensa.
+Programa, Sitio      Correcto               Se puede usar, pero     El sitio/ app es        El sitio o app no
+                     funcionamiento sin     se tienen uno o dos     inestable y se cuelga   arranca ni puede
+                     errores de lógica o    errores de              constantemente o        compilarse. O sus
+                     de funcionamiento      programación o          no muestra la           elementos no
+                     del programa. La       funcionamiento.         información             funcionan
+                     app conecta                                    apropiadamente en       correctamente.
+                     correctamente.                                 sus secciones.
+Codificación         Indentado              Indentado               Solo comentarios El     Sin indentación ni
+                     correctamente y        correctamente sin       código no es claro o    comentarios. El
+                     con los comentarios    comentarios. El         es una colección de     código no es claro o
+                     correspondientes.      código no es legible.   copy paste, sin         es una colección de
+                     El código es claro y                           contexto ni             copy paste, sin
+                     legible. Bien                                  comprensión.            contexto ni
+                     organizado en todas                                                    comprensión.
+                     sus partes.
+                     Frontend / Backend.
+Entregas             Se entrega en          Se tienen al menos 1    El sitio o app tiene    El sitio o app tiene
+                     tiempo y forma sin     corrección              que ser rehecho en      que ser rehecho
+                     mayores                importantes que         gran parte              totalmente
+                     correcciones a         realizar
+                     realizar
+Trabajo en clase     Todos los              No hay trabajo          Solo uno se encarga     No se registra
+                     participantes          constante del grupo     de trabajar en la       trabajo en clase o
+                     aportan al trabajo     en clase. No se         mayoría de las clases   ninguno de los
+                     grupal                                         Se registran            integrantes asistió
+                    constantemente, en     registran               inasistencias           de forma regular a
+                    cada clase.            inasistencias.          prolongadas que no      clase.
+                                                                   permiten apreciar el
+                                                                   aporte del grupo en
+                                                                   clase.
+Autonomía           Resolución total de    Entre 3 y 4 consultas   Se buscan               No se puede avanzar
+                    parte del grupo de     por clase. Se           soluciones              sin consultar al
+                    trabajo una o dos      muestran estrategias    alternativas pero las   profesor, no se
+                    consultas por clase,   alternas de             consultas son           muestra búsqueda
+                    se muestra el uso de   búsqueda de             constantes.             de soluciones por
+                    vías alternativas de   soluciones por vías                             vías alternativas.
+                    búsqueda de            alternativas.
+                    soluciones.
+Presentación        Todos los                                                              No se puede corregir
+                    documentos tienen                                                      porque no se
+                    que estar accesibles                                                   presentaron todos
+                    al momento de la                                                       los documentos.
+                    corrección.
+Nombre archivo      Se entrega                                                             No se entrega
+                    respetando el                                                          respetando el
+                    formato solicitado.                                                    formato
+                                                                                           correspondiente.
+
+Formato de entrega:
+Carpeta comprimida, con formato de nombre tipo
+[apellido1-apellido2-apellido3-nombreproducto].zip por ejemplo
+Perez-Martinez-Rodriguez-SitioJuguetesComics.zip.
+El archivo solo puede ser entregado en el aula virtual (classroom) de INFORMÁTICA
+
+Condiciones de aprobación
+Para poder aprobar el puntaje tiene que superar los 30 puntos. Y cumplir con los criterios
+fundamentales de la corrección.
+El trabajo tendrá una nota grupal y una nota individual, que puede coincidir o no.
+
+En caso de no poder completar la actividad con los criterios indicados, se deberá completar en
+el período de diciembre.
+

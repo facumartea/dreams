@@ -1,0 +1,50 @@
+erDiagram
+    AUTH_USERS ||--|| PROFILES : identifica
+    AUTH_USERS ||--o| ACCOUNT_CARTS : conserva
+    ACCOUNT_CARTS ||--o{ ACCOUNT_CART_OPERATIONS : deduplica
+    PROFILES ||--o{ REVIEWS : publica
+    PROFILES o|--o{ INQUIRIES : consulta
+    PRODUCTS o|--o{ INQUIRIES : refiere
+    PROFILES ||--o{ ORDERS : registra
+    COUPONS o|--o{ ORDERS : aplica
+    PROFILES ||--o{ FAVORITES_HISTORICO : legacy
+    PRODUCTS ||--o{ FAVORITES_HISTORICO : legacy
+    PRODUCTS {
+        bigint id PK
+        text marca
+        text name
+        numeric price
+        integer stock
+        text image_url
+        boolean featured
+    }
+    PROFILES {
+        uuid id PK,FK
+        text name
+        text role
+    }
+    ACCOUNT_CARTS {
+        uuid user_id PK,FK
+        jsonb items
+        bigint revision
+    }
+    ACCOUNT_CART_OPERATIONS {
+        uuid user_id PK,FK
+        uuid operation_id PK
+        jsonb operation
+    }
+    REVIEWS {
+        bigint id PK
+        uuid user_id FK
+        uuid operation_id
+        integer rating
+        text comment
+    }
+    ORDERS {
+        uuid id PK
+        uuid user_id FK
+        bigint coupon_id FK
+        text status
+        numeric total
+        jsonb items
+    }

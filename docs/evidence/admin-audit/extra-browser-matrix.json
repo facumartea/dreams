@@ -1,0 +1,42 @@
+[
+  {
+    "id": "A24",
+    "objective": "tap en móvil conserva una sola selección y no deja hover pegado",
+    "environment": "Chromium touch móvil emulado390x844",
+    "expected": "tap en móvil conserva una sola selección y no deja hover pegado",
+    "actual": "Comprobado en navegador",
+    "result": "PASS"
+  },
+  {
+    "id": "A25",
+    "objective": "movimiento reducido sin transiciones de tarjetas",
+    "environment": "Chromium reduced-motion",
+    "expected": "movimiento reducido sin transiciones de tarjetas",
+    "actual": "Comprobado en navegador",
+    "result": "PASS"
+  },
+  {
+    "id": "E29",
+    "objective": "respuesta vieja no valida ni reemplaza una URL nueva",
+    "environment": "Chromium imágenes interceptadas fixture",
+    "expected": "respuesta vieja no valida ni reemplaza una URL nueva",
+    "actual": "Comprobado en navegador",
+    "result": "PASS"
+  },
+  {
+    "id": "E30",
+    "objective": "enlace temporal válido advierte sin modificarlo",
+    "environment": "Chromium URL firmada ficticia",
+    "expected": "enlace temporal válido advierte sin modificarlo",
+    "actual": "Comprobado en navegador",
+    "result": "PASS"
+  },
+  {
+    "id": "A26",
+    "objective": "hover de escritorio cambia fondo con contraste",
+    "environment": "Chromium mouse escritorio",
+    "expected": "hover de escritorio cambia fondo con contraste",
+    "actual": "Comprobado en navegador",
+    "result": "PASS"
+  }
+]

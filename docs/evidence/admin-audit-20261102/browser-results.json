@@ -1,0 +1,771 @@
+[
+  {
+    "id": "BASE-PREEXIST",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "ningún producto con marca/nombre QA antes de alta",
+    "actual": 0,
+    "result": "PASS"
+  },
+  {
+    "id": "BASE-GUARD",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "reproducir bloqueo del backend antiguo",
+    "actual": {
+      "method": "POST",
+      "path": "/api/admin/products",
+      "status": 403,
+      "code": null,
+      "guard_message": true
+    },
+    "result": "PASS"
+  },
+  {
+    "id": "BASE-NO-DUPLICATE",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "ningún alta completada tras respuesta403",
+    "actual": 0,
+    "result": "PASS"
+  },
+  {
+    "id": "BASE-CONFIG",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "configuración efectiva identificada",
+    "actual": {
+      "preview_read_only": true,
+      "admin_writes_enabled": false
+    },
+    "result": "PASS"
+  },
+  {
+    "id": "SOURCE-admin-script",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "JS autenticado servido coincide exactamente con el código revisado",
+    "actual": {
+      "sha256": "82142cca2c6a6671394e0bc08ff367d7efa4ba664a06b8ef619b4e9e080900b0"
+    },
+    "result": "PASS"
+  },
+  {
+    "id": "NAV-productos",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "módulo real carga y única tarjeta activa",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "NAV-baja",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "módulo real carga y única tarjeta activa",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "NAV-usuarios",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "módulo real carga y única tarjeta activa",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "NAV-consultas",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "módulo real carga y única tarjeta activa",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "NAV-opiniones",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "módulo real carga y única tarjeta activa",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "NAV-pedidos",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "módulo real carga y única tarjeta activa",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "NAV-cupones",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "módulo real carga y única tarjeta activa",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "NAV-keyboard",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "activar módulo por Enter conserva foco útil",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "NAV-dashboard-retry",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "error de conteos muestra reintento y recupera API real",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "NAV-module-retry",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "error de módulo se recupera sin elevar permisos",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "IMG-invalid",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "URL inválida bloquea Guardar",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "IMG-http",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "HTTP inseguro rechazado",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "IMG-html",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "respuesta HTML no se valida como imagen (fallo inyectado)",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "IMG-no-extension",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "HTTPS sin extensión admite respuesta imagen en navegador (respuesta controlada)",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "IMG-timeout-retry",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "timeout falla cerrado y Reintentar carga el asset real",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "IMG-late-response",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "respuesta vieja no habilita una URL nueva inválida",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "IMG-expiring",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "URL firmada advierte vencimiento (respuesta controlada)",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PROD-create",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "alta QA real y lectura persistida",
+    "actual": {
+      "qa_id": 219
+    },
+    "result": "PASS"
+  },
+  {
+    "id": "PROD-create-second",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "segundo producto exclusivamente QA para cambio de edición",
+    "actual": {
+      "qa_id": 220
+    },
+    "result": "PASS"
+  },
+  {
+    "id": "SEARCH-name-accent",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "nombre parcial con tildes y espacios por Enter",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "SEARCH-brand-button",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "marca parcial y botón Buscar cubren catálogo completo",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "SEARCH-empty-clear",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "búsqueda vacía y Limpiar vuelven al total",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PROD-edit-every-field",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "todos los campos persistidos y sin mezclar otro ID",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "SEARCH-retained",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "guardar conserva filtro aplicado",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PROD-image-kept",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "editar precio conserva imagen después de recarga",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PROD-public-reflection",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "catálogo y detalle leen precio/imagen confirmados",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PROD-images-rendered",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "imagen guardada se ve realmente en catálogo y detalle",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PROD-featured-home",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "destacado guardado aparece realmente en Inicio",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "COUNTS-products-low",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "tarjetas coinciden con listado real y stock bajo 0/1/2",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PROD-dirty-cancel",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "cancelar confirmación conserva cambios; aceptar limpia ID",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "STOCK-0",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "baja incluye 0/1/2 y excluye3, con persistencia",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "STOCK-1",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "baja incluye 0/1/2 y excluye3, con persistencia",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "STOCK-2",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "baja incluye 0/1/2 y excluye3, con persistencia",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "STOCK-3",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "baja incluye 0/1/2 y excluye3, con persistencia",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PROD-equal-buttons",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "Editar y Eliminar con iguales dimensiones",
+    "actual": {
+      "width": 104,
+      "height": 44
+    },
+    "result": "PASS"
+  },
+  {
+    "id": "PROD-double-submit",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "doble clic en Guardar emite sólo un PUT",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PROD-before-network-failure",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "fallo de red antes de PUT conserva borrador y no anuncia éxito",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "API-stock-null",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "JSON null debe rechazarse400 sin convertirse en stock0",
+    "actual": {
+      "status": 200,
+      "stock": 0
+    },
+    "result": "FAIL"
+  },
+  {
+    "id": "API-stock-null-restored",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "restaurar exclusivamente el producto QA al estado anterior",
+    "actual": {
+      "qa_id": 219,
+      "stock": 3
+    },
+    "result": "PASS"
+  },
+  {
+    "id": "CLEAN-ADMIN-SESSION",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "logout de la sesión QA, sin afectar otras sesiones Admin",
+    "actual": 200,
+    "result": "PASS"
+  },
+  {
+    "id": "API-stock-null",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "JSON null debe rechazarse400 sin convertirse en stock0",
+    "actual": {
+      "status": 400,
+      "stock": 3
+    },
+    "result": "PASS"
+  },
+  {
+    "id": "API-stock-null-restored",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "restaurar exclusivamente el producto QA al estado anterior",
+    "actual": {
+      "qa_id": 219,
+      "stock": 3
+    },
+    "result": "PASS"
+  },
+  {
+    "id": "PUB-legacy-compatible",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "formato firmado del verificador legacy sigue siendo aceptado por la oficial",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PUB-register-normal",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "registro web normal sin confirmación, un POST ante doble clic y sesión inmediata",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PUB-session-reload",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "recarga y navegación conservan sesión",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PUB-secure-refresh",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "cookies seguras y renovación real de sesión",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PUB-customer-denied",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "customer no puede abrir Admin",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PUB-logout-login",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "logout y login real funcionan",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PUB-wrong-password",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "contraseña incorrecta da error recuperable",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PUB-network-retry",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "fallo de red de login conserva formulario y habilita reintento",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PUB-cart-persist",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "carrito por cuenta se guarda tras recarga",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PUB-whatsapp",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "destinatario y resumen correctos sin enviar mensajes",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PUB-checkout",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "checkout académico completo, referencia estable y doble envío protegido",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PUB-cart-cleaned",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "simulación consumió sólo el carrito QA",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PUB-responsive-390",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "portada estática y carrusel accesible sin overflow",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PUB-responsive-1440",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "portada estática y carrusel accesible sin overflow",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PUB-anonymous-admin",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "visitante rechazado después de publicación",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PROD-readback-discrepancy",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "HTTP200 discrepante no anuncia guardado (respuesta interceptada)",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PROD-cross-record-pending",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "respuesta demorada no permite mezclar otro producto",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PROD-unfeature",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "quitar destacado persiste y actualiza catálogo",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PROD-lost-create-retry",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "respuesta de POST perdida se recupera sin duplicar ni emitir otro POST",
+    "actual": {
+      "one_post": true,
+      "qa_id": 225
+    },
+    "result": "PASS"
+  },
+  {
+    "id": "COUPON-create",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "alta inactiva con código normalizado y contenido persistido",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "COUPON-edit",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "edición conserva ID y confirma porcentaje tras recarga",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "COUPON-toggle",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "Activar y Desactivar guardan estado real",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "COUPON-clear",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "Limpiar sale de edición sin otro envío",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "COUPON-delete-confirm",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "cancelar conserva; aceptar elimina y confirma ausencia",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "SEC-roles-rejected",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "el registro rechaza campos de rol antes de crear sesión",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "SEC-normal-customer",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "registro normal crea customer con sesión y sin privilegios Admin",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "SEC-customer--admin",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "customer no accede Admin",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "SEC-customer--api-admin-products",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "customer no accede Admin",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "SEC-customer--api-admin-users",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "customer no accede Admin",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "SEC-customer-write",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "customer no puede crear productos ni editar roles",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "SEC-origin",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "origen ajeno rechazado aunque la sesión Admin sea válida",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "REVIEW-create-customer",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "opinión ligada a customer normal para moderación exclusiva QA",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "REVIEW-search",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "buscador de opiniones filtra por comentario",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "REVIEW-edit",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "guardar confirma rating y comentario persistidos",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "REVIEW-delete",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "confirmación de borrado verifica ausencia real",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "RESP-390",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "móvil/escritorio: controles accesibles, tabla desplazable sin overflow de página",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "RESP-1440",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "móvil/escritorio: controles accesibles, tabla desplazable sin overflow de página",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PROD-delete-cancel",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "cancelar borrado conserva producto QA",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PROD-delete-edited",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "borrar producto editado limpia ID y confirma ausencia",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "CLEAN-commercial-unchanged",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "productos/stock y pedidos comerciales sin cambios",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "FINAL-admin-create",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "alta real después de retirar mecanismo y Secret QA",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "FINAL-admin-edit-image",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "edición e imagen persistidas en backend final limpio",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "FINAL-admin-clean",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "borrado exclusivo QA y ausencia confirmada",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "FINAL-admin-logout",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "botón real Cerrar sesión revoca y retira acceso",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "CLEAN-ADMIN-SESSION",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "logout de la sesión QA, sin afectar otras sesiones Admin",
+    "actual": 200,
+    "result": "PASS"
+  }
+]

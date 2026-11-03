@@ -48,6 +48,7 @@ class MercadoPagoProvider {
     async request(path, options = {}) {
         const response = await this.fetch(`${this.api_url}${path}`, {
             ...options,
+            signal: options.signal || AbortSignal.timeout(15000),
             headers: {
                 Authorization: `Bearer ${this.access_token}`,
                 'Content-Type': 'application/json',

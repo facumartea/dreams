@@ -1,0 +1,8 @@
+mobile-mujer {"background":"rgb(246, 239, 229)","text":"rgb(31, 26, 23)","accent":"#8c4450"}
+mobile-hombre {"background":"rgb(17, 17, 15)","text":"rgb(242, 238, 230)","accent":"#c5a46a"}
+mobile-unisex {"background":"rgb(48, 44, 39)","text":"rgb(241, 236, 226)","accent":"#b9a582"}
+mobile multiselect/pending/all/last/radios/history/reload/search/empty/error/retry/focus/cart/access PASS
+desktop-mujer {"background":"rgb(246, 239, 229)","text":"rgb(31, 26, 23)","accent":"#8c4450"}
+desktop-hombre {"background":"rgb(17, 17, 15)","text":"rgb(242, 238, 230)","accent":"#c5a46a"}
+desktop-unisex {"background":"rgb(48, 44, 39)","text":"rgb(241, 236, 226)","accent":"#b9a582"}
+desktop multiselect/pending/all/last/radios/history/reload/search/empty/error/retry/focus/cart/access PASS
