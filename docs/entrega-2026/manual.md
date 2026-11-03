@@ -24,7 +24,7 @@ Los botones se bloquean durante envío para evitar duplicación; los mensajes in
 
 Agregar productos disponibles desde catálogo o detalle; abrir Carrito para aumentar/reducir cantidades, quitar o vaciar. El servidor recalcula precio y disponibilidad. En visitante se conserva el carrito local; al entrar, el candidato combina con el de la cuenta sin sumar duplicados por repetir la misma operación. Cambiar a otra cuenta debe mostrar su propio carrito, nunca el de la anterior. Si queda una operación pendiente, esperar la sincronización antes de comprar.
 
-Comprar abre el checkout académico: revisar resumen, total y envío gratis de esa simulación; completar sólo datos ficticios de tarjeta válidos para el formulario (por ejemplo la tarjeta de prueba 4242 4242 4242 4242, vencimiento futuro y CVV ficticio). Nunca ingresar una tarjeta real. El nombre es obligatorio; los campos financieros no se procesan ni se envían. Sólo el ticket firmado viaja al backend. No se valida ni autoriza una tarjeta bancaria. Continuar una sola vez, esperar el resultado y conservar la referencia estable. Si se recarga durante una espera, el intento se retoma sin crear un segundo resultado para el mismo ticket. El flujo no cobra dinero, crea pedidos comerciales ni descuenta stock.
+Comprar abre el checkout académico: revisar resumen, total y Envío de $0 de esa simulación; completar sólo datos ficticios de tarjeta válidos para el formulario (por ejemplo la tarjeta de prueba 4242 4242 4242 4242, vencimiento futuro y CVV ficticio). Nunca ingresar una tarjeta real. El nombre es obligatorio; los campos financieros no se procesan ni se envían. Sólo el ticket firmado viaja al backend. No se valida ni autoriza una tarjeta bancaria. Continuar una sola vez, esperar el resultado y conservar la referencia estable. Si se recarga durante una espera, el intento se retoma sin crear un segundo resultado para el mismo ticket. El flujo no cobra dinero, crea pedidos comerciales ni descuenta stock.
 
 No confundir los módulos históricos Mercado Pago/demo con la simulación académica de la oficial: no habilitar pagos comerciales para demostrar este manual.
 
@@ -57,7 +57,7 @@ Antes de una nueva alta se revisa el listado. Si la respuesta de un alta se pier
 ## Otros módulos Admin
 
 - **Pedidos:** listar y revisar referencia, fecha, estado y totales existentes. No generar una compra comercial para poblarlo. La simulación académica no crea filas aquí.
-- **Cupones:** crear/editar código, porcentaje y activo, guardar o limpiar; el código se normaliza en mayúsculas. No se presenta un cupón comercial como activo en el checkout académico. La confirmación incluye una lectura posterior de código, porcentaje y activo; un alta incierta se recupera sin duplicar el código.
+- **Cupones:** crear/editar código, porcentaje y activo, guardar o limpiar; el código se normaliza en mayúsculas. El carrito permite aplicar un cupón existente: estado, vencimiento, mínimo y límites se validan en servidor. La simulación no consume usos comerciales. Condiciones especiales no implementadas se rechazan con un mensaje. La confirmación incluye una lectura posterior de código, porcentaje y activo; un alta incierta se recupera sin duplicar el código.
 - **Usuarios:** lectura de perfiles y roles; esta UI no permite crear Admin ni cambiar contraseñas/roles.
 - **Consultas:** lectura de consultas existentes y producto asociado, sin enviar WhatsApp automáticamente.
 - **Opiniones:** buscar, editar puntuación/comentario o eliminar con confirmación. No hay ocultamiento/publicación por estado en el modelo y no se simula. Guardar confirma puntuación y comentario con una lectura posterior; eliminar confirma ausencia en el listado.
@@ -71,3 +71,9 @@ El operador conserva el frontend publicado y una versión probada del backend co
 ## Auditoría Admin comprobada
 
 Inventario completo y procedencia de pruebas: [controles](../evidence/admin-audit-20261102/inventario.md). Las correcciones de guardado e imágenes ya están en la oficial; la matriz distingue cada resultado comprobado de los casos todavía pendientes y del cierre operativo ya completado.
+
+## Cupón y formato local del formulario
+
+En el resumen del carrito, ingresar el código en «Cupón de descuento» y pulsar Aplicar o Enter. Quitar cupón elimina su descuento; volver a aplicar no lo acumula. El servidor revalida al cambiar cantidades y al confirmar. Un error de red bloquea Comprar hasta Reintentar; un cupón inválido no conserva descuento. El cupón aplicado se mantiene al recargar y pasar al checkout. Productos, descuento, Envío ($0) y total deben coincidir hasta la confirmación.
+
+El titular empieza vacío, con placeholder CLIENTE DREAMS. Permite espacios, tildes, guiones y apóstrofes. Número:16 dígitos, agrupados; vencimiento MM/AA (mes01–12); CVV:3 dígitos, incluidos ceros iniciales. Se puede pegar, seleccionar y editar en medio. Son validaciones de formato locales, sin verificación bancaria; usar sólo datos ficticios. Nunca se envían ni guardan estos campos. [Capturas y evidencia](../evidence/coupon-academic-20261103/README.md).

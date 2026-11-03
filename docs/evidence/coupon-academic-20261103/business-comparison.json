@@ -1,0 +1,8 @@
+{
+  "orders_unchanged": true,
+  "stock_unchanged": true,
+  "coupons_unchanged": true,
+  "qa_customer_sessions_remaining": 0,
+  "no_coupon_writes": true,
+  "no_paid_order_writes": true
+}
