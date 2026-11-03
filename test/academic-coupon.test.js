@@ -64,3 +64,15 @@ test('validación local distingue mes, longitud y ceros sin verificación bancar
         assert.equal(c.academic_input_valid(),expected);
     }
 });
+
+test('pegado se normaliza antes del maxlength nativo y conserva ceros', () => {
+    const listeners = {};
+    const input = {value:'',selectionStart:0,selectionEnd:0,addEventListener:(k,fn)=>listeners[k]=fn,
+        setRangeText(value){this.value=value;this.selectionStart=value.length;},
+        dispatchEvent(){listeners.input();},setSelectionRange(){},setCustomValidity(){}};
+    const c=vm.createContext({document:{addEventListener(){}},Event:class {}});
+    vm.runInContext(readFileSync(require.resolve('../public/js/academic-inputs.js'),'utf8'),c);
+    c.academic_mask(input,'cvv');
+    listeners.paste({clipboardData:{getData:()=> '00e1+-999'},preventDefault(){}});
+    assert.equal(input.value,'001');
+});

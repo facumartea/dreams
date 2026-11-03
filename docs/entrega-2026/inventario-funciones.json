@@ -495,8 +495,8 @@
       "name": "academic_mask",
       "kind": "FunctionDeclaration",
       "start": 8,
-      "end": 24,
-      "lines": 17
+      "end": 31,
+      "lines": 24
     },
     {
       "file": "public/js/academic-inputs.js",
@@ -511,23 +511,31 @@
       "name": "callback:addEventListener",
       "kind": "ArrowFunctionExpression",
       "start": 16,
-      "end": 23,
-      "lines": 8
-    },
-    {
-      "file": "public/js/academic-inputs.js",
-      "name": "academic_input_valid",
-      "kind": "FunctionDeclaration",
-      "start": 25,
-      "end": 31,
+      "end": 22,
       "lines": 7
     },
     {
       "file": "public/js/academic-inputs.js",
       "name": "callback:addEventListener",
       "kind": "ArrowFunctionExpression",
+      "start": 23,
+      "end": 30,
+      "lines": 8
+    },
+    {
+      "file": "public/js/academic-inputs.js",
+      "name": "academic_input_valid",
+      "kind": "FunctionDeclaration",
       "start": 32,
-      "end": 34,
+      "end": 38,
+      "lines": 7
+    },
+    {
+      "file": "public/js/academic-inputs.js",
+      "name": "callback:addEventListener",
+      "kind": "ArrowFunctionExpression",
+      "start": 39,
+      "end": 41,
       "lines": 3
     },
     {
@@ -7264,6 +7272,78 @@
       "kind": "ArrowFunctionExpression",
       "start": 60,
       "end": 60,
+      "lines": 1
+    },
+    {
+      "file": "test/academic-coupon.test.js",
+      "name": "callback:test",
+      "kind": "ArrowFunctionExpression",
+      "start": 68,
+      "end": 78,
+      "lines": 11
+    },
+    {
+      "file": "test/academic-coupon.test.js",
+      "name": "addEventListener",
+      "kind": "ArrowFunctionExpression",
+      "start": 70,
+      "end": 70,
+      "lines": 1
+    },
+    {
+      "file": "test/academic-coupon.test.js",
+      "name": "setRangeText",
+      "kind": "FunctionExpression",
+      "start": 71,
+      "end": 71,
+      "lines": 1
+    },
+    {
+      "file": "test/academic-coupon.test.js",
+      "name": "dispatchEvent",
+      "kind": "FunctionExpression",
+      "start": 72,
+      "end": 72,
+      "lines": 1
+    },
+    {
+      "file": "test/academic-coupon.test.js",
+      "name": "setSelectionRange",
+      "kind": "FunctionExpression",
+      "start": 72,
+      "end": 72,
+      "lines": 1
+    },
+    {
+      "file": "test/academic-coupon.test.js",
+      "name": "setCustomValidity",
+      "kind": "FunctionExpression",
+      "start": 72,
+      "end": 72,
+      "lines": 1
+    },
+    {
+      "file": "test/academic-coupon.test.js",
+      "name": "addEventListener",
+      "kind": "FunctionExpression",
+      "start": 73,
+      "end": 73,
+      "lines": 1
+    },
+    {
+      "file": "test/academic-coupon.test.js",
+      "name": "getData",
+      "kind": "ArrowFunctionExpression",
+      "start": 76,
+      "end": 76,
+      "lines": 1
+    },
+    {
+      "file": "test/academic-coupon.test.js",
+      "name": "preventDefault",
+      "kind": "FunctionExpression",
+      "start": 76,
+      "end": 76,
       "lines": 1
     },
     {

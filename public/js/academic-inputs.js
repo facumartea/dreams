@@ -6,6 +6,13 @@ function academic_format(value, kind) {
     return kind === 'expiry' && raw.length > 2 ? raw.slice(0, 2) + '/' + raw.slice(2) : raw;
 }
 function academic_mask(input, kind) {
+    input.addEventListener('paste', event => {
+        const pasted = event.clipboardData?.getData('text');
+        if (typeof pasted !== 'string') return;
+        event.preventDefault();
+        input.setRangeText(pasted, input.selectionStart, input.selectionEnd, 'end');
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+    });
     input.addEventListener('beforeinput', event => {
         // Borrar junto al separador también elimina un dígito, sin atrapar el cursor.
         const at = input.selectionStart;
