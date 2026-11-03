@@ -39,5 +39,318 @@
       "admin_writes_enabled": false
     },
     "result": "PASS"
+  },
+  {
+    "id": "SOURCE-admin-script",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "JS autenticado servido coincide exactamente con el código revisado",
+    "actual": {
+      "sha256": "82142cca2c6a6671394e0bc08ff367d7efa4ba664a06b8ef619b4e9e080900b0"
+    },
+    "result": "PASS"
+  },
+  {
+    "id": "NAV-productos",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "módulo real carga y única tarjeta activa",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "NAV-baja",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "módulo real carga y única tarjeta activa",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "NAV-usuarios",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "módulo real carga y única tarjeta activa",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "NAV-consultas",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "módulo real carga y única tarjeta activa",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "NAV-opiniones",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "módulo real carga y única tarjeta activa",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "NAV-pedidos",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "módulo real carga y única tarjeta activa",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "NAV-cupones",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "módulo real carga y única tarjeta activa",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "NAV-keyboard",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "activar módulo por Enter conserva foco útil",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "NAV-dashboard-retry",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "error de conteos muestra reintento y recupera API real",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "NAV-module-retry",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "error de módulo se recupera sin elevar permisos",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "IMG-invalid",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "URL inválida bloquea Guardar",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "IMG-http",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "HTTP inseguro rechazado",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "IMG-html",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "respuesta HTML no se valida como imagen (fallo inyectado)",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "IMG-no-extension",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "HTTPS sin extensión admite respuesta imagen en navegador (respuesta controlada)",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "IMG-timeout-retry",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "timeout falla cerrado y Reintentar carga el asset real",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "IMG-late-response",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "respuesta vieja no habilita una URL nueva inválida",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "IMG-expiring",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "URL firmada advierte vencimiento (respuesta controlada)",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PROD-create",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "alta QA real y lectura persistida",
+    "actual": {
+      "qa_id": 219
+    },
+    "result": "PASS"
+  },
+  {
+    "id": "PROD-create-second",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "segundo producto exclusivamente QA para cambio de edición",
+    "actual": {
+      "qa_id": 220
+    },
+    "result": "PASS"
+  },
+  {
+    "id": "SEARCH-name-accent",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "nombre parcial con tildes y espacios por Enter",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "SEARCH-brand-button",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "marca parcial y botón Buscar cubren catálogo completo",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "SEARCH-empty-clear",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "búsqueda vacía y Limpiar vuelven al total",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PROD-edit-every-field",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "todos los campos persistidos y sin mezclar otro ID",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "SEARCH-retained",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "guardar conserva filtro aplicado",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PROD-image-kept",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "editar precio conserva imagen después de recarga",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PROD-public-reflection",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "catálogo y detalle leen precio/imagen confirmados",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PROD-images-rendered",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "imagen guardada se ve realmente en catálogo y detalle",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PROD-featured-home",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "destacado guardado aparece realmente en Inicio",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "COUNTS-products-low",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "tarjetas coinciden con listado real y stock bajo 0/1/2",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PROD-dirty-cancel",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "cancelar confirmación conserva cambios; aceptar limpia ID",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "STOCK-0",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "baja incluye 0/1/2 y excluye3, con persistencia",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "STOCK-1",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "baja incluye 0/1/2 y excluye3, con persistencia",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "STOCK-2",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "baja incluye 0/1/2 y excluye3, con persistencia",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "STOCK-3",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "baja incluye 0/1/2 y excluye3, con persistencia",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PROD-equal-buttons",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "Editar y Eliminar con iguales dimensiones",
+    "actual": {
+      "width": 104,
+      "height": 44
+    },
+    "result": "PASS"
+  },
+  {
+    "id": "PROD-double-submit",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "doble clic en Guardar emite sólo un PUT",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PROD-before-network-failure",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "fallo de red antes de PUT conserva borrador y no anuncia éxito",
+    "actual": "verificado",
+    "result": "PASS"
   }
 ]

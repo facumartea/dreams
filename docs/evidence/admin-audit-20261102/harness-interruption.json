@@ -1,0 +1,18 @@
+{
+  "application_cases_passed_before_interruption": 42,
+  "cause": "El puente API reemplazó un método interno requerido por route.fetch de Playwright; el interceptor lanzó excepción y terminó el proceso QA. No es respuesta de DREAMS.",
+  "credentials_exposed": false,
+  "admin_password_or_role_changed": false,
+  "orphan_test_session_cleanup": {
+    "closed": 1,
+    "match": "Única sesión Admin creada desde la sonda; creada 03:29:03.590135UTC y grant KV 03:29:04UTC. Eliminación exacta por ID, usuario y timestamp; no signout global Admin."
+  },
+  "obsolete_grant": "Ciphertext retirado y reemplazado por tombstone temporal para impedir regeneración durante propagación Cron.",
+  "qa_products_preserved_for_resume": [
+    219,
+    220
+  ],
+  "resumption": "Restaurar los42 IDs PASS, recuperar sólo productos QA del prefijo del run anterior, retomar casos restantes; no repetir las altas ya acreditadas.",
+  "runtime_recovery": "Mismo artefacto de código/source643c348; cambia sólo configuración temporal de QA y clave pública receptora. Revalidación de versión nueva antes del cierre.",
+  "predeployment_legacy_ticket": "Se perdió al terminar el proceso efímero. No afirmar replay de ese ticket. Verificar por separado formato/verificador legacy inmutable, con ticket nuevo académico y sin pedidos/stock."
+}

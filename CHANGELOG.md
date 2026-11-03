@@ -1,3 +1,17 @@
+# Oficial publicada; auditoría real42PASS, recuperación de harness en curso
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+OFICIAL Pagesb169918f-ce14-4588-a006-6099afba06aa SUCCESS/canónico, fuentee544c6ca8f00927cbe2c92f8c7fa225fff18e4d9, CI221445tests. API/config ya admin_writes_enabled=true conservando preview_read_only=true y lista exacta de rutas; health/DB200 y catálogo46 al publicar. Backend código643c348 (CI220445tests), versión verificada2300a05a con nueve fasesPASS y readSDK/directo200. No nuevo sitio/preview/DNS/pagos comercial ni credencialesAdmin cambiadas.
+
+QA OFICIAL REAL:42 casosPASS guardados en browser-results.json: Admin autorizado, módulos/navegación/reintentos, imágenes/timeout/respuestasviejas, alta dosproductosQA219/220, buscador, edición de TODOSloscampos, persistencia/imagen/catálogo/detalle real/destacadoInicio, stock0/1/2/3, botones iguales, doblePUTúnico, fallo antesdeescribir y recuperación. No repetir esoscasos. OriginalPOST403 fue reproducido con producto ausenteantes/después y configuraciónlegacy; ahora altas/ediciones reales ya funcionan.
+
+El proceso QA murió por error DEL HARNESS (`route.fetch` requería un método interno que el puenteAPI había reemplazado), antesdeacreditar loscasos restantes. No ocultar esto como falloapp ni afirmar cierrecompleto. Se cerró1sesiónAdminQA exacta, única desdeinicio y creada410ms antesdelgrantKV; no otras sesiones/roles/contraseñas. Ciphertextviejo retirado, tombstonekeyr1 para impedir regeneración. Ver harness-interruption.json. ProductosQA219/220 se conservan para retomar, sin stockcomercial cambiado.
+
+Proceso navegador nuevo conserva claveprivada sóloRAM, runpr56-admin-20261102-r2; restaura42PASS desdeJSON y recursos del prefijo r1. Interceptores corregidos usan HTTP porproxy sin reemplazar métodos internos, y erroresasíncronos se sanitizan sin terminar elproceso. Backend recovery6ac06cff-e8e7-4b91-b4b5-3f20c9d33a51/deploymenta137fedf conserva ARTEFACTO idéntico643c348: sólo nuevos parámetrosQA/clavepública receptora, mismosSecrets heredadosde2300a05a. ProgramaQA vuelvea acreditar laversiónnueva; mientras comparar snapshots, NO modificarQA219/220 desdebrowser paraevitarinterferencia. Luego continuar sólo casosrestantes, checkout/cuenta, retirarQA/Secret/KV y verificar backendfinallimpio.
+
+Ticketlegacy previose perdióconelprocesoefímero: noafirmarcompatibilidaddeeseticket. Nueva prueba explícita deFORMATO/verificadorlegacyinmutable sinstock/orders, no otro sitio. Mantenerrollbackb169 y backend probado2300a05a(mismafirmaySecret); a318esemergencialegacy, nodeclararcompatibleconticketsnuevos sinprueba. SinZIPfinal. Publicaciónsí; cierre todavíaPENDIENTE.
+
 # Promoción oficial preparada con evidencia de la misma versión
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
