@@ -1,0 +1,16 @@
+[
+  {
+    "width": 390,
+    "result": "PASS",
+    "coupon_total": 180,
+    "shipping": 0,
+    "financial_network_storage": false
+  },
+  {
+    "width": 1440,
+    "result": "PASS",
+    "coupon_total": 180,
+    "shipping": 0,
+    "financial_network_storage": false
+  }
+]

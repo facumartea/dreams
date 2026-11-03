@@ -20,6 +20,7 @@ function harness(fetch_session) {
     const calls = [];
     const items = [{ id: 7, quantity: 2, price: 120, brand: 'Fixture', name: 'Test product' }];
     const sandbox = {
+        academic_input_valid: () => true, // Formato cubierto por pruebas del módulo de máscaras.
         document: { getElementById: node, querySelector: node, createElement: node },
         sessionStorage: { getItem: k => stored.get(k) || null, setItem: (k, v) => stored.set(k, v), removeItem: k => stored.delete(k) },
         get_cart: () => sandbox.cart,
@@ -58,7 +59,7 @@ test('academic client never reads financial fields and retries a lost response w
     await Promise.all([retry, double]);
     const sessions = h.calls.filter(call => call.url.endsWith('/session'));
     assert.equal(sessions.length, 2); assert.equal(sessions[0].body.intent_id, sessions[1].body.intent_id);
-    for (const session of sessions) assert.deepEqual(Object.keys(session.body).sort(), ['intent_id', 'items']);
+    for (const session of sessions) assert.deepEqual(Object.keys(session.body).sort(), ['coupon_code', 'intent_id', 'items']);
     assert.equal(h.calls.filter(call => call.url.endsWith('/payment')).length, 1);
     assert.equal(h.sandbox.redirect, '/checkout-resultado.html?presentation=1');
     assert.equal(h.node('payment-title').textContent, 'Tarjeta');

@@ -1,7 +1,7 @@
 // Academic-only signed snapshots. Card fields are never read, sent or stored.
 const PRESENTATION_KEY = 'dreams_presentation_checkout';
 const PRESENTATION_RECEIPT = 'dreams_presentation_receipt';
-const presentation_snapshot = items => JSON.stringify(items.map(item => [Number(item.id), Number(item.quantity)]).sort((a, b) => a[0] - b[0]));
+const presentation_snapshot = items => JSON.stringify([sessionStorage.getItem('dreams_coupon') || '', items.map(item => [Number(item.id), Number(item.quantity)]).sort((a, b) => a[0] - b[0])]);
 async function presentation_request(path, body) {
         let response;
         try { response = await fetch(`/api/presentation/${path}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }); }
@@ -18,12 +18,12 @@ function presentation_layout(form) {
         document.getElementById('sandbox-help').remove();
         form.hidden = false;
         form.noValidate = true;
-        document.querySelector('.coupon-box').hidden = true;
+        document.querySelector('.coupon-box').hidden = true; // El cupón se administra en el carrito.
         document.getElementById('payment-title').textContent = 'Tarjeta';
-        document.getElementById('payment-description').textContent = '';
-        document.getElementById('payment-description').hidden = true;
-        document.getElementById('demo-card-privacy').textContent = '';
-        document.getElementById('demo-card-privacy').hidden = true;
+        document.getElementById('payment-description').textContent = 'Simulación académica: usá datos ficticios. No se cobra dinero.';
+        document.getElementById('payment-description').hidden = false;
+        document.getElementById('demo-card-privacy').textContent = 'Formato local: número de16 dígitos, MM/AA (mes01–12) y CVV de3 dígitos. No se envían ni guardan.';
+        document.getElementById('demo-card-privacy').hidden = false;
 }
 function presentation_labels(button) {
         document.querySelector('.demo-card-preview small').textContent = 'TARJETA';
@@ -37,10 +37,10 @@ function presentation_labels(button) {
 }
 async function presentation_quote(button, status, initial_snapshot) {
         try {
-            const response = await fetch('/api/cart/quote', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ items: checkout_items_payload() }) });
+            const response = await fetch('/api/cart/quote', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ items: checkout_items_payload(), coupon_code: sessionStorage.getItem('dreams_coupon') || '' }) });
             const quote = await response.json();
-            if (!response.ok || !quote.items?.length || quote.warnings?.length || quote.shipping !== 0 || quote.total !== quote.subtotal || !Number.isFinite(quote.subtotal) || quote.subtotal <= 0 || presentation_snapshot(get_cart()) !== initial_snapshot) throw new Error(quote.error || 'Revisá los productos del carrito antes de continuar.');
-            render_checkout(quote.items, quote.subtotal, 0, quote.total);
+            if (!response.ok || !quote.items?.length || quote.warnings?.length || quote.shipping !== 0 || quote.coupon_error || quote.total !== Math.round((quote.subtotal - (quote.discount || 0)) * 100) / 100 || !Number.isFinite(quote.subtotal) || quote.subtotal <= 0 || presentation_snapshot(get_cart()) !== initial_snapshot) throw new Error(quote.error || 'Revisá los productos del carrito antes de continuar.');
+            render_checkout(quote.items, quote.subtotal, quote.discount || 0, quote.total);
             const shipping = document.createElement('div');
             shipping.id = 'checkout-shipping'; shipping.className = 'summary-line';
             const label = document.createElement('span'); label.textContent = quote.shipping_label;
@@ -55,7 +55,7 @@ function presentation_intent(cart) {
                 try { saved = JSON.parse(sessionStorage.getItem(PRESENTATION_KEY)); } catch { saved = null; }
                 // A v2 intent is persisted BEFORE the first network call, including retries.
                 if (saved && saved.version !== 2) { sessionStorage.removeItem(PRESENTATION_KEY); saved = null; }
-                if (saved && saved.snapshot !== presentation_snapshot(cart)) throw new Error('Revisá el carrito antes de comenzar otra operación.');
+                if (saved && saved.snapshot !== presentation_snapshot(cart)) { sessionStorage.removeItem(PRESENTATION_KEY); saved = null; }
                 if (!saved) {
                     saved = { version: 2, intent_id: crypto.randomUUID(), snapshot: presentation_snapshot(cart), ticket: null };
                     sessionStorage.setItem(PRESENTATION_KEY, JSON.stringify(saved));
@@ -64,7 +64,7 @@ function presentation_intent(cart) {
 }
 async function presentation_complete(saved) {
                 if (!saved.ticket) {
-                    const data = await presentation_request('session', { items: checkout_items_payload(), intent_id: saved.intent_id });
+                    const data = await presentation_request('session', { items: checkout_items_payload(), intent_id: saved.intent_id, coupon_code: sessionStorage.getItem('dreams_coupon') || '' });
                     saved.ticket = data.ticket;
                     sessionStorage.setItem(PRESENTATION_KEY, JSON.stringify(saved));
                 }
@@ -75,8 +75,9 @@ async function presentation_complete(saved) {
 }
 async function presentation_submit(button, status, form, initial_snapshot) {
             if (button.disabled) return;
-            // Preserve the existing buyer-name validation; no financial-field validation.
+            // Formato local únicamente; no se incorporan campos financieros a la petición.
             if (!document.getElementById('demo-card-holder').value.trim()) { status.textContent = 'Completá tu nombre para continuar.'; return; }
+            if (!academic_input_valid()) { status.textContent = 'Usá 16 dígitos de prueba, vencimiento MM/AA con mes01–12 y CVV de3 dígitos.'; return; }
             button.disabled = true; button.setAttribute('aria-busy', 'true'); button.textContent = 'Procesando…'; status.textContent = '';
             try {
                 const cart = get_cart();
@@ -104,10 +105,10 @@ const PresentationCheckout = {
         try {
             if(typeof account_cart !== 'undefined') await account_cart?.ready();
             const data = await presentation_request('result', { receipt: sessionStorage.getItem(PRESENTATION_RECEIPT) });
-            if (data.status !== 'completed' || data.simulated !== true || data.shipping !== 0 || data.total !== data.subtotal || !Number.isFinite(data.subtotal) || data.subtotal <= 0 || !Array.isArray(data.items) || !data.items.length) throw new Error('No pudimos verificar la confirmación.');
+            if (data.status !== 'completed' || data.simulated !== true || data.shipping !== 0 || data.total !== Math.round((data.subtotal - (data.discount || 0)) * 100) / 100 || !Number.isFinite(data.subtotal) || data.subtotal <= 0 || !Array.isArray(data.items) || !data.items.length) throw new Error('No pudimos verificar la confirmación.');
             container.className = 'payment-result presentation-result status-completed';
             const products = data.items.map(item => `<li>${escape_html(item.quantity)} × ${escape_html(item.brand)} ${escape_html(item.name)}<strong>${escape_html(format_price(item.price * item.quantity))}</strong></li>`).join('');
-            container.innerHTML = `<span class="payment-result-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="m13 25 7 7 15-17"/></svg></span><p class="eyebrow">DREAMS</p><h1>Pedido confirmado</h1><div class="order-reference"><span>Pedido</span><strong>${escape_html(data.reference)}</strong></div><ul class="presentation-products">${products}</ul><div class="summary-line"><span>${escape_html(data.shipping_label)}</span><strong>${escape_html(format_price(data.shipping))}</strong></div><div class="summary-line summary-total"><span>Total</span><strong>${escape_html(format_price(data.total))}</strong></div><div class="result-actions"><a class="button" href="/catalogo.html">Volver a la colección</a></div>`;
+            container.innerHTML = `<span class="payment-result-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="m13 25 7 7 15-17"/></svg></span><p class="eyebrow">DREAMS</p><h1>Pedido confirmado</h1><div class="order-reference"><span>Pedido</span><strong>${escape_html(data.reference)}</strong></div><ul class="presentation-products">${products}</ul><div class="summary-line"><span>Descuento</span><strong>−${escape_html(format_price(data.discount || 0))}</strong></div><div class="summary-line"><span>${escape_html(data.shipping_label)}</span><strong>${escape_html(format_price(data.shipping))}</strong></div><div class="summary-line summary-total"><span>Total</span><strong>${escape_html(format_price(data.total))}</strong></div><div class="result-actions"><a class="button" href="/catalogo.html">Volver a la colección</a></div>`;
             if (sessionStorage.getItem('dreams_presentation_completed') !== data.reference) {
                 if (presentation_snapshot(get_cart()) === presentation_snapshot(data.items)) { if (typeof account_cart !== 'undefined' && account_cart?.active()) { account_cart.consume(data.items); await account_cart.flush(); } else { localStorage.removeItem('dreams_cart'); update_cart_count(); } }
                 sessionStorage.setItem('dreams_presentation_completed', data.reference);
