@@ -352,5 +352,27 @@
     "expected": "fallo de red antes de PUT conserva borrador y no anuncia éxito",
     "actual": "verificado",
     "result": "PASS"
+  },
+  {
+    "id": "API-stock-null",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "JSON null debe rechazarse400 sin convertirse en stock0",
+    "actual": {
+      "status": 200,
+      "stock": 0
+    },
+    "result": "FAIL"
+  },
+  {
+    "id": "API-stock-null-restored",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "restaurar exclusivamente el producto QA al estado anterior",
+    "actual": {
+      "qa_id": 219,
+      "stock": 3
+    },
+    "result": "PASS"
   }
 ]

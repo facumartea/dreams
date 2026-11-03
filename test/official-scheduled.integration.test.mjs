@@ -60,3 +60,15 @@ test('grant Admin recorre login normal en workerd y cifra sesión sin Supabase r
     const response = await harness.fetch('https://fixture.invalid/');
     assert.deepEqual(await response.json(), { ready: true, encrypted: true, auth_calls: 1 });
 });
+
+test('workerd rechaza stock null antes de escribir y acredita versión sin exponer autenticación', { timeout: 60000 }, async t => {
+    const config = JSON.parse(await readFile(new URL('../wrangler.official.jsonc', import.meta.url), 'utf8'));
+    config.compatibility_date = '2026-10-08';
+    config.main = new URL('../worker/test-fixtures/private-browser-session.mjs', import.meta.url).pathname;
+    config.vars.SUPABASE_SECRET_KEY = 'sb_secret_LOCAL_TYPE_FIXTURE_ONLY';
+    config.vars.CF_VERSION_METADATA = { id: '11111111-1111-4111-8111-111111111111' };
+    const harness = createTestHarness({ workers: [{ config }] });
+    t.after(() => harness.close()); await harness.listen();
+    const response = await harness.fetch('https://fixture.invalid/?types=1');
+    assert.deepEqual(await response.json(), { status: 400, product_writes: 0, backend_version: config.vars.CF_VERSION_METADATA.id });
+});

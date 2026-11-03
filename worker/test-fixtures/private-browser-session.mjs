@@ -2,10 +2,12 @@ import { prepare_browser_qa } from '../private-browser-qa.mjs';
 import { fetch_official } from '../official.mjs';
 const id = 'a88d8d4e-ada3-4bfa-a6f5-db39d2dc9c19';
 const user = { id, email: 'qa-fixture@example.com', user_metadata: { name: 'QA' } };
-let auth_calls = 0;
+let auth_calls = 0, product_writes = 0;
 globalThis.fetch = async (input) => {
     const url = new URL(typeof input === 'string' ? input : input.url);
     if (url.hostname !== 'nwsmbemwtexmrtpkgxrz.supabase.co') throw new Error('Unexpected fixture host');
+    if (url.pathname === '/auth/v1/user') return Response.json(user);
+    if (url.pathname === '/rest/v1/products') { product_writes++; throw new Error('Unexpected product write'); }
     if (url.pathname === '/auth/v1/token') {
         auth_calls++;
         return Response.json({ user, access_token: 'fixture-access', refresh_token: 'fixture-refresh', expires_in: 3600, token_type: 'bearer' });
@@ -14,7 +16,8 @@ globalThis.fetch = async (input) => {
     throw new Error('Unexpected fixture path');
 };
 export default {
-    async fetch(_request, env) {
+    async fetch(request, env) {
+        if (new URL(request.url).searchParams.has('types')) return invalid_stock_call(env);
         let stored;
         const configured = { ...env, QA_RUN_ID: 'pr56-local-browser-grant', QA_EXPIRES_AT: String(Date.now() + 600000),
             QA_BROWSER_VAULT: { get: async () => null, put: async (_key, value) => { stored = value; } } };
@@ -27,3 +30,11 @@ export default {
         } catch (error) { return Response.json({ ready: false, stage: error.message, auth_calls }); }
     }
 };
+
+async function invalid_stock_call(env) {
+    const body = JSON.stringify({ brand: 'DREAMS QA', name: 'QA type', gender: 'unisex', category: 'nicho', size_ml: 50, price: 125, stock: null,
+        intensity: 3, family: 'QA', top_notes: 'QA', heart_notes: 'QA', base_notes: 'QA', description: 'QA', image_url: '/assets/dreams-bottle.png', featured: false });
+    const headers = { Origin: 'https://dreams-perfumes.pages.dev', 'Content-Type': 'application/json', Cookie: 'dreams_access_token=fixture-access', 'Content-Length': String(new TextEncoder().encode(body).length) };
+    const response = await fetch_official(new Request('https://dreams-perfumes.pages.dev/api/admin/products/219', { method: 'PUT', headers, body }), env);
+    return Response.json({ status: response.status, product_writes, backend_version: response.headers.get('X-Dreams-Backend-Version') });
+}

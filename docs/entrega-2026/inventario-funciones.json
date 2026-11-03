@@ -1,6 +1,6 @@
 {
   "limit": 40,
-  "files": 114,
+  "files": 115,
   "records": [
     {
       "file": "pages/catalog.mjs",
@@ -4860,387 +4860,379 @@
     },
     {
       "file": "server/app.js",
-      "name": "validate",
+      "name": "valid_product_field_type",
       "kind": "FunctionDeclaration",
       "start": 157,
-      "end": 168,
-      "lines": 12
+      "end": 160,
+      "lines": 4
+    },
+    {
+      "file": "server/app.js",
+      "name": "validate",
+      "kind": "FunctionDeclaration",
+      "start": 162,
+      "end": 175,
+      "lines": 14
     },
     {
       "file": "server/app.js",
       "name": "callback:some",
       "kind": "ArrowFunctionExpression",
-      "start": 159,
-      "end": 159,
+      "start": 164,
+      "end": 164,
       "lines": 1
     },
     {
       "file": "server/app.js",
       "name": "callback:some",
       "kind": "ArrowFunctionExpression",
-      "start": 165,
-      "end": 165,
+      "start": 172,
+      "end": 172,
       "lines": 1
     },
     {
       "file": "server/app.js",
       "name": "payload",
       "kind": "FunctionDeclaration",
-      "start": 170,
-      "end": 178,
+      "start": 177,
+      "end": 185,
       "lines": 9
     },
     {
       "file": "server/app.js",
       "name": "normalize_cart_items",
       "kind": "FunctionDeclaration",
-      "start": 180,
-      "end": 189,
+      "start": 187,
+      "end": 196,
       "lines": 10
     },
     {
       "file": "server/app.js",
       "name": "quote_cart",
       "kind": "FunctionDeclaration",
-      "start": 191,
-      "end": 209,
+      "start": 198,
+      "end": 216,
       "lines": 19
     },
     {
       "file": "server/app.js",
       "name": "callback:map",
       "kind": "ArrowFunctionExpression",
-      "start": 197,
-      "end": 197,
+      "start": 204,
+      "end": 204,
       "lines": 1
     },
     {
       "file": "server/app.js",
       "name": "callback:reduce",
       "kind": "ArrowFunctionExpression",
-      "start": 207,
-      "end": 207,
+      "start": 214,
+      "end": 214,
       "lines": 1
     },
     {
       "file": "server/app.js",
       "name": "database_health",
       "kind": "FunctionDeclaration",
-      "start": 211,
-      "end": 226,
+      "start": 218,
+      "end": 233,
       "lines": 16
     },
     {
       "file": "server/app.js",
       "name": "callback:map",
       "kind": "ArrowFunctionExpression",
-      "start": 218,
-      "end": 224,
+      "start": 225,
+      "end": 231,
       "lines": 7
     },
     {
       "file": "server/app.js",
       "name": "callback:execute_database_query",
       "kind": "ArrowFunctionExpression",
-      "start": 219,
-      "end": 222,
+      "start": 226,
+      "end": 229,
       "lines": 4
     },
     {
       "file": "server/app.js",
       "name": "application_context",
       "kind": "FunctionDeclaration",
-      "start": 229,
-      "end": 257,
+      "start": 236,
+      "end": 264,
       "lines": 29
     },
     {
       "file": "server/app.js",
       "name": "anónima",
       "kind": "ArrowFunctionExpression",
-      "start": 235,
-      "end": 235,
+      "start": 242,
+      "end": 242,
       "lines": 1
     },
     {
       "file": "server/app.js",
       "name": "async_route",
       "kind": "ArrowFunctionExpression",
-      "start": 249,
-      "end": 249,
+      "start": 256,
+      "end": 256,
       "lines": 1
     },
     {
       "file": "server/app.js",
       "name": "anónima",
       "kind": "ArrowFunctionExpression",
-      "start": 249,
-      "end": 249,
+      "start": 256,
+      "end": 256,
       "lines": 1
     },
     {
       "file": "server/app.js",
       "name": "install_http_middleware",
       "kind": "FunctionDeclaration",
-      "start": 259,
-      "end": 271,
+      "start": 266,
+      "end": 278,
       "lines": 13
     },
     {
       "file": "server/app.js",
       "name": "callback:morgan",
       "kind": "ArrowFunctionExpression",
-      "start": 264,
-      "end": 264,
+      "start": 271,
+      "end": 271,
       "lines": 1
     },
     {
       "file": "server/app.js",
       "name": "callback:use",
       "kind": "ArrowFunctionExpression",
-      "start": 267,
-      "end": 270,
+      "start": 274,
+      "end": 277,
       "lines": 4
     },
     {
       "file": "server/app.js",
       "name": "install_limits_and_static",
       "kind": "FunctionDeclaration",
-      "start": 273,
-      "end": 289,
+      "start": 280,
+      "end": 296,
       "lines": 17
     },
     {
       "file": "server/app.js",
       "name": "skip",
       "kind": "ArrowFunctionExpression",
-      "start": 280,
-      "end": 280,
+      "start": 287,
+      "end": 287,
       "lines": 1
     },
     {
       "file": "server/app.js",
       "name": "skip",
       "kind": "ArrowFunctionExpression",
-      "start": 282,
-      "end": 282,
+      "start": 289,
+      "end": 289,
       "lines": 1
     },
     {
       "file": "server/app.js",
       "name": "callback:use",
       "kind": "ArrowFunctionExpression",
-      "start": 286,
-      "end": 286,
+      "start": 293,
+      "end": 293,
       "lines": 1
     },
     {
       "file": "server/app.js",
       "name": "profile_loader",
       "kind": "FunctionDeclaration",
-      "start": 291,
-      "end": 305,
+      "start": 298,
+      "end": 312,
       "lines": 15
     },
     {
       "file": "server/app.js",
       "name": "profile_for",
       "kind": "FunctionDeclaration",
-      "start": 292,
-      "end": 302,
+      "start": 299,
+      "end": 309,
       "lines": 11
     },
     {
       "file": "server/app.js",
       "name": "install_session_middleware",
       "kind": "FunctionDeclaration",
-      "start": 307,
-      "end": 343,
+      "start": 314,
+      "end": 350,
       "lines": 37
     },
     {
       "file": "server/app.js",
       "name": "callback:async_route",
       "kind": "ArrowFunctionExpression",
-      "start": 311,
-      "end": 342,
+      "start": 318,
+      "end": 349,
       "lines": 32
     },
     {
       "file": "server/app.js",
       "name": "configure_router",
       "kind": "FunctionDeclaration",
-      "start": 345,
-      "end": 353,
+      "start": 352,
+      "end": 360,
       "lines": 9
     },
     {
       "file": "server/app.js",
       "name": "login",
       "kind": "ArrowFunctionExpression",
-      "start": 347,
-      "end": 347,
+      "start": 354,
+      "end": 354,
       "lines": 1
     },
     {
       "file": "server/app.js",
       "name": "admin",
       "kind": "ArrowFunctionExpression",
-      "start": 348,
-      "end": 348,
+      "start": 355,
+      "end": 355,
       "lines": 1
     },
     {
       "file": "server/app.js",
       "name": "admin_database",
       "kind": "ArrowFunctionExpression",
-      "start": 349,
-      "end": 349,
+      "start": 356,
+      "end": 356,
       "lines": 1
     },
     {
       "file": "server/app.js",
       "name": "route",
       "kind": "ArrowFunctionExpression",
-      "start": 350,
-      "end": 350,
+      "start": 357,
+      "end": 357,
       "lines": 1
     },
     {
       "file": "server/app.js",
       "name": "callback:map",
       "kind": "ArrowFunctionExpression",
-      "start": 350,
-      "end": 350,
+      "start": 357,
+      "end": 357,
       "lines": 1
     },
     {
       "file": "server/app.js",
       "name": "fail_if",
       "kind": "ArrowFunctionExpression",
-      "start": 351,
-      "end": 351,
+      "start": 358,
+      "end": 358,
       "lines": 1
     },
     {
       "file": "server/app.js",
       "name": "install_customer_modules",
       "kind": "FunctionDeclaration",
-      "start": 355,
-      "end": 361,
+      "start": 362,
+      "end": 368,
       "lines": 7
     },
     {
       "file": "server/app.js",
       "name": "install_get_api_cart_config",
       "kind": "FunctionDeclaration",
-      "start": 363,
-      "end": 367,
+      "start": 370,
+      "end": 374,
       "lines": 5
     },
     {
       "file": "server/app.js",
       "name": "callback:route",
       "kind": "ArrowFunctionExpression",
-      "start": 366,
-      "end": 366,
+      "start": 373,
+      "end": 373,
       "lines": 1
     },
     {
       "file": "server/app.js",
       "name": "install_presentation_routes",
       "kind": "FunctionDeclaration",
-      "start": 369,
-      "end": 373,
+      "start": 376,
+      "end": 380,
       "lines": 5
     },
     {
       "file": "server/app.js",
       "name": "install_google_routes",
       "kind": "FunctionDeclaration",
-      "start": 375,
-      "end": 380,
+      "start": 382,
+      "end": 387,
       "lines": 6
     },
     {
       "file": "server/app.js",
       "name": "provider_enabled",
       "kind": "ArrowFunctionExpression",
-      "start": 379,
-      "end": 379,
+      "start": 386,
+      "end": 386,
       "lines": 1
     },
     {
       "file": "server/app.js",
       "name": "anónima",
       "kind": "ArrowFunctionExpression",
-      "start": 379,
-      "end": 379,
+      "start": 386,
+      "end": 386,
       "lines": 1
     },
     {
       "file": "server/app.js",
       "name": "install_get_api_auth_google_config",
       "kind": "FunctionDeclaration",
-      "start": 382,
-      "end": 386,
+      "start": 389,
+      "end": 393,
       "lines": 5
     },
     {
       "file": "server/app.js",
       "name": "callback:route",
       "kind": "ArrowFunctionExpression",
-      "start": 385,
-      "end": 385,
+      "start": 392,
+      "end": 392,
       "lines": 1
     },
     {
       "file": "server/app.js",
       "name": "anónima",
       "kind": "ArrowFunctionExpression",
-      "start": 385,
-      "end": 385,
+      "start": 392,
+      "end": 392,
       "lines": 1
     },
     {
       "file": "server/app.js",
       "name": "install_get_api_auth_config",
       "kind": "FunctionDeclaration",
-      "start": 388,
-      "end": 392,
+      "start": 395,
+      "end": 399,
       "lines": 5
     },
     {
       "file": "server/app.js",
       "name": "callback:route",
       "kind": "ArrowFunctionExpression",
-      "start": 391,
-      "end": 391,
+      "start": 398,
+      "end": 398,
       "lines": 1
     },
     {
       "file": "server/app.js",
       "name": "install_get_api_config",
       "kind": "FunctionDeclaration",
-      "start": 394,
-      "end": 398,
-      "lines": 5
-    },
-    {
-      "file": "server/app.js",
-      "name": "callback:route",
-      "kind": "ArrowFunctionExpression",
-      "start": 397,
-      "end": 397,
-      "lines": 1
-    },
-    {
-      "file": "server/app.js",
-      "name": "install_get_api_checkout_config",
-      "kind": "FunctionDeclaration",
-      "start": 400,
+      "start": 401,
       "end": 405,
-      "lines": 6
+      "lines": 5
     },
     {
       "file": "server/app.js",
@@ -5252,666 +5244,682 @@
     },
     {
       "file": "server/app.js",
-      "name": "install_get_api_products",
+      "name": "install_get_api_checkout_config",
       "kind": "FunctionDeclaration",
       "start": 407,
-      "end": 424,
+      "end": 412,
+      "lines": 6
+    },
+    {
+      "file": "server/app.js",
+      "name": "callback:route",
+      "kind": "ArrowFunctionExpression",
+      "start": 411,
+      "end": 411,
+      "lines": 1
+    },
+    {
+      "file": "server/app.js",
+      "name": "install_get_api_products",
+      "kind": "FunctionDeclaration",
+      "start": 414,
+      "end": 431,
       "lines": 18
     },
     {
       "file": "server/app.js",
       "name": "callback:route",
       "kind": "ArrowFunctionExpression",
-      "start": 410,
-      "end": 423,
+      "start": 417,
+      "end": 430,
       "lines": 14
     },
     {
       "file": "server/app.js",
       "name": "callback:execute_database_query",
       "kind": "ArrowFunctionExpression",
-      "start": 413,
-      "end": 421,
+      "start": 420,
+      "end": 428,
       "lines": 9
     },
     {
       "file": "server/app.js",
       "name": "install_get_api_products_id",
       "kind": "FunctionDeclaration",
-      "start": 426,
-      "end": 435,
+      "start": 433,
+      "end": 442,
       "lines": 10
     },
     {
       "file": "server/app.js",
       "name": "callback:route",
       "kind": "ArrowFunctionExpression",
-      "start": 429,
-      "end": 434,
+      "start": 436,
+      "end": 441,
       "lines": 6
     },
     {
       "file": "server/app.js",
       "name": "callback:execute_database_query",
       "kind": "ArrowFunctionExpression",
-      "start": 432,
-      "end": 432,
+      "start": 439,
+      "end": 439,
       "lines": 1
     },
     {
       "file": "server/app.js",
       "name": "install_get_api_brands",
       "kind": "FunctionDeclaration",
-      "start": 437,
-      "end": 441,
+      "start": 444,
+      "end": 448,
       "lines": 5
     },
     {
       "file": "server/app.js",
       "name": "callback:route",
       "kind": "ArrowFunctionExpression",
-      "start": 440,
-      "end": 440,
+      "start": 447,
+      "end": 447,
       "lines": 1
     },
     {
       "file": "server/app.js",
       "name": "callback:execute_database_query",
       "kind": "ArrowFunctionExpression",
-      "start": 440,
-      "end": 440,
+      "start": 447,
+      "end": 447,
       "lines": 1
     },
     {
       "file": "server/app.js",
       "name": "callback:map",
       "kind": "ArrowFunctionExpression",
-      "start": 440,
-      "end": 440,
+      "start": 447,
+      "end": 447,
       "lines": 1
     },
     {
       "file": "server/app.js",
       "name": "install_post_api_auth_register",
       "kind": "FunctionDeclaration",
-      "start": 443,
-      "end": 448,
+      "start": 450,
+      "end": 455,
       "lines": 6
     },
     {
       "file": "server/app.js",
       "name": "install_post_api_auth_login",
       "kind": "FunctionDeclaration",
-      "start": 450,
-      "end": 468,
+      "start": 457,
+      "end": 475,
       "lines": 19
     },
     {
       "file": "server/app.js",
       "name": "callback:route",
       "kind": "ArrowFunctionExpression",
-      "start": 454,
-      "end": 467,
+      "start": 461,
+      "end": 474,
       "lines": 14
     },
     {
       "file": "server/app.js",
       "name": "install_post_api_auth_logout",
       "kind": "FunctionDeclaration",
-      "start": 470,
-      "end": 481,
+      "start": 477,
+      "end": 488,
       "lines": 12
     },
     {
       "file": "server/app.js",
       "name": "callback:route",
       "kind": "ArrowFunctionExpression",
-      "start": 473,
-      "end": 480,
+      "start": 480,
+      "end": 487,
       "lines": 8
     },
     {
       "file": "server/app.js",
       "name": "install_get_api_auth_me",
       "kind": "FunctionDeclaration",
-      "start": 483,
-      "end": 488,
-      "lines": 6
-    },
-    {
-      "file": "server/app.js",
-      "name": "callback:route",
-      "kind": "ArrowFunctionExpression",
-      "start": 486,
-      "end": 487,
-      "lines": 2
-    },
-    {
-      "file": "server/app.js",
-      "name": "install_post_api_cart_quote",
-      "kind": "FunctionDeclaration",
       "start": 490,
-      "end": 501,
-      "lines": 12
+      "end": 495,
+      "lines": 6
     },
     {
       "file": "server/app.js",
       "name": "callback:route",
       "kind": "ArrowFunctionExpression",
       "start": 493,
-      "end": 500,
+      "end": 494,
+      "lines": 2
+    },
+    {
+      "file": "server/app.js",
+      "name": "install_post_api_cart_quote",
+      "kind": "FunctionDeclaration",
+      "start": 497,
+      "end": 508,
+      "lines": 12
+    },
+    {
+      "file": "server/app.js",
+      "name": "callback:route",
+      "kind": "ArrowFunctionExpression",
+      "start": 500,
+      "end": 507,
       "lines": 8
     },
     {
       "file": "server/app.js",
       "name": "callback:map",
       "kind": "ArrowFunctionExpression",
-      "start": 496,
-      "end": 496,
+      "start": 503,
+      "end": 503,
       "lines": 1
     },
     {
       "file": "server/app.js",
       "name": "install_post_api_coupons_validate",
       "kind": "FunctionDeclaration",
-      "start": 503,
-      "end": 512,
+      "start": 510,
+      "end": 519,
       "lines": 10
     },
     {
       "file": "server/app.js",
       "name": "callback:route",
       "kind": "ArrowFunctionExpression",
-      "start": 506,
-      "end": 511,
+      "start": 513,
+      "end": 518,
       "lines": 6
     },
     {
       "file": "server/app.js",
       "name": "commercial_order",
       "kind": "FunctionDeclaration",
-      "start": 514,
-      "end": 533,
+      "start": 521,
+      "end": 540,
       "lines": 20
     },
     {
       "file": "server/app.js",
       "name": "callback:map",
       "kind": "ArrowFunctionExpression",
-      "start": 530,
-      "end": 530,
+      "start": 537,
+      "end": 537,
       "lines": 1
     },
     {
       "file": "server/app.js",
       "name": "install_post_api_checkout_session",
       "kind": "FunctionDeclaration",
-      "start": 535,
-      "end": 566,
+      "start": 542,
+      "end": 573,
       "lines": 32
     },
     {
       "file": "server/app.js",
       "name": "callback:route",
       "kind": "ArrowFunctionExpression",
-      "start": 539,
-      "end": 565,
+      "start": 546,
+      "end": 572,
       "lines": 27
     },
     {
       "file": "server/app.js",
       "name": "install_post_api_checkout_demo_payment",
       "kind": "FunctionDeclaration",
-      "start": 568,
-      "end": 601,
+      "start": 575,
+      "end": 608,
       "lines": 34
     },
     {
       "file": "server/app.js",
       "name": "callback:route",
       "kind": "ArrowFunctionExpression",
-      "start": 572,
-      "end": 600,
+      "start": 579,
+      "end": 607,
       "lines": 29
     },
     {
       "file": "server/app.js",
       "name": "install_post_api_checkout_confirm",
       "kind": "FunctionDeclaration",
-      "start": 603,
-      "end": 621,
+      "start": 610,
+      "end": 628,
       "lines": 19
     },
     {
       "file": "server/app.js",
       "name": "callback:route",
       "kind": "ArrowFunctionExpression",
-      "start": 607,
-      "end": 620,
+      "start": 614,
+      "end": 627,
       "lines": 14
     },
     {
       "file": "server/app.js",
       "name": "install_get_api_orders_id",
       "kind": "FunctionDeclaration",
-      "start": 623,
-      "end": 632,
+      "start": 630,
+      "end": 639,
       "lines": 10
     },
     {
       "file": "server/app.js",
       "name": "callback:route",
       "kind": "ArrowFunctionExpression",
-      "start": 626,
-      "end": 631,
+      "start": 633,
+      "end": 638,
       "lines": 6
     },
     {
       "file": "server/app.js",
       "name": "install_post_api_payments_webhook",
       "kind": "FunctionDeclaration",
-      "start": 634,
-      "end": 649,
+      "start": 641,
+      "end": 656,
       "lines": 16
     },
     {
       "file": "server/app.js",
       "name": "callback:route",
       "kind": "ArrowFunctionExpression",
-      "start": 638,
-      "end": 648,
+      "start": 645,
+      "end": 655,
       "lines": 11
     },
     {
       "file": "server/app.js",
       "name": "install_post_api_inquiries",
       "kind": "FunctionDeclaration",
-      "start": 651,
-      "end": 662,
+      "start": 658,
+      "end": 669,
       "lines": 12
     },
     {
       "file": "server/app.js",
       "name": "callback:route",
       "kind": "ArrowFunctionExpression",
-      "start": 654,
-      "end": 661,
+      "start": 661,
+      "end": 668,
       "lines": 8
     },
     {
       "file": "server/app.js",
       "name": "install_get_api_admin_stats",
       "kind": "FunctionDeclaration",
-      "start": 664,
-      "end": 677,
+      "start": 671,
+      "end": 684,
       "lines": 14
     },
     {
       "file": "server/app.js",
       "name": "callback:route",
       "kind": "ArrowFunctionExpression",
-      "start": 667,
-      "end": 676,
+      "start": 674,
+      "end": 683,
       "lines": 10
     },
     {
       "file": "server/app.js",
       "name": "callback:map",
       "kind": "ArrowFunctionExpression",
-      "start": 670,
-      "end": 670,
+      "start": 677,
+      "end": 677,
       "lines": 1
     },
     {
       "file": "server/app.js",
       "name": "install_get_api_admin_products",
       "kind": "FunctionDeclaration",
-      "start": 679,
-      "end": 683,
+      "start": 686,
+      "end": 690,
       "lines": 5
     },
     {
       "file": "server/app.js",
       "name": "callback:route",
       "kind": "ArrowFunctionExpression",
-      "start": 682,
-      "end": 682,
+      "start": 689,
+      "end": 689,
       "lines": 1
     },
     {
       "file": "server/app.js",
       "name": "callback:map",
       "kind": "ArrowFunctionExpression",
-      "start": 682,
-      "end": 682,
+      "start": 689,
+      "end": 689,
       "lines": 1
     },
     {
       "file": "server/app.js",
       "name": "install_post_api_admin_products",
       "kind": "FunctionDeclaration",
-      "start": 685,
-      "end": 693,
+      "start": 692,
+      "end": 700,
       "lines": 9
     },
     {
       "file": "server/app.js",
       "name": "callback:route",
       "kind": "ArrowFunctionExpression",
-      "start": 688,
-      "end": 692,
+      "start": 695,
+      "end": 699,
       "lines": 5
     },
     {
       "file": "server/app.js",
       "name": "install_put_api_admin_products_id",
       "kind": "FunctionDeclaration",
-      "start": 695,
-      "end": 709,
+      "start": 702,
+      "end": 716,
       "lines": 15
     },
     {
       "file": "server/app.js",
       "name": "callback:route",
       "kind": "ArrowFunctionExpression",
-      "start": 698,
-      "end": 708,
+      "start": 705,
+      "end": 715,
       "lines": 11
     },
     {
       "file": "server/app.js",
       "name": "install_delete_api_admin_products_id",
       "kind": "FunctionDeclaration",
-      "start": 711,
-      "end": 723,
+      "start": 718,
+      "end": 730,
       "lines": 13
     },
     {
       "file": "server/app.js",
       "name": "callback:route",
       "kind": "ArrowFunctionExpression",
-      "start": 714,
-      "end": 722,
+      "start": 721,
+      "end": 729,
       "lines": 9
     },
     {
       "file": "server/app.js",
       "name": "install_get_api_admin_users",
       "kind": "FunctionDeclaration",
-      "start": 725,
-      "end": 729,
+      "start": 732,
+      "end": 736,
       "lines": 5
     },
     {
       "file": "server/app.js",
       "name": "callback:route",
       "kind": "ArrowFunctionExpression",
-      "start": 728,
-      "end": 728,
+      "start": 735,
+      "end": 735,
       "lines": 1
     },
     {
       "file": "server/app.js",
       "name": "callback:map",
       "kind": "ArrowFunctionExpression",
-      "start": 728,
-      "end": 728,
+      "start": 735,
+      "end": 735,
       "lines": 1
     },
     {
       "file": "server/app.js",
       "name": "install_get_api_admin_inquiries",
       "kind": "FunctionDeclaration",
-      "start": 731,
-      "end": 735,
+      "start": 738,
+      "end": 742,
       "lines": 5
     },
     {
       "file": "server/app.js",
       "name": "callback:route",
       "kind": "ArrowFunctionExpression",
-      "start": 734,
-      "end": 734,
+      "start": 741,
+      "end": 741,
       "lines": 1
     },
     {
       "file": "server/app.js",
       "name": "callback:map",
       "kind": "ArrowFunctionExpression",
-      "start": 734,
-      "end": 734,
+      "start": 741,
+      "end": 741,
       "lines": 1
     },
     {
       "file": "server/app.js",
       "name": "install_get_api_admin_reviews",
       "kind": "FunctionDeclaration",
-      "start": 737,
-      "end": 741,
+      "start": 744,
+      "end": 748,
       "lines": 5
     },
     {
       "file": "server/app.js",
       "name": "callback:route",
       "kind": "ArrowFunctionExpression",
-      "start": 740,
-      "end": 740,
+      "start": 747,
+      "end": 747,
       "lines": 1
     },
     {
       "file": "server/app.js",
       "name": "install_put_api_admin_reviews_id",
       "kind": "FunctionDeclaration",
-      "start": 743,
-      "end": 754,
+      "start": 750,
+      "end": 761,
       "lines": 12
     },
     {
       "file": "server/app.js",
       "name": "callback:route",
       "kind": "ArrowFunctionExpression",
-      "start": 746,
-      "end": 753,
+      "start": 753,
+      "end": 760,
       "lines": 8
     },
     {
       "file": "server/app.js",
       "name": "install_delete_api_admin_reviews_id",
       "kind": "FunctionDeclaration",
-      "start": 756,
-      "end": 765,
+      "start": 763,
+      "end": 772,
       "lines": 10
     },
     {
       "file": "server/app.js",
       "name": "callback:route",
       "kind": "ArrowFunctionExpression",
-      "start": 759,
-      "end": 764,
+      "start": 766,
+      "end": 771,
       "lines": 6
     },
     {
       "file": "server/app.js",
       "name": "install_get_api_admin_orders",
       "kind": "FunctionDeclaration",
-      "start": 767,
-      "end": 771,
+      "start": 774,
+      "end": 778,
       "lines": 5
     },
     {
       "file": "server/app.js",
       "name": "callback:route",
       "kind": "ArrowFunctionExpression",
-      "start": 770,
-      "end": 770,
+      "start": 777,
+      "end": 777,
       "lines": 1
     },
     {
       "file": "server/app.js",
       "name": "callback:map",
       "kind": "ArrowFunctionExpression",
-      "start": 770,
-      "end": 770,
+      "start": 777,
+      "end": 777,
       "lines": 1
     },
     {
       "file": "server/app.js",
       "name": "install_get_api_admin_coupons",
       "kind": "FunctionDeclaration",
-      "start": 773,
-      "end": 777,
+      "start": 780,
+      "end": 784,
       "lines": 5
     },
     {
       "file": "server/app.js",
       "name": "callback:route",
       "kind": "ArrowFunctionExpression",
-      "start": 776,
-      "end": 776,
+      "start": 783,
+      "end": 783,
       "lines": 1
     },
     {
       "file": "server/app.js",
       "name": "install_post_api_admin_coupons",
       "kind": "FunctionDeclaration",
-      "start": 779,
-      "end": 791,
+      "start": 786,
+      "end": 798,
       "lines": 13
     },
     {
       "file": "server/app.js",
       "name": "callback:route",
       "kind": "ArrowFunctionExpression",
-      "start": 782,
-      "end": 790,
+      "start": 789,
+      "end": 797,
       "lines": 9
     },
     {
       "file": "server/app.js",
       "name": "install_put_api_admin_coupons_id",
       "kind": "FunctionDeclaration",
-      "start": 793,
-      "end": 807,
+      "start": 800,
+      "end": 814,
       "lines": 15
     },
     {
       "file": "server/app.js",
       "name": "callback:route",
       "kind": "ArrowFunctionExpression",
-      "start": 796,
-      "end": 806,
+      "start": 803,
+      "end": 813,
       "lines": 11
     },
     {
       "file": "server/app.js",
       "name": "install_delete_api_admin_coupons_id",
       "kind": "FunctionDeclaration",
-      "start": 809,
-      "end": 818,
+      "start": 816,
+      "end": 825,
       "lines": 10
     },
     {
       "file": "server/app.js",
       "name": "callback:route",
       "kind": "ArrowFunctionExpression",
-      "start": 812,
-      "end": 817,
+      "start": 819,
+      "end": 824,
       "lines": 6
     },
     {
       "file": "server/app.js",
       "name": "install_get_js_admin_console_v3_js",
       "kind": "FunctionDeclaration",
-      "start": 820,
-      "end": 824,
+      "start": 827,
+      "end": 831,
       "lines": 5
     },
     {
       "file": "server/app.js",
       "name": "callback:route",
       "kind": "ArrowFunctionExpression",
-      "start": 823,
-      "end": 823,
+      "start": 830,
+      "end": 830,
       "lines": 1
     },
     {
       "file": "server/app.js",
       "name": "install_get_admin_page",
       "kind": "FunctionDeclaration",
-      "start": 826,
-      "end": 830,
+      "start": 833,
+      "end": 837,
       "lines": 5
     },
     {
       "file": "server/app.js",
       "name": "callback:route",
       "kind": "ArrowFunctionExpression",
-      "start": 829,
-      "end": 829,
+      "start": 836,
+      "end": 836,
       "lines": 1
     },
     {
       "file": "server/app.js",
       "name": "install_get_legacy_redirect",
       "kind": "FunctionDeclaration",
-      "start": 832,
-      "end": 836,
+      "start": 839,
+      "end": 843,
       "lines": 5
     },
     {
       "file": "server/app.js",
       "name": "callback:route",
       "kind": "ArrowFunctionExpression",
-      "start": 835,
-      "end": 835,
+      "start": 842,
+      "end": 842,
       "lines": 1
     },
     {
       "file": "server/app.js",
       "name": "install_get_api_health",
       "kind": "FunctionDeclaration",
-      "start": 838,
-      "end": 850,
+      "start": 845,
+      "end": 857,
       "lines": 13
     },
     {
       "file": "server/app.js",
       "name": "callback:route",
       "kind": "ArrowFunctionExpression",
-      "start": 841,
-      "end": 849,
+      "start": 848,
+      "end": 856,
       "lines": 9
     },
     {
       "file": "server/app.js",
       "name": "install_final_handlers",
       "kind": "FunctionDeclaration",
-      "start": 852,
-      "end": 863,
+      "start": 859,
+      "end": 870,
       "lines": 12
     },
     {
       "file": "server/app.js",
       "name": "callback:use",
       "kind": "ArrowFunctionExpression",
-      "start": 855,
-      "end": 857,
+      "start": 862,
+      "end": 864,
       "lines": 3
     },
     {
       "file": "server/app.js",
       "name": "callback:use",
       "kind": "ArrowFunctionExpression",
-      "start": 858,
-      "end": 862,
+      "start": 865,
+      "end": 869,
       "lines": 5
     },
     {
       "file": "server/app.js",
       "name": "create_app",
       "kind": "FunctionDeclaration",
-      "start": 915,
-      "end": 920,
+      "start": 922,
+      "end": 927,
       "lines": 6
     },
     {
@@ -8817,6 +8825,70 @@
       "start": 69,
       "end": 69,
       "lines": 1
+    },
+    {
+      "file": "test/admin-product-types.test.js",
+      "name": "callback:test",
+      "kind": "ArrowFunctionExpression",
+      "start": 10,
+      "end": 12,
+      "lines": 3
+    },
+    {
+      "file": "test/admin-product-types.test.js",
+      "name": "callback:test",
+      "kind": "ArrowFunctionExpression",
+      "start": 16,
+      "end": 18,
+      "lines": 3
+    },
+    {
+      "file": "test/admin-product-types.test.js",
+      "name": "callback:test",
+      "kind": "ArrowFunctionExpression",
+      "start": 21,
+      "end": 23,
+      "lines": 3
+    },
+    {
+      "file": "test/admin-product-types.test.js",
+      "name": "callback:test",
+      "kind": "ArrowFunctionExpression",
+      "start": 25,
+      "end": 28,
+      "lines": 4
+    },
+    {
+      "file": "test/admin-product-types.test.js",
+      "name": "callback:test",
+      "kind": "ArrowFunctionExpression",
+      "start": 29,
+      "end": 32,
+      "lines": 4
+    },
+    {
+      "file": "test/admin-product-types.test.js",
+      "name": "bloque ejecutable superior",
+      "kind": "ProgramBlock",
+      "start": 8,
+      "end": 14,
+      "lines": 7
+    },
+    {
+      "file": "test/admin-product-types.test.js",
+      "name": "bloque ejecutable superior",
+      "kind": "ProgramBlock",
+      "start": 15,
+      "end": 19,
+      "lines": 5
+    },
+    {
+      "file": "test/admin-product-types.test.js",
+      "name": "bloque ejecutable superior",
+      "kind": "ProgramBlock",
+      "start": 20,
+      "end": 24,
+      "lines": 5
     },
     {
       "file": "test/admin-proxy.test.mjs",
@@ -13379,6 +13451,22 @@
       "lines": 1
     },
     {
+      "file": "test/official-scheduled.integration.test.mjs",
+      "name": "callback:test",
+      "kind": "ArrowFunctionExpression",
+      "start": 64,
+      "end": 74,
+      "lines": 11
+    },
+    {
+      "file": "test/official-scheduled.integration.test.mjs",
+      "name": "callback:after",
+      "kind": "ArrowFunctionExpression",
+      "start": 71,
+      "end": 71,
+      "lines": 1
+    },
+    {
       "file": "test/pages-proxy.test.mjs",
       "name": "callback:test",
       "kind": "ArrowFunctionExpression",
@@ -16500,34 +16588,42 @@
     },
     {
       "file": "worker/official.mjs",
-      "name": "fetch_official",
+      "name": "official_version_response",
       "kind": "FunctionDeclaration",
       "start": 41,
-      "end": 51,
+      "end": 45,
+      "lines": 5
+    },
+    {
+      "file": "worker/official.mjs",
+      "name": "fetch_official",
+      "kind": "FunctionDeclaration",
+      "start": 46,
+      "end": 56,
       "lines": 11
     },
     {
       "file": "worker/official.mjs",
       "name": "scheduled",
       "kind": "FunctionExpression",
-      "start": 55,
-      "end": 63,
-      "lines": 9
+      "start": 60,
+      "end": 70,
+      "lines": 11
     },
     {
       "file": "worker/official.mjs",
       "name": "fetch",
       "kind": "ArrowFunctionExpression",
-      "start": 56,
-      "end": 56,
+      "start": 61,
+      "end": 61,
       "lines": 1
     },
     {
       "file": "worker/official.mjs",
       "name": "callback:run_official_qa",
       "kind": "ArrowFunctionExpression",
-      "start": 61,
-      "end": 61,
+      "start": 67,
+      "end": 67,
       "lines": 1
     },
     {
@@ -16735,56 +16831,64 @@
       "name": "anónima",
       "kind": "ArrowFunctionExpression",
       "start": 6,
-      "end": 15,
-      "lines": 10
+      "end": 17,
+      "lines": 12
     },
     {
       "file": "worker/test-fixtures/private-browser-session.mjs",
       "name": "fetch",
       "kind": "FunctionExpression",
-      "start": 17,
-      "end": 28,
-      "lines": 12
+      "start": 19,
+      "end": 31,
+      "lines": 13
     },
     {
       "file": "worker/test-fixtures/private-browser-session.mjs",
       "name": "get",
       "kind": "ArrowFunctionExpression",
-      "start": 20,
-      "end": 20,
+      "start": 23,
+      "end": 23,
       "lines": 1
     },
     {
       "file": "worker/test-fixtures/private-browser-session.mjs",
       "name": "put",
       "kind": "ArrowFunctionExpression",
-      "start": 20,
-      "end": 20,
+      "start": 23,
+      "end": 23,
       "lines": 1
     },
     {
       "file": "worker/test-fixtures/private-browser-session.mjs",
       "name": "create_database",
       "kind": "ArrowFunctionExpression",
-      "start": 23,
-      "end": 23,
+      "start": 26,
+      "end": 26,
       "lines": 1
     },
     {
       "file": "worker/test-fixtures/private-browser-session.mjs",
       "name": "getUserById",
       "kind": "ArrowFunctionExpression",
-      "start": 23,
-      "end": 23,
+      "start": 26,
+      "end": 26,
       "lines": 1
     },
     {
       "file": "worker/test-fixtures/private-browser-session.mjs",
       "name": "fetch",
       "kind": "ArrowFunctionExpression",
-      "start": 24,
-      "end": 24,
+      "start": 27,
+      "end": 27,
       "lines": 1
+    },
+    {
+      "file": "worker/test-fixtures/private-browser-session.mjs",
+      "name": "invalid_stock_call",
+      "kind": "FunctionDeclaration",
+      "start": 34,
+      "end": 40,
+      "lines": 7
     },
     {
       "file": "worker/test-fixtures/synthetic-registration.mjs",

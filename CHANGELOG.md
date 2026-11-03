@@ -1,3 +1,13 @@
+# Falla API real de tipos reproducida; parche en validación
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Oficial sigue Pagesb169918f/e544c6c. Backend activo6ac06cff conserva código643c348; read/auth y42casosUI acreditados. R2 privado dejó11 operacionesA en9minutos04:05–04:13UTC: recuperación de carritos+merge+9marcadores de fase, sin reportesCF disponibles por rechazos intermitentes403 de observabilidad; no inventar detalle de logs. Proceso navegador99584 vivo, sesiónr2 recibida cifrada, Adminme realtrue; se restauran42PASS desdeJSON y QA219/220. No perder laclaveprivada ni reiniciar proceso por rutina. KVr1tombstone impide regeneración; se cerróademás sesiónQA3:49exacta regenerada durantepropagaciónCron, sin otras sesionesAdmin.
+
+NUEVA CAUSA DE DATOS: payload() usaba Number(null)/Boolean('false') y coerciones de textos. ReproducidoAPI oficial conAdmin real sobreQA219: PUT stock:null→200, stock0 (FAIL esperado400). RestauradoEXCLUSIVAMENTE QA219 astock3 confirmado. EvidenciaAPI-stock-null/stock-null-restored enbrowser-results.json; no productoscomerciales tocados. Regresiónlocalantes:30casos,20FAIL; después30PASS. Se validan tipos numéricos/texto antesdecoerción y featured booleanopcionalestricto; strings numéricos legítimos/stock0/featuredomitidofalse se conservan. Nuevo testworkerd prueba400antesdeescribir y headerno secreto de versión;4integracionesPASS. Suitecompleta nueva476seacredita al finalizar.
+
+Parcheworker añadeX-Dreams-Backend-Version(UUIDno secreto) paraprobarqué versión respondió realmente; clonadodecookies cubiertoporworkerd. ReportesQA sanitizados se guardanopcionalmenteenel MISMO KV privado (QA_REPORTS_KV), sin endpointpúblico, paranos dependerdeobservabilidad403. Próximo candidato: fuenteparche/CI, heredarSecretsde6ac06cff, QA_RUN_IDr3, SIN QA_BROWSER_PUBLIC_KEY/QA_BROWSER_VAULT (ya hay sesiónr2válidaenRAM), CON QA_REPORTS_KV. MantenerCron activo paraacreditar versiónactual; no interferir snapshots conaltas/borrados desdebrowser. Tras9PASS, confirmarAPI400/parámetrosinválidos y retomar sólo casosrestantes (flaglocaldecontinuación). DespuésLogin/cart/checkoutacadémico/legacyformato ylimpiezaSecret/KV/QA/sesiones. SinAuthconfig/roles/passwordAdmincambiados.
+
 # Oficial publicada; auditoría real42PASS, recuperación de harness en curso
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.

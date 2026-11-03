@@ -1,0 +1,29 @@
+{
+  "source_bug": "Number(null) podía convertir stock null en0; Boolean(\"false\") activaba destacados, y textos no string podían convertirse implícitamente.",
+  "local_before": {
+    "tests": 30,
+    "pass": 10,
+    "fail": 20
+  },
+  "local_after": {
+    "tests": 30,
+    "pass": 30,
+    "fail": 0
+  },
+  "remote_before": {
+    "id": "API-stock-null",
+    "qa_product_id": 219,
+    "expected": 400,
+    "actual": 200,
+    "stock_after": 0,
+    "restored_stock": 3,
+    "commercial_products_changed": false
+  },
+  "fix": "Validar tipos antes de conversiones; destacado sólo booleano si se proporciona; conservar números/string numérico, stock0 y omisión histórica false.",
+  "workerd_integration": {
+    "status": 400,
+    "product_writes": 0,
+    "version_header_verified": true
+  },
+  "remote_after": "PENDIENTE publicación y verificación de la nueva versión"
+}

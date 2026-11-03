@@ -38,16 +38,21 @@ function trusted_request(request) {
     if (headers.get('cf-connecting-ip')) headers.set('x-forwarded-for', headers.get('cf-connecting-ip'));
     headers.set('x-forwarded-proto', 'https'); return new Request(request, { headers });
 }
+function official_version_response(response, env) {
+    const headers = new Headers(response.headers);
+    if (env.CF_VERSION_METADATA?.id) headers.set('X-Dreams-Backend-Version', env.CF_VERSION_METADATA.id);
+    return new Response(response.body, { status: response.status, statusText: response.statusText, headers });
+}
 export async function fetch_official(request, env) {
     const url = new URL(request.url);
-    if (url.origin !== policy.OFFICIAL_ORIGIN || !policy.official_route(request.method, url.pathname)) return Response.json({ error: 'Esta operación no está habilitada.' }, { status: 403, headers: { 'Cache-Control': 'no-store' } });
+    if (url.origin !== policy.OFFICIAL_ORIGIN || !policy.official_route(request.method, url.pathname)) return official_version_response(Response.json({ error: 'Esta operación no está habilitada.' }, { status: 403, headers: { 'Cache-Control': 'no-store' } }), env);
     try {
         expected_environment(env);
         const legacy = await legacy_presentation(request);
-        if (legacy) return legacy;
+        if (legacy) return official_version_response(legacy, env);
         if (!server) { server = createServer(create_official_app(env)); server.listen(8080); }
-        return await handleAsNodeRequest(8080, trusted_request(request));
-    } catch { console.error('DREAMS official runtime unavailable'); return Response.json({ error: 'El servicio no está disponible temporalmente.' }, { status: 503, headers: { 'Cache-Control': 'no-store' } }); }
+        return official_version_response(await handleAsNodeRequest(8080, trusted_request(request)), env);
+    } catch { console.error('DREAMS official runtime unavailable'); return official_version_response(Response.json({ error: 'El servicio no está disponible temporalmente.' }, { status: 503, headers: { 'Cache-Control': 'no-store' } }), env); }
 }
 
 export default {
@@ -58,7 +63,9 @@ export default {
             const code = /^(qa_[a-z_]+|admin_identity|admin_login_[0-9]{3}|secure_session|private_encryption_or_vault)$/.test(error.message) ? error.message : 'private_browser_runtime';
             console.warn('DREAMS private browser QA unavailable', { type: 'dreams-private-browser-qa-state', status: 'FAIL', code }); return;
         }
-        if (env.QA_RUN_ID) await run_official_qa(env, request => fetch_official(request, env));
-        else await scheduled_diagnostic(env);
+        if (env.QA_RUN_ID) {
+            const report = await run_official_qa(env, request => fetch_official(request, env));
+            if (report && env.QA_REPORTS_KV) await env.QA_REPORTS_KV.put(`qa-report:${env.QA_RUN_ID}:${report.phase}`, JSON.stringify(report), { expirationTtl: 3600 });
+        } else await scheduled_diagnostic(env);
     }
 };

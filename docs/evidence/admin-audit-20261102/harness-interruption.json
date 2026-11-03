@@ -5,7 +5,9 @@
   "admin_password_or_role_changed": false,
   "orphan_test_session_cleanup": {
     "closed": 1,
-    "match": "Única sesión Admin creada desde la sonda; creada 03:29:03.590135UTC y grant KV 03:29:04UTC. Eliminación exacta por ID, usuario y timestamp; no signout global Admin."
+    "match": "Única sesión Admin creada desde la sonda; creada 03:29:03.590135UTC y grant KV 03:29:04UTC. Eliminación exacta por ID, usuario y timestamp; no signout global Admin.",
+    "additional_closed": 1,
+    "regeneration": "Cron aún en propagación regeneró una sesión r1 a03:49:04.981634UTC tras retirar el ciphertext. Se cerró sólo esa sesión exacta y se mantuvo tombstone; no eliminar la key vigente hasta retirar el código/binding QA para impedir regeneración."
   },
   "obsolete_grant": "Ciphertext retirado y reemplazado por tombstone temporal para impedir regeneración durante propagación Cron.",
   "qa_products_preserved_for_resume": [

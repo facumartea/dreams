@@ -154,9 +154,16 @@ const product = row => ({
     }
 });
 
+function valid_product_field_type(key, value) {
+    const numeric = ['size_ml', 'price', 'stock', 'intensity'].includes(key);
+    return numeric ? typeof value === 'number' || typeof value === 'string' : typeof value === 'string';
+}
+
 function validate(value) {
     const fields = ['brand', 'name', 'gender', 'category', 'size_ml', 'price', 'stock', 'intensity', 'family', 'top_notes', 'heart_notes', 'base_notes', 'description', 'image_url'];
-    if (!value || typeof value !== 'object' || fields.some(key => value[key] === undefined || String(value[key]).trim() === '')) return 'Completá todos los campos del producto.';
+    if (!value || typeof value !== 'object' || fields.some(key => !valid_product_field_type(key, value[key]) || String(value[key]).trim() === '')) return 'Completá todos los campos del producto.';
+    // Validar tipos antes de Number(null)/Boolean('false') para no inventar stock ni destacados.
+    if (value.featured !== undefined && typeof value.featured !== 'boolean') return 'La opción de destacado debe ser verdadera o falsa.';
     if (!['hombre', 'mujer', 'unisex'].includes(value.gender)) return 'Género inválido.';
     if (!['diseñador', 'nicho'].includes(value.category)) return 'Categoría inválida.';
     const size = Number(value.size_ml), price = Number(value.price), stock = Number(value.stock), intensity = Number(value.intensity);
