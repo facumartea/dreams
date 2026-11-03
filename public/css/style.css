@@ -369,4 +369,3 @@ button.admin-stat:active{background:var(--ink-elevated,#26221b)}
 /* Autofill conserva contraste y permite gestores de contraseñas. */
 .account-card input:-webkit-autofill,.account-card input:-webkit-autofill:hover,.account-card input:-webkit-autofill:focus{-webkit-text-fill-color:var(--ivory);caret-color:var(--ivory);box-shadow:0 0 0 1000px var(--surface) inset}
 .account-card input:autofill{color:var(--ivory);background:var(--surface);box-shadow:0 0 0 1000px var(--surface) inset}
-
