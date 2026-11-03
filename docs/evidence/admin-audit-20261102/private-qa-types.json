@@ -620,5 +620,930 @@
       "pass": 30,
       "fail": 0
     }
+  },
+  {
+    "type": "dreams-private-authenticated-qa-v2",
+    "run": "pr56-types-20261102-r3",
+    "source_commit": "0368f65ed16acada506a327302aaa5277a4052fa",
+    "secret_source_version": "6ac06cff-e8e7-4b91-b4b5-3f20c9d33a51",
+    "backend_version": "11477c4f-0a90-4a71-86a1-2e9a7bfdbd4a",
+    "started_at": "2026-11-03T04:41:25.572Z",
+    "checks": [
+      {
+        "id": "expected-project-url",
+        "result": "PASS"
+      },
+      {
+        "id": "qa-identity-marker-readable",
+        "result": "PASS"
+      },
+      {
+        "id": "a-qa-profile-unambiguous",
+        "result": "PASS"
+      },
+      {
+        "id": "b-qa-profile-unambiguous",
+        "result": "PASS"
+      },
+      {
+        "id": "qa-phases-readable",
+        "result": "PASS"
+      },
+      {
+        "id": "business-snapshot-readable",
+        "result": "PASS"
+      },
+      {
+        "id": "a-secure-cookies",
+        "result": "PASS"
+      },
+      {
+        "id": "a-qa-login",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "a-qa-customer-identity",
+        "result": "PASS"
+      },
+      {
+        "id": "catalog-read",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "available-readonly-product",
+        "result": "PASS"
+      },
+      {
+        "id": "academic-quote",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "academic-free-shipping",
+        "result": "PASS"
+      },
+      {
+        "id": "whatsapp-recipient-summary",
+        "result": "PASS"
+      },
+      {
+        "id": "a-secure-cookies",
+        "result": "PASS"
+      },
+      {
+        "id": "academic-session",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "academic-payment",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "academic-double-submit",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "academic-stable-reference",
+        "result": "PASS"
+      },
+      {
+        "id": "academic-result",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "academic-completed",
+        "result": "PASS"
+      },
+      {
+        "id": "a-qa-refresh-sessions-revoked",
+        "result": "PASS"
+      },
+      {
+        "id": "a-secure-cookies",
+        "result": "PASS"
+      },
+      {
+        "id": "a-final-logout",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "business-snapshot-readable",
+        "result": "PASS"
+      },
+      {
+        "id": "commercial-stock-unchanged",
+        "result": "PASS"
+      },
+      {
+        "id": "commercial-orders-unchanged",
+        "result": "PASS"
+      },
+      {
+        "id": "phase-recorded",
+        "result": "PASS"
+      }
+    ],
+    "phase": "academic_compatibility",
+    "completed_phases": [
+      "registration_sessions",
+      "cart_isolation",
+      "review_ownership",
+      "academic_compatibility"
+    ],
+    "status": "PHASE_PASS",
+    "completed_at": "2026-11-03T04:41:27.916Z",
+    "totals": {
+      "pass": 28,
+      "fail": 0
+    }
+  },
+  {
+    "type": "dreams-private-authenticated-qa-v2",
+    "run": "pr56-types-20261102-r3",
+    "source_commit": "0368f65ed16acada506a327302aaa5277a4052fa",
+    "secret_source_version": "6ac06cff-e8e7-4b91-b4b5-3f20c9d33a51",
+    "backend_version": "11477c4f-0a90-4a71-86a1-2e9a7bfdbd4a",
+    "started_at": "2026-11-03T04:42:26.040Z",
+    "checks": [
+      {
+        "id": "expected-project-url",
+        "result": "PASS"
+      },
+      {
+        "id": "qa-identity-marker-readable",
+        "result": "PASS"
+      },
+      {
+        "id": "a-qa-profile-unambiguous",
+        "result": "PASS"
+      },
+      {
+        "id": "b-qa-profile-unambiguous",
+        "result": "PASS"
+      },
+      {
+        "id": "qa-phases-readable",
+        "result": "PASS"
+      },
+      {
+        "id": "business-snapshot-readable",
+        "result": "PASS"
+      },
+      {
+        "id": "existing-admin-identity",
+        "result": "PASS"
+      },
+      {
+        "id": "admin-secure-cookies",
+        "result": "PASS"
+      },
+      {
+        "id": "existing-admin-login",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "existing-admin-role",
+        "result": "PASS"
+      },
+      {
+        "id": "existing-admin-secret-available",
+        "result": "PASS"
+      },
+      {
+        "id": "existing-admin-page",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "admin-stats-read",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "admin-products-read",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "admin-users-read",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "admin-inquiries-read",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "admin-reviews-read",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "admin-orders-read",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "admin-coupons-read",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "admin-secure-cookies",
+        "result": "PASS"
+      },
+      {
+        "id": "admin-final-logout",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "business-snapshot-readable",
+        "result": "PASS"
+      },
+      {
+        "id": "commercial-stock-unchanged",
+        "result": "PASS"
+      },
+      {
+        "id": "commercial-orders-unchanged",
+        "result": "PASS"
+      },
+      {
+        "id": "phase-recorded",
+        "result": "PASS"
+      }
+    ],
+    "phase": "admin_modules",
+    "completed_phases": [
+      "registration_sessions",
+      "cart_isolation",
+      "review_ownership",
+      "academic_compatibility",
+      "admin_modules"
+    ],
+    "status": "PHASE_PASS",
+    "completed_at": "2026-11-03T04:42:31.854Z",
+    "totals": {
+      "pass": 25,
+      "fail": 0
+    }
+  },
+  {
+    "type": "dreams-private-authenticated-qa-v2",
+    "run": "pr56-types-20261102-r3",
+    "source_commit": "0368f65ed16acada506a327302aaa5277a4052fa",
+    "secret_source_version": "6ac06cff-e8e7-4b91-b4b5-3f20c9d33a51",
+    "backend_version": "11477c4f-0a90-4a71-86a1-2e9a7bfdbd4a",
+    "started_at": "2026-11-03T04:43:25.792Z",
+    "checks": [
+      {
+        "id": "expected-project-url",
+        "result": "PASS"
+      },
+      {
+        "id": "qa-identity-marker-readable",
+        "result": "PASS"
+      },
+      {
+        "id": "a-qa-profile-unambiguous",
+        "result": "PASS"
+      },
+      {
+        "id": "b-qa-profile-unambiguous",
+        "result": "PASS"
+      },
+      {
+        "id": "qa-phases-readable",
+        "result": "PASS"
+      },
+      {
+        "id": "business-snapshot-readable",
+        "result": "PASS"
+      },
+      {
+        "id": "existing-admin-identity",
+        "result": "PASS"
+      },
+      {
+        "id": "admin-secure-cookies",
+        "result": "PASS"
+      },
+      {
+        "id": "existing-admin-login",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "existing-admin-role",
+        "result": "PASS"
+      },
+      {
+        "id": "existing-admin-secret-available",
+        "result": "PASS"
+      },
+      {
+        "id": "admin-product-create",
+        "result": "PASS",
+        "observed_status": 201,
+        "expected_status": 201
+      },
+      {
+        "id": "qa-created-product-identity",
+        "result": "PASS"
+      },
+      {
+        "id": "admin-product-update",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "admin-product-persistence-read",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "admin-product-persistence",
+        "result": "PASS"
+      },
+      {
+        "id": "admin-product-edit-preserves-image",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "admin-product-detail",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "admin-image-persistence",
+        "result": "PASS"
+      },
+      {
+        "id": "admin-product-catalog",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "admin-catalog-persistence",
+        "result": "PASS"
+      },
+      {
+        "id": "admin-product-delete-qa",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "admin-qa-product-cleaned",
+        "result": "PASS"
+      },
+      {
+        "id": "admin-secure-cookies",
+        "result": "PASS"
+      },
+      {
+        "id": "admin-final-logout",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "business-snapshot-readable",
+        "result": "PASS"
+      },
+      {
+        "id": "commercial-stock-unchanged",
+        "result": "PASS"
+      },
+      {
+        "id": "commercial-orders-unchanged",
+        "result": "PASS"
+      },
+      {
+        "id": "phase-recorded",
+        "result": "PASS"
+      }
+    ],
+    "phase": "admin_persistence",
+    "completed_phases": [
+      "registration_sessions",
+      "cart_isolation",
+      "review_ownership",
+      "academic_compatibility",
+      "admin_modules",
+      "admin_persistence"
+    ],
+    "status": "PHASE_PASS",
+    "completed_at": "2026-11-03T04:43:29.338Z",
+    "totals": {
+      "pass": 29,
+      "fail": 0
+    }
+  },
+  {
+    "type": "dreams-private-authenticated-qa-v2",
+    "run": "pr56-types-20261102-r3",
+    "source_commit": "0368f65ed16acada506a327302aaa5277a4052fa",
+    "secret_source_version": "6ac06cff-e8e7-4b91-b4b5-3f20c9d33a51",
+    "backend_version": "11477c4f-0a90-4a71-86a1-2e9a7bfdbd4a",
+    "started_at": "2026-11-03T04:44:25.714Z",
+    "checks": [
+      {
+        "id": "expected-project-url",
+        "result": "PASS"
+      },
+      {
+        "id": "qa-identity-marker-readable",
+        "result": "PASS"
+      },
+      {
+        "id": "a-qa-profile-unambiguous",
+        "result": "PASS"
+      },
+      {
+        "id": "b-qa-profile-unambiguous",
+        "result": "PASS"
+      },
+      {
+        "id": "qa-phases-readable",
+        "result": "PASS"
+      },
+      {
+        "id": "business-snapshot-readable",
+        "result": "PASS"
+      },
+      {
+        "id": "existing-admin-identity",
+        "result": "PASS"
+      },
+      {
+        "id": "admin-secure-cookies",
+        "result": "PASS"
+      },
+      {
+        "id": "existing-admin-login",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "existing-admin-role",
+        "result": "PASS"
+      },
+      {
+        "id": "existing-admin-secret-available",
+        "result": "PASS"
+      },
+      {
+        "id": "stock-qa-product-create",
+        "result": "PASS",
+        "observed_status": 201,
+        "expected_status": 201
+      },
+      {
+        "id": "stock-qa-product-identity",
+        "result": "PASS"
+      },
+      {
+        "id": "admin-stock-0-save",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "admin-stock-0-reload",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "admin-stock-0-persisted",
+        "result": "PASS"
+      },
+      {
+        "id": "admin-stock-1-save",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "admin-stock-1-reload",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "admin-stock-1-persisted",
+        "result": "PASS"
+      },
+      {
+        "id": "admin-stock-2-save",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "admin-stock-2-reload",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "admin-stock-2-persisted",
+        "result": "PASS"
+      },
+      {
+        "id": "admin-featured-save",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "admin-featured-home-read",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "admin-featured-persisted",
+        "result": "PASS"
+      },
+      {
+        "id": "stock-qa-product-delete",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "admin-secure-cookies",
+        "result": "PASS"
+      },
+      {
+        "id": "admin-final-logout",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "business-snapshot-readable",
+        "result": "PASS"
+      },
+      {
+        "id": "commercial-stock-unchanged",
+        "result": "PASS"
+      },
+      {
+        "id": "commercial-orders-unchanged",
+        "result": "PASS"
+      },
+      {
+        "id": "phase-recorded",
+        "result": "PASS"
+      }
+    ],
+    "phase": "admin_stock_featured",
+    "completed_phases": [
+      "registration_sessions",
+      "cart_isolation",
+      "review_ownership",
+      "academic_compatibility",
+      "admin_modules",
+      "admin_persistence",
+      "admin_stock_featured"
+    ],
+    "status": "PHASE_PASS",
+    "completed_at": "2026-11-03T04:44:30.132Z",
+    "totals": {
+      "pass": 32,
+      "fail": 0
+    }
+  },
+  {
+    "type": "dreams-private-authenticated-qa-v2",
+    "run": "pr56-types-20261102-r3",
+    "source_commit": "0368f65ed16acada506a327302aaa5277a4052fa",
+    "secret_source_version": "6ac06cff-e8e7-4b91-b4b5-3f20c9d33a51",
+    "backend_version": "11477c4f-0a90-4a71-86a1-2e9a7bfdbd4a",
+    "started_at": "2026-11-03T04:45:26.051Z",
+    "checks": [
+      {
+        "id": "expected-project-url",
+        "result": "PASS"
+      },
+      {
+        "id": "qa-identity-marker-readable",
+        "result": "PASS"
+      },
+      {
+        "id": "a-qa-profile-unambiguous",
+        "result": "PASS"
+      },
+      {
+        "id": "b-qa-profile-unambiguous",
+        "result": "PASS"
+      },
+      {
+        "id": "qa-phases-readable",
+        "result": "PASS"
+      },
+      {
+        "id": "business-snapshot-readable",
+        "result": "PASS"
+      },
+      {
+        "id": "existing-admin-identity",
+        "result": "PASS"
+      },
+      {
+        "id": "admin-secure-cookies",
+        "result": "PASS"
+      },
+      {
+        "id": "existing-admin-login",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "existing-admin-role",
+        "result": "PASS"
+      },
+      {
+        "id": "existing-admin-secret-available",
+        "result": "PASS"
+      },
+      {
+        "id": "admin-coupon-create",
+        "result": "PASS",
+        "observed_status": 201,
+        "expected_status": 201
+      },
+      {
+        "id": "admin-coupon-edit",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "admin-coupon-reload",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "admin-coupon-persisted",
+        "result": "PASS"
+      },
+      {
+        "id": "admin-coupon-delete-qa",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "admin-secure-cookies",
+        "result": "PASS"
+      },
+      {
+        "id": "admin-final-logout",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "business-snapshot-readable",
+        "result": "PASS"
+      },
+      {
+        "id": "commercial-stock-unchanged",
+        "result": "PASS"
+      },
+      {
+        "id": "commercial-orders-unchanged",
+        "result": "PASS"
+      },
+      {
+        "id": "phase-recorded",
+        "result": "PASS"
+      }
+    ],
+    "phase": "admin_coupons",
+    "completed_phases": [
+      "registration_sessions",
+      "cart_isolation",
+      "review_ownership",
+      "academic_compatibility",
+      "admin_modules",
+      "admin_persistence",
+      "admin_stock_featured",
+      "admin_coupons"
+    ],
+    "status": "PHASE_PASS",
+    "completed_at": "2026-11-03T04:45:30.497Z",
+    "totals": {
+      "pass": 22,
+      "fail": 0
+    }
+  },
+  {
+    "type": "dreams-private-authenticated-qa-v2",
+    "run": "pr56-types-20261102-r3",
+    "source_commit": "0368f65ed16acada506a327302aaa5277a4052fa",
+    "secret_source_version": "6ac06cff-e8e7-4b91-b4b5-3f20c9d33a51",
+    "backend_version": "11477c4f-0a90-4a71-86a1-2e9a7bfdbd4a",
+    "started_at": "2026-11-03T04:46:25.976Z",
+    "checks": [
+      {
+        "id": "expected-project-url",
+        "result": "PASS"
+      },
+      {
+        "id": "qa-identity-marker-readable",
+        "result": "PASS"
+      },
+      {
+        "id": "a-qa-profile-unambiguous",
+        "result": "PASS"
+      },
+      {
+        "id": "b-qa-profile-unambiguous",
+        "result": "PASS"
+      },
+      {
+        "id": "qa-phases-readable",
+        "result": "PASS"
+      },
+      {
+        "id": "business-snapshot-readable",
+        "result": "PASS"
+      },
+      {
+        "id": "existing-admin-identity",
+        "result": "PASS"
+      },
+      {
+        "id": "admin-secure-cookies",
+        "result": "PASS"
+      },
+      {
+        "id": "existing-admin-login",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "existing-admin-role",
+        "result": "PASS"
+      },
+      {
+        "id": "existing-admin-secret-available",
+        "result": "PASS"
+      },
+      {
+        "id": "a-secure-cookies",
+        "result": "PASS"
+      },
+      {
+        "id": "a-qa-login",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "a-qa-customer-identity",
+        "result": "PASS"
+      },
+      {
+        "id": "moderation-qa-review-create",
+        "result": "PASS",
+        "observed_status": 201,
+        "expected_status": 201
+      },
+      {
+        "id": "moderation-qa-review-read",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "moderation-qa-identity",
+        "result": "PASS"
+      },
+      {
+        "id": "admin-review-edit",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "admin-review-reload",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "admin-review-persisted",
+        "result": "PASS"
+      },
+      {
+        "id": "admin-review-delete",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "a-qa-refresh-sessions-revoked",
+        "result": "PASS"
+      },
+      {
+        "id": "a-secure-cookies",
+        "result": "PASS"
+      },
+      {
+        "id": "a-final-logout",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "admin-secure-cookies",
+        "result": "PASS"
+      },
+      {
+        "id": "admin-final-logout",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "business-snapshot-readable",
+        "result": "PASS"
+      },
+      {
+        "id": "commercial-stock-unchanged",
+        "result": "PASS"
+      },
+      {
+        "id": "commercial-orders-unchanged",
+        "result": "PASS"
+      },
+      {
+        "id": "phase-recorded",
+        "result": "PASS"
+      }
+    ],
+    "phase": "admin_moderation",
+    "completed_phases": [
+      "registration_sessions",
+      "cart_isolation",
+      "review_ownership",
+      "academic_compatibility",
+      "admin_modules",
+      "admin_persistence",
+      "admin_stock_featured",
+      "admin_coupons",
+      "admin_moderation"
+    ],
+    "status": "PASS",
+    "completed_at": "2026-11-03T04:46:30.565Z",
+    "totals": {
+      "pass": 30,
+      "fail": 0
+    }
   }
 ]

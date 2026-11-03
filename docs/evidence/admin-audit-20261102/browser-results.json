@@ -524,5 +524,248 @@
     "expected": "visitante rechazado después de publicación",
     "actual": "verificado",
     "result": "PASS"
+  },
+  {
+    "id": "PROD-readback-discrepancy",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "HTTP200 discrepante no anuncia guardado (respuesta interceptada)",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PROD-cross-record-pending",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "respuesta demorada no permite mezclar otro producto",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PROD-unfeature",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "quitar destacado persiste y actualiza catálogo",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PROD-lost-create-retry",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "respuesta de POST perdida se recupera sin duplicar ni emitir otro POST",
+    "actual": {
+      "one_post": true,
+      "qa_id": 225
+    },
+    "result": "PASS"
+  },
+  {
+    "id": "COUPON-create",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "alta inactiva con código normalizado y contenido persistido",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "COUPON-edit",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "edición conserva ID y confirma porcentaje tras recarga",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "COUPON-toggle",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "Activar y Desactivar guardan estado real",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "COUPON-clear",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "Limpiar sale de edición sin otro envío",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "COUPON-delete-confirm",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "cancelar conserva; aceptar elimina y confirma ausencia",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "SEC-roles-rejected",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "el registro rechaza campos de rol antes de crear sesión",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "SEC-normal-customer",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "registro normal crea customer con sesión y sin privilegios Admin",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "SEC-customer--admin",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "customer no accede Admin",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "SEC-customer--api-admin-products",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "customer no accede Admin",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "SEC-customer--api-admin-users",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "customer no accede Admin",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "SEC-customer-write",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "customer no puede crear productos ni editar roles",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "SEC-origin",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "origen ajeno rechazado aunque la sesión Admin sea válida",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "REVIEW-create-customer",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "opinión ligada a customer normal para moderación exclusiva QA",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "REVIEW-search",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "buscador de opiniones filtra por comentario",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "REVIEW-edit",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "guardar confirma rating y comentario persistidos",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "REVIEW-delete",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "confirmación de borrado verifica ausencia real",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "RESP-390",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "móvil/escritorio: controles accesibles, tabla desplazable sin overflow de página",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "RESP-1440",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "móvil/escritorio: controles accesibles, tabla desplazable sin overflow de página",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PROD-delete-cancel",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "cancelar borrado conserva producto QA",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PROD-delete-edited",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "borrar producto editado limpia ID y confirma ausencia",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "CLEAN-commercial-unchanged",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "productos/stock y pedidos comerciales sin cambios",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "FINAL-admin-create",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "alta real después de retirar mecanismo y Secret QA",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "FINAL-admin-edit-image",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "edición e imagen persistidas en backend final limpio",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "FINAL-admin-clean",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "borrado exclusivo QA y ausencia confirmada",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "FINAL-admin-logout",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "botón real Cerrar sesión revoca y retira acceso",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "CLEAN-ADMIN-SESSION",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "logout de la sesión QA, sin afectar otras sesiones Admin",
+    "actual": 200,
+    "result": "PASS"
   }
 ]

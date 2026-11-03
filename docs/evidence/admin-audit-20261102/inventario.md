@@ -4,7 +4,7 @@ Destino exclusivo: https://dreams-perfumes.pages.dev/admin. Fuente: `views/admin
 
 | Módulo/control | Acción esperada | Comprobación y evidencia |
 |---|---|---|
-| Siete tarjetas: Productos, Disponibilidad baja, Usuarios, Consultas, Opiniones, Pedidos, Cupones | Una activa, carga del módulo, foco y `aria-pressed` consistentes | Matriz histórica A; recorrido remoto nuevo pendiente |
+| Siete tarjetas: Productos, Disponibilidad baja, Usuarios, Consultas, Opiniones, Pedidos, Cupones | Una activa, carga del módulo, foco y `aria-pressed` consistentes | Matriz histórica A y NAV-* remotos PASS |
 | Reintentar conteos / Reintentar módulo | Recuperar de error sin perder navegación | Inyección de error en navegador, luego respuesta real |
 | Estadísticas y conteos | Coincidir con API y filas, sin inventar stock | Conteo productos/cuando hay QA y después de eliminar; API real |
 | Productos: marca, nombre, género, categoría, tamaño, precio, stock, intensidad, familia, notas de salida/corazón/fondo, descripción, imagen y destacar | Editar cada campo, validar rangos y persistir | Matriz histórica D y 25 casos de readback; crear/editar exclusivamente QA remoto |
@@ -30,6 +30,6 @@ Destino exclusivo: https://dreams-perfumes.pages.dev/admin. Fuente: `views/admin
 
 [201 ejecuciones locales previas](../admin-audit/matrix.md): áreas A28/B25/C25/D27/E30/F24, todas con al menos 20 casos distintos. Los [25 casos de persistencia](../../../test/admin-persistence.test.js) amplían D. Los [casos DR/FR](../../../test/admin-recovery.test.js) comprueban recuperación de altas y confirmación de cambios/borrados en módulos secundarios. Los nuevos resultados remotos se registran en `browser-results.json`; no se suman fixtures como si fueran Supabase real.
 
-## Limitaciones vigentes al preparar este inventario
+## Alcance y límites de la comprobación
 
-Publicación, reproducción autenticada del guardado y recorrido remoto final todavía pendientes. Los reportes privados del 29/10 acreditan las nueve fases del candidato, no la interfaz oficial publicada. No se prueba Safari físico ni se certifica una auditoría completa WCAG/performance. No se alteran datos comerciales.
+Oficial publicada; guardado legacy403 reproducido y corregido. Nueve fases privadas de la versión11477c4f/0368f65 PASS (281 assertions, no281casos distintos), separadas del recorrido Chromium oficial. Último resultado por caso en browser-results.json; los casos de cierre se completan después de retirar QA. No se prueba Safari físico ni se certifica una auditoría completa WCAG/performance. No se alteran datos comerciales.

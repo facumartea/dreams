@@ -1,6 +1,6 @@
 # Entrega DREAMS · Integración Diseño y Programación 2026
 
-Estado de preparación: **BLOQUEADO** para entrega funcional completa. La conexión del candidato ya pasó lectura directa y SDK. Registro, sesiones y aislamiento de carrito tienen pruebas remotas parciales; faltan completar Admin y las demás fases y publicar. Este índice no certifica aprobación académica.
+Estado técnico: **COMPLETO** en la oficial; pruebas y limpieza acreditadas. Código y documentos en PR56 dirigida a main; la ficha de GitHub registra el merge y su SHA exacto. La rúbrica conserva aspectos académicos parciales/no verificables (participación, preentregas, defensa y licencias); no certifica aprobación.
 
 - [Rúbrica 2026 original](rubrica-2026.pdf) y [extracción de texto](rubrica-2026.txt).
 - [Matriz completa de requisitos](matriz-rubrica.md).
@@ -13,7 +13,9 @@ Estado de preparación: **BLOQUEADO** para entrega funcional completa. La conexi
 - [Inventario de funciones y alcance](funciones.md) y [detalle JSON](inventario-funciones.json).
 - [Resultados y bloqueos de pruebas](pruebas.md).
 - [Identidad visual](diseno.md).
-- [Preparación, extracción y comprobación del ZIP](zip.md) y [resultado versionado](verificacion-zip.json).
+- [Entrega y extracción](zip.md), [extracción limpia vigente sin secretos ni .git](extraccion-limpia.json) y [ZIP histórico](verificacion-zip.json).
 - [README de instalación](../../README.md), [dependencias](../../package.json), [lockfile](../../pnpm-lock.yaml) y [variables de ejemplo](../../.env.example).
 
 Sólo está autorizada la publicación en https://dreams-perfumes.pages.dev/. No se entrega automáticamente en Classroom. Integrantes confirmados por el usuario: **Martearena y Ruas**. El usuario pidió subir todo a GitHub y no generar otro ZIP final; se conservan las comprobaciones de extracción anteriores como evidencia histórica.
+
+- [Matriz remota final](../evidence/admin-audit-20261102/matriz-remota.md), [estado y limpieza](../evidence/admin-audit-20261102/final-state.json), [nueve fases privadas](../evidence/admin-audit-20261102/private-qa-types.json).

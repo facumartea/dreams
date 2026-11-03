@@ -1,3 +1,14 @@
+## Cierre funcional acreditado — 03/11/2026 UTC
+
+ Secret histórico malformado (reemplazado por usuario; lecturas directa/SDK200 en proyecto esperado); guardado403 porque proxy oficial enviaba Admin al backend legado protegido de preview; stock:null coercionado a0. Corregido enrutamiento específico con roles/origen y validación de tipos antes de convertir. Sin fallback ni reparación de clave eliminando caracteres.
+
+QA final: nueve fases privadas en11477c4f/0368f65 PASS,281 assertions/0fallos; Chromium oficial89casos distintos PASS,92registros conservados. Admin final limpio: alta, edición/imagen/persistencia, borrado y logout PASS; cliente login/recarga/logout PASS. Registro sin confirmación, renovación, carrito aislado, opiniones propias/moderación y checkout académico comprobados. Sin pagos comerciales, mensajes enviados, stock/pedidos comerciales cambiados ni credenciales/roles Admin modificados.
+
+Limpieza completada: entrypoint productivo sin mecanismo QA, Cron vacío, DREAMS_QA_ADMIN_PASSWORD ausente, sólo SUPABASE_SECRET_KEY presente. KV temporal2440c640ebd6493d83b39dddba3cbdb2 eliminado. SesiónAdminQA y clientes cerrados;0productos/cupones/opiniones QA,0sesionescustomerQA. Cuentas de prueba retenidas como customer. Navegador/proceso efímero cerrados; depurador loopback retirado. No solicitar intervención por esos recursos.
+
+Checks:476testsPASS,CI224SUCCESS para e86f434; sintaxis101archivos; inventario115archivos/2111registros/0>40. Extracción de e86f434 sin.git ni secretos: instalación, checks,476tests, builds oficial/Pages PASS; sin ZIP final. Documentación y evidencia en docs/entrega-2026 y docs/evidence/admin-audit-20261102. Mantener historial de fallos, no repetirlos como estado vigente.
+
+
 Retirada preparada del mecanismo QA en el entrypoint: scheduled queda inerte incluso con variables antiguas. Pendiente desplegar sólo después de completar las nueve fases R3 y casos Admin; heredar únicamente Secret Supabase. Suite476PASS, sintaxis101 y límite40 verificados para este cambio.
 
 # Falla API real de tipos reproducida; parche en validación

@@ -1,3 +1,21 @@
+# Cierre comprobado — 03/11/2026 UTC
+
+**89 casos remotos distintos PASS** (92 registros históricos), nueve fases privadas PASS/281 assertions,476tests locales PASS y extracción limpia sin.git/secretos PASS. [Matriz por caso](../evidence/admin-audit-20261102/matriz-remota.md). Backend final29b843a0/e86f434: Admin alta/edición/imagen/borrado/logout y cliente login/recarga/logout PASS después de retirar QA. SecretAdmin, Cron y KV retirados; recursosQA0, sesionescustomerQA0. Sin stock/pedidos comerciales cambiados. [Estado final](../evidence/admin-audit-20261102/final-state.json).
+
+La evidencia privada completa corresponde a11477c4f/0368f65; la versión final conserva HTTP y elimina únicamente la ejecución QA. No atribuir las nueve fases a una versión que no las ejecutó. El navegador sí verificó la versión final limpia. Inventario final115archivos/2111registros/0>40. CI224SUCCESS. Los apartados siguientes conservan las etapas anteriores y sus pendientes históricos.
+
+# Pruebas vigentes — 03/11/2026 UTC
+
+La oficial está publicada: Pages b169918f/e544c6c y backend11477c4f/0368f65. La cabecera no secreta X-Dreams-Backend-Version identifica el backend efectivo. Lectura directa y SDK200 en el proyecto esperado, sin fallback ni transformación de Secret. El401 histórico y el403 de guardado legacy no describen la versión vigente.
+
+Regresión real corregida: stock:null era200/stock0; ahora400 y stockQA219 conserva3. Regresiones locales de tipos30PASS; suite476PASS/0fallos/0omitidos, CI223 y224SUCCESS. Código preparado e86f434 retira QA del entrypoint; la activación limpia y sus pruebas posteriores se registrarán al cerrar.
+
+Chromium oficial: registro sin confirmación y doble envío único, sesión inmediata, recarga/navegación, cookies seguras, renovación, logout/login, contraseña incorrecta, fallo de red/reintento, rechazoAdmincustomer/anónimo, carrito persistente, WhatsApp sin envío y checkout académico (referencia estable, doble envío único, sin stock/pedidos comerciales). PASS. Formato legacy firmado aceptado por verificador oficial; no se afirma que sea el ticket anterior al despliegue perdido.
+
+Evidencia estructurada: [casos remotos](../evidence/admin-audit-20261102/browser-results.json), [regresión de tipos](../evidence/admin-audit-20261102/input-type-regression.json), [fases privadas actuales](../evidence/admin-audit-20261102/private-qa-types.json). Se mantienen los fallos históricos y se toma el último resultado por ID; assertions privadas no equivalen a casos distintos.
+
+Extracción limpia e86f434 sin.git ni secretos: instalación frozen, checks, inventario,476tests y builds oficial/Pages PASS. [Resultado](extraccion-limpia.json). No se generó ZIP final. Inventario:115archivos/2111registros/0exceden40. La evidencia histórica de abajo conserva sus versiones y no representa el estado vigente.
+
 # Estado vigente de pruebas — 29/10/2026
 
 La clave cargada por el usuario en `8fcb56e1` funciona: lectura directa y SDK200, URL esperada y clave sin transformación. La versión privada `4862a658`, fuente `09ee61a`, acreditó registro normal A/B sin confirmación, perfiles customer, sesiones, login, refresh, logout, contraseña incorrecta y rechazo Admin de anónimo/customer. Carrito: combinación idempotente, persistencia y aislamiento A/B pasaron hasta agotar el límite Free. [Reporte parcial real](../evidence/functional-backend-20261027/real-auth-cart-partial-20261029.json). No acredita QA Admin ni limpieza final.

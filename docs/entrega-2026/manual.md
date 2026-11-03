@@ -1,6 +1,6 @@
 # Manual de uso DREAMS · Entrega 2026
 
-**Versión documentada: PR #56 y oficial https://dreams-perfumes.pages.dev/.** Registro, sesión, renovación, login/logout, carrito y checkout académico ya se comprobaron en el navegador oficial. Alta, edición, imágenes y persistencia Admin tienen evidencia remota; el cierre de los casos restantes y la retirada del mecanismo temporal se registran por separado en la matriz de pruebas. Las capturas de Inicio y Cuenta son remotas; la captura Admin local está identificada y no acredita una sesión productiva.
+**Versión documentada: PR #56 y oficial https://dreams-perfumes.pages.dev/.** Registro, sesión, renovación, login/logout, carrito y checkout académico ya se comprobaron en el navegador oficial. Alta, edición, imágenes y persistencia Admin tienen evidencia remota; el cierre y la retirada del mecanismo temporal también están acreditados en la matriz de pruebas. Las capturas de Inicio y Cuenta son remotas; la captura del formulario Admin también corresponde a la oficial y excluye listados personales.
 
 ## Inicio, catálogo y detalle
 
@@ -40,7 +40,7 @@ Usar la cuenta administradora ya existente. Entrar desde Cuenta o `/admin`; el s
 
 El panel tiene tarjetas de Productos, Usuarios, Consultas, Opiniones, Pedidos, Disponibilidad baja y Cupones. Una tarjeta activa muestra su módulo; los conteos provienen del servidor. Si falla la carga, usar Reintentar. Con teclado, Tab enfoca la tarjeta y Enter/Espacio la activa.
 
-![Panel candidato local con Admin de fixture y datos sintéticos](capturas/admin-local.png)
+![Formulario Admin oficial comprobado; sin credenciales ni datos personales](../evidence/admin-audit-20261102/admin-form-oficial.png)
 
 ## Productos e imágenes: alta, edición y guardado
 
@@ -68,6 +68,6 @@ Un 401 indica sesión/credencial no válida; un 403 indica operación no autoriz
 
 El operador conserva el frontend publicado y una versión probada del backend con la misma clave y firmas como rollback compatible; el frontend legacy restaurado queda como recuperación de emergencia. Los usuarios no tienen que reconfigurar Supabase ni Cloudflare. Los requisitos técnicos pendientes están documentados en la matriz; no se ocultan con el manual.
 
-## Auditoría Admin en curso
+## Auditoría Admin comprobada
 
-Inventario completo y procedencia de pruebas: [controles](../evidence/admin-audit-20261102/inventario.md). Las correcciones de guardado e imágenes ya están en la oficial; la matriz distingue cada resultado comprobado de los casos todavía pendientes y del cierre operativo.
+Inventario completo y procedencia de pruebas: [controles](../evidence/admin-audit-20261102/inventario.md). Las correcciones de guardado e imágenes ya están en la oficial; la matriz distingue cada resultado comprobado de los casos todavía pendientes y del cierre operativo ya completado.
