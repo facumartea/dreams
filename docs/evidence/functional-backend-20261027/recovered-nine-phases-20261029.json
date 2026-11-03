@@ -1,0 +1,553 @@
+{
+  "note": "Reportes históricos recuperados por API autenticada. Cloudflare truncó arrays de checks; se conserva esa limitación explícita. PHASE_PASS/PASS sólo se emite después de ejecutar toda la fase, limpiar recursos y verificar stock/pedidos comerciales.",
+  "events": [
+    {
+      "source": {
+        "candidate_read": {
+          "project_url_matches": true,
+          "key_format": {
+            "present": true,
+            "surrounding_whitespace": false,
+            "any_whitespace": false,
+            "wrapped_quotes": false,
+            "ascii_controls": false,
+            "internal_whitespace": false,
+            "header_value_valid": true,
+            "assignment_instead_of_value": false,
+            "bearer_prefix_present": false,
+            "masked_or_ellipsis": false,
+            "non_ascii": false,
+            "kind": "modern_secret",
+            "jwt_project": "not_encoded",
+            "characters": 41,
+            "bytes": 41
+          },
+          "apikey_unchanged": true,
+          "project_key_pair": "verified_by_read",
+          "checked_at": "2026-10-29T17:31:21.796Z",
+          "raw_status": 200,
+          "sdk_status": 200
+        },
+        "message": "DREAMS private QA",
+        "type": "dreams-private-authenticated-qa-v2",
+        "run": "pr56-f2efb1d-r1",
+        "source_commit": "f2efb1d19c86c3684bbf357a1079b0481a1424bf",
+        "secret_source_version": "8fcb56e1-b2a5-4cd7-832a-e084b5aab0e1",
+        "backend_version": "fb7d3c95-c638-4c04-9e41-93c31fac8aaf",
+        "started_at": "2026-10-29T17:31:20.671Z",
+        "checks": [
+          {
+            "id": "expected-project-url",
+            "result": "PASS"
+          },
+          {
+            "id": "qa-identity-marker-readable",
+            "result": "PASS"
+          },
+          {
+            "id": "a-qa-profile-unambiguous",
+            "result": "PASS"
+          },
+          {
+            "id": "b-qa-profile-unambiguous",
+            "result": "PASS"
+          },
+          {
+            "id": "qa-phases-readable",
+            "result": "PASS"
+          },
+          {
+            "id": "candidate-direct-sdk-read",
+            "result": "PASS"
+          },
+          {
+            "id": "server-key-type",
+            "result": "PASS"
+          },
+          {
+            "id": "business-snapshot-readable",
+            "result": "PASS"
+          },
+          {
+            "id": "a-secure-cookies",
+            "result": "PASS"
+          },
+          "--- TRUNCATED --- 40 more items"
+        ],
+        "phase": "registration_sessions",
+        "completed_phases": [
+          "registration_sessions"
+        ],
+        "status": "PHASE_PASS",
+        "completed_at": "2026-10-29T17:31:26.309Z"
+      },
+      "version": "fb7d3c95-c638-4c04-9e41-93c31fac8aaf"
+    },
+    {
+      "source": {
+        "message": "DREAMS private QA",
+        "type": "dreams-private-authenticated-qa-v2",
+        "run": "pr56-f2efb1d-r1",
+        "source_commit": "f2efb1d19c86c3684bbf357a1079b0481a1424bf",
+        "secret_source_version": "8fcb56e1-b2a5-4cd7-832a-e084b5aab0e1",
+        "backend_version": "fb7d3c95-c638-4c04-9e41-93c31fac8aaf",
+        "started_at": "2026-10-29T17:32:20.251Z",
+        "checks": [
+          {
+            "id": "expected-project-url",
+            "result": "PASS"
+          },
+          {
+            "id": "qa-identity-marker-readable",
+            "result": "PASS"
+          },
+          {
+            "id": "a-qa-profile-unambiguous",
+            "result": "PASS"
+          },
+          {
+            "id": "b-qa-profile-unambiguous",
+            "result": "PASS"
+          },
+          {
+            "id": "qa-phases-readable",
+            "result": "PASS"
+          },
+          {
+            "id": "business-snapshot-readable",
+            "result": "PASS"
+          },
+          {
+            "id": "a-secure-cookies",
+            "result": "PASS"
+          },
+          {
+            "id": "a-qa-login",
+            "result": "PASS",
+            "observed_status": 200,
+            "expected_status": 200
+          },
+          "--- TRUNCATED --- 28 more items"
+        ],
+        "phase": "cart_isolation",
+        "completed_phases": [
+          "registration_sessions",
+          "cart_isolation"
+        ],
+        "status": "PHASE_PASS",
+        "completed_at": "2026-10-29T17:32:27.011Z"
+      },
+      "version": "fb7d3c95-c638-4c04-9e41-93c31fac8aaf"
+    },
+    {
+      "source": {
+        "message": "DREAMS private QA",
+        "type": "dreams-private-authenticated-qa-v2",
+        "run": "pr56-f2efb1d-r1",
+        "source_commit": "f2efb1d19c86c3684bbf357a1079b0481a1424bf",
+        "secret_source_version": "8fcb56e1-b2a5-4cd7-832a-e084b5aab0e1",
+        "backend_version": "fb7d3c95-c638-4c04-9e41-93c31fac8aaf",
+        "started_at": "2026-10-29T17:33:20.216Z",
+        "checks": [
+          {
+            "id": "expected-project-url",
+            "result": "PASS"
+          },
+          {
+            "id": "qa-identity-marker-readable",
+            "result": "PASS"
+          },
+          {
+            "id": "a-qa-profile-unambiguous",
+            "result": "PASS"
+          },
+          {
+            "id": "b-qa-profile-unambiguous",
+            "result": "PASS"
+          },
+          {
+            "id": "qa-phases-readable",
+            "result": "PASS"
+          },
+          {
+            "id": "business-snapshot-readable",
+            "result": "PASS"
+          },
+          {
+            "id": "a-secure-cookies",
+            "result": "PASS"
+          },
+          {
+            "id": "a-qa-login",
+            "result": "PASS",
+            "observed_status": 200,
+            "expected_status": 200
+          },
+          "--- TRUNCATED --- 22 more items"
+        ],
+        "phase": "review_ownership",
+        "completed_phases": [
+          "registration_sessions",
+          "cart_isolation",
+          "review_ownership"
+        ],
+        "status": "PHASE_PASS",
+        "completed_at": "2026-10-29T17:33:24.099Z"
+      },
+      "version": "fb7d3c95-c638-4c04-9e41-93c31fac8aaf"
+    },
+    {
+      "source": {
+        "message": "DREAMS private QA",
+        "type": "dreams-private-authenticated-qa-v2",
+        "run": "pr56-f2efb1d-r1",
+        "source_commit": "f2efb1d19c86c3684bbf357a1079b0481a1424bf",
+        "secret_source_version": "8fcb56e1-b2a5-4cd7-832a-e084b5aab0e1",
+        "backend_version": "fb7d3c95-c638-4c04-9e41-93c31fac8aaf",
+        "started_at": "2026-10-29T17:34:20.112Z",
+        "checks": [
+          {
+            "id": "expected-project-url",
+            "result": "PASS"
+          },
+          {
+            "id": "qa-identity-marker-readable",
+            "result": "PASS"
+          },
+          {
+            "id": "a-qa-profile-unambiguous",
+            "result": "PASS"
+          },
+          {
+            "id": "b-qa-profile-unambiguous",
+            "result": "PASS"
+          },
+          {
+            "id": "qa-phases-readable",
+            "result": "PASS"
+          },
+          {
+            "id": "business-snapshot-readable",
+            "result": "PASS"
+          },
+          {
+            "id": "a-secure-cookies",
+            "result": "PASS"
+          },
+          {
+            "id": "a-qa-login",
+            "result": "PASS",
+            "observed_status": 200,
+            "expected_status": 200
+          },
+          "--- TRUNCATED --- 20 more items"
+        ],
+        "phase": "academic_compatibility",
+        "completed_phases": [
+          "registration_sessions",
+          "cart_isolation",
+          "review_ownership",
+          "academic_compatibility"
+        ],
+        "status": "PHASE_PASS",
+        "completed_at": "2026-10-29T17:34:23.786Z"
+      },
+      "version": "fb7d3c95-c638-4c04-9e41-93c31fac8aaf"
+    },
+    {
+      "source": {
+        "message": "DREAMS private QA",
+        "type": "dreams-private-authenticated-qa-v2",
+        "run": "pr56-f2efb1d-r1",
+        "source_commit": "f2efb1d19c86c3684bbf357a1079b0481a1424bf",
+        "secret_source_version": "8fcb56e1-b2a5-4cd7-832a-e084b5aab0e1",
+        "backend_version": "fb7d3c95-c638-4c04-9e41-93c31fac8aaf",
+        "started_at": "2026-10-29T17:35:20.500Z",
+        "checks": [
+          {
+            "id": "expected-project-url",
+            "result": "PASS"
+          },
+          {
+            "id": "qa-identity-marker-readable",
+            "result": "PASS"
+          },
+          {
+            "id": "a-qa-profile-unambiguous",
+            "result": "PASS"
+          },
+          {
+            "id": "b-qa-profile-unambiguous",
+            "result": "PASS"
+          },
+          {
+            "id": "qa-phases-readable",
+            "result": "PASS"
+          },
+          {
+            "id": "business-snapshot-readable",
+            "result": "PASS"
+          },
+          {
+            "id": "existing-admin-identity",
+            "result": "PASS"
+          },
+          {
+            "id": "admin-secure-cookies",
+            "result": "PASS"
+          },
+          "--- TRUNCATED --- 17 more items"
+        ],
+        "phase": "admin_modules",
+        "completed_phases": [
+          "registration_sessions",
+          "cart_isolation",
+          "review_ownership",
+          "academic_compatibility",
+          "admin_modules"
+        ],
+        "status": "PHASE_PASS",
+        "completed_at": "2026-10-29T17:35:24.502Z"
+      },
+      "version": "fb7d3c95-c638-4c04-9e41-93c31fac8aaf"
+    },
+    {
+      "source": {
+        "message": "DREAMS private QA",
+        "type": "dreams-private-authenticated-qa-v2",
+        "run": "pr56-f2efb1d-r1",
+        "source_commit": "f2efb1d19c86c3684bbf357a1079b0481a1424bf",
+        "secret_source_version": "8fcb56e1-b2a5-4cd7-832a-e084b5aab0e1",
+        "backend_version": "fb7d3c95-c638-4c04-9e41-93c31fac8aaf",
+        "started_at": "2026-10-29T17:36:20.486Z",
+        "checks": [
+          {
+            "id": "expected-project-url",
+            "result": "PASS"
+          },
+          {
+            "id": "qa-identity-marker-readable",
+            "result": "PASS"
+          },
+          {
+            "id": "a-qa-profile-unambiguous",
+            "result": "PASS"
+          },
+          {
+            "id": "b-qa-profile-unambiguous",
+            "result": "PASS"
+          },
+          {
+            "id": "qa-phases-readable",
+            "result": "PASS"
+          },
+          {
+            "id": "business-snapshot-readable",
+            "result": "PASS"
+          },
+          {
+            "id": "existing-admin-identity",
+            "result": "PASS"
+          },
+          {
+            "id": "admin-secure-cookies",
+            "result": "PASS"
+          },
+          "--- TRUNCATED --- 21 more items"
+        ],
+        "phase": "admin_persistence",
+        "completed_phases": [
+          "registration_sessions",
+          "cart_isolation",
+          "review_ownership",
+          "academic_compatibility",
+          "admin_modules",
+          "admin_persistence"
+        ],
+        "status": "PHASE_PASS",
+        "completed_at": "2026-10-29T17:36:34.750Z"
+      },
+      "version": "fb7d3c95-c638-4c04-9e41-93c31fac8aaf"
+    },
+    {
+      "source": {
+        "message": "DREAMS private QA",
+        "type": "dreams-private-authenticated-qa-v2",
+        "run": "pr56-f2efb1d-r1",
+        "source_commit": "f2efb1d19c86c3684bbf357a1079b0481a1424bf",
+        "secret_source_version": "8fcb56e1-b2a5-4cd7-832a-e084b5aab0e1",
+        "backend_version": "fb7d3c95-c638-4c04-9e41-93c31fac8aaf",
+        "started_at": "2026-10-29T17:37:20.541Z",
+        "checks": [
+          {
+            "id": "expected-project-url",
+            "result": "PASS"
+          },
+          {
+            "id": "qa-identity-marker-readable",
+            "result": "PASS"
+          },
+          {
+            "id": "a-qa-profile-unambiguous",
+            "result": "PASS"
+          },
+          {
+            "id": "b-qa-profile-unambiguous",
+            "result": "PASS"
+          },
+          {
+            "id": "qa-phases-readable",
+            "result": "PASS"
+          },
+          {
+            "id": "business-snapshot-readable",
+            "result": "PASS"
+          },
+          {
+            "id": "existing-admin-identity",
+            "result": "PASS"
+          },
+          {
+            "id": "admin-secure-cookies",
+            "result": "PASS"
+          },
+          "--- TRUNCATED --- 24 more items"
+        ],
+        "phase": "admin_stock_featured",
+        "completed_phases": [
+          "registration_sessions",
+          "cart_isolation",
+          "review_ownership",
+          "academic_compatibility",
+          "admin_modules",
+          "admin_persistence",
+          "admin_stock_featured"
+        ],
+        "status": "PHASE_PASS",
+        "completed_at": "2026-10-29T17:37:30.775Z"
+      },
+      "version": "fb7d3c95-c638-4c04-9e41-93c31fac8aaf"
+    },
+    {
+      "source": {
+        "message": "DREAMS private QA",
+        "type": "dreams-private-authenticated-qa-v2",
+        "run": "pr56-f2efb1d-r1",
+        "source_commit": "f2efb1d19c86c3684bbf357a1079b0481a1424bf",
+        "secret_source_version": "8fcb56e1-b2a5-4cd7-832a-e084b5aab0e1",
+        "backend_version": "fb7d3c95-c638-4c04-9e41-93c31fac8aaf",
+        "started_at": "2026-10-29T17:38:20.249Z",
+        "checks": [
+          {
+            "id": "expected-project-url",
+            "result": "PASS"
+          },
+          {
+            "id": "qa-identity-marker-readable",
+            "result": "PASS"
+          },
+          {
+            "id": "a-qa-profile-unambiguous",
+            "result": "PASS"
+          },
+          {
+            "id": "b-qa-profile-unambiguous",
+            "result": "PASS"
+          },
+          {
+            "id": "qa-phases-readable",
+            "result": "PASS"
+          },
+          {
+            "id": "business-snapshot-readable",
+            "result": "PASS"
+          },
+          {
+            "id": "existing-admin-identity",
+            "result": "PASS"
+          },
+          {
+            "id": "admin-secure-cookies",
+            "result": "PASS"
+          },
+          "--- TRUNCATED --- 14 more items"
+        ],
+        "phase": "admin_coupons",
+        "completed_phases": [
+          "registration_sessions",
+          "cart_isolation",
+          "review_ownership",
+          "academic_compatibility",
+          "admin_modules",
+          "admin_persistence",
+          "admin_stock_featured",
+          "admin_coupons"
+        ],
+        "status": "PHASE_PASS",
+        "completed_at": "2026-10-29T17:38:23.204Z"
+      },
+      "version": "fb7d3c95-c638-4c04-9e41-93c31fac8aaf"
+    },
+    {
+      "source": {
+        "message": "DREAMS private QA",
+        "type": "dreams-private-authenticated-qa-v2",
+        "run": "pr56-f2efb1d-r1",
+        "source_commit": "f2efb1d19c86c3684bbf357a1079b0481a1424bf",
+        "secret_source_version": "8fcb56e1-b2a5-4cd7-832a-e084b5aab0e1",
+        "backend_version": "fb7d3c95-c638-4c04-9e41-93c31fac8aaf",
+        "started_at": "2026-10-29T17:39:20.075Z",
+        "checks": [
+          {
+            "id": "expected-project-url",
+            "result": "PASS"
+          },
+          {
+            "id": "qa-identity-marker-readable",
+            "result": "PASS"
+          },
+          {
+            "id": "a-qa-profile-unambiguous",
+            "result": "PASS"
+          },
+          {
+            "id": "b-qa-profile-unambiguous",
+            "result": "PASS"
+          },
+          {
+            "id": "qa-phases-readable",
+            "result": "PASS"
+          },
+          {
+            "id": "business-snapshot-readable",
+            "result": "PASS"
+          },
+          {
+            "id": "existing-admin-identity",
+            "result": "PASS"
+          },
+          {
+            "id": "admin-secure-cookies",
+            "result": "PASS"
+          },
+          "--- TRUNCATED --- 22 more items"
+        ],
+        "phase": "admin_moderation",
+        "completed_phases": [
+          "registration_sessions",
+          "cart_isolation",
+          "review_ownership",
+          "academic_compatibility",
+          "admin_modules",
+          "admin_persistence",
+          "admin_stock_featured",
+          "admin_coupons",
+          "admin_moderation"
+        ],
+        "status": "PASS",
+        "completed_at": "2026-10-29T17:39:25.543Z"
+      },
+      "version": "fb7d3c95-c638-4c04-9e41-93c31fac8aaf"
+    }
+  ]
+}

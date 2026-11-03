@@ -13,5 +13,5 @@
   "official_version": "2ef6be90-b8d8-4e03-8bc4-58b36718e6f1",
   "official_deployment": "43a8bd54-658a-4240-9327-66e4885c6f78",
   "failed_pages_deployment": "1e881ec8-7c32-4a2e-9857-ef63bf091c4f",
-  "publication_blocker": "Supabase rejects inherited backend key: HTTP401 UNAUTHORIZED_INVALID_API_KEY / bad_length"
+  "publication_blocker": "Lectura directa y SDK200 acreditadas; completar QA privada por fases, Admin y compatibilidad antes de conectar la oficial"
 }

@@ -5,7 +5,7 @@ Fuente: [PDF 2026 adjunto](rubrica-2026.pdf), 3 páginas; [texto extraído](rubr
 | ID | Requisito exacto o fragmento literal del PDF | Evidencia en archivos y funcionamiento | Estado | Corrección realizada o pendiente |
 |---|---|---|---|---|
 | G01 | «sitio y la imagen corporativa de una marca de producto»; «la marca debe ser de fantasía» | DREAMS; `public/index.html`, PNG y CSS, diseno.md | CUMPLE | Identidad conservada; valoración creativa docente. |
-| G02 | «presentar los productos de forma que estos sean vendibles»; «atractivo y funcional» | Catálogo/detalle/carrito; backend candidato401 | PARCIAL | Presentación implementada; cierre funcional remoto bloqueado. |
+| G02 | «presentar los productos de forma que estos sean vendibles»; «atractivo y funcional» | Catálogo/detalle/carrito; candidato con lectura directa y SDK200 | PARCIAL | Presentación implementada; registro y sesiones remotas probadas. Admin y publicación pendientes. |
 | G03 | «Javascript, API y SQL»; «ciclos, funciones, condicionales, operadores lógicos» | `public/js`, `server`, migraciones, api.md y defensa.md | CUMPLE | Código y explicación técnica; comprensión individual no acreditada. |
 | D01 | «Diseño de un logo: Simple, como máximo 3 colores en PNG» | `public/assets/dreams-isologo-clean.png`, inspección, diseno.md | CUMPLE | Isologo existente sin modificar; tintas de diseño distinguidas del antialias. |
 | D02 | «paleta cromática definida y constante» | `public/css/style.css`, diseno.md, capturas locales | CUMPLE | Negro/marfil/dorado conservados. |
@@ -22,9 +22,9 @@ Fuente: [PDF 2026 adjunto](rubrica-2026.pdf), 3 páginas; [texto extraído](rubr
 | R02 | «Fecha de entrega previa 2 de octubre» | No hay comprobante de entrega adjunto | NO VERIFICABLE | Solicitar evidencia que conserven los alumnos; no inventar fecha. |
 | R03 | «Fecha de entrega final 6 de noviembre» | Preparación al29/10; no envío | PARCIAL | Falta cierre y entrega por usuario antes de fecha. |
 | R04 | «app web o sitio HTML/CSS/JS aplicando/consumiendo una API» | HTML/CSS/JS y Supabase; api.md | CUMPLE | Recorrido documentado; conexión candidata pendiente por separado. |
-| R05 | «Mostrar productos… de una base de datos… backend… SQLlite… Flask… Node.js» | Real: Supabase/PostgreSQL; el usuario confirmó aceptación docente el29/10/2026, registrada en sqlite.md | PARCIAL | Excepción comunicada por usuario resuelve motor, sin afirmar equivalencia ni comprobante docente adjunto. Conexión/QA remota siguen pendientes. |
+| R05 | «Mostrar productos… de una base de datos… backend… SQLlite… Flask… Node.js» | Real: Supabase/PostgreSQL; el usuario confirmó aceptación docente el29/10/2026, registrada en sqlite.md | PARCIAL | Excepción comunicada por usuario resuelve motor, sin afirmar equivalencia ni comprobante docente adjunto. Conexión probada; QA remota completa y publicación pendientes. |
 | R06 | «Node.js… registro de las versiones usando Git (github)» | Historial de facumartea/dreams, PR56 | CUMPLE | Checkpoints sin reescritura; ZIP exacto identifica commit. |
-| R07 | «pantalla de login… y de registro» | `public/cuenta.html`, `cuenta.js`, registro/signIn | PARCIAL | Pantallas y tests locales; real candidato bloqueado y oficial403 previo. |
+| R07 | «pantalla de login… y de registro» | `public/cuenta.html`, `cuenta.js`, registro/signIn | PARCIAL | Registro normal sin confirmación, sesión, login, logout, refresh y contraseña incorrecta: PASS remoto privado; falta verificación web publicada. |
 | R08 | «productos… editarse… interfaz específica… usuario autorizado» | Admin, guard rol, JWT, readback de persistencia | PARCIAL | Implementado y probado con fixtures; falta Admin real/guardado remoto. |
 | R09 | «si o si Javascript» | Código propio de navegador y servidor | CUMPLE | Uso real, no sólo librería. |
 | R10 | «carousel» | Carrusel manual de colecciones en Inicio candidato | PARCIAL | Añadido y comprobación local registrada; no publicado. |
@@ -37,7 +37,7 @@ Fuente: [PDF 2026 adjunto](rubrica-2026.pdf), 3 páginas; [texto extraído](rubr
 | O05 | «Link a la API. Explicación de su uso» | api.md con documentación pública, recorrido y ejemplo | CUMPLE | WhatsApp identificado como enlace, no API. |
 | M01 | «programa principal y… funciones no supera las 40 líneas… modularizado» | Inventario AST y comando sin.git, funciones.md | CUMPLE | Refactorización con callbacks/métodos; alcance e interpretación de main explícitos. |
 | M02 | «Indentado correctamente… comentarios… claro y legible… Frontend / Backend» | Módulos, validación y comentarios de responsabilidades | PARCIAL | Refactorizaciones nuevas legibles; tests históricos compactos no reescritos por estética. Revisión docente pendiente. |
-| E01 | «Correcto funcionamiento sin errores… conecta correctamente» | última lectura del candidato falla transporte/SDK0;401 histórico separado; pruebas remotas bloqueadas | NO CUMPLE | Reemplazo seguro de Secret, lectura/SDK y QA completa antes de publicar. |
+| E01 | «Correcto funcionamiento sin errores… conecta correctamente» | lectura directa y SDK200; Auth y carrito parcialmente probados; QA Admin/publicación aún pendientes | PARCIAL | Clave reemplazada por usuario y verificada en versión heredada correcta. Completar fases privadas y QA oficial. |
 | E02 | «Todos los integrantes poseen… documentación… justificar y explicar» | Carpeta descargable y defensa.md | NO VERIFICABLE | Accesibilidad del repositorio no demuestra posesión ni dominio individual. |
 | E03 | «IA… complemento… registro completo… muchos agregados…» | Bitácora parcial, autoría no inventada | PARCIAL | Faltan registros e intervención propia acreditada; no se asigna puntaje. |
 | E04 | «Se entrega en tiempo y forma sin mayores correcciones» | ZIP candidato y bloqueos | NO VERIFICABLE | No hay entrega Classroom realizada por el agente. |

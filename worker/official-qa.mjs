@@ -352,6 +352,8 @@ export async function run_official_qa(env, dispatch, services = {}) {
     } catch { report.status = 'FAIL'; report.failed_check = context.checks.find(c => c.result === 'FAIL')?.id || 'runtime_or_provider_failure'; }
     report.completed_at = new Date().toISOString();
     // Ningún usuario, correo, contraseña, cookie, ticket ni header se registra.
+    for (const item of context.checks) (services.log || console.log)('DREAMS private QA check', { type: 'dreams-private-qa-check-v1', run, phase: report.phase, backend_version: context.version, ...item });
+    report.totals = { pass: context.checks.filter(item => item.result === 'PASS').length, fail: context.checks.filter(item => item.result === 'FAIL').length };
     (services.log || console.log)('DREAMS private QA', report);
     active_run = null;
     return report;

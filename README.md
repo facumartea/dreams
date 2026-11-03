@@ -4,7 +4,7 @@ Sitio HTML/CSS/JavaScript con API Node.js/Express y Supabase (Auth y PostgreSQL)
 
 **Oficial:** https://dreams-perfumes.pages.dev/ · [Entrega 2026](docs/entrega-2026/INDICE.md) · [Estado real y bloqueos](CURRENT_STATE.md).
 
-La oficial restaurada y el candidato de PR #56 son versiones distintas. El backend candidato no está conectado a producción hasta completar QA autenticada: la nueva clave ya pasó lectura directa y SDK, y se está corrigiendo el transporte de la prueba interna; registro/login/Admin remotos no se declaran resueltos. El usuario confirmó que el profesor aceptó Supabase: se conserva PostgreSQL por esa excepción comunicada, sin presentarlo como SQLite. Ver [registro de la decisión](docs/entrega-2026/sqlite.md).
+La oficial restaurada y el candidato de PR #56 son versiones distintas. El backend candidato no está conectado a producción hasta completar QA autenticada: la nueva clave ya pasó lectura directa y SDK, y registro, sesiones y aislamiento de carrito pasaron pruebas reales. La QA restante se ejecuta en fases privadas para respetar los límites del plan Free; Admin y la publicación todavía requieren resultados completos. El usuario confirmó que el profesor aceptó Supabase: se conserva PostgreSQL por esa excepción comunicada, sin presentarlo como SQLite. Ver [registro de la decisión](docs/entrega-2026/sqlite.md).
 
 ## Requisitos y verificación sin secretos
 

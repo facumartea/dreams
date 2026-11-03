@@ -1,6 +1,6 @@
 # Entrega DREAMS · Integración Diseño y Programación 2026
 
-Estado de preparación: **BLOQUEADO** para entrega funcional completa. El Secret del candidato sigue rechazado, falta QA autenticada real. Este índice no certifica aprobación académica.
+Estado de preparación: **BLOQUEADO** para entrega funcional completa. La conexión del candidato ya pasó lectura directa y SDK. Registro, sesiones y aislamiento de carrito tienen pruebas remotas parciales; faltan completar Admin y las demás fases y publicar. Este índice no certifica aprobación académica.
 
 - [Rúbrica 2026 original](rubrica-2026.pdf) y [extracción de texto](rubrica-2026.txt).
 - [Matriz completa de requisitos](matriz-rubrica.md).

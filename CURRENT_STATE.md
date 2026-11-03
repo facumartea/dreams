@@ -1,3 +1,13 @@
+# Auditoría Admin retomada: QA histórica completa, oficial aún legacy
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Recuperación de sesión del 02/11/2026 (America/Buenos_Aires). PR56 sigue abierta/draft en `codex/admin-cards-audit`, HEAD `f2efb1d`; no hay commits posteriores remotos. Se preservan los cambios documentales sin commit de la sesión anterior. Oficial: Pages `a3184576`, frontend `7b302cf`, backend legacy `d5df723d`/`ec04a358`; no conectada al candidato. Candidato privado efectivo `fb7d3c95`, deployment `a8d7a52a`, ambos Secrets presentes por nombre/tipo sin valores.
+
+Se recuperaron las NUEVE fases del 29/10: Auth, carrito, opiniones, checkout académico, módulos Admin, persistencia/imágenes, stock/destacados, cupones y moderación: PHASE_PASS/PASS. Terminaron a17:39:25UTC; el proceso se interrumpió antes de publicación y retirada final. Evidencia `docs/evidence/functional-backend-20261027/recovered-nine-phases-20261029.json`. Los arrays de checks fueron truncados por Cloudflare: no inventar totales por caso a partir de ellos. No repetir esas pruebas como análisis inicial; la promoción requiere lectura reciente y comprobación de la versión vigente.
+
+Nuevo alcance prioritario: auditoría funcional completa del Admin oficial, reproducción de guardado bloqueado, corrección específica del enrutamiento sin habilitación indiscriminada. Se prepara canal temporal de sesión RSA-OAEP/AES-GCM por KV PRIVADO, sin endpoint público: contraseña Admin sólo dentro del Worker, clave privada efímera y sesión descifrada sólo en RAM del navegador QA. Capturas sin datos personales, exclusivamente recursos QA. No cambiar contraseña/rol. Al terminar: logout de sesiones de prueba, retirar KV, mecanismo, Cron y `DREAMS_QA_ADMIN_PASSWORD`. Sin sitios/previews/DNS/pagos/seeds/resets nuevos; sin ZIP final.
+
 # Continuidad vigente: clave válida y QA dividida por límites del plan — 2026-10-29
 
 La versión privada `4862a658-f541-40b1-b03a-88327c54579d` (fuente `09ee61a`, CI 216 aprobada, 398 tests) heredó ambos Secrets de `8fcb56e1-b2a5-4cd7-832a-e084b5aab0e1`. Lectura directa y SDK: 200, proyecto esperado, clave sin transformación. No solicitar otra copia ni modificar Auth.

@@ -1,3 +1,13 @@
+# Estado vigente de pruebas — 29/10/2026
+
+La clave cargada por el usuario en `8fcb56e1` funciona: lectura directa y SDK200, URL esperada y clave sin transformación. La versión privada `4862a658`, fuente `09ee61a`, acreditó registro normal A/B sin confirmación, perfiles customer, sesiones, login, refresh, logout, contraseña incorrecta y rechazo Admin de anónimo/customer. Carrito: combinación idempotente, persistencia y aislamiento A/B pasaron hasta agotar el límite Free. [Reporte parcial real](../evidence/functional-backend-20261027/real-auth-cart-partial-20261029.json). No acredita QA Admin ni limpieza final.
+
+La versión `fb7d3c95-c638-4c04-9e41-93c31fac8aaf`, fuente `f2efb1d`, divide la QA en nueve fases de Cron privado y reutiliza A/B; las fases pendientes no se anuncian como aprobadas. CI217 aprobada: 400 tests, sintaxis, inventario sin funciones >40 y cuatro builds. Las cuentas y recursos son exclusivos de QA; no se ejecutan compras ni cambios de stock comercial. Oficial restaurada `a3184576` conservada hasta resultados completos. No se requiere intervención del usuario ahora.
+
+## Evidencia histórica local y remota
+
+Los resultados que siguen conservan su fecha/versión. Los bloqueos de clave mencionados debajo son históricos y fueron superados por la copia nueva; no corresponden al binding actual.
+
 # Conexión Supabase acreditada tras nueva copia ·29/10/2026
 
 El Secret nuevo8fcb56e1 ya está verificado desde4d32d704: directo200,SDK200,clave íntegra,sinwhitespace/controles yproyecto esperado. [Evidencia](../evidence/functional-backend-20261027/new-secret-read-20261029.json). La primeraQA se detuvo en400porJSON no parseado de la invocaciónsintética sinContent-Length; reproducciónlocal exacta confirmó la causa yeltransporte delharness se corrigió sin cambiarAuth. No hubo peticionesAuth ni cuentasQA creadas enese intento. Stock/órdenes sin cambios. Lectura resuelta NO equivale a QAautenticada completada; reintento pendiente.

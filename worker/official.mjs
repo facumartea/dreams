@@ -3,6 +3,7 @@ import { createHmac } from 'node:crypto';
 import { handleAsNodeRequest } from 'cloudflare:node';
 import { create_official_database } from './official-client.mjs';
 import { scheduled_diagnostic } from './supabase-diagnostic.mjs';
+import { prepare_browser_qa } from './private-browser-qa.mjs';
 import { run_official_qa } from './official-qa.mjs';
 import appModule from '../server/app.js';
 import policy from '../server/official-policy.js';
@@ -52,6 +53,8 @@ export async function fetch_official(request, env) {
 export default {
     fetch: fetch_official,
     async scheduled(_event, env) {
+        try { if (await prepare_browser_qa(env)) return; }
+        catch { console.warn('DREAMS private browser QA unavailable'); return; }
         if (env.QA_RUN_ID) await run_official_qa(env, request => fetch_official(request, env));
         else await scheduled_diagnostic(env);
     }

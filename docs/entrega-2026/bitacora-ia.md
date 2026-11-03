@@ -24,3 +24,7 @@ El usuario respondió que el profesor aceptó Supabase, confirmó los apellidos 
 ## Reemplazo de clave informado y verificado ·29/10/2026
 
 El usuario informó haber cambiado la clave servidor. La IA verificó la versión actualizada y ejecutó sonda privada acotada heredando ese Secret, sin leerlo: el nuevo valor todavía incluye espacios internos/controlASCII y no permite obtener respuesta HTTP válida; se retiró el Cron y se conservó la oficial restaurada. Se prepararon QA interna opt-in y guardas para no iniciar altas antes de lectura200. No se atribuye este código al alumnado ni se declara reparación o QA remota completada.
+
+## Nueva copia válida y QA real · 29/10/2026
+
+El usuario volvió a copiar la Secret key con el botón Copy y desplegó el Worker. La IA verificó el origen exacto de los bindings heredados y acreditó lectura directa/SDK200 sin transformar el valor ni mostrarlo. Una petición sintética del harness falló por faltar Content-Length; se reprodujo en workerd con fixture, se corrigió sólo el transporte y se aprobaron 398 tests/CI216. Registro, sesiones y parte del carrito pasaron realmente contra Supabase; la invocación larga alcanzó el límite Free de 50 subrequests. La IA dividió la QA en fases cortas con marcadores exclusivos de cuentas QA, sin cambiar el plan, Auth ni la cuenta Admin. Fuente `f2efb1d`, CI217/400 tests. La publicación y las fases restantes todavía no se acreditan en esta entrada. No hay revisión manual de alumnos acreditada para estos cambios.

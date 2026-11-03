@@ -1,3 +1,11 @@
+# Estado de hosting vigente · 29/10/2026
+
+Único sitio autorizado: https://dreams-perfumes.pages.dev/. La oficial restaurada está en el deployment `a3184576-4390-4a71-9205-d9269bd7dfe7`; su backend está fijado a `d5df723d`, fuente `ec04a358`. El candidato `dreams-official-backend` es privado: workers.dev y previews deshabilitados. Su nueva clave ya pasa lectura directa/SDK; sólo se conecta mediante `DREAMS_OFFICIAL` cuando se complete la QA y la guarda de `pages/official-release.json`.
+
+El proxy se construye con `build:pages` y conserva la portada estática. La publicación autorizada usa Direct Upload de producción en el proyecto existente, nunca previews, otros sitios ni DNS. El deployment restaurado se conserva para rollback; no se ejecutan resets ni migraciones productivas para publicar. Las referencias de URL pública Worker, Railway y checkout deshabilitado que siguen son historia técnica, no instrucciones vigentes. Ver CURRENT_STATE.md y docs/entrega-2026/pruebas.md para resultados actuales.
+
+## Historial de infraestructura
+
 ## Actualización 2026-10-07: portada estática aislada
 
 El build ahora empaqueta sólo inicio/CSS/motion para publicar el diseño estático solicitado sin incluir PR35/36. El proxy conserva respuestas y permisos del backend y reemplaza únicamente esos GET/HEAD exitosos; resto de HTML/JS/API/assets y SUPABASE_SECRET_KEY siguen en el Worker sin modificación. ETag/HEAD/304 y cabeceras protegidas probados. Ver [static_home_pages.md](static_home_pages.md) para evidencia, destino exacto y reversión. Publicado como deployment 444489eb-dcfe-4650-b005-acc3469ab02e, fuente 5e3835e, PR37 y CI verde. Alias raíz verificado con hero estático; Worker f73d5087 intacto. El checkpoint ae2f7932 de abajo es histórico y constituye el destino de reversión. Carrera previa del carrito pendiente PR35.

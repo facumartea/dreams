@@ -1,6 +1,6 @@
 # Entrega en GitHub y reproducción histórica
 
-Branch de entrega: **`codex/admin-cards-audit`**, PR https://github.com/facumartea/dreams/pull/56. Predeterminada observada: **main**, commit `4655b0cbdcec8ad2aade4cdde03ef60b22652bf1`. No se afirma que contenga la entrega mientras ésta siga en la PR. Integración autorizada sólo después de checks/revisión y dependencias resueltas; el Secret y la QA remota siguen bloqueados.
+Branch de entrega: **`codex/admin-cards-audit`**, PR https://github.com/facumartea/dreams/pull/56. Predeterminada observada: **main**, commit `4655b0cbdcec8ad2aade4cdde03ef60b22652bf1`. No se afirma que contenga la entrega mientras ésta siga en la PR. Integración autorizada sólo después de checks/revisión y dependencias resueltas; la clave ya conecta; faltan las fases restantes de QA y la publicación verificada.
 
 **Instrucción vigente:** el usuario confirmó **Martearena y Ruas** y pidió «no me generes un zip final subilo al github todo lo que falte y arregla lo que no va». Por tanto, se actualiza el repositorio y no se genera otro ZIP final. Si el usuario decide descargarlo después, el nombre acorde a los apellidos será `Martearena-Ruas-DREAMS.zip`. No se envió nada a Classroom.
 
