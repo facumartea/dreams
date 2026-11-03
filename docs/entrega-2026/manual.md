@@ -1,6 +1,6 @@
 # Manual de uso DREAMS · Entrega 2026
 
-**Versión documentada: candidato de PR #56.** Oficial autorizada: https://dreams-perfumes.pages.dev/. La oficial sigue restaurada; registro/login/Admin del candidato todavía no tienen QA remota acreditada. Las capturas de esta edición son del candidato local con datos sintéticos, etiquetadas como tales; no representan una sesión Admin productiva ni una publicación final.
+**Versión documentada: PR #56 y oficial https://dreams-perfumes.pages.dev/.** Registro, sesión, renovación, login/logout, carrito y checkout académico ya se comprobaron en el navegador oficial. Alta, edición, imágenes y persistencia Admin tienen evidencia remota; el cierre de los casos restantes y la retirada del mecanismo temporal se registran por separado en la matriz de pruebas. Las capturas de Inicio y Cuenta son remotas; la captura Admin local está identificada y no acredita una sesión productiva.
 
 ## Inicio, catálogo y detalle
 
@@ -8,7 +8,7 @@ Abrir Inicio y usar el menú para entrar a Perfumes, colecciones Mujer/Hombre/Un
 
 En catálogo, escribir nombre o marca y aplicar la búsqueda. Combinar filtros disponibles de marca, género, tipo y precio, y ordenar por los criterios del selector. Limpiar filtros para volver a todo el catálogo. Abrir una tarjeta para ver imagen, tamaño, precio, stock, intensidad y notas. Una imagen rota muestra un fallback; no prueba que se haya perdido su URL en base.
 
-![Inicio del candidato local, portada y navegación](capturas/inicio-local.png)
+![Inicio oficial comprobado, portada estática y navegación](capturas/inicio-oficial.png)
 
 ## Crear cuenta, iniciar y cerrar sesión
 
@@ -16,7 +16,7 @@ En Cuenta elegir Registro, completar nombre, correo, contraseña y repetición. 
 
 Para login, completar correo y contraseña. Si son incorrectos, corregirlos sin revelar la contraseña. Recargar o navegar debe conservar la sesión mediante cookies; si vence se intenta renovar. Cerrar sesión desde Cuenta y comprobar que ya no aparecen los datos personales ni el acceso Admin. Si la red falla al salir, reintentar y comprobar el estado antes de usar un equipo compartido.
 
-![Cuenta del candidato local; no prueba registro remoto](capturas/cuenta-local.png)
+![Formulario de Cuenta oficial; los resultados de registro figuran en la evidencia](capturas/cuenta-oficial.png)
 
 Los botones se bloquean durante envío para evitar duplicación; los mensajes indican errores de formato, acceso o conexión. Ante fallo de red, conservar los datos, revisar conectividad y reintentar una sola vez después de comprobar si se completó la operación. Un customer y un visitante no pueden entrar al Admin. No se debe editar localStorage para elevar permisos.
 
@@ -52,7 +52,7 @@ Usar una URL HTTPS directa a imagen o un asset local permitido. No pegar una pá
 
 Editar carga el producto existente, incluida su URL. Cambiar otro campo conserva esa imagen. Cancelar/Limpiar permite salir de la edición con aviso de cambios sin guardar. Editar y Eliminar conservan las mismas dimensiones. Eliminar es permanente y pide confirmación; para practicar sólo usar productos exclusivos de prueba.
 
-Antes de una nueva alta se revisa el listado. Si la respuesta de un alta se pierde, Reintentar consulta su marca/nombre y sus campos antes de crear: recupera el ID existente sin otro POST; si hay discrepancias o ambigüedad no sobrescribe. Guardar espera la escritura y una lectura posterior que confirme todos los campos. Si esa lectura falla, el formulario conserva los datos y no anuncia éxito: revisar el listado antes de repetir un alta. Después de confirmar, recargar y comprobar Admin, catálogo, detalle y conteos. La persistencia remota de esta versión está pendiente de sesión y conexión válidas; no basta la captura local.
+Antes de una nueva alta se revisa el listado. Si la respuesta de un alta se pierde, Reintentar consulta su marca/nombre y sus campos antes de crear: recupera el ID existente sin otro POST; si hay discrepancias o ambigüedad no sobrescribe. Guardar espera la escritura y una lectura posterior que confirme todos los campos. Si esa lectura falla, el formulario conserva los datos y no anuncia éxito: revisar el listado antes de repetir un alta. Después de confirmar, recargar y comprobar Admin, catálogo, detalle y conteos. La persistencia y la recuperación de errores se comprueban con productos exclusivos QA; ver resultados remotos en la evidencia, además de la captura local.
 
 ## Otros módulos Admin
 
@@ -66,8 +66,8 @@ Antes de una nueva alta se revisa el listado. Si la respuesta de un alta se pier
 
 Un 401 indica sesión/credencial no válida; un 403 indica operación no autorizada; un 503 puede indicar dependencia no disponible. No pegar valores de claves ni headers en capturas. Si el catálogo funciona pero el registro falla, no dar por sana toda la aplicación. Ante fallo de imagen revisar URL, permisos y disponibilidad del hosting de la foto; ante guardado dudoso revisar listado antes de repetir.
 
-El operador conserva rollback del frontend restaurado y mantiene el backend candidato aislado hasta verificarlo. Los usuarios no tienen que reconfigurar Supabase ni Cloudflare. Los requisitos técnicos pendientes están documentados en la matriz; no se ocultan con el manual.
+El operador conserva el frontend publicado y una versión probada del backend con la misma clave y firmas como rollback compatible; el frontend legacy restaurado queda como recuperación de emergencia. Los usuarios no tienen que reconfigurar Supabase ni Cloudflare. Los requisitos técnicos pendientes están documentados en la matriz; no se ocultan con el manual.
 
 ## Auditoría Admin en curso
 
-Inventario completo y procedencia de pruebas: [controles](../evidence/admin-audit-20261102/inventario.md). Las correcciones nuevas se publicarán sólo después de QA privada y se repetirán en la oficial; no atribuir estas instrucciones todavía a una publicación terminada.
+Inventario completo y procedencia de pruebas: [controles](../evidence/admin-audit-20261102/inventario.md). Las correcciones de guardado e imágenes ya están en la oficial; la matriz distingue cada resultado comprobado de los casos todavía pendientes y del cierre operativo.

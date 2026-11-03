@@ -1,3 +1,7 @@
+## Reparación y retirada preparada — 03/11/2026 UTC
+
+Backend0368 activo y API-stock-null corregido400/stockQA3; registro/sesión/carrito/checkout académico reales del navegador pasan. Se prepara entrypoint productivo sin imports de diagnóstico/QA y test que conserva HTTP y niega rutas internas incluso con variablesQA obsoletas.476testsPASS; no se ha retirado aún el Secret porque la QA privada sigue activa.
+
 # Falla API real de tipos reproducida; parche en validación
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.

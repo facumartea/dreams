@@ -25,5 +25,15 @@
     "product_writes": 0,
     "version_header_verified": true
   },
-  "remote_after": "PENDIENTE publicación y verificación de la nueva versión"
+  "remote_after": {
+    "backend_version": "11477c4f-0a90-4a71-86a1-2e9a7bfdbd4a",
+    "source_commit": "0368f65ed16acada506a327302aaa5277a4052fa",
+    "official_health": 200,
+    "case": "API-stock-null",
+    "status": 400,
+    "qa_product_id": 219,
+    "stock_preserved": 3,
+    "result": "PASS",
+    "commercial_products_changed": false
+  }
 }

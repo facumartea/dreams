@@ -13407,63 +13407,63 @@
       "name": "callback:test",
       "kind": "ArrowFunctionExpression",
       "start": 6,
-      "end": 26,
-      "lines": 21
+      "end": 31,
+      "lines": 26
     },
     {
       "file": "test/official-scheduled.integration.test.mjs",
       "name": "callback:after",
       "kind": "ArrowFunctionExpression",
-      "start": 13,
-      "end": 13,
+      "start": 18,
+      "end": 18,
       "lines": 1
     },
     {
       "file": "test/official-scheduled.integration.test.mjs",
       "name": "callback:test",
       "kind": "ArrowFunctionExpression",
-      "start": 28,
-      "end": 48,
+      "start": 33,
+      "end": 53,
       "lines": 21
     },
     {
       "file": "test/official-scheduled.integration.test.mjs",
       "name": "callback:after",
       "kind": "ArrowFunctionExpression",
-      "start": 34,
-      "end": 34,
+      "start": 39,
+      "end": 39,
       "lines": 1
     },
     {
       "file": "test/official-scheduled.integration.test.mjs",
       "name": "callback:test",
       "kind": "ArrowFunctionExpression",
-      "start": 50,
-      "end": 62,
+      "start": 55,
+      "end": 67,
       "lines": 13
     },
     {
       "file": "test/official-scheduled.integration.test.mjs",
       "name": "callback:after",
       "kind": "ArrowFunctionExpression",
-      "start": 59,
-      "end": 59,
+      "start": 64,
+      "end": 64,
       "lines": 1
     },
     {
       "file": "test/official-scheduled.integration.test.mjs",
       "name": "callback:test",
       "kind": "ArrowFunctionExpression",
-      "start": 64,
-      "end": 74,
+      "start": 69,
+      "end": 79,
       "lines": 11
     },
     {
       "file": "test/official-scheduled.integration.test.mjs",
       "name": "callback:after",
       "kind": "ArrowFunctionExpression",
-      "start": 71,
-      "end": 71,
+      "start": 76,
+      "end": 76,
       "lines": 1
     },
     {
@@ -16518,112 +16518,96 @@
       "file": "worker/official.mjs",
       "name": "expected_environment",
       "kind": "FunctionDeclaration",
-      "start": 14,
-      "end": 17,
+      "start": 11,
+      "end": 14,
       "lines": 4
     },
     {
       "file": "worker/official.mjs",
       "name": "create_official_app",
       "kind": "FunctionDeclaration",
-      "start": 18,
-      "end": 34,
+      "start": 15,
+      "end": 31,
       "lines": 17
     },
     {
       "file": "worker/official.mjs",
       "name": "client",
       "kind": "ArrowFunctionExpression",
-      "start": 20,
-      "end": 20,
+      "start": 17,
+      "end": 17,
       "lines": 1
     },
     {
       "file": "worker/official.mjs",
       "name": "signing_key",
       "kind": "ArrowFunctionExpression",
-      "start": 21,
-      "end": 21,
+      "start": 18,
+      "end": 18,
       "lines": 1
     },
     {
       "file": "worker/official.mjs",
       "name": "email_confirmation_required",
       "kind": "ArrowFunctionExpression",
-      "start": 27,
-      "end": 27,
+      "start": 24,
+      "end": 24,
       "lines": 1
     },
     {
       "file": "worker/official.mjs",
       "name": "static_middleware",
       "kind": "ArrowFunctionExpression",
-      "start": 31,
-      "end": 31,
+      "start": 28,
+      "end": 28,
       "lines": 1
     },
     {
       "file": "worker/official.mjs",
       "name": "warn",
       "kind": "ArrowFunctionExpression",
-      "start": 32,
-      "end": 32,
+      "start": 29,
+      "end": 29,
       "lines": 1
     },
     {
       "file": "worker/official.mjs",
       "name": "error",
       "kind": "ArrowFunctionExpression",
-      "start": 32,
-      "end": 32,
+      "start": 29,
+      "end": 29,
       "lines": 1
     },
     {
       "file": "worker/official.mjs",
       "name": "trusted_request",
       "kind": "FunctionDeclaration",
-      "start": 35,
-      "end": 40,
+      "start": 32,
+      "end": 37,
       "lines": 6
     },
     {
       "file": "worker/official.mjs",
       "name": "official_version_response",
       "kind": "FunctionDeclaration",
-      "start": 41,
-      "end": 45,
+      "start": 38,
+      "end": 42,
       "lines": 5
     },
     {
       "file": "worker/official.mjs",
       "name": "fetch_official",
       "kind": "FunctionDeclaration",
-      "start": 46,
-      "end": 56,
+      "start": 43,
+      "end": 53,
       "lines": 11
     },
     {
       "file": "worker/official.mjs",
       "name": "scheduled",
       "kind": "FunctionExpression",
-      "start": 60,
-      "end": 70,
-      "lines": 11
-    },
-    {
-      "file": "worker/official.mjs",
-      "name": "fetch",
-      "kind": "ArrowFunctionExpression",
-      "start": 61,
-      "end": 61,
-      "lines": 1
-    },
-    {
-      "file": "worker/official.mjs",
-      "name": "callback:run_official_qa",
-      "kind": "ArrowFunctionExpression",
-      "start": 67,
-      "end": 67,
+      "start": 59,
+      "end": 59,
       "lines": 1
     },
     {

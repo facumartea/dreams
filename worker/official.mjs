@@ -2,9 +2,6 @@ import { createServer } from 'node:http';
 import { createHmac } from 'node:crypto';
 import { handleAsNodeRequest } from 'cloudflare:node';
 import { create_official_database } from './official-client.mjs';
-import { scheduled_diagnostic } from './supabase-diagnostic.mjs';
-import { prepare_browser_qa } from './private-browser-qa.mjs';
-import { run_official_qa } from './official-qa.mjs';
 import appModule from '../server/app.js';
 import policy from '../server/official-policy.js';
 import { legacy_presentation } from './official-legacy.mjs';
@@ -57,15 +54,7 @@ export async function fetch_official(request, env) {
 
 export default {
     fetch: fetch_official,
-    async scheduled(_event, env) {
-        try { if (await prepare_browser_qa(env, { fetch: (url, init) => fetch_official(new Request(url, init), env) })) return; }
-        catch (error) {
-            const code = /^(qa_[a-z_]+|admin_identity|admin_login_[0-9]{3}|secure_session|private_encryption_or_vault)$/.test(error.message) ? error.message : 'private_browser_runtime';
-            console.warn('DREAMS private browser QA unavailable', { type: 'dreams-private-browser-qa-state', status: 'FAIL', code }); return;
-        }
-        if (env.QA_RUN_ID) {
-            const report = await run_official_qa(env, request => fetch_official(request, env));
-            if (report && env.QA_REPORTS_KV) await env.QA_REPORTS_KV.put(`qa-report:${env.QA_RUN_ID}:${report.phase}`, JSON.stringify(report), { expirationTtl: 3600 });
-        } else await scheduled_diagnostic(env);
-    }
+    // Absorber eventos antiguos durante la propagación de la retirada del Cron.
+    // Producción no conserva diagnóstico, QA ni acceso a la contraseña temporal.
+    scheduled() {}
 };

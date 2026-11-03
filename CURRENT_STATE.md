@@ -1,3 +1,13 @@
+# Versión estricta publicada y lectura efectiva acreditada — 03/11/2026 UTC
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Oficial https://dreams-perfumes.pages.dev/ conserva Pages b169918f-ce14-4588-a006-6099afba06aa, frontend e544c6c. Backend activo 11477c4f-0a90-4a71-86a1-2e9a7bfdbd4a, deployment e64f73a8-7cce-426e-a885-4ac851519186, fuente 0368f65; CI223 aprobada con476 tests. Health200 con cabecera X-Dreams-Backend-Version exacta. Lectura directa y SDK200, proyecto esperado y clave sin transformación. Caso API-stock-null ahora400 y stockQA219 preservado3: causa de coerción corregida y comprobada remotamente. No Auth/roles/contraseña Admin modificados.
+
+R3 privado pr56-types-20261102-r3 sigue nueve fases vía Cron ya existente; reportes sanitizados en KV privado2440c640ebd6493d83b39dddba3cbdb2, prefijo qa-report:pr56-types-20261102-r3:. Registro/sesiones, carrito, opiniones y compatibilidad académica acreditados; faltan fases Admin y cierre completo. No interferir productos mientras compara snapshots. Proceso navegador15704 vivo, sesiónAdmin descifrada sóloRAM y meAdmintrue. Se recuperó arnés sin nuevo login mediante depurador exclusivamente loopback, ya cerrado. No reconfigurar Secret ni Auth; no repetir42casos acreditados.
+
+Prueba remota del formato académico legacy PASS; no afirmar recuperación del ticket original perdido. Registro web normal y recarga/navegación PASS en curso. Al completar9fases retirarCron, crear flag /tmp/dreams-private-r3-complete y retomar sólo casosAdmin restantes. Después retirar imports/mecanismoQA de worker/official.mjs, Secret DREAMS_QA_ADMIN_PASSWORD y bindingsQA; desplegar preservando SUPABASE_SECRET_KEY; comprobar Admin final/cliente, cerrar sesiones, eliminar KV temporal. Falta ese cierre, documentación consolidada, extracción limpia sin.git e integración PR56. No generar ZIP final. No confundir publicación ya realizada con cierre completo.
+
 # Falla API real de tipos reproducida; parche en validación
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.

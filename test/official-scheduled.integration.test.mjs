@@ -3,12 +3,17 @@ import assert from 'node:assert/strict';
 import { createTestHarness } from 'wrangler';
 import { readFile } from 'node:fs/promises';
 
-test('backend oficial conserva HTTP y no ejecuta QA/diagnóstico sin opt-in en scheduled', { timeout: 60000 }, async t => {
+test('backend oficial conserva HTTP y retira QA/diagnóstico incluso con variables antiguas', { timeout: 60000 }, async t => {
     const config = JSON.parse(await readFile(new URL('../wrangler.official.jsonc', import.meta.url), 'utf8'));
     // Sólo el runtime local está limitado a esta fecha; producción conserva27/10.
     config.compatibility_date = '2026-10-08';
     config.main = new URL('../worker/official.mjs', import.meta.url).pathname;
     config.vars.SUPABASE_SECRET_KEY = 'sb_secret_OFFICIAL_LOCAL_FIXTURE_ONLY';
+    config.vars.QA_RUN_ID = 'retired-fixture';
+    config.vars.QA_EXPIRES_AT = String(Date.now() + 60000);
+    config.vars.DREAMS_QA_ADMIN_PASSWORD = 'retired-local-fixture';
+    const production_source = await readFile(config.main, 'utf8');
+    assert.doesNotMatch(production_source, /official-qa|private-browser-qa|supabase-diagnostic|QA_RUN_ID|DREAMS_QA_ADMIN_PASSWORD/);
     const harness = createTestHarness({ workers: [{ config }] });
     t.after(() => harness.close());
     await harness.listen();

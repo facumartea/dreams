@@ -374,5 +374,155 @@
       "stock": 3
     },
     "result": "PASS"
+  },
+  {
+    "id": "CLEAN-ADMIN-SESSION",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "logout de la sesión QA, sin afectar otras sesiones Admin",
+    "actual": 200,
+    "result": "PASS"
+  },
+  {
+    "id": "API-stock-null",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "JSON null debe rechazarse400 sin convertirse en stock0",
+    "actual": {
+      "status": 400,
+      "stock": 3
+    },
+    "result": "PASS"
+  },
+  {
+    "id": "API-stock-null-restored",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "restaurar exclusivamente el producto QA al estado anterior",
+    "actual": {
+      "qa_id": 219,
+      "stock": 3
+    },
+    "result": "PASS"
+  },
+  {
+    "id": "PUB-legacy-compatible",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "formato firmado del verificador legacy sigue siendo aceptado por la oficial",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PUB-register-normal",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "registro web normal sin confirmación, un POST ante doble clic y sesión inmediata",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PUB-session-reload",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "recarga y navegación conservan sesión",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PUB-secure-refresh",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "cookies seguras y renovación real de sesión",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PUB-customer-denied",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "customer no puede abrir Admin",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PUB-logout-login",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "logout y login real funcionan",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PUB-wrong-password",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "contraseña incorrecta da error recuperable",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PUB-network-retry",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "fallo de red de login conserva formulario y habilita reintento",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PUB-cart-persist",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "carrito por cuenta se guarda tras recarga",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PUB-whatsapp",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "destinatario y resumen correctos sin enviar mensajes",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PUB-checkout",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "checkout académico completo, referencia estable y doble envío protegido",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PUB-cart-cleaned",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "simulación consumió sólo el carrito QA",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PUB-responsive-390",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "portada estática y carrusel accesible sin overflow",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PUB-responsive-1440",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "portada estática y carrusel accesible sin overflow",
+    "actual": "verificado",
+    "result": "PASS"
+  },
+  {
+    "id": "PUB-anonymous-admin",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "visitante rechazado después de publicación",
+    "actual": "verificado",
+    "result": "PASS"
   }
 ]

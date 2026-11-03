@@ -1,0 +1,624 @@
+[
+  {
+    "type": "dreams-private-authenticated-qa-v2",
+    "run": "pr56-types-20261102-r3",
+    "source_commit": "0368f65ed16acada506a327302aaa5277a4052fa",
+    "secret_source_version": "6ac06cff-e8e7-4b91-b4b5-3f20c9d33a51",
+    "backend_version": "11477c4f-0a90-4a71-86a1-2e9a7bfdbd4a",
+    "started_at": "2026-11-03T04:38:26.081Z",
+    "checks": [
+      {
+        "id": "expected-project-url",
+        "result": "PASS"
+      },
+      {
+        "id": "qa-identity-marker-readable",
+        "result": "PASS"
+      },
+      {
+        "id": "a-qa-profile-unambiguous",
+        "result": "PASS"
+      },
+      {
+        "id": "b-qa-profile-unambiguous",
+        "result": "PASS"
+      },
+      {
+        "id": "qa-phases-readable",
+        "result": "PASS"
+      },
+      {
+        "id": "candidate-direct-sdk-read",
+        "result": "PASS"
+      },
+      {
+        "id": "server-key-type",
+        "result": "PASS"
+      },
+      {
+        "id": "business-snapshot-readable",
+        "result": "PASS"
+      },
+      {
+        "id": "a-secure-cookies",
+        "result": "PASS"
+      },
+      {
+        "id": "a-qa-login",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "a-qa-customer-identity",
+        "result": "PASS"
+      },
+      {
+        "id": "b-secure-cookies",
+        "result": "PASS"
+      },
+      {
+        "id": "b-qa-login",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "b-qa-customer-identity",
+        "result": "PASS"
+      },
+      {
+        "id": "c-secure-cookies",
+        "result": "PASS"
+      },
+      {
+        "id": "c-registration",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "c-registration-session",
+        "result": "PASS"
+      },
+      {
+        "id": "c-customer-profile",
+        "result": "PASS"
+      },
+      {
+        "id": "a-prior-qa-cart-cleared",
+        "result": "PASS"
+      },
+      {
+        "id": "b-prior-qa-cart-cleared",
+        "result": "PASS"
+      },
+      {
+        "id": "a-secure-cookies",
+        "result": "PASS"
+      },
+      {
+        "id": "logout-real",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "logout-session-read",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "logout-cleared-session",
+        "result": "PASS"
+      },
+      {
+        "id": "a-secure-cookies",
+        "result": "PASS"
+      },
+      {
+        "id": "login-real",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "login-same-user",
+        "result": "PASS"
+      },
+      {
+        "id": "wrong-password",
+        "result": "PASS",
+        "observed_status": 401,
+        "expected_status": 401
+      },
+      {
+        "id": "a-secure-cookies",
+        "result": "PASS"
+      },
+      {
+        "id": "refresh-real",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "refresh-same-user",
+        "result": "PASS"
+      },
+      {
+        "id": "session-reload",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "session-persisted",
+        "result": "PASS"
+      },
+      {
+        "id": "anonymous-admin-denied",
+        "result": "PASS",
+        "observed_status": 403,
+        "expected_status": 403
+      },
+      {
+        "id": "customer-admin-denied",
+        "result": "PASS",
+        "observed_status": 403,
+        "expected_status": 403
+      },
+      {
+        "id": "customer-admin-write-denied",
+        "result": "PASS",
+        "observed_status": 403,
+        "expected_status": 403
+      },
+      {
+        "id": "a-qa-refresh-sessions-revoked",
+        "result": "PASS"
+      },
+      {
+        "id": "a-secure-cookies",
+        "result": "PASS"
+      },
+      {
+        "id": "a-final-logout",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "b-qa-refresh-sessions-revoked",
+        "result": "PASS"
+      },
+      {
+        "id": "b-secure-cookies",
+        "result": "PASS"
+      },
+      {
+        "id": "b-final-logout",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "c-qa-refresh-sessions-revoked",
+        "result": "PASS"
+      },
+      {
+        "id": "c-secure-cookies",
+        "result": "PASS"
+      },
+      {
+        "id": "c-final-logout",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "business-snapshot-readable",
+        "result": "PASS"
+      },
+      {
+        "id": "commercial-stock-unchanged",
+        "result": "PASS"
+      },
+      {
+        "id": "commercial-orders-unchanged",
+        "result": "PASS"
+      },
+      {
+        "id": "phase-recorded",
+        "result": "PASS"
+      }
+    ],
+    "phase": "registration_sessions",
+    "candidate_read": {
+      "raw_status": 200,
+      "sdk_status": 200,
+      "project_key_pair": "verified_by_read",
+      "project_url_matches": true,
+      "key_format": {
+        "present": true,
+        "characters": 41,
+        "bytes": 41,
+        "kind": "modern_secret",
+        "surrounding_whitespace": false,
+        "any_whitespace": false,
+        "wrapped_quotes": false,
+        "ascii_controls": false,
+        "internal_whitespace": false,
+        "header_value_valid": true,
+        "assignment_instead_of_value": false,
+        "bearer_prefix_present": false,
+        "masked_or_ellipsis": false,
+        "non_ascii": false,
+        "jwt_project": "not_encoded"
+      },
+      "apikey_unchanged": true,
+      "checked_at": "2026-11-03T04:38:27.582Z"
+    },
+    "completed_phases": [
+      "registration_sessions"
+    ],
+    "status": "PHASE_PASS",
+    "completed_at": "2026-11-03T04:38:33.667Z",
+    "totals": {
+      "pass": 49,
+      "fail": 0
+    }
+  },
+  {
+    "type": "dreams-private-authenticated-qa-v2",
+    "run": "pr56-types-20261102-r3",
+    "source_commit": "0368f65ed16acada506a327302aaa5277a4052fa",
+    "secret_source_version": "6ac06cff-e8e7-4b91-b4b5-3f20c9d33a51",
+    "backend_version": "11477c4f-0a90-4a71-86a1-2e9a7bfdbd4a",
+    "started_at": "2026-11-03T04:39:25.684Z",
+    "checks": [
+      {
+        "id": "expected-project-url",
+        "result": "PASS"
+      },
+      {
+        "id": "qa-identity-marker-readable",
+        "result": "PASS"
+      },
+      {
+        "id": "a-qa-profile-unambiguous",
+        "result": "PASS"
+      },
+      {
+        "id": "b-qa-profile-unambiguous",
+        "result": "PASS"
+      },
+      {
+        "id": "qa-phases-readable",
+        "result": "PASS"
+      },
+      {
+        "id": "business-snapshot-readable",
+        "result": "PASS"
+      },
+      {
+        "id": "a-secure-cookies",
+        "result": "PASS"
+      },
+      {
+        "id": "a-qa-login",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "a-qa-customer-identity",
+        "result": "PASS"
+      },
+      {
+        "id": "b-secure-cookies",
+        "result": "PASS"
+      },
+      {
+        "id": "b-qa-login",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "b-qa-customer-identity",
+        "result": "PASS"
+      },
+      {
+        "id": "catalog-read",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "available-readonly-product",
+        "result": "PASS"
+      },
+      {
+        "id": "a-cart-read",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "a-cart-owner",
+        "result": "PASS"
+      },
+      {
+        "id": "b-cart-read",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "b-cart-owner",
+        "result": "PASS"
+      },
+      {
+        "id": "visitor-cart-merge",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "visitor-cart-replay",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "visitor-cart-no-duplicate",
+        "result": "PASS"
+      },
+      {
+        "id": "b-cart-isolation-read",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "cart-isolation",
+        "result": "PASS"
+      },
+      {
+        "id": "a-cart-reload",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "cart-persistence",
+        "result": "PASS"
+      },
+      {
+        "id": "cart-cross-account-scope-denied",
+        "result": "PASS",
+        "observed_status": 409,
+        "expected_status": 409
+      },
+      {
+        "id": "a-qa-refresh-sessions-revoked",
+        "result": "PASS"
+      },
+      {
+        "id": "a-secure-cookies",
+        "result": "PASS"
+      },
+      {
+        "id": "a-final-logout",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "b-qa-refresh-sessions-revoked",
+        "result": "PASS"
+      },
+      {
+        "id": "b-secure-cookies",
+        "result": "PASS"
+      },
+      {
+        "id": "b-final-logout",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "business-snapshot-readable",
+        "result": "PASS"
+      },
+      {
+        "id": "commercial-stock-unchanged",
+        "result": "PASS"
+      },
+      {
+        "id": "commercial-orders-unchanged",
+        "result": "PASS"
+      },
+      {
+        "id": "phase-recorded",
+        "result": "PASS"
+      }
+    ],
+    "phase": "cart_isolation",
+    "completed_phases": [
+      "registration_sessions",
+      "cart_isolation"
+    ],
+    "status": "PHASE_PASS",
+    "completed_at": "2026-11-03T04:39:30.536Z",
+    "totals": {
+      "pass": 36,
+      "fail": 0
+    }
+  },
+  {
+    "type": "dreams-private-authenticated-qa-v2",
+    "run": "pr56-types-20261102-r3",
+    "source_commit": "0368f65ed16acada506a327302aaa5277a4052fa",
+    "secret_source_version": "6ac06cff-e8e7-4b91-b4b5-3f20c9d33a51",
+    "backend_version": "11477c4f-0a90-4a71-86a1-2e9a7bfdbd4a",
+    "started_at": "2026-11-03T04:40:25.633Z",
+    "checks": [
+      {
+        "id": "expected-project-url",
+        "result": "PASS"
+      },
+      {
+        "id": "qa-identity-marker-readable",
+        "result": "PASS"
+      },
+      {
+        "id": "a-qa-profile-unambiguous",
+        "result": "PASS"
+      },
+      {
+        "id": "b-qa-profile-unambiguous",
+        "result": "PASS"
+      },
+      {
+        "id": "qa-phases-readable",
+        "result": "PASS"
+      },
+      {
+        "id": "business-snapshot-readable",
+        "result": "PASS"
+      },
+      {
+        "id": "a-secure-cookies",
+        "result": "PASS"
+      },
+      {
+        "id": "a-qa-login",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "a-qa-customer-identity",
+        "result": "PASS"
+      },
+      {
+        "id": "b-secure-cookies",
+        "result": "PASS"
+      },
+      {
+        "id": "b-qa-login",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "b-qa-customer-identity",
+        "result": "PASS"
+      },
+      {
+        "id": "review-create",
+        "result": "PASS",
+        "observed_status": 201,
+        "expected_status": 201
+      },
+      {
+        "id": "review-replay",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "review-reload",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "review-persisted-once",
+        "result": "PASS"
+      },
+      {
+        "id": "review-other-delete-denied",
+        "result": "PASS",
+        "observed_status": 404,
+        "expected_status": 404
+      },
+      {
+        "id": "review-own-delete",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "review-delete-reload",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "review-own-delete-persisted",
+        "result": "PASS"
+      },
+      {
+        "id": "a-qa-refresh-sessions-revoked",
+        "result": "PASS"
+      },
+      {
+        "id": "a-secure-cookies",
+        "result": "PASS"
+      },
+      {
+        "id": "a-final-logout",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "b-qa-refresh-sessions-revoked",
+        "result": "PASS"
+      },
+      {
+        "id": "b-secure-cookies",
+        "result": "PASS"
+      },
+      {
+        "id": "b-final-logout",
+        "result": "PASS",
+        "observed_status": 200,
+        "expected_status": 200
+      },
+      {
+        "id": "business-snapshot-readable",
+        "result": "PASS"
+      },
+      {
+        "id": "commercial-stock-unchanged",
+        "result": "PASS"
+      },
+      {
+        "id": "commercial-orders-unchanged",
+        "result": "PASS"
+      },
+      {
+        "id": "phase-recorded",
+        "result": "PASS"
+      }
+    ],
+    "phase": "review_ownership",
+    "completed_phases": [
+      "registration_sessions",
+      "cart_isolation",
+      "review_ownership"
+    ],
+    "status": "PHASE_PASS",
+    "completed_at": "2026-11-03T04:40:28.750Z",
+    "totals": {
+      "pass": 30,
+      "fail": 0
+    }
+  }
+]

@@ -1,3 +1,5 @@
+Retirada preparada del mecanismo QA en el entrypoint: scheduled queda inerte incluso con variables antiguas. Pendiente desplegar sólo después de completar las nueve fases R3 y casos Admin; heredar únicamente Secret Supabase. Suite476PASS, sintaxis101 y límite40 verificados para este cambio.
+
 # Falla API real de tipos reproducida; parche en validación
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
