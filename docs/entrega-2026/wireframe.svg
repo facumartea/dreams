@@ -3,14 +3,14 @@
 <style>text{font-family:DejaVu Sans,sans-serif;fill:#292722}.title{font-size:30px;font-weight:bold}.heading{font-size:19px;font-weight:bold}.body{font-size:17px}.route{font-size:15px;fill:#695a3c}</style>
 <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#a07b35"/></marker></defs>
 <text x="42" y="50" class="title">DREAMS · Wireframe y conexiones — entrega 2026</text>
-<text x="42" y="82" class="body">Adaptación de la propuesta adjunta a las rutas del candidato. No acredita QA remota ni publicación.</text>
+<text x="42" y="82" class="body">Rutas oficiales · Inicio sin carrusel por solicitud del usuario. Menú de colecciones conservado.</text>
 <rect x="42" y="125" width="402" height="265" rx="10" fill="white" stroke="#bdb4a7"/>
 <rect x="43" y="137" width="400" height="43" fill="#eae4da"/>
 <text x="57" y="166" class="heading">01 · INICIO</text>
 <text x="57" y="207" class="route">/</text>
 <text x="57" y="245" class="body">Logo · Menú · Cuenta · Carrito</text>
 <text x="57" y="279" class="body">Portada estática · Ver perfumes</text>
-<text x="57" y="313" class="body">Destacados · Carrusel de colecciones</text>
+<text x="57" y="313" class="body">Destacados · Sobre DREAMS</text>
 <text x="57" y="347" class="body">Opiniones · Recientes · Footer</text>
 <rect x="480" y="125" width="402" height="265" rx="10" fill="white" stroke="#bdb4a7"/>
 <rect x="481" y="137" width="400" height="43" fill="#eae4da"/>

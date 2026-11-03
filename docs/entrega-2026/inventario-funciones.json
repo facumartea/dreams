@@ -2436,54 +2436,6 @@
     },
     {
       "file": "public/js/app.js",
-      "name": "setup_collection_carousel",
-      "kind": "FunctionDeclaration",
-      "start": 298,
-      "end": 318,
-      "lines": 21
-    },
-    {
-      "file": "public/js/app.js",
-      "name": "show",
-      "kind": "ArrowFunctionExpression",
-      "start": 304,
-      "end": 308,
-      "lines": 5
-    },
-    {
-      "file": "public/js/app.js",
-      "name": "callback:forEach",
-      "kind": "ArrowFunctionExpression",
-      "start": 306,
-      "end": 306,
-      "lines": 1
-    },
-    {
-      "file": "public/js/app.js",
-      "name": "callback:addEventListener",
-      "kind": "ArrowFunctionExpression",
-      "start": 310,
-      "end": 310,
-      "lines": 1
-    },
-    {
-      "file": "public/js/app.js",
-      "name": "callback:addEventListener",
-      "kind": "ArrowFunctionExpression",
-      "start": 311,
-      "end": 311,
-      "lines": 1
-    },
-    {
-      "file": "public/js/app.js",
-      "name": "callback:addEventListener",
-      "kind": "ArrowFunctionExpression",
-      "start": 312,
-      "end": 316,
-      "lines": 5
-    },
-    {
-      "file": "public/js/app.js",
       "name": "bloque ejecutable superior",
       "kind": "ProgramBlock",
       "start": 12,
@@ -2494,8 +2446,8 @@
       "file": "public/js/app.js",
       "name": "bloque ejecutable superior",
       "kind": "ProgramBlock",
-      "start": 328,
-      "end": 328,
+      "start": 303,
+      "end": 303,
       "lines": 1
     },
     {
@@ -12003,142 +11955,6 @@
       "lines": 1
     },
     {
-      "file": "test/collection-carousel.test.js",
-      "name": "carousel",
-      "kind": "FunctionDeclaration",
-      "start": 7,
-      "end": 18,
-      "lines": 12
-    },
-    {
-      "file": "test/collection-carousel.test.js",
-      "name": "callback:from",
-      "kind": "ArrowFunctionExpression",
-      "start": 9,
-      "end": 9,
-      "lines": 1
-    },
-    {
-      "file": "test/collection-carousel.test.js",
-      "name": "querySelector",
-      "kind": "ArrowFunctionExpression",
-      "start": 9,
-      "end": 9,
-      "lines": 1
-    },
-    {
-      "file": "test/collection-carousel.test.js",
-      "name": "control",
-      "kind": "ArrowFunctionExpression",
-      "start": 10,
-      "end": 10,
-      "lines": 1
-    },
-    {
-      "file": "test/collection-carousel.test.js",
-      "name": "addEventListener",
-      "kind": "ArrowFunctionExpression",
-      "start": 10,
-      "end": 10,
-      "lines": 1
-    },
-    {
-      "file": "test/collection-carousel.test.js",
-      "name": "querySelectorAll",
-      "kind": "ArrowFunctionExpression",
-      "start": 13,
-      "end": 13,
-      "lines": 1
-    },
-    {
-      "file": "test/collection-carousel.test.js",
-      "name": "querySelector",
-      "kind": "ArrowFunctionExpression",
-      "start": 13,
-      "end": 13,
-      "lines": 1
-    },
-    {
-      "file": "test/collection-carousel.test.js",
-      "name": "addEventListener",
-      "kind": "ArrowFunctionExpression",
-      "start": 13,
-      "end": 13,
-      "lines": 1
-    },
-    {
-      "file": "test/collection-carousel.test.js",
-      "name": "callback:find",
-      "kind": "ArrowFunctionExpression",
-      "start": 15,
-      "end": 15,
-      "lines": 1
-    },
-    {
-      "file": "test/collection-carousel.test.js",
-      "name": "querySelector",
-      "kind": "ArrowFunctionExpression",
-      "start": 16,
-      "end": 16,
-      "lines": 1
-    },
-    {
-      "file": "test/collection-carousel.test.js",
-      "name": "callback:test",
-      "kind": "ArrowFunctionExpression",
-      "start": 20,
-      "end": 29,
-      "lines": 10
-    },
-    {
-      "file": "test/collection-carousel.test.js",
-      "name": "callback:map",
-      "kind": "ArrowFunctionExpression",
-      "start": 22,
-      "end": 22,
-      "lines": 1
-    },
-    {
-      "file": "test/collection-carousel.test.js",
-      "name": "callback:test",
-      "kind": "ArrowFunctionExpression",
-      "start": 30,
-      "end": 38,
-      "lines": 9
-    },
-    {
-      "file": "test/collection-carousel.test.js",
-      "name": "event",
-      "kind": "ArrowFunctionExpression",
-      "start": 32,
-      "end": 32,
-      "lines": 1
-    },
-    {
-      "file": "test/collection-carousel.test.js",
-      "name": "matches",
-      "kind": "ArrowFunctionExpression",
-      "start": 32,
-      "end": 32,
-      "lines": 1
-    },
-    {
-      "file": "test/collection-carousel.test.js",
-      "name": "preventDefault",
-      "kind": "ArrowFunctionExpression",
-      "start": 32,
-      "end": 32,
-      "lines": 1
-    },
-    {
-      "file": "test/collection-carousel.test.js",
-      "name": "callback:test",
-      "kind": "ArrowFunctionExpression",
-      "start": 39,
-      "end": 44,
-      "lines": 6
-    },
-    {
       "file": "test/coupon.test.js",
       "name": "coupon_database",
       "kind": "FunctionDeclaration",
@@ -13081,6 +12897,38 @@
       "start": 30,
       "end": 30,
       "lines": 1
+    },
+    {
+      "file": "test/home-collections-removal.test.js",
+      "name": "read",
+      "kind": "ArrowFunctionExpression",
+      "start": 4,
+      "end": 4,
+      "lines": 1
+    },
+    {
+      "file": "test/home-collections-removal.test.js",
+      "name": "callback:test",
+      "kind": "ArrowFunctionExpression",
+      "start": 5,
+      "end": 9,
+      "lines": 5
+    },
+    {
+      "file": "test/home-collections-removal.test.js",
+      "name": "callback:test",
+      "kind": "ArrowFunctionExpression",
+      "start": 10,
+      "end": 14,
+      "lines": 5
+    },
+    {
+      "file": "test/home-collections-removal.test.js",
+      "name": "callback:test",
+      "kind": "ArrowFunctionExpression",
+      "start": 15,
+      "end": 19,
+      "lines": 5
     },
     {
       "file": "test/migration.test.js",

@@ -10,7 +10,7 @@ Material de estudio; no demuestra que los integrantes ya comprendan o puedan def
 6. Dibujar el cambio de cuenta A→B del carrito. Explicar UUID, revisión, operation_id, merge de visitante e idempotencia. Mostrar por qué el precio se calcula en servidor.
 7. Demostrar autoría de opinión y rechazo de borrado ajeno por API. Explicar por qué ocultar un botón no protege una ruta.
 8. Checkout académico: tarjeta ficticia sólo navegador, ticket/receipt firmados y referencia estable. Distinguir simulación de un cobro y de una orden comercial. WhatsApp sólo abre un enlace con resumen.
-9. Explicar semántica HTML, labels, foco, responsive y carrusel manual. Navegar con Tab/Enter/Flechas, desactivar JS y revisar contenido disponible.
+9. Explicar semántica HTML, labels, foco, responsive y navegación por colecciones. Navegar con Tab/Enter y explicar que el carrusel fue retirado por pedido del usuario y queda pendiente en la rúbrica.
 10. Extraer ZIP, instalar con lockfile, ejecutar checks/tests/build sin `.git`. Localizar inventario40 y mostrar cómo falla una función de41 líneas con comentarios. Explicar limitaciones de la medición de programa principal.
 
 Ejercicios individuales: localizar y corregir una URL HTTP inválida; agregar un caso límite de stock; explicar un 401 frente a un 403; restaurar un cambio local mediante Git; leer un test sin ejecutarlo y predecir su resultado; detectar una interpolación HTML insegura y usar escape. Registrar qué resolvió cada integrante, sólo después de hacerlo.
