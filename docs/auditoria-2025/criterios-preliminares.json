@@ -1,0 +1,282 @@
+[
+  [
+    "D01",
+    "Marca de fantasía e identidad propia",
+    "public/index.html:43; docs/entrega-2026/diseno.md",
+    "CUMPLE",
+    "DREAMS identifica perfumería; isologo/textos propios de la propuesta. No se acredita registro legal ni autoría individual.",
+    "Aportar original/proceso si el profesor lo exige.",
+    "P2",
+    "Integrantes"
+  ],
+  [
+    "D02",
+    "Logo simple PNG, máximo3colores de diseño",
+    "public/assets/dreams-isologo-clean.png; public/cuenta.html",
+    "PARCIAL",
+    "PNG56×79 inspeccionado: símbolo dorado con transparencia y antialias. No contar píxeles como tintas. Original vectorial/proceso no acreditado.",
+    "Aportar original apropiado y aclaración docente si considera los tonos del raster colores de diseño.",
+    "P2",
+    "Integrantes/profesor"
+  ],
+  [
+    "D03",
+    "Paleta coherente",
+    "public/css/style.css:1–23,99–113",
+    "CUMPLE",
+    "Tokens negro/marfil/dorado y variantes Mujer/Hombre/Unisex coherentes por colección.",
+    "Valoración estética corresponde al profesor; no exigir todos los píxeles iguales.",
+    "P3",
+    "Profesor"
+  ],
+  [
+    "D04",
+    "Jerarquías tipográficas",
+    "public/css/style.css:20–26; public/index.html:43",
+    "CUMPLE",
+    "H1/H2/H3, display/UI, tamaños y eyebrow diferenciados.",
+    "Sin corrección funcional autorizada; revisar originalidad en defensa.",
+    "P3",
+    "Profesor"
+  ],
+  [
+    "D05",
+    "Navegación clara",
+    "public/index.html:31–40; public/js/navigation.js; contraste-oficial.json",
+    "CUMPLE",
+    "Menú/colecciones/cuenta/carrito/footer presentes; filtros visibles;390/1440 sin overflow ni pageerror en las rutas observadas.",
+    "WCAG completa y dispositivos físicos no auditados.",
+    "P3",
+    "—"
+  ],
+  [
+    "D06",
+    "Imágenes e íconos pertinentes",
+    "public/index.html:53–62; public/producto.html; public/assets",
+    "PARCIAL",
+    "Fotografía de frasco ySVG de cuenta/carrito pertinentes; licencias individuales de imágenes de productos no acreditadas.",
+    "Aportar procedencia/licencias/originales, sin inventarlas.",
+    "P2",
+    "Integrantes"
+  ],
+  [
+    "P01",
+    "Modalidad del proyecto",
+    "README.md; package.json; public/*.html; server/app.js",
+    "PARCIAL",
+    "Arquitectura compatible con sitioHTML/CSS/JS consumiendoAPI y backendNode. Falta el PDF2025 y acta de modalidad elegida.",
+    "Confirmar opción del PDF y elección del grupo. No trasladar SQLite de2026 a esta opción.",
+    "P1",
+    "Usuario/profesor"
+  ],
+  [
+    "P02",
+    "Consumo real de una API",
+    "worker/official-client.mjs; server/app.js; docs/entrega-2026/api.md",
+    "CUMPLE",
+    "Frontend→/api→backend→SupabaseAuth/DataAPI. GETproductos real y metadatos remotos verifican dependencia externa; sin enviar formularios nuevos.",
+    "El alcance exacto del requisitoAPI debe contrastarse con PDF faltante.",
+    "P2",
+    "Profesor"
+  ],
+  [
+    "P03",
+    "Mínimo4páginas si modalidad sitio",
+    "public/index.html,catalogo.html,producto.html,nosotros.html,cuenta.html,carrito.html,checkout.html,checkout-resultado.html",
+    "CUMPLE",
+    "Más de4documentos públicos distintos; los filtros Mujer/Hombre/Unisex no se cuentan como tresHTML adicionales.",
+    "Confirmar literal y modalidad del PDF; no confundir rutas con páginas independientes.",
+    "P2",
+    "Profesor"
+  ],
+  [
+    "P04",
+    "JavaScript",
+    "public/js; server; worker; pages",
+    "CUMPLE",
+    "Lógica propia de UI, API, sesiones, carrito, filtros y checkout.489testsPASS.",
+    "Comprensión individual requiere defensa.",
+    "P2",
+    "Integrantes"
+  ],
+  [
+    "P05",
+    "Carrusel",
+    "public/index.html; public/js/app.js; public/css/style.css; PR58",
+    "NO CUMPLE",
+    "Único carrusel eliminado por solicitud expresa anterior. No queda otro; no se conserva oculto.",
+    "Aclarar con profesor o autorizar un reemplazo en otra tarea; no se implementa en esta auditoría.",
+    "P1",
+    "Usuario/profesor"
+  ],
+  [
+    "P06",
+    "HTML semántico",
+    "public/index.html:31–115; public/catalogo.html; views/admin.html",
+    "CUMPLE",
+    "Header/nav/main/section/article/footer, labels, status y diálogo de filtros.",
+    "No equivale a certificado WCAG; revisión completa fuera de alcance.",
+    "P3",
+    "—"
+  ],
+  [
+    "P07",
+    "Responsive",
+    "public/css/style.css; contraste-oficial.json",
+    "CUMPLE",
+    "390/1440 emulados: siete rutas, filtros visibles, sin overflow y sin erroresJS observados.",
+    "Safari/celular físico y todos los estados no verificados hoy.",
+    "P3",
+    "—"
+  ],
+  [
+    "P08",
+    "Funcionamiento/conexión",
+    "contraste-oficial.json; docs/evidence/coupon-academic-20261103/remote-browser.json",
+    "PARCIAL",
+    "Lecturas actualesPASS y evidencia previa de Auth/checkout sobre mismo backendef043065. En esta tarea no se escriben datos. AdminautenticadoBLOQUEADO, no hay sesión disponible.",
+    "Habilitar revisión supervisada de Admin si se necesita evidencia nueva, sin pedir secretos por chat.",
+    "P1",
+    "Integrantes"
+  ],
+  [
+    "P09",
+    "Indentación/organización/comentarios",
+    "server/app.js; public/js; worker; scripts; tests",
+    "PARCIAL",
+    "Módulos y comentarios útiles presentes; mezcla de archivos legibles y código compacto/varias instrucciones por línea en históricos y tests.",
+    "Revisión cualitativa docente; no se refactoriza ni comprime aquí.",
+    "P2",
+    "Integrantes/profesor"
+  ],
+  [
+    "P10",
+    "Funciones y principal≤40líneas",
+    "scripts/function-inventory.mjs; control-40-lineas.md",
+    "PARCIAL",
+    "RepositorioJS:117archivos/2147registros/máximo40/0excesos. SQLpropio: dreams_cart_operation53líneas. Oficialcheckout.js distinto consetup_checkout113líneas.",
+    "Confirmar alcance docente sobreSQL y runtime; planificar correcciones/versionado fuera de esta tarea.",
+    "P1",
+    "Profesor/implementación posterior"
+  ],
+  [
+    "O01",
+    "Pseudocódigo y/o wireframe",
+    "docs/entrega-2026/wireframe.{png,svg,md}",
+    "PARCIAL",
+    "Enb60e33d existe mapa general, no láminas detalladas por pantalla/móvil. Esta solicitud genera17láminas y mapa nuevos, retrospectivos, sin fingir preentrega.",
+    "La documentación nueva queda disponible tras integrar esta PR; no retrofecharla.",
+    "P2",
+    "Integrantes"
+  ],
+  [
+    "O02",
+    "Manual de uso",
+    "docs/entrega-2026/manual.md ymanual.pdf",
+    "CUMPLE",
+    "Guía5páginasPDF con capturas yMarkdown: cuentas, catálogo, carrito, checkout, cupones, Admin y recuperación.",
+    "Los documentos históricos contradictorios deben identificarse al corregir.",
+    "P2",
+    "Integrantes"
+  ],
+  [
+    "O03",
+    "DiseñoBD porque se usa una",
+    "docs/entrega-2026/base-de-datos.md/.mmd; supabase/migrations",
+    "PARCIAL",
+    "Esquema textual/Mermaid real e histórico separados; no habíaDERPDF/PNG completo. CardinalidadAuth→perfil anterior exageraba obligatoriedad. NuevoDERcontrastaPK/FK/nulabilidad y9tablas remotas.",
+    "Entregar nuevosPDF/PNG/DOT/SVG y diccionario sin sustituir el histórico ni afirmar esquema completo internoAuth.",
+    "P1",
+    "Documentación de esta PR"
+  ],
+  [
+    "O04",
+    "Link API y explicación más allá del código",
+    "docs/entrega-2026/api.md:3–31",
+    "CUMPLE",
+    "Links aSupabase y recorrido por capas con ejemplos sin secretos. WhatsApp es enlace, noAPI.",
+    "Explicación oral por integrantes no acreditada.",
+    "P2",
+    "Integrantes"
+  ],
+  [
+    "O05",
+    "Documentos accesibles para corrección",
+    "docs/entrega-2026/INDICE.md; archivos-versionados-commit-auditado.txt",
+    "PARCIAL",
+    "Documentos versionados y relativos; carpeta2026 dominante para una auditoría que solicita2025. Nuevos gráficos no estaban enb60e33d.",
+    "Usar nuevo índice; verificar merge de laPR documental antes de descargar main.",
+    "P1",
+    "Integrantes"
+  ],
+  [
+    "A01",
+    "Máximo3integrantes según el pedido",
+    "README.md yfooter; confirmación del usuario en conversación",
+    "NO VERIFICABLE",
+    "Dos apellidos confirmados: Martearena yRuas. No hay acta oficial del grupo ni PDF2025 disponible para verificar el literal.",
+    "Aportar nómina/consigna2025; no usar límite2de2026 como equivalente.",
+    "P1",
+    "Integrantes/profesor"
+  ],
+  [
+    "A02",
+    "Entregas previa/final y fechas literales",
+    "PDF2025 no disponible; Git/CHANGELOG no son comprobantes",
+    "NO VERIFICABLE",
+    "No se conocen las fechas textuales2025 y no se trasladan las de2026. No hay recibosClassroom.",
+    "AdjuntarPDF2025 y comprobantes de entregas reales. No asumir calendario2025 aplicable a2026.",
+    "P0",
+    "Usuario/integrantes"
+  ],
+  [
+    "A03",
+    "Participación y trabajo en clase",
+    "docs/entrega-2026/bitacora-ia.md; historialGit",
+    "NO VERIFICABLE",
+    "Git y trabajoIA no prueban asistencia ni aporte individual.",
+    "Aportar evidencia propia y validación docente.",
+    "P1",
+    "Integrantes/profesor"
+  ],
+  [
+    "A04",
+    "Autonomía",
+    "Bitácora/historial técnico",
+    "NO VERIFICABLE",
+    "No observación de clase ni registro independiente; no atribuir al grupo resolución hecha porIA.",
+    "Evidencia de proceso y evaluación docente.",
+    "P1",
+    "Integrantes/profesor"
+  ],
+  [
+    "A05",
+    "Explicar código y documentación individualmente",
+    "docs/entrega-2026/defensa.md",
+    "NO VERIFICABLE",
+    "Hay guía y ejercicios, no prueba de dominio.",
+    "Practicar y realizar defensa individual; no declarar competencia por tener una guía.",
+    "P1",
+    "Cada integrante/profesor"
+  ],
+  [
+    "A06",
+    "Formato/nombre del archivo de entrega",
+    "docs/entrega-2026/zip.md; pedido actual noZIP",
+    "NO VERIFICABLE",
+    "SinZIPgenerado, conforme a autorización. PDF2025 y su patrón literal de nombre faltan.",
+    "Confirmar formato/nombre exactos conPDF y verificar archivo que entreguen los integrantes; no enviarlo automáticamente.",
+    "P0",
+    "Usuario/integrantes"
+  ],
+  [
+    "A07",
+    "Condiciones de aprobación",
+    "PDF2025 no disponible",
+    "NO VERIFICABLE",
+    "No se infieren umbrales ni puntajes de2026.",
+    "Leer literal2025 y dejar la calificación al profesor.",
+    "P0",
+    "Usuario/profesor"
+  ]
+]

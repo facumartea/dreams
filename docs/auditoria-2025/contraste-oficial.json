@@ -1,0 +1,186 @@
+{
+  "date": "2026-11-03",
+  "mode": "GET/HEAD; otras peticiones abortadas antes de red, sin formularios enviados",
+  "rows": [
+    {
+      "path": "/",
+      "width": 390,
+      "status": 200,
+      "overflow": false,
+      "heading": "Los perfumes\nde tus sueños.",
+      "page_errors": []
+    },
+    {
+      "path": "/catalogo.html",
+      "width": 390,
+      "status": 200,
+      "overflow": false,
+      "heading": "Perfumes",
+      "page_errors": []
+    },
+    {
+      "path": "catalogo/filtros",
+      "width": 390,
+      "visible": true
+    },
+    {
+      "path": "/producto.html?id=199",
+      "width": 390,
+      "status": 200,
+      "overflow": false,
+      "heading": "Ombre Leather Parfum",
+      "page_errors": []
+    },
+    {
+      "path": "/nosotros.html",
+      "width": 390,
+      "status": 200,
+      "overflow": false,
+      "heading": "Los perfumes de tus sueños.",
+      "page_errors": []
+    },
+    {
+      "path": "/cuenta.html",
+      "width": 390,
+      "status": 200,
+      "overflow": false,
+      "heading": "Ingresá a DREAMS",
+      "page_errors": []
+    },
+    {
+      "path": "/carrito.html",
+      "width": 390,
+      "status": 200,
+      "overflow": false,
+      "heading": "Tu carrito",
+      "page_errors": []
+    },
+    {
+      "path": "/checkout.html",
+      "width": 390,
+      "status": 200,
+      "overflow": false,
+      "heading": "Finalizar compra",
+      "page_errors": []
+    },
+    {
+      "path": "/admin",
+      "width": 390,
+      "status": 403,
+      "authenticated_test": "BLOQUEADO: sin sesión Admin autorizada disponible en esta ejecución",
+      "blocked_non_read_requests": 1
+    },
+    {
+      "path": "/",
+      "width": 1440,
+      "status": 200,
+      "overflow": false,
+      "heading": "Los perfumes\nde tus sueños.",
+      "page_errors": []
+    },
+    {
+      "path": "/catalogo.html",
+      "width": 1440,
+      "status": 200,
+      "overflow": false,
+      "heading": "Perfumes",
+      "page_errors": []
+    },
+    {
+      "path": "catalogo/filtros",
+      "width": 1440,
+      "visible": true
+    },
+    {
+      "path": "/producto.html?id=199",
+      "width": 1440,
+      "status": 200,
+      "overflow": false,
+      "heading": "Ombre Leather Parfum",
+      "page_errors": []
+    },
+    {
+      "path": "/nosotros.html",
+      "width": 1440,
+      "status": 200,
+      "overflow": false,
+      "heading": "Los perfumes de tus sueños.",
+      "page_errors": []
+    },
+    {
+      "path": "/cuenta.html",
+      "width": 1440,
+      "status": 200,
+      "overflow": false,
+      "heading": "Ingresá a DREAMS",
+      "page_errors": []
+    },
+    {
+      "path": "/carrito.html",
+      "width": 1440,
+      "status": 200,
+      "overflow": false,
+      "heading": "Tu carrito",
+      "page_errors": []
+    },
+    {
+      "path": "/checkout.html",
+      "width": 1440,
+      "status": 200,
+      "overflow": false,
+      "heading": "Finalizar compra",
+      "page_errors": []
+    },
+    {
+      "path": "/admin",
+      "width": 1440,
+      "status": 403,
+      "authenticated_test": "BLOQUEADO: sin sesión Admin autorizada disponible en esta ejecución",
+      "blocked_non_read_requests": 1
+    }
+  ],
+  "hashes": [
+    {
+      "path": "/js/app.js",
+      "status": 200,
+      "source_equal": true,
+      "remote_sha256": "538d674a2f08b2260254936515df00ceaa75259a116c427789e45097d5193f45",
+      "repo_sha256": "538d674a2f08b2260254936515df00ceaa75259a116c427789e45097d5193f45"
+    },
+    {
+      "path": "/js/carrito.js",
+      "status": 200,
+      "source_equal": true,
+      "remote_sha256": "1ca7a87e7ba2e0500d3e8b0ab7bf84c5c2b01db8f2a313035bff3099733af911",
+      "repo_sha256": "1ca7a87e7ba2e0500d3e8b0ab7bf84c5c2b01db8f2a313035bff3099733af911"
+    },
+    {
+      "path": "/js/presentation.js",
+      "status": 200,
+      "source_equal": true,
+      "remote_sha256": "11e0ece46dd1a33a97c8e687ae97fe2d8c4508ea8e2841f33667af03827bc079",
+      "repo_sha256": "11e0ece46dd1a33a97c8e687ae97fe2d8c4508ea8e2841f33667af03827bc079"
+    },
+    {
+      "path": "/js/academic-inputs.js",
+      "status": 200,
+      "source_equal": true,
+      "remote_sha256": "797eab6b7bdacfd21d2b3f624287d076ba79913c11476b2598db96b7b21fd07d",
+      "repo_sha256": "797eab6b7bdacfd21d2b3f624287d076ba79913c11476b2598db96b7b21fd07d"
+    },
+    {
+      "path": "/js/checkout.js",
+      "status": 200,
+      "source_equal": false,
+      "remote_sha256": "d90d177679399ac9dfb05e0781f1bf9d52a27bb99bb506213f38e57be3681e0e",
+      "repo_sha256": "0afa3aae18cedff28abe2559ff1f1a0713aaf2b769a14bcdd5eea24cee65b48c"
+    },
+    {
+      "path": "/css/style.css",
+      "status": 200,
+      "source_equal": true,
+      "remote_sha256": "b962a26b4b6a9fd5af21ba2b1ae8d457892ca8cacece66d2039184b4ac9b58b2",
+      "repo_sha256": "b962a26b4b6a9fd5af21ba2b1ae8d457892ca8cacece66d2039184b4ac9b58b2"
+    }
+  ]
+}

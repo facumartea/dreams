@@ -1,3 +1,19 @@
+# Auditoría documental2025 — fuente pendiente, sin cambios funcionales
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Rama docs/auditoria-rubrica-2025 desde mainb60e33db5d9c3925808f889f6581a75dc1738ac0 (commit auditado). Sólo documentos nuevos en docs/auditoria-2025 y enlaces/continuidad; aplicación, datos, Auth, credenciales, configuración y despliegues intactos. NoZIP.
+
+BLOQUEO: elPDF2025 solicitado no está disponible; sólo está el2026 anterior. Se pidió adjuntarlo al iniciar. NO se usó2026 como equivalente, NO se transcribieron fechas/puntajes2025 inventados. Matrizprovisional por orden del pedido; la auditoría definitiva por orden delPDF sigueBLOQUEADA hasta recibirlo.
+
+Trabajo independiente:17láminaswireframe escritorio/móvil PDF/PNG/SVG, mapaPDF/PNG/DOT/SVG yDERPDF/PNG/DOT/SVG, con metadatos remotos de9tablas públicas+auth.users.id, claves/cardinalidades/nulabilidad ydiccionario. Documentación retrospectiva, sin retrofechar. PDFsrasterizados e imágenes revisadas visualmente; fuentehistórica conservada.
+
+Hallazgos: carrusel ausente por eliminación solicitada; JSdelrepositorio117archivos/2147registros/máximo40/0excesos; funciónSQL dreams_cart_operation53líneas; checkout.js oficial legadodeec04 difiere demain ysetup_checkout113líneas. No se corrigió ninguno silenciosamente. AdminautenticadoBLOQUEADO sin sesión; GETAdmin403.489testsPASS, check103, buildPages/oficialPASS; inventario e instalación desdeTARsin.gitPASS. Lecturasoficiales390/1440sin erroresJS/overflow; noformularios enviados.
+
+GitHubmainverificado;22PRsabiertas previas:9HEADancestros y13noancestros, listadoySHAenalcance.json. Archivos nuevos no estaban encommit auditado; aparecen enmain sólo tras integrarPR documental conchecks. No nuevas credenciales, noAdminsessions, noSecret/KV/Cron ni publicación. Próxima acción cuando lleguePDF2025: leerlo completo y completar matrizdefinitiva/fechas respetando literal, sin reiniciar gráficos o controles acreditados.
+
+## Historial anterior conservado
+
 # Inicio actualizado y publicado — cierre03/11/2026
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.

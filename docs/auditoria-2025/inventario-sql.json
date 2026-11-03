@@ -1,0 +1,30 @@
+[
+  {
+    "file": "supabase/migrations/20260828144944_production_baseline.sql",
+    "name": "private.create_profile_for_new_user",
+    "start": 87,
+    "end": 103,
+    "lines": 17
+  },
+  {
+    "file": "supabase/migrations/20260828144944_production_baseline.sql",
+    "name": "private.set_updated_at",
+    "start": 115,
+    "end": 125,
+    "lines": 11
+  },
+  {
+    "file": "supabase/migrations/20260901090000_admin_authenticated_policies.sql",
+    "name": "public.is_dreams_admin",
+    "start": 3,
+    "end": 15,
+    "lines": 13
+  },
+  {
+    "file": "supabase/migrations/20261013032746_account_carts.sql",
+    "name": "public.dreams_cart_operation",
+    "start": 23,
+    "end": 75,
+    "lines": 53
+  }
+]

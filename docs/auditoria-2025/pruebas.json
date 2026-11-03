@@ -1,0 +1,42 @@
+{
+  "audited_commit": "b60e33db5d9c3925808f889f6581a75dc1738ac0",
+  "commands": [
+    {
+      "command": "corepack pnpm check",
+      "result": "PASS",
+      "javascript_files": 103
+    },
+    {
+      "command": "corepack pnpm test",
+      "result": "PASS",
+      "tests": 489,
+      "failures": 0,
+      "skipped": 0
+    },
+    {
+      "command": "corepack pnpm build:pages",
+      "result": "PASS",
+      "deployment": false
+    },
+    {
+      "command": "corepack pnpm build:official",
+      "result": "PASS",
+      "deployment": false
+    },
+    {
+      "command": "git archive b60e33d | tar -x; corepack pnpm install --frozen-lockfile; node scripts/function-inventory.mjs .",
+      "result": "PASS",
+      "no_git": true,
+      "zip_generated": false,
+      "files": 117,
+      "records": 2147,
+      "violations": 0
+    }
+  ],
+  "remote": "GET/HEAD; non-read browser requests aborted",
+  "schema": "catalog metadata only",
+  "source_pdf_2025": "MISSING",
+  "application_changes": false,
+  "deployments": false,
+  "graphics_visual_review": "PDFs rasterizados y PNG/SVG revisados;17láminas y detallecheckout/Admin,DER ymapa; se corrigieron desbordes y distribución documental durante la creación"
+}
