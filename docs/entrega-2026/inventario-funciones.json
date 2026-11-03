@@ -14027,6 +14027,22 @@
       "lines": 4
     },
     {
+      "file": "test/pages-proxy.test.mjs",
+      "name": "callback:test",
+      "kind": "ArrowFunctionExpression",
+      "start": 176,
+      "end": 184,
+      "lines": 9
+    },
+    {
+      "file": "test/pages-proxy.test.mjs",
+      "name": "fetch_backend",
+      "kind": "ArrowFunctionExpression",
+      "start": 180,
+      "end": 180,
+      "lines": 1
+    },
+    {
       "file": "test/payment.test.js",
       "name": "callback:test",
       "kind": "ArrowFunctionExpression",
