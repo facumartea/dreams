@@ -26,6 +26,7 @@ for (const [pathname, relative, content_type] of [
     ['/js/producto.js', 'public/js/producto.js', 'application/javascript; charset=utf-8'],
     ['/js/motion.js', 'public/js/motion.js', 'application/javascript; charset=utf-8'],
     ['/js/carrito.js', 'public/js/carrito.js', 'application/javascript; charset=utf-8'],
+    ['/js/academic-inputs.js', 'public/js/academic-inputs.js', 'application/javascript; charset=utf-8'],
     ['/js/presentation.js', 'public/js/presentation.js', 'application/javascript; charset=utf-8'],
     ['/js/cuenta.js', 'public/js/cuenta.js', 'application/javascript; charset=utf-8'],
     ['/js/account-cart.js', 'public/js/account-cart.js', 'application/javascript; charset=utf-8'],

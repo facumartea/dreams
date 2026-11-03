@@ -31,9 +31,11 @@
   "qa_evidence": "docs/evidence/admin-audit-20261102/private-qa.json",
   "next_deployment_note": "Publicación actual ya comprobada; este gate protege una NUEVA publicación. Renovar lectura y QA de la versión elegida antes de publicar otra vez. No repetir deployment fallido.",
   "active_backend": {
-    "backend_version": "29b843a0-d04e-4631-8d52-627d5f598654",
-    "backend_deployment": "31aef453-abc3-44ff-8dc1-659e84553dd3",
-    "backend_commit": "e86f4343851d9810623996d2b7d13504163340c0"
+    "backend_version": "ef043065-5d28-45c7-906b-b9e1edb6a5ab",
+    "backend_deployment": "2479eec0-5831-4284-8b7c-0ae8069884a7",
+    "backend_commit": "08635cdc5c1706ae520cbeec6c9a1b403c4df483"
   },
-  "live_evidence": "docs/evidence/admin-audit-20261102/final-state.json"
+  "live_evidence": "docs/evidence/coupon-academic-20261103/README.md",
+  "current_pages_deployment": "fdd5f665-c7d1-438a-bc3d-e4bb079517fc",
+  "current_pages_commit": "97c433355e1da58054620f5446bac2b5b6e7bb7f"
 }

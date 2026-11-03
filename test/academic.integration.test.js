@@ -34,7 +34,7 @@ test('direct academic confirmation recalculates products, has zero shipping, rep
             assert.equal(created.status, 200);
             const cookie = created.headers.getSetCookie()[0].split(';')[0];
             const data = await created.json();
-            assert.equal(data.subtotal, 240); assert.equal(data.shipping, 0); assert.equal(data.total, data.subtotal); assert.equal(data.shipping_label, 'Envío gratis');
+            assert.equal(data.subtotal, 240); assert.equal(data.shipping, 0); assert.equal(data.total, data.subtotal); assert.equal(data.shipping_label, 'Envío');
             const receipt = await (await post(base, '/api/presentation/payment', { ticket: data.ticket }, cookie)).json();
             assert.equal(receipt.status, 'completed');
             assert.deepEqual(await (await post(base, '/api/presentation/payment', { ticket: data.ticket }, cookie)).json(), receipt);
@@ -72,7 +72,7 @@ test('free shipping and WhatsApp total apply only to academic quote, preserving 
     for (const academic of [false, true]) await serve({ ...(academic ? enabled : {}), whatsapp_number: '5491112345678' }, async base => {
         const quote = await (await post(base, '/api/cart/quote', { items: [{ id: 7, quantity: 2 }] })).json();
         assert.equal(quote.total, 240);
-        if (academic) { assert.equal(quote.shipping, 0); assert.equal(quote.shipping_label, 'Envío gratis'); assert.match(decodeURIComponent(quote.whatsapp_url), /Envío gratis/); }
+        if (academic) { assert.equal(quote.shipping, 0); assert.equal(quote.shipping_label, 'Envío'); assert.match(decodeURIComponent(quote.whatsapp_url), /Envío/); }
         else { assert.equal(quote.shipping, undefined); assert.match(decodeURIComponent(quote.whatsapp_url), /Envío a consultar, no incluido/); }
     });
 });

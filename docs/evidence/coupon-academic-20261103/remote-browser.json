@@ -1,0 +1,39 @@
+{
+  "origin": "https://dreams-perfumes.pages.dev",
+  "checks": [
+    {
+      "area": "coupon",
+      "width": 390,
+      "enter_button_remove_invalid_quantity_reload_network_retry": "PASS"
+    },
+    {
+      "area": "form-confirmation",
+      "width": 390,
+      "total_consistent": true,
+      "stable_reference": true,
+      "shipping": 0,
+      "financial_network_storage": false,
+      "result": "PASS"
+    },
+    {
+      "area": "coupon",
+      "width": 1440,
+      "enter_button_remove_invalid_quantity_reload_network_retry": "PASS"
+    },
+    {
+      "area": "form-confirmation",
+      "width": 1440,
+      "total_consistent": true,
+      "stable_reference": true,
+      "shipping": 0,
+      "financial_network_storage": false,
+      "result": "PASS"
+    },
+    {
+      "area": "normal-register-login-session-logout-customer-admin-denied",
+      "result": "PASS"
+    }
+  ],
+  "commercial_coupons_modified": false,
+  "commercial_usage_consumed": false
+}

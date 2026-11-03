@@ -19,3 +19,5 @@ Estado técnico: **COMPLETO** en la oficial; pruebas y limpieza acreditadas. Có
 Sólo está autorizada la publicación en https://dreams-perfumes.pages.dev/. No se entrega automáticamente en Classroom. Integrantes confirmados por el usuario: **Martearena y Ruas**. El usuario pidió subir todo a GitHub y no generar otro ZIP final; se conservan las comprobaciones de extracción anteriores como evidencia histórica.
 
 - [Matriz remota final](../evidence/admin-audit-20261102/matriz-remota.md), [estado y limpieza](../evidence/admin-audit-20261102/final-state.json), [nueve fases privadas](../evidence/admin-audit-20261102/private-qa-types.json).
+
+- [Actualización de cupón y formulario académico, con capturas oficiales](../evidence/coupon-academic-20261103/README.md).

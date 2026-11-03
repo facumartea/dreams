@@ -39,6 +39,6 @@ test('aplica cupón activo y rechaza inexistente o inactivo', async () => {
         const invalid = await resolve_coupon(coupon_database(row), 'off', 100000);
         assert.equal(invalid.coupon, null);
         assert.equal(invalid.total, 100000);
-        assert.equal(invalid.coupon_error, 'Cupón inválido.');
+        assert.equal(invalid.coupon_error, 'Cupón inválido o inactivo.');
     }
 });

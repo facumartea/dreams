@@ -49,9 +49,11 @@ function cart_actions(whatsapp_url, checkout_enabled, state) {
 function cart_summary(total, academic, state, consultation, checkout) {
     return `
         <p class="eyebrow">RESUMEN</p>
-        <div class="summary-line"><span>Productos</span><strong>${format_price(total)}</strong></div>
+        <div class="summary-line"><span>Productos</span><strong>${format_price(academic?.subtotal ?? total)}</strong></div>
+        ${academic?.discount ? `<div class="summary-line"><span>Descuento</span><strong>−${format_price(academic.discount)}</strong></div>` : ''}
         ${academic ? `<div class="summary-line"><span>${escape_html(academic.shipping_label)}</span><span>${format_price(academic.shipping)}</span></div>` : state === 'ready' ? '<div class="summary-line"><span>Envío</span><span>A consultar</span></div><p class="cart-payment-note">Envío no incluido. Su costo se confirma antes del pago.</p>' : ''}
-        <div class="summary-line summary-total"><span>${academic ? 'Total' : 'Subtotal'}</span><strong>${format_price(total)}</strong></div>
+        <div class="summary-line summary-total"><span>${academic ? 'Total' : 'Subtotal'}</span><strong>${format_price(academic?.total ?? total)}</strong></div>
+        ${cart_coupon_markup(state)}
         ${checkout}
         ${consultation}
         ${state === 'error' ? '<button id="retry-cart" class="text-button" type="button">Reintentar</button>' : ''}
@@ -78,6 +80,7 @@ function render_cart(cart = get_cart(), whatsapp_url = null, checkout_enabled = 
         catch { show_toast('No se pudo sincronizar el carrito. Reintentá.'); }
     });
     document.getElementById('retry-cart')?.addEventListener('click', load_cart);
+    bind_cart_coupon();
 }
 
 async function update_cart(product_id, change) {
@@ -89,7 +92,7 @@ async function cart_quote_responses(cart) {
     return await Promise.all([fetch('/api/cart/quote', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ items: cart.map(item => ({ id: item.id, quantity: item.quantity })) })
+            body: JSON.stringify({ coupon_code: cart_coupon_code(), items: cart.map(item => ({ id: item.id, quantity: item.quantity })) })
         }), fetch('/api/checkout/config').then(async result => {
             if (!result.ok) return false;
             const checkout_config = await result.json();
@@ -100,13 +103,16 @@ async function accept_cart_quote(request_id, response, checkout_response) {
         const data = await response.json();
         if (request_id !== cart_request_id) return;
         if (!response.ok) throw new Error(data.error || 'No se pudo verificar el carrito.');
-        academic_cart_summary = data.shipping === 0 && typeof data.shipping_label === 'string' ? { shipping: data.shipping, shipping_label: data.shipping_label } : null;
+        academic_cart_summary = data.shipping === 0 && typeof data.shipping_label === 'string' ? data : null;
+        cart_coupon_message = data.coupon_error || (data.coupon ? 'Cupón aplicado.' : cart_coupon_message);
+        if (data.coupon_error) sessionStorage.removeItem('dreams_coupon');
         save_cart(data.items, {reconcile:true});
         render_cart(cart_account?.active() ? get_cart() : data.items, get_cart().some(i=>i.unavailable) ? null : data.whatsapp_url, checkout_response && !get_cart().some(i=>i.unavailable), 'ready');
         if (data.warnings?.length) show_toast(data.warnings.join(' '));
  }
 async function load_cart() {
     const request_id = ++cart_request_id;
+    academic_cart_summary = null;
     render_cart(get_cart());
     try { if(cart_account) await cart_account.ready(); } catch { render_cart(get_cart(),null,false,'error'); return; }
     if (request_id !== cart_request_id) return;
@@ -130,3 +136,21 @@ window.addEventListener('storage', event => {
 });
 
 window.addEventListener('dreams:cart', load_cart);
+
+let cart_coupon_message = '';
+function cart_coupon_markup(state) {
+    return `<form id="cart-coupon-form" class="coupon-box"><label for="cart-coupon">Cupón de descuento</label><div class="coupon-control"><input id="cart-coupon" ${state === 'loading' ? 'disabled' : ''} maxlength="40" placeholder="Ingresá tu cupón" value="${escape_html(cart_coupon_code())}"><button type="submit" ${state === 'loading' ? 'disabled aria-busy="true"' : ''}>${state === 'loading' ? 'Verificando…' : 'Aplicar'}</button></div><p role="status" aria-live="polite">${escape_html(cart_coupon_message)}</p>${sessionStorage.getItem('dreams_coupon') ? '<button id="cart-coupon-remove" type="button" class="text-button">Quitar cupón</button>' : ''}</form>`;
+}
+function bind_cart_coupon() {
+    document.getElementById('cart-coupon-form')?.addEventListener('submit', event => {
+        event.preventDefault();
+        const code = document.getElementById('cart-coupon').value.trim().toUpperCase();
+        if (!code) { cart_coupon_message = 'Ingresá un cupón.'; load_cart(); return; }
+        sessionStorage.setItem('dreams_coupon', code); cart_coupon_message = ''; load_cart();
+    });
+    document.getElementById('cart-coupon-remove')?.addEventListener('click', () => {
+        sessionStorage.removeItem('dreams_coupon'); cart_coupon_message = 'Cupón quitado.'; load_cart();
+    });
+}
+
+function cart_coupon_code() { return typeof sessionStorage === 'undefined' ? '' : sessionStorage.getItem('dreams_coupon') || ''; }

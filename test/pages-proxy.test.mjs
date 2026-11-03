@@ -172,3 +172,13 @@ test('filter state script inherits security headers and keeps API and mutations 
     assert.equal(await post.text(), 'original');
     assert.deepEqual(calls, ['/js/app.js', '/js/catalog-filter-state.js']);
 });
+
+test('nuevo módulo de máscaras usa cabeceras públicas existentes sin depender de que exista en legacy', async () => {
+    const asset = { body: '/* local formatting */', content_type: 'application/javascript; charset=utf-8', etag: '"fixture"' };
+    const handler = create_proxy({ '/js/academic-inputs.js': asset }, {
+        backend_url: 'https://40e7b0a3-dreams-perfumes.dreams-perfumes.workers.dev',
+        fetch_backend: async request => new Response('legacy', { status: new URL(request.url).pathname === '/js/app.js' ? 200 : 404 })
+    });
+    const response = await handler.fetch(new Request('https://dreams-perfumes.pages.dev/js/academic-inputs.js'), {});
+    assert.equal(response.status, 200); assert.equal(await response.text(), asset.body);
+});

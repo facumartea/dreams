@@ -125,16 +125,30 @@ function discounted_totals(subtotal, discount_percent = 0) {
     return { subtotal: safe_subtotal, discount, total: Math.max(0, Math.round((safe_subtotal - discount) * 100) / 100) };
 }
 
-async function resolve_coupon(database, code, subtotal) {
+async function coupon_restriction(database, coupon, user_id) {
+    // No interpretar condiciones arbitrarias ni omitir límites ya configurados.
+    if (coupon.conditions && Object.keys(coupon.conditions).length) return 'Este cupón tiene condiciones especiales y no puede aplicarse en este checkout.';
+    if (coupon.per_user_limit && !user_id) return 'Iniciá sesión para validar el límite por cuenta de este cupón.';
+    if (!coupon.max_uses && !coupon.per_user_limit) return null;
+    const used = await database.from('orders').select('id,user_id').eq('coupon_id', coupon.id).eq('status', 'approved');
+    if (used.error) throw used.error;
+    if (coupon.max_uses && used.data.length >= coupon.max_uses) return 'Este cupón alcanzó su límite de usos.';
+    if (coupon.per_user_limit && used.data.filter(row => row.user_id === user_id).length >= coupon.per_user_limit) return 'Alcanzaste el límite de usos de este cupón.';
+    return null;
+}
+
+async function resolve_coupon(database, code, subtotal, user_id = null) {
     const normalized = normalize_coupon_code(code);
     if (!normalized) return { ...discounted_totals(subtotal), coupon: null, coupon_error: null };
     if (!/^[A-Z0-9_-]{3,40}$/.test(normalized)) return { ...discounted_totals(subtotal), coupon: null, coupon_error: 'Cupón inválido.' };
-    const result = await database.from('coupons').select('id,code,discount_percent,active,expires_at,minimum_purchase').eq('code', normalized).eq('active', true).maybeSingle();
+    const result = await database.from('coupons').select('id,code,discount_percent,active,expires_at,minimum_purchase,max_uses,per_user_limit,conditions').eq('code', normalized).eq('active', true).maybeSingle();
     if (result.error) throw result.error;
     const coupon = result.data;
     const expired = coupon?.expires_at && new Date(coupon.expires_at).getTime() <= Date.now();
     const below_minimum = coupon?.minimum_purchase !== null && Number(subtotal) < Number(coupon?.minimum_purchase);
-    if (!coupon || coupon.active !== true || expired || below_minimum) return { ...discounted_totals(subtotal), coupon: null, coupon_error: 'Cupón inválido.' };
+    if (!coupon || coupon.active !== true || expired || below_minimum) return { ...discounted_totals(subtotal), coupon: null, coupon_error: expired ? 'El cupón está vencido.' : below_minimum ? 'No alcanzaste la compra mínima del cupón.' : 'Cupón inválido o inactivo.' };
+    const restricted = await coupon_restriction(database, coupon, user_id);
+    if (restricted) return { ...discounted_totals(subtotal), coupon: null, coupon_error: restricted };
     const totals = discounted_totals(subtotal, coupon.discount_percent);
     return {
         ...totals,
@@ -195,7 +209,7 @@ function normalize_cart_items(items) {
     return { quantities };
 }
 
-async function quote_cart(database, items, coupon_code = '', product_brand_column = 'brand') {
+async function quote_cart(database, items, coupon_code = '', product_brand_column = 'brand', user_id = null) {
     const normalized = normalize_cart_items(items);
     if (normalized.error) return normalized;
     const ids = [...normalized.quantities.keys()];
@@ -212,7 +226,7 @@ async function quote_cart(database, items, coupon_code = '', product_brand_colum
         quoted.push({ ...item, id, price: Number(item.price), stock, quantity });
     }
     const subtotal = quoted.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    return { items: quoted, warnings, ...(await resolve_coupon(database, coupon_code, subtotal)) };
+    return { items: quoted, warnings, ...(await resolve_coupon(database, coupon_code, subtotal, user_id)) };
 }
 
 async function database_health(database, product_brand_column = 'brand', checkout_ready = false) {
@@ -498,10 +512,10 @@ function install_post_api_cart_quote({
     database, product_brand_column, whatsapp_number, presentation, route,
 }) {
     route('post', '/api/cart/quote', async (request, response) => {
-        const quote = await quote_cart(database, request.body.items, presentation.ready ? '' : request.body.coupon_code, product_brand_column);
+        const quote = await quote_cart(database, request.body.items, request.body.coupon_code, product_brand_column, request.user?.id);
         if (quote.error) return response.status(400).json({ error: quote.error });
         const lines = quote.items.map(item => `${item.quantity} × ${item.brand} ${item.name} — ${item.price * item.quantity} ARS`);
-        const summary = presentation.ready ? academic_summary(quote.subtotal) : null;
+        const summary = presentation.ready ? academic_summary(quote.subtotal, quote) : null;
         const text = ['Hola DREAMS, quiero consultar por este carrito:', ...lines, summary ? `Total: ${summary.total} ARS. ${summary.shipping_label}.` : `Subtotal de productos: ${quote.total} ARS. Envío a consultar, no incluido.`].join('\n');
         response.json({ ...quote, ...(summary || {}), whatsapp_url: quote.items.length && /^\d{8,15}$/.test(whatsapp_number) ? `https://wa.me/${whatsapp_number}?text=${encodeURIComponent(text)}` : null });
     });
@@ -545,7 +559,7 @@ function install_post_api_checkout_session({
 }) {
     route('post', '/api/checkout/session', login, async (request, response) => {
         if (!checkout_enabled || !app_base_url) return response.status(503).json({ error: 'El pago online todavía no está disponible.' });
-        const quote = await quote_cart(database, request.body.items, request.body.coupon_code, product_brand_column);
+        const quote = await quote_cart(database, request.body.items, request.body.coupon_code, product_brand_column, request.user?.id);
         if (quote.error) return response.status(400).json({ error: quote.error });
         if (request.body.coupon_code && !quote.coupon) return response.status(409).json({ error: 'Cupón inválido.' });
         if (!quote.items.length || quote.total <= 0) return response.status(409).json({ error: 'No hay productos disponibles para pagar.' });
