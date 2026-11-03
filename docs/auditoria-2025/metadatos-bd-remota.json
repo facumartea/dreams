@@ -1,0 +1,1068 @@
+{
+  "tables": [
+    {
+      "tablename": "account_cart_operations",
+      "rowsecurity": true
+    },
+    {
+      "tablename": "account_carts",
+      "rowsecurity": true
+    },
+    {
+      "tablename": "coupons",
+      "rowsecurity": true
+    },
+    {
+      "tablename": "favorites",
+      "rowsecurity": true
+    },
+    {
+      "tablename": "inquiries",
+      "rowsecurity": true
+    },
+    {
+      "tablename": "orders",
+      "rowsecurity": true
+    },
+    {
+      "tablename": "products",
+      "rowsecurity": true
+    },
+    {
+      "tablename": "profiles",
+      "rowsecurity": true
+    },
+    {
+      "tablename": "reviews",
+      "rowsecurity": true
+    }
+  ],
+  "columns": [
+    {
+      "udt_name": "uuid",
+      "data_type": "uuid",
+      "table_name": "account_cart_operations",
+      "column_name": "user_id",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 1
+    },
+    {
+      "udt_name": "uuid",
+      "data_type": "uuid",
+      "table_name": "account_cart_operations",
+      "column_name": "operation_id",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 2
+    },
+    {
+      "udt_name": "jsonb",
+      "data_type": "jsonb",
+      "table_name": "account_cart_operations",
+      "column_name": "operation",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 3
+    },
+    {
+      "udt_name": "timestamptz",
+      "data_type": "timestamp with time zone",
+      "table_name": "account_cart_operations",
+      "column_name": "created_at",
+      "is_nullable": "NO",
+      "column_default": "now()",
+      "ordinal_position": 4
+    },
+    {
+      "udt_name": "uuid",
+      "data_type": "uuid",
+      "table_name": "account_carts",
+      "column_name": "user_id",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 1
+    },
+    {
+      "udt_name": "jsonb",
+      "data_type": "jsonb",
+      "table_name": "account_carts",
+      "column_name": "items",
+      "is_nullable": "NO",
+      "column_default": "'[]'::jsonb",
+      "ordinal_position": 2
+    },
+    {
+      "udt_name": "int8",
+      "data_type": "bigint",
+      "table_name": "account_carts",
+      "column_name": "revision",
+      "is_nullable": "NO",
+      "column_default": "0",
+      "ordinal_position": 3
+    },
+    {
+      "udt_name": "timestamptz",
+      "data_type": "timestamp with time zone",
+      "table_name": "account_carts",
+      "column_name": "updated_at",
+      "is_nullable": "NO",
+      "column_default": "now()",
+      "ordinal_position": 4
+    },
+    {
+      "udt_name": "int8",
+      "data_type": "bigint",
+      "table_name": "coupons",
+      "column_name": "id",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 1
+    },
+    {
+      "udt_name": "text",
+      "data_type": "text",
+      "table_name": "coupons",
+      "column_name": "code",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 2
+    },
+    {
+      "udt_name": "numeric",
+      "data_type": "numeric",
+      "table_name": "coupons",
+      "column_name": "discount_percent",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 3
+    },
+    {
+      "udt_name": "bool",
+      "data_type": "boolean",
+      "table_name": "coupons",
+      "column_name": "active",
+      "is_nullable": "NO",
+      "column_default": "true",
+      "ordinal_position": 4
+    },
+    {
+      "udt_name": "timestamptz",
+      "data_type": "timestamp with time zone",
+      "table_name": "coupons",
+      "column_name": "expires_at",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 5
+    },
+    {
+      "udt_name": "int4",
+      "data_type": "integer",
+      "table_name": "coupons",
+      "column_name": "max_uses",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 6
+    },
+    {
+      "udt_name": "int4",
+      "data_type": "integer",
+      "table_name": "coupons",
+      "column_name": "per_user_limit",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 7
+    },
+    {
+      "udt_name": "numeric",
+      "data_type": "numeric",
+      "table_name": "coupons",
+      "column_name": "minimum_purchase",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 8
+    },
+    {
+      "udt_name": "jsonb",
+      "data_type": "jsonb",
+      "table_name": "coupons",
+      "column_name": "conditions",
+      "is_nullable": "NO",
+      "column_default": "'{}'::jsonb",
+      "ordinal_position": 9
+    },
+    {
+      "udt_name": "timestamptz",
+      "data_type": "timestamp with time zone",
+      "table_name": "coupons",
+      "column_name": "created_at",
+      "is_nullable": "NO",
+      "column_default": "now()",
+      "ordinal_position": 10
+    },
+    {
+      "udt_name": "timestamptz",
+      "data_type": "timestamp with time zone",
+      "table_name": "coupons",
+      "column_name": "updated_at",
+      "is_nullable": "NO",
+      "column_default": "now()",
+      "ordinal_position": 11
+    },
+    {
+      "udt_name": "uuid",
+      "data_type": "uuid",
+      "table_name": "favorites",
+      "column_name": "user_id",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 1
+    },
+    {
+      "udt_name": "int8",
+      "data_type": "bigint",
+      "table_name": "favorites",
+      "column_name": "product_id",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 2
+    },
+    {
+      "udt_name": "timestamptz",
+      "data_type": "timestamp with time zone",
+      "table_name": "favorites",
+      "column_name": "created_at",
+      "is_nullable": "NO",
+      "column_default": "now()",
+      "ordinal_position": 3
+    },
+    {
+      "udt_name": "int8",
+      "data_type": "bigint",
+      "table_name": "inquiries",
+      "column_name": "id",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 1
+    },
+    {
+      "udt_name": "uuid",
+      "data_type": "uuid",
+      "table_name": "inquiries",
+      "column_name": "user_id",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 2
+    },
+    {
+      "udt_name": "int8",
+      "data_type": "bigint",
+      "table_name": "inquiries",
+      "column_name": "product_id",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 3
+    },
+    {
+      "udt_name": "text",
+      "data_type": "text",
+      "table_name": "inquiries",
+      "column_name": "product_name",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 4
+    },
+    {
+      "udt_name": "text",
+      "data_type": "text",
+      "table_name": "inquiries",
+      "column_name": "user_name",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 5
+    },
+    {
+      "udt_name": "text",
+      "data_type": "text",
+      "table_name": "inquiries",
+      "column_name": "user_email",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 6
+    },
+    {
+      "udt_name": "timestamptz",
+      "data_type": "timestamp with time zone",
+      "table_name": "inquiries",
+      "column_name": "created_at",
+      "is_nullable": "NO",
+      "column_default": "now()",
+      "ordinal_position": 7
+    },
+    {
+      "udt_name": "uuid",
+      "data_type": "uuid",
+      "table_name": "orders",
+      "column_name": "id",
+      "is_nullable": "NO",
+      "column_default": "gen_random_uuid()",
+      "ordinal_position": 1
+    },
+    {
+      "udt_name": "uuid",
+      "data_type": "uuid",
+      "table_name": "orders",
+      "column_name": "user_id",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 2
+    },
+    {
+      "udt_name": "text",
+      "data_type": "text",
+      "table_name": "orders",
+      "column_name": "provider",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 3
+    },
+    {
+      "udt_name": "text",
+      "data_type": "text",
+      "table_name": "orders",
+      "column_name": "provider_preference_id",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 4
+    },
+    {
+      "udt_name": "text",
+      "data_type": "text",
+      "table_name": "orders",
+      "column_name": "provider_payment_id",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 5
+    },
+    {
+      "udt_name": "text",
+      "data_type": "text",
+      "table_name": "orders",
+      "column_name": "status",
+      "is_nullable": "NO",
+      "column_default": "'created'::text",
+      "ordinal_position": 6
+    },
+    {
+      "udt_name": "text",
+      "data_type": "text",
+      "table_name": "orders",
+      "column_name": "status_detail",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 7
+    },
+    {
+      "udt_name": "text",
+      "data_type": "text",
+      "table_name": "orders",
+      "column_name": "currency",
+      "is_nullable": "NO",
+      "column_default": "'ARS'::text",
+      "ordinal_position": 8
+    },
+    {
+      "udt_name": "numeric",
+      "data_type": "numeric",
+      "table_name": "orders",
+      "column_name": "subtotal",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 9
+    },
+    {
+      "udt_name": "numeric",
+      "data_type": "numeric",
+      "table_name": "orders",
+      "column_name": "discount",
+      "is_nullable": "NO",
+      "column_default": "0",
+      "ordinal_position": 10
+    },
+    {
+      "udt_name": "numeric",
+      "data_type": "numeric",
+      "table_name": "orders",
+      "column_name": "total",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 11
+    },
+    {
+      "udt_name": "int8",
+      "data_type": "bigint",
+      "table_name": "orders",
+      "column_name": "coupon_id",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 12
+    },
+    {
+      "udt_name": "text",
+      "data_type": "text",
+      "table_name": "orders",
+      "column_name": "coupon_code",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 13
+    },
+    {
+      "udt_name": "numeric",
+      "data_type": "numeric",
+      "table_name": "orders",
+      "column_name": "coupon_percent",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 14
+    },
+    {
+      "udt_name": "jsonb",
+      "data_type": "jsonb",
+      "table_name": "orders",
+      "column_name": "items",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 15
+    },
+    {
+      "udt_name": "timestamptz",
+      "data_type": "timestamp with time zone",
+      "table_name": "orders",
+      "column_name": "paid_at",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 16
+    },
+    {
+      "udt_name": "timestamptz",
+      "data_type": "timestamp with time zone",
+      "table_name": "orders",
+      "column_name": "created_at",
+      "is_nullable": "NO",
+      "column_default": "now()",
+      "ordinal_position": 17
+    },
+    {
+      "udt_name": "timestamptz",
+      "data_type": "timestamp with time zone",
+      "table_name": "orders",
+      "column_name": "updated_at",
+      "is_nullable": "NO",
+      "column_default": "now()",
+      "ordinal_position": 18
+    },
+    {
+      "udt_name": "int8",
+      "data_type": "bigint",
+      "table_name": "products",
+      "column_name": "id",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 1
+    },
+    {
+      "udt_name": "text",
+      "data_type": "text",
+      "table_name": "products",
+      "column_name": "marca",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 2
+    },
+    {
+      "udt_name": "text",
+      "data_type": "text",
+      "table_name": "products",
+      "column_name": "name",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 3
+    },
+    {
+      "udt_name": "text",
+      "data_type": "text",
+      "table_name": "products",
+      "column_name": "gender",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 4
+    },
+    {
+      "udt_name": "text",
+      "data_type": "text",
+      "table_name": "products",
+      "column_name": "category",
+      "is_nullable": "NO",
+      "column_default": "'diseñador'::text",
+      "ordinal_position": 5
+    },
+    {
+      "udt_name": "int4",
+      "data_type": "integer",
+      "table_name": "products",
+      "column_name": "size_ml",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 6
+    },
+    {
+      "udt_name": "numeric",
+      "data_type": "numeric",
+      "table_name": "products",
+      "column_name": "price",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 7
+    },
+    {
+      "udt_name": "int4",
+      "data_type": "integer",
+      "table_name": "products",
+      "column_name": "stock",
+      "is_nullable": "NO",
+      "column_default": "0",
+      "ordinal_position": 8
+    },
+    {
+      "udt_name": "int4",
+      "data_type": "integer",
+      "table_name": "products",
+      "column_name": "intensity",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 9
+    },
+    {
+      "udt_name": "text",
+      "data_type": "text",
+      "table_name": "products",
+      "column_name": "family",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 10
+    },
+    {
+      "udt_name": "text",
+      "data_type": "text",
+      "table_name": "products",
+      "column_name": "top_notes",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 11
+    },
+    {
+      "udt_name": "text",
+      "data_type": "text",
+      "table_name": "products",
+      "column_name": "heart_notes",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 12
+    },
+    {
+      "udt_name": "text",
+      "data_type": "text",
+      "table_name": "products",
+      "column_name": "base_notes",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 13
+    },
+    {
+      "udt_name": "text",
+      "data_type": "text",
+      "table_name": "products",
+      "column_name": "description",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 14
+    },
+    {
+      "udt_name": "text",
+      "data_type": "text",
+      "table_name": "products",
+      "column_name": "image_url",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 15
+    },
+    {
+      "udt_name": "bool",
+      "data_type": "boolean",
+      "table_name": "products",
+      "column_name": "featured",
+      "is_nullable": "NO",
+      "column_default": "false",
+      "ordinal_position": 16
+    },
+    {
+      "udt_name": "timestamptz",
+      "data_type": "timestamp with time zone",
+      "table_name": "products",
+      "column_name": "created_at",
+      "is_nullable": "NO",
+      "column_default": "now()",
+      "ordinal_position": 17
+    },
+    {
+      "udt_name": "timestamptz",
+      "data_type": "timestamp with time zone",
+      "table_name": "products",
+      "column_name": "updated_at",
+      "is_nullable": "NO",
+      "column_default": "now()",
+      "ordinal_position": 18
+    },
+    {
+      "udt_name": "uuid",
+      "data_type": "uuid",
+      "table_name": "profiles",
+      "column_name": "id",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 1
+    },
+    {
+      "udt_name": "text",
+      "data_type": "text",
+      "table_name": "profiles",
+      "column_name": "name",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 2
+    },
+    {
+      "udt_name": "text",
+      "data_type": "text",
+      "table_name": "profiles",
+      "column_name": "role",
+      "is_nullable": "NO",
+      "column_default": "'customer'::text",
+      "ordinal_position": 3
+    },
+    {
+      "udt_name": "timestamptz",
+      "data_type": "timestamp with time zone",
+      "table_name": "profiles",
+      "column_name": "created_at",
+      "is_nullable": "NO",
+      "column_default": "now()",
+      "ordinal_position": 4
+    },
+    {
+      "udt_name": "int8",
+      "data_type": "bigint",
+      "table_name": "reviews",
+      "column_name": "id",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 1
+    },
+    {
+      "udt_name": "uuid",
+      "data_type": "uuid",
+      "table_name": "reviews",
+      "column_name": "user_id",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 2
+    },
+    {
+      "udt_name": "text",
+      "data_type": "text",
+      "table_name": "reviews",
+      "column_name": "user_name",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 3
+    },
+    {
+      "udt_name": "int4",
+      "data_type": "integer",
+      "table_name": "reviews",
+      "column_name": "rating",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 4
+    },
+    {
+      "udt_name": "text",
+      "data_type": "text",
+      "table_name": "reviews",
+      "column_name": "comment",
+      "is_nullable": "NO",
+      "column_default": null,
+      "ordinal_position": 5
+    },
+    {
+      "udt_name": "timestamptz",
+      "data_type": "timestamp with time zone",
+      "table_name": "reviews",
+      "column_name": "created_at",
+      "is_nullable": "NO",
+      "column_default": "now()",
+      "ordinal_position": 6
+    },
+    {
+      "udt_name": "uuid",
+      "data_type": "uuid",
+      "table_name": "reviews",
+      "column_name": "operation_id",
+      "is_nullable": "YES",
+      "column_default": null,
+      "ordinal_position": 7
+    }
+  ],
+  "constraints": [
+    {
+      "schema": "public",
+      "conname": "account_cart_operations_pkey",
+      "contype": "p",
+      "definition": "PRIMARY KEY (user_id, operation_id)",
+      "table_name": "account_cart_operations"
+    },
+    {
+      "schema": "public",
+      "conname": "account_cart_operations_user_id_fkey",
+      "contype": "f",
+      "definition": "FOREIGN KEY (user_id) REFERENCES account_carts(user_id) ON DELETE CASCADE",
+      "table_name": "account_cart_operations"
+    },
+    {
+      "schema": "public",
+      "conname": "account_carts_items_check",
+      "contype": "c",
+      "definition": "CHECK (((jsonb_typeof(items) = 'array'::text) AND (jsonb_array_length(items) <= 30)))",
+      "table_name": "account_carts"
+    },
+    {
+      "schema": "public",
+      "conname": "account_carts_pkey",
+      "contype": "p",
+      "definition": "PRIMARY KEY (user_id)",
+      "table_name": "account_carts"
+    },
+    {
+      "schema": "public",
+      "conname": "account_carts_revision_check",
+      "contype": "c",
+      "definition": "CHECK ((revision >= 0))",
+      "table_name": "account_carts"
+    },
+    {
+      "schema": "public",
+      "conname": "account_carts_user_id_fkey",
+      "contype": "f",
+      "definition": "FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE",
+      "table_name": "account_carts"
+    },
+    {
+      "schema": "public",
+      "conname": "coupons_code_format",
+      "contype": "c",
+      "definition": "CHECK (((code = upper(code)) AND (code ~ '^[A-Z0-9_-]{3,40}$'::text)))",
+      "table_name": "coupons"
+    },
+    {
+      "schema": "public",
+      "conname": "coupons_code_key",
+      "contype": "u",
+      "definition": "UNIQUE (code)",
+      "table_name": "coupons"
+    },
+    {
+      "schema": "public",
+      "conname": "coupons_conditions_object",
+      "contype": "c",
+      "definition": "CHECK ((jsonb_typeof(conditions) = 'object'::text))",
+      "table_name": "coupons"
+    },
+    {
+      "schema": "public",
+      "conname": "coupons_discount_range",
+      "contype": "c",
+      "definition": "CHECK (((discount_percent > (0)::numeric) AND (discount_percent <= (100)::numeric)))",
+      "table_name": "coupons"
+    },
+    {
+      "schema": "public",
+      "conname": "coupons_max_uses_positive",
+      "contype": "c",
+      "definition": "CHECK (((max_uses IS NULL) OR (max_uses > 0)))",
+      "table_name": "coupons"
+    },
+    {
+      "schema": "public",
+      "conname": "coupons_minimum_purchase_positive",
+      "contype": "c",
+      "definition": "CHECK (((minimum_purchase IS NULL) OR (minimum_purchase >= (0)::numeric)))",
+      "table_name": "coupons"
+    },
+    {
+      "schema": "public",
+      "conname": "coupons_per_user_limit_positive",
+      "contype": "c",
+      "definition": "CHECK (((per_user_limit IS NULL) OR (per_user_limit > 0)))",
+      "table_name": "coupons"
+    },
+    {
+      "schema": "public",
+      "conname": "coupons_pkey",
+      "contype": "p",
+      "definition": "PRIMARY KEY (id)",
+      "table_name": "coupons"
+    },
+    {
+      "schema": "public",
+      "conname": "favorites_pkey",
+      "contype": "p",
+      "definition": "PRIMARY KEY (user_id, product_id)",
+      "table_name": "favorites"
+    },
+    {
+      "schema": "public",
+      "conname": "favorites_product_id_fkey",
+      "contype": "f",
+      "definition": "FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE",
+      "table_name": "favorites"
+    },
+    {
+      "schema": "public",
+      "conname": "favorites_user_id_fkey",
+      "contype": "f",
+      "definition": "FOREIGN KEY (user_id) REFERENCES profiles(id) ON DELETE CASCADE",
+      "table_name": "favorites"
+    },
+    {
+      "schema": "public",
+      "conname": "inquiries_pkey",
+      "contype": "p",
+      "definition": "PRIMARY KEY (id)",
+      "table_name": "inquiries"
+    },
+    {
+      "schema": "public",
+      "conname": "inquiries_product_id_fkey",
+      "contype": "f",
+      "definition": "FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE SET NULL",
+      "table_name": "inquiries"
+    },
+    {
+      "schema": "public",
+      "conname": "inquiries_user_id_fkey",
+      "contype": "f",
+      "definition": "FOREIGN KEY (user_id) REFERENCES profiles(id) ON DELETE SET NULL",
+      "table_name": "inquiries"
+    },
+    {
+      "schema": "public",
+      "conname": "orders_check",
+      "contype": "c",
+      "definition": "CHECK (((discount >= (0)::numeric) AND (discount <= subtotal)))",
+      "table_name": "orders"
+    },
+    {
+      "schema": "public",
+      "conname": "orders_check1",
+      "contype": "c",
+      "definition": "CHECK (((total >= (0)::numeric) AND (total = (subtotal - discount))))",
+      "table_name": "orders"
+    },
+    {
+      "schema": "public",
+      "conname": "orders_coupon_id_fkey",
+      "contype": "f",
+      "definition": "FOREIGN KEY (coupon_id) REFERENCES coupons(id) ON DELETE SET NULL",
+      "table_name": "orders"
+    },
+    {
+      "schema": "public",
+      "conname": "orders_coupon_snapshot",
+      "contype": "c",
+      "definition": "CHECK ((((coupon_code IS NULL) AND (coupon_percent IS NULL) AND (discount = (0)::numeric)) OR ((coupon_code = upper(coupon_code)) AND (coupon_percent > (0)::numeric) AND (coupon_percent <= (100)::numeric) AND (discount > (0)::numeric))))",
+      "table_name": "orders"
+    },
+    {
+      "schema": "public",
+      "conname": "orders_currency_check",
+      "contype": "c",
+      "definition": "CHECK ((currency ~ '^[A-Z]{3}$'::text))",
+      "table_name": "orders"
+    },
+    {
+      "schema": "public",
+      "conname": "orders_items_array",
+      "contype": "c",
+      "definition": "CHECK (((jsonb_typeof(items) = 'array'::text) AND (jsonb_array_length(items) > 0)))",
+      "table_name": "orders"
+    },
+    {
+      "schema": "public",
+      "conname": "orders_pkey",
+      "contype": "p",
+      "definition": "PRIMARY KEY (id)",
+      "table_name": "orders"
+    },
+    {
+      "schema": "public",
+      "conname": "orders_provider_check",
+      "contype": "c",
+      "definition": "CHECK ((provider = ANY (ARRAY['mercado_pago'::text, 'demo'::text])))",
+      "table_name": "orders"
+    },
+    {
+      "schema": "public",
+      "conname": "orders_status_check",
+      "contype": "c",
+      "definition": "CHECK ((status = ANY (ARRAY['created'::text, 'approved'::text, 'rejected'::text, 'pending'::text, 'cancelled'::text, 'error'::text])))",
+      "table_name": "orders"
+    },
+    {
+      "schema": "public",
+      "conname": "orders_status_detail_check",
+      "contype": "c",
+      "definition": "CHECK (((status_detail IS NULL) OR (char_length(status_detail) <= 160)))",
+      "table_name": "orders"
+    },
+    {
+      "schema": "public",
+      "conname": "orders_subtotal_check",
+      "contype": "c",
+      "definition": "CHECK ((subtotal >= (0)::numeric))",
+      "table_name": "orders"
+    },
+    {
+      "schema": "public",
+      "conname": "orders_user_id_fkey",
+      "contype": "f",
+      "definition": "FOREIGN KEY (user_id) REFERENCES profiles(id) ON DELETE RESTRICT",
+      "table_name": "orders"
+    },
+    {
+      "schema": "public",
+      "conname": "products_brand_name_key",
+      "contype": "u",
+      "definition": "UNIQUE (marca, name)",
+      "table_name": "products"
+    },
+    {
+      "schema": "public",
+      "conname": "products_category_check",
+      "contype": "c",
+      "definition": "CHECK ((category = ANY (ARRAY['diseñador'::text, 'nicho'::text])))",
+      "table_name": "products"
+    },
+    {
+      "schema": "public",
+      "conname": "products_gender_check",
+      "contype": "c",
+      "definition": "CHECK ((gender = ANY (ARRAY['hombre'::text, 'mujer'::text, 'unisex'::text])))",
+      "table_name": "products"
+    },
+    {
+      "schema": "public",
+      "conname": "products_intensity_check",
+      "contype": "c",
+      "definition": "CHECK (((intensity >= 1) AND (intensity <= 5)))",
+      "table_name": "products"
+    },
+    {
+      "schema": "public",
+      "conname": "products_pkey",
+      "contype": "p",
+      "definition": "PRIMARY KEY (id)",
+      "table_name": "products"
+    },
+    {
+      "schema": "public",
+      "conname": "products_price_check",
+      "contype": "c",
+      "definition": "CHECK ((price >= (0)::numeric))",
+      "table_name": "products"
+    },
+    {
+      "schema": "public",
+      "conname": "products_size_ml_check",
+      "contype": "c",
+      "definition": "CHECK ((size_ml > 0))",
+      "table_name": "products"
+    },
+    {
+      "schema": "public",
+      "conname": "products_stock_check",
+      "contype": "c",
+      "definition": "CHECK ((stock >= 0))",
+      "table_name": "products"
+    },
+    {
+      "schema": "public",
+      "conname": "profiles_id_fkey",
+      "contype": "f",
+      "definition": "FOREIGN KEY (id) REFERENCES auth.users(id) ON DELETE CASCADE",
+      "table_name": "profiles"
+    },
+    {
+      "schema": "public",
+      "conname": "profiles_name_check",
+      "contype": "c",
+      "definition": "CHECK (((char_length(name) >= 1) AND (char_length(name) <= 80)))",
+      "table_name": "profiles"
+    },
+    {
+      "schema": "public",
+      "conname": "profiles_pkey",
+      "contype": "p",
+      "definition": "PRIMARY KEY (id)",
+      "table_name": "profiles"
+    },
+    {
+      "schema": "public",
+      "conname": "profiles_role_check",
+      "contype": "c",
+      "definition": "CHECK ((role = ANY (ARRAY['customer'::text, 'admin'::text])))",
+      "table_name": "profiles"
+    },
+    {
+      "schema": "public",
+      "conname": "reviews_comment_check",
+      "contype": "c",
+      "definition": "CHECK (((char_length(comment) >= 1) AND (char_length(comment) <= 1000)))",
+      "table_name": "reviews"
+    },
+    {
+      "schema": "public",
+      "conname": "reviews_pkey",
+      "contype": "p",
+      "definition": "PRIMARY KEY (id)",
+      "table_name": "reviews"
+    },
+    {
+      "schema": "public",
+      "conname": "reviews_rating_check",
+      "contype": "c",
+      "definition": "CHECK (((rating >= 1) AND (rating <= 5)))",
+      "table_name": "reviews"
+    },
+    {
+      "schema": "public",
+      "conname": "reviews_user_id_fkey",
+      "contype": "f",
+      "definition": "FOREIGN KEY (user_id) REFERENCES profiles(id) ON DELETE SET NULL",
+      "table_name": "reviews"
+    }
+  ],
+  "auth_boundary": {
+    "id_type": "uuid",
+    "primary_key": "PRIMARY KEY (id)"
+  }
+}

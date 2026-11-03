@@ -38,3 +38,7 @@ Auth usa el proveedor; hashing permanece en Supabase. Cookies HttpOnly/SameSite 
 Cloudflare Pages sirve la oficial y actúa como proxy hacia backend aprobado. El candidato privado `dreams-official-backend` requiere lectura Supabase y QA autenticada antes de promoción. Secret sólo en el backend. [Rollback y proxy](docs/pages_frontdoor.md), [manual](docs/entrega-2026/manual.md), [API](docs/entrega-2026/api.md) y [defensa](docs/entrega-2026/defensa.md).
 
 Railway y los módulos de previews son antecedentes conservados; no son destinos autorizados para esta entrega. La publicación y el cierre operativo están acreditados; la PR #56 integra esta entrega a main después de sus checks. La ficha de GitHub contiene el estado y SHA exacto del merge. Integrantes confirmados: Martearena y Ruas. La entrega se actualiza en GitHub; por pedido del usuario no se genera otro ZIP final. Ver [branch y extracción histórica](docs/entrega-2026/zip.md); la descarga predeterminada no contiene una PR sin integrar.
+
+## Auditoría documental solicitada para2025
+
+[Informe, wireframes por pantalla y D.E.R.](docs/auditoria-2025/INDICE.md). El PDF2025 no estaba disponible al realizar la parte técnica: la matriz es provisional y no usa la rúbrica2026 como equivalente. Commit auditado:b60e33d; la nueva documentación es retrospectiva, creada después de ese commit. No se modificó ni desplegó la aplicación en esta auditoría.
