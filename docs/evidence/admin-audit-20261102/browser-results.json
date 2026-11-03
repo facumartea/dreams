@@ -1,0 +1,43 @@
+[
+  {
+    "id": "BASE-PREEXIST",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "ningún producto con marca/nombre QA antes de alta",
+    "actual": 0,
+    "result": "PASS"
+  },
+  {
+    "id": "BASE-GUARD",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "reproducir bloqueo del backend antiguo",
+    "actual": {
+      "method": "POST",
+      "path": "/api/admin/products",
+      "status": 403,
+      "code": null,
+      "guard_message": true
+    },
+    "result": "PASS"
+  },
+  {
+    "id": "BASE-NO-DUPLICATE",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "ningún alta completada tras respuesta403",
+    "actual": 0,
+    "result": "PASS"
+  },
+  {
+    "id": "BASE-CONFIG",
+    "environment": "oficial remota autenticada; Chromium y API reales",
+    "preconditions": "cuenta Admin existente; recursos exclusivos QA",
+    "expected": "configuración efectiva identificada",
+    "actual": {
+      "preview_read_only": true,
+      "admin_writes_enabled": false
+    },
+    "result": "PASS"
+  }
+]

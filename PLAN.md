@@ -1,3 +1,13 @@
+# Promoción oficial preparada con evidencia de la misma versión
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Backend privado2300a05a-b179-4ee2-b3ed-bfe017a801d8, deploymentbafb761a, fuente643c348/CI220 aprobada445tests. Lectura directa/SDK200 a03:30:04UTC del proveedor, proyecto esperado, sin transformar la clave. Las nueve fases privadas terminaron PASS a03:38, lista final completa; Cron retirado. Evidencia `docs/evidence/admin-audit-20261102/private-qa.json`. No confundir el contador de assertions con casos distintos ni los arrays truncados de logs con detalle completo.
+
+Sesión Admin real recibida sólo cifrada por KV privado y descifrada en RAM del navegador; contraseña sólo en Worker. UI oficial legacy reproducida: POST/api/admin/products403, preview_read_only=true y admin_writes_enabled=false; marca/nombre QA ausente antes y después, sin alta oculta ni duplicado. `browser-results.json` BASE4PASS documenta reproducción, NO que el guardado oficial esté resuelto. Node API driver necesitó usar el proxy de esta ejecución; puente HTTP conserva cookies únicamente en RAM, sin omitir TLS ni validaciones.
+
+`pages/official-release.json` habilita promoción con lectura reciente y QA de2300a05a. Oficial todavíaa3184576/7b302cf→d5df; mantener rollback. Próximo: CI del checkpoint, ticket académico legacy en RAM, publicar SOLO producción dreams-perfumes con mismo bindingDREAMS_OFFICIAL ya preparado; luego recorrido Admin real, guardado/imágenes y regresión pública. Retirar después mecanismo, SecretAdmin y KV, verificar backend final limpio y cerrar sesión con botón real. No publicar video, otros sitios/previews/DNS/pagos ni alterar datos comerciales.
+
 # Transporte privado de sesión: fallo reproducido y corregido
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
