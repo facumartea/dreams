@@ -1,3 +1,13 @@
+# Transporte privado de sesión: fallo reproducido y corregido
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+`f3d46ea` está pusheado; CI219 aprobada con444 tests. Candidato privado36c8aa1f, deploymenta4b36341; oficial a3184576 sin cambios. El grant no se emitió: fallo temporal ANTES de Auth, cero sesiones Admin creadas desde la sonda (consulta agregada auth.sessions). Cron pausado, KV temporal aún vacío. No es fallo de Secret ni de configuración Auth.
+
+Causa reproducida en integración workerd local con proveedor fixture: `redirect: 'error'` no es un valor admitido por Request de Workers; se rechazaba antes de hacer signIn (auth_calls=0). Cambiado a `manual`, que impide reenviar contraseñas/cookies mediante redirects; login exige status200 y rol/UUID originales. La nueva regresión recorre dispatcher Node real y cifrado RSA3072/AES, con cero llamadas Supabase reales. Nuevos códigos de etapa son enum sanitizado, nunca error crudo de proveedor. Corregido el mismo modo en logout de recuperación del grant.
+
+No repetir carga de Secret, Auth ni contraseña Admin. Continuar con build/CI, privado nuevo heredando ambos Secrets del36c8aa1f vigente, binding de clave pública del proceso navegador activo y KV privado2440c640ebd6493d83b39dddba3cbdb2. Reproducir guardado403 oficial antes de conectar; completar QA fresca/recorrido oficial y retirar todos los recursos/mecanismo temporales al terminar.
+
 # Correcciones Admin preparadas; publicación todavía pendiente
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.

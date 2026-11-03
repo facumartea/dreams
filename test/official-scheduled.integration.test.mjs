@@ -46,3 +46,17 @@ test('invocación HTTP sintética necesita Content-Length para que Express lea J
     assert.equal(accepted.authenticated, true);
     assert.equal(accepted.cookie_count, 2);
 });
+
+test('grant Admin recorre login normal en workerd y cifra sesión sin Supabase real', { timeout: 60000 }, async t => {
+    const pair = await crypto.subtle.generateKey({ name: 'RSA-OAEP', modulusLength: 3072, publicExponent: new Uint8Array([1, 0, 1]), hash: 'SHA-256' }, true, ['encrypt', 'decrypt']);
+    const config = JSON.parse(await readFile(new URL('../wrangler.official.jsonc', import.meta.url), 'utf8'));
+    config.compatibility_date = '2026-10-08';
+    config.main = new URL('../worker/test-fixtures/private-browser-session.mjs', import.meta.url).pathname;
+    config.vars.SUPABASE_SECRET_KEY = 'sb_secret_LOCAL_GRANT_FIXTURE_ONLY';
+    config.vars.DREAMS_QA_ADMIN_PASSWORD = 'fixture-admin-password';
+    config.vars.QA_BROWSER_PUBLIC_KEY = Buffer.from(await crypto.subtle.exportKey('spki', pair.publicKey)).toString('base64');
+    const harness = createTestHarness({ workers: [{ config }] });
+    t.after(() => harness.close()); await harness.listen();
+    const response = await harness.fetch('https://fixture.invalid/');
+    assert.deepEqual(await response.json(), { ready: true, encrypted: true, auth_calls: 1 });
+});
