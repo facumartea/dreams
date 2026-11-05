@@ -1,0 +1,34 @@
+{
+  "postgres": "17-alpine",
+  "tests": 4,
+  "pass": 4,
+  "fail": 0,
+  "scope": "PostgreSQL efímero aislado, datos ficticios, sin puerto público",
+  "functions": [
+    {
+      "function": "public.dreams_cart_sorted",
+      "start": 3,
+      "end": 7,
+      "lines": 5
+    },
+    {
+      "function": "public.dreams_cart_adjust",
+      "start": 9,
+      "end": 39,
+      "lines": 31
+    },
+    {
+      "function": "public.dreams_cart_desired",
+      "start": 41,
+      "end": 72,
+      "lines": 32
+    },
+    {
+      "function": "public.dreams_cart_operation",
+      "start": 74,
+      "end": 105,
+      "lines": 32
+    }
+  ],
+  "permissions": "SECURITY INVOKER, search_path vacío; sólo service_role; lock y auxiliares dentro de la misma transacción"
+}

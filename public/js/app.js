@@ -217,7 +217,9 @@ async function load_featured_products() {
         const products = await response.json();
         if (!response.ok || !Array.isArray(products)) throw new Error('No se pudieron cargar los perfumes.');
         container.innerHTML = '';
-        products.slice(0, 8).forEach(product => container.appendChild(create_product_card(product)));
+        const distinct = products.filter((product, index, all) => all.findIndex(item => item.id === product.id) === index);
+        distinct.slice(0, 8).forEach(product => container.appendChild(create_product_card(product)));
+        if (typeof setup_featured_carousel === 'function') setup_featured_carousel(container);
     } catch (error) {
         container.innerHTML = '<p>No se pudieron cargar los perfumes.</p>';
     }

@@ -1,4 +1,4 @@
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 
 const assets = {};
@@ -10,8 +10,6 @@ for (const [pathname, relative, content_type] of [
     ['/admin', 'views/admin.html', 'text/html; charset=utf-8'],
     ['/admin.html', 'views/admin.html', 'text/html; charset=utf-8'],
     ['/js/admin-console-v3.js', 'public/js/admin.js', 'application/javascript; charset=utf-8'],
-    ['/js/admin-product-search.js', 'public/js/admin-product-search.js', 'application/javascript; charset=utf-8'],
-    ['/js/admin-image-url.js', 'public/js/admin-image-url.js', 'application/javascript; charset=utf-8'],
     ['/index.html', 'public/index.html', 'text/html; charset=utf-8'],
     ['/nosotros.html', 'public/nosotros.html', 'text/html; charset=utf-8'],
     ['/catalogo.html', 'public/catalogo.html', 'text/html; charset=utf-8'],
@@ -23,19 +21,10 @@ for (const [pathname, relative, content_type] of [
     ['/404.html', 'public/404.html', 'text/html; charset=utf-8'],
     ['/robots.txt', 'public/robots.txt', 'text/plain; charset=utf-8'],
     ['/sitemap.xml', 'public/sitemap.xml', 'application/xml; charset=utf-8'],
-    ['/js/producto.js', 'public/js/producto.js', 'application/javascript; charset=utf-8'],
-    ['/js/motion.js', 'public/js/motion.js', 'application/javascript; charset=utf-8'],
-    ['/js/carrito.js', 'public/js/carrito.js', 'application/javascript; charset=utf-8'],
-    ['/js/academic-inputs.js', 'public/js/academic-inputs.js', 'application/javascript; charset=utf-8'],
-    ['/js/presentation.js', 'public/js/presentation.js', 'application/javascript; charset=utf-8'],
-    ['/js/cuenta.js', 'public/js/cuenta.js', 'application/javascript; charset=utf-8'],
-    ['/js/account-cart.js', 'public/js/account-cart.js', 'application/javascript; charset=utf-8'],
-    ['/js/reviews.js', 'public/js/reviews.js', 'application/javascript; charset=utf-8'],
-    ['/js/app.js', 'public/js/app.js', 'application/javascript; charset=utf-8'],
-    ['/js/catalog-filter-state.js', 'public/js/catalog-filter-state.js', 'application/javascript; charset=utf-8'],
-    ['/js/catalogo.js', 'public/js/catalogo.js', 'application/javascript; charset=utf-8'],
-    ['/js/navigation.js', 'public/js/navigation.js', 'application/javascript; charset=utf-8'],
-    ['/css/style.css', 'public/css/style.css', 'text/css; charset=utf-8']
+    ['/css/style.css', 'public/css/style.css', 'text/css; charset=utf-8'],
+    ...(await readdir(new URL('../public/js/', import.meta.url)))
+        .filter(name => /^[a-z0-9-]+\.js$/.test(name))
+        .map(name => [`/js/${name}`, `public/js/${name}`, 'application/javascript; charset=utf-8'])
 ]) {
     let body = await readFile(new URL(`../${relative}`, import.meta.url), 'utf8');
     if (content_type.startsWith('text/html')) body = body.replace(/<footer class="site-footer">[\s\S]*?<\/footer>/, footer);

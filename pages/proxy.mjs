@@ -15,7 +15,9 @@ const header_aliases = new Map([['/js/academic-inputs.js', '/js/app.js'], ['/js/
 
 function visual_request(request, pathname, asset) {
     if (pathname === '/admin' || pathname === '/admin.html') return request;
-    const upstream = header_aliases.has(pathname) && asset ? new Request(new URL(header_aliases.get(pathname), request.url), request) : request;
+    // Los scripts nuevos toman headers del recurso base: no dependen de existir en el legado.
+    const alias = header_aliases.get(pathname) || (/^\/js\/[a-z0-9-]+\.js$/.test(pathname) ? '/js/app.js' : null);
+    const upstream = alias && asset ? new Request(new URL(alias, request.url), request) : request;
     if (!asset) return upstream;
     const headers = new Headers(request.headers);
     for (const name of ['If-None-Match', 'If-Modified-Since', 'Range', 'If-Range']) headers.delete(name);
@@ -73,7 +75,8 @@ async function proxy_response(request, env, visual_assets, options) {
     const data_options = official_options(env, options);
     const catalog = options.backend_url ? await filtered_catalog(request, data_options) : null;
     if (catalog) return options.seo ? index_response(request, catalog) : catalog;
-    let asset = visual_paths.has(pathname) && ['GET', 'HEAD'].includes(request.method) ? visual_assets[pathname] : null;
+    const bundled_path = visual_paths.has(pathname) || /^\/js\/[a-z0-9-]+\.js$/.test(pathname);
+    let asset = bundled_path && Object.hasOwn(visual_assets, pathname) && ['GET', 'HEAD'].includes(request.method) ? visual_assets[pathname] : null;
     const upstream = await forward_request(visual_request(request, pathname, asset), env, options);
     if (asset && upstream.status === 200 && options.seo) asset = await enrich_asset(request, asset, env, data_options);
     const response = !asset || upstream.status !== 200 ? upstream : await visual_response(request, upstream, asset);

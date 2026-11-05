@@ -1,0 +1,72 @@
+{
+  "date": "2026-11-05T16:03:04.908Z",
+  "mode": "real-official",
+  "checks": [
+    {
+      "name": "existing-admin-identity",
+      "pass": true
+    },
+    {
+      "name": "normal-admin-login",
+      "pass": true
+    },
+    {
+      "name": "admin-real-access",
+      "pass": true
+    },
+    {
+      "name": "statistics-visible",
+      "pass": true
+    },
+    {
+      "name": "real-catalog-images",
+      "pass": true
+    },
+    {
+      "name": "exclusive-test-product-created",
+      "pass": true
+    },
+    {
+      "name": "search-name-and-reload",
+      "pass": true
+    },
+    {
+      "name": "image-recovered-on-edit",
+      "pass": true
+    },
+    {
+      "name": "edit-save-response",
+      "pass": true
+    },
+    {
+      "name": "image-and-price-persisted",
+      "pass": true
+    },
+    {
+      "name": "search-brand",
+      "pass": true
+    },
+    {
+      "name": "low-stock-test-product",
+      "pass": false
+    },
+    {
+      "name": "test-product-cleaned",
+      "pass": true
+    },
+    {
+      "name": "admin-logout",
+      "pass": true
+    },
+    {
+      "name": "customer-logout",
+      "pass": true
+    },
+    {
+      "name": "admin-session-closed",
+      "pass": true
+    }
+  ],
+  "pass": false,
+  "failed_stage": "edit"
+}
