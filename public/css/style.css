@@ -369,3 +369,28 @@ button.admin-stat:active{background:var(--ink-elevated,#26221b)}
 /* Autofill conserva contraste y permite gestores de contraseñas. */
 .account-card input:-webkit-autofill,.account-card input:-webkit-autofill:hover,.account-card input:-webkit-autofill:focus{-webkit-text-fill-color:var(--ivory);caret-color:var(--ivory);box-shadow:0 0 0 1000px var(--surface) inset}
 .account-card input:autofill{color:var(--ivory);background:var(--surface);box-shadow:0 0 0 1000px var(--surface) inset}
+
+/* Carrusel manual de destacados: el desplazamiento táctil sigue siendo nativo. */
+.featured-carousel-track {
+    display: grid;
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: calc((100% - 48px) / 3);
+    gap: 24px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    padding: 4px 2px 16px;
+}
+.featured-carousel-track > .product-card { scroll-snap-align: start; min-width: 0; }
+.featured-carousel-track:focus-visible { outline: 2px solid var(--gold, #9c773d); outline-offset: 4px; }
+.featured-products-controls { display: flex; align-items: center; justify-content: flex-end; gap: 16px; margin-top: 16px; }
+.featured-products-controls[hidden] { display: none; }
+.featured-products-controls button:disabled { opacity: .45; cursor: default; }
+.featured-products-controls [role="status"] { font-size: .85rem; }
+@media (max-width: 900px) { .featured-carousel-track { grid-auto-columns: calc((100% - 24px) / 2); } }
+@media (max-width: 600px) {
+    .featured-carousel-track { grid-auto-columns: 86%; gap: 16px; }
+    .featured-products-controls { justify-content: space-between; gap: 8px; }
+}
+@media (prefers-reduced-motion: reduce) { .featured-carousel-track { scroll-behavior: auto; } }

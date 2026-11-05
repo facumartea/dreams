@@ -182,3 +182,35 @@ test('nuevo módulo de máscaras usa cabeceras públicas existentes sin depender
     const response = await handler.fetch(new Request('https://dreams-perfumes.pages.dev/js/academic-inputs.js'), {});
     assert.equal(response.status, 200); assert.equal(await response.text(), asset.body);
 });
+
+test('own scripts override the legacy body even when absent from the pinned backend', async () => {
+    const paths = ['/js/checkout.js', '/js/checkout-result.js', '/js/featured-carousel.js', '/js/safe.js'];
+    for (const path of paths) {
+        const asset = { body: '// current reviewed script', content_type: 'application/javascript', etag: '"current"' };
+        const proxy = create_proxy({ [path]: asset }, { backend_url: 'https://40e7b0a3-dreams-perfumes.dreams-perfumes.workers.dev',
+            fetch_backend: async request => {
+                assert.equal(new URL(request.url).pathname, '/js/app.js');
+                return new Response('// legacy script', { headers: { 'Content-Type': 'application/javascript' } });
+            } });
+        const response = await proxy.fetch(new Request('https://dreams-perfumes.pages.dev' + path), {});
+        assert.equal(response.status, 200);
+        assert.equal(await response.text(), asset.body);
+        assert.equal(response.headers.get('etag'), asset.etag);
+        assert.equal(response.headers.get('cache-control'), 'no-cache');
+    }
+});
+
+test('bundling preserves the upstream authorization of the canonical Admin script', async () => {
+    const asset = { body: '// approved Admin script', content_type: 'application/javascript', etag: '"admin"' };
+    const proxy = create_proxy({ '/js/admin-console-v3.js': asset }, {
+        backend_url: 'https://40e7b0a3-dreams-perfumes.dreams-perfumes.workers.dev', official_service: 'dreams-official-backend'
+    });
+    const response = await proxy.fetch(new Request('https://dreams-perfumes.pages.dev/js/admin-console-v3.js'), {
+        DREAMS_OFFICIAL: { fetch: async request => {
+            assert.equal(new URL(request.url).pathname, '/js/admin-console-v3.js');
+            return new Response('Sesión requerida', { status: 401, headers: { 'Cache-Control': 'no-store' } });
+        } }
+    });
+    assert.equal(response.status, 401);
+    assert.equal(await response.text(), 'Sesión requerida');
+});

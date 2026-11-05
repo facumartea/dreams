@@ -117,5 +117,7 @@
     "archive_identity": "PASS: cinco originales preservados byte por byte",
     "credential_scan": "PASS: sin coincidencias de patrones de claves/token/llave privada en archivos agregados o modificados",
     "visual_review": "Wireframes, D.E.R. y mapa existentes de la misma interfaz: PNG representativos y render de la primera página de los tres PDF revisados nuevamente; sin recortes ni superposiciones observados. Gráficos sin cambios de bytes."
-  }
+  },
+  "historical_record": true,
+  "current_technical_evidence": "../evidence/cierre-tecnico-20261105/README.md"
 }

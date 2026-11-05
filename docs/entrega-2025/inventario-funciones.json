@@ -1,6 +1,6 @@
 {
   "limit": 40,
-  "files": 117,
+  "files": 121,
   "records": [
     {
       "file": "pages/catalog.mjs",
@@ -127,95 +127,95 @@
       "name": "visual_request",
       "kind": "FunctionDeclaration",
       "start": 16,
-      "end": 23,
-      "lines": 8
+      "end": 26,
+      "lines": 11
     },
     {
       "file": "pages/proxy.mjs",
       "name": "forward_request",
       "kind": "FunctionDeclaration",
-      "start": 25,
-      "end": 37,
+      "start": 28,
+      "end": 40,
       "lines": 13
     },
     {
       "file": "pages/proxy.mjs",
       "name": "asset_not_modified",
       "kind": "FunctionDeclaration",
-      "start": 39,
-      "end": 44,
+      "start": 42,
+      "end": 47,
       "lines": 6
     },
     {
       "file": "pages/proxy.mjs",
       "name": "callback:some",
       "kind": "ArrowFunctionExpression",
-      "start": 40,
-      "end": 43,
+      "start": 43,
+      "end": 46,
       "lines": 4
     },
     {
       "file": "pages/proxy.mjs",
       "name": "visual_response",
       "kind": "FunctionDeclaration",
-      "start": 46,
-      "end": 57,
+      "start": 49,
+      "end": 60,
       "lines": 12
     },
     {
       "file": "pages/proxy.mjs",
       "name": "callback:from",
       "kind": "ArrowFunctionExpression",
-      "start": 55,
-      "end": 55,
+      "start": 58,
+      "end": 58,
       "lines": 1
     },
     {
       "file": "pages/proxy.mjs",
       "name": "approved",
       "kind": "ArrowFunctionExpression",
-      "start": 59,
-      "end": 59,
+      "start": 62,
+      "end": 62,
       "lines": 1
     },
     {
       "file": "pages/proxy.mjs",
       "name": "compressed_api_request",
       "kind": "FunctionDeclaration",
-      "start": 62,
-      "end": 66,
+      "start": 65,
+      "end": 69,
       "lines": 5
     },
     {
       "file": "pages/proxy.mjs",
       "name": "approved_release",
       "kind": "ArrowFunctionExpression",
-      "start": 68,
-      "end": 68,
+      "start": 71,
+      "end": 71,
       "lines": 1
     },
     {
       "file": "pages/proxy.mjs",
       "name": "proxy_response",
       "kind": "FunctionDeclaration",
-      "start": 70,
-      "end": 81,
-      "lines": 12
+      "start": 73,
+      "end": 85,
+      "lines": 13
     },
     {
       "file": "pages/proxy.mjs",
       "name": "create_proxy",
       "kind": "FunctionDeclaration",
-      "start": 83,
-      "end": 94,
+      "start": 87,
+      "end": 98,
       "lines": 12
     },
     {
       "file": "pages/proxy.mjs",
       "name": "fetch",
       "kind": "FunctionExpression",
-      "start": 85,
-      "end": 92,
+      "start": 89,
+      "end": 96,
       "lines": 8
     },
     {
@@ -2311,8 +2311,8 @@
       "name": "load_featured_products",
       "kind": "FunctionDeclaration",
       "start": 207,
-      "end": 224,
-      "lines": 18
+      "end": 226,
+      "lines": 20
     },
     {
       "file": "public/js/app.js",
@@ -2324,7 +2324,7 @@
     },
     {
       "file": "public/js/app.js",
-      "name": "callback:forEach",
+      "name": "callback:filter",
       "kind": "ArrowFunctionExpression",
       "start": 220,
       "end": 220,
@@ -2332,106 +2332,122 @@
     },
     {
       "file": "public/js/app.js",
+      "name": "callback:findIndex",
+      "kind": "ArrowFunctionExpression",
+      "start": 220,
+      "end": 220,
+      "lines": 1
+    },
+    {
+      "file": "public/js/app.js",
+      "name": "callback:forEach",
+      "kind": "ArrowFunctionExpression",
+      "start": 221,
+      "end": 221,
+      "lines": 1
+    },
+    {
+      "file": "public/js/app.js",
       "name": "get_recent_products",
       "kind": "FunctionDeclaration",
-      "start": 226,
-      "end": 231,
+      "start": 228,
+      "end": 233,
       "lines": 6
     },
     {
       "file": "public/js/app.js",
       "name": "callback:filter",
       "kind": "ArrowFunctionExpression",
-      "start": 229,
-      "end": 229,
+      "start": 231,
+      "end": 231,
       "lines": 1
     },
     {
       "file": "public/js/app.js",
       "name": "save_recent_product",
       "kind": "FunctionDeclaration",
-      "start": 233,
-      "end": 237,
+      "start": 235,
+      "end": 239,
       "lines": 5
     },
     {
       "file": "public/js/app.js",
       "name": "callback:filter",
       "kind": "ArrowFunctionExpression",
-      "start": 234,
-      "end": 234,
+      "start": 236,
+      "end": 236,
       "lines": 1
     },
     {
       "file": "public/js/app.js",
       "name": "render_recent_products",
       "kind": "FunctionDeclaration",
-      "start": 239,
-      "end": 246,
+      "start": 241,
+      "end": 248,
       "lines": 8
     },
     {
       "file": "public/js/app.js",
       "name": "callback:forEach",
       "kind": "ArrowFunctionExpression",
-      "start": 245,
-      "end": 245,
+      "start": 247,
+      "end": 247,
       "lines": 1
     },
     {
       "file": "public/js/app.js",
       "name": "setup_menu",
       "kind": "FunctionDeclaration",
-      "start": 248,
-      "end": 282,
+      "start": 250,
+      "end": 284,
       "lines": 35
     },
     {
       "file": "public/js/app.js",
       "name": "callback:addEventListener",
       "kind": "ArrowFunctionExpression",
-      "start": 260,
-      "end": 265,
+      "start": 262,
+      "end": 267,
       "lines": 6
     },
     {
       "file": "public/js/app.js",
       "name": "callback:addEventListener",
       "kind": "ArrowFunctionExpression",
-      "start": 267,
-      "end": 274,
+      "start": 269,
+      "end": 276,
       "lines": 8
     },
     {
       "file": "public/js/app.js",
       "name": "callback:forEach",
       "kind": "ArrowFunctionExpression",
-      "start": 276,
-      "end": 281,
+      "start": 278,
+      "end": 283,
       "lines": 6
     },
     {
       "file": "public/js/app.js",
       "name": "callback:addEventListener",
       "kind": "ArrowFunctionExpression",
-      "start": 276,
-      "end": 281,
+      "start": 278,
+      "end": 283,
       "lines": 6
     },
     {
       "file": "public/js/app.js",
       "name": "setup_header_scroll",
       "kind": "FunctionDeclaration",
-      "start": 284,
-      "end": 294,
+      "start": 286,
+      "end": 296,
       "lines": 11
     },
     {
       "file": "public/js/app.js",
       "name": "update",
       "kind": "ArrowFunctionExpression",
-      "start": 287,
-      "end": 291,
+      "start": 289,
+      "end": 293,
       "lines": 5
     },
     {
@@ -2446,8 +2462,8 @@
       "file": "public/js/app.js",
       "name": "bloque ejecutable superior",
       "kind": "ProgramBlock",
-      "start": 303,
-      "end": 303,
+      "start": 305,
+      "end": 305,
       "lines": 1
     },
     {
@@ -3619,6 +3635,54 @@
       "lines": 7
     },
     {
+      "file": "public/js/featured-carousel.js",
+      "name": "setup_featured_carousel",
+      "kind": "FunctionDeclaration",
+      "start": 2,
+      "end": 36,
+      "lines": 35
+    },
+    {
+      "file": "public/js/featured-carousel.js",
+      "name": "update",
+      "kind": "ArrowFunctionExpression",
+      "start": 12,
+      "end": 19,
+      "lines": 8
+    },
+    {
+      "file": "public/js/featured-carousel.js",
+      "name": "move",
+      "kind": "ArrowFunctionExpression",
+      "start": 20,
+      "end": 23,
+      "lines": 4
+    },
+    {
+      "file": "public/js/featured-carousel.js",
+      "name": "callback:addEventListener",
+      "kind": "ArrowFunctionExpression",
+      "start": 24,
+      "end": 24,
+      "lines": 1
+    },
+    {
+      "file": "public/js/featured-carousel.js",
+      "name": "callback:addEventListener",
+      "kind": "ArrowFunctionExpression",
+      "start": 25,
+      "end": 25,
+      "lines": 1
+    },
+    {
+      "file": "public/js/featured-carousel.js",
+      "name": "callback:addEventListener",
+      "kind": "ArrowFunctionExpression",
+      "start": 26,
+      "end": 32,
+      "lines": 7
+    },
+    {
       "file": "public/js/motion.js",
       "name": "motion_reveals",
       "kind": "FunctionDeclaration",
@@ -4267,6 +4331,102 @@
       "lines": 1
     },
     {
+      "file": "scripts/audit-served-scripts.mjs",
+      "name": "digest",
+      "kind": "ArrowFunctionExpression",
+      "start": 9,
+      "end": 9,
+      "lines": 1
+    },
+    {
+      "file": "scripts/audit-served-scripts.mjs",
+      "name": "audit_served_scripts",
+      "kind": "FunctionDeclaration",
+      "start": 12,
+      "end": 33,
+      "lines": 22
+    },
+    {
+      "file": "scripts/audit-served-scripts.mjs",
+      "name": "callback:filter",
+      "kind": "ArrowFunctionExpression",
+      "start": 14,
+      "end": 14,
+      "lines": 1
+    },
+    {
+      "file": "scripts/audit-served-scripts.mjs",
+      "name": "callback:map",
+      "kind": "ArrowFunctionExpression",
+      "start": 15,
+      "end": 15,
+      "lines": 1
+    },
+    {
+      "file": "scripts/audit-served-scripts.mjs",
+      "name": "callback:map",
+      "kind": "ArrowFunctionExpression",
+      "start": 30,
+      "end": 30,
+      "lines": 1
+    },
+    {
+      "file": "scripts/audit-served-scripts.mjs",
+      "name": "callback:every",
+      "kind": "ArrowFunctionExpression",
+      "start": 31,
+      "end": 31,
+      "lines": 1
+    },
+    {
+      "file": "scripts/audit-served-scripts.mjs",
+      "name": "main",
+      "kind": "FunctionDeclaration",
+      "start": 35,
+      "end": 41,
+      "lines": 7
+    },
+    {
+      "file": "scripts/audit-served-scripts.mjs",
+      "name": "callback:filter",
+      "kind": "ArrowFunctionExpression",
+      "start": 39,
+      "end": 39,
+      "lines": 1
+    },
+    {
+      "file": "scripts/audit-served-scripts.mjs",
+      "name": "callback:map",
+      "kind": "ArrowFunctionExpression",
+      "start": 39,
+      "end": 39,
+      "lines": 1
+    },
+    {
+      "file": "scripts/audit-served-scripts.mjs",
+      "name": "bloque ejecutable superior",
+      "kind": "ProgramBlock",
+      "start": 42,
+      "end": 42,
+      "lines": 1
+    },
+    {
+      "file": "scripts/build-pages.mjs",
+      "name": "callback:filter",
+      "kind": "ArrowFunctionExpression",
+      "start": 26,
+      "end": 26,
+      "lines": 1
+    },
+    {
+      "file": "scripts/build-pages.mjs",
+      "name": "callback:map",
+      "kind": "ArrowFunctionExpression",
+      "start": 27,
+      "end": 27,
+      "lines": 1
+    },
+    {
       "file": "scripts/build-pages.mjs",
       "name": "bloque ejecutable superior",
       "kind": "ProgramBlock",
@@ -4287,8 +4447,8 @@
       "name": "bloque ejecutable superior",
       "kind": "ProgramBlock",
       "start": 9,
-      "end": 43,
-      "lines": 35
+      "end": 32,
+      "lines": 24
     },
     {
       "file": "scripts/check.js",
@@ -12627,6 +12787,174 @@
       "lines": 21
     },
     {
+      "file": "test/featured-carousel.test.js",
+      "name": "carousel",
+      "kind": "FunctionDeclaration",
+      "start": 6,
+      "end": 23,
+      "lines": 18
+    },
+    {
+      "file": "test/featured-carousel.test.js",
+      "name": "addEventListener",
+      "kind": "FunctionExpression",
+      "start": 7,
+      "end": 7,
+      "lines": 1
+    },
+    {
+      "file": "test/featured-carousel.test.js",
+      "name": "addEventListener",
+      "kind": "FunctionExpression",
+      "start": 8,
+      "end": 8,
+      "lines": 1
+    },
+    {
+      "file": "test/featured-carousel.test.js",
+      "name": "getBoundingClientRect",
+      "kind": "ArrowFunctionExpression",
+      "start": 10,
+      "end": 10,
+      "lines": 1
+    },
+    {
+      "file": "test/featured-carousel.test.js",
+      "name": "add",
+      "kind": "FunctionExpression",
+      "start": 12,
+      "end": 12,
+      "lines": 1
+    },
+    {
+      "file": "test/featured-carousel.test.js",
+      "name": "setAttribute",
+      "kind": "FunctionExpression",
+      "start": 12,
+      "end": 12,
+      "lines": 1
+    },
+    {
+      "file": "test/featured-carousel.test.js",
+      "name": "addEventListener",
+      "kind": "ArrowFunctionExpression",
+      "start": 12,
+      "end": 12,
+      "lines": 1
+    },
+    {
+      "file": "test/featured-carousel.test.js",
+      "name": "scrollBy",
+      "kind": "ArrowFunctionExpression",
+      "start": 13,
+      "end": 13,
+      "lines": 1
+    },
+    {
+      "file": "test/featured-carousel.test.js",
+      "name": "scrollTo",
+      "kind": "ArrowFunctionExpression",
+      "start": 13,
+      "end": 13,
+      "lines": 1
+    },
+    {
+      "file": "test/featured-carousel.test.js",
+      "name": "getElementById",
+      "kind": "ArrowFunctionExpression",
+      "start": 16,
+      "end": 16,
+      "lines": 1
+    },
+    {
+      "file": "test/featured-carousel.test.js",
+      "name": "querySelector",
+      "kind": "ArrowFunctionExpression",
+      "start": 16,
+      "end": 16,
+      "lines": 1
+    },
+    {
+      "file": "test/featured-carousel.test.js",
+      "name": "getComputedStyle",
+      "kind": "ArrowFunctionExpression",
+      "start": 17,
+      "end": 17,
+      "lines": 1
+    },
+    {
+      "file": "test/featured-carousel.test.js",
+      "name": "matchMedia",
+      "kind": "ArrowFunctionExpression",
+      "start": 17,
+      "end": 17,
+      "lines": 1
+    },
+    {
+      "file": "test/featured-carousel.test.js",
+      "name": "observe",
+      "kind": "FunctionExpression",
+      "start": 18,
+      "end": 18,
+      "lines": 1
+    },
+    {
+      "file": "test/featured-carousel.test.js",
+      "name": "callback:test",
+      "kind": "ArrowFunctionExpression",
+      "start": 25,
+      "end": 35,
+      "lines": 11
+    },
+    {
+      "file": "test/featured-carousel.test.js",
+      "name": "callback:test",
+      "kind": "ArrowFunctionExpression",
+      "start": 37,
+      "end": 47,
+      "lines": 11
+    },
+    {
+      "file": "test/featured-carousel.test.js",
+      "name": "preventDefault",
+      "kind": "FunctionExpression",
+      "start": 42,
+      "end": 42,
+      "lines": 1
+    },
+    {
+      "file": "test/featured-carousel.test.js",
+      "name": "preventDefault",
+      "kind": "FunctionExpression",
+      "start": 43,
+      "end": 43,
+      "lines": 1
+    },
+    {
+      "file": "test/featured-carousel.test.js",
+      "name": "preventDefault",
+      "kind": "FunctionExpression",
+      "start": 45,
+      "end": 45,
+      "lines": 1
+    },
+    {
+      "file": "test/featured-carousel.test.js",
+      "name": "callback:test",
+      "kind": "ArrowFunctionExpression",
+      "start": 49,
+      "end": 54,
+      "lines": 6
+    },
+    {
+      "file": "test/featured-carousel.test.js",
+      "name": "callback:doesNotThrow",
+      "kind": "ArrowFunctionExpression",
+      "start": 53,
+      "end": 53,
+      "lines": 1
+    },
+    {
       "file": "test/function-inventory.test.mjs",
       "name": "callback:test",
       "kind": "ArrowFunctionExpression",
@@ -13969,6 +14297,38 @@
       "start": 180,
       "end": 180,
       "lines": 1
+    },
+    {
+      "file": "test/pages-proxy.test.mjs",
+      "name": "callback:test",
+      "kind": "ArrowFunctionExpression",
+      "start": 186,
+      "end": 201,
+      "lines": 16
+    },
+    {
+      "file": "test/pages-proxy.test.mjs",
+      "name": "fetch_backend",
+      "kind": "ArrowFunctionExpression",
+      "start": 191,
+      "end": 194,
+      "lines": 4
+    },
+    {
+      "file": "test/pages-proxy.test.mjs",
+      "name": "callback:test",
+      "kind": "ArrowFunctionExpression",
+      "start": 203,
+      "end": 216,
+      "lines": 14
+    },
+    {
+      "file": "test/pages-proxy.test.mjs",
+      "name": "fetch",
+      "kind": "ArrowFunctionExpression",
+      "start": 209,
+      "end": 212,
+      "lines": 4
     },
     {
       "file": "test/payment.test.js",
@@ -15776,6 +16136,134 @@
       "kind": "ArrowFunctionExpression",
       "start": 129,
       "end": 129,
+      "lines": 1
+    },
+    {
+      "file": "test/sql-cart-postgres.test.mjs",
+      "name": "sql",
+      "kind": "ArrowFunctionExpression",
+      "start": 15,
+      "end": 15,
+      "lines": 1
+    },
+    {
+      "file": "test/sql-cart-postgres.test.mjs",
+      "name": "invoke",
+      "kind": "ArrowFunctionExpression",
+      "start": 16,
+      "end": 16,
+      "lines": 1
+    },
+    {
+      "file": "test/sql-cart-postgres.test.mjs",
+      "name": "callback:before",
+      "kind": "ArrowFunctionExpression",
+      "start": 18,
+      "end": 24,
+      "lines": 7
+    },
+    {
+      "file": "test/sql-cart-postgres.test.mjs",
+      "name": "compare_sequence",
+      "kind": "FunctionDeclaration",
+      "start": 26,
+      "end": 35,
+      "lines": 10
+    },
+    {
+      "file": "test/sql-cart-postgres.test.mjs",
+      "name": "callback:test",
+      "kind": "ArrowFunctionExpression",
+      "start": 37,
+      "end": 47,
+      "lines": 11
+    },
+    {
+      "file": "test/sql-cart-postgres.test.mjs",
+      "name": "callback:test",
+      "kind": "ArrowFunctionExpression",
+      "start": 49,
+      "end": 58,
+      "lines": 10
+    },
+    {
+      "file": "test/sql-cart-postgres.test.mjs",
+      "name": "callback:throws",
+      "kind": "ArrowFunctionExpression",
+      "start": 53,
+      "end": 53,
+      "lines": 1
+    },
+    {
+      "file": "test/sql-cart-postgres.test.mjs",
+      "name": "callback:throws",
+      "kind": "ArrowFunctionExpression",
+      "start": 54,
+      "end": 54,
+      "lines": 1
+    },
+    {
+      "file": "test/sql-cart-postgres.test.mjs",
+      "name": "callback:from",
+      "kind": "ArrowFunctionExpression",
+      "start": 55,
+      "end": 55,
+      "lines": 1
+    },
+    {
+      "file": "test/sql-cart-postgres.test.mjs",
+      "name": "callback:throws",
+      "kind": "ArrowFunctionExpression",
+      "start": 56,
+      "end": 56,
+      "lines": 1
+    },
+    {
+      "file": "test/sql-cart-postgres.test.mjs",
+      "name": "callback:test",
+      "kind": "ArrowFunctionExpression",
+      "start": 60,
+      "end": 70,
+      "lines": 11
+    },
+    {
+      "file": "test/sql-cart-postgres.test.mjs",
+      "name": "callback:throws",
+      "kind": "ArrowFunctionExpression",
+      "start": 68,
+      "end": 68,
+      "lines": 1
+    },
+    {
+      "file": "test/sql-cart-postgres.test.mjs",
+      "name": "callback:doesNotThrow",
+      "kind": "ArrowFunctionExpression",
+      "start": 69,
+      "end": 69,
+      "lines": 1
+    },
+    {
+      "file": "test/sql-cart-postgres.test.mjs",
+      "name": "callback:test",
+      "kind": "ArrowFunctionExpression",
+      "start": 72,
+      "end": 76,
+      "lines": 5
+    },
+    {
+      "file": "test/sql-cart-postgres.test.mjs",
+      "name": "callback:from",
+      "kind": "ArrowFunctionExpression",
+      "start": 74,
+      "end": 74,
+      "lines": 1
+    },
+    {
+      "file": "test/sql-cart-postgres.test.mjs",
+      "name": "callback:filter",
+      "kind": "ArrowFunctionExpression",
+      "start": 74,
+      "end": 74,
       "lines": 1
     },
     {

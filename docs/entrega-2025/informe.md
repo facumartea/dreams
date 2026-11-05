@@ -1,3 +1,5 @@
+> Auditoría inicial previa a PR #61, conservada como registro. El [cierre técnico actual](../evidence/cierre-tecnico-20261105/README.md) reemplaza sus conclusiones sobre carrusel, SQL, assets y acceso Admin; la matriz se actualiza con evidencia de publicación.
+
 # Entrega DREAMS según la rúbrica 2025
 
 **Fuente leída íntegramente:** [PDF 2025](rubrica-2025.pdf), tres páginas; [texto completo](rubrica-2025.txt). [Matriz de 40 puntos de revisión](matriz-rubrica.md), en el orden del documento. No se usa la rúbrica 2026 como equivalente.

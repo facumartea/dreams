@@ -2,7 +2,8 @@
   {
     "lamina": "01-inicio",
     "pantalla": "Inicio",
-    "ruta": "/"
+    "ruta": "/",
+    "actualizacion": "05/11/2026: carrusel manual en Más buscados; portada estática conservada, diseño retrospectivo"
   },
   {
     "lamina": "02-catalogo",

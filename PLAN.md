@@ -1,12 +1,10 @@
-# Plan de entrega según PDF 2025
+# Plan PR #61
 
-1. Fuente y continuidad: completas; fecha literal previa 30 de octubre/final 12 de noviembre, sin trasladar calendario a 2026.
-2. Inventario y referencias: completos; 384 archivos del commit auditado y eliminaciones justificadas.
-3. Limpieza: un prompt obsoleto retirado; históricos conservados y enlazados; seguridad intacta.
-4. Claridad: comentarios de intención en español y nombre local body en carrito, sin cambios de contratos.
-5. Verificación: inventario de 40 líneas, equivalencia AST, tests y builds; lectura oficial y evidencia anterior aplicable.
-6. Informe criterio por criterio, guía de defensa y PR #60 en GitHub; integrar únicamente con CI aprobado. Sin ZIP.
+1. Continuidad y diagnóstico: completos; checkout.js coincidía con ec04a358 por omisión del overlay de Pages.
+2. Carrusel manual de productos y scripts coherentes: implementados, pruebas locales aprobadas.
+3. SQL: migración nueva aplicada; equivalencia, permisos, transacciones, concurrencia y carrito remoto aprobados.
+4. Admin real: casos solicitados acreditados; sesiones cerradas y recursos QA retirados.
+5. Manual, Inicio wireframe y mapa actualizados; evidencia de publicación completada.
+6. Publicación y contraste completos en Production; cerrar PR61 con CI final aprobado. No volver a desplegar por evidencia documental.
 
-No reactivar carrusel eliminado ni implementar pagos comerciales. SQL histórico aplicado no se modifica sin migración nueva y pruebas PostgreSQL aisladas. No se cambia Auth ni contraseña Admin.
-
-[Planes anteriores íntegros](docs/history/PLAN-hasta-20261105.md).
+No repetir limpieza PR60. No modificar otros sitios, portada estática, credenciales, Auth, DNS ni pagos comerciales. Sin ZIP.
