@@ -116,6 +116,6 @@
     "relative_links": "PASS: ningún destino local inexistente en documentación activa revisada",
     "archive_identity": "PASS: cinco originales preservados byte por byte",
     "credential_scan": "PASS: sin coincidencias de patrones de claves/token/llave privada en archivos agregados o modificados",
-    "visual_review": "Gráficos existentes de la misma interfaz; wireframe representativo y D.E.R. PNG revisados nuevamente, PDF revisados en la auditoría anterior, sin cambios de bytes."
+    "visual_review": "Wireframes, D.E.R. y mapa existentes de la misma interfaz: PNG representativos y render de la primera página de los tres PDF revisados nuevamente; sin recortes ni superposiciones observados. Gráficos sin cambios de bytes."
   }
 }

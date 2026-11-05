@@ -19,7 +19,7 @@ La oficial sigue en Pages `a176fa63-c0c5-46aa-bb8c-c97d1eb85466`, fuente `d36655
 
 ## Limpieza y organización
 
-Se leyó el contenido textual del árbol y se registraron referencias, propósito y grupo de cada archivo, no sólo su nombre: [inventarioJSON](inventario-archivos.json) / [CSV](inventario-archivos.csv). Los binarios se conservan como assets/documentos y no se descartan por falta de referencias textuales.
+El inventario clasifica los 384 archivos del commit de entrada: se leyó el contenido textual y se registraron referencias, propósito y grupo, no sólo el nombre. Los documentos nuevos y las rutas finales de los archivos movidos se identifican en el diff de la [PR #60](https://github.com/facumartea/dreams/pull/60): [inventarioJSON](inventario-archivos.json) / [CSV](inventario-archivos.csv). Los binarios se conservan como assets/documentos y no se descartan por falta de referencias textuales.
 
 - **Eliminado:** `NEXT_CHAT_PROMPT.md`. No se importa ni ejecuta; sólo figura en el manifiesto histórico de otro commit, que se conserva. El prompt apuntaba a `drams`, Railway y 26 tests, y decía que no existía checkout. Lo vigente está en AGENTS/CURRENT_STATE y documentos funcionales. No contenía evidencia académica única; Git conserva la versión anterior.
 - **Archivadas sin cambiar bytes:** tres auditorías visuales en `docs/history/visual-audits/`. Fechas, contenido y autoría se conservaron. Referencias operativas actualizadas.
@@ -45,7 +45,7 @@ Checks en 103 archivos y 489 tests locales PASS después de los comentarios/reno
 
 La interfaz no cambió: se reutilizan las lecturas 390/1440 y las pruebas funcionales anteriores del mismo backend, distinguiendo fechas y código en los informes originales. No se repitieron registros/cobros/guardados reales sin motivo. Admin autenticado nuevo queda BLOQUEADO; no se solicitan ni cambian contraseñas. No se enviaron mensajesWhatsApp ni se alteraron stock/pedidos/cupones.
 
-Wireframes/DER conservan el mismo contenido y archivos verificados: se revisaron representativosPDF/PNG y su contraste con fuente/versión de la oficial. RLS/PK/FK se documentan según metadatos previos de sólo lectura, sin consultar filas personales ni hashes. No se afirman nuevas políticas o migraciones remotas.
+Wireframes/DER conservan el mismo contenido y archivos verificados: se revisaron PDF/PNG representativos y su contraste con fuente/versión de la oficial. RLS/PK/FK se documentan según metadatos previos de sólo lectura, sin consultar filas personales ni hashes. No se afirman nuevas políticas o migraciones remotas.
 
 ## Prioridades y evidencia faltante
 
@@ -70,3 +70,7 @@ No se garantiza nota. Avance: se resuelve la falta del PDF y se completa la matr
 | G | Prompt obsoleto y descartables comprobados. | Sólo NEXT_CHAT_PROMPT.md eliminado, tras referencias e inspección; no se amplía la limpieza por suposición. |
 
 El inventario es una clasificación explicada, no una autorización de borrado por extensión o ruta. Para el único eliminado y los archivos movidos se verificaron contenido, dependencias y duplicación de información vigente. Los demás archivos se preservan ante duda. La revisión de nombres no sustituye la de sus consumidores.
+
+## Integración y consulta
+
+[PR #60](https://github.com/facumartea/dreams/pull/60), branch `codex/entrega-2025-claridad-limpieza`. El commit auditado es el indicado al inicio; los commits de documentación y el merge final se consultan en esa PR para no inventar un SHA autorreferencial. La integración sólo se realiza después de los checks aprobados. Ninguna PR ajena se incorpora.
