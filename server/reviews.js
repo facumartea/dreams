@@ -1,9 +1,11 @@
+// Opiniones vinculadas a la sesión verificada; el cliente no elige el autor ni su rol.
 const uuid = value => typeof value === 'string' && /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value);
 const public_name = name => typeof name === 'string' && !name.includes('@') ? name.trim().slice(0, 80) || 'Cliente' : 'Cliente';
 const columns = 'id,user_id,user_name,rating,comment,created_at';
 function review_input(body) {
     if (!body || Object.keys(body).some(key => !['rating', 'comment', 'operation_id'].includes(key))) return null;
-    if (!Number.isInteger(body.rating) || body.rating < 1 || body.rating > 5 || typeof body.comment !== 'string' || !uuid(body.operation_id)) return null;
+    if (!Number.isInteger(body.rating) || body.rating < 1 || body.rating > 5 ||
+        typeof body.comment !== 'string' || !uuid(body.operation_id)) return null;
     const comment = body.comment.trim();
     return comment && comment.length <= 1000 ? { rating: body.rating, comment, operation_id: body.operation_id } : null;
 }
@@ -21,6 +23,7 @@ async function publish_review(request, response, database) {
     if (result.error) throw result.error;
     response.status(201).json({ message: 'Opinión publicada.' });
 }
+// Repetir el mismo UUID devuelve éxito sólo si el contenido coincide; evita duplicados por reintento.
 async function replay_review(request, response, database, input) {
     const result = await database.from('reviews').select('rating,comment').eq('user_id', request.user.id).eq('operation_id', input.operation_id).maybeSingle();
     if (result.error) throw result.error;

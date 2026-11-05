@@ -1,3 +1,4 @@
+// Carrito por UUID de sesión: valida operaciones y delega su orden e idempotencia a la RPC.
 const { createHmac, timingSafeEqual } = require('node:crypto');
 const { normalize_product_brand } = require('./product-schema');
 const uuid = value => typeof value === 'string' && /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value);
@@ -18,7 +19,9 @@ class AccountCartService {
         this.ready = enabled && typeof signing_key === 'string' && signing_key.length >= 32;
         this.signing_key = signing_key;
     }
+    // El contexto firmado impide reutilizar una operación pendiente en otra cuenta.
     scope_for(id) { return createHmac('sha256', this.signing_key).update(`dreams-cart-v1:${id}`).digest('hex'); }
+    // Recupera precios y disponibilidad actuales; el JSON persistido sólo contiene IDs y cantidades.
     async hydrate(row, user) {
         const stored = Array.isArray(row?.items) ? row.items : [];
         const result = stored.length ? await this.database.from('products').select(`id,${this.product_brand_column},name,price,stock,image_url,size_ml`).in('id', stored.map(i => i.id)) : { data: [] };
@@ -39,11 +42,11 @@ class AccountCartService {
     }
     async write(req, res) {
         if (!this.ready) return res.status(503).json({ error: 'El guardado del carrito no está disponible.' });
-        const b = req.body;
-        if (!exact(b, ['operation_id', 'operation', 'scope']) || !uuid(b.operation_id) || !valid_operation(b.operation)) return res.status(400).json({ error: 'Operación de carrito inválida.' });
+        const body = req.body;
+        if (!exact(body, ['operation_id', 'operation', 'scope']) || !uuid(body.operation_id) || !valid_operation(body.operation)) return res.status(400).json({ error: 'Operación de carrito inválida.' });
         const scope = this.scope_for(req.user.id);
-        if (typeof b.scope !== 'string' || Buffer.byteLength(b.scope) !== Buffer.byteLength(scope) || !timingSafeEqual(Buffer.from(b.scope), Buffer.from(scope))) return res.status(409).json({ error: 'La cuenta cambió. Volvé a cargar el carrito.' });
-        const result = await this.database.rpc('dreams_cart_operation', { p_user_id: req.user.id, p_operation_id: b.operation_id, p_operation: b.operation });
+        if (typeof body.scope !== 'string' || Buffer.byteLength(body.scope) !== Buffer.byteLength(scope) || !timingSafeEqual(Buffer.from(body.scope), Buffer.from(scope))) return res.status(409).json({ error: 'La cuenta cambió. Volvé a cargar el carrito.' });
+        const result = await this.database.rpc('dreams_cart_operation', { p_user_id: req.user.id, p_operation_id: body.operation_id, p_operation: body.operation });
         if (result.error) {
             if (['22023', '23514'].includes(result.error.code)) return res.status(409).json({ error: 'El carrito cambió o alcanzó su límite. Recargalo antes de reintentar.' });
             throw result.error;

@@ -1,0 +1,79 @@
+{
+  "date_utc": "2026-11-05",
+  "base_commit": "f0f38865de1085e85cf7a7c5ebd940510fa4eec5",
+  "scope": "Documentación, limpieza y comentarios/renombre local equivalentes; sin escrituras remotas ni despliegue.",
+  "checks": [
+    {
+      "command": "pnpm run check",
+      "result": "PASS",
+      "javascript_files": 103
+    },
+    {
+      "command": "pnpm test",
+      "result": "PASS",
+      "tests": 489,
+      "fail": 0,
+      "skip": 0,
+      "kind": "Local; incluye fixtures, no acredita una nueva QA autenticada remota."
+    },
+    {
+      "command": "pnpm run build:pages",
+      "result": "PASS",
+      "deployment": false
+    },
+    {
+      "command": "pnpm run build:official",
+      "result": "PASS",
+      "deployment": false
+    },
+    {
+      "command": "pnpm run check:functions",
+      "result": "PASS",
+      "files": 117,
+      "records": 2147,
+      "maximum": 40,
+      "violations": 0,
+      "language": "JavaScript propio e inline HTML, Acorn"
+    },
+    {
+      "command": "Comparación AST Acorn contra commit base, normalizando sólo b → body",
+      "result": "PASS",
+      "evidence": "equivalencia-ast.json"
+    }
+  ],
+  "without_git": {
+    "result": "PENDIENTE",
+    "plan": "Extraer árbol versionado mediante TAR, instalar lockfile y ejecutar inventario sin .git; no generar ZIP."
+  },
+  "remote": {
+    "official": "https://dreams-perfumes.pages.dev/",
+    "pages_deployment": "a176fa63-c0c5-46aa-bb8c-c97d1eb85466",
+    "frontend_source": "d366551a2f8880addd133ace40e5e76f70dd4315",
+    "backend_version": "ef043065-5d28-45c7-906b-b9e1edb6a5ab",
+    "backend_source": "08635cdc5c1706ae520cbeec6c9a1b403c4df483",
+    "deployment_metadata": "Lectura confirmada en esta tarea; sin cambios.",
+    "reused_evidence": "../auditoria-2025/contraste-oficial.json",
+    "reason": "Misma interfaz y backend; sólo comentarios y nombre local equivalentes en esta tanda.",
+    "new_authenticated_admin": "BLOQUEADO: no hay sesión autorizada disponible; no se solicitan ni cambian credenciales.",
+    "writes": "Ninguna nueva escritura real; sin cobros, WhatsApp enviado, seeds, resets ni migraciones."
+  },
+  "forty_line_limits": [
+    {
+      "file": "supabase/migrations/20261013032746_account_carts.sql",
+      "function": "public.dreams_cart_operation",
+      "start": 23,
+      "end": 75,
+      "lines": 53,
+      "status": "PARCIAL: migración histórica aplicada; no se reescribe para ocultar el exceso."
+    },
+    {
+      "file": "https://dreams-perfumes.pages.dev/js/checkout.js",
+      "function": "setup_checkout",
+      "start": 134,
+      "end": 246,
+      "lines": 113,
+      "source": "ec04a358",
+      "status": "Asset remoto legado, distinto del archivo descargable; no se publica por rutina."
+    }
+  ]
+}

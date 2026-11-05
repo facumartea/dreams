@@ -1,19 +1,10 @@
-> Entrega2026 vigente: [índice completo](entrega-2026/INDICE.md). Este documento anterior es histórico y puede contener rutas, versiones o funciones retiradas.
+# Documentación DREAMS
 
-Documentación vigente de hosting: [Cloudflare: migración y rollback](cloudflare_migration.md) y [evidencias y pendientes](cloudflare_validation.md). El estado de sesión está en ../CURRENT_STATE.md. Los documentos Railway se conservan como referencia histórica.
+Entrada de entrega: **[rúbrica 2025 e informe actual](entrega-2025/INDICE.md)**.
 
-# Guía rápida DREAMS
+- [Manual vigente](entrega-2026/manual.md) y [PDF](entrega-2026/manual.pdf), reutilizados por su contenido funcional.
+- [Wireframes, mapa y D.E.R.](auditoria-2025/INDICE.md): documentación retrospectiva, no preentrega inventada.
+- [API](entrega-2026/api.md), [defensa](entrega-2025/defensa.md), [continuidad](../CURRENT_STATE.md).
+- [Históricos](history/): se conservan versiones de otros momentos y rúbricas. No prevalecen sobre el código ni el informe vigente.
 
-Consultar primero `CURRENT_STATE.md`, `AGENTS.md` y las guías Cloudflare enlazadas arriba. `docs/documentacion.md` y `docs/railway_deploy.md` conservan información histórica que debe contrastarse con el código actual.
-
-Stack actual: Node.js 20+, Express 5, Supabase Auth/Postgres, JavaScript, HTML/CSS, pnpm, Helmet y Morgan. No se usa SQLite, `express-session`, bcrypt ni una API de cotización.
-
-Para ejecutar localmente se necesita un proyecto Supabase de desarrollo, `.env` basado en `.env.example`, la baseline aplicada y:
-
-```bash
-corepack enable
-pnpm install --frozen-lockfile
-pnpm start
-```
-
-Abrir `http://localhost:3000`; el panel está en `/admin` y requiere iniciar sesión con el administrador configurado. No hay una contraseña predeterminada versionada.
+Entorno actual: Node.js 24, pnpm 11.19.0, puerto 8080. Hosting oficial: Cloudflare Pages y backend privado. Railway y las guías antiguas se conservan como historia. No copiar instrucciones antiguas de puerto 3000 o Node 20 como si fueran actuales.

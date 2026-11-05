@@ -1,0 +1,385 @@
+path,group,purpose,content_heading,text_read,reference_files
+.env.example,B,"Dependencias, esquema o configuración reproducible; variantes históricas se conservan sin activarlas.",Solo servidor: usar una clave secreta real únicamente en el gestor de variables del entorno.,True,9
+.gitattributes,B,"Dependencias, esquema o configuración reproducible; variantes históricas se conservan sin activarlas.",Auto detect text files and perform LF normalization,True,1
+.github/workflows/ci.yml,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,2
+.gitignore,B,"Dependencias, esquema o configuración reproducible; variantes históricas se conservan sin activarlas.",Logs,True,1
+AGENTS.md,E,"Entrada, reglas o continuidad; originales extensos se conservan en history cuando se resumen.",Guía de trabajo — DREAMS,True,6
+ART_DIRECTION_AUDIT_2026-09-01.md,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,Auditoría de dirección de arte y motion — DREAMS,True,2
+AUDIT.md,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",Revalidación de continuidad — 2026-10-05,True,7
+CHANGELOG.md,E,"Entrada, reglas o continuidad; originales extensos se conservan en history cuando se resumen.","Auditoría documental2025 — fuente pendiente, sin cambios funcionales",True,5
+CURRENT_STATE.md,E,"Entrada, reglas o continuidad; originales extensos se conservan en history cuando se resumen.","Auditoría documental2025 — fuente pendiente, sin cambios funcionales",True,16
+MOTION_REFERENCE_AUDIT_2026-09-01.md,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,Auditoría de motion — referencia Xerjoff/Lamborghini,True,1
+NEXT_CHAT_PROMPT.md,G,Prompt humano obsoleto; indica drams/Railway/26tests y excluye checkout hoy existente; sin consumo de ejecución.,Prompt de continuidad — DREAMS,True,1
+PLAN.md,E,"Entrada, reglas o continuidad; originales extensos se conservan en history cuando se resumen.","Auditoría documental2025 — fuente pendiente, sin cambios funcionales",True,5
+PREMIUM_EXPANSION_AUDIT.md,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,Auditoría específica — expansión premium DREAMS,True,3
+README.md,E,"Entrada, reglas o continuidad; originales extensos se conservan en history cuando se resumen.",DREAMS · Perfumería multimarca,True,8
+SECURITY_ADVERSARIAL_2026-09-01.md,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",Auditoría adversarial autorizada — DREAMS,True,2
+SECURITY_REVIEW_2026-08-29.md,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",Revisión de seguridad y plan de mejora — DREAMS,True,2
+docs/README.md,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,Guía rápida DREAMS,True,1
+docs/academic_preview.md,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,DREAMS — preview académica,True,3
+docs/access_language_refinement.md,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,"Acceso, idioma y contactos — PR38",True,2
+docs/admin_audit.md,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,Auditoría y mejoras del Admin — 2026-10-21,True,4
+docs/admin_search_images.md,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,Buscador y revisión de imágenes del Admin,True,1
+docs/auditoria-2025/INDICE.md,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",Auditoría2025 y gráficos — índice,True,1
+docs/auditoria-2025/alcance.json,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,True,5
+docs/auditoria-2025/archivos-versionados-commit-auditado.txt,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,True,4
+docs/auditoria-2025/base-de-datos.md,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",D.E.R. — alcance y diccionario de datos,True,8
+docs/auditoria-2025/checkout-oficial-inventario.json,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,True,2
+docs/auditoria-2025/contraste-oficial.json,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,True,4
+docs/auditoria-2025/control-40-lineas.md,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",Control de 40 líneas — sin refactorización,True,4
+docs/auditoria-2025/criterios-preliminares.json,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,True,0
+docs/auditoria-2025/fuentes/01-inicio.svg,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,True,1
+docs/auditoria-2025/fuentes/02-catalogo.svg,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,True,1
+docs/auditoria-2025/fuentes/03-filtros.svg,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,True,1
+docs/auditoria-2025/fuentes/04-detalle.svg,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,True,1
+docs/auditoria-2025/fuentes/05-login.svg,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,True,1
+docs/auditoria-2025/fuentes/06-registro.svg,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,True,1
+docs/auditoria-2025/fuentes/07-carrito.svg,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,True,1
+docs/auditoria-2025/fuentes/08-checkout.svg,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,True,1
+docs/auditoria-2025/fuentes/09-confirmacion.svg,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,True,1
+docs/auditoria-2025/fuentes/10-nosotros.svg,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,True,1
+docs/auditoria-2025/fuentes/11-admin-productos.svg,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,True,1
+docs/auditoria-2025/fuentes/12-admin-disponibilidad-baja.svg,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,True,1
+docs/auditoria-2025/fuentes/13-admin-cupones.svg,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,True,1
+docs/auditoria-2025/fuentes/14-admin-pedidos.svg,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,True,1
+docs/auditoria-2025/fuentes/15-admin-usuarios.svg,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,True,1
+docs/auditoria-2025/fuentes/16-admin-consultas.svg,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,True,1
+docs/auditoria-2025/fuentes/17-admin-opiniones.svg,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,True,1
+docs/auditoria-2025/fuentes/der.dot,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,True,0
+docs/auditoria-2025/fuentes/der.svg,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,True,0
+docs/auditoria-2025/fuentes/mapa-navegacion.dot,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,True,1
+docs/auditoria-2025/fuentes/mapa-navegacion.svg,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,True,1
+docs/auditoria-2025/fuentes/pantallas.json,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,True,1
+docs/auditoria-2025/graficos/der.pdf,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,False,0
+docs/auditoria-2025/graficos/der.png,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,False,0
+docs/auditoria-2025/graficos/mapa-navegacion.pdf,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,False,1
+docs/auditoria-2025/graficos/mapa-navegacion.png,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,False,1
+docs/auditoria-2025/graficos/wireframe-01.png,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,False,1
+docs/auditoria-2025/graficos/wireframe-02.png,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,False,1
+docs/auditoria-2025/graficos/wireframe-03.png,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,False,1
+docs/auditoria-2025/graficos/wireframe-04.png,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,False,1
+docs/auditoria-2025/graficos/wireframe-05.png,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,False,1
+docs/auditoria-2025/graficos/wireframe-06.png,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,False,1
+docs/auditoria-2025/graficos/wireframe-07.png,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,False,1
+docs/auditoria-2025/graficos/wireframe-08.png,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,False,1
+docs/auditoria-2025/graficos/wireframe-09.png,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,False,1
+docs/auditoria-2025/graficos/wireframe-10.png,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,False,1
+docs/auditoria-2025/graficos/wireframe-11.png,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,False,1
+docs/auditoria-2025/graficos/wireframe-12.png,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,False,1
+docs/auditoria-2025/graficos/wireframe-13.png,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,False,1
+docs/auditoria-2025/graficos/wireframe-14.png,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,False,1
+docs/auditoria-2025/graficos/wireframe-15.png,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,False,1
+docs/auditoria-2025/graficos/wireframe-16.png,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,False,1
+docs/auditoria-2025/graficos/wireframe-17.png,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,False,1
+docs/auditoria-2025/graficos/wireframes.pdf,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,False,1
+docs/auditoria-2025/indices-bd-remota.json,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,True,2
+docs/auditoria-2025/informe.md,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",Auditoría de entrega: informe provisional para la rúbrica 2025,True,0
+docs/auditoria-2025/inventario-funciones.json,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,True,6
+docs/auditoria-2025/inventario-sql.json,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,True,2
+docs/auditoria-2025/matriz-preliminar.md,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",Matriz PRELIMINAR — fuente2025 pendiente,True,2
+docs/auditoria-2025/metadatos-bd-remota.json,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,True,2
+docs/auditoria-2025/pruebas.json,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,True,2
+docs/checkout_sandbox.md,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,Checkout Sandbox — diseño y activación,True,2
+docs/cloudflare_migration.md,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,DREAMS — migración a Cloudflare Workers,True,6
+docs/cloudflare_validation.md,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,DREAMS — evidencias y límites de validación,True,4
+docs/collection_filters.md,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,Filtros por colección y diagnóstico de acceso — 2026-10-20,True,1
+docs/continuity-functional-backend-20261027.md,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,DREAMS — reparación funcional terminada,True,3
+docs/documentacion.md,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,Documentación técnica DREAMS,True,2
+docs/entrega-2026/INDICE.md,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",Entrega DREAMS · Integración Diseño y Programación 2026,True,5
+docs/entrega-2026/api.md,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",API externa y recorrido,True,4
+docs/entrega-2026/base-de-datos.md,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",Base de datos real e histórico,True,8
+docs/entrega-2026/base-de-datos.mmd,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,True,3
+docs/entrega-2026/bitacora-ia.md,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",Bitácora de uso de IA,True,5
+docs/entrega-2026/capturas/admin-local.png,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,False,1
+docs/entrega-2026/capturas/cuenta-local.png,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,False,1
+docs/entrega-2026/capturas/cuenta-oficial.png,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,False,2
+docs/entrega-2026/capturas/inicio-local.png,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,False,1
+docs/entrega-2026/capturas/inicio-oficial.png,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,False,2
+docs/entrega-2026/defensa.md,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",Guía para practicar la defensa,True,4
+docs/entrega-2026/diseno.md,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.","Diseño, contenido y límites de evidencia",True,3
+docs/entrega-2026/esquema-columnas-real.json,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,True,2
+docs/entrega-2026/extraccion-limpia.json,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,True,4
+docs/entrega-2026/funciones.md,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",Límite de 40 líneas,True,6
+docs/entrega-2026/inventario-funciones.json,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,True,6
+docs/entrega-2026/manual.md,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",Manual de uso DREAMS · Entrega 2026,True,4
+docs/entrega-2026/manual.pdf,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,False,1
+docs/entrega-2026/matriz-rubrica.md,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",Matriz completa · Rúbrica 2026,True,3
+docs/entrega-2026/pruebas-browser-local.json,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,True,2
+docs/entrega-2026/pruebas.md,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",Cambio posterior: Inicio sin carrusel —03/11/2026,True,2
+docs/entrega-2026/rubrica-2026.pdf,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,3
+docs/entrega-2026/rubrica-2026.txt,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,True,3
+docs/entrega-2026/sqlite.md,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",SQLite y excepción docente comunicada,True,2
+docs/entrega-2026/verificacion-zip.json,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,True,7
+docs/entrega-2026/wireframe.md,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",Wireframe y conexiones vigentes,True,3
+docs/entrega-2026/wireframe.png,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,False,4
+docs/entrega-2026/wireframe.svg,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",,True,3
+docs/entrega-2026/zip.md,D,"Manual, wireframe, DER, API, evidencia e inventarios; reutilización diferenciada de la edición de la consigna.",Entrega en GitHub y reproducción histórica,True,4
+docs/evidence/admin-audit-20261102/admin-form-oficial.png,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,2
+docs/evidence/admin-audit-20261102/browser-results.json,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,True,6
+docs/evidence/admin-audit-20261102/candidate-deployment.json,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,True,1
+docs/evidence/admin-audit-20261102/final-state.json,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,True,3
+docs/evidence/admin-audit-20261102/harness-interruption.json,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,True,4
+docs/evidence/admin-audit-20261102/input-type-regression.json,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,True,2
+docs/evidence/admin-audit-20261102/inventario.md,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,Inventario de controles Admin y comprobación,True,2
+docs/evidence/admin-audit-20261102/matriz-remota.md,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,Matriz remota final por caso,True,3
+docs/evidence/admin-audit-20261102/private-qa-types.json,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,True,3
+docs/evidence/admin-audit-20261102/private-qa.json,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,True,5
+docs/evidence/admin-audit/action-buttons-matrix.json,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,True,1
+docs/evidence/admin-audit/browser-matrix.json,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,True,2
+docs/evidence/admin-audit/coupon-browser-matrix.json,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,True,1
+docs/evidence/admin-audit/dashboard-retry-matrix.json,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,True,1
+docs/evidence/admin-audit/desktop-cards.png,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,2
+docs/evidence/admin-audit/desktop-equal-product-actions.png,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,1
+docs/evidence/admin-audit/desktop-header-cards.png,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,1
+docs/evidence/admin-audit/desktop-header.png,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,2
+docs/evidence/admin-audit/desktop-low-stock-search.png,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,1
+docs/evidence/admin-audit/extra-browser-matrix.json,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,True,1
+docs/evidence/admin-audit/matrix.md,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,Matriz Admin — 2026-10-21,True,1
+docs/evidence/admin-audit/mobile-cards.png,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,1
+docs/evidence/admin-audit/mobile-equal-product-actions.png,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,2
+docs/evidence/admin-audit/mobile-header-cards.png,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,1
+docs/evidence/admin-audit/mobile-header.png,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,2
+docs/evidence/admin-audit/mobile-low-stock-search.png,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,2
+docs/evidence/admin-audit/node-matrix.json,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,True,1
+docs/evidence/admin-audit/remote-matrix.json,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,True,2
+docs/evidence/collection-filters/desktop-hombre.png,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,2
+docs/evidence/collection-filters/desktop-mujer.png,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,2
+docs/evidence/collection-filters/desktop-unisex.png,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,2
+docs/evidence/collection-filters/local-browser.txt,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,True,1
+docs/evidence/collection-filters/mobile-hombre.png,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,2
+docs/evidence/collection-filters/mobile-mujer.png,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,2
+docs/evidence/collection-filters/mobile-unisex.png,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,2
+docs/evidence/collection-filters/official-desktop-hombre.png,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,2
+docs/evidence/collection-filters/official-desktop-mujer.png,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,2
+docs/evidence/collection-filters/official-desktop-unisex.png,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,2
+docs/evidence/collection-filters/official-final-browser.txt,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,True,1
+docs/evidence/collection-filters/official-full-browser.txt,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,True,1
+docs/evidence/collection-filters/official-http.txt,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,True,1
+docs/evidence/collection-filters/official-mobile-hombre.png,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,2
+docs/evidence/collection-filters/official-mobile-mujer.png,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,2
+docs/evidence/collection-filters/official-mobile-unisex.png,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,2
+docs/evidence/collection-filters/staging-browser.txt,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,True,1
+docs/evidence/coupon-academic-20261103/README.md,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,Cupón y formulario académico — cierre comprobado03/11/2026,True,1
+docs/evidence/coupon-academic-20261103/business-comparison.json,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,True,2
+docs/evidence/coupon-academic-20261103/cart-1440.png,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,1
+docs/evidence/coupon-academic-20261103/cart-390.png,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,1
+docs/evidence/coupon-academic-20261103/form-1440.png,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,2
+docs/evidence/coupon-academic-20261103/form-390.png,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,2
+docs/evidence/coupon-academic-20261103/local-browser.json,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,True,6
+docs/evidence/coupon-academic-20261103/official-coupon-1440.png,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,2
+docs/evidence/coupon-academic-20261103/official-coupon-390.png,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,2
+docs/evidence/coupon-academic-20261103/official-form-1440.png,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,2
+docs/evidence/coupon-academic-20261103/official-form-390.png,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,2
+docs/evidence/coupon-academic-20261103/remote-browser.json,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,True,5
+docs/evidence/coupon-academic-20261103/remote-input-edges.json,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,True,2
+docs/evidence/functional-backend-20261027/credential-diagnosis.md,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,Diagnóstico del Secret del backend candidato,True,4
+docs/evidence/functional-backend-20261027/credential-diagnostic-result.json,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,True,6
+docs/evidence/functional-backend-20261027/credential-replacement-20261029.json,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,True,2
+docs/evidence/functional-backend-20261027/credential-replacement-20261029.md,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,Secret reemplazado por el usuario: resultado real ·29/10/2026,True,6
+docs/evidence/functional-backend-20261027/local-browser.json,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,True,6
+docs/evidence/functional-backend-20261027/new-secret-read-20261029.json,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,True,5
+docs/evidence/functional-backend-20261027/phased-qa-deployment-20261029.json,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,True,1
+docs/evidence/functional-backend-20261027/real-auth-cart-partial-20261029.json,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,True,2
+docs/evidence/functional-backend-20261027/recovered-nine-phases-20261029.json,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,True,4
+docs/evidence/functional-backend-20261027/remote-smoke.json,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,True,1
+docs/evidence/functional-backend-20261027/restored-1440.png,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,2
+docs/evidence/functional-backend-20261027/restored-390.png,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,2
+docs/evidence/functional-backend-20261027/verification.md,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,Recuperación funcional — 2026-10-27,True,4
+docs/evidence/home-removal-20261103/README.md,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,Retirada del bloque de colecciones de Inicio —03/11/2026,True,2
+docs/evidence/home-removal-20261103/local-browser.json,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,True,6
+docs/evidence/home-removal-20261103/local-home-1440.png,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,1
+docs/evidence/home-removal-20261103/local-home-390.png,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,1
+docs/evidence/home-removal-20261103/official-home-1440.png,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,2
+docs/evidence/home-removal-20261103/official-home-390.png,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,2
+docs/evidence/home-removal-20261103/remote-browser.json,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,True,5
+docs/evidence/navigation/desktop-filters.png,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,1
+docs/evidence/navigation/desktop-menu.png,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,1
+docs/evidence/navigation/mobile-filters.png,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,1
+docs/evidence/navigation/mobile-menu.png,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,1
+docs/evidence/navigation/remote-qa.txt,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,True,1
+docs/evidence/official-review-20261027/academic-official-matrix.json,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,True,1
+docs/evidence/official-review-20261027/after-http-matrix.json,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,True,1
+docs/evidence/official-review-20261027/before-http.json,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,True,2
+docs/evidence/official-review-20261027/desktop-academic-official.png,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,2
+docs/evidence/official-review-20261027/desktop-admin-local.png,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,1
+docs/evidence/official-review-20261027/desktop-cart-local.png,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,1
+docs/evidence/official-review-20261027/desktop-cart-official.png,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,2
+docs/evidence/official-review-20261027/feature-status.json,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,True,1
+docs/evidence/official-review-20261027/local-browser-matrix.json,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,True,2
+docs/evidence/official-review-20261027/matrix.md,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,Matriz consolidada — oficial 2026-10-27,True,3
+docs/evidence/official-review-20261027/mobile-academic-official.png,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,2
+docs/evidence/official-review-20261027/mobile-admin-local.png,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,1
+docs/evidence/official-review-20261027/mobile-cart-local.png,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,1
+docs/evidence/official-review-20261027/mobile-cart-official.png,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,2
+docs/evidence/official-review-20261027/official-browser-matrix.json,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,True,1
+docs/evidence/pr56-current-20261028/status.md,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,Estado vigente posterior al reemplazo ·29/10/2026,True,4
+docs/evidence/seo/desktop-product.png,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,1
+docs/evidence/seo/isolated-http.txt,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,True,1
+docs/evidence/seo/mobile-catalog.png,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,1
+docs/evidence/seo/nojs-product.png,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,False,1
+docs/evidence/seo/official-browser.txt,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,True,1
+docs/evidence/seo/official-http.txt,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,True,1
+docs/evidence/seo/product-initial-head.html,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,True,2
+docs/evidence/seo/validator-home.json,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,True,1
+docs/evidence/seo/validator-product.json,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,,True,1
+docs/history/CURRENT_STATE_PR33.md,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,Estado actual — DREAMS,True,1
+docs/history/PLAN_PR33.md,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,Roadmap de producción — DREAMS,True,2
+docs/image_sources.md,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,Fuentes visuales,True,2
+docs/manual_de_uso.md,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,Manual de uso DREAMS,True,1
+docs/navigation_filters.md,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,Navegación y filtros DREAMS — 2026-10-15,True,1
+docs/official_academic_release.md,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,Publicación oficial estática y aislamiento del video,True,1
+docs/official_direct_checkout.md,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,Promoción aislada de checkout académico a Pages,True,1
+docs/official_navigation_footer.md,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,Navegación y footer oficial — 2026-10-09 UTC,True,2
+docs/official_review_20261027.md,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,Continuidad oficial — 27 de octubre de 2026,True,3
+docs/pages_frontdoor.md,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,Estado de hosting vigente · 29/10/2026,True,3
+docs/pseudocodigo.md,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,Pseudocódigo DREAMS,True,1
+docs/railway_deploy.md,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,Publicar DREAMS en Railway,True,2
+docs/recovery_runbook.md,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,DREAMS — recuperación de hosting,True,2
+docs/seo_y_metadatos.md,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,"SEO, redacción y enlaces compartidos de DREAMS",True,1
+docs/static_home_pages.md,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,Portada estática en Pages,True,3
+docs/supabase_railway_github.md,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,"Supabase, GitHub y Railway",True,1
+docs/wireframe.md,F,Informe o evidencia histórica útil; no se elimina por antigüedad ni porque no sea requisito expreso.,Wireframe general,True,3
+package.json,B,"Dependencias, esquema o configuración reproducible; variantes históricas se conservan sin activarlas.",,True,5
+pages/catalog.mjs,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,7
+pages/official-backend.mjs,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,6
+pages/official-release.json,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,12
+pages/proxy.mjs,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,13
+pages/seo.mjs,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,5
+pages/wrangler.jsonc,B,"Dependencias, esquema o configuración reproducible; variantes históricas se conservan sin activarlas.",,True,6
+pnpm-lock.yaml,B,"Dependencias, esquema o configuración reproducible; variantes históricas se conservan sin activarlas.",,True,2
+pnpm-workspace.yaml,B,"Dependencias, esquema o configuración reproducible; variantes históricas se conservan sin activarlas.",,True,2
+public/404.html,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,4
+public/assets/dreams-bottle.png,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,False,14
+public/assets/dreams-hero-1024.webp,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,False,6
+public/assets/dreams-hero-640.webp,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,False,3
+public/assets/dreams-isologo-clean.png,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,False,8
+public/assets/dreams-isotype.png,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,False,14
+public/assets/dreams-social.png,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,False,15
+public/assets/isotipo-dreams.png,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,False,1
+public/assets/logo-dreams.png,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,False,1
+public/carrito.html,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,26
+public/catalogo.html,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,42
+public/checkout-resultado.html,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,18
+public/checkout.html,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,21
+public/css/style.css,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,cart-count{position:absolute;top:2px;right:-1px;display:grid;width:18px;height:18px;place-items:center;border:1px solid var(--ink),True,9
+public/cuenta.html,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,42
+public/index.html,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,7
+public/js/academic-inputs.js,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,10
+public/js/account-cart.js,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,14
+public/js/admin-image-url.js,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,9
+public/js/admin-product-search.js,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,9
+public/js/admin.js,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,16
+public/js/app.js,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,13
+public/js/carrito.js,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,6
+public/js/catalog-filter-state.js,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,10
+public/js/catalogo.js,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,10
+public/js/checkout-result.js,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,5
+public/js/checkout.js,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,15
+public/js/cuenta.js,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,6
+public/js/motion.js,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,5
+public/js/navigation.js,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,19
+public/js/presentation.js,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,11
+public/js/producto.js,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,11
+public/js/reviews.js,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,5
+public/js/safe.js,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,4
+public/nosotros.html,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,25
+public/producto.html,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,22
+public/robots.txt,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,3
+public/sitemap.xml,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,8
+railway.toml,B,"Dependencias, esquema o configuración reproducible; variantes históricas se conservan sin activarlas.",,True,7
+scripts/build-pages.mjs,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,4
+scripts/check.js,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,4
+scripts/deploy-pages.mjs,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,5
+scripts/function-inventory.mjs,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,10
+scripts/grant-google-admin.js,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,4
+scripts/install_and_run.txt,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,1
+scripts/official-release-gate.mjs,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,6
+scripts/repair-official-secret.mjs,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,8
+scripts/sync-public-footer.mjs,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,4
+server/account-cart.js,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,14
+server/app.js,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,16
+server/auth-cookies.js,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,3
+server/auth-limits.js,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,4
+server/contacts.js,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,5
+server/customer-registration.js,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,5
+server/google-auth.js,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,3
+server/official-policy.js,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,5
+server/payments/demo.js,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,5
+server/payments/mercado-pago.js,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,5
+server/presentation-checkout.js,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,4
+server/preview-write-guard.js,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,4
+server/product-schema.js,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,5
+server/reviews.js,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,3
+server/seed.js,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,6
+server/server.js,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,11
+supabase/migrations/20260828144944_production_baseline.sql,B,"Dependencias, esquema o configuración reproducible; variantes históricas se conservan sin activarlas.",,True,6
+supabase/migrations/20260831024826_checkout_orders_and_coupons.sql,B,"Dependencias, esquema o configuración reproducible; variantes históricas se conservan sin activarlas.",,True,5
+supabase/migrations/20260831040000_enable_demo_checkout_provider.sql,B,"Dependencias, esquema o configuración reproducible; variantes históricas se conservan sin activarlas.",,True,5
+supabase/migrations/20260901090000_admin_authenticated_policies.sql,B,"Dependencias, esquema o configuración reproducible; variantes históricas se conservan sin activarlas.",,True,5
+supabase/migrations/20260902090000_admin_orders_coupons_grants.sql,B,"Dependencias, esquema o configuración reproducible; variantes históricas se conservan sin activarlas.",,True,3
+supabase/migrations/20261013032746_account_carts.sql,B,"Dependencias, esquema o configuración reproducible; variantes históricas se conservan sin activarlas.",,True,4
+supabase/migrations/20261021004927_customer_review_ownership.sql,B,"Dependencias, esquema o configuración reproducible; variantes históricas se conservan sin activarlas.",,True,2
+supabase/schema.sql,B,"Dependencias, esquema o configuración reproducible; variantes históricas se conservan sin activarlas.",,True,8
+templates/public-footer.html,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,5
+templates/social-card.html,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,2
+test/academic-client.test.js,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,3
+test/academic-coupon.test.js,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,3
+test/academic.integration.test.js,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,4
+test/account-cart.test.js,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,4
+test/admin-audit-matrix.test.js,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,3
+test/admin-image-client.test.js,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,3
+test/admin-persistence.test.js,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,5
+test/admin-product-search.test.js,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,3
+test/admin-product-types.test.js,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,3
+test/admin-proxy.test.mjs,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,3
+test/admin-recovery.test.js,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,4
+test/admin.integration.test.js,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,3
+test/app.integration.test.js,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,4
+test/cart-browser.test.js,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,3
+test/catalog-filter-state.test.js,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,3
+test/catalog-multiselect.test.mjs,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,3
+test/catalog-request-order.test.js,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,3
+test/cloudflare.integration.test.mjs,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,3
+test/coupon.test.js,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,3
+test/customer-registration.integration.test.js,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,4
+test/demo-payment.test.js,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,3
+test/design-system.test.js,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,4
+test/function-inventory.test.mjs,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,3
+test/helpers/admin-fixture.cjs,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,5
+test/home-collections-removal.test.js,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,3
+test/migration.test.js,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,3
+test/navigation.test.js,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,3
+test/official-binding.test.mjs,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,4
+test/official-policy.test.js,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,4
+test/official-qa.test.mjs,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,3
+test/official-release-gate.test.mjs,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,3
+test/official-release.test.mjs,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,4
+test/official-scheduled.integration.test.mjs,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,3
+test/pages-proxy.test.mjs,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,3
+test/payment.test.js,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,3
+test/private-browser-qa.test.mjs,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,3
+test/product-schema.integration.test.js,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,3
+test/product-schema.test.js,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,3
+test/recent-products.test.js,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,3
+test/registration-browser.test.js,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,4
+test/repair-official-secret.test.mjs,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,3
+test/review-ownership.test.js,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,4
+test/safe.test.js,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,3
+test/seed.test.js,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,3
+test/seo.test.mjs,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,3
+test/server.test.js,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,3
+test/supabase-diagnostic.test.mjs,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,3
+test/whatsapp.test.js,C,"Pruebas, verificación o auditoría; conserva regresiones y decisiones de seguridad.",,True,3
+views/admin.html,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,20
+worker/admin-review.mjs,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,4
+worker/index.mjs,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,6
+worker/official-client.mjs,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,12
+worker/official-legacy.mjs,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,6
+worker/official-qa.mjs,C,Herramienta/fixture de diagnóstico o QA consumida por tests; no implica que esté habilitada en el backend productivo.,,True,7
+worker/official.mjs,A,Implementación o recurso del sitio/adaptadores; incluso fixtures importados se conservan ante dependencia.,,True,10
+worker/private-browser-qa.mjs,C,Herramienta/fixture de diagnóstico o QA consumida por tests; no implica que esté habilitada en el backend productivo.,,True,5
+worker/supabase-diagnostic.mjs,C,Herramienta/fixture de diagnóstico o QA consumida por tests; no implica que esté habilitada en el backend productivo.,,True,5
+worker/test-fixtures/private-browser-session.mjs,C,Herramienta/fixture de diagnóstico o QA consumida por tests; no implica que esté habilitada en el backend productivo.,,True,4
+worker/test-fixtures/synthetic-registration.mjs,C,Herramienta/fixture de diagnóstico o QA consumida por tests; no implica que esté habilitada en el backend productivo.,,True,4
+wrangler.jsonc,B,"Dependencias, esquema o configuración reproducible; variantes históricas se conservan sin activarlas.",,True,6
+wrangler.official.jsonc,B,"Dependencias, esquema o configuración reproducible; variantes históricas se conservan sin activarlas.",,True,4

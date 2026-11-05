@@ -1,3 +1,5 @@
+> **Histórico del03/11/2026:** entonces faltaba elPDF. El05/11se recibió y leyó; la evaluación vigente está en [entrega2025](../entrega-2025/INDICE.md). Se conserva este informe original para no alterar su contexto. Los gráficos siguen siendo los mismos y se reutilizan.
+
 # Auditoría2025 y gráficos — índice
 
 **BLOQUEADO: ** falta el PDF 2025 solicitado. No se usó el PDF 2026 como equivalente. Informe y matriz son provisionales hasta leerlo. Los gráficos son documentación retrospectiva del diseño implementado, generados03/11/2026, no documentos de preentrega.

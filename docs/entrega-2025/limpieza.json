@@ -1,0 +1,42 @@
+{
+  "deleted": [
+    {
+      "path": "NEXT_CHAT_PROMPT.md",
+      "runtime_references": 0,
+      "historical_reference": "docs/auditoria-2025/archivos-versionados-commit-auditado.txt conserva la lista del commit auditado anterior, no es un enlace vigente",
+      "reason": "Información actual repetida por AGENTS/CURRENT_STATE; instrucciones viejas contradicen repo/hosting/checkout. No contiene un requisito académico único. HistorialGit intacto."
+    }
+  ],
+  "archived": [
+    {
+      "source": "ART_DIRECTION_AUDIT_2026-09-01.md",
+      "destination": "docs/history/visual-audits/ART_DIRECTION_AUDIT_2026-09-01.md",
+      "same_bytes_as_audited_commit": true,
+      "sha256": "4b5c4af34b35fd0eafd2598f1bcbbcbf43cbd18343e69b90181cd510f9da1033"
+    },
+    {
+      "source": "MOTION_REFERENCE_AUDIT_2026-09-01.md",
+      "destination": "docs/history/visual-audits/MOTION_REFERENCE_AUDIT_2026-09-01.md",
+      "same_bytes_as_audited_commit": true,
+      "sha256": "0b653316c170374b94e9c4963b43e41a135bfd2d7dfd21e1983c5069f530b8ce"
+    },
+    {
+      "source": "PREMIUM_EXPANSION_AUDIT.md",
+      "destination": "docs/history/visual-audits/PREMIUM_EXPANSION_AUDIT.md",
+      "same_bytes_as_audited_commit": true,
+      "sha256": "2efae580c6a5ab9d32bf821c68118aa0ddb603061ec16423d6899f86b58871e7"
+    },
+    {
+      "source": "CURRENT_STATE.md",
+      "destination": "docs/history/CURRENT_STATE-hasta-20261105.md",
+      "same_bytes_as_audited_commit": true,
+      "sha256": "23ea9dfc4683d4aa9d7f508a3bdae9c067f734012d717a38afb3632fb3098013"
+    },
+    {
+      "source": "PLAN.md",
+      "destination": "docs/history/PLAN-hasta-20261105.md",
+      "same_bytes_as_audited_commit": true,
+      "sha256": "7a0236c9bdffe4d7ed08baf4fb9409a0e8c2c9fedd8848206e40f6cbad82eda8"
+    }
+  ]
+}

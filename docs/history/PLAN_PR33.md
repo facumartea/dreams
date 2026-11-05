@@ -119,4 +119,4 @@ Revisar CI del PR de estabilización, recuperar Railway y desplegar con smoke ve
 
 ## Expansión premium mapeada al roadmap
 
-Las diez funcionalidades nuevas no crean fases paralelas: hero/cards/tema/360 pertenecen a F10-F13; quiz/configurador/recomendaciones a F4/F9/F15; dashboard/fidelidad/timeline a F3/F7/F18. `PREMIUM_EXPANSION_AUDIT.md` registra estado, reutilización, faltantes, riesgos y orden. Fidelidad no avanza hasta definir beneficios reales; el 360° real no avanza sin assets adecuados y autorizados.
+Las diez funcionalidades nuevas no crean fases paralelas: hero/cards/tema/360 pertenecen a F10-F13; quiz/configurador/recomendaciones a F4/F9/F15; dashboard/fidelidad/timeline a F3/F7/F18. [PREMIUM_EXPANSION_AUDIT.md](visual-audits/PREMIUM_EXPANSION_AUDIT.md) registra estado, reutilización, faltantes, riesgos y orden. Fidelidad no avanza hasta definir beneficios reales; el 360° real no avanza sin assets adecuados y autorizados.
