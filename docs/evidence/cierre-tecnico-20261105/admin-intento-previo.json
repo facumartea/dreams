@@ -68,5 +68,6 @@
     }
   ],
   "pass": false,
-  "failed_stage": "edit"
+  "failed_stage": "edit",
+  "assessment": "Pruebas UI de alta/edición/imagen y búsqueda aprobadas. La disponibilidad baja se consultó durante carga: se completó esperando la respuesta en admin-remoto.json. No se cambió Admin para corregir el harness."
 }

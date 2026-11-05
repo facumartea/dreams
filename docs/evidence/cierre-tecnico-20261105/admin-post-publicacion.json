@@ -1,0 +1,36 @@
+{
+  "date": "2026-11-05T16:19:15.617Z",
+  "mode": "post-deployment-real-admin",
+  "checks": [
+    {
+      "name": "existing-identity",
+      "pass": true
+    },
+    {
+      "name": "normal-admin-login",
+      "pass": true
+    },
+    {
+      "name": "admin-form-and-statistics",
+      "pass": true
+    },
+    {
+      "name": "no-admin-page-errors",
+      "pass": true
+    },
+    {
+      "name": "all-approved-served-scripts-and-forty-lines",
+      "pass": true
+    },
+    {
+      "name": "admin-logout",
+      "pass": true
+    },
+    {
+      "name": "admin-api-denied-after-logout",
+      "pass": true
+    }
+  ],
+  "reused_module_evidence": "admin-post-intento.json",
+  "pass": true
+}

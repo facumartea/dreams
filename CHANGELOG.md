@@ -4,7 +4,7 @@
 - Incorporado carrusel manual en Más buscados; controles, teclado, responsive, táctil nativo y movimiento reducido, sin autoplay ni cambio de portada.
 - Aplicada migración nueva compatible de carrito después de pruebas PostgreSQL aisladas; invoker, permisos de servidor, idempotencia y lock transaccional conservados. Histórico intacto; rollback sólo de definición preparado.
 - QA Admin real y carrito por cuenta completados con recursos exclusivos retirados y sesiones cerradas. No se modificaron credenciales ni Auth.
-- Manual, wireframe retrospectivo de Inicio y mapa actualizados. Pruebas/publicación en docs/evidence/cierre-tecnico-20261105; el cierre remoto se registra después del deployment.
+- Manual, wireframe retrospectivo de Inicio y mapa actualizados. Pruebas/publicación en docs/evidence/cierre-tecnico-20261105; cierre remoto: Pages b60383af/commit5c6dd5e, 20 scripts con hashes coincidentes y máximo38, 22 checks de checkout/carrusel aprobados. Backend sin nuevo despliegue.
 
 ## 2026-11-05 — Rúbrica2025, limpieza y claridad
 

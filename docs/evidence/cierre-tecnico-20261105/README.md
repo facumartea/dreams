@@ -18,7 +18,7 @@ En la sección existente «Más buscados»: productos reales distintos, Anterior
 
 ## SQL activo e historial
 
-La consulta de `pg_get_functiondef` confirmó que la RPC antigua de 53 líneas seguía activa. Se creó mediante CLI una migración nueva: `20261105155756_modularize_account_cart.sql`. Tras versionarla y probarla, se aplicó con la conexión Supabase autorizada.
+La consulta de `pg_get_functiondef` confirmó que la RPC antigua de 53 líneas seguía activa. Se creó mediante CLI una migración nueva: `20261105160613_modularize_account_cart.sql`. Tras versionarla y probarla, se aplicó con la conexión Supabase autorizada. El CLI la creó inicialmente como `20261105155756`; su nombre final se alineó con el journal remoto `20261105160613`, conservando el mismo SQL y sin repetir la aplicación. Las diferencias de timestamp de migraciones anteriores se conservan como antecedentes; no se reparó su historial por rutina.
 
 Auxiliares y entrada miden 5/31/32/32 líneas en fuente; PostgreSQL devuelve 10/35/36/36 incluyendo su encabezado normalizado. Todas son SECURITY INVOKER con search_path vacío, sin EXECUTE para PUBLIC, anon o authenticated; sólo service_role. El lock del carrito se conserva hasta terminar la transacción, que incluye auxiliares y registro idempotente. No se cambiaron tablas, RLS, datos, stock ni firmas HTTP.
 
@@ -32,9 +32,19 @@ El archivo histórico de 53 líneas queda inmutable y ahora está reemplazado. `
 
 ## Validación y publicación
 
-Suite local: 497 casos, 493 aprobados y 4 omitidos si no se configura PostgreSQL. Los cuatro omitidos se ejecutaron aparte y aprobaron en `dreams-sql-qa`. Sintaxis, inventario Acorn, builds Pages/backend privado y diff revisados. No se despliega el backend privado existente, que sigue en `ef043065`/fuente `08635cd`.
+Suite local: 498 casos, 494 aprobados y 4 omitidos si no se configura PostgreSQL. Los cuatro omitidos se ejecutaron aparte y aprobaron en `dreams-sql-qa`. Sintaxis, inventario Acorn, builds Pages/backend privado y diff revisados. No se despliega el backend privado existente, que sigue en `ef043065`/fuente `08635cd`.
 
-Estado de esta revisión: publicación de frontend y contraste remoto pendientes. No declarar cierre del carrusel ni de los scripts servidos hasta incorporar esos resultados.
+Publicación completada: Production `b60383af-2676-4781-b7df-339f300cafd1`, commit `5c6dd5e3cba36b282c44891fd0a6ee0755ca7747`, CI245 aprobado. [Datos de publicación](publicacion.json).
+
+[Inventario de scripts realmente servidos](scripts-oficiales.json): 20 recursos, 601 funciones/callbacks y bloques, máximo 38 líneas, cero excesos y 20 hashes iguales a la fuente aprobada. Incluye checkout.js, checkout-result.js, safe.js y alias Admin; no se limita a los archivos de main.
+
+[Recorrido real en la oficial](browser-oficial.json): 22 comprobaciones, con cupón existente válido (sin editarlo ni consumir usos comerciales), Enter/botón/quitar/reaplicar/recargar, total coincidente hasta confirmación, máscaras locales, referencia estable, doble clic, error de red/reintento con carrito conservado, ausencia de datos financieros en red/storage, controles táctiles y escritorio/móvil sin overflow ni errores JS. Las reglas de cupones inválidos, vencimiento e inactividad conservan sus pruebas de regresión previas; no se inventaron cupones comerciales para probarlas.
+
+[Admin posterior a publicación](admin-post-publicacion.json): login, formulario/estadísticas, ausencia de errores JS, comparación de scripts y logout. Se reutiliza la apertura real de los siete módulos de [intento anterior](admin-post-intento.json): el fallo posterior fue del selector de captura del harness, no de los módulos. [Conteos reales](admin-estadisticas.json): nueve verificaciones con producto exclusivo, stock 1→3, conteos de producto y stock bajo, visualización en Admin, eliminación del recurso y restauración de conteos. Sesión cerrada. Las capturas sólo muestran el formulario vacío, nunca datos de clientes.
+
+[Carrusel escritorio](carrusel-escritorio.png), [móvil](carrusel-movil.png), [Inicio](inicio-oficial.png), [formulario Admin](admin-form-publicado.png). Revisados visualmente. El manual PDF se actualizó en su ubicación existente, con texto/capturas de esta versión. Inicio y mapa conservan fuentes editables y carácter retrospectivo.
+
+**Cierre técnico comprobado en el alcance solicitado.** Participación, preentregas, posesión individual de documentos y defensa siguen requiriendo evidencia humana; no se garantiza nota ni cumplimiento absoluto de toda la rúbrica.
 
 ## Rollback
 

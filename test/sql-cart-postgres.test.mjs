@@ -9,7 +9,7 @@ const container = process.env.DREAMS_SQL_QA_CONTAINER;
 const run = promisify(execFile);
 const docker = ['--host=unix:///var/run/docker.sock', 'exec', '-i', container || 'unused', 'psql', '-U', 'postgres', '-At', '-v', 'ON_ERROR_STOP=1'];
 const original = 'supabase/migrations/20261013032746_account_carts.sql';
-const migration = 'supabase/migrations/20261105155756_modularize_account_cart.sql';
+const migration = 'supabase/migrations/20261105160613_modularize_account_cart.sql';
 const old_user = '00000000-0000-4000-8000-000000000001';
 const new_user = '00000000-0000-4000-8000-000000000002';
 const sql = text => execFileSync('docker', docker, { input: text, encoding: 'utf8', stdio: ['pipe', 'pipe', 'pipe'] }).trim();

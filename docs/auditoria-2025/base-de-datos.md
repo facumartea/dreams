@@ -213,3 +213,7 @@ Restricciones declaradas:
 Ver índices remotos: reviews_owner_operation_unique es único parcial sobre(user_id, operation_id) cuandooperation_id no esNULL; los identificadores de proveedor enorders también tienen índices únicos parciales. No son claves foráneas adicionales.
 
 Para regenerar el gráfico con Graphviz, sin conexión: `dot -Tpdf fuentes/der.dot -o graficos/der.pdf` y `dot -Tpng -Gdpi=150 fuentes/der.dot -o graficos/der.png`. El PDF/PNG se abren sin instalar Graphviz. Los campos completos se conservan aquí y en metadatos; el diagrama prioriza los campos relevantes para evitar una lámina ilegible.
+
+## Actualización técnica del 05/11/2026 — PR #61
+
+La migración `20261105160613_modularize_account_cart.sql` reemplaza la RPC activa del carrito por funciones auxiliares invoker, sin cambiar entidades, columnas, PK, FK, cardinalidades, RLS ni datos. El D.E.R. existente continúa representando esas relaciones; no se duplica ni se dibujan funciones como tablas. La definición histórica de 53 líneas queda reemplazada y se conserva. Permisos, transacción y pruebas: [cierre técnico](../evidence/cierre-tecnico-20261105/README.md).

@@ -30,5 +30,13 @@
       "lines": 32
     }
   ],
-  "permissions": "SECURITY INVOKER, search_path vacío; sólo service_role; lock y auxiliares dentro de la misma transacción"
+  "permissions": "SECURITY INVOKER, search_path vacío; sólo service_role; lock y auxiliares dentro de la misma transacción",
+  "migration": {
+    "source_file": "supabase/migrations/20261105160613_modularize_account_cart.sql",
+    "created_by_cli_as": "20261105155756_modularize_account_cart.sql",
+    "remote_journal_version": "20261105160613",
+    "same_sql_bytes": "El archivo creado por CLI se renombró a la versión registrada por apply_migration; sin reejecutar ni modificar su SQL."
+  },
+  "remote_rendered_maximum": 36,
+  "remote_permissions_verified": true
 }

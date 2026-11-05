@@ -1,4 +1,4 @@
-# Manual de uso DREAMS · Entrega 2026
+# Manual de uso DREAMS
 
 **Versión documentada: continuidad de main `3e12bc6`, actualizada por PR #61 para https://dreams-perfumes.pages.dev/.** Se reutiliza esta ubicación del manual sin trasladar requisitos de la rúbrica 2026: la evaluación vigente usa el PDF 2025. Las pruebas remotas y el commit publicado se registran en [evidencia actual](../evidence/cierre-tecnico-20261105/README.md). Capturas anteriores conservan su procedencia; las nuevas muestran el carrusel publicado. No se atribuyen trabajo ni dominio a los integrantes.
 
@@ -8,9 +8,9 @@ Abrir Inicio y usar el menú para entrar a Perfumes, colecciones Mujer/Hombre/Un
 
 En catálogo, escribir nombre o marca y aplicar la búsqueda. Combinar filtros disponibles de marca, género, tipo y precio, y ordenar por los criterios del selector. Limpiar filtros para volver a todo el catálogo. Abrir una tarjeta para ver imagen, tamaño, precio, stock, intensidad y notas. Una imagen rota muestra un fallback; no prueba que se haya perdido su URL en base.
 
-![Inicio oficial comprobado, portada estática y navegación](capturas/inicio-oficial.png)
+![Inicio oficial comprobado, portada estática y navegación](../evidence/cierre-tecnico-20261105/inicio-oficial.png)
 
-![Verificación local del nuevo carrusel de Más buscados](../evidence/cierre-tecnico-20261105/carrusel-escritorio-local.png)
+![Carrusel manual publicado en Más buscados](../evidence/cierre-tecnico-20261105/carrusel-escritorio.png)
 
 ## Crear cuenta, iniciar y cerrar sesión
 
