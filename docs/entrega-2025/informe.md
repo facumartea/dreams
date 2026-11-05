@@ -41,7 +41,7 @@ Comentarios en español explican propósito del carrito por UUID, contexto firma
 
 ## Pruebas y alcance real
 
-Checks en 103 archivos y 489 tests locales PASS después de los comentarios/renombre; fixtures prueban aislamiento del carrito, opiniones propias, productos/imágenes y Admin. No son una nueva escritura real en producción. Builds e inventario sin .git se registran en [pruebas](pruebas.json).
+Checks en 103 archivos y 489 tests locales PASS después de los comentarios/renombre; fixtures prueban aislamiento del carrito, opiniones propias, productos/imágenes y Admin. No son una nueva escritura real en producción. Builds e inventario sin .git se registran en [pruebas](pruebas.json). La extracción del árbol versionado sin .git pasó instalación congelada, inventario, sintaxis y build de Pages, sin secretos reales ni generar ZIP.
 
 La interfaz no cambió: se reutilizan las lecturas 390/1440 y las pruebas funcionales anteriores del mismo backend, distinguiendo fechas y código en los informes originales. No se repitieron registros/cobros/guardados reales sin motivo. Admin autenticado nuevo queda BLOQUEADO; no se solicitan ni cambian contraseñas. No se enviaron mensajesWhatsApp ni se alteraron stock/pedidos/cupones.
 

@@ -39,11 +39,47 @@
       "command": "Comparación AST Acorn contra commit base, normalizando sólo b → body",
       "result": "PASS",
       "evidence": "equivalencia-ast.json"
+    },
+    {
+      "command": "pnpm audit --prod",
+      "result": "PASS",
+      "vulnerabilities": 0
+    },
+    {
+      "command": "node --test test/review-ownership.test.js test/account-cart.test.js test/academic.integration.test.js",
+      "result": "PASS",
+      "tests": 30,
+      "reason": "Revisión dirigida después del ajuste de formato en validación de opiniones."
     }
   ],
   "without_git": {
-    "result": "PENDIENTE",
-    "plan": "Extraer árbol versionado mediante TAR, instalar lockfile y ejecutar inventario sin .git; no generar ZIP."
+    "result": "PASS",
+    "source_commit": "ea79312965e44d589b55206a5ae860d8139e3f8e",
+    "mechanism": "git archive HEAD | tar -x, extracción local sin .git; ningún ZIP generado",
+    "commands": [
+      {
+        "command": "pnpm install --frozen-lockfile",
+        "result": "PASS"
+      },
+      {
+        "command": "pnpm run check:functions",
+        "result": "PASS",
+        "files": 117,
+        "records": 2147,
+        "violations": 0
+      },
+      {
+        "command": "pnpm run check",
+        "result": "PASS",
+        "files": 103
+      },
+      {
+        "command": "pnpm run build:pages",
+        "result": "PASS",
+        "deployment": false
+      }
+    ],
+    "credentials": "No se incluyeron secretos reales; no se conecta a datos comerciales."
   },
   "remote": {
     "official": "https://dreams-perfumes.pages.dev/",
@@ -75,5 +111,11 @@
       "source": "ec04a358",
       "status": "Asset remoto legado, distinto del archivo descargable; no se publica por rutina."
     }
-  ]
+  ],
+  "documentation_checks": {
+    "relative_links": "PASS: ningún destino local inexistente en documentación activa revisada",
+    "archive_identity": "PASS: cinco originales preservados byte por byte",
+    "credential_scan": "PASS: sin coincidencias de patrones de claves/token/llave privada en archivos agregados o modificados",
+    "visual_review": "Gráficos existentes de la misma interfaz; wireframe representativo y D.E.R. PNG revisados nuevamente, PDF revisados en la auditoría anterior, sin cambios de bytes."
+  }
 }
