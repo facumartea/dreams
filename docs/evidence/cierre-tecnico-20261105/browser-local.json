@@ -1,0 +1,75 @@
+{
+  "mode": "local-source-on-official-api",
+  "date": "2026-11-05T16:07:58.844Z",
+  "checks": [
+    {
+      "name": "distinct-real-products",
+      "pass": true
+    },
+    {
+      "name": "desktop-next-button",
+      "pass": true
+    },
+    {
+      "name": "keyboard-end",
+      "pass": true
+    },
+    {
+      "name": "keyboard-home",
+      "pass": true
+    },
+    {
+      "name": "mobile-controls-and-overflow",
+      "pass": true
+    },
+    {
+      "name": "reduced-motion",
+      "pass": true
+    },
+    {
+      "name": "product-actions-preserved",
+      "pass": true
+    },
+    {
+      "name": "holder-empty",
+      "pass": true
+    },
+    {
+      "name": "holder-placeholder",
+      "pass": true
+    },
+    {
+      "name": "local-masks",
+      "pass": true
+    },
+    {
+      "name": "cart-retained-after-network-error",
+      "pass": true
+    },
+    {
+      "name": "stable-reference-after-reload",
+      "pass": true
+    },
+    {
+      "name": "intent-retained-on-retry",
+      "pass": true
+    },
+    {
+      "name": "financial-data-absent-from-network",
+      "pass": true
+    },
+    {
+      "name": "academic-and-zero-shipping",
+      "pass": true
+    },
+    {
+      "name": "financial-data-absent-from-storage",
+      "pass": true
+    },
+    {
+      "name": "no-page-errors",
+      "pass": true
+    }
+  ],
+  "pass": true
+}

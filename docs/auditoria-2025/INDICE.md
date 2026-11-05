@@ -1,4 +1,4 @@
-> **Histórico del03/11/2026:** entonces faltaba elPDF. El05/11se recibió y leyó; la evaluación vigente está en [entrega2025](../entrega-2025/INDICE.md). Se conserva este informe original para no alterar su contexto. Los gráficos siguen siendo los mismos y se reutilizan.
+> **Histórico del03/11/2026:** entonces faltaba elPDF. El05/11se recibió y leyó; la evaluación vigente está en [entrega2025](../entrega-2025/INDICE.md). Se conserva este informe original para no alterar su contexto. Los gráficos se reutilizan; Inicio y mapa se actualizan el 05/11 por PR #61 para documentar el nuevo carrusel manual, manteniendo su carácter retrospectivo.
 
 # Auditoría2025 y gráficos — índice
 

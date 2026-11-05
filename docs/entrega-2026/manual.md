@@ -1,14 +1,16 @@
 # Manual de uso DREAMS · Entrega 2026
 
-**Versión documentada: PR #56 y oficial https://dreams-perfumes.pages.dev/.** Registro, sesión, renovación, login/logout, carrito y checkout académico ya se comprobaron en el navegador oficial. Alta, edición, imágenes y persistencia Admin tienen evidencia remota; el cierre y la retirada del mecanismo temporal también están acreditados en la matriz de pruebas. Las capturas de Inicio y Cuenta son remotas; la captura del formulario Admin también corresponde a la oficial y excluye listados personales.
+**Versión documentada: continuidad de main `3e12bc6`, actualizada por PR #61 para https://dreams-perfumes.pages.dev/.** Se reutiliza esta ubicación del manual sin trasladar requisitos de la rúbrica 2026: la evaluación vigente usa el PDF 2025. Las pruebas remotas y el commit publicado se registran en [evidencia actual](../evidence/cierre-tecnico-20261105/README.md). Capturas anteriores conservan su procedencia; las nuevas muestran el carrusel publicado. No se atribuyen trabajo ni dominio a los integrantes.
 
 ## Inicio, catálogo y detalle
 
-Abrir Inicio y usar el menú para entrar a Perfumes, colecciones Mujer/Hombre/Unisex, Nosotros, Cuenta y Carrito. En móvil, desplegar el menú; con teclado usar Tab y Enter. La portada es una imagen estática. Las colecciones Mujer, Hombre y Unisex se abren desde el menú. El bloque de carrusel del Inicio fue eliminado por solicitud del usuario; no quedan botones ni contador de ese bloque.
+Abrir Inicio y usar el menú para entrar a Perfumes, colecciones Mujer/Hombre/Unisex, Nosotros, Cuenta y Carrito. En móvil, desplegar el menú; con teclado usar Tab y Enter. La portada es una imagen estática. Las colecciones Mujer, Hombre y Unisex se abren desde el menú. El bloque «Tres formas de empezar» continúa eliminado. En «Más buscados» hay un carrusel manual de productos reales: Anterior/Siguiente y flechas del teclado al enfocar el listado; Inicio/Fin llevan a sus extremos. En móvil también se puede deslizar horizontalmente. No hay reproducción automática y se respeta movimiento reducido. Las tarjetas conservan sus enlaces y Agregar al carrito.
 
 En catálogo, escribir nombre o marca y aplicar la búsqueda. Combinar filtros disponibles de marca, género, tipo y precio, y ordenar por los criterios del selector. Limpiar filtros para volver a todo el catálogo. Abrir una tarjeta para ver imagen, tamaño, precio, stock, intensidad y notas. Una imagen rota muestra un fallback; no prueba que se haya perdido su URL en base.
 
 ![Inicio oficial comprobado, portada estática y navegación](capturas/inicio-oficial.png)
+
+![Verificación local del nuevo carrusel de Más buscados](../evidence/cierre-tecnico-20261105/carrusel-escritorio-local.png)
 
 ## Crear cuenta, iniciar y cerrar sesión
 
@@ -76,4 +78,4 @@ Inventario completo y procedencia de pruebas: [controles](../evidence/admin-audi
 
 En el resumen del carrito, ingresar el código en «Cupón de descuento» y pulsar Aplicar o Enter. Quitar cupón elimina su descuento; volver a aplicar no lo acumula. El servidor revalida al cambiar cantidades y al confirmar. Un error de red bloquea Comprar hasta Reintentar; un cupón inválido no conserva descuento. El cupón aplicado se mantiene al recargar y pasar al checkout. Productos, descuento, Envío ($0) y total deben coincidir hasta la confirmación.
 
-El titular empieza vacío, con placeholder CLIENTE DREAMS. Permite espacios, tildes, guiones y apóstrofes. Número:16 dígitos, agrupados; vencimiento MM/AA (mes01–12); CVV:3 dígitos, incluidos ceros iniciales. Se puede pegar, seleccionar y editar en medio. Son validaciones de formato locales, sin verificación bancaria; usar sólo datos ficticios. Nunca se envían ni guardan estos campos. [Capturas y evidencia](../evidence/coupon-academic-20261103/README.md).
+El titular empieza vacío, con placeholder CLIENTE DREAMS. Permite espacios, tildes, guiones y apóstrofes. Número: 16 dígitos, agrupados; vencimiento MM/AA (mes 01–12); CVV: 3 dígitos, incluidos ceros iniciales. Se puede pegar, seleccionar y editar en medio. Son validaciones de formato locales, sin verificación bancaria; usar sólo datos ficticios. Nunca se envían ni guardan estos campos. [Capturas y evidencia](../evidence/coupon-academic-20261103/README.md).

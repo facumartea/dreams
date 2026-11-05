@@ -1,3 +1,11 @@
+## 2026-11-05 — PR61: carrusel manual, scripts coherentes y SQL modular
+
+- Corregida la omisión de checkout.js en Pages: todos los scripts propios se empaquetan desde la fuente revisada, con ETag y no-cache. Se conserva backend privado y contratos.
+- Incorporado carrusel manual en Más buscados; controles, teclado, responsive, táctil nativo y movimiento reducido, sin autoplay ni cambio de portada.
+- Aplicada migración nueva compatible de carrito después de pruebas PostgreSQL aisladas; invoker, permisos de servidor, idempotencia y lock transaccional conservados. Histórico intacto; rollback sólo de definición preparado.
+- QA Admin real y carrito por cuenta completados con recursos exclusivos retirados y sesiones cerradas. No se modificaron credenciales ni Auth.
+- Manual, wireframe retrospectivo de Inicio y mapa actualizados. Pruebas/publicación en docs/evidence/cierre-tecnico-20261105; el cierre remoto se registra después del deployment.
+
 ## 2026-11-05 — Rúbrica2025, limpieza y claridad
 
 - PDF 2025 leído íntegro y versionado; matriz en su orden, sin trasladar requisitos de 2026. Fechas literales 30 de octubre/12 de noviembre, máximo 3, más de 30 puntos; aspectos académicos no acreditados siguen marcados.

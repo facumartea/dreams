@@ -1,0 +1,63 @@
+{
+  "date": "2026-11-05T16:08:38.369Z",
+  "scope": "real-customer-carts-after-migration",
+  "checks": [
+    {
+      "name": "normal-registration-0",
+      "pass": true
+    },
+    {
+      "name": "customer-login-0",
+      "pass": true
+    },
+    {
+      "name": "normal-registration-1",
+      "pass": true
+    },
+    {
+      "name": "customer-login-1",
+      "pass": true
+    },
+    {
+      "name": "available-real-product",
+      "pass": true
+    },
+    {
+      "name": "new-rpc-write",
+      "pass": true
+    },
+    {
+      "name": "idempotent-retry",
+      "pass": true
+    },
+    {
+      "name": "foreign-scope-denied",
+      "pass": true
+    },
+    {
+      "name": "second-account-isolated",
+      "pass": true
+    },
+    {
+      "name": "server-cart-persisted",
+      "pass": true
+    },
+    {
+      "name": "logout-0",
+      "pass": true
+    },
+    {
+      "name": "logout-1",
+      "pass": true
+    },
+    {
+      "name": "qa-account-cleanup",
+      "pass": true
+    },
+    {
+      "name": "qa-account-cleanup",
+      "pass": true
+    }
+  ],
+  "pass": true
+}

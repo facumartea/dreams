@@ -19,8 +19,8 @@ Material de práctica basado en el código real. No demuestra que los integrante
 3. ¿Qué impide que una operación pendiente del carrito A se aplique a B?
 4. ¿Por qué `orders.items` y `account_carts.items` no son FK a cada producto?
 5. ¿Cómo se preservan los reintentos sin enviar una tarjeta ni consumir usos comerciales?
-6. ¿Qué versión de checkout.js entrega la oficial y por qué difiere del archivo de `main`?
-7. ¿Qué está pendiente del carrusel y del alcance de 40 líneas sobre SQL? No prometer cumplimiento absoluto.
+6. ¿Cómo garantiza el build de Pages que checkout.js y los demás scripts correspondan a la versión aprobada?
+7. ¿Qué cambió en la RPC del carrito y por qué se conserva la migración histórica? ¿Cómo se probaron permisos y concurrencia?
 
 ## Cambios pequeños y seguros, sólo localmente
 
