@@ -43,6 +43,7 @@ function allowed_origin_set(value) {
     return new Set(entries.map(normalize_origin).filter(Boolean));
 }
 
+// Rechaza escrituras de otros orígenes incluso cuando el navegador conserva cookies de sesión.
 function mutation_origin_guard(configured_origins) {
     const configured = allowed_origin_set(configured_origins);
     return (request, response, next) => {

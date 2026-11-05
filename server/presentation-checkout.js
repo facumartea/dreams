@@ -1,3 +1,4 @@
+// Checkout académico: firma snapshots y revalida importes sin crear pedidos ni cobrar.
 const { createHmac, timingSafeEqual, randomUUID } = require('node:crypto');
 const { auth_cookie } = require('./auth-cookies');
 const academic_summary = (subtotal, quote = {}) => ({ subtotal, discount: quote.discount || 0, coupon: quote.coupon || null, shipping: 0, shipping_label: 'Envío', total: quote.total ?? subtotal });

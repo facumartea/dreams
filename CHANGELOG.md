@@ -1,3 +1,10 @@
+## 2026-11-05 — Rúbrica2025, limpieza y claridad
+
+- PDF 2025 leído íntegro y versionado; matriz en su orden, sin trasladar requisitos de 2026. Fechas literales 30 de octubre/12 de noviembre, máximo 3, más de 30 puntos; aspectos académicos no acreditados siguen marcados.
+- Retirado NEXT_CHAT_PROMPT.md tras revisar contenido y referencias. Tres auditorías visuales trasladadas sin cambiar bytes; estados y planes completos archivados antes de resumir continuidad.
+- Nombre local body y comentarios en español sobre carrito, permisos/opiniones, errores e idempotencia. AST equivalente; 489 tests PASS. Sin cambios de contratos, Auth, roles, datos ni deployment.
+- README/índices actualizados, inventario de archivos y guía de defensa. Conservadas seguridad, migraciones y evidencia de IA. SQL histórico de 53 líneas y asset oficial de 113 líneas permanecen explícitos; no se declara cumplimiento absoluto.
+
 # Auditoría documental2025 — fuente pendiente, sin cambios funcionales
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
@@ -663,7 +670,7 @@ Todos los cambios relevantes de DREAMS se registran aquí. El proyecto aún no u
 
 ### 2026-09-01 — Dirección de arte: motion foundation y Scent Trail
 
-- Auditadas portada, catálogo, producto y flujos globales en ART_DIRECTION_AUDIT_2026-09-01.md; se preserva el sistema visual existente y se descartan WebGL/Three.js, 360° y transiciones que retrasen la compra por falta de un caso o assets adecuados.
+- Auditadas portada, catálogo, producto y flujos globales en docs/history/visual-audits/ART_DIRECTION_AUDIT_2026-09-01.md; se preserva el sistema visual existente y se descartan WebGL/Three.js, 360° y transiciones que retrasen la compra por falta de un caso o assets adecuados.
 - Centralizados tokens de duración y easing sin instalar dependencias ni crear un segundo motor de animación.
 - El hero incorpora una iluminación champagne tenue que comparte el requestAnimationFrame del pointer depth existente; touch y prefers-reduced-motion la simplifican o eliminan.
 - Las notas reales del producto ahora forman un DREAMS Scent Trail semántico: salida, corazón y fondo en timeline horizontal/vertical, con contenido siempre accesible.
@@ -693,7 +700,7 @@ Todos los cambios relevantes de DREAMS se registran aquí. El proyecto aún no u
 - Aplicada en Supabase la migración `enable_demo_checkout_provider`, que amplía el constraint de proveedor sin eliminar Mercado Pago; RLS y grants server-only fueron verificados.
 - Incorporados reveals, profundidad leve en hero, spotlight editorial, botones magnéticos mínimos, hover de cards y feedback del carrito mediante CSS/JS liviano, sin dependencias nuevas y con fallbacks touch/reduced-motion.
 - Sanitizado `.env.example`: se retiraron valores reales y quedaron únicamente placeholders. La rotación de cualquier credencial que haya estado en historial sigue siendo obligatoria.
-- Auditadas las diez expansiones premium en `PREMIUM_EXPANSION_AUDIT.md`; hero/cards se reutilizan, quiz/configurador compartirán motor, y no se implementará 360° real sin assets adecuados.
+- Auditadas las diez expansiones premium en `docs/history/visual-audits/PREMIUM_EXPANSION_AUDIT.md`; hero/cards se reutilizan, quiz/configurador compartirán motor, y no se implementará 360° real sin assets adecuados.
 - Revisado `public-apis/public-apis`; no se integró una API sin un caso real de logística, moneda o validación.
 - Verificación local: sintaxis de 25 archivos, 53/53 tests y audit de producción sin vulnerabilidades conocidas.
 - Commit funcional `efc2c4eca3f07862b7302f892f5e3c751613c74e` y corrección CI `0dede4bcae63924fca031526041ac3d5a8f9bff9`; PR #10 pasó CI #30 y se fusionó como `773fd8fa6269ceb02b4655c6f7956b19790991b6`.

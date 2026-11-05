@@ -4,6 +4,12 @@
 
 DREAMS es una tienda de perfumería con catálogo, carrito, consultas por WhatsApp y checkout de Mercado Pago preparado para Sandbox. Tratar este repositorio como software de producción: no inventar funciones, resultados de QA, estados de deploy ni porcentajes.
 
+## Estado operativo para interpretar esta guía
+
+La oficial es https://dreams-perfumes.pages.dev/, servida por Cloudflare Pages y el backend privado dreams-official-backend. Railway y las previews son antecedentes, no destinos autorizados por defecto. Node 24, pnpm 11.19.0 y puerto 8080 son los valores actuales. Consultar CURRENT_STATE.md para el commit/despliegue exactos.
+
+Para evaluar una entrega se usa el PDF adjunto vigente; no se trasladan fechas, límites de integrantes ni modalidades de otra edición. La carpeta de entrega actual está enlazada en README. Conservar evidencia de IA e históricos sin atribuir autoría o participación no acreditada.
+
 ## Arquitectura actual
 
 - `public/`: frontend multipágina en HTML, CSS y JavaScript sin framework.
@@ -17,7 +23,7 @@ DREAMS es una tienda de perfumería con catálogo, carrito, consultas por WhatsA
 - `supabase/migrations/20260831040000_enable_demo_checkout_provider.sql`: habilita el proveedor interno `demo` sin eliminar Mercado Pago.
 - `railway.toml`: despliegue Railway histórico, conservar.
 - `worker/index.mjs` y `wrangler.jsonc`: adaptador Cloudflare Workers con assets; `docs/cloudflare_migration.md`: publicación y rollback.
-- `pages/proxy.mjs` y `pages/wrangler.jsonc`: hostname dreams-perfumes.pages.dev mediante Service binding al Worker existente, con inicio/CSS/motion empaquetados como capa visual aislada por build-pages; `docs/pages_frontdoor.md`: build, publicación y recuperación. Secret Supabase permanece sólo en el Worker.
+- `pages/proxy.mjs` y `pages/wrangler.jsonc`: hostname dreams-perfumes.pages.dev mediante Service bindings, con páginas y assets públicos seleccionados empaquetados por build-pages; `docs/pages_frontdoor.md`: build, publicación y recuperación. Secret Supabase permanece sólo en el Worker.
 - `docs/`: documentación histórica; puede estar desactualizada y no prevalece sobre el código.
 
 El navegador sólo habla con `/api`. `SUPABASE_SECRET_KEY` es exclusivamente del servidor. No incorporar el SDK privilegiado ni secretos en `public/`.
@@ -106,7 +112,7 @@ Desde el 2026-10-15, los cambios solicitados por el usuario se destinan a https:
 
 ## Deploy
 
-Railway ejecuta `node server/server.js`. El healthcheck debe comprobar dependencias críticas; no aceptar un `200` si Supabase está inaccesible. Verificar variables, logs, dominio y smoke test después de cada despliegue importante. Nunca usar credenciales de producción en tests locales.
+La ejecución Node de desarrollo usa `node server/server.js`; el hosting oficial actual es Cloudflare. El healthcheck debe comprobar dependencias críticas; no aceptar un `200` si Supabase está inaccesible. Verificar variables, logs, dominio y smoke test después de cada despliegue importante. Nunca usar credenciales de producción en tests locales.
 
 Todas las mutaciones HTTP pasan por la verificación de origen. No retirar `mutation_origin_guard`, no aceptar comodines en `APP_ORIGINS` y añadir el dominio nuevo antes de promover un cambio de URL.
 
