@@ -127,95 +127,95 @@
       "name": "visual_request",
       "kind": "FunctionDeclaration",
       "start": 16,
-      "end": 25,
-      "lines": 10
+      "end": 26,
+      "lines": 11
     },
     {
       "file": "pages/proxy.mjs",
       "name": "forward_request",
       "kind": "FunctionDeclaration",
-      "start": 27,
-      "end": 39,
+      "start": 28,
+      "end": 40,
       "lines": 13
     },
     {
       "file": "pages/proxy.mjs",
       "name": "asset_not_modified",
       "kind": "FunctionDeclaration",
-      "start": 41,
-      "end": 46,
+      "start": 42,
+      "end": 47,
       "lines": 6
     },
     {
       "file": "pages/proxy.mjs",
       "name": "callback:some",
       "kind": "ArrowFunctionExpression",
-      "start": 42,
-      "end": 45,
+      "start": 43,
+      "end": 46,
       "lines": 4
     },
     {
       "file": "pages/proxy.mjs",
       "name": "visual_response",
       "kind": "FunctionDeclaration",
-      "start": 48,
-      "end": 59,
+      "start": 49,
+      "end": 60,
       "lines": 12
     },
     {
       "file": "pages/proxy.mjs",
       "name": "callback:from",
       "kind": "ArrowFunctionExpression",
-      "start": 57,
-      "end": 57,
+      "start": 58,
+      "end": 58,
       "lines": 1
     },
     {
       "file": "pages/proxy.mjs",
       "name": "approved",
       "kind": "ArrowFunctionExpression",
-      "start": 61,
-      "end": 61,
+      "start": 62,
+      "end": 62,
       "lines": 1
     },
     {
       "file": "pages/proxy.mjs",
       "name": "compressed_api_request",
       "kind": "FunctionDeclaration",
-      "start": 64,
-      "end": 68,
+      "start": 65,
+      "end": 69,
       "lines": 5
     },
     {
       "file": "pages/proxy.mjs",
       "name": "approved_release",
       "kind": "ArrowFunctionExpression",
-      "start": 70,
-      "end": 70,
+      "start": 71,
+      "end": 71,
       "lines": 1
     },
     {
       "file": "pages/proxy.mjs",
       "name": "proxy_response",
       "kind": "FunctionDeclaration",
-      "start": 72,
-      "end": 84,
+      "start": 73,
+      "end": 85,
       "lines": 13
     },
     {
       "file": "pages/proxy.mjs",
       "name": "create_proxy",
       "kind": "FunctionDeclaration",
-      "start": 86,
-      "end": 97,
+      "start": 87,
+      "end": 98,
       "lines": 12
     },
     {
       "file": "pages/proxy.mjs",
       "name": "fetch",
       "kind": "FunctionExpression",
-      "start": 88,
-      "end": 95,
+      "start": 89,
+      "end": 96,
       "lines": 8
     },
     {
@@ -14312,6 +14312,22 @@
       "kind": "ArrowFunctionExpression",
       "start": 191,
       "end": 194,
+      "lines": 4
+    },
+    {
+      "file": "test/pages-proxy.test.mjs",
+      "name": "callback:test",
+      "kind": "ArrowFunctionExpression",
+      "start": 203,
+      "end": 216,
+      "lines": 14
+    },
+    {
+      "file": "test/pages-proxy.test.mjs",
+      "name": "fetch",
+      "kind": "ArrowFunctionExpression",
+      "start": 209,
+      "end": 212,
       "lines": 4
     },
     {

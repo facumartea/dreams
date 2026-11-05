@@ -199,3 +199,18 @@ test('own scripts override the legacy body even when absent from the pinned back
         assert.equal(response.headers.get('cache-control'), 'no-cache');
     }
 });
+
+test('bundling preserves the upstream authorization of the canonical Admin script', async () => {
+    const asset = { body: '// approved Admin script', content_type: 'application/javascript', etag: '"admin"' };
+    const proxy = create_proxy({ '/js/admin-console-v3.js': asset }, {
+        backend_url: 'https://40e7b0a3-dreams-perfumes.dreams-perfumes.workers.dev', official_service: 'dreams-official-backend'
+    });
+    const response = await proxy.fetch(new Request('https://dreams-perfumes.pages.dev/js/admin-console-v3.js'), {
+        DREAMS_OFFICIAL: { fetch: async request => {
+            assert.equal(new URL(request.url).pathname, '/js/admin-console-v3.js');
+            return new Response('Sesión requerida', { status: 401, headers: { 'Cache-Control': 'no-store' } });
+        } }
+    });
+    assert.equal(response.status, 401);
+    assert.equal(await response.text(), 'Sesión requerida');
+});

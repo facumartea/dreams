@@ -16,7 +16,8 @@ const header_aliases = new Map([['/js/academic-inputs.js', '/js/app.js'], ['/js/
 function visual_request(request, pathname, asset) {
     if (pathname === '/admin' || pathname === '/admin.html') return request;
     // Los scripts nuevos toman headers del recurso base: no dependen de existir en el legado.
-    const alias = header_aliases.get(pathname) || (/^\/js\/[a-z0-9-]+\.js$/.test(pathname) ? '/js/app.js' : null);
+    const public_script = /^\/js\/[a-z0-9-]+\.js$/.test(pathname) && pathname !== '/js/admin-console-v3.js';
+    const alias = header_aliases.get(pathname) || (public_script ? '/js/app.js' : null);
     const upstream = alias && asset ? new Request(new URL(alias, request.url), request) : request;
     if (!asset) return upstream;
     const headers = new Headers(request.headers);
