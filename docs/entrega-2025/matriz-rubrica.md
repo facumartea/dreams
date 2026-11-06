@@ -44,3 +44,7 @@ Fuente: [PDF original](rubrica-2025.pdf), leído completo en sus tres páginas, 
 | 38 | Aprobación: puntaje | Superar 30 puntos y cumplir criterios fundamentales. | NO VERIFICABLE | Es >30, no ≥30; no se calcula nota ni se presume cuáles excepciones acepta el profesor. | Evaluación docente, resolver faltantes. |
 | 39 | Notas | Una nota grupal y otra individual, pueden coincidir o no. | NO VERIFICABLE | No hubo defensa individual ni calificación. | Profesor. |
 | 40 | Diciembre | Si no completa criterios, completar en período de diciembre. | NO VERIFICABLE | Condición literal; no se decide su aplicación ni se traslada calendario. | Profesor. |
+
+## Ajuste de interfaz — PR #62
+
+El carrusel exigido se conserva; su indicador queda sólo para lectores de pantalla. Inicio ya no incluye vistos recientemente y las cuatro cabeceras no muestran párrafo, sin eliminar SEO ni descripciones de productos. Wireframes y manual se ajustaron. [Validación y publicación](../evidence/inicio-cabeceras-20261105/README.md). No cambian los criterios académicos individuales ni se los presume acreditados.

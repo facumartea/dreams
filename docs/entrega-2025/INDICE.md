@@ -2,7 +2,8 @@
 
 Fuente actual: **[rúbrica 2025 original](rubrica-2025.pdf)** y [texto completo](rubrica-2025.txt). No es equivalente a la edición 2026. Fechas literales: 30 de octubre y 12 de noviembre; el profesor debe aclarar calendario aplicable. La aprobación y la defensa no se garantizan.
 
-- [Cierre técnico actual: PR #61 y evidencia](../evidence/cierre-tecnico-20261105/README.md).
+- [Ajustes visuales actuales: PR #62](../evidence/inicio-cabeceras-20261105/README.md).
+- [Cierre técnico previo: PR #61 y evidencia](../evidence/cierre-tecnico-20261105/README.md).
 - [Informe de auditoría inicial y limpieza](informe.md).
 - [Matriz en el orden del PDF](matriz-rubrica.md).
 - [Inventario de archivos JSON](inventario-archivos.json) / [CSV](inventario-archivos.csv).
