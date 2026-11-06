@@ -12,7 +12,7 @@ En catálogo, escribir nombre o marca y aplicar la búsqueda. Combinar filtros d
 
 ![Inicio oficial comprobado, portada estática y navegación](../evidence/cierre-tecnico-20261105/inicio-oficial.png)
 
-![Verificación local del carrusel, con indicador sólo accesible](../evidence/inicio-cabeceras-20261105/inicio-escritorio-local.png)
+![Carrusel publicado con controles y sin indicador visible](../evidence/inicio-cabeceras-20261105/inicio-escritorio.png)
 
 ## Crear cuenta, iniciar y cerrar sesión
 

@@ -3,7 +3,7 @@
 - Indicador de posición del carrusel sólo para lectores de pantalla, sin celda visible; controles y funcionamiento conservados.
 - Retirados vistos recientemente y sus funciones/llamadas exclusivas, sin borrar claves ni datos del navegador. No cambia carrito/cuentas.
 - Cabeceras sin párrafos descriptivos y en una columna; metadatos SEO independientes del DOM retirado y descripciones de productos intactas.
-- QA local 1440/390px y regresión SEO aprobadas; manual y wireframes retrospectivos actualizados. Evidencia/publicación en docs/evidence/inicio-cabeceras-20261105.
+- QA local y oficial 1440/390px: 52 checks, sin errores JS ni overflow. Regresión SEO, suite y CI aprobados. Publicado en `85147d8`/Pages `3ad69579`; 20 scripts coincidentes, máximo 38. Manual y wireframes retrospectivos actualizados; evidencia en docs/evidence/inicio-cabeceras-20261105.
 
 ## 2026-11-05 — PR61: carrusel manual, scripts coherentes y SQL modular
 

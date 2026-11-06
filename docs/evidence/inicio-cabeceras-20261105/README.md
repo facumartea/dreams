@@ -18,4 +18,21 @@ Inicio y catálogo actualizados en wireframes PDF/PNG/fuentes, conservando su ca
 
 ## Publicación
 
-Pendiente al redactar este checkpoint: CI final, publicación y comparación de assets/capturas en la oficial. No se crea ni modifica otra web o preview. Rollback: deployment Pages `b60383af-2676-4781-b7df-339f300cafd1`; backend privado `ef043065` permanece igual.
+Publicado y comprobado: Production `3ad69579-9e5e-450a-abe8-f28faec44c42`, commit `85147d83eecd868179c03e7b48d826b656c2d3b9`, CI249 aprobado. [Datos de publicación](publicacion.json).
+
+[QA real de la oficial](oficial.json): 52 comprobaciones en 1440px y 390px, todas aprobadas. Cabeceras y recorrido sin errores JS ni overflow; filtros y carrito siguen funcionando. [Scripts servidos](scripts-oficiales.json): 20 hashes coincidentes con la fuente aprobada, máximo 38 líneas, sin excesos.
+
+No se crea ni modifica otra web o preview. Rollback disponible al deployment `b60383af-2676-4781-b7df-339f300cafd1`; backend privado `ef043065` permanece igual. No se despliega nuevamente por los commits finales de documentación/evidencia. No se cambia Auth, BD, credenciales ni datos comerciales.
+
+## Capturas de la oficial
+
+| Pantalla | Escritorio | Móvil |
+|---|---|---|
+| Inicio completo | [PNG](inicio-completo-escritorio.png) | [PNG](inicio-completo-movil.png) |
+| Carrusel conservado sin contador visible | [PNG](inicio-escritorio.png) | [PNG](inicio-movil.png) |
+| Perfumes | [PNG](cabecera-perfumes-escritorio.png) | [PNG](cabecera-perfumes-movil.png) |
+| Hombre | [PNG](cabecera-hombre-escritorio.png) | [PNG](cabecera-hombre-movil.png) |
+| Mujer | [PNG](cabecera-mujer-escritorio.png) | [PNG](cabecera-mujer-movil.png) |
+| Unisex | [PNG](cabecera-unisex-escritorio.png) | [PNG](cabecera-unisex-movil.png) |
+
+Capturas y PDFs revisados visualmente. Los archivos `-local` documentan la validación previa; no se presentan como capturas publicadas. Pendientes académicos individuales de la matriz conservados; no se garantiza nota.
