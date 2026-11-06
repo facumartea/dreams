@@ -3,6 +3,7 @@ let catalog_products = [], catalog_request_id = 0, brand_request_id = 0;
 let applied_filters = { ...filter_model.defaults }, pending_filters = { ...applied_filters };
 let catalog_brands = [], filter_scroll = null, brands_loading = true, brands_failed = false;
 
+// Las descripciones se conservan sólo para metadatos; no se renderizan en cabeceras.
 const COLLECTION_VARIANTS = {
     mujer: {
         body_class: 'collection-women',
@@ -42,7 +43,7 @@ function update_catalog_theme(variant) {
 
 function update_catalog_metadata(gender) {
     const canonical = document.getElementById('canonical-url');
-    const description = document.getElementById('catalog-description').textContent;
+    const description = COLLECTION_VARIANTS[gender]?.description || 'Diseñador, algunos nichos seleccionados y una sola idea: encontrar tu firma.';
     const filtered = applied_filters.gender.length > 1 || [...new URLSearchParams(window.location.search).keys()].some(key => !['gender', 'utm_source', 'utm_medium', 'utm_campaign'].includes(key));
     const robots = document.querySelector('meta[name="robots"]');
     if (robots) robots.content = window.location.origin !== 'https://dreams-perfumes.pages.dev' ? 'noindex,nofollow' : filtered ? 'noindex,follow' : 'index,follow';
@@ -62,7 +63,6 @@ function update_catalog_context(gender) {
     update_catalog_theme(variant);
     document.getElementById('catalog-eyebrow').textContent = variant?.eyebrow || 'COLECCIÓN DREAMS';
     document.getElementById('catalog-title').textContent = variant?.title || 'Perfumes';
-    document.getElementById('catalog-description').textContent = variant?.description || 'Diseñador, algunos nichos seleccionados y una sola idea: encontrar tu firma.';
     document.title = variant?.document_title || 'Perfumes | DREAMS';
     update_catalog_metadata(variant ? gender : '');
 }

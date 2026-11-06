@@ -4,14 +4,14 @@
   'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
 <svg width="1190" height="842" preserveAspectRatio="xMinYMin meet" viewBox="0 0 1190 842" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
 	<title>...</title>
-	<desc>...</desc>
+	<desc>Cabecera de una columna con etiqueta y título, sin párrafo visible. Paletas y filtros conservados; metadatos SEO independientes.</desc>
 	<clipPath id="clip">
 		<rect x="0" y="0" width="1190" height="842"/>
 	</clipPath>
 	<g id="group" transform="scale(1,-1) translate(0,-842)" style="clip-path: url(#clip)">
 		<g transform="">
 			<text x="30" y="818" style="font-family: DejaVu; font-size: 20px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,1636) scale(1,-1)">Catálogo</text>
-			<text x="30" y="793" style="font-family: DejaVu; font-size: 11px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,1586) scale(1,-1)">Documentación retrospectiva del diseño implementado · 03/11/2026 · main b60e33d</text>
+			<text x="30" y="793" style="font-family: DejaVu; font-size: 11px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,1586) scale(1,-1)">Documentación retrospectiva del diseño implementado · Actualizado 05/11/2026 · base main e6d60bf</text>
 			<text x="30" y="772" style="font-family: DejaVu; font-size: 10px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,1544) scale(1,-1)">/catalogo.html · Escritorio1440 y móvil390; datos esquemáticos sin personas reales.</text>
 			<text x="30" y="748" style="font-family: DejaVu; font-size: 9px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,1496) scale(1,-1)">ESCRITORIO · estructura y jerarquía</text>
 			<text x="900" y="748" style="font-family: DejaVu; font-size: 9px;fill: rgb(13%,13%,13%); stroke:none;" transform="translate(0,1496) scale(1,-1)">MÓVIL · apilado / menú</text>

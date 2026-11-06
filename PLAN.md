@@ -1,10 +1,9 @@
-# Plan PR #61
+# Plan PR #62
 
-1. Continuidad y diagnóstico: completos; checkout.js coincidía con ec04a358 por omisión del overlay de Pages.
-2. Carrusel manual de productos y scripts coherentes: implementados, pruebas locales aprobadas.
-3. SQL: migración nueva aplicada; equivalencia, permisos, transacciones, concurrencia y carrito remoto aprobados.
-4. Admin real: casos solicitados acreditados; sesiones cerradas y recursos QA retirados.
-5. Manual, Inicio wireframe y mapa actualizados; evidencia de publicación completada.
-6. Publicación y contraste completos en Production; cerrar PR61 con CI final aprobado. No volver a desplegar por evidencia documental.
+1. Continuidad y diagnóstico: completos; cambios acotados a frontend.
+2. Retirada de recientes, contador sólo accesible y cabeceras: implementados.
+3. Pruebas locales: 52 checks escritorio/móvil y suite aprobados; sin repetir QA backend vigente.
+4. Manual, wireframes y auditoría: actualizados; CI249 aprobado y publicación oficial completa.
+5. Contraste remoto completo: 52 checks y 20 hashes coincidentes. Integrar PR62 con CI final, sin repetir deployment documental; rollback conservado.
 
-No repetir limpieza PR60. No modificar otros sitios, portada estática, credenciales, Auth, DNS ni pagos comerciales. Sin ZIP.
+No modificar portada, backend, cuentas/carrito, Auth, credenciales, DNS ni otras webs. Sin ZIP.

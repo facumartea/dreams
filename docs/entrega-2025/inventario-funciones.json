@@ -2348,106 +2348,58 @@
     },
     {
       "file": "public/js/app.js",
-      "name": "get_recent_products",
-      "kind": "FunctionDeclaration",
-      "start": 228,
-      "end": 233,
-      "lines": 6
-    },
-    {
-      "file": "public/js/app.js",
-      "name": "callback:filter",
-      "kind": "ArrowFunctionExpression",
-      "start": 231,
-      "end": 231,
-      "lines": 1
-    },
-    {
-      "file": "public/js/app.js",
-      "name": "save_recent_product",
-      "kind": "FunctionDeclaration",
-      "start": 235,
-      "end": 239,
-      "lines": 5
-    },
-    {
-      "file": "public/js/app.js",
-      "name": "callback:filter",
-      "kind": "ArrowFunctionExpression",
-      "start": 236,
-      "end": 236,
-      "lines": 1
-    },
-    {
-      "file": "public/js/app.js",
-      "name": "render_recent_products",
-      "kind": "FunctionDeclaration",
-      "start": 241,
-      "end": 248,
-      "lines": 8
-    },
-    {
-      "file": "public/js/app.js",
-      "name": "callback:forEach",
-      "kind": "ArrowFunctionExpression",
-      "start": 247,
-      "end": 247,
-      "lines": 1
-    },
-    {
-      "file": "public/js/app.js",
       "name": "setup_menu",
       "kind": "FunctionDeclaration",
-      "start": 250,
-      "end": 284,
+      "start": 228,
+      "end": 262,
       "lines": 35
     },
     {
       "file": "public/js/app.js",
       "name": "callback:addEventListener",
       "kind": "ArrowFunctionExpression",
-      "start": 262,
-      "end": 267,
+      "start": 240,
+      "end": 245,
       "lines": 6
     },
     {
       "file": "public/js/app.js",
       "name": "callback:addEventListener",
       "kind": "ArrowFunctionExpression",
-      "start": 269,
-      "end": 276,
+      "start": 247,
+      "end": 254,
       "lines": 8
     },
     {
       "file": "public/js/app.js",
       "name": "callback:forEach",
       "kind": "ArrowFunctionExpression",
-      "start": 278,
-      "end": 283,
+      "start": 256,
+      "end": 261,
       "lines": 6
     },
     {
       "file": "public/js/app.js",
       "name": "callback:addEventListener",
       "kind": "ArrowFunctionExpression",
-      "start": 278,
-      "end": 283,
+      "start": 256,
+      "end": 261,
       "lines": 6
     },
     {
       "file": "public/js/app.js",
       "name": "setup_header_scroll",
       "kind": "FunctionDeclaration",
-      "start": 286,
-      "end": 296,
+      "start": 264,
+      "end": 274,
       "lines": 11
     },
     {
       "file": "public/js/app.js",
       "name": "update",
       "kind": "ArrowFunctionExpression",
-      "start": 289,
-      "end": 293,
+      "start": 267,
+      "end": 271,
       "lines": 5
     },
     {
@@ -2462,8 +2414,8 @@
       "file": "public/js/app.js",
       "name": "bloque ejecutable superior",
       "kind": "ProgramBlock",
-      "start": 305,
-      "end": 305,
+      "start": 283,
+      "end": 283,
       "lines": 1
     },
     {
@@ -2766,49 +2718,49 @@
       "file": "public/js/catalogo.js",
       "name": "update_catalog_theme",
       "kind": "FunctionDeclaration",
-      "start": 33,
-      "end": 41,
+      "start": 34,
+      "end": 42,
       "lines": 9
     },
     {
       "file": "public/js/catalogo.js",
       "name": "callback:map",
       "kind": "ArrowFunctionExpression",
-      "start": 35,
-      "end": 35,
+      "start": 36,
+      "end": 36,
       "lines": 1
     },
     {
       "file": "public/js/catalogo.js",
       "name": "callback:map",
       "kind": "ArrowFunctionExpression",
-      "start": 37,
-      "end": 37,
+      "start": 38,
+      "end": 38,
       "lines": 1
     },
     {
       "file": "public/js/catalogo.js",
       "name": "update_catalog_metadata",
       "kind": "FunctionDeclaration",
-      "start": 43,
-      "end": 57,
+      "start": 44,
+      "end": 58,
       "lines": 15
     },
     {
       "file": "public/js/catalogo.js",
       "name": "callback:some",
       "kind": "ArrowFunctionExpression",
-      "start": 46,
-      "end": 46,
+      "start": 47,
+      "end": 47,
       "lines": 1
     },
     {
       "file": "public/js/catalogo.js",
       "name": "update_catalog_context",
       "kind": "FunctionDeclaration",
-      "start": 59,
+      "start": 60,
       "end": 68,
-      "lines": 10
+      "lines": 9
     },
     {
       "file": "public/js/catalogo.js",
@@ -4015,119 +3967,119 @@
       "name": "load_product_detail",
       "kind": "FunctionDeclaration",
       "start": 1,
-      "end": 28,
-      "lines": 28
+      "end": 26,
+      "lines": 26
     },
     {
       "file": "public/js/producto.js",
       "name": "update_product_metadata",
       "kind": "FunctionDeclaration",
-      "start": 30,
-      "end": 45,
+      "start": 28,
+      "end": 43,
       "lines": 16
     },
     {
       "file": "public/js/producto.js",
       "name": "product_whatsapp_url",
       "kind": "FunctionDeclaration",
-      "start": 47,
-      "end": 51,
+      "start": 45,
+      "end": 49,
       "lines": 5
     },
     {
       "file": "public/js/producto.js",
       "name": "product_detail_image",
       "kind": "FunctionDeclaration",
-      "start": 52,
-      "end": 54,
+      "start": 50,
+      "end": 52,
       "lines": 3
     },
     {
       "file": "public/js/producto.js",
       "name": "product_detail_intro",
       "kind": "FunctionDeclaration",
-      "start": 55,
-      "end": 61,
+      "start": 53,
+      "end": 59,
       "lines": 7
     },
     {
       "file": "public/js/producto.js",
       "name": "callback:map",
       "kind": "ArrowFunctionExpression",
-      "start": 59,
-      "end": 59,
+      "start": 57,
+      "end": 57,
       "lines": 1
     },
     {
       "file": "public/js/producto.js",
       "name": "product_detail_actions",
       "kind": "FunctionDeclaration",
-      "start": 62,
-      "end": 65,
+      "start": 60,
+      "end": 63,
       "lines": 4
     },
     {
       "file": "public/js/producto.js",
       "name": "product_scent_trail",
       "kind": "FunctionDeclaration",
-      "start": 66,
-      "end": 70,
+      "start": 64,
+      "end": 68,
       "lines": 5
     },
     {
       "file": "public/js/producto.js",
       "name": "callback:map",
       "kind": "ArrowFunctionExpression",
-      "start": 68,
-      "end": 68,
+      "start": 66,
+      "end": 66,
       "lines": 1
     },
     {
       "file": "public/js/producto.js",
       "name": "setup_product_actions",
       "kind": "FunctionDeclaration",
-      "start": 71,
-      "end": 77,
+      "start": 69,
+      "end": 75,
       "lines": 7
     },
     {
       "file": "public/js/producto.js",
       "name": "callback:addEventListener",
       "kind": "ArrowFunctionExpression",
-      "start": 72,
-      "end": 72,
+      "start": 70,
+      "end": 70,
       "lines": 1
     },
     {
       "file": "public/js/producto.js",
       "name": "callback:addEventListener",
       "kind": "ArrowFunctionExpression",
-      "start": 73,
-      "end": 76,
+      "start": 71,
+      "end": 74,
       "lines": 4
     },
     {
       "file": "public/js/producto.js",
       "name": "callback:catch",
       "kind": "ArrowFunctionExpression",
-      "start": 75,
-      "end": 75,
+      "start": 73,
+      "end": 73,
       "lines": 1
     },
     {
       "file": "public/js/producto.js",
       "name": "render_product_detail",
       "kind": "FunctionDeclaration",
-      "start": 78,
-      "end": 84,
+      "start": 76,
+      "end": 82,
       "lines": 7
     },
     {
       "file": "public/js/producto.js",
       "name": "callback:catch",
       "kind": "ArrowFunctionExpression",
-      "start": 80,
-      "end": 80,
+      "start": 78,
+      "end": 78,
       "lines": 1
     },
     {
@@ -13227,6 +13179,62 @@
       "lines": 1
     },
     {
+      "file": "test/home-catalog-copy.test.js",
+      "name": "catalog_without_description",
+      "kind": "FunctionDeclaration",
+      "start": 7,
+      "end": 20,
+      "lines": 14
+    },
+    {
+      "file": "test/home-catalog-copy.test.js",
+      "name": "element",
+      "kind": "ArrowFunctionExpression",
+      "start": 9,
+      "end": 13,
+      "lines": 5
+    },
+    {
+      "file": "test/home-catalog-copy.test.js",
+      "name": "add",
+      "kind": "FunctionExpression",
+      "start": 11,
+      "end": 11,
+      "lines": 1
+    },
+    {
+      "file": "test/home-catalog-copy.test.js",
+      "name": "remove",
+      "kind": "FunctionExpression",
+      "start": 11,
+      "end": 11,
+      "lines": 1
+    },
+    {
+      "file": "test/home-catalog-copy.test.js",
+      "name": "addEventListener",
+      "kind": "FunctionExpression",
+      "start": 16,
+      "end": 16,
+      "lines": 1
+    },
+    {
+      "file": "test/home-catalog-copy.test.js",
+      "name": "callback:test",
+      "kind": "ArrowFunctionExpression",
+      "start": 22,
+      "end": 33,
+      "lines": 12
+    },
+    {
+      "file": "test/home-catalog-copy.test.js",
+      "name": "callback:doesNotThrow",
+      "kind": "ArrowFunctionExpression",
+      "start": 25,
+      "end": 25,
+      "lines": 1
+    },
+    {
       "file": "test/home-collections-removal.test.js",
       "name": "read",
       "kind": "ArrowFunctionExpression",
@@ -14992,78 +15000,6 @@
       "kind": "ArrowFunctionExpression",
       "start": 37,
       "end": 37,
-      "lines": 1
-    },
-    {
-      "file": "test/recent-products.test.js",
-      "name": "callback:test",
-      "kind": "ArrowFunctionExpression",
-      "start": 8,
-      "end": 15,
-      "lines": 8
-    },
-    {
-      "file": "test/recent-products.test.js",
-      "name": "getItem",
-      "kind": "ArrowFunctionExpression",
-      "start": 10,
-      "end": 10,
-      "lines": 1
-    },
-    {
-      "file": "test/recent-products.test.js",
-      "name": "setItem",
-      "kind": "FunctionExpression",
-      "start": 10,
-      "end": 10,
-      "lines": 1
-    },
-    {
-      "file": "test/recent-products.test.js",
-      "name": "callback:doesNotThrow",
-      "kind": "ArrowFunctionExpression",
-      "start": 13,
-      "end": 13,
-      "lines": 1
-    },
-    {
-      "file": "test/recent-products.test.js",
-      "name": "callback:test",
-      "kind": "ArrowFunctionExpression",
-      "start": 17,
-      "end": 24,
-      "lines": 8
-    },
-    {
-      "file": "test/recent-products.test.js",
-      "name": "callback:from",
-      "kind": "ArrowFunctionExpression",
-      "start": 18,
-      "end": 18,
-      "lines": 1
-    },
-    {
-      "file": "test/recent-products.test.js",
-      "name": "getItem",
-      "kind": "ArrowFunctionExpression",
-      "start": 19,
-      "end": 19,
-      "lines": 1
-    },
-    {
-      "file": "test/recent-products.test.js",
-      "name": "setItem",
-      "kind": "ArrowFunctionExpression",
-      "start": 19,
-      "end": 19,
-      "lines": 1
-    },
-    {
-      "file": "test/recent-products.test.js",
-      "name": "callback:filter",
-      "kind": "ArrowFunctionExpression",
-      "start": 23,
-      "end": 23,
       "lines": 1
     },
     {

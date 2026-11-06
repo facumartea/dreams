@@ -2,7 +2,7 @@
   "source_commit": "ec04a35812d044e57196c6a1ca55232e723ff60c",
   "backend_url": "https://d5df723d-dreams-perfumes.dreams-perfumes.workers.dev",
   "backend_deployment": "d5df723d-e1f1-4889-ae5b-e79ebfd131cd",
-  "previous_pages_deployment": "a176fa63-c0c5-46aa-bb8c-c97d1eb85466",
+  "previous_pages_deployment": "b60383af-2676-4781-b7df-339f300cafd1",
   "hero": "static",
   "checkout": "academic-only",
   "writes": "protected",
@@ -15,9 +15,9 @@
   "failed_pages_deployment": "1e881ec8-7c32-4a2e-9857-ef63bf091c4f",
   "candidate_read": {
     "status": 200,
-    "project_url": "https://nwsmbemwtexmrtpkgxrz.supabase.co",
     "backend_version": "ef043065-5d28-45c7-906b-b9e1edb6a5ab",
-    "checked_at": "2026-11-05T16:12:02.628Z"
+    "project_url": "https://nwsmbemwtexmrtpkgxrz.supabase.co",
+    "checked_at": "2026-11-06T01:03:39.525Z"
   },
   "authenticated_qa": {
     "backend_version": "ef043065-5d28-45c7-906b-b9e1edb6a5ab",
@@ -29,14 +29,20 @@
     "academic_compatibility": true
   },
   "qa_evidence": "docs/evidence/cierre-tecnico-20261105/README.md",
-  "next_deployment_note": "PR61 publicada y contrastada en Production. Gate cerrado para evitar desplegar cambios documentales por rutina; una publicación nueva requiere renovar evidencia de su versión.",
+  "next_deployment_note": "PR62 publicada y contrastada: 52 checks UI y 20 hashes coincidentes. Cambios finales de documentos no requieren deployment. Renovar gate sólo para otra publicación autorizada.",
   "active_backend": {
     "backend_version": "ef043065-5d28-45c7-906b-b9e1edb6a5ab",
     "backend_deployment": "2479eec0-5831-4284-8b7c-0ae8069884a7",
     "backend_commit": "08635cdc5c1706ae520cbeec6c9a1b403c4df483"
   },
-  "live_evidence": "docs/evidence/cierre-tecnico-20261105/README.md",
-  "current_pages_deployment": "b60383af-2676-4781-b7df-339f300cafd1",
-  "current_pages_commit": "5c6dd5e3cba36b282c44891fd0a6ee0755ca7747",
-  "review_ownership_evidence": "Misma versión de backend ef043065; evidencia remota previa de PR56/57 reutilizada, sin cambio de esas rutas."
+  "live_evidence": "docs/evidence/inicio-cabeceras-20261105/README.md",
+  "current_pages_deployment": "3ad69579-9e5e-450a-abe8-f28faec44c42",
+  "current_pages_commit": "85147d83eecd868179c03e7b48d826b656c2d3b9",
+  "review_ownership_evidence": "Misma versión de backend ef043065; evidencia remota previa de PR56/57 reutilizada, sin cambio de esas rutas.",
+  "frontend_review": {
+    "scope": "PR62: indicador accesible, retiro de recientes y cabeceras sin párrafo",
+    "local_qa": "docs/evidence/inicio-cabeceras-20261105/local.json",
+    "checks": 52,
+    "backend_qa_reused": "Misma versión ef043065 de PR61, sin cambios de Auth, API o DB"
+  }
 }

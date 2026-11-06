@@ -1,16 +1,18 @@
 # Manual de uso DREAMS
 
-**Versión documentada: continuidad de main `3e12bc6`, actualizada por PR #61 para https://dreams-perfumes.pages.dev/.** Se reutiliza esta ubicación del manual sin trasladar requisitos de la rúbrica 2026: la evaluación vigente usa el PDF 2025. Las pruebas remotas y el commit publicado se registran en [evidencia actual](../evidence/cierre-tecnico-20261105/README.md). Capturas anteriores conservan su procedencia; las nuevas muestran el carrusel publicado. No se atribuyen trabajo ni dominio a los integrantes.
+**Versión documentada: continuidad de main `e6d60bf`, actualizada por PR #62 para https://dreams-perfumes.pages.dev/.** Se reutiliza esta ubicación del manual sin trasladar requisitos de la rúbrica 2026: la evaluación vigente usa el PDF 2025. Las pruebas de los ajustes de Inicio/cabeceras y su publicación se registran en [evidencia actual](../evidence/inicio-cabeceras-20261105/README.md). La QA funcional anterior se conserva con su procedencia. Capturas anteriores conservan su procedencia; las nuevas muestran el carrusel publicado. No se atribuyen trabajo ni dominio a los integrantes.
 
 ## Inicio, catálogo y detalle
 
-Abrir Inicio y usar el menú para entrar a Perfumes, colecciones Mujer/Hombre/Unisex, Nosotros, Cuenta y Carrito. En móvil, desplegar el menú; con teclado usar Tab y Enter. La portada es una imagen estática. Las colecciones Mujer, Hombre y Unisex se abren desde el menú. El bloque «Tres formas de empezar» continúa eliminado. En «Más buscados» hay un carrusel manual de productos reales: Anterior/Siguiente y flechas del teclado al enfocar el listado; Inicio/Fin llevan a sus extremos. En móvil también se puede deslizar horizontalmente. No hay reproducción automática y se respeta movimiento reducido. Las tarjetas conservan sus enlaces y Agregar al carrito.
+Abrir Inicio y usar el menú para entrar a Perfumes, colecciones Mujer/Hombre/Unisex, Nosotros, Cuenta y Carrito. En móvil, desplegar el menú; con teclado usar Tab y Enter. La portada es una imagen estática. Las colecciones Mujer, Hombre y Unisex se abren desde el menú. El bloque «Tres formas de empezar» continúa eliminado. En «Más buscados» hay un carrusel manual de productos reales: Anterior/Siguiente y flechas del teclado al enfocar el listado; Inicio/Fin llevan a sus extremos. En móvil también se puede deslizar horizontalmente. No hay reproducción automática y se respeta movimiento reducido. Las tarjetas conservan sus enlaces y Agregar al carrito. El indicador de posición sólo se anuncia a lectores de pantalla; no aparece ni reserva espacio. La sección de productos vistos recientemente fue retirada: navegar al detalle ya no guarda ese historial. Los valores antiguos de ese historial quedan sin utilizar, sin tocar carrito ni cuentas.
+
+Las cabeceras Perfumes, Hombre, Mujer y Unisex muestran etiqueta y título en una columna, sin párrafo descriptivo. Conservan sus paletas y filtros; los metadatos SEO y las descripciones de los productos continúan disponibles.
 
 En catálogo, escribir nombre o marca y aplicar la búsqueda. Combinar filtros disponibles de marca, género, tipo y precio, y ordenar por los criterios del selector. Limpiar filtros para volver a todo el catálogo. Abrir una tarjeta para ver imagen, tamaño, precio, stock, intensidad y notas. Una imagen rota muestra un fallback; no prueba que se haya perdido su URL en base.
 
 ![Inicio oficial comprobado, portada estática y navegación](../evidence/cierre-tecnico-20261105/inicio-oficial.png)
 
-![Carrusel manual publicado en Más buscados](../evidence/cierre-tecnico-20261105/carrusel-escritorio.png)
+![Carrusel publicado con controles y sin indicador visible](../evidence/inicio-cabeceras-20261105/inicio-escritorio.png)
 
 ## Crear cuenta, iniciar y cerrar sesión
 

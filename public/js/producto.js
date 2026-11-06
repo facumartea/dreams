@@ -19,8 +19,6 @@ async function load_product_detail() {
         }
 
         update_product_metadata(product);
-        save_recent_product(product);
-        render_recent_products();
         await render_product_detail(product);
     } catch (error) {
         container.innerHTML = `<div class="empty-state"><h2>${escape_html(error.message)}</h2><a class="button button-dark" href="/catalogo.html">Volver al catálogo</a></div>`;

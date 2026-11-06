@@ -1,3 +1,10 @@
+## 2026-11-05 — PR62: Inicio y cabeceras más simples
+
+- Indicador de posición del carrusel sólo para lectores de pantalla, sin celda visible; controles y funcionamiento conservados.
+- Retirados vistos recientemente y sus funciones/llamadas exclusivas, sin borrar claves ni datos del navegador. No cambia carrito/cuentas.
+- Cabeceras sin párrafos descriptivos y en una columna; metadatos SEO independientes del DOM retirado y descripciones de productos intactas.
+- QA local y oficial 1440/390px: 52 checks, sin errores JS ni overflow. Regresión SEO, suite y CI aprobados. Publicado en `85147d8`/Pages `3ad69579`; 20 scripts coincidentes, máximo 38. Manual y wireframes retrospectivos actualizados; evidencia en docs/evidence/inicio-cabeceras-20261105.
+
 ## 2026-11-05 — PR61: carrusel manual, scripts coherentes y SQL modular
 
 - Corregida la omisión de checkout.js en Pages: todos los scripts propios se empaquetan desde la fuente revisada, con ETag y no-cache. Se conserva backend privado y contratos.

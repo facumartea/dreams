@@ -225,28 +225,6 @@ async function load_featured_products() {
     }
 }
 
-function get_recent_products() {
-    try {
-        const value = JSON.parse(localStorage.getItem('dreams_recent'));
-        return Array.isArray(value) ? value.filter(item => item && typeof item === 'object' && Number.isSafeInteger(Number(item.id)) && Number(item.id) > 0 && typeof item.name === 'string' && typeof item.brand === 'string').slice(0, 6) : [];
-    } catch { return []; }
-}
-
-function save_recent_product(product) {
-    const recent = get_recent_products().filter(item => item.id !== product.id);
-    recent.unshift({ id: product.id, name: product.name, brand: product.brand, price: product.price, image_url: product.image_url, stock: product.stock, size_ml: product.size_ml, gender: product.gender });
-    try { localStorage.setItem('dreams_recent', JSON.stringify(recent.slice(0, 6))); } catch { /* Storage bloqueado: el detalle sigue disponible. */ }
-}
-
-function render_recent_products() {
-    const container = document.getElementById('recent-products');
-    if (!container) return;
-    const recent = get_recent_products();
-    container.innerHTML = '';
-    if (!recent.length) { container.innerHTML = '<p class="muted">Todavía no viste perfumes. Explorá el catálogo y acá van a aparecer.</p>'; return; }
-    recent.forEach(product => container.appendChild(create_product_card(product)));
-}
-
 function setup_menu() {
     const toggle = document.querySelector('.menu-toggle');
     const nav = document.querySelector('.main-nav');
@@ -303,4 +281,3 @@ window.DreamsNavigation?.update();
 apply_public_config();
 load_featured_products();
 if (typeof dreams_reviews !== 'undefined') dreams_reviews.start();
-render_recent_products();

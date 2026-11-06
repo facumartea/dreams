@@ -3,12 +3,13 @@
     "lamina": "01-inicio",
     "pantalla": "Inicio",
     "ruta": "/",
-    "actualizacion": "05/11/2026: carrusel manual en Más buscados; portada estática conservada, diseño retrospectivo"
+    "actualizacion": "05/11/2026: indicador sólo para lectores de pantalla y sección de recientes retirada; carrusel manual conservado"
   },
   {
     "lamina": "02-catalogo",
     "pantalla": "Catálogo",
-    "ruta": "/catalogo.html"
+    "ruta": "/catalogo.html",
+    "actualizacion": "05/11/2026: cabeceras de Perfumes y colecciones sin párrafo visible; título, paleta y filtros conservados"
   },
   {
     "lamina": "03-filtros",
