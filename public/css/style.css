@@ -73,7 +73,6 @@ h1{font-size:clamp(3.3rem,6.6vw,7.6rem)}h2{font-size:clamp(2.5rem,4.2vw,4.9rem)}
 .catalog-page:is(.is-women,.is-men,.is-unisex) .page-intro::after{position:absolute;right:clamp(1.5rem,4vw,4rem);bottom:clamp(1.5rem,4vw,3rem);width:clamp(54px,6vw,88px);height:1px;background:var(--collection-accent);content:"";opacity:.55}
 .catalog-page:is(.is-women,.is-men,.is-unisex) .page-intro .eyebrow{color:var(--collection-accent)}
 .catalog-page:is(.is-women,.is-men,.is-unisex) .page-intro h1{color:var(--collection-heading)}
-.catalog-page:is(.is-women,.is-men,.is-unisex) .page-intro>p:last-child{color:var(--collection-muted)}
 .collection-themed{background:var(--collection-page);transition:background var(--slow)}
 .collection-themed .site-header{border-bottom-color:var(--collection-border);background:var(--collection-header);box-shadow:0 10px 35px var(--collection-shadow)}
 .collection-themed .site-header .brand,.collection-themed .site-header .main-nav a,.collection-themed .site-header .icon-link,.collection-themed .site-header .cart-link,.collection-themed .site-header .menu-toggle{color:var(--collection-heading)}
@@ -100,7 +99,6 @@ h1{font-size:clamp(3.3rem,6.6vw,7.6rem)}h2{font-size:clamp(2.5rem,4.2vw,4.9rem)}
 .collection-men{--collection-page:#111312;--collection-intro:#171a18;--collection-surface:#151816;--collection-card:#f4f1e9;--collection-image:#ebe8e0;--collection-field:#101210;--collection-focus:#1b1f1c;--collection-header:rgba(17,19,18,.96);--collection-heading:#f0ede5;--collection-muted:#a5a39b;--collection-placeholder:#6f716c;--collection-card-heading:#252620;--collection-card-muted:#696b63;--collection-accent:#a88f61;--collection-border:rgba(184,161,118,.24);--collection-card-border:rgba(236,229,214,.74);--collection-shadow:rgba(0,0,0,.2);--collection-counter:#17140f;--collection-button-text:#18150f;--collection-card-lift:-3px}
 .collection-unisex{--collection-page:#24221f;--collection-intro:#302c27;--collection-surface:#2b2824;--collection-card:#d8d0c4;--collection-image:#cbc3b7;--collection-field:#211f1c;--collection-focus:#35312b;--collection-header:rgba(36,34,31,.96);--collection-heading:#f1ece2;--collection-muted:#b7afa3;--collection-placeholder:#817a70;--collection-card-heading:#292622;--collection-card-muted:#6d665d;--collection-accent:#b9a582;--collection-border:rgba(185,165,130,.24);--collection-card-border:rgba(215,204,187,.48);--collection-shadow:rgba(0,0,0,.2);--collection-counter:#1a1712;--collection-button-text:#1a1712;--collection-card-lift:-2px}
 .collection-men .page-intro h1{font-weight:600;letter-spacing:-.02em}
-.collection-men .page-intro>p:last-child{font-weight:400}
 .collection-women .page-intro h1{font-weight:500;letter-spacing:-.018em}
 .collection-women .page-intro::after{width:clamp(76px,9vw,128px)}
 .collection-women .page-intro .eyebrow{color:var(--collection-gold)}
@@ -387,10 +385,31 @@ button.admin-stat:active{background:var(--ink-elevated,#26221b)}
 .featured-products-controls { display: flex; align-items: center; justify-content: flex-end; gap: 16px; margin-top: 16px; }
 .featured-products-controls[hidden] { display: none; }
 .featured-products-controls button:disabled { opacity: .45; cursor: default; }
-.featured-products-controls [role="status"] { font-size: .85rem; }
 @media (max-width: 900px) { .featured-carousel-track { grid-auto-columns: calc((100% - 24px) / 2); } }
 @media (max-width: 600px) {
     .featured-carousel-track { grid-auto-columns: 86%; gap: 16px; }
     .featured-products-controls { justify-content: space-between; gap: 8px; }
 }
 @media (prefers-reduced-motion: reduce) { .featured-carousel-track { scroll-behavior: auto; } }
+
+/* El indicador sigue disponible para lectores de pantalla sin ocupar una celda. */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+}
+/* Título y etiqueta forman una sola columna; las paletas permanecen vigentes. */
+.catalog-page .page-intro {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--s3);
+    padding-top: var(--s5);
+    padding-bottom: var(--s5);
+}
+.catalog-page .page-intro .eyebrow { margin-bottom: 0; }
