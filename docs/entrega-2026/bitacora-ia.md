@@ -1,5 +1,7 @@
 # Bitácora de uso de IA
 
+> Continuación y fuentes: [registro consolidado parcial de prompts](../entrega-2025/registro-prompts.md), revisado el 10/11/2026. Se conserva esta bitácora como evidencia histórica; no es una transcripción literal completa.
+
 Este registro identifica trabajo asistido por IA; no atribuye a los alumnos programación, revisión manual o dominio del código sin evidencia. Las fechas son las documentadas en commits y continuidad, no una reconstrucción de entregas de clase.
 
 | Fecha acreditada | Prompt o resumen fiel | Resultado y evidencia | Revisión / cambios humanos acreditados |

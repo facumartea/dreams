@@ -8,7 +8,11 @@ Fuente actual: **[rúbrica 2025 original](rubrica-2025.pdf)** y [texto completo]
 - [Matriz en el orden del PDF](matriz-rubrica.md).
 - [Inventario de archivos JSON](inventario-archivos.json) / [CSV](inventario-archivos.csv).
 - [Eliminaciones/archivos e identidad de originales](limpieza.json).
-- [Guía breve de defensa](defensa.md).
+- Guía completa de defensa: [Word](defensa.docx), [PDF](defensa.pdf) y [fuente Markdown](defensa.md).
+- [Endpoints verificados: 46 combinaciones](endpoints-verificados.json).
+- [Registro consolidado parcial de prompts](registro-prompts.md).
+- [Limpieza acotada y archivos preservados](revision-limpieza-20261110.md).
+- [Validación documental de esta entrega](verificacion-defensa-20261110.md).
 - [Inventario JavaScript de 40 líneas](inventario-funciones.json) / [pruebas](pruebas.json) / [equivalencia AST](equivalencia-ast.json).
 - [Manual Markdown](../entrega-2026/manual.md) / [PDF](../entrega-2026/manual.pdf): contenido funcional vigente reutilizado, no su rúbrica.
 - [Wireframes PDF: 17 láminas](../auditoria-2025/graficos/wireframes.pdf) / [PNG y fuentes por pantalla](../auditoria-2025/INDICE.md#láminas-por-pantalla).
