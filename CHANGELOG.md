@@ -1,3 +1,11 @@
+## 2026-11-10 — Material de defensa oral y registro de prompts
+
+- Guía ampliada desde el Word aportado y main 60451ca: Node/Worker, Express/JavaScript, rutas y métodos, funciones, conexión y seguridad sin afirmar bcrypt propio ni biblioteca CORS.
+- Inventario estático de 46 combinaciones API, habilitadas/preparadas/históricas. Guía con respuestas, explicación, ejemplos y práctica local segura.
+- Registro parcial consolidado con ocho extractos, resúmenes identificados y mensajes completos disponibles; revisión humana y fechas sólo cuando hay evidencia. Bitácora histórica conservada.
+- Retirada únicamente una captura documental duplicada exacta y sin referencias activas; preservada su fuente/evidencia. No se suben transcripción ni audios privados.
+- Sin cambios de aplicación, Auth, datos, configuración ni publicación web. Estado de validación documental en docs/entrega-2025/verificacion-defensa-20261110.md.
+
 ## 2026-11-05 — PR62: Inicio y cabeceras más simples
 
 - Indicador de posición del carrusel sólo para lectores de pantalla, sin celda visible; controles y funcionamiento conservados.

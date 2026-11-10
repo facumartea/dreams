@@ -1,3 +1,16 @@
+# Plan documental · defensa oral 10/11/2026
+
+1. Base main, adjuntos y bitácora: contrastados, sin cambios funcionales posteriores a 60451ca.
+2. Guía y registro: fuentes Markdown preparadas, 43 temas y 46 rutas; historial declarado parcial.
+3. Limpieza: un duplicado documental comprobado; preservados históricos y evidencia de fases.
+4. Word/PDF: completos; 25 páginas, inspección visual, 60 enlaces y privacidad verificados.
+5. GitHub: checkpoint 2cf4eb4 y PR63 subidos, CI252 aprobado. Cierre documental con evidencia; integrar únicamente con CI final aprobado. Estado/SHA final en PR63. Sin deploy.
+6. Oral: una pregunta por vez, esperar respuesta y corregir con explicación.
+
+No repetir el plan técnico anterior ni desplegar por documentación.
+
+## Plan anterior (PR62, antecedente)
+
 # Plan PR #62
 
 1. Continuidad y diagnóstico: completos; cambios acotados a frontend.

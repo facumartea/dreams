@@ -1,5 +1,7 @@
 # Guía para practicar la defensa
 
+> Guía ampliada vigente: [Markdown](../entrega-2025/defensa.md), [Word](../entrega-2025/defensa.docx) y [PDF](../entrega-2025/defensa.pdf). Este resumen histórico se conserva como antecedente de práctica.
+
 Material de estudio; no demuestra que los integrantes ya comprendan o puedan defender el código. Cada uno debe tener su copia de documentación y practicar sin IA.
 
 1. Dibujar navegador → Pages → Worker privado → Express → Supabase. Ubicar HTML/CSS/JS, proxy, SDK, cookies, RLS y clave exclusivamente servidor. Explicar por qué el 200 de la oficial restaurada no prueba el candidato.

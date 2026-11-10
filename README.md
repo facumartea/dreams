@@ -39,7 +39,7 @@ El navegador sólo llama a `/api`. La clave de servidor permanece en backend. Su
 
 ## Documentación y límites de la entrega
 
-[Manual](docs/entrega-2026/manual.md) · [Wireframes y mapa](docs/auditoria-2025/INDICE.md) · [D.E.R.](docs/auditoria-2025/base-de-datos.md) · [API](docs/entrega-2026/api.md) · [Guía de defensa](docs/entrega-2025/defensa.md).
+[Manual](docs/entrega-2026/manual.md) · [Wireframes y mapa](docs/auditoria-2025/INDICE.md) · [D.E.R.](docs/auditoria-2025/base-de-datos.md) · [API](docs/entrega-2026/api.md) · [Guía de defensa](docs/entrega-2025/defensa.md) ([Word](docs/entrega-2025/defensa.docx) / [PDF](docs/entrega-2025/defensa.pdf)) · [Prompts: registro parcial](docs/entrega-2025/registro-prompts.md).
 
 Se reutilizan manual y gráficos vigentes ubicados en carpetas previas; eso no convierte la rúbrica 2026 en fuente de esta evaluación. Los gráficos retrospectivos conservan su identificación y no se presentan como preentregas originales. Los integrantes confirmados son Martearena y Ruas; su participación y dominio deben acreditarse individualmente.
 
