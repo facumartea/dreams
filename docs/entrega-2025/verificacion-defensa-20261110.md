@@ -33,7 +33,9 @@ No se accede a filas remotas, contraseñas, hashes, credenciales ni sesiones. No
 
 ## Estado de GitHub
 
-Pendiente de completar con la PR y resultado de CI de esta misma tanda antes de integrar. La oficial conserva su deployment anterior; push e integración documental no significan publicación web.
+Entrega por [PR #63](https://github.com/facumartea/dreams/pull/63), branch `docs/defensa-oral-prompts-20261110`. Checkpoint documental `2cf4eb404e17c8ca2843b3d73d1266ce4911792e` subido y cotejado con el remoto. [CI #252](https://github.com/facumartea/dreams/actions/runs/42925703488) **aprobado** sobre ese checkpoint: auditoría de dependencias sin vulnerabilidades conocidas, sintaxis, inventario de 121 archivos/2200 registros sin excesos, 493 tests aprobados, 0 fallidos y 4 SQL omitidos sin PostgreSQL de prueba; cuatro builds sin deployment aprobados.
+
+El commit de cierre sólo añade esta evidencia y enlaces: el Word/PDF y la aplicación no cambian. La integración exige también el CI de ese cierre aprobado; su estado final y SHA de integración se consultan en la PR para no inventar un hash autorreferente. La oficial conserva su deployment anterior; push e integración documental no significan publicación web.
 
 ## Límites reales
 

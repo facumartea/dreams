@@ -8,7 +8,7 @@ Guía ampliada contrastada con código: 43 temas, 13 fichas de funciones y 46 co
 
 No se modifica código, DB, Auth, credenciales ni configuración. Sin ZIP ni deployment documental. La oficial conserva Pages `3ad69579-9e5e-450a-abe8-f28faec44c42`, fuente `85147d83eecd868179c03e7b48d826b656c2d3b9`; backend ef043065 y rollback b60383af. No se revalida producción en esta tarea de estudio.
 
-Validaciones y estado de GitHub: [verificación documental](docs/entrega-2025/verificacion-defensa-20261110.md). Al completar la entrega iniciar simulacro oral de una pregunta por vez; esperar intento antes de corregir.
+Entrega por [PR #63](https://github.com/facumartea/dreams/pull/63), checkpoint `2cf4eb4`. CI252 aprobado (493 tests, 0 fallidos, 4 omitidos; inventario y builds sin despliegue). El cierre documental sólo añade evidencia y necesita su propio CI antes de integrar; consultar PR para SHA/estado final. Validaciones y estado de GitHub: [verificación documental](docs/entrega-2025/verificacion-defensa-20261110.md). Al completar la entrega iniciar simulacro oral de una pregunta por vez; esperar intento antes de corregir.
 
 ## Continuidad anterior (PR62, conservada)
 

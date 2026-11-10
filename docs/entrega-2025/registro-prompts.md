@@ -232,8 +232,8 @@ Los bloques siguientes conservan el texto íntegro de mensajes seleccionados vis
 - Fecha comprobable: **10/11/2026**, mensaje de tarea actual y fecha de elaboración.
 - Tipo: resumen fiel del pedido actual; el texto completo de la tarea se conserva debajo.
 - Objetivo: guía oral contrastada, registro parcial consolidado, limpieza justificada y simulacro una pregunta por vez.
-- Resultado/evidencia: defensa.md/.docx/.pdf, endpoints-verificados.json, este registro y revisión de limpieza; commits de la PR documental de esta tarea.
-- Pruebas del agente: cotejo de 46 métodos/rutas, referencias de archivos/funciones, scan de datos sensibles, enlaces locales, revisión visual de documentos y diff limitado. CI del repositorio según resultado publicado en la PR. Sin despliegue ni pruebas de escritura reales.
+- Resultado/evidencia: defensa.md/.docx/.pdf, endpoints-verificados.json, este registro y revisión de limpieza; [PR #63](https://github.com/facumartea/dreams/pull/63), checkpoint documental [2cf4eb4](https://github.com/facumartea/dreams/commit/2cf4eb404e17c8ca2843b3d73d1266ce4911792e).
+- Pruebas del agente: cotejo de 46 métodos/rutas, referencias de archivos/funciones, scan de datos sensibles, enlaces locales, revisión visual de documentos y diff limitado. [CI #252](https://github.com/facumartea/dreams/actions/runs/42925703488) aprobado: 493 tests, 0 fallidos, 4 omitidos por falta de PostgreSQL de prueba, inventario y builds sin despliegue. El cierre documental exige su CI final aprobado. Sin despliegue ni pruebas de escritura reales.
 - Revisión humana: pendiente; no se atribuye al alumnado ninguna revisión todavía no observada.
 
 ### Prompt completo de esta tarea
