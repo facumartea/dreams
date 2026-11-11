@@ -1,8 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtemp, mkdir, writeFile, rm } from 'node:fs/promises';
+import { mkdtemp, mkdir, writeFile, rm, readFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
+import { fileURLToPath } from 'node:url';
 import { inventory } from '../scripts/function-inventory.mjs';
 
 test('inventario cuenta comentarios, callbacks y métodos sin requerir .git', async t => {
@@ -29,4 +32,18 @@ test('inventario distingue módulo, main explícito y scripts inline de HTML', a
     assert.equal(result.violations[0].kind, 'ProgramBlock');
     assert.equal(result.violations[0].lines, 41);
     assert.equal(result.records.find(row => row.name === 'inline').start, 3);
+});
+
+// Exportar el inventario no debe recrear las antiguas carpetas de entrega ni necesitar Git.
+test('el reporte opcional se genera fuera de la documentación sin requerir .git', async t => {
+    const root = await mkdtemp(join(tmpdir(), 'dreams-inventory-output-'));
+    t.after(() => rm(root, { recursive: true, force: true }));
+    await writeFile(join(root, 'source.js'), 'function ejemplo() { return true; }');
+    const script = fileURLToPath(new URL('../scripts/function-inventory.mjs', import.meta.url));
+    await promisify(execFile)(process.execPath, [script, root, '--write']);
+    const report = JSON.parse(await readFile(join(root, 'app/dist/inventario-funciones.json'), 'utf8'));
+    assert.equal(report.limit, 40);
+    assert.equal(report.files, 1);
+    assert.equal(report.violations.length, 0);
+    assert.ok(report.records.some(row => row.name === 'ejemplo'));
 });

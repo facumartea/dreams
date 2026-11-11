@@ -28,20 +28,20 @@
     "admin_persistence": true,
     "academic_compatibility": true
   },
-  "qa_evidence": "docs/evidence/cierre-tecnico-20261105/README.md",
+  "qa_evidence": "https://github.com/facumartea/dreams/blob/305c5fd6ca0f5a72792c4f5e64fa60ac13a70828/docs/evidence/cierre-tecnico-20261105/README.md",
   "next_deployment_note": "PR62 publicada y contrastada: 52 checks UI y 20 hashes coincidentes. Cambios finales de documentos no requieren deployment. Renovar gate sólo para otra publicación autorizada.",
   "active_backend": {
     "backend_version": "ef043065-5d28-45c7-906b-b9e1edb6a5ab",
     "backend_deployment": "2479eec0-5831-4284-8b7c-0ae8069884a7",
     "backend_commit": "08635cdc5c1706ae520cbeec6c9a1b403c4df483"
   },
-  "live_evidence": "docs/evidence/inicio-cabeceras-20261105/README.md",
+  "live_evidence": "https://github.com/facumartea/dreams/blob/305c5fd6ca0f5a72792c4f5e64fa60ac13a70828/docs/evidence/inicio-cabeceras-20261105/README.md",
   "current_pages_deployment": "3ad69579-9e5e-450a-abe8-f28faec44c42",
   "current_pages_commit": "85147d83eecd868179c03e7b48d826b656c2d3b9",
   "review_ownership_evidence": "Misma versión de backend ef043065; evidencia remota previa de PR56/57 reutilizada, sin cambio de esas rutas.",
   "frontend_review": {
     "scope": "PR62: indicador accesible, retiro de recientes y cabeceras sin párrafo",
-    "local_qa": "docs/evidence/inicio-cabeceras-20261105/local.json",
+    "local_qa": "https://github.com/facumartea/dreams/blob/305c5fd6ca0f5a72792c4f5e64fa60ac13a70828/docs/evidence/inicio-cabeceras-20261105/local.json",
     "checks": 52,
     "backend_qa_reused": "Misma versión ef043065 de PR61, sin cambios de Auth, API o DB"
   }
