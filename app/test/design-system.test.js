@@ -225,3 +225,18 @@ test('Admin valida y previsualiza la URL directa antes de guardar', () => {
     assert.doesNotMatch(server, /imgSrc:[^\n]*images\.unsplash\.com/);
     assert.doesNotMatch(script, /images\.unsplash\.com/);
 });
+
+
+// el acceso de iphone necesita un icono propio cuadrado y un nombre estable.
+test('iphone usa un icono cuadrado dedicado sin cambiar el favicon ni los logos de la pagina', () => {
+    for (const page of [...public_pages.map(name => 'public/' + name), 'views/admin.html']) {
+        const html = fs.readFileSync(path.join(root, page), 'utf8');
+        assert.match(html, /<link rel="apple-touch-icon" sizes="1254x1254" href="\/assets\/dreams-iphone-icon-v1\.png">/);
+        assert.match(html, /<meta name="apple-mobile-web-app-title" content="DREAMS">/);
+    }
+    const image = fs.readFileSync(path.join(root, 'public/assets/dreams-iphone-icon-v1.png'));
+    assert.equal(image.subarray(1, 4).toString(), 'PNG');
+    assert.equal(image.readUInt32BE(16), 1254);
+    assert.equal(image.readUInt32BE(20), 1254);
+    assert.equal(image[25], 2, 'png rgb opaco: ios aplica su propia mascara');
+});

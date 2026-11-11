@@ -214,3 +214,25 @@ test('bundling preserves the upstream authorization of the canonical Admin scrip
     assert.equal(response.status, 401);
     assert.equal(await response.text(), 'Sesión requerida');
 });
+
+
+// el icono se sirve desde el overlay, aunque la ruta nueva no exista en el backend anterior.
+test('icono iphone conserva bytes png, seguridad, etag y HEAD sin depender del asset legado', async () => {
+    const body = Uint8Array.from([137, 80, 78, 71, 13, 10, 26, 10]);
+    const icon = '/assets/dreams-iphone-icon-v1.png';
+    const app = create_proxy({ [icon]: { body: btoa(String.fromCharCode(...body)), encoding: 'base64', content_type: 'image/png', etag: '"iphone-fixture"' } });
+    const env = { DREAMS: { fetch: async request => {
+        assert.equal(new URL(request.url).pathname, '/assets/dreams-isotype.png');
+        assert.equal(request.headers.get('If-None-Match'), null);
+        return new Response('old', { headers: { 'Content-Security-Policy': "default-src 'self'", 'Content-Type': 'text/plain' } });
+    } } };
+    const response = await app.fetch(new Request('https://dreams-perfumes.pages.dev' + icon), env);
+    assert.equal(response.status, 200);
+    assert.equal(response.headers.get('Content-Type'), 'image/png');
+    assert.equal(response.headers.get('Content-Security-Policy'), "default-src 'self'");
+    assert.deepEqual(new Uint8Array(await response.arrayBuffer()), body);
+    const head = await app.fetch(new Request('https://dreams-perfumes.pages.dev' + icon, { method: 'HEAD' }), env);
+    assert.equal((await head.arrayBuffer()).byteLength, 0);
+    const cached = await app.fetch(new Request('https://dreams-perfumes.pages.dev' + icon, { headers: { 'If-None-Match': '"iphone-fixture"' } }), env);
+    assert.equal(cached.status, 304);
+});

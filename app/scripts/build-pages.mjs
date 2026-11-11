@@ -30,8 +30,11 @@ for (const [pathname, relative, content_type] of [
     if (content_type.startsWith('text/html')) body = body.replace(/<footer class="site-footer">[\s\S]*?<\/footer>/, footer);
     assets[pathname] = { body, content_type, etag: `"${createHash('sha256').update(body).digest('hex')}"` };
 }
-const social = await readFile(new URL('../public/assets/dreams-social.png', import.meta.url));
-assets['/assets/dreams-social.png'] = { body: social.toString('base64'), encoding: 'base64', content_type: 'image/png', etag: `"${createHash('sha256').update(social).digest('hex')}"` };
+// incluir el icono local evita depender de que exista en el backend anterior.
+for (const name of ['dreams-social.png', 'dreams-iphone-icon-v1.png']) {
+    const image = await readFile(new URL(`../public/assets/${name}`, import.meta.url));
+    assets[`/assets/${name}`] = { body: image.toString('base64'), encoding: 'base64', content_type: 'image/png', etag: `"${createHash('sha256').update(image).digest('hex')}"` };
+}
 assets['/'] = assets['/index.html'];
 const seo = (await readFile(new URL('../pages/seo.mjs', import.meta.url), 'utf8')).replace(/^import .*;$/gm, '').replace(/^export /gm, '');
 const model = (await readFile(new URL('../public/js/catalog-filter-state.js', import.meta.url), 'utf8')).replace(/if \(typeof module === 'object'[\s\S]*$/, '');
