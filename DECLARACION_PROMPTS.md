@@ -570,7 +570,7 @@ function registration_values(body = {}) {
 }
 ```
 
-Fuente del pedido: mensaje actual del 11/11/2026; fecha de esta ejecucion. Evidencia de cambios: esta revision, pendiente de su commit/PR.
+Fuente del pedido: mensaje actual del 11/11/2026; fecha de esta ejecucion. Evidencia de cambios: [checkpoint 4a217d4](https://github.com/facumartea/dreams/commit/4a217d4f573b4a1ec9f6e1a71ca1aeb48c0155fc) y [PR71](https://github.com/facumartea/dreams/pull/71).
 
 ## Limites y fuentes conservadas
 
