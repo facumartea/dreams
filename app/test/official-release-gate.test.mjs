@@ -1,3 +1,4 @@
+// pruebas de official release gate: usan datos ficticios para detectar cambios en respuestas, permisos y errores.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

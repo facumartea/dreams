@@ -1,8 +1,9 @@
+// pruebas de product schema: usan datos ficticios para detectar cambios en respuestas, permisos y errores.
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { create_app } = require('../server/app');
+const { create_app: crear_aplicacion } = require('../server/app');
 
-function database() {
+function base_de_datos() {
     const rows = [{ id: 1, marca: 'Marca de prueba', name: 'Fragancia de prueba', gender: 'unisex', category: 'nicho', price: 123, stock: 4, size_ml: 50, top_notes: 'Salida', heart_notes: 'Corazón', base_notes: 'Fondo' }];
     const calls = [];
     return {
@@ -20,11 +21,11 @@ function database() {
                 limit() { return q; },
                 insert(input) { action = 'insert'; value = input; return q; },
                 update(input) { action = 'update'; value = input; return q; },
-                maybeSingle() { return Promise.resolve(execute(true)); },
-                single() { return Promise.resolve(execute(true)); },
-                then(resolve, reject) { return Promise.resolve(execute(false)).then(resolve, reject); }
+                maybeSingle() { return Promise.resolve(ejecutar(true)); },
+                single() { return Promise.resolve(ejecutar(true)); },
+                then(resolve, reject) { return Promise.resolve(ejecutar(false)).then(resolve, reject); }
             };
-            function execute(single) {
+            function ejecutar(single) {
                 if (table === 'profiles') return { data: { name: 'Admin de prueba', role: 'admin' }, error: null };
                 if (table === 'inquiries') return { data: [{ id: 1, product_name: rows[0].name, products: { marca: rows[0].marca, name: rows[0].name } }], error: null };
                 assert.equal(table, 'products');
@@ -44,8 +45,8 @@ function database() {
 }
 
 async function serve(callback) {
-    const db = database();
-    const app = create_app({ database: db, create_auth_client: () => db, product_brand_column: 'marca', disable_request_log: true });
+    const db = base_de_datos();
+    const app = crear_aplicacion({ database: db, create_auth_client: () => db, product_brand_column: 'marca', disable_request_log: true });
     const server = app.listen(0, '127.0.0.1');
     await new Promise(resolve => server.once('listening', resolve));
     try { await callback(`http://127.0.0.1:${server.address().port}`, db); }

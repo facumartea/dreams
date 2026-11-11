@@ -1,3 +1,4 @@
+// pruebas de panel persistence: usan datos ficticios para detectar cambios en respuestas, permisos y errores.
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const vm = require('node:vm');
@@ -9,7 +10,7 @@ const expected = { brand: 'DREAMS', name: 'QA', gender: 'unisex', category: 'nic
 function harness(read) {
     const context = vm.createContext({ document: { addEventListener() {} }, Intl });
     vm.runInContext(readFileSync(require.resolve('../public/js/admin.js'), 'utf8'), context);
-    context.admin_fetch = read;
+    context.consultar_api_del_panel = read;
     return context;
 }
 
@@ -17,29 +18,29 @@ for (const key of Object.keys(expected)) {
     test(`persistencia Admin rechaza discrepancia en ${key}`, async () => {
         const changed = typeof expected[key] === 'number' ? expected[key] + 1 : key === 'featured' ? false : 'diferente';
         const h = harness(async () => [{ id: 7, ...expected, [key]: changed }]);
-        await assert.rejects(h.confirm_product_persistence({ id: 7 }, expected), /confirmar todos/);
+        await assert.rejects(h.comprobar_perfume_guardado({ id: 7 }, expected), /confirmar todos/);
     });
 }
 
 test('persistencia confirma todos los campos, incluida imagen y destacado', async () => {
     let requested;
     const h = harness(async path => { requested = path; return [{ id: 7, ...expected }]; });
-    await h.confirm_product_persistence({ id: 7 }, expected);
+    await h.comprobar_perfume_guardado({ id: 7 }, expected);
     assert.equal(requested, '/api/admin/products');
 });
 test('persistencia admite números serializados como formulario y texto normalizado', async () => {
     const h = harness(async () => [{ id: 7, ...expected }]);
-    await h.confirm_product_persistence({ id: '7' }, { ...expected, price: '100', name: ' QA ' });
+    await h.comprobar_perfume_guardado({ id: '7' }, { ...expected, price: '100', name: ' QA ' });
 });
 for (const [name, read] of [['producto ausente', []], ['respuesta no array', {}], ['otro ID', [{ id: 8, ...expected }]]]) {
     test(`persistencia rechaza ${name}`, async () => {
-        await assert.rejects(harness(async () => read).confirm_product_persistence({ id: 7 }, expected));
+        await assert.rejects(harness(async () => read).comprobar_perfume_guardado({ id: 7 }, expected));
     });
 }
 for (const id of [undefined, 0, -1, 1.5]) {
     test(`persistencia rechaza identificador inválido ${id}`, async () => {
         let reads = 0;
-        await assert.rejects(harness(async () => { reads++; return []; }).confirm_product_persistence({ id }, expected));
+        await assert.rejects(harness(async () => { reads++; return []; }).comprobar_perfume_guardado({ id }, expected));
         assert.equal(reads, 0);
     });
 }
@@ -48,11 +49,11 @@ test('caída de lectura posterior conserva el formulario y no anuncia éxito ni 
     const message = { textContent: '' };
     h.document.getElementById = () => message;
     let resets = 0, writes = 0;
-    h.reset_form = () => { resets++; };
-    h.set_product_save_pending = () => {};
+    h.limpiar_formulario_del_perfume = () => { resets++; };
+    h.indicar_guardado_en_curso = () => {};
     let reads = 0;
-    h.admin_fetch = async (_path, options) => { if (options) { writes++; return { id: 7 }; } if (reads++ === 0) return []; throw new Error('lectura interrumpida'); };
-    await h.commit_product('', expected);
+    h.consultar_api_del_panel = async (_path, options) => { if (options) { writes++; return { id: 7 }; } if (reads++ === 0) return []; throw new Error('lectura interrumpida'); };
+    await h.confirmar_guardado_del_perfume('', expected);
     assert.equal(writes, 1);
     assert.equal(resets, 0);
     assert.match(message.textContent, /Revisá el listado/);

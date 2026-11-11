@@ -1,3 +1,4 @@
+// pruebas de migration: usan datos ficticios para detectar cambios en respuestas, permisos y errores.
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const { readFileSync } = require('node:fs');

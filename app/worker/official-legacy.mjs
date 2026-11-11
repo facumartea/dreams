@@ -1,6 +1,7 @@
+// conserva la compatibilidad con la version anterior para un rollback controlado.
 const legacy_origin = 'https://d5df723d-dreams-perfumes.dreams-perfumes.workers.dev';
-async function limited_body(request) {
-    const reader = request.clone().body?.getReader();
+async function leer_cuerpo_con_limite(solicitud) {
+    const reader = solicitud.clone().body?.getReader();
     if (!reader) return null;
     const chunks = []; let length = 0;
     try {
@@ -17,17 +18,18 @@ async function limited_body(request) {
     } catch { return null; }
     finally { reader.releaseLock(); }
 }
-// Only select the verifier here. The immutable backend verifies signature, owner and expiry.
-export async function legacy_presentation(request, fetcher = fetch) {
-    const path = new URL(request.url).pathname;
-    if (request.method !== 'POST' || !['/api/presentation/payment', '/api/presentation/result'].includes(path)) return null;
-    const body = await limited_body(request), key = path.endsWith('/payment') ? 'ticket' : 'receipt';
+// aqui solo se elige el verificador; el backend comprueba firma, dueno y vencimiento.
+async function preparar_simulacion_anterior(solicitud, fetcher = fetch) {
+    const path = new URL(solicitud.url).pathname;
+    if (solicitud.method !== 'POST' || !['/api/presentation/payment', '/api/presentation/result'].includes(path)) return null;
+    const body = await leer_cuerpo_con_limite(solicitud), key = path.endsWith('/payment') ? 'ticket' : 'receipt';
     if (!body || Object.keys(body).length !== 1 || typeof body[key] !== 'string' || body[key].length > 24000) return null;
     try {
         const parts = body[key].split('.');
         if (parts.length !== 2) return null;
         const payload = JSON.parse(atob(parts[0].replace(/-/g, '+').replace(/_/g, '/')));
         if (payload.version !== 2 || Object.hasOwn(payload, 'issuer')) return null;
-        return fetcher(new Request(new URL(path, legacy_origin), new Request(request, { redirect: 'manual' })));
+        return fetcher(new Request(new URL(path, legacy_origin), new Request(solicitud, { redirect: 'manual' })));
     } catch { return null; }
 }
+export { preparar_simulacion_anterior as legacy_presentation };

@@ -1,9 +1,10 @@
+// adaptador del proveedor comercial; su presencia no habilita cobros en la oficial.
 const crypto = require('node:crypto');
 
 const PAYMENT_API = 'https://api.mercadopago.com';
 const PAYMENT_STATES = new Set(['approved', 'rejected', 'pending', 'cancelled', 'error']);
 
-function normalize_payment_status(status) {
+function normalizar_estado_del_pago(status) {
     const value = String(status || '').toLowerCase();
     if (value === 'approved') return 'approved';
     if (value === 'rejected') return 'rejected';
@@ -12,23 +13,23 @@ function normalize_payment_status(status) {
     return 'error';
 }
 
-function parse_signature(value) {
+function interpretar_firma(value) {
     return Object.fromEntries(String(value || '').split(',').map(part => part.trim().split('=')).filter(parts => parts.length === 2));
 }
 
-function secure_equal(left, right) {
+function comparar_firmas_de_forma_segura(left, right) {
     const a = Buffer.from(String(left || ''), 'utf8');
     const b = Buffer.from(String(right || ''), 'utf8');
     return a.length === b.length && crypto.timingSafeEqual(a, b);
 }
 
-function verify_webhook_signature({ signature, request_id, data_id, secret }) {
+function comprobar_firma_de_notificacion({ signature, request_id, data_id, secret }) {
     if (!signature || !request_id || !data_id || !secret) return false;
-    const values = parse_signature(signature);
+    const values = interpretar_firma(signature);
     if (!values.ts || !values.v1) return false;
     const manifest = `id:${String(data_id).toLowerCase()};request-id:${request_id};ts:${values.ts};`;
     const expected = crypto.createHmac('sha256', secret).update(manifest).digest('hex');
-    return secure_equal(expected, values.v1);
+    return comparar_firmas_de_forma_segura(expected, values.v1);
 }
 
 class MercadoPagoProvider {
@@ -105,7 +106,7 @@ class MercadoPagoProvider {
         return {
             id: String(payment.id),
             order_id: String(payment.external_reference || payment.metadata?.order_id || ''),
-            status: normalize_payment_status(payment.status),
+            status: normalizar_estado_del_pago(payment.status),
             status_detail: String(payment.status_detail || '').slice(0, 160),
             amount: Number(payment.transaction_amount),
             currency: String(payment.currency_id || ''),
@@ -115,7 +116,7 @@ class MercadoPagoProvider {
     }
 
     verify_webhook(headers, data_id) {
-        return verify_webhook_signature({
+        return comprobar_firma_de_notificacion({
             signature: headers['x-signature'],
             request_id: headers['x-request-id'],
             data_id,
@@ -124,4 +125,4 @@ class MercadoPagoProvider {
     }
 }
 
-module.exports = { MercadoPagoProvider, normalize_payment_status, verify_webhook_signature, PAYMENT_STATES };
+module.exports = { MercadoPagoProvider, normalize_payment_status: normalizar_estado_del_pago, verify_webhook_signature: comprobar_firma_de_notificacion, PAYMENT_STATES };

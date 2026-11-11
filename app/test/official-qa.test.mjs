@@ -1,7 +1,8 @@
+// pruebas de official qa: usan datos ficticios para detectar cambios en respuestas, permisos y errores.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { run_official_qa } from '../worker/official-qa.mjs';
-const empty_state = async () => ({ completed: new Set() });
+const vacio_estado = async () => ({ completed: new Set() });
 const valid = { SUPABASE_URL: 'https://nwsmbemwtexmrtpkgxrz.supabase.co', QA_RUN_ID: 'pr56-test-expiry', QA_EXPIRES_AT: String(Date.now() + 600000) };
 
 test('QA privada requiere opt-in válido y vencimiento acotado antes de acceder a secretos o red', async () => {
@@ -15,7 +16,7 @@ test('QA bloquea registro/escrituras si falla lectura directa o SDK del candidat
     for (const [label, raw, sdk] of [['direct', 401, true], ['sdk', 200, false]]) {
         let calls = 0;
         const report = await run_official_qa({ ...valid, QA_RUN_ID: `pr56-test-${label}` }, () => { calls++; }, {
-            create_database: () => ({}), read_state: empty_state, log() {},
+            create_database: () => ({}), read_state: vacio_estado, log() {},
             diagnose: async () => ({ raw_apikey_only: { status: raw }, candidate_sdk: { succeeded: sdk }, project_key_pair: 'not_verified' })
         });
         assert.equal(calls, 0);
@@ -26,7 +27,7 @@ test('QA bloquea registro/escrituras si falla lectura directa o SDK del candidat
 
 test('un error privado del proveedor nunca aparece en el reporte y permite reintento seguro', async () => {
     const env = { ...valid, QA_RUN_ID: 'pr56-test-redaction', SUPABASE_SECRET_KEY: 'fixture-private-value', DREAMS_QA_ADMIN_PASSWORD: 'fixture-password-value' };
-    const services = { create_database: () => ({}), read_state: empty_state, log() {}, diagnose: async () => { throw new Error(env.SUPABASE_SECRET_KEY + env.DREAMS_QA_ADMIN_PASSWORD); } };
+    const services = { create_database: () => ({}), read_state: vacio_estado, log() {}, diagnose: async () => { throw new Error(env.SUPABASE_SECRET_KEY + env.DREAMS_QA_ADMIN_PASSWORD); } };
     const report = await run_official_qa(env, () => assert.fail(), services);
     assert.equal(report.status, 'FAIL');
     assert.equal(report.failed_check, 'runtime_or_provider_failure');
@@ -47,7 +48,7 @@ test('fallo al construir el cliente también se reporta sin volcar credenciales'
 test('una clave pública no habilita altas aunque pueda leer el catálogo público', async () => {
     let calls = 0;
     const report = await run_official_qa({ ...valid, QA_RUN_ID: 'pr56-test-public-key' }, () => { calls++; }, {
-        create_database: () => ({}), read_state: empty_state, log() {}, diagnose: async () => ({
+        create_database: () => ({}), read_state: vacio_estado, log() {}, diagnose: async () => ({
             shape: { kind: 'publishable' }, raw_apikey_only: { status: 200 },
             candidate_sdk: { status: 200, succeeded: true }, project_key_pair: 'verified_by_read'
         })

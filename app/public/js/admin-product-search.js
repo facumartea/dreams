@@ -1,3 +1,4 @@
+// filtra nombre y marca; considera stock bajo solamente a 0, 1 o 2 unidades validas.
 const DreamsAdminProducts = {
     normalize_search(value) { return String(value ?? '').normalize('NFD').replace(/\p{M}/gu, '').toLowerCase().trim(); },
     filter_products(products, query, low_only = false) {

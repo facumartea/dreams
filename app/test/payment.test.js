@@ -1,15 +1,16 @@
+// pruebas de pago: usan datos ficticios para detectar cambios en respuestas, permisos y errores.
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const crypto = require('node:crypto');
-const { MercadoPagoProvider, normalize_payment_status, verify_webhook_signature } = require('../server/payments/mercado-pago');
+const { MercadoPagoProvider, normalize_payment_status: normalizar_estado_del_pago, verify_webhook_signature: comprobar_firma_de_notificacion } = require('../server/payments/mercado-pago');
 
 test('normaliza todos los estados relevantes de Mercado Pago', () => {
-    assert.equal(normalize_payment_status('approved'), 'approved');
-    assert.equal(normalize_payment_status('rejected'), 'rejected');
-    assert.equal(normalize_payment_status('pending'), 'pending');
-    assert.equal(normalize_payment_status('in_process'), 'pending');
-    assert.equal(normalize_payment_status('cancelled'), 'cancelled');
-    assert.equal(normalize_payment_status('unknown'), 'error');
+    assert.equal(normalizar_estado_del_pago('approved'), 'approved');
+    assert.equal(normalizar_estado_del_pago('rejected'), 'rejected');
+    assert.equal(normalizar_estado_del_pago('pending'), 'pending');
+    assert.equal(normalizar_estado_del_pago('in_process'), 'pending');
+    assert.equal(normalizar_estado_del_pago('cancelled'), 'cancelled');
+    assert.equal(normalizar_estado_del_pago('unknown'), 'error');
 });
 
 test('no activa checkout si falta token o secreto de Webhook', () => {
@@ -25,8 +26,8 @@ test('valida firmas webhook con HMAC y rechaza alteraciones', () => {
     const secret = 'webhook-test-secret';
     const manifest = `id:${data_id};request-id:${request_id};ts:${ts};`;
     const v1 = crypto.createHmac('sha256', secret).update(manifest).digest('hex');
-    assert.equal(verify_webhook_signature({ signature: `ts=${ts},v1=${v1}`, request_id, data_id, secret }), true);
-    assert.equal(verify_webhook_signature({ signature: `ts=${ts},v1=${v1}`, request_id, data_id: '999', secret }), false);
+    assert.equal(comprobar_firma_de_notificacion({ signature: `ts=${ts},v1=${v1}`, request_id, data_id, secret }), true);
+    assert.equal(comprobar_firma_de_notificacion({ signature: `ts=${ts},v1=${v1}`, request_id, data_id: '999', secret }), false);
 });
 
 test('crea una preferencia Sandbox sin exponer el token en el payload', async () => {

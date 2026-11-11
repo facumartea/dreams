@@ -1,9 +1,10 @@
+// pruebas de featured carousel: usan datos ficticios para detectar cambios en respuestas, permisos y errores.
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const vm = require('node:vm');
 const { readFileSync } = require('node:fs');
 
-function carousel({ count = 8, reduced = false, region_present = true } = {}) {
+function carrusel({ count = 8, reduced = false, region_present = true } = {}) {
     const previous = { addEventListener(type, callback) { this.click = callback; } };
     const next = { addEventListener(type, callback) { this.click = callback; } };
     const status = {}, controls = { hidden: true }, handlers = {}, moves = [];
@@ -18,12 +19,12 @@ function carousel({ count = 8, reduced = false, region_present = true } = {}) {
         ResizeObserver: class { observe() {} } };
     vm.createContext(sandbox);
     vm.runInContext(readFileSync(require.resolve('../public/js/featured-carousel.js'), 'utf8'), sandbox);
-    sandbox.setup_featured_carousel(track);
+    sandbox.preparar_carrusel_de_perfumes(track);
     return { track, previous, next, status, controls, handlers, moves };
 }
 
 test('destacados: controles visibles, límites y contador del contenido real', () => {
-    const c = carousel();
+    const c = carrusel();
     assert.equal(c.controls.hidden, false);
     assert.equal(c.previous.disabled, true);
     assert.equal(c.next.disabled, false);
@@ -35,7 +36,7 @@ test('destacados: controles visibles, límites y contador del contenido real', (
 });
 
 test('destacados: botones y teclado manual, sin interceptar tarjetas', () => {
-    const c = carousel();
+    const c = carrusel();
     c.next.click(); c.previous.click();
     assert.equal(c.moves[0].left, 224); assert.equal(c.moves[1].left, -224);
     let prevented = 0;
@@ -47,8 +48,8 @@ test('destacados: botones y teclado manual, sin interceptar tarjetas', () => {
 });
 
 test('destacados: movimiento reducido y degradación sin múltiples productos', () => {
-    const c = carousel({ reduced: true }); c.next.click();
+    const c = carrusel({ reduced: true }); c.next.click();
     assert.equal(c.moves[0].behavior, 'instant');
-    assert.equal(carousel({ count: 1 }).controls.hidden, true);
-    assert.doesNotThrow(() => carousel({ region_present: false }));
+    assert.equal(carrusel({ count: 1 }).controls.hidden, true);
+    assert.doesNotThrow(() => carrusel({ region_present: false }));
 });

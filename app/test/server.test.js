@@ -1,9 +1,10 @@
+// pruebas de servidor: usan datos ficticios para detectar cambios en respuestas, permisos y errores.
 const test = require('node:test');
 const assert = require('node:assert/strict');
 
-const { create_app, validate, validate_product_image_url, IMAGE_URL_ERROR, payload, order_number, database_health, auth_cookie, session, parse_id, normalize_cart_items, quote_cart, execute_database_query } = require('../server/app');
+const { create_app: crear_aplicacion, validate: validar_datos, validate_product_image_url: validar_url_de_imagen, IMAGE_URL_ERROR, payload: preparar_datos, order_number: crear_referencia_del_pedido, database_health: consultar_estado_de_la_base, auth_cookie: crear_cookie_de_autenticacion, session: guardar_cookies_de_sesion, parse_id: interpretar_id, normalize_cart_items: normalizar_productos_del_carrito, quote_cart: cotizar_carrito, execute_database_query: consultar_base_de_datos } = require('../server/app');
 
-const app = create_app({ database: {}, disable_request_log: true });
+const app = crear_aplicacion({ database: {}, disable_request_log: true });
 
 test('validación de producto rechaza números y URLs inseguros', () => {
     const valid = {
@@ -11,18 +12,18 @@ test('validación de producto rechaza números y URLs inseguros', () => {
         price: 1000, stock: 2, intensity: 4, family: 'amaderada', top_notes: 'bergamota',
         heart_notes: 'iris', base_notes: 'cedro', description: 'Descripción', image_url: '/assets/dreams-bottle.png'
     };
-    assert.equal(validate(valid), undefined);
-    assert.match(validate({ ...valid, stock: 1.5 }), /válidos/);
-    assert.match(validate({ ...valid, price: 'NaN' }), /válidos/);
-    assert.match(validate({ ...valid, image_url: 'javascript:alert(1)' }), /HTTPS/);
-    assert.equal(payload({ ...valid, brand: '  DREAMS  ' }).o.brand, 'DREAMS');
+    assert.equal(validar_datos(valid), undefined);
+    assert.match(validar_datos({ ...valid, stock: 1.5 }), /válidos/);
+    assert.match(validar_datos({ ...valid, price: 'NaN' }), /válidos/);
+    assert.match(validar_datos({ ...valid, image_url: 'javascript:alert(1)' }), /HTTPS/);
+    assert.equal(preparar_datos({ ...valid, brand: '  DREAMS  ' }).o.brand, 'DREAMS');
 });
 
 test('URLs de imagen no usan allowlist de Unsplash y bloquean entradas inseguras', () => {
-    assert.equal(validate_product_image_url('https://images.unsplash.com/photo-123?auto=format'), null);
-    assert.equal(validate_product_image_url('https://upload.wikimedia.org/wikipedia/commons/a/a9/Example.jpg'), null);
-    assert.equal(validate_product_image_url('https://cdn.example.com/assets/perfume.webp?width=900'), null);
-    assert.equal(validate_product_image_url('/assets/dreams-bottle.png'), null);
+    assert.equal(validar_url_de_imagen('https://images.unsplash.com/photo-123?auto=format'), null);
+    assert.equal(validar_url_de_imagen('https://upload.wikimedia.org/wikipedia/commons/a/a9/Example.jpg'), null);
+    assert.equal(validar_url_de_imagen('https://cdn.example.com/assets/perfume.webp?width=900'), null);
+    assert.equal(validar_url_de_imagen('/assets/dreams-bottle.png'), null);
     for (const value of [
         'not-a-url',
         'http://cdn.example.com/perfume.jpg',
@@ -30,28 +31,28 @@ test('URLs de imagen no usan allowlist de Unsplash y bloquean entradas inseguras
         'https://www.google.com/imgres?imgurl=https%3A%2F%2Fcdn.example.com%2Fperfume.jpg',
         'https://google.com/search?tbm=isch&q=perfume',
         'https://user:password@cdn.example.com/perfume.jpg'
-    ]) assert.equal(validate_product_image_url(value), IMAGE_URL_ERROR);
+    ]) assert.equal(validar_url_de_imagen(value), IMAGE_URL_ERROR);
 });
 
 test('número de compra es estable y deriva del pedido persistido', () => {
     const order = { id: '12345678-1234-4234-8234-123456789abc', created_at: '2026-09-01T12:00:00.000Z' };
-    assert.equal(order_number(order), 'DRM-2026-123456781234');
-    assert.equal(order_number(order), order_number({ ...order }));
+    assert.equal(crear_referencia_del_pedido(order), 'DRM-2026-123456781234');
+    assert.equal(crear_referencia_del_pedido(order), crear_referencia_del_pedido({ ...order }));
 });
 
 test('parse_id sólo acepta enteros positivos seguros', () => {
-    assert.equal(parse_id('42'), 42);
-    for (const value of ['', 'abc', '1.5', '-1', '0', Number.MAX_SAFE_INTEGER + 1]) assert.equal(parse_id(value), null);
+    assert.equal(interpretar_id('42'), 42);
+    for (const value of ['', 'abc', '1.5', '-1', '0', Number.MAX_SAFE_INTEGER + 1]) assert.equal(interpretar_id(value), null);
 });
 
 test('readiness falla cuando Supabase devuelve error', async () => {
     const database = { from: () => ({ select: async () => ({ error: new Error('offline') }) }) };
-    await assert.rejects(database_health(database), /offline/);
+    await assert.rejects(consultar_estado_de_la_base(database), /offline/);
 });
 
 test('consultas reintentan una sola vez ante el desfase JWT transitorio', async () => {
     let calls = 0, waits = 0;
-    const result = await execute_database_query(async () => {
+    const result = await consultar_base_de_datos(async () => {
         calls += 1;
         return calls === 1 ? { error: { code: 'PGRST303' } } : { data: ['ok'], error: null };
     }, async milliseconds => {
@@ -63,7 +64,7 @@ test('consultas reintentan una sola vez ante el desfase JWT transitorio', async 
     assert.equal(waits, 1);
 
     calls = 0;
-    await execute_database_query(async () => {
+    await consultar_base_de_datos(async () => {
         calls += 1;
         return { error: { code: 'OTHER' } };
     }, async () => assert.fail('no debe esperar'));
@@ -71,8 +72,8 @@ test('consultas reintentan una sola vez ante el desfase JWT transitorio', async 
 });
 
 test('carrito valida cantidades y se reconcilia con precio y stock del servidor', async () => {
-    assert.match(normalize_cart_items([]).error, /entre 1 y 30/);
-    assert.match(normalize_cart_items([{ id: 1, quantity: 0 }]).error, /cantidad inválida/);
+    assert.match(normalizar_productos_del_carrito([]).error, /entre 1 y 30/);
+    assert.match(normalizar_productos_del_carrito([{ id: 1, quantity: 0 }]).error, /cantidad inválida/);
     const database = {
         from(table) {
             assert.equal(table, 'products');
@@ -93,7 +94,7 @@ test('carrito valida cantidades y se reconcilia con precio y stock del servidor'
             };
         }
     };
-    const quote = await quote_cart(database, [{ id: 1, quantity: 3 }, { id: 2, quantity: 1 }, { id: 3, quantity: 1 }]);
+    const quote = await cotizar_carrito(database, [{ id: 1, quantity: 3 }, { id: 2, quantity: 1 }, { id: 3, quantity: 1 }]);
     assert.equal(quote.total, 300);
     assert.equal(quote.items[0].quantity, 2);
     assert.equal(quote.items[0].price, 150);
@@ -103,12 +104,12 @@ test('carrito valida cantidades y se reconcilia con precio y stock del servidor'
 test('cookies de sesión separan expiración de access y refresh', () => {
     const headers = {};
     const response = { setHeader(name, value) { headers[name] = value; } };
-    session(response, { access_token: 'access value', refresh_token: 'refresh value', expires_in: 900 });
+    guardar_cookies_de_sesion(response, { access_token: 'access value', refresh_token: 'refresh value', expires_in: 900 });
     assert.equal(headers['Set-Cookie'].length, 2);
     assert.match(headers['Set-Cookie'][0], /dreams_access_token=access%20value/);
     assert.match(headers['Set-Cookie'][0], /Max-Age=900/);
     assert.match(headers['Set-Cookie'][1], /Max-Age=2592000/);
-    assert.match(auth_cookie('test', 'a b', 60), /HttpOnly; SameSite=Lax/);
+    assert.match(crear_cookie_de_autenticacion('test', 'a b', 60), /HttpOnly; SameSite=Lax/);
 });
 
 test('la respuesta HTTP incluye CSP sin unsafe-inline', async t => {

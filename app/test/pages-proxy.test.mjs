@@ -1,3 +1,4 @@
+// pruebas de pages proxy: usan datos ficticios para detectar cambios en respuestas, permisos y errores.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import proxy, { create_proxy } from '../pages/proxy.mjs';
@@ -161,8 +162,8 @@ test('filter state script inherits security headers and keeps API and mutations 
     const asset = { body: 'filter state', content_type: 'application/javascript', etag: '"filters"' };
     const overlay = create_proxy({ '/js/catalog-filter-state.js': asset });
     const calls = [];
-    const env = { DREAMS: { fetch: async request => {
-        calls.push(new URL(request.url).pathname);
+    const env = { DREAMS: { fetch: async solicitud => {
+        calls.push(new URL(solicitud.url).pathname);
         return new Response('original', { headers: { 'X-Content-Type-Options': 'nosniff' } });
     } } };
     const response = await overlay.fetch(new Request('https://dreams.example/js/catalog-filter-state.js'), env);
@@ -177,7 +178,7 @@ test('nuevo módulo de máscaras usa cabeceras públicas existentes sin depender
     const asset = { body: '/* local formatting */', content_type: 'application/javascript; charset=utf-8', etag: '"fixture"' };
     const handler = create_proxy({ '/js/academic-inputs.js': asset }, {
         backend_url: 'https://40e7b0a3-dreams-perfumes.dreams-perfumes.workers.dev',
-        fetch_backend: async request => new Response('legacy', { status: new URL(request.url).pathname === '/js/app.js' ? 200 : 404 })
+        fetch_backend: async solicitud => new Response('legacy', { status: new URL(solicitud.url).pathname === '/js/app.js' ? 200 : 404 })
     });
     const response = await handler.fetch(new Request('https://dreams-perfumes.pages.dev/js/academic-inputs.js'), {});
     assert.equal(response.status, 200); assert.equal(await response.text(), asset.body);
@@ -188,8 +189,8 @@ test('own scripts override the legacy body even when absent from the pinned back
     for (const path of paths) {
         const asset = { body: '// current reviewed script', content_type: 'application/javascript', etag: '"current"' };
         const proxy = create_proxy({ [path]: asset }, { backend_url: 'https://40e7b0a3-dreams-perfumes.dreams-perfumes.workers.dev',
-            fetch_backend: async request => {
-                assert.equal(new URL(request.url).pathname, '/js/app.js');
+            fetch_backend: async solicitud => {
+                assert.equal(new URL(solicitud.url).pathname, '/js/app.js');
                 return new Response('// legacy script', { headers: { 'Content-Type': 'application/javascript' } });
             } });
         const response = await proxy.fetch(new Request('https://dreams-perfumes.pages.dev' + path), {});
@@ -206,8 +207,8 @@ test('bundling preserves the upstream authorization of the canonical Admin scrip
         backend_url: 'https://40e7b0a3-dreams-perfumes.dreams-perfumes.workers.dev', official_service: 'dreams-official-backend'
     });
     const response = await proxy.fetch(new Request('https://dreams-perfumes.pages.dev/js/admin-console-v3.js'), {
-        DREAMS_OFFICIAL: { fetch: async request => {
-            assert.equal(new URL(request.url).pathname, '/js/admin-console-v3.js');
+        DREAMS_OFFICIAL: { fetch: async solicitud => {
+            assert.equal(new URL(solicitud.url).pathname, '/js/admin-console-v3.js');
             return new Response('Sesión requerida', { status: 401, headers: { 'Cache-Control': 'no-store' } });
         } }
     });

@@ -1,3 +1,4 @@
+// pruebas de metadatos: usan datos ficticios para detectar cambios en respuestas, permisos y errores.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
@@ -10,15 +11,15 @@ for (const route of ['/', '/catalogo.html', '/producto.html', '/cuenta.html', '/
     const file = route === '/' ? 'index.html' : route.slice(1);
     assets[route] = { body: await readFile(new URL(`../public/${file}`, import.meta.url), 'utf8'), etag: '"initial"', content_type: file.endsWith('.xml') ? 'application/xml' : 'text/html' };
 }
-function setup({ data = sample, status = 200, denied = 0 } = {}) {
+function preparar_entorno({ data = sample, status = 200, denied = 0 } = {}) {
     const calls = [];
-    const proxy = create_proxy(assets, { backend_url, seo: true, fetch_backend: async request => {
-        calls.push(request);
-        if (new URL(request.url).pathname.startsWith('/api/products')) return Response.json(data, { status });
+    const proxy = create_proxy(assets, { backend_url, seo: true, fetch_backend: async solicitud => {
+        calls.push(solicitud);
+        if (new URL(solicitud.url).pathname.startsWith('/api/products')) return Response.json(data, { status });
         return new Response('upstream', { status: denied || 200, headers: { 'X-Robots-Tag': 'noindex', 'Content-Security-Policy': "script-src 'self'", 'Cache-Control': 'private, no-store' } });
     } });
-    const get = (path, init = {}, origin = SITE_ORIGIN) => proxy.fetch(new Request(origin + path, init), {});
-    return { get, calls };
+    const obtener_datos = (path, init = {}, origin = SITE_ORIGIN) => proxy.fetch(new Request(origin + path, init), {});
+    return { get: obtener_datos, calls };
 }
 
 test('initial public HTML has unique official metadata; private shells remain noindex', async () => {
@@ -34,7 +35,7 @@ test('initial public HTML has unique official metadata; private shells remain no
 });
 
 test('product HTML includes real metadata and non-JavaScript content without injecting database HTML', async () => {
-    const f = setup(); const response = await f.get('/producto.html?id=7&redirect=https://untrusted.example', { headers: { Cookie: 'access=fixture', Origin: SITE_ORIGIN } });
+    const f = preparar_entorno(); const response = await f.get('/producto.html?id=7&redirect=https://untrusted.example', { headers: { Cookie: 'access=fixture', Origin: SITE_ORIGIN } });
     const html = await response.text();
     assert.equal(response.status, 200); assert.match(html, /<title>Éclat &lt;script&gt;/); assert.match(html, /Maison &amp; Fils/);
     assert.match(html, /<noscript><section class="detail-layout">/); assert.match(html, /Una descripción real/);
@@ -48,33 +49,33 @@ test('product HTML includes real metadata and non-JavaScript content without inj
 
 test('missing products and invalid identifiers have genuine noindex 404 responses', async () => {
     for (const id of ['', '0', '-7', '7%2Fadmin', 'https://evil.example', '1e4']) {
-        const f = setup(), response = await f.get('/producto.html?id=' + id);
+        const f = preparar_entorno(), response = await f.get('/producto.html?id=' + id);
         assert.equal(response.status, 404); assert.equal(f.calls.length, 1); assert.match(await response.text(), /Perfume no encontrado/);
         assert.match(response.headers.get('x-robots-tag'), /noindex/);
     }
-    assert.equal((await setup({ status: 404 }).get('/producto.html?id=7')).status, 404);
-    const unavailable = await setup({ status: 503 }).get('/producto.html?id=7'); assert.equal(unavailable.status, 503);
+    assert.equal((await preparar_entorno({ status: 404 }).get('/producto.html?id=7')).status, 404);
+    const unavailable = await preparar_entorno({ status: 503 }).get('/producto.html?id=7'); assert.equal(unavailable.status, 503);
     assert.doesNotMatch(await unavailable.text(), /public data unavailable|stack/);
 });
 
 test('denials, mutations and API routes do not trigger public metadata reads or mask permissions', async () => {
     for (const [path, method] of [['/producto.html?id=7', 'GET'], ['/api/admin/products', 'PUT'], ['/api/auth/register', 'POST']]) {
-        const f = setup({ denied: 403 }), response = await f.get(path, { method });
+        const f = preparar_entorno({ denied: 403 }), response = await f.get(path, { method });
         assert.equal(response.status, 403); assert.equal(await response.text(), 'upstream'); assert.equal(f.calls.length, 1);
         assert.match(response.headers.get('x-robots-tag'), /noindex/);
     }
 });
 
 test('HEAD and conditional requests use the metadata representation rather than stale generic ETags', async () => {
-    const f = setup(), first = await f.get('/producto.html?id=7'), etag = first.headers.get('etag');
+    const f = preparar_entorno(), first = await f.get('/producto.html?id=7'), etag = first.headers.get('etag');
     assert.notEqual(etag, '"initial"');
     const head = await f.get('/producto.html?id=7', { method: 'HEAD' }); assert.equal(head.headers.get('etag'), etag); assert.equal(await head.text(), '');
     const cached = await f.get('/producto.html?id=7', { headers: { 'If-None-Match': etag } }); assert.equal(cached.status, 304); assert.equal(await cached.text(), '');
-    const changed = await setup({ data: { ...sample, name: 'Otro nombre real' } }).get('/producto.html?id=7'); assert.notEqual(changed.headers.get('etag'), etag);
+    const changed = await preparar_entorno({ data: { ...sample, name: 'Otro nombre real' } }).get('/producto.html?id=7'); assert.notEqual(changed.headers.get('etag'), etag);
 });
 
 test('catalog categories preserve canonical meaning, link real products and noindex search combinations', async () => {
-    const f = setup({ data: [sample, { ...sample, id: 8, gender: 'mujer', brand: null }] });
+    const f = preparar_entorno({ data: [sample, { ...sample, id: 8, gender: 'mujer', brand: null }] });
     const category = await f.get('/catalogo.html?gender=unisex'), html = await category.text();
     assert.match(html, /<title>Perfumes unisex \| DREAMS<\/title>/); assert.match(html, /href="\/producto.html\?id=7"/);
     assert.doesNotMatch(html, /href="\/producto.html\?id=8"/); assert.match(html, /catalogo.html\?gender=unisex/);
@@ -84,7 +85,7 @@ test('catalog categories preserve canonical meaning, link real products and noin
 });
 
 test('sitemap contains only public canonical real URLs and preview cannot be indexed', async () => {
-    const f = setup({ data: [sample, { ...sample, id: 8 }] }); const response = await f.get('/sitemap.xml'), xml = await response.text();
+    const f = preparar_entorno({ data: [sample, { ...sample, id: 8 }] }); const response = await f.get('/sitemap.xml'), xml = await response.text();
     assert.equal((xml.match(/<loc>/g) || []).length, 8); assert.match(xml, /producto.html\?id=7/);
     assert.doesNotMatch(xml, /cuenta|carrito|checkout|admin|lastmod|railway|workers.dev/);
     const preview = 'https://seo-review.dreams-perfumes.pages.dev';
@@ -98,7 +99,7 @@ test('sitemap contains only public canonical real URLs and preview cannot be ind
 test('public metadata refuses oversized/HTML data and never follows image or data redirects', async () => {
     await assert.rejects(limited_json(new Response('html', { headers: { 'Content-Type': 'text/html' } })));
     await assert.rejects(limited_json(Response.json({ text: 'x'.repeat(100) }), 20));
-    const redirect = setup({ status: 302 }); assert.equal((await redirect.get('/producto.html?id=7')).status, 503);
+    const redirect = preparar_entorno({ status: 302 }); assert.equal((await redirect.get('/producto.html?id=7')).status, 503);
     const missing_brand = product_metadata({ ...sample, brand: null, description: '.', image_url: 'javascript:alert(1)' });
     assert.doesNotMatch(missing_brand.title + missing_brand.description, /undefined|null|de \|/);
     assert.equal(missing_brand.image, SITE_ORIGIN + '/assets/dreams-social.png');
@@ -110,8 +111,8 @@ test('public metadata refuses oversized/HTML data and never follows image or dat
 test('social asset remains binary and cookie refresh/private caching survives metadata policies', async () => {
     const image = { body: Buffer.from([137, 80, 78, 71]).toString('base64'), encoding: 'base64', content_type: 'image/png', etag: '"png"' };
     const f = create_proxy({ '/assets/dreams-social.png': image }, { seo: true });
-    const response = await f.fetch(new Request(SITE_ORIGIN + '/assets/dreams-social.png'), { DREAMS: { fetch: async request => {
-        assert.equal(new URL(request.url).pathname, '/assets/dreams-hero-1024.webp');
+    const response = await f.fetch(new Request(SITE_ORIGIN + '/assets/dreams-social.png'), { DREAMS: { fetch: async solicitud => {
+        assert.equal(new URL(solicitud.url).pathname, '/assets/dreams-hero-1024.webp');
         const result = new Response('old', { headers: { 'Cache-Control': 'private, no-store', 'X-Content-Type-Options': 'nosniff' } });
         result.headers.append('Set-Cookie', 'access=fixture; Secure; HttpOnly'); result.headers.append('Set-Cookie', 'refresh=fixture; Secure; HttpOnly'); return result;
     } } });
@@ -122,7 +123,7 @@ test('social asset remains binary and cookie refresh/private caching survives me
 
 test('unknown and inherited-property gender names cannot create canonical category URLs', async () => {
     for (const gender of ['__proto__', 'constructor', 'toString', 'otra']) {
-        const response = await setup({ data: [sample] }).get('/catalogo.html?gender=' + gender);
+        const response = await preparar_entorno({ data: [sample] }).get('/catalogo.html?gender=' + gender);
         const html = await response.text();
         assert.match(html, /<link id="canonical-url" rel="canonical" href="https:\/\/dreams-perfumes.pages.dev\/catalogo.html">/);
         assert.match(html, /href="\/producto.html\?id=7"/);
@@ -130,14 +131,14 @@ test('unknown and inherited-property gender names cannot create canonical catego
 });
 
 test('local HTTP entrypoints still use HTTPS for the immutable server destination', async () => {
-    const f = setup(); const response = await f.get('/', {}, 'http://127.0.0.1:4177');
+    const f = preparar_entorno(); const response = await f.get('/', {}, 'http://127.0.0.1:4177');
     assert.equal(f.calls[0].url, backend_url + '/'); assert.equal(response.status, 200);
     assert.match(response.headers.get('x-robots-tag'), /noindex/);
 });
 
 
 test('multi-gender catalog keeps general canonical and consistent noindex in HTML and HTTP headers', async () => {
-    const f = setup({ data: [sample] });
+    const f = preparar_entorno({ data: [sample] });
     for (const query of ['gender=%5B%22mujer%22%2C%22unisex%22%5D', 'gender=mujer&gender=unisex']) {
         const response = await f.get('/catalogo.html?' + query);
         assert.match(response.headers.get('x-robots-tag'), /noindex/);

@@ -1,3 +1,4 @@
+// pruebas de catalogo multiselect: usan datos ficticios para detectar cambios en respuestas, permisos y errores.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { filtered_catalog } from '../pages/catalog.mjs';
@@ -9,18 +10,18 @@ const rows = [
     { id: 3, brand: 'Chanel', gender: 'unisex' }, { id: 4, brand: null, gender: 'unisex' },
     { id: 5, brand: 'Byredo', gender: 'mujer' }
 ];
-function request(values = {}, method = 'GET') {
+function hacer_peticion(values = {}, method = 'GET') {
     const params = new URLSearchParams(values);
     return new Request('https://dreams-perfumes.pages.dev/api/products?' + params, { method, headers: { Cookie: 'private=test', Authorization: 'Bearer test' } });
 }
-function options(data = rows) {
+function opciones(data = rows) {
     const calls = [];
-    return { backend_url, calls, fetch_backend: async req => { calls.push(req); return Response.json(data, { headers: { 'Cache-Control': 'public,max-age=60', ETag: 'old' } }); } };
+    return { backend_url, calls, fetch_backend: async solicitud => { calls.push(solicitud); return Response.json(data, { headers: { 'Cache-Control': 'public,max-age=60', ETag: 'old' } }); } };
 }
 
 test('API aplica OR dentro de cada lista y AND entre grupos sobre todo el catálogo antes de limit', async () => {
-    const setup = options();
-    const response = await filtered_catalog(request({ brand: '["Chanel","Dior"]', gender: '["mujer","unisex"]', limit: '1', sort: 'name', search: 'iris' }), setup);
+    const setup = opciones();
+    const response = await filtered_catalog(hacer_peticion({ brand: '["Chanel","Dior"]', gender: '["mujer","unisex"]', limit: '1', sort: 'name', search: 'iris' }), setup);
     assert.deepEqual((await response.json()).map(row => row.id), [2]);
     const sent = setup.calls[0], url = new URL(sent.url);
     assert.equal(url.origin, backend_url);
@@ -35,52 +36,52 @@ test('API aplica OR dentro de cada lista y AND entre grupos sobre todo el catál
 });
 
 test('todos, quitar última selección y marca ausente funcionan sin descartar otros grupos', async () => {
-    const all = await filtered_catalog(request({ brand: '[]', gender: '[]' }), options());
+    const all = await filtered_catalog(hacer_peticion({ brand: '[]', gender: '[]' }), opciones());
     assert.equal((await all.json()).length, rows.length);
-    const gender = await filtered_catalog(request({ brand: '[]', gender: '["unisex"]' }), options());
+    const gender = await filtered_catalog(hacer_peticion({ brand: '[]', gender: '["unisex"]' }), opciones());
     assert.deepEqual((await gender.json()).map(row => row.id), [3, 4]);
-    const none = await filtered_catalog(request({ brand: '["Inexistente"]' }), options());
+    const none = await filtered_catalog(hacer_peticion({ brand: '["Inexistente"]' }), opciones());
     assert.deepEqual(await none.json(), []);
 });
 
 test('API rechaza listas inválidas antes de red; valores hostiles son texto y nunca consultas interpoladas', async () => {
-    const setup = options();
+    const setup = opciones();
     for (const brand of ['[bad', '[{}]', '[' + Array(51).fill('"Dior"').join(',') + ']']) {
-        assert.equal((await filtered_catalog(request({ brand }), setup)).status, 400);
+        assert.equal((await filtered_catalog(hacer_peticion({ brand }), setup)).status, 400);
     }
-    assert.equal((await filtered_catalog(request({ gender: '["admin"]' }), setup)).status, 400);
+    assert.equal((await filtered_catalog(hacer_peticion({ gender: '["admin"]' }), setup)).status, 400);
     assert.equal(setup.calls.length, 0);
-    const result = await filtered_catalog(request({ brand: JSON.stringify(['Dior),role.eq.admin', '<script>']) }), setup);
+    const result = await filtered_catalog(hacer_peticion({ brand: JSON.stringify(['Dior),role.eq.admin', '<script>']) }), setup);
     assert.deepEqual(await result.json(), []);
     assert.equal(new URL(setup.calls[0].url).search, '');
 });
 
 test('enlaces anteriores y rutas de escritura siguen en el backend sin excepción nueva', async () => {
-    const setup = options();
-    assert.equal(await filtered_catalog(request({ brand: 'Dior', gender: 'mujer' }), setup), null);
+    const setup = opciones();
+    assert.equal(await filtered_catalog(hacer_peticion({ brand: 'Dior', gender: 'mujer' }), setup), null);
     for (const method of ['POST', 'PUT', 'PATCH', 'DELETE']) {
-        const req = request({ brand: '["Dior"]' }, method);
+        const req = hacer_peticion({ brand: '["Dior"]' }, method);
         assert.equal(await filtered_catalog(req, setup), null);
     }
     assert.equal(setup.calls.length, 0);
     const proxy = create_proxy({}, { backend_url, fetch_backend: async () => Response.json({ error: 'protegido' }, { status: 403 }) });
-    assert.equal((await proxy.fetch(request({ brand: '["Dior"]' }, 'POST'), {})).status, 403);
+    assert.equal((await proxy.fetch(hacer_peticion({ brand: '["Dior"]' }, 'POST'), {})).status, 403);
 });
 
 test('datos truncados, red fallida y respuestas no JSON no aparentan catálogo completo', async () => {
     const proxy = create_proxy({}, { backend_url, fetch_backend: async () => Response.json(Array.from({ length: 1000 }, (_, id) => ({ id }))) });
-    assert.equal((await proxy.fetch(request({ brand: '["Dior"]' }), {})).status, 503);
+    assert.equal((await proxy.fetch(hacer_peticion({ brand: '["Dior"]' }), {})).status, 503);
     for (const fetch_backend of [async () => { throw new Error('offline'); }, async () => new Response('<html>error</html>')]) {
-        assert.equal((await create_proxy({}, { backend_url, fetch_backend }).fetch(request({ brand: '["Dior"]' }), {})).status, 503);
+        assert.equal((await create_proxy({}, { backend_url, fetch_backend }).fetch(hacer_peticion({ brand: '["Dior"]' }), {})).status, 503);
     }
     const setup = { backend_url, fetch_backend: async () => Response.json({ error: 'no disponible' }, { status: 503 }) };
-    assert.equal((await filtered_catalog(request({ brand: '["Dior"]' }), setup)).status, 503);
+    assert.equal((await filtered_catalog(hacer_peticion({ brand: '["Dior"]' }), setup)).status, 503);
 });
 
 test('HEAD conserva la semántica sin cuerpo y un error del proveedor no se transforma en éxito', async () => {
-    const response = await filtered_catalog(request({ brand: '["Dior"]' }, 'HEAD'), options());
+    const response = await filtered_catalog(hacer_peticion({ brand: '["Dior"]' }, 'HEAD'), opciones());
     assert.equal(response.status, 200);
     assert.equal(await response.text(), '');
     const setup = { backend_url, fetch_backend: async () => Response.json({ error: 'prohibido' }, { status: 403 }) };
-    assert.equal((await filtered_catalog(request({ brand: '["Dior"]' }), setup)).status, 403);
+    assert.equal((await filtered_catalog(hacer_peticion({ brand: '["Dior"]' }), setup)).status, 403);
 });

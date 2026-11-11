@@ -1,3 +1,4 @@
+// pruebas de supabase diagnostic: usan datos ficticios para detectar cambios en respuestas, permisos y errores.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { credential_shape, diagnose_supabase, scheduled_diagnostic } from '../worker/supabase-diagnostic.mjs';

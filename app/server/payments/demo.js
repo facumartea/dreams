@@ -1,8 +1,9 @@
+// proveedor de pagos ficticios de desarrollo; es distinto del checkout academico firmado.
 const { randomUUID } = require('node:crypto');
 
 const DEMO_STATUSES = new Set(['approved', 'rejected', 'pending', 'error']);
 
-function normalize_demo_scenario(value) {
+function normalizar_escenario_ficticio(value) {
     const scenario = String(value || '').trim().toLowerCase();
     return DEMO_STATUSES.has(scenario) ? scenario : null;
 }
@@ -23,7 +24,7 @@ class DemoPaymentProvider {
     }
 
     async process_payment({ order_id, scenario }) {
-        const status = normalize_demo_scenario(scenario);
+        const status = normalizar_escenario_ficticio(scenario);
         if (!status) {
             const error = new Error('Escenario demo invalido.');
             error.code = 'DEMO_SCENARIO_INVALID';
@@ -39,4 +40,4 @@ class DemoPaymentProvider {
     }
 }
 
-module.exports = { DemoPaymentProvider, normalize_demo_scenario };
+module.exports = { DemoPaymentProvider, normalize_demo_scenario: normalizar_escenario_ficticio };
