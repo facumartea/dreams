@@ -1,4 +1,4 @@
-// Datos de prueba locales: nunca conectan Supabase ni clientes reales.
+// datos de prueba locales: nunca conectan supabase ni clientes reales.
 const product = () => ({ id: 7, brand: 'DREAMS', name: 'Perfume de prueba', gender: 'unisex', category: 'nicho', size_ml: 50, price: 100, stock: 2, intensity: 3, family: 'Familia de prueba', top_notes: 'Prueba', heart_notes: 'Prueba', base_notes: 'Prueba', description: 'Producto de prueba local', image_url: '/assets/dreams-bottle.png', featured: false });
 class Query {
     constructor(state, table) { this.state = state; this.table = table; this.filters = []; this.action = 'select'; this.value = null; }

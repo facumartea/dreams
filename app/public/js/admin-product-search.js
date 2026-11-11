@@ -1,3 +1,4 @@
+// busca por nombre o marca; stock bajo significa cero, una o dos unidades validas.
 const DreamsAdminProducts = {
     normalize_search(value) { return String(value ?? '').normalize('NFD').replace(/\p{M}/gu, '').toLowerCase().trim(); },
     filter_products(products, query, low_only = false) {

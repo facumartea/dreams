@@ -1,3 +1,4 @@
+// cuenta lineas fisicas con un parser; funciona desde una descarga sin historial de git.
 import { readdir, readFile, writeFile, mkdir } from 'node:fs/promises';
 import { resolve, relative } from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -36,15 +37,15 @@ function walk(node, parent, records, file, offset) {
 
 function script_blocks(source, file) {
     if (!file.endsWith('.html')) return [{ source, offset: 0 }];
-    // Sólo JavaScript inline propio; los scripts externos se inventarían por archivo.
+    // solo codigo propio dentro del html; los scripts externos se cuentan en su archivo.
     return [...source.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)]
         .filter(match => !/\bsrc\s*=/.test(match[1]) && !/application\/ld\+json/.test(match[1]))
         .map(match => ({ source: match[2], offset: source.slice(0, match.index + match[0].indexOf('>') + 1).split('\n').length - 1 }));
 }
 
 function main_blocks(tree, file, records, offset) {
-    // Cada sentencia ejecutable superior es un bloque, no el archivo completo.
-    // Declaraciones de datos, imports y registros de callbacks no son un main.
+    // cada sentencia ejecutable superior es un bloque, no el archivo completo.
+    // declaraciones de datos, imports y registros de callbacks no son un main.
     for (const node of tree.body) {
         if (!['IfStatement', 'ForStatement', 'ForOfStatement', 'ForInStatement',
             'WhileStatement', 'DoWhileStatement', 'TryStatement', 'BlockStatement'].includes(node.type)) continue;
@@ -72,7 +73,7 @@ async function main() {
     const root = resolve(process.argv[2] || '.');
     const result = await inventory(root);
     if (process.argv.includes('--write')) {
-        // El reporte generado no se mezcla ni se versiona con los documentos de entrega.
+        // el reporte generado no se mezcla ni se versiona con los documentos de entrega.
         await mkdir(resolve(root, 'app/dist'), { recursive: true });
         await writeFile(resolve(root, 'app/dist/inventario-funciones.json'), JSON.stringify(result, null, 2) + '\n');
     }

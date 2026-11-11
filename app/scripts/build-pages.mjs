@@ -1,3 +1,4 @@
+// prepara el proxy y sus recursos locales; construir el archivo no publica la web.
 import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 

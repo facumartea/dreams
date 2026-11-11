@@ -1,4 +1,4 @@
-// Checkout académico: firma snapshots y revalida importes sin crear pedidos ni cobrar.
+// checkout academico: firma snapshots y revalida importes sin crear pedidos ni cobrar.
 const { createHmac, timingSafeEqual, randomUUID } = require('node:crypto');
 const { auth_cookie } = require('./auth-cookies');
 const academic_summary = (subtotal, quote = {}) => ({ subtotal, discount: quote.discount || 0, coupon: quote.coupon || null, shipping: 0, shipping_label: 'Envío', total: quote.total ?? subtotal });
@@ -14,7 +14,7 @@ const owner_for = request => {
 };
 const valid_body = (body, keys) => body && typeof body === 'object' && !Array.isArray(body) && Object.keys(body).every(key => keys.includes(key));
 
-// Simulación firmada y con vencimiento: no escribe pedidos ni stock ni llama a pagos.
+// simulacion firmada y con vencimiento: no escribe pedidos ni stock ni llama a pagos.
 function presentation_checkout({ enabled, signing_key, quote_cart, database, product_brand_column, production, issuer }) {
     const ready = enabled === true && typeof signing_key === 'string' && signing_key.length >= 32;
     const key = ready ? createHmac('sha256', signing_key).update('DREAMS presentation checkout v2').digest() : null;
@@ -47,10 +47,10 @@ function install_presentation({ ready, quote_cart, database, product_brand_colum
         if (!valid_body(request.body, ['ticket'])) return response.status(400).json({ error: 'Sólo se admite la referencia de presentación.' });
         const ticket = read(request.body.ticket, 'ticket', owner_for(request));
         if (!ticket) return response.status(400).json({ error: 'La referencia venció o no es válida. Volvé a intentarlo.' });
-        // Revalidar sin consumir usos: ninguna operación de pago ni pedido comercial.
+        // revalidar sin consumir usos: ninguna operacion de pago ni pedido comercial.
         const current = await quote_cart(database, ticket.items.map(({id, quantity}) => ({id, quantity})), ticket.coupon?.code || '', product_brand_column, request.user?.id);
         if (current.error || current.coupon_error || current.warnings.length || current.subtotal !== ticket.subtotal || current.total !== ticket.total || (current.discount || 0) !== (ticket.discount || 0) || item_amounts(current.items) !== item_amounts(ticket.items) || (current.coupon?.id || null) !== (ticket.coupon?.id || null)) return response.status(409).json({ error: 'Los importes o el cupón cambiaron. Volvé al carrito.' });
-        // La referencia identifica también los importes y el cupón, conservando reintentos.
+        // la referencia identifica tambien los importes y el cupon, conservando reintentos.
         const receipt = { ...ticket, kind: 'receipt', status: 'completed', reference: `DREAMS-${ticket.intent_id.replace(/-/g, '').toUpperCase() + (ticket.coupon ? '-' + signing_reference(ticket) : '')}` };
         response.json({ receipt: sign(receipt), status: receipt.status, reference: receipt.reference });
     });

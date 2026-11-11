@@ -20,7 +20,7 @@ DREAMS/
 │   └── package.json, pnpm y Wrangler
 ├── docs/                       Índice, wireframe, mapa y diseño de base de datos
 │   ├── wireframe/              Pantallas y navegación reunidas en un PDF
-│   └── base-de-datos/          D.E.R., diccionario y estructura en un PDF
+│   └── base-de-datos/          D.E.R. original en una sola lámina PDF
 └── .github/workflows/          CI; GitHub exige esta ubicación
 ```
 
@@ -40,9 +40,30 @@ corepack pnpm run build:pages
 corepack pnpm run build:official
 ```
 
-Los checks y builds funcionan sin `.git` ni secretos reales y no publican. El inventario de 40 líneas recorre también el resto del repositorio. Los tests SQL necesitan PostgreSQL de prueba; sin configurarlo se omiten esos casos. No ejecutar seeds, resets o migraciones sobre producción para estudiar.
+Los checks y builds funcionan sin `.git` ni secretos reales y no publican. Los cuatro builds disponibles son `build:cloudflare`, `build:pages`, `build:admin-review` y `build:official`; todos construyen sin desplegar. El inventario de 40 líneas recorre también el resto del repositorio. Los tests SQL necesitan PostgreSQL de prueba; sin configurarlo se omiten esos casos. No ejecutar seeds, resets o migraciones sobre producción para estudiar.
 
-Para arrancar conectado, copiar **`app/.env.example` a `app/.env`**, completar únicamente un Supabase de desarrollo autorizado y, desde `app/`, ejecutar:
+Para arrancar conectado hace falta un proyecto Supabase de desarrollo autorizado, con su estructura ya preparada. No usar la base comercial ni ejecutar seeds o migraciones para probar este README. Copiar el ejemplo desde la carpeta app/:
+
+```sh
+cp .env.example .env
+```
+
+Completar estas variables en el entorno local o en `.env`, sin subir sus valores a GitHub:
+
+| Variable | Para qué sirve |
+|---|---|
+| `SUPABASE_URL` | URL del proyecto de desarrollo. |
+| `SUPABASE_SECRET_KEY` | Clave de servidor del mismo proyecto, suministrada mediante el gestor seguro del entorno. |
+| `PORT` | Puerto local; el ejemplo usa 8080. |
+| `APP_BASE_URL`, `APP_ORIGINS` | Dirección y origen local permitidos, ambos `http://localhost:8080`. |
+| `NODE_ENV` | Mantener development en local. |
+| `CHECKOUT_PROVIDER` | El ejemplo usa demo para el proveedor preparado; no equivale al checkout académico oficial. |
+| `CHECKOUT_SCHEMA_READY` | Mantener false si no se verificó el esquema de pedidos del entorno de desarrollo. |
+| `PRESENTATION_CHECKOUT_ENABLED`, `PRESENTATION_SIGNING_KEY` | Para probar la simulación académica, usar true y una clave local aleatoria de al menos 32 caracteres cargada en el entorno; no reutilizar la de producción. Sin eso el flujo queda deshabilitado. |
+
+Las variables de contacto son opcionales. No hacen falta contraseña Admin ni tokens de Mercado Pago para arrancar con el proveedor demo del ejemplo. Los campos ADMIN del ejemplo no crean administradores al iniciar. No cambiar `DEMO_AUTO_CONFIRM_EMAIL=false` ni `GOOGLE_ACCESS_READY=false` para sortear Auth.
+
+Luego, desde app/, ejecutar:
 
 ```sh
 corepack pnpm start
@@ -56,7 +77,7 @@ Navegador → `/api` → Pages/proxy → Worker privado → Express → Supabase
 
 Supabase gestiona contraseñas. Carrito vinculado al UUID, operaciones idempotentes y precios calculados en servidor. Opiniones propias restringidas también por API/RLS. Checkout académico con tickets firmados: no transmite ni guarda datos de tarjeta, no crea pedidos comerciales, no consume usos como compra pagada ni modifica stock. WhatsApp prepara un enlace; no envía mensajes automáticamente.
 
-Esta reorganización no cambia rutas, funciones, Auth, datos, credenciales, valores de configuración ni la web oficial. No se publica por mover archivos. Los comandos de instalación, mantenimiento y futura publicación se ejecutan desde `app/`. Las guardas de publicación siguen vigentes; ninguna receta histórica autoriza activar previews, video u otros sitios.
+Esta edición aclara comentarios sin cambiar instrucciones ejecutables, rutas, Auth, datos, credenciales ni configuración. La web oficial se conserva sin desplegar estos comentarios. No se publica por mover archivos. Los comandos de instalación, mantenimiento y futura publicación se ejecutan desde `app/`. Las guardas de publicación siguen vigentes; ninguna receta histórica autoriza activar previews, video u otros sitios.
 
 ## Documentación de entrega
 
@@ -93,7 +114,7 @@ Los botones se bloquean durante envío para evitar duplicación; los mensajes in
 
 ### Carrito por cuenta y checkout académico
 
-Agregar productos disponibles desde catálogo o detalle; abrir Carrito para aumentar/reducir cantidades, quitar o vaciar. El servidor recalcula precio y disponibilidad. En visitante se conserva el carrito local; al entrar, el candidato combina con el de la cuenta sin sumar duplicados por repetir la misma operación. Cambiar a otra cuenta debe mostrar su propio carrito, nunca el de la anterior. Si queda una operación pendiente, esperar la sincronización antes de comprar.
+Agregar productos disponibles desde catálogo o detalle; abrir Carrito para aumentar/reducir cantidades, quitar o vaciar. El servidor recalcula precio y disponibilidad. En visitante se conserva el carrito local; al entrar, la aplicación combina con el de la cuenta sin sumar duplicados por repetir la misma operación. Cambiar a otra cuenta debe mostrar su propio carrito, nunca el de la anterior. Si queda una operación pendiente, esperar la sincronización antes de comprar.
 
 Comprar abre el checkout académico: revisar resumen, total y Envío de $0 de esa simulación; completar sólo datos ficticios de tarjeta válidos para el formulario (por ejemplo la tarjeta de prueba 4242 4242 4242 4242, vencimiento futuro y CVV ficticio). Nunca ingresar una tarjeta real. El nombre es obligatorio; los campos financieros no se procesan ni se envían. Sólo el ticket firmado viaja al backend. No se valida ni autoriza una tarjeta bancaria. Continuar una sola vez, esperar el resultado y conservar la referencia estable. Si se recarga durante una espera, el intento se retoma sin crear un segundo resultado para el mismo ticket. El flujo no cobra dinero, no crea pedidos comerciales ni descuenta stock.
 
@@ -167,7 +188,7 @@ Respuesta ilustrativa, no un precio ni un resultado remoto certificado:
 [{"id":1,"brand":"Marca de prueba","name":"Producto QA","price":100,"stock":2}]
 ```
 
-Registro normal: formulario → `POST /api/auth/register` → `auth.signUp` → perfil customer → cookies si Supabase devuelve sesión. Login usa `signInWithPassword`; recarga valida `getUser`, refresh renueva y logout revoca sesión/cookies. No se utiliza `createUser` administrativo como bypass en el candidato oficial. La existencia de estas rutas no acredita QA remota exitosa: ver [pruebas](https://github.com/facumartea/dreams/blob/305c5fd6ca0f5a72792c4f5e64fa60ac13a70828/docs/history/entrega-anterior.html#fuente-0a164ff09539).
+Registro normal: formulario → `POST /api/auth/register` → `auth.signUp` → perfil customer → cookies si Supabase devuelve sesión. Login usa `signInWithPassword`; recarga valida `getUser`, refresh renueva y logout revoca sesión/cookies. No se utiliza `createUser` administrativo como bypass en el backend oficial. La existencia de estas rutas no acredita QA remota exitosa: ver [pruebas](https://github.com/facumartea/dreams/blob/305c5fd6ca0f5a72792c4f5e64fa60ac13a70828/docs/history/entrega-anterior.html#fuente-0a164ff09539).
 
 Admin: `GET /api/admin/{stats,products,users,inquiries,reviews,orders,coupons}`. Productos y cupones permiten alta/edición/borrado; opiniones permiten moderación. Usuarios, consultas y pedidos son de lectura: no inventar botones de modificar roles o pedidos. Antes de anunciar guardado, se confirma respuesta y una lectura de todos los campos del producto.
 
@@ -179,4 +200,13 @@ Carrito: `GET/POST /api/cart/account`, operación UUID idempotente sobre RPC, si
 
 La documentación previa identificaba referencias de Armani Beauty, Dior Argentina, Chanel, Creed y Unsplash. No se acreditó una licencia individual para cada fotografía; esta lista no concede permisos ni declara autoría sobre imágenes de terceros. Los originales de marca utilizados se conservan en app/public/assets/. Martearena y Ruas son los apellidos informados; participación y defensa deben acreditarse individualmente.
 
-Esta limpieza no cambia el funcionamiento ni la configuración efectiva de la oficial y no requiere deployment. Se conservan las guardas de publicación: otra publicación necesita sus propias verificaciones. No se genera ZIP ni se garantizan notas o aprobación.
+Esta limpieza y revisión de comentarios conserva el funcionamiento y la configuración efectiva de la oficial. No se publica por rutina un cambio de comentarios. Se conservan las guardas de publicación: otra publicación necesita sus propias verificaciones. No se genera ZIP ni se garantizan notas o aprobación.
+
+
+## Alcance de la comprobación local de esta entrega
+
+Fecha de revisión: 11/11/2026, miércoles; el jueves siguiente es 12/11/2026. La entrega para ese jueves fue indicada por el usuario: no acredita entrega realizada. El comienzo aproximado en agosto/septiembre y los horarios de clase tampoco fijan las fechas de los prompts.
+
+Instalación, checks, tests y builds se verifican en una copia limpia sin .git ni secretos. El arranque conectado requiere credenciales de desarrollo; esta ejecución no dispone de un proyecto de desarrollo acreditado y no usa la clave comercial disponible. El intento sin variables obligatorias debe terminar con error y no abrir el puerto: no se presenta como arranque conectado exitoso. Las pruebas con fixtures locales no equivalen a una sesión real en Supabase. No hay una modalidad offline del sitio que este README pueda prometer.
+
+Resultado local de esta revision: instalacion con lockfile, sintaxis, inventario (119 archivos y 2207 registros, sin excesos de 40), 497 tests aprobados, 4 SQL omitidos y cuatro builds en seco aprobados. Navegador con fixtures aislados: 12 comprobaciones en 1440 y 390 px, sin errores JavaScript de pagina. Arranque con `pnpm start` sin variables obligatorias: salida 1, puerto sin abrir; conexion real de desarrollo BLOQUEADA. No es una prueba de registro/login/Admin contra Supabase real.

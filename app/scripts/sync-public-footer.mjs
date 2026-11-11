@@ -1,3 +1,4 @@
+// actualiza el pie local desde su plantilla compartida para evitar versiones distintas.
 import { readFile, writeFile } from 'node:fs/promises';
 const root = new URL('../', import.meta.url);
 const footer = (await readFile(new URL('templates/public-footer.html', root), 'utf8')).trim();

@@ -17,7 +17,7 @@ function browser(fetch) {
     const context = vm.createContext({ fetch, document: { addEventListener() {}, getElementById: id => nodes[id] },
         window: { location: { assign: url => redirects.push(url), replace: url => redirects.push(url) }, addEventListener() {} }, escape_html: value => value });
     vm.runInContext(source, context);
-    // Validación DOM ejercitada además con navegador real; estos casos aíslan el protocolo de envío.
+    // validacion dom ejercitada ademas con navegador real; estos casos aislan el protocolo de envio.
     context.validate_account_form = () => true; context.set_field_error = () => {};
     return { form, nodes, redirects, context, event: { preventDefault() {}, currentTarget: form } };
 }

@@ -1,3 +1,4 @@
+// lectura publica del catalogo: aplica filtros antes de limitar la lista que se muestra.
 import filter_model from '../public/js/catalog-filter-state.js';
 import { limited_json, preserved_headers } from './seo.mjs';
 
@@ -25,7 +26,7 @@ function catalog_request(request, options) {
     const url = new URL('/api/products', options.backend_url);
     const state = filter_model.parse(new URL(request.url).search);
     url.search = filter_model.params({ ...state, brand: [], gender: [] }).toString();
-    // La API actual devuelve el catálogo completo, sin paginación. Nunca enviar limit antes de filtrar.
+    // la api actual devuelve el catalogo completo, sin paginacion. nunca enviar limit antes de filtrar.
     return new Request(url, { redirect: 'manual', signal: AbortSignal.timeout(8000), headers: { Accept: 'application/json' } });
 }
 

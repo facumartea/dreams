@@ -1,3 +1,4 @@
+// publicacion controlada: exige las verificaciones de la version antes de enviarla a la oficial.
 import { official_release_ready } from './official-release-gate.mjs';
 import { readFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';

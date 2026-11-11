@@ -1,3 +1,4 @@
+// lista de rutas oficiales permitidas; lo que queda fuera se rechaza antes de llegar a la api.
 const OFFICIAL_ORIGIN = 'https://dreams-perfumes.pages.dev';
 const reads = new Set(['/admin', '/admin.html', '/js/admin-console-v3.js', '/api/health', '/api/config', '/api/products', '/api/brands', '/api/reviews', '/api/cart/config', '/api/cart/account', '/api/auth/me', '/api/auth/config', '/api/auth/google/config', '/api/auth/google/callback', '/api/checkout/config', '/api/admin/stats', '/api/admin/products', '/api/admin/users', '/api/admin/inquiries', '/api/admin/reviews', '/api/admin/orders', '/api/admin/coupons']);
 const posts = new Set(['/api/auth/register', '/api/auth/login', '/api/auth/logout', '/api/auth/google', '/api/cart/quote', '/api/cart/account', '/api/reviews', '/api/inquiries', '/api/presentation/session', '/api/presentation/payment', '/api/presentation/result', '/api/admin/products', '/api/admin/coupons']);

@@ -1,3 +1,4 @@
+// valida enlaces de imagen permitidos; el mismo criterio se comparte con servidor y pruebas.
     function supported_image_url(value) {
         const candidate = String(value ?? '').trim();
         if (!candidate || /[\\\u0000-\u001f\u007f]/u.test(candidate)) return false;

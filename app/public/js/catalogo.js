@@ -1,9 +1,10 @@
+// carga el catalogo y sus filtros; una respuesta vieja no debe reemplazar la busqueda mas reciente.
 const filter_model = window.DreamsCatalogFilters;
 let catalog_products = [], catalog_request_id = 0, brand_request_id = 0;
 let applied_filters = { ...filter_model.defaults }, pending_filters = { ...applied_filters };
 let catalog_brands = [], filter_scroll = null, brands_loading = true, brands_failed = false;
 
-// Las descripciones se conservan sólo para metadatos; no se renderizan en cabeceras.
+// las descripciones se conservan solo para metadatos; no se renderizan en cabeceras.
 const COLLECTION_VARIANTS = {
     mujer: {
         body_class: 'collection-women',
@@ -207,7 +208,7 @@ function filter_dialog_closed() {
 }
 
 function contain_filter_focus(event) {
-    // Escape debe cerrar incluso si el buscador nativo intentaría limpiar su texto.
+    // escape debe cerrar incluso si el buscador nativo intentaria limpiar su texto.
     if (event.key === 'Escape') {
         event.preventDefault();
         close_catalog_filters();

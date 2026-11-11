@@ -38,7 +38,7 @@ test('direct academic confirmation recalculates products, has zero shipping, rep
             const receipt = await (await post(base, '/api/presentation/payment', { ticket: data.ticket }, cookie)).json();
             assert.equal(receipt.status, 'completed');
             assert.deepEqual(await (await post(base, '/api/presentation/payment', { ticket: data.ticket }, cookie)).json(), receipt);
-            // If the first session response is lost, the same intent keeps its reference.
+            // si se pierde la primera respuesta, el mismo intento conserva su referencia.
             const retry = await (await post(base, '/api/presentation/session', body, cookie)).json();
             const retried = await (await post(base, '/api/presentation/payment', { ticket: retry.ticket }, cookie)).json();
             assert.equal(retried.reference, receipt.reference);
@@ -83,7 +83,7 @@ test('all admin modules reject anonymous and user-editable admin metadata; previ
             if (role === 'customer') assert.equal((await fetch(base + path, { headers: { Cookie: 'dreams_access_token=verified' } })).status, 403, path);
         }
         assert.equal((await post(base, '/api/admin/products', {}, 'dreams_access_token=verified')).status, 403);
-        // Registro customer ahora llega a validación; no se habilitan roles ni escrituras Admin.
+        // registro customer ahora llega a validacion; no se habilitan roles ni escrituras admin.
         assert.equal((await post(base, '/api/auth/register', { email: 'no-write@example.invalid', password: 'not-used', name: 'Test', role: 'admin' })).status, 400);
     });
 });

@@ -1,3 +1,4 @@
+// compatibilidad con referencias anteriores: el backend correspondiente sigue comprobando su firma.
 const legacy_origin = 'https://d5df723d-dreams-perfumes.dreams-perfumes.workers.dev';
 async function limited_body(request) {
     const reader = request.clone().body?.getReader();
@@ -17,7 +18,7 @@ async function limited_body(request) {
     } catch { return null; }
     finally { reader.releaseLock(); }
 }
-// Only select the verifier here. The immutable backend verifies signature, owner and expiry.
+// aqui solo se elige el verificador; el backend comprueba firma, propietario y vencimiento.
 export async function legacy_presentation(request, fetcher = fetch) {
     const path = new URL(request.url).pathname;
     if (request.method !== 'POST' || !['/api/presentation/payment', '/api/presentation/result'].includes(path)) return null;

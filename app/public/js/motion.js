@@ -1,4 +1,4 @@
-// Factories separadas conservan el ámbito privado de la inicialización.
+// factories separadas conservan el ambito privado de la inicializacion.
 function motion_reveals(reduced) {
     return function setup_reveals(root = document) {
         const elements = root.querySelectorAll('.section-heading,.about-preview>*,.page-intro>*,.checkout-layout>*,.review-compose>*,.product-card,.review-card,.detail-layout>*,.scent-trail-header,.scent-step');

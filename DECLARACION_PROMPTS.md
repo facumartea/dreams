@@ -1,16 +1,585 @@
-# Declaración de uso de IA y registro parcial de prompts de DREAMS
+# Declaracion de uso de IA y bitacora parcial de DREAMS
 
-**ESTADO: PARCIAL. No es una exportación completa ni un historial exhaustivo.** Preparación inicial 10/11/2026; consolidación de declaración/bitácora 11/11/2026. Base histórica revisada: main `60451cabe5ff9b78f97777d64120e5ff9a3238b2`; esta limpieza parte de `8ad5401fe0f2d0c3e501ab203f6ab37b27ff7db1`.
+Esto es un registro de los 18 prompts principales. No pusimos todos porque generalmente dábamos muchas vueltas hasta conseguir algo útil, así que agrupamos los pedidos sobre una misma tarea y mostramos el resultado principal de cada uno. El código completo está en el proyecto.
 
-## Declaración y alcance
+**Estado: parcial.** Los 18 pedidos estan resumidos o consolidados, no son transcripciones literales. El primero procede de un resumen historico sin el mensaje original completo; los demas tienen pedidos disponibles en la conversacion o registros aportados. Hay 17 fechas de prompt por confirmar. Solo el pedido actual tiene fecha contrastada con esta ejecucion: 11/11/2026. El orden sigue las etapas documentadas y la secuencia disponible; no pretende fijar el orden exacto de cada iteracion sin fecha.
 
-Las entradas disponibles documentan asistencia de IA en análisis, correcciones de código, pruebas y documentación. No permiten atribuir programación manual, revisión o participación a un integrante sin evidencia. La limpieza conserva ese reconocimiento y no presenta el historial parcial como si fuera completo.
+Los fragmentos son copias exactas de la implementacion de esta branch sobre main `3305d56dcf307ee69436d9393adef1b0bd6382b6`, revisadas despues de aclarar comentarios. **No son salidas literales de aquellas conversaciones.** Se indica el commit de evidencia tecnica cuando existe: acredita cambios, no la fecha del prompt ni que lo programo o reviso un integrante. En pedidos documentales se identifica expresamente el ejemplo actual o Markdown, sin fingir una salida de codigo historica. Se revisa tambien la presencia de la funcion en ese commit; no se atribuye a una etapa donde no existia.
 
-Integra el adjunto PROMPTS_DREAMS_PARCIAL.md, referencias a la bitácora ya existente, algunos mensajes originales completos visibles en esta conversación y resúmenes de fases verificadas en Git. La transcripción privada sólo orienta la guía: no se publica el relato, nombres ni archivos de audio. No se copian valores de claves, cookies, contraseñas ni datos personales. Cuando aparece un valor sensible debe reemplazarse por [SECRETO OMITIDO]. Los nombres de variables de configuración no son sus valores.
+Se uso asistencia de IA para analizar, corregir, probar y documentar. No se afirma trabajo integramente manual, autoria personal, revision humana ni dominio del codigo sin evidencia. Los antecedentes conservan los errores y limites, no solo los resultados favorables. No hay secretos ni datos de clientes en los fragmentos; los nombres de variables no son sus valores.
 
-Las fechas de commits/PR acreditan implementación, no prueban cuándo se escribió un prompt ni quién programó o revisó. Una autorización o preferencia expresada por el usuario no acredita revisión de código de un integrante. Cada entrada identifica cita, extracto o resumen. No se reconstruyen originales ausentes.
+El usuario informa clases martes y jueves, de 11:20 a 13:15, con comedor de 12:15 a 12:45, y un comienzo aproximado en agosto/septiembre. Es contexto, no evidencia de fechas de mensajes o asistencia. Hoy es miercoles 11/11/2026 y manana jueves 12/11/2026: la entrega para ese dia es una indicacion del usuario, no una entrega realizada. No se conoce el dia del primer pedido ni se acredita una preentrega. La aceptacion de Supabase y los apellidos Martearena y Ruas fueron informados por el usuario; no prueban participacion o defensa individual.
 
-No se duplica el archivo adjunto como otro registro independiente. Sus ocho extractos se conservan aquí. La [bitácora previa está consolidada abajo](#f-bitácora-histórica-consolidada) con su procedencia y límites; ya no se mantiene un segundo registro independiente. Sus entradas no se convierten en citas literales por estar en una tabla.
+## PROMPT 1 · arquitectura y seguridad
+
+Fecha: fecha por confirmar
+
+Prompt (resumen consolidado, no literal): revisa como esta armada la pagina y los problemas de seguridad antes de publicarla
+
+Resultado: guardas de origen; ejemplo actual, no salida literal de la primera auditoria.
+
+Archivo: [app/server/app.js](app/server/app.js)
+
+Codigo (implementacion actual):
+
+```javascript
+function mutation_origin_guard(configured_origins) {
+    const configured = allowed_origin_set(configured_origins);
+    return (request, response, next) => {
+        if (!unsafe_methods.has(request.method)) return next();
+
+        const origin_header = request.get('origin');
+        const referer_header = request.get('referer');
+        const fetch_site = String(request.get('sec-fetch-site') || '').toLowerCase();
+        if (!origin_header && !referer_header) {
+            const has_session_cookie = /(?:^|;\s*)dreams_(?:access|refresh)_token=/.test(String(request.headers.cookie || ''));
+            return fetch_site === 'cross-site' || has_session_cookie
+                ? response.status(403).json({ error: 'Origen de solicitud no permitido.' })
+                : next();
+        }
+
+        const supplied_origin = normalize_origin(origin_header || referer_header);
+        const request_origin = normalize_origin(`${request.protocol}://${request.get('host') || ''}`);
+        const trusted = configured.size ? configured : new Set([request_origin].filter(Boolean));
+        return supplied_origin && trusted.has(supplied_origin)
+            ? next()
+            : response.status(403).json({ error: 'Origen de solicitud no permitido.' });
+    };
+}
+```
+
+Fuente del pedido: registro previo B01, resumen de etapa sin original completo. Evidencia de cambios: [f3533d7](https://github.com/facumartea/dreams/commit/f3533d7).
+
+La funcion elegida no se acredita en ese commit; se muestra solo como ejemplo de la implementacion actual.
+
+## PROMPT 2 · conexion del backend
+
+Fecha: fecha por confirmar
+
+Prompt (resumen consolidado, no literal): segui con la pr 56 y revisa por que falla la clave sin mostrarla ni cambiar auth. conserva la oficial hasta que conecte
+
+Resultado: cliente servidor actual; el diagnostico y su cierre historico se distinguen en los antecedentes.
+
+Archivo: [app/worker/official-client.mjs](app/worker/official-client.mjs)
+
+Codigo (implementacion actual):
+
+```javascript
+export function create_official_database(env, access, fetcher) {
+    return createClient(env.SUPABASE_URL, env.SUPABASE_SECRET_KEY, {
+        auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false },
+        global: {
+            ...(fetcher ? { fetch: fetcher } : {}),
+            ...(access ? { headers: { Authorization: `Bearer ${access}` } } : {})
+        }
+    });
+}
+```
+
+Fuente del pedido: mensajes disponibles de continuidad y diagnostico de PR56. Evidencia de cambios: [5236ef6](https://github.com/facumartea/dreams/commit/5236ef6).
+
+## PROMPT 3 · registro y sesion
+
+Fecha: fecha por confirmar
+
+Prompt (resumen consolidado, no literal): arregla el registro y el login de verdad, sin confirmar usuarios por un atajo ni cambiar al administrador
+
+Resultado: registro normal y perfil customer, sujeto a la respuesta real del proveedor.
+
+Archivo: [app/server/customer-registration.js](app/server/customer-registration.js)
+
+Codigo (implementacion actual):
+
+```javascript
+async function normal_registration(context, values, response) {
+    // el registro normal devuelve sesion cuando el proveedor no exige confirmar el correo.
+    const result = await context.create_auth_client().auth.signUp({
+        email: values.email, password: values.password, options: { data: { name: values.name } }
+    });
+    if (result.error || !result.data?.user) return registration_failure(response, result.error);
+    await save_customer(context.database, result.data.user, values);
+    const confirmation_required = result.data.session ? false : await registration_confirmation(context);
+    return registered_response(response, result.data, values, context.production, false, confirmation_required);
+}
+```
+
+Fuente del pedido: pedido disponible de cierre funcional de PR56. Evidencia de cambios: [5236ef6](https://github.com/facumartea/dreams/commit/5236ef6).
+
+## PROMPT 4 · guardado del admin
+
+Fecha: fecha por confirmar
+
+Prompt (resumen consolidado, no literal): revisa todo el admin, sobre todo guardar productos e imagenes. no muestres guardado hasta confirmar que quedo
+
+Resultado: guardado con lectura posterior y recuperacion de errores.
+
+Archivo: [app/public/js/admin.js](app/public/js/admin.js)
+
+Codigo (implementacion actual):
+
+```javascript
+async function commit_product(id, data) {
+    set_product_save_pending(true);
+    try {
+        const resolved = id || await prepare_product_creation(data);
+        const saved = await write_product_record(resolved, data);
+        await confirm_product_persistence(saved, data);
+        uncertain_product_create = null;
+        reset_form(true);
+        document.getElementById('admin-message').textContent = id ? 'Producto actualizado correctamente.' : resolved ? 'Alta anterior recuperada y cambios confirmados.' : 'Producto creado correctamente.';
+        await Promise.all([load_dashboard(), load_admin_products()]);
+    } catch (error) { document.getElementById('admin-message').textContent = `${error.message} Revisá el listado antes de repetir un alta si no pudimos confirmar el guardado.`; }
+    finally { set_product_save_pending(false); }
+}
+```
+
+Fuente del pedido: pedido disponible de panel Admin y extracto A01. Evidencia de cambios: [5236ef6](https://github.com/facumartea/dreams/commit/5236ef6).
+
+## PROMPT 5 · carrito por cuenta
+
+Fecha: fecha por confirmar
+
+Prompt (resumen consolidado, no literal): comproba que cada cuenta tenga su carrito y que al entrar se junte con el de visitante sin duplicar
+
+Resultado: operaciones ligadas a la cuenta verificada; precios recuperados en servidor.
+
+Archivo: [app/server/account-cart.js](app/server/account-cart.js)
+
+Codigo (implementacion actual):
+
+```javascript
+    async write(req, res) {
+        if (!this.ready) return res.status(503).json({ error: 'El guardado del carrito no está disponible.' });
+        const body = req.body;
+        if (!exact(body, ['operation_id', 'operation', 'scope']) || !uuid(body.operation_id) || !valid_operation(body.operation)) return res.status(400).json({ error: 'Operación de carrito inválida.' });
+        const scope = this.scope_for(req.user.id);
+        if (typeof body.scope !== 'string' || Buffer.byteLength(body.scope) !== Buffer.byteLength(scope) || !timingSafeEqual(Buffer.from(body.scope), Buffer.from(scope))) return res.status(409).json({ error: 'La cuenta cambió. Volvé a cargar el carrito.' });
+        const result = await this.database.rpc('dreams_cart_operation', { p_user_id: req.user.id, p_operation_id: body.operation_id, p_operation: body.operation });
+        if (result.error) {
+            if (['22023', '23514'].includes(result.error.code)) return res.status(409).json({ error: 'El carrito cambió o alcanzó su límite. Recargalo antes de reintentar.' });
+            throw result.error;
+        }
+        res.json(await this.hydrate(result.data, req.user));
+    }
+```
+
+Fuente del pedido: pedido disponible de carrito por UUID en PR56. Evidencia de cambios: [5236ef6](https://github.com/facumartea/dreams/commit/5236ef6).
+
+## PROMPT 6 · opiniones propias
+
+Fecha: fecha por confirmar
+
+Prompt (resumen consolidado, no literal): deja que cada usuario pueda borrar su opinion pero no la de otro y conserva la moderacion del admin
+
+Resultado: borrado propio comprobado tambien en la api.
+
+Archivo: [app/server/reviews.js](app/server/reviews.js)
+
+Codigo (implementacion actual):
+
+```javascript
+async function delete_own_review(request, response, create_auth_client) {
+    const id = Number(request.params.id);
+    if (!Number.isSafeInteger(id) || id <= 0 || Object.keys(request.body || {}).length) return response.status(400).json({ error: 'Solicitud de eliminación inválida.' });
+    // jwt limitado mas predicado de dueno: la clave de servicio nunca elimina aqui.
+    const result = await create_auth_client(request.access_token).from('reviews').delete().eq('id', id).eq('user_id', request.user.id).select('id').maybeSingle();
+    if (result.error) throw result.error;
+    if (!result.data) return response.status(404).json({ error: 'No encontramos una opinión propia para eliminar.' });
+    response.json({ message: 'Tu opinión fue eliminada.' });
+}
+```
+
+Fuente del pedido: pedido disponible de opiniones y eliminacion propia. Evidencia de cambios: [5236ef6](https://github.com/facumartea/dreams/commit/5236ef6).
+
+## PROMPT 7 · checkout academico
+
+Fecha: fecha por confirmar
+
+Prompt (resumen consolidado, no literal): completa el checkout de la escuela sin cobrar, sin cambiar stock y sin guardar los datos de tarjeta
+
+Resultado: referencias firmadas, con propietario y vencimiento; no crea pedidos comerciales.
+
+Archivo: [app/server/presentation-checkout.js](app/server/presentation-checkout.js)
+
+Codigo (implementacion actual):
+
+```javascript
+function presentation_checkout({ enabled, signing_key, quote_cart, database, product_brand_column, production, issuer }) {
+    const ready = enabled === true && typeof signing_key === 'string' && signing_key.length >= 32;
+    const key = ready ? createHmac('sha256', signing_key).update('DREAMS presentation checkout v2').digest() : null;
+    const sign = payload => { const body = Buffer.from(JSON.stringify(payload)).toString('base64url'); return `${body}.${createHmac('sha256', key).update(body).digest('base64url')}`; };
+    function read(token, kind, owner) {
+        if (typeof token !== 'string' || token.length > 24000) return null;
+        const parts = token.split('.');
+        if (parts.length !== 2) return null;
+        const expected = createHmac('sha256', key).update(parts[0]).digest();
+        const supplied = Buffer.from(parts[1], 'base64url');
+        if (supplied.length !== expected.length || !timingSafeEqual(supplied, expected)) return null;
+        try { const value = JSON.parse(Buffer.from(parts[0], 'base64url')); return value.version === 2 && value.issuer === issuer && value.kind === kind && value.owner === owner && value.expires > Date.now() ? value : null; } catch { return null; }
+    }
+    const install = (app, route) => install_presentation({ ready, quote_cart, database, product_brand_column, production, issuer, sign, read }, app, route);
+    return { ready, install };
+}
+```
+
+Fuente del pedido: pedido disponible de checkout academico. Evidencia de cambios: [5236ef6](https://github.com/facumartea/dreams/commit/5236ef6).
+
+## PROMPT 8 · cupon en carrito
+
+Fecha: fecha por confirmar
+
+Prompt (resumen consolidado, no literal): pone para ingresar el cupon antes de comprar, con aplicar y quitar. que los totales coincidan hasta el final
+
+Resultado: validacion servidor del cupon y de sus condiciones.
+
+Archivo: [app/server/app.js](app/server/app.js)
+
+Codigo (implementacion actual):
+
+```javascript
+async function resolve_coupon(database, code, subtotal, user_id = null) {
+    const normalized = normalize_coupon_code(code);
+    if (!normalized) return { ...discounted_totals(subtotal), coupon: null, coupon_error: null };
+    if (!/^[A-Z0-9_-]{3,40}$/.test(normalized)) return { ...discounted_totals(subtotal), coupon: null, coupon_error: 'Cupón inválido.' };
+    const result = await database.from('coupons').select('id,code,discount_percent,active,expires_at,minimum_purchase,max_uses,per_user_limit,conditions').eq('code', normalized).eq('active', true).maybeSingle();
+    if (result.error) throw result.error;
+    const coupon = result.data;
+    const expired = coupon?.expires_at && new Date(coupon.expires_at).getTime() <= Date.now();
+    const below_minimum = coupon?.minimum_purchase !== null && Number(subtotal) < Number(coupon?.minimum_purchase);
+    if (!coupon || coupon.active !== true || expired || below_minimum) return { ...discounted_totals(subtotal), coupon: null, coupon_error: expired ? 'El cupón está vencido.' : below_minimum ? 'No alcanzaste la compra mínima del cupón.' : 'Cupón inválido o inactivo.' };
+    const restricted = await coupon_restriction(database, coupon, user_id);
+    if (restricted) return { ...discounted_totals(subtotal), coupon: null, coupon_error: restricted };
+    const totals = discounted_totals(subtotal, coupon.discount_percent);
+    return {
+        ...totals,
+        coupon: { id: coupon.id, code: coupon.code, discount_percent: Number(coupon.discount_percent) },
+        coupon_error: null
+    };
+}
+```
+
+Fuente del pedido: pedido disponible de ajustes del carrito y extracto A02. Evidencia de cambios: [6865365](https://github.com/facumartea/dreams/commit/6865365).
+
+## PROMPT 9 · campos de tarjeta y envio
+
+Fecha: fecha por confirmar
+
+Prompt (resumen consolidado, no literal): deja vacio el nombre y pone cliente dreams como ejemplo. que tarjeta y cvv acepten solo numeros, el vencimiento lleve barra y diga envio $0
+
+Resultado: mascaras locales; no se transmiten ni guardan los campos financieros.
+
+Archivo: [app/public/js/academic-inputs.js](app/public/js/academic-inputs.js)
+
+Codigo (implementacion actual):
+
+```javascript
+function academic_mask(input, kind) {
+    input.addEventListener('paste', event => {
+        const pasted = event.clipboardData?.getData('text');
+        if (typeof pasted !== 'string') return;
+        event.preventDefault();
+        input.setRangeText(pasted, input.selectionStart, input.selectionEnd, 'end');
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+    });
+    input.addEventListener('beforeinput', event => {
+        // borrar junto al separador tambien elimina un digito, sin atrapar el cursor.
+        const at = input.selectionStart;
+        if (event.inputType !== 'deleteContentBackward' || at !== input.selectionEnd || !at || !/[ /]/.test(input.value[at - 1])) return;
+        event.preventDefault(); input.setRangeText('', Math.max(0, at - 2), at, 'end');
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+    });
+    input.addEventListener('input', () => {
+        const before = academic_digits(input.value.slice(0, input.selectionStart), 99).length;
+        input.value = academic_format(input.value, kind);
+        let at = 0, seen = 0;
+        while (at < input.value.length && seen < before) if (/[0-9]/.test(input.value[at++])) seen++;
+        input.setSelectionRange(at, at);
+        input.setCustomValidity('');
+    });
+}
+```
+
+Fuente del pedido: pedido disponible de formulario y extractos A03/A04. Evidencia de cambios: [6865365](https://github.com/facumartea/dreams/commit/6865365).
+
+## PROMPT 10 · retirar bloque de colecciones
+
+Fecha: fecha por confirmar
+
+Prompt (resumen consolidado, no literal): saca explora la seleccion y tres formas de empezar con sus tarjetas y botones, pero deja mujer, hombre y unisex en el menu
+
+Resultado: regresion que comprueba la retirada y los accesos conservados.
+
+Archivo: [app/test/home-collections-removal.test.js](app/test/home-collections-removal.test.js)
+
+Codigo (implementacion actual):
+
+```javascript
+test('Inicio retira el bloque completo y mantiene contiguos productos y presentación', () => {
+    const html = read('public/index.html');
+    assert.doesNotMatch(html, /collection-carousel|carousel-slide|carousel-status|Tres formas de empezar|EXPLORÁ LA SELECCIÓN/);
+    assert.match(html, /id="featured-products"[\s\S]*?<\/section>\s*<section class="section about-preview"/);
+});
+```
+
+Fuente del pedido: pedido disponible posterior a los ajustes de carrito. Evidencia de cambios: [b60e33d](https://github.com/facumartea/dreams/commit/b60e33d).
+
+## PROMPT 11 · auditoria 2025 y limite de funciones
+
+Fecha: fecha por confirmar
+
+Prompt (resumen consolidado, no literal): revisa la rubrica 2025 completa, no la mezcles con la otra y comproba que las funciones no pasen de 40 lineas, tambien sin git
+
+Resultado: inventario reproducible con parser; no demuestra asistencia ni entregas academicas.
+
+Archivo: [app/scripts/function-inventory.mjs](app/scripts/function-inventory.mjs)
+
+Codigo (implementacion actual):
+
+```javascript
+export async function inventory(root) {
+    const records = [];
+    const files = await source_files(root);
+    for (const path of files) {
+        const file = relative(root, path).replaceAll('\\', '/');
+        for (const block of script_blocks(await readFile(path, 'utf8'), file)) {
+            const tree = parse(block.source, { ecmaVersion: 'latest', sourceType: 'module', locations: true, allowHashBang: true });
+            walk(tree, null, records, file, block.offset);
+            main_blocks(tree, file, records, block.offset);
+        }
+    }
+    return { limit: 40, files: files.length, records, violations: records.filter(row => row.lines > 40) };
+}
+```
+
+Fuente del pedido: pedido disponible de auditoria y limpieza 2025. Evidencia de cambios: [3e12bc6](https://github.com/facumartea/dreams/commit/3e12bc6).
+
+## PROMPT 12 · scripts, carrusel y sql
+
+Fecha: fecha por confirmar
+
+Prompt (resumen consolidado, no literal): revisa por que la oficial sirve otro checkout, recupera el carrusel en destacados y aclara la funcion sql vieja sin borrar el historial
+
+Resultado: carrusel manual actual; el cierre tecnico y la distincion SQL estan acreditados por su evidencia historica.
+
+Archivo: [app/public/js/featured-carousel.js](app/public/js/featured-carousel.js)
+
+Codigo (implementacion actual):
+
+```javascript
+function setup_featured_carousel(track) {
+    const region = document.getElementById('featured-carousel');
+    if (!region || track.children.length < 2) return;
+    const previous = region.querySelector('[data-carousel-previous]');
+    const next = region.querySelector('[data-carousel-next]');
+    const status = region.querySelector('[data-featured-position]');
+    region.querySelector('.featured-products-controls').hidden = false;
+    track.classList.add('featured-carousel-track');
+    track.tabIndex = 0;
+    track.setAttribute('aria-label', 'Productos destacados; usá las flechas para recorrerlos');
+    const update = () => {
+        const width = track.firstElementChild.getBoundingClientRect().width;
+        const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+        const index = Math.max(0, Math.round(track.scrollLeft / (width + gap)));
+        previous.disabled = track.scrollLeft <= 2;
+        next.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 2;
+        status.textContent = `Desde el producto ${index + 1} de ${track.children.length}`;
+    };
+    const move = direction => {
+        const amount = track.firstElementChild.getBoundingClientRect().width + (parseFloat(getComputedStyle(track).columnGap) || 0);
+        track.scrollBy({ left: direction * amount, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
+    };
+    previous.addEventListener('click', () => move(-1));
+    next.addEventListener('click', () => move(1));
+    track.addEventListener('keydown', event => {
+        // no intercepta edicion ni acciones dentro de las tarjetas.
+        if (event.target !== track || !['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+        event.preventDefault();
+        if (event.key === 'Home' || event.key === 'End') track.scrollTo({ left: event.key === 'Home' ? 0 : track.scrollWidth, behavior: 'instant' });
+        else move(event.key === 'ArrowLeft' ? -1 : 1);
+    });
+    track.addEventListener('scroll', update, { passive: true });
+    new ResizeObserver(update).observe(track);
+    update();
+}
+```
+
+Fuente del pedido: pedido disponible de cierre tecnico desde PR60. Evidencia de cambios: [e6d60bf](https://github.com/facumartea/dreams/commit/e6d60bf).
+
+## PROMPT 13 · inicio y cabeceras mas simples
+
+Fecha: fecha por confirmar
+
+Prompt (resumen consolidado, no literal): oculta el texto de posicion del carrusel solo para que lo lea el lector de pantalla, saca los perfumes vistos y los parrafos de las cabeceras
+
+Resultado: cabeceras actuales sin parrafo visible; las descripciones siguen en los metadatos.
+
+Archivo: [app/public/js/catalogo.js](app/public/js/catalogo.js)
+
+Codigo (implementacion actual):
+
+```javascript
+function update_catalog_context(gender) {
+    const variant = COLLECTION_VARIANTS[gender] || null;
+    window.DreamsNavigation?.update(variant ? gender : '');
+    update_catalog_theme(variant);
+    document.getElementById('catalog-eyebrow').textContent = variant?.eyebrow || 'COLECCIÓN DREAMS';
+    document.getElementById('catalog-title').textContent = variant?.title || 'Perfumes';
+    document.title = variant?.document_title || 'Perfumes | DREAMS';
+    update_catalog_metadata(variant ? gender : '');
+}
+```
+
+Fuente del pedido: pedido disponible de Inicio y colecciones. Evidencia de cambios: [60451ca](https://github.com/facumartea/dreams/commit/60451ca).
+
+## PROMPT 14 · material para estudiar
+
+Fecha: fecha por confirmar
+
+Prompt (resumen consolidado, no literal): hace un resumen sencillo para la defensa con los archivos, node, express, endpoints, metodos, base de datos y seguridad
+
+Resultado: ejemplo actual del arranque Node usado para estudiar. La guia se retiro luego por pedido expreso; no se vuelve a crear.
+
+Archivo: [app/server/server.js](app/server/server.js)
+
+Codigo (implementacion actual):
+
+```javascript
+async function start() {
+    const needed = ['SUPABASE_URL', 'SUPABASE_SECRET_KEY'].filter(key => !process.env[key]);
+    if (needed.length) throw new Error(`Faltan variables obligatorias: ${needed.join(', ')}`);
+
+    const client_options = { auth: { autoRefreshToken: false, persistSession: false } };
+    const create_database = (access_token, auth_options = {}) => createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SECRET_KEY, {
+        ...client_options, auth: { ...client_options.auth, ...auth_options },
+        ...(access_token ? { global: { headers: { Authorization: `Bearer ${access_token}` } } } : {})
+    });
+    const database = create_database();
+    const checkout_provider = String(process.env.CHECKOUT_PROVIDER || 'mercado_pago').trim().toLowerCase();
+    const payment_provider = checkout_provider === 'demo'
+        ? new DemoPaymentProvider()
+        : new MercadoPagoProvider({
+            access_token: process.env.MERCADO_PAGO_ACCESS_TOKEN,
+            webhook_secret: process.env.MERCADO_PAGO_WEBHOOK_SECRET,
+            mode: process.env.MERCADO_PAGO_MODE
+        });
+    const port = Number(process.env.PORT || 8080);
+    const product_brand_column = await resolve_product_brand_column(database);
+    const app = app_module.create_app(application_options(create_database, database, payment_provider, product_brand_column));
+
+    return app.listen(port, '0.0.0.0', () => {
+        console.log(`DREAMS funcionando en el puerto ${port} con Supabase.`);
+    });
+}
+```
+
+Fuente del pedido: mensajes disponibles de estudio C01-C04 y solicitud de guia. Evidencia de cambios: [8ad5401](https://github.com/facumartea/dreams/commit/8ad5401).
+
+## PROMPT 15 · ordenar el repositorio y conservar manual y api
+
+Fecha: fecha por confirmar
+
+Prompt (resumen consolidado, no literal): reduci lo que sobra sin romper la pagina. deja los archivos necesarios y junta el manual y la explicacion de la api en el readme
+
+Resultado: recorrido de archivos sin depender de git; manual y API permanecen en README.
+
+Archivo: [app/scripts/function-inventory.mjs](app/scripts/function-inventory.mjs)
+
+Codigo (implementacion actual):
+
+```javascript
+export async function source_files(root) {
+    const entries = await readdir(root, { withFileTypes: true });
+    const groups = await Promise.all(entries.filter(e => !excluded.has(e.name)).map(async entry => {
+        const file = resolve(root, entry.name);
+        if (entry.isSymbolicLink()) return [];
+        if (entry.isDirectory()) return source_files(file);
+        return /\.(?:js|mjs|cjs|html)$/.test(entry.name) ? [file] : [];
+    }));
+    return groups.flat().sort();
+}
+```
+
+Fuente del pedido: pedidos disponibles de simplificacion y decisiones de docs, PR64-PR68. Evidencia de cambios: [42792c9](https://github.com/facumartea/dreams/commit/42792c9).
+
+## PROMPT 16 · icono del iphone
+
+Fecha: fecha por confirmar
+
+Prompt (resumen consolidado, no literal): el icono se ve descentrado y tiene una palabra arriba, ayudame a dejarlo bien
+
+Resultado: icono dedicado incluido en el build; no se cambia la marca dentro del sitio.
+
+Archivo: [app/scripts/build-pages.mjs](app/scripts/build-pages.mjs)
+
+Codigo (implementacion actual):
+
+```javascript
+// incluir el icono local evita depender de que exista en el backend anterior.
+for (const name of ['dreams-social.png', 'dreams-iphone-icon-v1.png']) {
+    const image = await readFile(new URL(`../public/assets/${name}`, import.meta.url));
+    assets[`/assets/${name}`] = { body: image.toString('base64'), encoding: 'base64', content_type: 'image/png', etag: `"${createHash('sha256').update(image).digest('hex')}"` };
+}
+```
+
+Fuente del pedido: mensaje disponible con captura del icono de iPhone. Evidencia de cambios: [6e4647c](https://github.com/facumartea/dreams/commit/6e4647c).
+
+## PROMPT 17 · dos pdf y limpieza comprobada
+
+Fecha: fecha por confirmar
+
+Prompt (resumen consolidado, no literal): deja un pdf para wireframe y otro para base de datos, revisa archivo por archivo y conserva lo que hace falta para que arranque y pase los tests
+
+Resultado: indice actual de los documentos; la version anterior de dos PDF extensos se acredita en PR70.
+
+Archivo: [docs/README.md](docs/README.md)
+
+Codigo (implementacion actual; fragmento Markdown documental):
+
+```markdown
+## Manual, API y declaración
+
+- [Instalación y ejecución local](../README.md#instalación-y-ejecución).
+- [Manual de uso](../README.md#manual-de-uso).
+- [API externa y recorrido](../README.md#api-externa-y-recorrido).
+- [Declaración y bitácora parcial de prompts](../DECLARACION_PROMPTS.md).
+```
+
+Fuente del pedido: pedido disponible de consolidacion e integracion de PR70. Evidencia de cambios: [3305d56](https://github.com/facumartea/dreams/commit/3305d56).
+
+## PROMPT 18 · ultima revision de entrega
+
+Fecha: 11/11/2026
+
+Prompt (resumen consolidado, no literal): junta los pedidos reales en una bitacora con ejemplos del codigo. saca la portada del wireframe, deja solo la lamina del der y aclara los comentarios sin romper nada
+
+Resultado: validacion y comentarios actuales; no se cambia el registro ni los permisos.
+
+Archivo: [app/server/customer-registration.js](app/server/customer-registration.js)
+
+Codigo (implementacion actual):
+
+```javascript
+function registration_values(body = {}) {
+    const name = typeof body.name === 'string' ? body.name.trim() : '';
+    const email = typeof body.email === 'string' ? body.email.trim().toLowerCase() : '';
+    const password = typeof body.password === 'string' ? body.password : '';
+    const forbidden = ['role', 'is_admin', 'app_metadata', 'user_metadata'];
+    if (forbidden.some(key => Object.hasOwn(body, key))) return null;
+    if (!name || name.length > 80 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254) return null;
+    return password.length >= 8 && password.length <= 128 ? { name, email, password } : null;
+}
+```
+
+Fuente del pedido: mensaje actual del 11/11/2026; fecha de esta ejecucion. Evidencia de cambios: esta revision, pendiente de su commit/PR.
+
+## Limites y fuentes conservadas
+
+Los 18 pedidos no completan toda la historia. No hacen falta mas conversaciones para esos pedidos, pero faltan los mensajes iniciales completos, marcas de fecha de las etapas anteriores y evidencia de preentregas. No se rellenan con fechas de commits ni dias de clase. Si los integrantes conservan esas exportaciones, podran completar las fechas sin cambiar la historia.
+
+La declaracion anterior se consolida aqui. Sus textos originales largos, fuentes y resultados siguen consultables en la [version previa exacta](https://github.com/facumartea/dreams/blob/3305d56dcf307ee69436d9393adef1b0bd6382b6/DECLARACION_PROMPTS.md); no se guarda otra copia o archivo de bitacora. Los extractos originales, resultados historicos y antecedentes de seguridad unicos se conservan debajo. Son antecedentes, no instrucciones para volver a desplegar, habilitar accesos ni recrear documentos retirados. Las fechas de esas notas acreditan lo que cada fuente dice; no corrigen las fechas pendientes de los prompts.
+
+<details>
+<summary>extractos originales aportados y limites de su identificacion</summary>
 
 ## A. Extractos del adjunto parcial
 
@@ -110,530 +679,23 @@ No se duplica el archivo adjunto como otro registro independiente. Sus ocho extr
 - Pruebas del agente: Lectura estática, cotejo de endpoints y revisión de Word/PDF en esta tanda; no nueva QA funcional.
 - Revisión humana: no acreditada en el adjunto.
 
-## B. Bitácora previa y resultados verificables
 
-Estas entradas son **resúmenes**, no prompts originales ni nuevas ejecuciones. Se enlazan las fuentes para evitar duplicar la bitácora y se señala la diferencia entre fecha del documento y fecha del commit.
-
-### B01. Arquitectura y seguridad inicial
-
-- Fecha del prompt: **sin fecha confirmada**. Fecha de evidencia: La bitácora etiqueta una etapa 28/08/2026.
-- Tipo: resumen identificado; texto original completo no incorporado como cita.
-- Objetivo: Auditar arquitectura/seguridad y preparar despliegue.
-- Resultado: CHANGELOG y auditorías preservadas; no se reconstruye el mensaje inicial. [Fuente](#f-bitácora-histórica-consolidada).
-- Pruebas del agente: Pruebas declaradas en las fuentes históricas; no repetidas ahora.
-- Revisión humana: no hay evidencia suficiente para atribuir a un integrante la revisión de esos cambios. Las declaraciones del usuario que la fuente registra se mantienen como declaraciones, no como revisión de código.
-
-### B02. Diagnóstico de credencial y continuidad
-
-- Fecha del prompt: **sin fecha confirmada**. Fecha de evidencia: Git: 29ee9ea del 27/10/2026, 6f54b08 y 2b8dcc1 del 28/10; be57610 del 29/10.
-- Tipo: resumen identificado; texto original completo no incorporado como cita.
-- Objetivo: Conservar la oficial y diagnosticar el candidato sin exponer valores.
-- Resultado: La bitácora etiqueta 29ee9ea bajo 28/10, pero Git fecha ese commit 27/10. Se conserva la discrepancia; no se inventa la fecha del prompt. [Fuente](#f-bitácora-histórica-consolidada).
-- Pruebas del agente: Sondas y tests reportados por el agente en la bitácora; un 401 inicial no se presenta como conexión resuelta.
-- Revisión humana: no hay evidencia suficiente para atribuir a un integrante la revisión de esos cambios. Las declaraciones del usuario que la fuente registra se mantienen como declaraciones, no como revisión de código.
-
-### B03. Reparación de backend y Admin
-
-- Fecha del prompt: **sin fecha confirmada**. Fecha de evidencia: PR56: merge 5236ef6, 03/11/2026.
-- Tipo: resumen identificado; texto original completo no incorporado como cita.
-- Objetivo: Cerrar registro, sesión, Admin y documentación funcional.
-- Resultado: El cierre histórico documenta QA real y retirada del mecanismo temporal; no hay nueva ejecución en esta tanda. [Fuente](#f-bitácora-histórica-consolidada).
-- Pruebas del agente: 476 tests y 89 casos remotos según bitácora de cierre; leer su alcance y fecha.
-- Revisión humana: no hay evidencia suficiente para atribuir a un integrante la revisión de esos cambios. Las declaraciones del usuario que la fuente registra se mantienen como declaraciones, no como revisión de código.
-
-### B04. Auditoría documental inicial 2025
-
-- Fecha del prompt: **sin fecha confirmada**. Fecha de evidencia: PR59: f0f3886, 03/11/2026.
-- Tipo: resumen identificado; texto original completo no incorporado como cita.
-- Objetivo: Auditar fuente descargable y preparar gráficos.
-- Resultado: El PDF2025 faltaba entonces; la matriz provisional no se convierte retrospectivamente en auditoría del PDF recibido luego. Fuente: índice documental anterior, reemplazado por docs/README.md..
-- Pruebas del agente: Checks y evidencia en auditoria-2025/pruebas.json; no nueva QA por esta consolidación.
-- Revisión humana: no hay evidencia suficiente para atribuir a un integrante la revisión de esos cambios. Las declaraciones del usuario que la fuente registra se mantienen como declaraciones, no como revisión de código.
-
-### B05. Limpieza y rúbrica 2025 recibida
-
-- Fecha del prompt: **sin fecha confirmada**. Fecha de evidencia: PR60: 3e12bc6, 05/11/2026.
-- Tipo: resumen identificado; texto original completo no incorporado como cita.
-- Objetivo: Leer la edición correcta, organizar y preservar registros.
-- Resultado: Se retiró NEXT_CHAT_PROMPT.md obsoleto y se preservaron históricos; esta tarea no repite esa limpieza. [Fuente](https://github.com/facumartea/dreams/blob/305c5fd6ca0f5a72792c4f5e64fa60ac13a70828/docs/entrega-2025/informe.md).
-- Pruebas del agente: 489 tests y extracción sin .git según pruebas.json histórico.
-- Revisión humana: no hay evidencia suficiente para atribuir a un integrante la revisión de esos cambios. Las declaraciones del usuario que la fuente registra se mantienen como declaraciones, no como revisión de código.
-
-### B06. Scripts coherentes, carrusel y SQL
-
-- Fecha del prompt: **sin fecha confirmada**. Fecha de evidencia: PR61: e6d60bf, 05/11/2026.
-- Tipo: resumen identificado; texto original completo no incorporado como cita.
-- Objetivo: Resolver los pendientes técnicos y documentar la oficial.
-- Resultado: Se aplicó migración nueva compatible; carrusel manual, scripts coincidentes, QA Admin real. [Fuente](https://github.com/facumartea/dreams/blob/305c5fd6ca0f5a72792c4f5e64fa60ac13a70828/docs/evidence/cierre-tecnico-20261105/README.md).
-- Pruebas del agente: 494 tests, 4 PostgreSQL aparte, 22 checks oficiales de checkout/carrusel y QA específica, según evidencia.
-- Revisión humana: no hay evidencia suficiente para atribuir a un integrante la revisión de esos cambios. Las declaraciones del usuario que la fuente registra se mantienen como declaraciones, no como revisión de código.
-
-### B07. Inicio y cabeceras sin extras
-
-- Fecha del prompt: **sin fecha confirmada**. Fecha de evidencia: PR62: 60451ca, 05/11/2026 (Git con zona -03:00).
-- Tipo: resumen identificado; texto original completo no incorporado como cita.
-- Objetivo: Retirar recientes y párrafos visibles, conservar carrusel y SEO.
-- Resultado: Fuente publicada 85147d8; main integra documentación final. [Fuente](https://github.com/facumartea/dreams/blob/305c5fd6ca0f5a72792c4f5e64fa60ac13a70828/docs/evidence/inicio-cabeceras-20261105/README.md).
-- Pruebas del agente: 493 tests, 52 checks locales/oficiales y hashes de scripts según evidencia. Fechas UTC pueden caer el día siguiente sin implicar otra etapa.
-- Revisión humana: no hay evidencia suficiente para atribuir a un integrante la revisión de esos cambios. Las declaraciones del usuario que la fuente registra se mantienen como declaraciones, no como revisión de código.
-
-## C. Mensajes originales completos disponibles
-
-Los bloques siguientes conservan el texto íntegro de mensajes seleccionados visibles en esta conversación, sin corregir su escritura. Su inclusión no convierte el conjunto en una exportación completa. Los mensajes largos de otras etapas se representan por las fuentes/resúmenes anteriores; para un historial literal exhaustivo faltan exportaciones, orden y adjuntos originales.
-
-### C01. Consulta de endpoints y decoradores
-
-- Fecha del mensaje: **sin fecha confirmada**; no se infiere de la fecha del Word adjunto.
-- Tipo: prompt original completo visible; no exportación de toda la conversación.
+### Mensajes de estudio disponibles
 
 > cuales son todoa los endpoints de nuestro codigo que es un decorador y donde se encuentra y los metodos
 
-- Objetivo: Preparar explicación de API y conceptos para estudiar.
-- Resultado/evidencia: el Word adjunto acredita que existía material de estudio; no prueba por sí solo la ejecución exacta de cada mensaje. La guía ampliada y verificable de esta tarea se publica en defensa.md/.docx/.pdf mediante su PR documental.
-- Pruebas del agente: no hay un informe autónomo por cada mensaje C. Las comprobaciones de esta consolidación están en verificacion-defensa-20261110.md; no se atribuyen retroactivamente a esos mensajes ni equivalen a QA de aplicación.
-- Revisión humana: no acreditada. La solicitud del usuario no prueba lectura o dominio del material.
-
-### C02. Solicitud de resumen amplio
-
-- Fecha del mensaje: **sin fecha confirmada**; no se infiere de la fecha del Word adjunto.
-- Tipo: prompt original completo visible; no exportación de toda la conversación.
-
 > necesito que me hagas un mini resumen de dónde están los Points, cuáles son todos los endpoints que hay en nuestro código cómo modificar la base de datos cómo está conectada a la datos como está conectada subscript todas las preguntas que nos podría ser hacer imagínátetelas y pensarlas, el profe los templates qué es un decorador para qué sirve donde se encuentra cómo se encuentra y todo lo de los métodos qué hay en cada carpeta cómo hacer para crear un usuario borrarlo, autenticarlo
-
-- Objetivo: Relacionar estructura, base de datos, métodos y autenticación.
-- Resultado/evidencia: el Word adjunto acredita que existía material de estudio; no prueba por sí solo la ejecución exacta de cada mensaje. La guía ampliada y verificable de esta tarea se publica en defensa.md/.docx/.pdf mediante su PR documental.
-- Pruebas del agente: no hay un informe autónomo por cada mensaje C. Las comprobaciones de esta consolidación están en verificacion-defensa-20261110.md; no se atribuyen retroactivamente a esos mensajes ni equivalen a QA de aplicación.
-- Revisión humana: no acreditada. La solicitud del usuario no prueba lectura o dominio del material.
-
-### C03. Word con lenguaje simple
-
-- Fecha del mensaje: **sin fecha confirmada**; no se infiere de la fecha del Word adjunto.
-- Tipo: prompt original completo visible; no exportación de toda la conversación.
 
 > hacemelo todo en un word y con palabras simples de entender en un lenguaje coloquial pero siempre siguiendo las normas del colegio
 
-- Objetivo: Generar material de estudio con tono respetuoso. El mismo mensaje se repitió en el contexto; se registra una sola vez, sin inventar una nueva fase.
-- Resultado/evidencia: el Word adjunto acredita que existía material de estudio; no prueba por sí solo la ejecución exacta de cada mensaje. La guía ampliada y verificable de esta tarea se publica en defensa.md/.docx/.pdf mediante su PR documental.
-- Pruebas del agente: no hay un informe autónomo por cada mensaje C. Las comprobaciones de esta consolidación están en verificacion-defensa-20261110.md; no se atribuyen retroactivamente a esos mensajes ni equivalen a QA de aplicación.
-- Revisión humana: no acreditada. La solicitud del usuario no prueba lectura o dominio del material.
-
-### C04. Ampliación de Node y formato de respuestas
-
-- Fecha del mensaje: **sin fecha confirmada**; no se infiere de la fecha del Word adjunto.
-- Tipo: prompt original completo visible; no exportación de toda la conversación.
-
 > inclui posibles preguntas de node tambien no me escribas las preguntas solo las respuestas como un mini resumen dentro de todo que incluya todo como conectar la base de datos, etc
 
-- Objetivo: Añadir Node y producir aquella versión sin cuestionario. El pedido actual cambia el formato e incluye preguntas/repreguntas.
-- Resultado/evidencia: el Word adjunto acredita que existía material de estudio; no prueba por sí solo la ejecución exacta de cada mensaje. La guía ampliada y verificable de esta tarea se publica en defensa.md/.docx/.pdf mediante su PR documental.
-- Pruebas del agente: no hay un informe autónomo por cada mensaje C. Las comprobaciones de esta consolidación están en verificacion-defensa-20261110.md; no se atribuyen retroactivamente a esos mensajes ni equivalen a QA de aplicación.
-- Revisión humana: no acreditada. La solicitud del usuario no prueba lectura o dominio del material.
+La guia y sus PDF/Word se retiraron por autorizacion posterior. Estos mensajes conservan la evidencia de que se pidio material de estudio, sin afirmar que el alumnado lo reviso o domina.
 
-## D. Esta consolidación
+</details>
 
-- Fecha comprobable: **10/11/2026**, mensaje de tarea actual y fecha de elaboración.
-- Tipo: resumen fiel del pedido actual; el texto completo de la tarea se conserva debajo.
-- Objetivo: guía oral contrastada, registro parcial consolidado, limpieza justificada y simulacro una pregunta por vez.
-- Resultado/evidencia: defensa.md/.docx/.pdf, endpoints-verificados.json, este registro y revisión de limpieza; [PR #63](https://github.com/facumartea/dreams/pull/63), checkpoint documental [2cf4eb4](https://github.com/facumartea/dreams/commit/2cf4eb404e17c8ca2843b3d73d1266ce4911792e).
-- Pruebas del agente: cotejo de 46 métodos/rutas, referencias de archivos/funciones, scan de datos sensibles, enlaces locales, revisión visual de documentos y diff limitado. [CI #252](https://github.com/facumartea/dreams/actions/runs/42925703488) aprobado: 493 tests, 0 fallidos, 4 omitidos por falta de PostgreSQL de prueba, inventario y builds sin despliegue. El cierre documental exige su CI final aprobado. Sin despliegue ni pruebas de escritura reales.
-- Revisión humana: pendiente; no se atribuye al alumnado ninguna revisión todavía no observada.
-
-### Prompt completo de esta tarea
-
-```text
-Prepará el material final de defensa oral y el registro de prompts de DREAMS.
-También revisá qué archivos innecesarios pueden retirarse del repositorio.
-
-REPOSITORIO
-https://github.com/facumartea/dreams
-
-Esta tarea es de estudio y documentación.
-No cambies ni despliegues la página oficial por estos documentos.
-
-ADJUNTOS
-- Word de estudio.
-- Transcripción de tres audios de un compañero.
-- PROMPTS_DREAMS_PARCIAL.md.
-
-1. CONTINUAR SIN REHACER
-Revisá el estado actual del repositorio y las instrucciones.
-La guía adjunta se preparó consultando main en 60451ca.
-Contrastá sus explicaciones con la versión actual y corregí diferencias.
-
-No repitas auditorías y tests ya acreditados sin motivo.
-No alteres trabajo en curso.
-
-2. WORD DE ESTUDIO COMPLETO
-Los audios mencionan:
-- Archivo principal.
-- Estructura de carpetas.
-- Qué hace cada archivo y determinadas funciones.
-- Express y por qué se usa.
-- JavaScript y Node.js.
-- Rutas, endpoints y métodos HTTP.
-- POST para login.
-- Seguridad, hash de contraseñas y CORS.
-
-Revisá el Word y cubrí todos esos temas con:
-- Pregunta probable.
-- Respuesta breve para decir en el oral.
-- Explicación desde cero.
-- Archivo y función reales.
-- Ejemplo de DREAMS.
-- Posibles repreguntas.
-- Errores conceptuales frecuentes.
-
-Conservá las distinciones:
-- Entrada Node local frente a entrada del Worker oficial.
-- Página HTML frente a endpoint de API.
-- Node frente a Express y JavaScript.
-- API propia frente a servicios externos.
-- Hash frente a cifrado y HTTPS.
-- CORS frente a control de origen y permisos.
-- Código histórico frente a funciones habilitadas.
-- Checkout académico frente a cobros comerciales.
-
-No afirmes que hay una biblioteca CORS o una implementación propia
-de bcrypt sin comprobarlo.
-
-3. FUNCIONES Y ENDPOINTS
-Verificá método, ruta, propósito y permisos de cada endpoint documentado.
-Separá rutas habilitadas de las preparadas o históricas.
-
-Incluí funciones representativas de:
-- Catálogo y filtros.
-- Registro y login.
-- Permisos Admin.
-- Guardado de productos.
-- Carrito por usuario.
-- Opiniones.
-- Checkout.
-- Buscador y disponibilidad baja.
-
-Explicá entradas, proceso, retorno, efectos y errores.
-No basta con repetir el nombre de una función.
-Incluí ejercicios pequeños y seguros para practicar localmente.
-
-4. REGISTRO DE PROMPTS
-Prepará un archivo Markdown consolidado en la documentación de entrega.
-
-Primero revisá la bitácora existente para evitar duplicados.
-El archivo adjunto es parcial: no lo presentes como historial completo.
-
-Por entrada registrá:
-- Fecha comprobable o “sin fecha confirmada”.
-- Prompt original completo cuando esté disponible.
-- Extracto o resumen identificado cuando no lo esté.
-- Objetivo.
-- Resultado y evidencia en commit/PR.
-- Pruebas realizadas por el agente.
-- Revisión humana solo cuando esté acreditada.
-
-No reconstruyas textos como si fueran citas literales.
-Si necesitás exportaciones o mensajes que no tenés, pedime únicamente
-las conversaciones faltantes. Continuá lo independiente mientras respondo.
-
-Eliminá de los registros contraseñas, tokens, cookies y datos personales.
-Usá [SECRETO OMITIDO] donde corresponda.
-No inventes autoría, fechas ni participación.
-
-5. LIMPIEZA DEL REPOSITORIO
-Reutilizá el inventario y la limpieza anteriores.
-
-Identificá:
-- Prompts operativos obsoletos.
-- Archivos temporales.
-- Duplicados exactos.
-- Documentación contradictoria.
-- Evidencia repetida sin utilidad adicional.
-
-Podés eliminar únicamente descartables comprobados y prompts de continuidad
-obsoletos después de preservar la información académica única.
-
-Antes, verificá referencias en imports, scripts, CI, configuración,
-documentación y proceso de publicación.
-
-Conservá:
-- README actualizado.
-- Código y assets utilizados.
-- Dependencias y lockfile.
-- Migraciones.
-- Tests y configuración vigente.
-- Manual, wireframe, D.E.R. y rúbrica.
-- Registro de IA y prompts relevante.
-- Licencias, atribuciones y evidencias únicas.
-
-No elimines archivos para ocultar uso de IA.
-No reescribas historial de Git.
-Si un archivo tiene utilidad dudosa o información única, preservalo
-y explicá la duda.
-
-6. ENTREGA Y GITHUB
-Guardá en la documentación académica:
-- Guía de defensa .docx.
-- Copia PDF legible.
-- Fuente Markdown de la guía.
-- Registro consolidado de prompts.
-- Índice con enlaces relativos.
-
-Verificá visualmente Word/PDF: sin recortes, tablas ilegibles
-o referencias equivocadas.
-No subas audios privados del compañero a GitHub sin autorización.
-La guía puede resumir sus temas sin identificarlo.
-
-Trabajá en una branch, revisá diff, hacé commit y push y prepará PR.
-Integrá los documentos revisados mediante el flujo autorizado del repositorio.
-No integres cambios funcionales ajenos.
-
-No hace falta deployment por documentación.
-
-ENTREGA FINAL
-- Word y PDF descargables.
-- Markdown de prompts, indicando si está completo o qué falta.
-- Enlaces GitHub.
-- Archivos retirados y motivo.
-- Archivos conservados y motivo.
-- Commit y estado de integración.
-
-Al terminar, iniciá un simulacro oral:
-una pregunta por vez, esperá mi respuesta, corregime con explicación
-y pedime que vuelva a responder cuando haga falta.
-No respondas por mí antes de que intente contestar.
-```
-
-## E. Originales completos disponibles para fases históricas
-
-Estos mensajes completos del contexto complementan los resúmenes B; no sustituyen los originales todavía ausentes ni acreditan cuándo fueron enviados. Los adjuntos/capturas referidos no se reconstruyen.
-
-### E01. Cierre técnico posterior a PR60
-
-- Fecha: **sin fecha confirmada**.
-- Tipo: prompt original completo disponible en el contexto, sin sus capturas.
-- Objetivo, resultado, commit/PR y pruebas del agente: ver B06; se mantiene la distinción entre pedido e implementación.
-- Revisión humana: no acreditada; la autorización de publicar no demuestra revisión de código.
-
-```text
-Continuá desde main, commit informado 3e12bc6.
-La limpieza de PR #60 ya está integrada: no la repitas.
-
-OBJETIVO
-Cerrar los pendientes técnicos de la auditoría 2025 y mantener coherencia
-entre repositorio, documentación y página oficial.
-
-ÚNICO SITIO AUTORIZADO
-https://dreams-perfumes.pages.dev/
-
-No crees ni modifiques otras webs o previews públicas.
-No generes ZIP.
-
-1. CORREGIR LA DIFERENENCIA ENTRE MAIN Y OFICIAL
-Investigá por qué checkout.js servido en la oficial contiene una función
-de 113 líneas mientras el inventario de main aprueba el límite de 40.
-
-Identificá:
-- URL y archivo efectivo.
-- Commit de origen.
-- Proxy, backend o caché responsable.
-- Diferencias funcionales entre ambas versiones.
-
-No reemplaces el archivo a ciegas.
-Asegurá una versión compatible que conserve:
-- Cupones y totales.
-- Formatos de tarjeta y vencimiento.
-- Checkout académico sin datos financieros persistidos.
-- Referencia estable.
-- Prevención de duplicados.
-- Carrito conservado ante errores.
-
-Verificá el límite de 40 líneas también sobre los scripts propios
-realmente servidos por la oficial, no únicamente sobre main.
-
-2. RECUPERAR EL REQUISITO DE CARRUSEL
-Está autorizado implementar un carrusel manual en una sección existente
-de productos destacados o equivalente.
-
-No restaures el bloque eliminado “Tres formas de empezar”.
-No modifiques la portada estática.
-
-Usá productos reales distintos, controles accesibles, teclado,
-adaptación móvil y movimiento reducido.
-Sin autoplay y sin inventar contenido comercial.
-
-Comprobá que sea funcional y visible: un archivo o contenedor sin uso
-no acredita el requisito.
-
-3. REVISAR LA FUNCIÓN SQL DE 53 LÍNEAS
-Determiná si es:
-- Una definición histórica reemplazada.
-- La función actualmente utilizada.
-- Código incluido únicamente para conservar el historial de migraciones.
-
-Documentá esa distinción.
-
-No reescribas una migración aplicada ni comprimas instrucciones.
-Si la función vigente necesita modularización para el límite solicitado,
-prepará una migración nueva compatible, pruebas y evaluación de permisos
-y transacciones antes de aplicarla.
-
-No ejecutes cambios destructivos ni migres datos.
-Si el único exceso pertenece al historial inmutable, explicá la excepción
-y pedí aclaración del criterio académico en vez de ocultarlo o afirmar
-cumplimiento absoluto.
-
-4. QA AUTENTICADA DEL ADMIN
-Reutilizá accesos seguros autorizados si siguen disponibles.
-No restaures mecanismos temporales ni secretos de QA innecesariamente.
-
-Comprobá con una sesión Admin real:
-- Acceso y logout.
-- Buscador y disponibilidad baja.
-- Alta y edición con producto exclusivo de prueba.
-- Guardado y persistencia de imágenes.
-- Destacar en Inicio.
-- Actualización del catálogo y estadísticas.
-- Rechazo de operaciones para customer y anónimo.
-
-No modifiques productos comerciales.
-Si falta acceso, pedime temprano el mecanismo seguro concreto.
-No declares fixtures locales como prueba remota.
-
-5. DOCUMENTACIÓN COHERENTE
-Revisá si el manual PDF alojado en entrega-2026 describe correctamente
-la versión actual auditada con la rúbrica 2025.
-
-Actualizá contenidos desfasados y enlaces cuando corresponda.
-No dupliques archivos solo para cambiar el nombre de la carpeta.
-Actualizá wireframe, matriz e índice por el nuevo carrusel.
-
-Conservá el carácter retrospectivo de los diseños.
-No inventes participación, preentregas o defensa individual.
-
-6. VALIDACIÓN Y PUBLICACIÓN
-Creá una branch y PR específicas.
-Ejecutá checks, pruebas relevantes y builds.
-Revisá diff y ausencia de secretos.
-
-Está autorizado integrar y publicar las correcciones verificadas
-en la oficial, con rollback compatible.
-
-No incorpores el video exclusivo de preview.
-No cambies credenciales Admin, DNS ni pagos comerciales.
-
-Después de publicar:
-- Compará los assets servidos con la versión aprobada.
-- Repetí el recorrido de checkout.
-- Verificá carrusel y Admin.
-- Actualizá la matriz con evidencia del commit final.
-
-ENTREGA
-- Causa y solución de la diferencia main/oficial.
-- Carrusel implementado y probado.
-- Estado justificado del SQL histórico.
-- Resultado de QA Admin real.
-- Manual y gráficos actualizados.
-- PR y commits integrados/desplegados.
-- Pendientes académicos que requieren intervención humana.
-
-No declares cumplimiento total mientras queden requisitos técnicos
-o evidencias sin resolver.
-
-CARRUSEL OBLIGATORIO — REQUISITO PENDIENTE
-La auditoría confirmó que falta el carrusel exigido por la rúbrica.
-El anterior se eliminó por pedido del usuario.
-
-Está autorizado incorporarlo en “Productos destacados”, reutilizando
-esa sección si existe, sin restaurar “Tres formas de empezar”.
-
-- Usá productos reales y distintos del catálogo.
-- Conservá la estética de DREAMS.
-- Incluí botones Anterior/Siguiente, navegación por teclado y uso táctil.
-- Adaptalo a móvil y escritorio.
-- Sin reproducción automática.
-- Respetá movimiento reducido.
-- Conservá enlaces a productos y acciones existentes.
-- No alteres la portada estática.
-
-Verificá su funcionamiento real en la OFICIAL:
-https://dreams-perfumes.pages.dev/
-
-Actualizá wireframe, manual y matriz de la rúbrica con evidencia
-del carrusel publicado.
-```
-
-### E02. Retirada de recientes y textos visibles
-
-- Fecha: **sin fecha confirmada**.
-- Tipo: prompt original completo disponible en el contexto, sin sus capturas.
-- Objetivo, resultado, commit/PR y pruebas del agente: ver B07; se mantiene la distinción entre pedido e implementación.
-- Revisión humana: no acreditada; la autorización de publicar no demuestra revisión de código.
-
-```text
-Aplicá estos cambios en la OFICIAL:
-https://dreams-perfumes.pages.dev/
-
-Continuá desde el estado actual sin repetir procesos ya acreditados.
-La eliminación de los elementos indicados está autorizada.
-
-1. TEXTO DEL CARRUSEL
-Quitá de la interfaz visible “Desde el producto 1 de 8” y sus variantes
-al avanzar.
-
-Conservá el carrusel de Productos destacados, sus productos y controles:
-es necesario para la rúbrica.
-Si el indicador sirve para accesibilidad, mantenelo solo para lectores
-de pantalla, sin dejar espacio visible.
-
-2. ELIMINAR PRODUCTOS VISTOS RECIENTEMENTE
-Retirá toda la sección de la primera captura:
-- “Tu recorrido”.
-- “Perfumes que viste recientemente”.
-- Tarjetas, acciones, separadores y espacio reservado de ese bloque.
-
-Retirá su lógica y estilos exclusivos si dejan de utilizarse.
-No borres productos, imágenes compartidas ni componentes del catálogo.
-No modifiques carrito ni cuentas.
-Si su almacenamiento local queda sin uso, dejá de escribirlo sin afectar
-otras claves.
-
-3. QUITAR DESCRIPCIONES DE LAS CABECERAS
-En Perfumes, Hombre, Mujer y Unisex, eliminá los párrafos descriptivos
-que acompañan al título de la colección.
-
-Ejemplo a retirar:
-“Una selección sobria y profunda, con carácter, precisión y presencia”.
-
-Eliminá también los textos equivalentes de las demás colecciones.
-Conservá títulos, paletas, identidad visual y filtros.
-
-Ajustá la composición para no dejar una columna vacía ni espacios excesivos.
-No elimines descripciones de productos ni metadatos SEO por este pedido.
-
-4. VALIDACIÓN Y PUBLICACIÓN
-Comprobá móvil y escritorio:
-- Ausencia de los textos y sección solicitados.
-- Sin huecos, desbordes ni errores de consola.
-- Carrusel obligatorio funcional.
-- Navegación, filtros y carrito sin regresiones.
-
-Actualizá wireframe, manual y auditoría cuando el cambio los afecte.
-Respetá funciones de máximo 40 líneas.
-Ejecutá checks pertinentes y build, revisá diff, hacé commit y push
-y prepará o actualizá la PR.
-
-Integrá y publicá los cambios verificados únicamente en la OFICIAL,
-con rollback disponible. No modifiques otras webs ni previews.
-
-Entregá URL, commit publicado y capturas de Inicio y cabeceras corregidas.
-```
-
-## Qué falta para un historial completo
-
-1. Exportaciones originales de las primeras etapas y preentregas anteriores a PR56, con sus fechas reales. Los commits y la bitácora no sustituyen esos mensajes.
-2. Mensajes completos y contexto/capturas de los ocho extractos A01–A08, especialmente qué sección se pretendía quitar y qué cambio tipográfico se pedía.
-3. Exportaciones íntegras y ordenadas de los tramos intermedios todavía no disponibles, incluidas sus respuestas y fechas. Los originales E01/E02 y los mensajes completos C/D ya están conservados; no hace falta volver a enviarlos.
-4. Evidencia humana de revisión o cambios de integrantes si quieren acreditarlos. Una captura de aprobación o un pedido de continuar no demuestra revisión de código.
-
-No se necesitan credenciales, cookies, audios privados ni datos de clientes para completar el registro. Si una exportación contiene esos valores, deben omitirse. Esta tarea continúa y entrega material útil sin bloquearse por esos faltantes.
+<details>
+<summary>resultados y aclaraciones historicas conservadas</summary>
 
 ## F. Bitácora histórica consolidada
 
@@ -678,178 +740,22 @@ La contraseña Admin aportada como Secret se usa sólo dentro del Worker para lo
 
 Cierre acreditado:89casos remotos distintos PASS, nueve fases privadas PASS/281assertions y476tests. Retirados SecretAdmin/Cron/KV/mecanismo; logout real y guardado/imágenes comprobados sobre backend final limpio. Documentación final/manualPDF actualizados por IA. Usuario pidió continuar hasta terminar sin repetir procesos; no se ejecutó de nuevo la QA ya aprobada ni se generó ZIP final.
 
-## G. Simplificación del repositorio · 11/11/2026
 
-- Fecha comprobable: 11/11/2026, solicitud actual y fecha de esta ejecución.
-- Tipo: prompt original completo disponible; no es una reconstrucción de etapas anteriores.
-- Objetivo: conservar ejecución y entrega académica, consolidar el registro y preparar una lista de excepciones antes de borrar archivos necesarios.
-- Resultado: bitácora histórica consolidada en F; navegación e instalación repetidas trasladadas a README. Inventario y decisiones en `docs/limpieza-20261111.json`. PR de esta branch, sin integrar ni desplegar mientras falte decisión sobre excepciones.
-- Pruebas del agente: base CI254 reutilizada; sintaxis e inventario antes de cambiar. Instalación limpia, tests, builds y enlaces posteriores se acreditan en el JSON con sus resultados reales, sin asumirlos por anticipado.
-- Revisión humana: decisiones de excepciones pendientes. No se atribuye al alumnado revisión de código o dominio del proyecto.
+### Estudios y limpieza posteriores
 
-```text
-Quiero simplificar al máximo el repositorio de DREAMS sin romper la aplicación
-ni perder documentos necesarios para la entrega.
+- PR63: cotejo documental de 46 metodos/rutas y guia; CI252 con 493 tests aprobados, 4 SQL omitidos; no fue nueva QA remota. La fecha 10/11/2026 del registro anterior identifica su preparacion; no se transfiere a todos los pedidos de estudio.
+- PR60: auditoria de la rubrica 2025 recibida, 489 tests y comprobacion sin .git; el primer informe provisional previo no se convierte retrospectivamente en lectura de un PDF que aun faltaba.
+- PR61: 494 tests, 4 PostgreSQL aparte y 22 checks oficiales de checkout/carrusel, segun su evidencia. El usuario acepta excluir migraciones historicas y rollback del limite de 40; el SQL activo se modularizo con una migracion nueva.
+- PR62: 493 tests y 52 checks locales/oficiales, fuente publicada 85147d8. Se retiraron recientes y parrafos visibles sin quitar SEO ni carrusel. Fechas UTC/locales distintas no prueban otra etapa.
+- PR64-PR68: traslado de aplicacion a app/, retirada autorizada de capturas, guias de defensa y consignas, manual/API integrados en README y declaracion en raiz. Los archivos necesarios de CI/configuracion permanecen; PR67 sigue pendiente y no se incorpora en esta tarea. grant-google-admin.js y social-card.html se retiraron con evidencia de ausencia de consumidores; no se vuelve a ejecutar esa limpieza.
+- PR69: icono iPhone cuadrado y centrado, 497 tests y 4 SQL omitidos, deployment oficial cb0d0913-fd07-4ee2-a7e8-5751889888bb, backend ef043065 sin redesplegar. Verificacion fisica en iPhone no acreditada.
+- PR70: 198 a 157 archivos, 41 auxiliares retirados y dos PDF consolidados; 497 tests, 4 omitidos y cuatro builds secos. Main 3305d56 integrado con CI aprobado; sin deployment. CI, dos logos antiguos y providers de payments conservados por decision del usuario.
+- Cronologia documentada con discrepancia: 29ee9ea es del 27/10 en Git y una nota anterior lo ubico el 28/10. No se cambia la fecha del prompt por esa diferencia. No se acreditan asistencia, Classroom, programacion o revision humana individual con estas cifras.
 
-REPOSITORIO
-https://github.com/facumartea/dreams
+</details>
 
-OFICIAL
-https://dreams-perfumes.pages.dev/
-
-ESTRUCTURA DESEADA
-Conservar principalmente:
-- Código JS/MJS/CJS, JSON, HTML, CSS y Python si realmente existe y se utiliza.
-- README.md.
-- Un único Markdown de declaración y registro de prompts.
-
-Quiero retirar documentación operativa de IA, prompts de continuidad,
-planes obsoletos, duplicados y archivos innecesarios.
-
-IMPORTANTE
-No uses la extensión como único criterio.
-Si un archivo fuera de esa lista es necesario para ejecutar, instalar,
-probar, publicar, conservar datos o cumplir la rúbrica, NO lo borres:
-explicame su función y pedime una decisión.
-
-1. ANALIZAR ANTES DE BORRAR
-Leé las instrucciones aplicables y revisá Git, PRs y cambios locales.
-Partí de la versión vigente, preservando trabajo ajeno.
-Creá una branch específica de limpieza.
-
-Inventariá archivos y comprobá referencias en:
-- Imports.
-- HTML, CSS y JavaScript.
-- package.json y scripts.
-- CI de GitHub.
-- Configuración y build de Cloudflare.
-- Migraciones y esquema.
-- Tests.
-- Documentación e índices.
-
-No borres carpetas enteras sin revisar su contenido.
-No incluyas archivos nuevos de otras tareas en la limpieza.
-
-2. DECLARACIÓN DE PROMPTS
-Consolidá en un único Markdown la declaración de uso de IA y el registro
-de prompts disponibles.
-
-Preservá contenido único de las bitácoras antes de retirar duplicados.
-Identificá extractos, resúmenes y datos faltantes.
-No inventes prompts, fechas, resultados o revisión humana.
-No incluyas secretos ni datos privados.
-
-La limpieza debe mejorar organización, no ocultar el uso de IA.
-
-3. ELIMINACIONES AUTORIZADAS
-Podés retirar, después de comprobar que no tienen dependencias ni información
-única necesaria:
-- Prompts operativos de continuidad ya obsoletos.
-- Planes descartados.
-- Archivos temporales o generados innecesariamente versionados.
-- Duplicados exactos.
-- Documentación repetida cuyo contenido vigente ya esté consolidado.
-
-No reescribas el historial de Git.
-No elimines evidencia única o documentos exigidos por la rúbrica.
-
-4. EXCEPCIONES: CONSULTARME ANTES
-Prepará una única lista agrupada con los archivos que no cumplen mi lista
-de extensiones pero conviene conservar.
-
-Revisá especialmente:
-- Imágenes, logos, iconos y fuentes utilizados.
-- SQL y migraciones.
-- pnpm-lock.yaml y pnpm-workspace.yaml.
-- Workflows YAML.
-- Configuraciones Wrangler JSONC/TOML.
-- .gitignore y otros archivos de herramientas.
-- AGENTS.md y su alcance.
-- robots.txt y sitemap.xml.
-- Manual, wireframe, D.E.R., rúbrica y documentos académicos.
-- Licencias y atribuciones.
-- Configuración histórica cuya necesidad no esté clara.
-
-Para cada excepción indicá:
-- Archivo o grupo.
-- Para qué sirve.
-- Qué se rompería o perdería al retirarlo.
-- Si existe una alternativa segura.
-- Recomendación.
-
-No borres estos archivos hasta que responda.
-Diferenciá “no lo exige la rúbrica” de “no lo necesita la aplicación”.
-
-No agregues Python ni conviertas código a otro lenguaje para cumplir
-una lista de extensiones.
-No renombres archivos de configuración a extensiones incorrectas.
-
-5. VALIDAR LA LIMPIEZA
-Establecé una base de checks antes de cambiar, reutilizando evidencia vigente.
-Después:
-- Actualizá referencias de archivos retirados.
-- Comprobá enlaces del README.
-- Ejecutá sintaxis, tests pertinentes y builds.
-- Verificá instalación reproducible.
-- Conservá el límite de 40 líneas por función.
-- Revisá ausencia de secretos.
-
-No retires tests para que el proyecto parezca más pequeño.
-Si una eliminación produce un fallo, restaurá el archivo e informá la causa.
-
-6. GITHUB Y OFICIAL
-Prepará commit, push y PR revisable.
-No hagas merge mientras haya excepciones pendientes de mi decisión.
-
-Esta tarea no autoriza modificar funcionalidades, datos, Auth, credenciales
-ni configuración de producción.
-
-Si solo se elimina documentación, no despliegues la web.
-Si una modificación afecta al artefacto publicado, explicá su impacto
-y las verificaciones necesarias antes de publicar.
-
-No modifiques otros sitios ni previews.
-
-ENTREGA
-- Árbol propuesto del repositorio.
-- Archivos eliminados y justificación.
-- Archivos consolidados.
-- Lista de excepciones que necesitan mi decisión.
-- Resultado de checks y builds.
-- Branch y PR.
-- Confirmación de que no se modificó la oficial.
-
-El objetivo no es borrar la mayor cantidad posible:
-es dejar únicamente lo necesario, con las excepciones que yo apruebe.
-```
-
-## H. Raíz con sólo README y reducción de carpetas · 10/11/2026 local
-
-- Fecha: 10/11/2026, contexto horario del usuario en Buenos Aires. La branch usa 20261111 por la fecha UTC inicial; no se cambia ese nombre para aparentar otra etapa.
-- Prompt original completo disponible: «reduci todo lo  mas posible de esta imagen tiene que quedar solo el reedme y de las carpetas reduci lo mas posible». La captura muestra archivos de la raíz; no se inventa contenido adicional de ella.
-- Objetivo: reducir archivos visibles en la raíz y documentación repetida sin romper instalación, publicación futura ni entrega.
-- Resultado: proyecto ejecutable en app/; raíz con README y carpetas app/, docs/, .github/. Históricos consolidados en cuatro HTML sin JavaScript, con contenido original verificable. Dos duplicados exactos unificados preservando sus procedencias como alias. Configuración necesaria, tests, migraciones, material académico, capturas únicas y fuentes editables conservados.
-- Evidencia: PR64 y second_phase de docs/limpieza-20261111.json. No se modifica la oficial ni se ejecuta publicación por la reorganización.
-- Pruebas del agente: registrar instalación limpia, regresiones, límite40, builds, integridad de archivos movidos y contenido histórico en second_phase.checks; no atribuir QA remota nueva a estas pruebas.
-- Revisión humana: esta solicitud autoriza la reducción. No acredita revisión de código ni dominio de los integrantes.
-
-## I. Retirar rúbricas y sobrantes de la carpeta mostrada
-
-- Fuente: solicitud posterior a la integración de PR64, acompañada de capturas de docs/entrega-2026. No se reconstruye una fecha no confirmada del mensaje.
-- Prompt original completo disponible: «aca en esta captuira tambien retirar todo lo que no este en la rubrica los archivos de la rubrica retirarlos tambien solo dejar wireframe y lo que pide la rubrica esos dos de la imagen retirar tambien».
-- Objetivo: dejar en esa carpeta documentación de entrega, sin copias de las consignas ni reportes de control sobrantes.
-- Resultado: se conservan manual Markdown/PDF, API, wireframe PNG/SVG y la captura usada por el manual; se retiran seis reportes/esquemas antiguos, tres capturas sin uso y las cuatro copias PDF/TXT de las rúbricas 2025/2026. El D.E.R. actual, su diccionario y fuentes permanecen en docs/auditoria-2025. Aplicación, SQL, configuración y otros documentos de estudio/entrega no se modifican.
-- Evidencia: branch docs/entrega-sin-reportes-ni-rubricas y PR de esta limpieza. Referencias de navegación actualizadas; inventarios/archivos históricos se mantienen como fotografías de sus commits, sin reescribirlos como si fueran la lista actual.
-- Pruebas del agente: lectura del PDF 2025 antes de retirarlo; revisión de consumidores, enlaces Markdown y Word/PDF, conservación del D.E.R./manual y build Pages comparado con el artefacto anterior. CI según los checks de la PR. No es QA remota nueva y no hay deployment.
-- Revisión humana: el usuario autoriza explícitamente la retirada indicada. No se acredita revisión de código ni participación por esa autorización.
-
-## J. Entrega mínima sin capturas · 11/11/2026
-
-- Prompt original completo: «saca este (capturas) y de las otras fotos retirar todos los archivos posibles». Capturas adjuntas de docs/ y app/ utilizadas como referencia de alcance.
-- Objetivo: retirar capturas y reportes de trabajo, reunir documentos de entrega y eliminar utilidades no utilizadas sin romper ejecución, pruebas o publicación.
-- Resultado: documentación reunida en docs/, con wireframe/mapa y D.E.R. en sus carpetas. Manual sin capturas; guía de defensa y registro de IA conservados. Los metadatos estructurales de BD se reúnen en un solo esquema JSON. Se retiran reportes de auditoría/limpieza, copias históricas y pseudocódigo de favoritos obsoleto; wireframe satisface la alternativa documental. Las pruebas existentes no se eliminan. Se retiran el CLI antiguo grant-google-admin.js y el template gráfico social-card.html, sin consumidores en aplicación/build/tests; no se ejecuta la herramienta de roles.
-- Evidencia: branch refactor/entrega-minima-sin-capturas y PR de esta tarea. Los textos originales siguen en Git; enlaces históricos usan el commit de origen y no inventan hechos actuales.
-- Pruebas del agente: revisión de consumidores, rutas de documentos, esquema y 46 endpoints; prueba del inventario --write sin .git; instalación limpia, checks, tests y builds según resultados de la PR. No se atribuye nueva QA remota ni revisión humana. No hay deployment ni cambios de Auth/credenciales/datos.
+<details>
+<summary>antecedentes de seguridad unicos; informes historicos, no fallos vigentes acreditados</summary>
 
 ## Antecedentes de seguridad conservados
 
@@ -1305,56 +1211,16 @@ Antes de implementar S3 sólo hace falta confirmar una decisión de producto: si
 
 > Procedencia de la entrada siguiente: PR #67, commit `2ade1033d89110d220e65f564d5eb5de3aa3360c`, todavía sin integrar. Se conserva como antecedente de trabajo y pruebas de esa branch; no describe cambios funcionales incorporados por esta limpieza documental.
 
-## Simplificacion y lectura del codigo · 11/11/2026
 
-- Tipo: resumen identificado del mensaje actual; no es una cita literal reconstruida.
-- Solicitud: reducir archivos sin romper la aplicacion; conservar README, base de datos, wireframe y declaracion de prompts; explicar el codigo en comentarios simples y nombres propios en espanol, con minusculas y sin tildes.
-- Base comprobada: main `03a0ee1498040b98ddb7ca4126d24631a37b88ed`, despues de la limpieza ya integrada en PR66.
-- Cambios: manual, API e indice se consolidan en README; se retiran sus copias separadas y la guia de estudio del repositorio. Los documentos anteriores siguen en el commit citado. Se conservan configuracion necesaria, SQL, tests, imagenes, diagramas y fuentes editables.
-- Uso de IA: los renombres, comentarios y documentos reciben asistencia de IA. Redactar de forma natural no acredita trabajo manual ni cambia la procedencia registrada. No se modifica el historial de Git.
-- Pruebas: se registraran en la PR las comprobaciones de sintaxis, limite de funciones, regresiones y builds realmente ejecutadas. No se atribuye QA remota nueva a estas pruebas locales.
-- Revision humana: no acreditada; la solicitud y autorizacion del usuario no prueban una revision del codigo por los integrantes.
-- Estado del registro: parcial; faltan conversaciones originales no aportadas y evidencia de revision humana. No se inventan mensajes ni fechas.
+</details>
 
-- Resultado local final: instalacion congelada y sin .git, sintaxis, inventario de 119 archivos y 2202 registros sin excesos; 495 pruebas aprobadas, 4 SQL omitidas por falta de PostgreSQL aislado; builds cloudflare, pages, admin-review y official en modo local aprobados. Comparacion estructural con parser de los 57 archivos JS/MJS/CJS de produccion: cambios limitados a nombres, comentarios y alias de exportacion, sin alterar instrucciones ni datos de negocio. No se desplego la oficial.
+## Revision de esta entrega
 
-## Organización documental de docs/ · 11/11/2026
+- El wireframe conserva 19 paginas, sin la portada; der.pdf conserva solo la lamina original del diagrama. No hay nueva consulta remota ni cambios de esquema.
+- Comentarios propios revisados en minusculas y sin acentos. Las instrucciones JavaScript se comparan con parser; los textos HTML/CSS se comparan sin comentarios. No se cambian identificadores ni contratos para dar apariencia humana al codigo.
+- No se ejecutan seeds, resets, migraciones, reparaciones de secretos ni altas comerciales. Instalacion y pruebas usan una copia limpia sin .git ni secretos. Arranque conectado bloqueado por falta de un proyecto de desarrollo acreditado; no se usa la clave de produccion.
+- Tests, CI, SQL, configuraciones y providers conservados. La oficial permanece intacta; cambiar comentarios altera bytes del build, pero no se publica por rutina. Los resultados finales y el inventario por carpeta se entregan en la PR de esta tarea.
+- Revision humana del codigo por integrantes: no acreditada.
 
-- Tipo: resumen identificado de la solicitud actual y su aclaración; no es una cita literal reconstruida.
-- Base comprobada: main `03a0ee1498040b98ddb7ca4126d24631a37b88ed`. La PR67 sigue separada; esta tarea no incorpora sus cambios de código.
-- Objetivo: dejar docs/ sólo con índice, wireframe, mapa y D.E.R.; trasladar esta declaración a la raíz y preservar el contenido académico requerido.
-- Decisión comunicada por el usuario: eliminar la guía de defensa en Markdown, Word y PDF, sin trasladarla; integrar íntegramente manual y API en README antes de eliminar sus copias separadas; integrar la limpieza verificada sin publicar la web.
-- Cambios: declaración trasladada a DECLARACION_PROMPTS.md; diccionario trasladado a docs/base-de-datos/README.md; índice sustituido por docs/README.md; manual y API completos integrados en README; se retiran defensa.md/.docx/.pdf, manual.md/.pdf, api.md y docs/.gitattributes. No se crean copias adicionales de los diseños.
-- Pruebas y revisión: se registrarán los resultados comprobados en la PR. No se presenta esta revisión documental como QA autenticada nueva ni como una lectura nueva del esquema remoto.
-- Uso de IA: análisis, organización y comprobaciones asistidos por IA; sin atribuir trabajo manual o revisión de los integrantes. Registro parcial; conversaciones ausentes no reconstruidas.
-
-- Resultado local comprobado: enlaces relativos y contenido completo del manual/API verificados; 19 PNG válidos, 17 SVG legibles y fuentes DOT compiladas; PDFs de wireframe (17 páginas), mapa y D.E.R. abiertos y revisados. Instalación congelada sin .git ni secretos, sintaxis, inventario de 40 líneas, test de estructura, build:pages y build:official aprobados. No se modifica el código ejecutable, las migraciones ni la configuración; sólo se actualiza la expectativa de archivos raíz del test para incluir esta declaración obligatoria.
-
-
-## Icono de acceso en iPhone · 11/11/2026
-
-- Tipo: resumen identificado del pedido actual y su captura; no es una transcripción literal reconstruida.
-- Solicitud: corregir el icono de DREAMS agregado desde Chrome al inicio del iPhone, sin texto de rotulado ni descentrado.
-- Causa: apple-touch-icon utilizaba dreams-isotype.png, rectangular (141 × 110) y con la palabra ISOTIPO dentro de la imagen.
-- Cambio: icono PNG cuadrado dedicado, opaco y con el monograma centrado, generado con asistencia de IA a partir de las marcas existentes. Se conserva el logo dentro de la web y los originales. Los HTML apuntan al icono nuevo y declaran el título DREAMS. Pages incluye sus bytes y mantiene las rutas y permisos del backend.
-- Verificación: pruebas de referencias y dimensiones, entrega binaria/HEAD/ETag del icono y regresiones existentes; resultados y publicación se registran en la PR. El icono ya guardado por iOS puede requerir quitar y volver a agregar sólo ese acceso.
-- Alcance: sólo la oficial autorizada; sin cambios de Auth, base de datos, credenciales Admin, DNS o pagos. QA autenticada previa se reutiliza únicamente si la versión del backend sigue coincidiendo; no se presenta como una nueva prueba autenticada.
-- Revisión humana del código y resultado en un iPhone físico: no acreditadas en esta ejecución.
-
-- Resultado local: copia limpia sin .git ni secretos, sintaxis e inventario aprobados (119 archivos, 2207 registros, ningún exceso de 40 líneas). 497 pruebas aprobadas y 4 SQL omitidas; builds Pages y backend oficial en seco aprobados. Se añaden dos regresiones específicas del icono y su entrega HTTP. Sin cambios en funciones de negocio.
-
-- Publicación comprobada: Pages production cb0d0913-fd07-4ee2-a7e8-5751889888bb, artefacto de be9cacf3d00e5703b5cf08bd93193732a1bd89e4; rollback 3ad69579 conservado. Inicio y PNG responden 200; SHA-256 del PNG remoto idéntico al aprobado. La versión del backend permanece ef043065 y no se desplegó otro Worker. Gate renovado mediante health SDK y cerrado tras publicar. Resultado en iPhone físico pendiente de volver a agregar el acceso; no se afirma verificación en el dispositivo.
-
-
-## Consolidación de diseños e inventario exhaustivo · 11/11/2026
-
-- Tipo: resumen identificado de la solicitud actual, no una cita literal reconstruida.
-- Base revisada: main `6e4647c9c6f44708a4e39a3b26e183718f2314e6`, 198 archivos versionados. La PR67 y demás trabajos pendientes no se incorporan.
-- Objetivo: un solo PDF en wireframe y otro en base de datos; preservar aplicación, manual/API, declaración, SQL y archivos necesarios; inventario por cada carpeta con decisiones explícitas.
-- Resultado documental: wireframe de 20 páginas (17 pantallas, introducción y dos mapas) y base de datos de 15 páginas (D.E.R., alcance, relaciones, 76 columnas, 48 restricciones y 32 índices). Fuentes y exportaciones auxiliares se retiran al quedar consolidada la información, sin crear otra carpeta para archivarlas. Se corrigen notas de evidencia Admin obsoletas sin inventar QA nueva.
-- Revisión del resto: proveedores demo y Mercado Pago siguen importados por arranque Node, Worker general y tests; no se eliminan ni se activan cobros. Workflow CI activo conservado. Dos imágenes antiguas sin consumidores internos pero incluidas en assets quedan conservadas, pendientes de decidir el retiro de sus URLs.
-- Límites: la consulta de protección de rama devolvió 403; rulesets accesibles devolvió lista vacía. No se afirma que no haya protección. Los metadatos de BD siguen teniendo el alcance histórico documentado; no se consulta producción ni datos personales.
-- Evidencia y validaciones: inventario exhaustivo y resultados comprobados se entregan en la PR. No se modifica código, configuración, tests, Auth, datos o credenciales; no se despliega la oficial ni otra web.
-- Uso de IA: análisis y consolidación asistidos por IA, sin atribuir autoría manual, participación o revisión de integrantes que no esté acreditada. El historial de prompts sigue siendo parcial.
-
-- Validación final local: instalación con lockfile en copia limpia sin .git; sintaxis y límite de 40 líneas aprobados; 497 tests aprobados, 4 SQL omitidos y 0 fallos; cuatro builds en seco aprobados. El artefacto Pages conserva el SHA-256 publicado. PDF de 20 y 15 páginas renderizados y revisados visualmente; texto sin recortes y metadatos documentados conservados. Enlaces relativos válidos y manual/API del README sin pérdida de contenido.
+- Resultado comprobado de esta revision: 18 fragmentos de 5 a 40 lineas coinciden exactamente con sus archivos; 108 archivos JavaScript con el mismo arbol de instrucciones, 123 comentarios revisados. Instalacion, sintaxis, inventario y cuatro builds aprobados; 497 tests aprobados, 4 SQL omitidos, 0 fallos. Doce checks de navegador con fixtures locales en movil/escritorio; no QA remota. El arranque sin variables obligatorias termina con salida 1; conexion de desarrollo BLOQUEADA.
+- Primer ensayo: retirar un bloque CSS comentado y comentar por fuera de la plantilla del pie rompio tres comprobaciones de fuente. Se restauraron esos contenidos y la suite volvio a aprobar, sin cambiar sus aserciones ni habilitar estilos que estaban comentados.

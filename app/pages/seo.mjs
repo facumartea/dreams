@@ -1,5 +1,5 @@
 import filter_model from '../public/js/catalog-filter-state.js';
-// SEO público de Pages: sólo lecturas acotadas al backend inmutable aprobado.
+// seo publico de pages: solo lecturas acotadas al backend inmutable aprobado.
 export const SITE_ORIGIN = 'https://dreams-perfumes.pages.dev';
 const social_image = `${SITE_ORIGIN}/assets/dreams-social.png`;
 const public_pages = new Set(['/', '/index.html', '/catalogo.html', '/nosotros.html', '/producto.html']);

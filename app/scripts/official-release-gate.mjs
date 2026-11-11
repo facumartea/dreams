@@ -1,3 +1,4 @@
+// comprueba compatibilidad y evidencia de pruebas antes de permitir una publicacion.
 const project = 'https://nwsmbemwtexmrtpkgxrz.supabase.co';
 const checks = ['registration', 'sessions', 'cart_isolation', 'review_ownership', 'admin_persistence', 'academic_compatibility'];
 export function official_release_ready(release, now = Date.now()) {

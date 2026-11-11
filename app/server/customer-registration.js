@@ -1,3 +1,4 @@
+// registro normal con el proveedor: crea un perfil cliente y nunca acepta un rol enviado por el formulario.
 const { session } = require('./auth-cookies');
 
 function registration_values(body = {}) {
@@ -11,7 +12,7 @@ function registration_values(body = {}) {
 }
 
 async function save_customer(database, user, values) {
-    // Nunca aceptar roles del formulario ni reemplazar perfiles existentes.
+    // nunca aceptar roles del formulario ni reemplazar perfiles existentes.
     const result = await database.from('profiles').upsert({ id: user.id, name: values.name, role: 'customer' }, { onConflict: 'id', ignoreDuplicates: true });
     if (result.error) throw result.error;
 }
@@ -30,7 +31,7 @@ function registered_response(response, data, values, production, demo = false, c
 }
 
 async function normal_registration(context, values, response) {
-    // signUp entrega la sesión cuando Confirm email está desactivado en Supabase.
+    // el registro normal devuelve sesion cuando el proveedor no exige confirmar el correo.
     const result = await context.create_auth_client().auth.signUp({
         email: values.email, password: values.password, options: { data: { name: values.name } }
     });
@@ -41,7 +42,7 @@ async function normal_registration(context, values, response) {
 }
 
 async function legacy_demo_registration(context, values, response) {
-    // Compatibilidad histórica, desactivada en oficial y preview; no resuelve este cambio.
+    // compatibilidad historica desactivada en la oficial y en revision; el registro normal no usa este atajo.
     const created = await context.database.auth.admin.createUser({
         email: values.email, password: values.password, email_confirm: true, user_metadata: { name: values.name }
     });

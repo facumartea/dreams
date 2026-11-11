@@ -1,3 +1,4 @@
+// diagnostico privado de conexion: informa estados sin mostrar claves ni cabeceras de acceso.
 import { create_official_database, official_project_url } from './official-client.mjs';
 
 function header_value_valid(value) {

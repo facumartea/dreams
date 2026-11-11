@@ -1,3 +1,4 @@
+// carga inicial de desarrollo: solo corresponde a una base autorizada y vacia.
 require('dotenv').config({quiet:true});
 
 const image_urls = [

@@ -1,3 +1,4 @@
+// herramienta de mantenimiento de secretos con validaciones y pruebas propias.
 import { pathToFileURL } from 'node:url';
 const project = 'nwsmbemwtexmrtpkgxrz';
 const account = '9f3d7af60fcb0c2b4fff8570843588f9';

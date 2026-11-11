@@ -1,4 +1,4 @@
-/* Los permisos llegan del servidor; nunca se deducen de nombres o correos. */
+/* los permisos llegan del servidor; nunca se deducen de nombres o correos. */
 class DreamsReviews {
     constructor() { this.load_id = 0; this.pending = null; }
     async request(path, options) {

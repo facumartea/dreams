@@ -1,3 +1,4 @@
+// arranque local: prepara la conexion y escucha en el puerto configurado; no carga datos iniciales.
 require('dotenv').config({ quiet: true });
 const { createClient } = require('@supabase/supabase-js');
 global.WebSocket = require('ws');

@@ -1,3 +1,4 @@
+// detalle del perfume: conserva el enlace de consulta y agrega al carrito con disponibilidad conocida.
 async function load_product_detail() {
     const params = new URLSearchParams(window.location.search);
     const product_id = Number(params.get('id'));
@@ -69,7 +70,7 @@ function product_scent_trail(product) {
 function setup_product_actions(product) {
     document.getElementById('detail-add').addEventListener('click', () => add_to_cart(product));
     document.querySelector('[data-whatsapp-inquiry]')?.addEventListener('click', () => {
-        // El enlace nativo abre durante el gesto; la consulta registrada no debe bloquearlo.
+        // el enlace nativo abre durante el gesto; la consulta registrada no debe bloquearlo.
         fetch('/api/inquiries', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ product_id: product.id }), keepalive: true }).catch(() => {});
     });
 }

@@ -1,4 +1,4 @@
-// Helpers compartidos por navegador y pruebas Node.
+// funciones de seguridad compartidas por navegador y pruebas locales.
 const fallback_image = '/assets/dreams-bottle.png';
 
 function escape_html(value) {

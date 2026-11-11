@@ -1,3 +1,4 @@
+// coordina resumen y formulario; el flujo academico envia referencias, nunca los datos de tarjeta.
 let checkout_quote = null;
 let applied_coupon = null;
 let checkout_config = null;

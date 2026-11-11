@@ -1,4 +1,4 @@
-// Desplazamiento manual: conserva enlaces y botones de las tarjetas, sin autoplay.
+// desplazamiento manual: conserva enlaces y botones de las tarjetas, sin autoplay.
 function setup_featured_carousel(track) {
     const region = document.getElementById('featured-carousel');
     if (!region || track.children.length < 2) return;
@@ -24,7 +24,7 @@ function setup_featured_carousel(track) {
     previous.addEventListener('click', () => move(-1));
     next.addEventListener('click', () => move(1));
     track.addEventListener('keydown', event => {
-        // No intercepta edición ni acciones dentro de las tarjetas.
+        // no intercepta edicion ni acciones dentro de las tarjetas.
         if (event.target !== track || !['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
         event.preventDefault();
         if (event.key === 'Home' || event.key === 'End') track.scrollTo({ left: event.key === 'Home' ? 0 : track.scrollWidth, behavior: 'instant' });

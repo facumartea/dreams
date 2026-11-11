@@ -3,7 +3,7 @@ const assert = require('node:assert/strict');
 const vm = require('node:vm');
 const { readFileSync } = require('node:fs');
 
-// Execute the browser controller with deferred HTTP responses; no real API or storage.
+// prueba el carrito con respuestas demoradas; no usa una api ni almacenamiento reales.
 function controller() {
     let cart = [{ id: 1, quantity: 1, price: 100 }];
     const requests = [], renders = [], saved = [], notices = [];

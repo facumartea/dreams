@@ -1,3 +1,4 @@
+// revisa sintaxis de los archivos propios sin arrancar la aplicacion ni tocar la base.
 const { readdirSync, statSync } = require('node:fs');
 const { join } = require('node:path');
 const { spawnSync } = require('node:child_process');

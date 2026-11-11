@@ -1,3 +1,4 @@
+// entrada del backend privado oficial: usa el cliente servidor y restringe las rutas disponibles.
 import { createServer } from 'node:http';
 import { createHmac } from 'node:crypto';
 import { handleAsNodeRequest } from 'cloudflare:node';
@@ -54,7 +55,7 @@ export async function fetch_official(request, env) {
 
 export default {
     fetch: fetch_official,
-    // Absorber eventos antiguos durante la propagación de la retirada del Cron.
-    // Producción no conserva diagnóstico, QA ni acceso a la contraseña temporal.
+    // absorber eventos antiguos durante la propagacion de la retirada del cron.
+    // produccion no conserva diagnostico, qa ni acceso a la contrasena temporal.
     scheduled() {}
 };

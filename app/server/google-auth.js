@@ -1,3 +1,4 @@
+// acceso con google preparado: valida el regreso permitido y solo se habilita si el entorno esta listo.
 const { auth_cookie, session } = require('./auth-cookies');
 const COOKIE = 'dreams_google_pkce';
 const allowed_next = value => ['/checkout.html', '/admin', '/cuenta.html'].includes(value) ? value : '/cuenta.html';

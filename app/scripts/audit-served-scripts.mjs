@@ -8,7 +8,7 @@ import { inventory } from './function-inventory.mjs';
 const origin = 'https://dreams-perfumes.pages.dev';
 const digest = text => createHash('sha256').update(text).digest('hex');
 
-// Sólo lee la oficial. El fetch opcional permite usar una sesión Admin en memoria.
+// solo lee la oficial. el fetch opcional permite usar una sesion admin en memoria.
 export async function audit_served_scripts(fetcher = fetch) {
     const root = new URL('../public/js/', import.meta.url);
     const names = (await readdir(root)).filter(name => /^[a-z0-9-]+\.js$/.test(name));

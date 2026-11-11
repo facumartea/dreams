@@ -1,26 +1,28 @@
 # Diseños de DREAMS
 
-Documentación retrospectiva del diseño implementado, consolidada el 11/11/2026 sobre main `6e4647c9c6f44708a4e39a3b26e183718f2314e6`. No se presenta como una preentrega anterior al desarrollo ni acredita participación individual.
+Documentación retrospectiva del diseño implementado. Esta edición parte de main `3305d56dcf307ee69436d9393adef1b0bd6382b6`; no acredita una preentrega ni una nueva verificación remota.
 
 ## Wireframe y navegación
 
-[Wireframe completo y mapa de conexiones · PDF, 20 páginas](wireframe/wireframes.pdf).
+[Wireframe y mapa de conexiones · PDF, 19 páginas](wireframe/wireframes.pdf).
 
-Incluye 17 pantallas con distribución de escritorio y adaptaciones móviles, una introducción de alcance y dos mapas legibles del recorrido público, cuenta y Admin. Conserva portada estática, carrusel manual, cupón, checkout académico y las colecciones accesibles desde el menú. Los rótulos de versión y las antiguas notas de bloqueo Admin se actualizan sin afirmar una nueva QA remota autenticada. El icono de iPhone de PR69 no altera esas distribuciones.
-
-Las láminas de pantallas usan formato horizontal amplio para conservar legibilidad y detalle. El mapa anterior, muy ancho, se reorganiza en dos páginas vectoriales. El PDF tiene marcadores de navegación y puede ampliarse sin perder texto.
+Se retiró únicamente la primera página del PDF anterior: era la portada con introducción e índice, no una pantalla de la aplicación. Permanecen las 17 pantallas de escritorio/móvil y los dos mapas, sin rediseñarlas. Se conserva su carácter retrospectivo y la numeración original de las láminas (2/20 a 20/20). Portada estática, carrusel manual, cuenta, Admin, carrito, cupón y checkout académico siguen representados.
 
 ## Diseño de base de datos / D.E.R.
 
-[D.E.R., relaciones y estructura documentada · PDF, 15 páginas](base-de-datos/der.pdf).
+[D.E.R. · una lámina PDF](base-de-datos/der.pdf).
 
-Incluye el diagrama vectorial, PK/FK, cardinalidades, relaciones, discrepancias brand/marca y baseline/migraciones; las 76 columnas con tipo, nulabilidad y DEFAULT, 48 restricciones y 32 índices del esquema documentado. Distingue tablas activas, historial, asociaciones lógicas en JSON y la frontera auth.users.id.
+Es exactamente la segunda página del PDF anterior, titulada «DREAMS · D.E.R. remoto verificado 03/11/2026 · sólo metadatos». Se extrajo del original vectorial del repositorio, no de una captura. No tiene portada ni anexos y conserva sus tablas, campos principales, PK/FK y cardinalidades sin recortes. Mantiene su pie original; es una sola página.
 
-Los metadatos corresponden al relevamiento documentado del 03/11/2026; esta limpieza no consulta de nuevo producción ni presenta el PDF como dump o esquema interno completo de Supabase. Las migraciones ejecutables permanecen en [app/supabase](../app/supabase/), sin cambios.
+El título describe un relevamiento histórico del 03/11/2026, no una consulta nueva a producción ni el esquema interno completo de Supabase. El diagrama separa tablas activas e históricas y muestra sólo auth.users.id como frontera de Auth. Los campos JSON no se convierten en relaciones FK ficticias. El baseline usa brand y el esquema documentado usa marca: el adaptador conserva la API. La documentación completa previa permanece en el [historial del PDF](https://github.com/facumartea/dreams/blob/3305d56dcf307ee69436d9393adef1b0bd6382b6/docs/base-de-datos/der.pdf); no se oculta ni se duplica en otra carpeta.
 
-## Documentación requerida que sigue disponible
+La estructura ejecutable sigue en [app/supabase](../app/supabase/), sin cambios. Los PDF no reemplazan migraciones ni autorizan aplicarlas.
 
-- [Instalación, manual de uso y explicación de la API](../README.md).
-- [Declaración de IA y registro parcial de prompts](../DECLARACION_PROMPTS.md).
+## Manual, API y declaración
 
-Por solicitud expresa, cada carpeta de diseño contiene sólo su PDF. Las fuentes y exportaciones auxiliares se retiraron después de consolidar la información necesaria; no se trasladaron a otra carpeta del repositorio. No se publica la web por esta limpieza.
+- [Instalación y ejecución local](../README.md#instalación-y-ejecución).
+- [Manual de uso](../README.md#manual-de-uso).
+- [API externa y recorrido](../README.md#api-externa-y-recorrido).
+- [Declaración y bitácora parcial de prompts](../DECLARACION_PROMPTS.md).
+
+Cada carpeta de diseño contiene únicamente su PDF. No se agregan copias, imágenes ni fuentes auxiliares.

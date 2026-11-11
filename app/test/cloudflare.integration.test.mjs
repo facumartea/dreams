@@ -49,8 +49,8 @@ function worker_login(harness) {
     };
 }
 
-// HTTP fixtures only: the real Worker, Express and Supabase SDK run in workerd.
-// No credentials or requests to the real Supabase project are used here.
+// el worker y el servidor corren localmente con respuestas de prueba.
+// no se usan credenciales ni se envian peticiones al proyecto real.
 test('Workers preserva rutas, sesiones aisladas, Admin, errores y caché privada', { timeout: 60000 }, async t => {
     const calls = [];
     const tokens = new Map();

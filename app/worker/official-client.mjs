@@ -1,3 +1,4 @@
+// crea el cliente de la base en servidor; la clave no se incluye en la pagina del usuario.
 import { createClient } from '@supabase/supabase-js';
 
 export const official_project_url = 'https://nwsmbemwtexmrtpkgxrz.supabase.co';

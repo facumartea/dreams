@@ -1,3 +1,4 @@
+// soporte interno de sesiones de prueba cifradas y con vencimiento; no se reactiva en produccion.
 import { create_official_database } from './official-client.mjs';
 const origin = 'https://dreams-perfumes.pages.dev';
 const project = 'https://nwsmbemwtexmrtpkgxrz.supabase.co';
@@ -31,8 +32,8 @@ async function normal_admin_session(env, services) {
     return { origin, run: env.QA_RUN_ID, expires_at: Number(env.QA_EXPIRES_AT), cookies };
 }
 
-// Sólo scheduled privado. Contraseña confinada al Worker; sesión cifrada para
-// una clave pública efímera cuyo componente privado vive únicamente en RAM.
+// solo scheduled privado. contrasena confinada al worker; sesion cifrada para
+// una clave publica efimera cuyo componente privado vive unicamente en ram.
 export async function prepare_browser_qa(env, services = {}) {
     const expires = Number(env.QA_EXPIRES_AT);
     if (!env.QA_BROWSER_PUBLIC_KEY || !env.QA_BROWSER_VAULT || !env.DREAMS_QA_ADMIN_PASSWORD) return false;

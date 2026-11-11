@@ -1,3 +1,4 @@
+// recupera la confirmacion con su referencia; un fallo no debe vaciar el carrito ni inventar un resultado.
 const RESULT_COPY = {
     approved: ['Pago realizado con éxito', 'Tu compra fue registrada correctamente.'],
     rejected: ['Pago rechazado', 'No se realizó ningún cobro. Podés volver a intentarlo.'],

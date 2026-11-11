@@ -1,3 +1,4 @@
+// menu compartido: mantiene foco, teclado y apertura movil sin cambiar las rutas de las colecciones.
 'use strict';
 {
     const root = typeof window === 'object' ? window : globalThis;

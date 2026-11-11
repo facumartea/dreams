@@ -1,4 +1,4 @@
-// Máscaras locales: sólo memoria del formulario; nunca red, storage ni analítica.
+// mascaras locales: solo memoria del formulario; nunca red, storage ni analitica.
 function academic_digits(value, limit) { return String(value).replace(/[^0-9]/g, '').slice(0, limit); }
 function academic_format(value, kind) {
     const raw = academic_digits(value, kind === 'number' ? 16 : kind === 'expiry' ? 4 : 3);
@@ -14,7 +14,7 @@ function academic_mask(input, kind) {
         input.dispatchEvent(new Event('input', { bubbles: true }));
     });
     input.addEventListener('beforeinput', event => {
-        // Borrar junto al separador también elimina un dígito, sin atrapar el cursor.
+        // borrar junto al separador tambien elimina un digito, sin atrapar el cursor.
         const at = input.selectionStart;
         if (event.inputType !== 'deleteContentBackward' || at !== input.selectionEnd || !at || !/[ /]/.test(input.value[at - 1])) return;
         event.preventDefault(); input.setRangeText('', Math.max(0, at - 2), at, 'end');
