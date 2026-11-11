@@ -4,8 +4,8 @@
 
 **BLOQUEADO: ** falta el PDF 2025 solicitado. No se usó el PDF 2026 como equivalente. Informe y matriz son provisionales hasta leerlo. Los gráficos son documentación retrospectiva del diseño implementado, generados03/11/2026, no documentos de preentrega.
 
-- [Informe técnico y pendientes](informe.md).
-- [Matriz preliminar según listado del pedido, NO según un PDF leído](matriz-preliminar.md).
+- [Informe técnico y pendientes](../history/entrega-anterior.html#fuente-2c00c100ff25).
+- [Matriz preliminar según listado del pedido, NO según un PDF leído](../history/entrega-anterior.html#fuente-b6ed615626db).
 - [Alcance, commit y PRs abiertas](alcance.json) · [archivos versionados en b60e33d](archivos-versionados-commit-auditado.txt).
 - [Wireframes PDF vectorial, 17 láminas](graficos/wireframes.pdf).
 - [Mapa PDF](graficos/mapa-navegacion.pdf) · [PNG](graficos/mapa-navegacion.png) · [DOT editable](fuentes/mapa-navegacion.dot) · [SVG editable](fuentes/mapa-navegacion.svg).

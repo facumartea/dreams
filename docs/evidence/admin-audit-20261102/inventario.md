@@ -28,7 +28,7 @@ Destino exclusivo: https://dreams-perfumes.pages.dev/admin. Fuente: `views/admin
 
 ## Evidencia reutilizada
 
-[201 ejecuciones locales previas](../admin-audit/matrix.md): áreas A28/B25/C25/D27/E30/F24, todas con al menos 20 casos distintos. Los [25 casos de persistencia](../../../test/admin-persistence.test.js) amplían D. Los [casos DR/FR](../../../test/admin-recovery.test.js) comprueban recuperación de altas y confirmación de cambios/borrados en módulos secundarios. Los nuevos resultados remotos se registran en `browser-results.json`; no se suman fixtures como si fueran Supabase real.
+[201 ejecuciones locales previas](../admin-audit/matrix.md): áreas A28/B25/C25/D27/E30/F24, todas con al menos 20 casos distintos. Los [25 casos de persistencia](../../../app/test/admin-persistence.test.js) amplían D. Los [casos DR/FR](../../../app/test/admin-recovery.test.js) comprueban recuperación de altas y confirmación de cambios/borrados en módulos secundarios. Los nuevos resultados remotos se registran en `browser-results.json`; no se suman fixtures como si fueran Supabase real.
 
 ## Alcance y límites de la comprobación
 

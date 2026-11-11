@@ -1,0 +1,2915 @@
+{
+  "scope": {
+    "base_branch": "main",
+    "base_commit": "8ad5401fe0f2d0c3e501ab203f6ab37b27ff7db1",
+    "branch": "docs/simplificacion-repositorio-20261111",
+    "latest_user_decision": "Reducir la raíz a sólo README y reducir carpetas conservando aplicación y documentos necesarios. Se satisface reubicando dependencias, sin borrarlas.",
+    "root_files": [
+      "README.md"
+    ],
+    "root_directories": [
+      ".github",
+      "app",
+      "docs"
+    ],
+    "baseline_tracked_files": 457,
+    "current_tracked_files": 404,
+    "official": "https://dreams-perfumes.pages.dev/",
+    "deployment": "NO",
+    "integration": "Actualización de PR64; integrar únicamente con revisión y CI aprobados. La conservación/reubicación resuelve las excepciones sin borrar dependencias."
+  },
+  "baseline_checks": {
+    "reused_ci": {
+      "run": 254,
+      "url": "https://github.com/facumartea/dreams/actions/runs/42926111378",
+      "commit": "8ad5401fe0f2d0c3e501ab203f6ab37b27ff7db1",
+      "result": "SUCCESS",
+      "tests_pass": 493,
+      "tests_skip": 4,
+      "tests_fail": 0
+    },
+    "local_before_changes": {
+      "syntax_js_files": 107,
+      "function_files": 121,
+      "function_records": 2200,
+      "function_violations": 0
+    }
+  },
+  "exceptions": [
+    {
+      "id": "E01",
+      "name": "Imágenes de la aplicación",
+      "purpose": "Marca PNG, iconos, portada responsive WebP y tarjeta social; no hay fuentes locales versionadas.",
+      "loss": "Se perderían imágenes, iconos, originales de marca o metadatos sociales. Las fuentes tipográficas se enlazan externamente desde HTML.",
+      "alternative": "Auditar cada recurso y su procedencia antes de retirar variantes; no sustituir o convertir sólo por extensión.",
+      "recommendation": "Conservar los ocho assets hasta revisar variantes con autorización.",
+      "files": [
+        "public/assets/dreams-bottle.png",
+        "public/assets/dreams-hero-1024.webp",
+        "public/assets/dreams-hero-640.webp",
+        "public/assets/dreams-isologo-clean.png",
+        "public/assets/dreams-isotype.png",
+        "public/assets/dreams-social.png",
+        "public/assets/isotipo-dreams.png",
+        "public/assets/logo-dreams.png"
+      ],
+      "count": 8,
+      "decision": "Resuelto sin borrar archivos necesarios: reubicación en app/docs o consolidación fiel autorizada por el pedido posterior.",
+      "previous_decision": "PENDIENTE: no eliminar antes de respuesta del usuario",
+      "current_locations": [
+        {
+          "original": "public/assets/dreams-bottle.png",
+          "current": "app/public/assets/dreams-bottle.png"
+        },
+        {
+          "original": "public/assets/dreams-hero-1024.webp",
+          "current": "app/public/assets/dreams-hero-1024.webp"
+        },
+        {
+          "original": "public/assets/dreams-hero-640.webp",
+          "current": "app/public/assets/dreams-hero-640.webp"
+        },
+        {
+          "original": "public/assets/dreams-isologo-clean.png",
+          "current": "app/public/assets/dreams-isologo-clean.png"
+        },
+        {
+          "original": "public/assets/dreams-isotype.png",
+          "current": "app/public/assets/dreams-isotype.png"
+        },
+        {
+          "original": "public/assets/dreams-social.png",
+          "current": "app/public/assets/dreams-social.png"
+        },
+        {
+          "original": "public/assets/isotipo-dreams.png",
+          "current": "app/public/assets/isotipo-dreams.png"
+        },
+        {
+          "original": "public/assets/logo-dreams.png",
+          "current": "app/public/assets/logo-dreams.png"
+        }
+      ]
+    },
+    {
+      "id": "E02",
+      "name": "SQL de datos y pruebas",
+      "purpose": "Ocho migraciones, schema histórico, rollback y fixture PostgreSQL.",
+      "loss": "Se pierde reproducción de estructura/permisos, historial de migraciones, recuperación o tests SQL.",
+      "alternative": "Conservar historial inmutable; documentar baseline frente a migraciones activas. No reemplazar SQL por JSON.",
+      "recommendation": "Conservar los once SQL.",
+      "files": [
+        "supabase/migrations/20260828144944_production_baseline.sql",
+        "supabase/migrations/20260831024826_checkout_orders_and_coupons.sql",
+        "supabase/migrations/20260831040000_enable_demo_checkout_provider.sql",
+        "supabase/migrations/20260901090000_admin_authenticated_policies.sql",
+        "supabase/migrations/20260902090000_admin_orders_coupons_grants.sql",
+        "supabase/migrations/20261013032746_account_carts.sql",
+        "supabase/migrations/20261021004927_customer_review_ownership.sql",
+        "supabase/migrations/20261105160613_modularize_account_cart.sql",
+        "supabase/rollback/20261105_account_cart_rpc.sql",
+        "supabase/schema.sql",
+        "test/fixtures/cart-postgres.sql"
+      ],
+      "count": 11,
+      "decision": "Resuelto sin borrar archivos necesarios: reubicación en app/docs o consolidación fiel autorizada por el pedido posterior.",
+      "previous_decision": "PENDIENTE: no eliminar antes de respuesta del usuario",
+      "current_locations": [
+        {
+          "original": "supabase/migrations/20260828144944_production_baseline.sql",
+          "current": "app/supabase/migrations/20260828144944_production_baseline.sql"
+        },
+        {
+          "original": "supabase/migrations/20260831024826_checkout_orders_and_coupons.sql",
+          "current": "app/supabase/migrations/20260831024826_checkout_orders_and_coupons.sql"
+        },
+        {
+          "original": "supabase/migrations/20260831040000_enable_demo_checkout_provider.sql",
+          "current": "app/supabase/migrations/20260831040000_enable_demo_checkout_provider.sql"
+        },
+        {
+          "original": "supabase/migrations/20260901090000_admin_authenticated_policies.sql",
+          "current": "app/supabase/migrations/20260901090000_admin_authenticated_policies.sql"
+        },
+        {
+          "original": "supabase/migrations/20260902090000_admin_orders_coupons_grants.sql",
+          "current": "app/supabase/migrations/20260902090000_admin_orders_coupons_grants.sql"
+        },
+        {
+          "original": "supabase/migrations/20261013032746_account_carts.sql",
+          "current": "app/supabase/migrations/20261013032746_account_carts.sql"
+        },
+        {
+          "original": "supabase/migrations/20261021004927_customer_review_ownership.sql",
+          "current": "app/supabase/migrations/20261021004927_customer_review_ownership.sql"
+        },
+        {
+          "original": "supabase/migrations/20261105160613_modularize_account_cart.sql",
+          "current": "app/supabase/migrations/20261105160613_modularize_account_cart.sql"
+        },
+        {
+          "original": "supabase/rollback/20261105_account_cart_rpc.sql",
+          "current": "app/supabase/rollback/20261105_account_cart_rpc.sql"
+        },
+        {
+          "original": "supabase/schema.sql",
+          "current": "app/supabase/schema.sql"
+        },
+        {
+          "original": "test/fixtures/cart-postgres.sql",
+          "current": "app/test/fixtures/cart-postgres.sql"
+        }
+      ]
+    },
+    {
+      "id": "E03",
+      "name": "Dependencias y CI YAML",
+      "purpose": "Lockfile reproducible, workspace y permisos de build para esbuild/workerd; workflow de checks/tests/builds.",
+      "loss": "Instalación deja de ser reproducible o CI/compiladores dejan de funcionar como están configurados.",
+      "alternative": "No renombrar YAML. Cambiar gestor o CI sería otra tarea funcional no autorizada.",
+      "recommendation": "Conservar pnpm-lock.yaml, pnpm-workspace.yaml y .github/workflows/ci.yml.",
+      "files": [
+        ".github/workflows/ci.yml",
+        "pnpm-lock.yaml",
+        "pnpm-workspace.yaml"
+      ],
+      "count": 3,
+      "decision": "Resuelto sin borrar archivos necesarios: reubicación en app/docs o consolidación fiel autorizada por el pedido posterior.",
+      "previous_decision": "PENDIENTE: no eliminar antes de respuesta del usuario",
+      "current_locations": [
+        {
+          "original": ".github/workflows/ci.yml",
+          "current": ".github/workflows/ci.yml"
+        },
+        {
+          "original": "pnpm-lock.yaml",
+          "current": "app/pnpm-lock.yaml"
+        },
+        {
+          "original": "pnpm-workspace.yaml",
+          "current": "app/pnpm-workspace.yaml"
+        }
+      ]
+    },
+    {
+      "id": "E04",
+      "name": "Configuración Cloudflare JSONC",
+      "purpose": "Entradas, compatibilidad, assets y Service bindings de Worker/Pages y build de candidato aislado.",
+      "loss": "Se romperían builds, publicación o compatibilidad del backend/proxy.",
+      "alternative": "Una migración de formato exige revisar todos los comandos; no aporta a esta limpieza.",
+      "recommendation": "Conservar las tres configuraciones JSONC sin cambios.",
+      "files": [
+        "pages/wrangler.jsonc",
+        "wrangler.jsonc",
+        "wrangler.official.jsonc"
+      ],
+      "count": 3,
+      "decision": "Resuelto sin borrar archivos necesarios: reubicación en app/docs o consolidación fiel autorizada por el pedido posterior.",
+      "previous_decision": "PENDIENTE: no eliminar antes de respuesta del usuario",
+      "current_locations": [
+        {
+          "original": "pages/wrangler.jsonc",
+          "current": "app/pages/wrangler.jsonc"
+        },
+        {
+          "original": "wrangler.jsonc",
+          "current": "app/wrangler.jsonc"
+        },
+        {
+          "original": "wrangler.official.jsonc",
+          "current": "app/wrangler.official.jsonc"
+        }
+      ]
+    },
+    {
+      "id": "E05",
+      "name": "Herramientas y ejemplo de entorno",
+      "purpose": ".gitignore excluye secretos/generados; .gitattributes normaliza texto y marca binarios; .env.example documenta nombres sin valores reales.",
+      "loss": "Riesgo de incorporar archivos privados, diffs binarios incorrectos o instalación menos clara.",
+      "alternative": "Mantener mínimos vigentes; no incluir .env real.",
+      "recommendation": "Conservar los tres archivos.",
+      "files": [
+        ".env.example",
+        ".gitattributes",
+        ".gitignore"
+      ],
+      "count": 3,
+      "decision": "Resuelto sin borrar archivos necesarios: reubicación en app/docs o consolidación fiel autorizada por el pedido posterior.",
+      "previous_decision": "PENDIENTE: no eliminar antes de respuesta del usuario",
+      "current_locations": [
+        {
+          "original": ".env.example",
+          "current": "app/.env.example"
+        },
+        {
+          "original": ".gitattributes",
+          "current": "docs/.gitattributes"
+        },
+        {
+          "original": ".gitignore",
+          "current": "app/.gitignore"
+        }
+      ]
+    },
+    {
+      "id": "E06",
+      "name": "SEO público TXT/XML",
+      "purpose": "robots.txt y sitemap.xml se empaquetan explícitamente en build-pages y se sirven públicamente.",
+      "loss": "Se eliminan recursos SEO y falla el build si falta una entrada requerida.",
+      "alternative": "Retirarlos exige modificar código/build y revisar SEO; fuera de alcance.",
+      "recommendation": "Conservar ambos sin cambios.",
+      "files": [
+        "public/robots.txt",
+        "public/sitemap.xml"
+      ],
+      "count": 2,
+      "decision": "Resuelto sin borrar archivos necesarios: reubicación en app/docs o consolidación fiel autorizada por el pedido posterior.",
+      "previous_decision": "PENDIENTE: no eliminar antes de respuesta del usuario",
+      "current_locations": [
+        {
+          "original": "public/robots.txt",
+          "current": "app/public/robots.txt"
+        },
+        {
+          "original": "public/sitemap.xml",
+          "current": "app/public/sitemap.xml"
+        }
+      ]
+    },
+    {
+      "id": "E07",
+      "name": "Documentación académica y fuentes editables",
+      "purpose": "Manual, guía oral, PDF de rúbrica, matrices, wireframes, D.E.R., mapa, pseudocódigo, API y sus fuentes/capturas/documentación.",
+      "loss": "La entrega pierde requisitos, evidencia, portabilidad o posibilidad de editar/revisar sus gráficos.",
+      "alternative": "Elegir ediciones vigentes y archivar/resumir sólo con decisión explícita; no convertir PDF/PNG en nombres de extensiones falsas.",
+      "recommendation": "Conservar los documentos actuales; revisar con el usuario los antecedentes académicos antes de reducirlos.",
+      "files": [
+        "docs/auditoria-2025/INDICE.md",
+        "docs/auditoria-2025/archivos-versionados-commit-auditado.txt",
+        "docs/auditoria-2025/base-de-datos.md",
+        "docs/auditoria-2025/control-40-lineas.md",
+        "docs/auditoria-2025/fuentes/01-inicio.svg",
+        "docs/auditoria-2025/fuentes/02-catalogo.svg",
+        "docs/auditoria-2025/fuentes/03-filtros.svg",
+        "docs/auditoria-2025/fuentes/04-detalle.svg",
+        "docs/auditoria-2025/fuentes/05-login.svg",
+        "docs/auditoria-2025/fuentes/06-registro.svg",
+        "docs/auditoria-2025/fuentes/07-carrito.svg",
+        "docs/auditoria-2025/fuentes/08-checkout.svg",
+        "docs/auditoria-2025/fuentes/09-confirmacion.svg",
+        "docs/auditoria-2025/fuentes/10-nosotros.svg",
+        "docs/auditoria-2025/fuentes/11-admin-productos.svg",
+        "docs/auditoria-2025/fuentes/12-admin-disponibilidad-baja.svg",
+        "docs/auditoria-2025/fuentes/13-admin-cupones.svg",
+        "docs/auditoria-2025/fuentes/14-admin-pedidos.svg",
+        "docs/auditoria-2025/fuentes/15-admin-usuarios.svg",
+        "docs/auditoria-2025/fuentes/16-admin-consultas.svg",
+        "docs/auditoria-2025/fuentes/17-admin-opiniones.svg",
+        "docs/auditoria-2025/fuentes/der.dot",
+        "docs/auditoria-2025/fuentes/der.svg",
+        "docs/auditoria-2025/fuentes/mapa-navegacion.dot",
+        "docs/auditoria-2025/fuentes/mapa-navegacion.svg",
+        "docs/auditoria-2025/graficos/der.pdf",
+        "docs/auditoria-2025/graficos/der.png",
+        "docs/auditoria-2025/graficos/mapa-navegacion.pdf",
+        "docs/auditoria-2025/graficos/mapa-navegacion.png",
+        "docs/auditoria-2025/graficos/wireframe-01.png",
+        "docs/auditoria-2025/graficos/wireframe-02.png",
+        "docs/auditoria-2025/graficos/wireframe-03.png",
+        "docs/auditoria-2025/graficos/wireframe-04.png",
+        "docs/auditoria-2025/graficos/wireframe-05.png",
+        "docs/auditoria-2025/graficos/wireframe-06.png",
+        "docs/auditoria-2025/graficos/wireframe-07.png",
+        "docs/auditoria-2025/graficos/wireframe-08.png",
+        "docs/auditoria-2025/graficos/wireframe-09.png",
+        "docs/auditoria-2025/graficos/wireframe-10.png",
+        "docs/auditoria-2025/graficos/wireframe-11.png",
+        "docs/auditoria-2025/graficos/wireframe-12.png",
+        "docs/auditoria-2025/graficos/wireframe-13.png",
+        "docs/auditoria-2025/graficos/wireframe-14.png",
+        "docs/auditoria-2025/graficos/wireframe-15.png",
+        "docs/auditoria-2025/graficos/wireframe-16.png",
+        "docs/auditoria-2025/graficos/wireframe-17.png",
+        "docs/auditoria-2025/graficos/wireframes.pdf",
+        "docs/auditoria-2025/informe.md",
+        "docs/auditoria-2025/matriz-preliminar.md",
+        "docs/documentacion.md",
+        "docs/entrega-2025/INDICE.md",
+        "docs/entrega-2025/defensa.docx",
+        "docs/entrega-2025/defensa.md",
+        "docs/entrega-2025/defensa.pdf",
+        "docs/entrega-2025/informe.md",
+        "docs/entrega-2025/inventario-archivos.csv",
+        "docs/entrega-2025/matriz-rubrica.md",
+        "docs/entrega-2025/revision-limpieza-20261110.md",
+        "docs/entrega-2025/rubrica-2025.pdf",
+        "docs/entrega-2025/rubrica-2025.txt",
+        "docs/entrega-2025/verificacion-defensa-20261110.md",
+        "docs/entrega-2026/INDICE.md",
+        "docs/entrega-2026/api.md",
+        "docs/entrega-2026/base-de-datos.md",
+        "docs/entrega-2026/base-de-datos.mmd",
+        "docs/entrega-2026/capturas/admin-local.png",
+        "docs/entrega-2026/capturas/cuenta-local.png",
+        "docs/entrega-2026/capturas/cuenta-oficial.png",
+        "docs/entrega-2026/capturas/inicio-local.png",
+        "docs/entrega-2026/defensa.md",
+        "docs/entrega-2026/diseno.md",
+        "docs/entrega-2026/funciones.md",
+        "docs/entrega-2026/manual.md",
+        "docs/entrega-2026/manual.pdf",
+        "docs/entrega-2026/matriz-rubrica.md",
+        "docs/entrega-2026/pruebas.md",
+        "docs/entrega-2026/rubrica-2026.pdf",
+        "docs/entrega-2026/rubrica-2026.txt",
+        "docs/entrega-2026/sqlite.md",
+        "docs/entrega-2026/wireframe.md",
+        "docs/entrega-2026/wireframe.png",
+        "docs/entrega-2026/wireframe.svg",
+        "docs/entrega-2026/zip.md",
+        "docs/manual_de_uso.md",
+        "docs/pseudocodigo.md",
+        "docs/wireframe.md"
+      ],
+      "count": 86,
+      "decision": "Resuelto sin borrar archivos necesarios: reubicación en app/docs o consolidación fiel autorizada por el pedido posterior.",
+      "previous_decision": "PENDIENTE: no eliminar antes de respuesta del usuario",
+      "current_locations": [
+        {
+          "original": "docs/auditoria-2025/INDICE.md",
+          "current": "docs/auditoria-2025/INDICE.md"
+        },
+        {
+          "original": "docs/auditoria-2025/archivos-versionados-commit-auditado.txt",
+          "current": "docs/auditoria-2025/archivos-versionados-commit-auditado.txt"
+        },
+        {
+          "original": "docs/auditoria-2025/base-de-datos.md",
+          "current": "docs/auditoria-2025/base-de-datos.md"
+        },
+        {
+          "original": "docs/auditoria-2025/control-40-lineas.md",
+          "current": "docs/auditoria-2025/control-40-lineas.md"
+        },
+        {
+          "original": "docs/auditoria-2025/fuentes/01-inicio.svg",
+          "current": "docs/auditoria-2025/fuentes/01-inicio.svg"
+        },
+        {
+          "original": "docs/auditoria-2025/fuentes/02-catalogo.svg",
+          "current": "docs/auditoria-2025/fuentes/02-catalogo.svg"
+        },
+        {
+          "original": "docs/auditoria-2025/fuentes/03-filtros.svg",
+          "current": "docs/auditoria-2025/fuentes/03-filtros.svg"
+        },
+        {
+          "original": "docs/auditoria-2025/fuentes/04-detalle.svg",
+          "current": "docs/auditoria-2025/fuentes/04-detalle.svg"
+        },
+        {
+          "original": "docs/auditoria-2025/fuentes/05-login.svg",
+          "current": "docs/auditoria-2025/fuentes/05-login.svg"
+        },
+        {
+          "original": "docs/auditoria-2025/fuentes/06-registro.svg",
+          "current": "docs/auditoria-2025/fuentes/06-registro.svg"
+        },
+        {
+          "original": "docs/auditoria-2025/fuentes/07-carrito.svg",
+          "current": "docs/auditoria-2025/fuentes/07-carrito.svg"
+        },
+        {
+          "original": "docs/auditoria-2025/fuentes/08-checkout.svg",
+          "current": "docs/auditoria-2025/fuentes/08-checkout.svg"
+        },
+        {
+          "original": "docs/auditoria-2025/fuentes/09-confirmacion.svg",
+          "current": "docs/auditoria-2025/fuentes/09-confirmacion.svg"
+        },
+        {
+          "original": "docs/auditoria-2025/fuentes/10-nosotros.svg",
+          "current": "docs/auditoria-2025/fuentes/10-nosotros.svg"
+        },
+        {
+          "original": "docs/auditoria-2025/fuentes/11-admin-productos.svg",
+          "current": "docs/auditoria-2025/fuentes/11-admin-productos.svg"
+        },
+        {
+          "original": "docs/auditoria-2025/fuentes/12-admin-disponibilidad-baja.svg",
+          "current": "docs/auditoria-2025/fuentes/12-admin-disponibilidad-baja.svg"
+        },
+        {
+          "original": "docs/auditoria-2025/fuentes/13-admin-cupones.svg",
+          "current": "docs/auditoria-2025/fuentes/13-admin-cupones.svg"
+        },
+        {
+          "original": "docs/auditoria-2025/fuentes/14-admin-pedidos.svg",
+          "current": "docs/auditoria-2025/fuentes/14-admin-pedidos.svg"
+        },
+        {
+          "original": "docs/auditoria-2025/fuentes/15-admin-usuarios.svg",
+          "current": "docs/auditoria-2025/fuentes/15-admin-usuarios.svg"
+        },
+        {
+          "original": "docs/auditoria-2025/fuentes/16-admin-consultas.svg",
+          "current": "docs/auditoria-2025/fuentes/16-admin-consultas.svg"
+        },
+        {
+          "original": "docs/auditoria-2025/fuentes/17-admin-opiniones.svg",
+          "current": "docs/auditoria-2025/fuentes/17-admin-opiniones.svg"
+        },
+        {
+          "original": "docs/auditoria-2025/fuentes/der.dot",
+          "current": "docs/auditoria-2025/fuentes/der.dot"
+        },
+        {
+          "original": "docs/auditoria-2025/fuentes/der.svg",
+          "current": "docs/auditoria-2025/fuentes/der.svg"
+        },
+        {
+          "original": "docs/auditoria-2025/fuentes/mapa-navegacion.dot",
+          "current": "docs/auditoria-2025/fuentes/mapa-navegacion.dot"
+        },
+        {
+          "original": "docs/auditoria-2025/fuentes/mapa-navegacion.svg",
+          "current": "docs/auditoria-2025/fuentes/mapa-navegacion.svg"
+        },
+        {
+          "original": "docs/auditoria-2025/graficos/der.pdf",
+          "current": "docs/auditoria-2025/graficos/der.pdf"
+        },
+        {
+          "original": "docs/auditoria-2025/graficos/der.png",
+          "current": "docs/auditoria-2025/graficos/der.png"
+        },
+        {
+          "original": "docs/auditoria-2025/graficos/mapa-navegacion.pdf",
+          "current": "docs/auditoria-2025/graficos/mapa-navegacion.pdf"
+        },
+        {
+          "original": "docs/auditoria-2025/graficos/mapa-navegacion.png",
+          "current": "docs/auditoria-2025/graficos/mapa-navegacion.png"
+        },
+        {
+          "original": "docs/auditoria-2025/graficos/wireframe-01.png",
+          "current": "docs/auditoria-2025/graficos/wireframe-01.png"
+        },
+        {
+          "original": "docs/auditoria-2025/graficos/wireframe-02.png",
+          "current": "docs/auditoria-2025/graficos/wireframe-02.png"
+        },
+        {
+          "original": "docs/auditoria-2025/graficos/wireframe-03.png",
+          "current": "docs/auditoria-2025/graficos/wireframe-03.png"
+        },
+        {
+          "original": "docs/auditoria-2025/graficos/wireframe-04.png",
+          "current": "docs/auditoria-2025/graficos/wireframe-04.png"
+        },
+        {
+          "original": "docs/auditoria-2025/graficos/wireframe-05.png",
+          "current": "docs/auditoria-2025/graficos/wireframe-05.png"
+        },
+        {
+          "original": "docs/auditoria-2025/graficos/wireframe-06.png",
+          "current": "docs/auditoria-2025/graficos/wireframe-06.png"
+        },
+        {
+          "original": "docs/auditoria-2025/graficos/wireframe-07.png",
+          "current": "docs/auditoria-2025/graficos/wireframe-07.png"
+        },
+        {
+          "original": "docs/auditoria-2025/graficos/wireframe-08.png",
+          "current": "docs/auditoria-2025/graficos/wireframe-08.png"
+        },
+        {
+          "original": "docs/auditoria-2025/graficos/wireframe-09.png",
+          "current": "docs/auditoria-2025/graficos/wireframe-09.png"
+        },
+        {
+          "original": "docs/auditoria-2025/graficos/wireframe-10.png",
+          "current": "docs/auditoria-2025/graficos/wireframe-10.png"
+        },
+        {
+          "original": "docs/auditoria-2025/graficos/wireframe-11.png",
+          "current": "docs/auditoria-2025/graficos/wireframe-11.png"
+        },
+        {
+          "original": "docs/auditoria-2025/graficos/wireframe-12.png",
+          "current": "docs/auditoria-2025/graficos/wireframe-12.png"
+        },
+        {
+          "original": "docs/auditoria-2025/graficos/wireframe-13.png",
+          "current": "docs/auditoria-2025/graficos/wireframe-13.png"
+        },
+        {
+          "original": "docs/auditoria-2025/graficos/wireframe-14.png",
+          "current": "docs/auditoria-2025/graficos/wireframe-14.png"
+        },
+        {
+          "original": "docs/auditoria-2025/graficos/wireframe-15.png",
+          "current": "docs/auditoria-2025/graficos/wireframe-15.png"
+        },
+        {
+          "original": "docs/auditoria-2025/graficos/wireframe-16.png",
+          "current": "docs/auditoria-2025/graficos/wireframe-16.png"
+        },
+        {
+          "original": "docs/auditoria-2025/graficos/wireframe-17.png",
+          "current": "docs/auditoria-2025/graficos/wireframe-17.png"
+        },
+        {
+          "original": "docs/auditoria-2025/graficos/wireframes.pdf",
+          "current": "docs/auditoria-2025/graficos/wireframes.pdf"
+        },
+        {
+          "original": "docs/auditoria-2025/informe.md",
+          "current": "docs/history/entrega-anterior.html#fuente-2c00c100ff25"
+        },
+        {
+          "original": "docs/auditoria-2025/matriz-preliminar.md",
+          "current": "docs/history/entrega-anterior.html#fuente-b6ed615626db"
+        },
+        {
+          "original": "docs/documentacion.md",
+          "current": "docs/history/entrega-anterior.html#fuente-6e4b647eb62e"
+        },
+        {
+          "original": "docs/entrega-2025/INDICE.md",
+          "current": "docs/entrega-2025/INDICE.md"
+        },
+        {
+          "original": "docs/entrega-2025/defensa.docx",
+          "current": "docs/entrega-2025/defensa.docx"
+        },
+        {
+          "original": "docs/entrega-2025/defensa.md",
+          "current": "docs/entrega-2025/defensa.md"
+        },
+        {
+          "original": "docs/entrega-2025/defensa.pdf",
+          "current": "docs/entrega-2025/defensa.pdf"
+        },
+        {
+          "original": "docs/entrega-2025/informe.md",
+          "current": "docs/entrega-2025/informe.md"
+        },
+        {
+          "original": "docs/entrega-2025/inventario-archivos.csv",
+          "current": "docs/entrega-2025/inventario-archivos.csv"
+        },
+        {
+          "original": "docs/entrega-2025/matriz-rubrica.md",
+          "current": "docs/entrega-2025/matriz-rubrica.md"
+        },
+        {
+          "original": "docs/entrega-2025/revision-limpieza-20261110.md",
+          "current": "docs/history/entrega-anterior.html#fuente-d56b99927e5a"
+        },
+        {
+          "original": "docs/entrega-2025/rubrica-2025.pdf",
+          "current": "docs/entrega-2025/rubrica-2025.pdf"
+        },
+        {
+          "original": "docs/entrega-2025/rubrica-2025.txt",
+          "current": "docs/entrega-2025/rubrica-2025.txt"
+        },
+        {
+          "original": "docs/entrega-2025/verificacion-defensa-20261110.md",
+          "current": "docs/history/entrega-anterior.html#fuente-45dc9355a04f"
+        },
+        {
+          "original": "docs/entrega-2026/INDICE.md",
+          "current": "docs/history/entrega-anterior.html#fuente-d5b290203a60"
+        },
+        {
+          "original": "docs/entrega-2026/api.md",
+          "current": "docs/entrega-2026/api.md"
+        },
+        {
+          "original": "docs/entrega-2026/base-de-datos.md",
+          "current": "docs/history/entrega-anterior.html#fuente-061c89ad8f04"
+        },
+        {
+          "original": "docs/entrega-2026/base-de-datos.mmd",
+          "current": "docs/entrega-2026/base-de-datos.mmd"
+        },
+        {
+          "original": "docs/entrega-2026/capturas/admin-local.png",
+          "current": "docs/entrega-2026/capturas/admin-local.png"
+        },
+        {
+          "original": "docs/entrega-2026/capturas/cuenta-local.png",
+          "current": "docs/entrega-2026/capturas/cuenta-local.png"
+        },
+        {
+          "original": "docs/entrega-2026/capturas/cuenta-oficial.png",
+          "current": "docs/entrega-2026/capturas/cuenta-oficial.png"
+        },
+        {
+          "original": "docs/entrega-2026/capturas/inicio-local.png",
+          "current": "docs/entrega-2026/capturas/inicio-local.png"
+        },
+        {
+          "original": "docs/entrega-2026/defensa.md",
+          "current": "docs/history/entrega-anterior.html#fuente-52a8ebcdf461"
+        },
+        {
+          "original": "docs/entrega-2026/diseno.md",
+          "current": "docs/history/entrega-anterior.html#fuente-ddc85a42fb4c"
+        },
+        {
+          "original": "docs/entrega-2026/funciones.md",
+          "current": "docs/history/entrega-anterior.html#fuente-b6f43acf04ee"
+        },
+        {
+          "original": "docs/entrega-2026/manual.md",
+          "current": "docs/entrega-2026/manual.md"
+        },
+        {
+          "original": "docs/entrega-2026/manual.pdf",
+          "current": "docs/entrega-2026/manual.pdf"
+        },
+        {
+          "original": "docs/entrega-2026/matriz-rubrica.md",
+          "current": "docs/history/entrega-anterior.html#fuente-b1f7d49a35b5"
+        },
+        {
+          "original": "docs/entrega-2026/pruebas.md",
+          "current": "docs/history/entrega-anterior.html#fuente-0a164ff09539"
+        },
+        {
+          "original": "docs/entrega-2026/rubrica-2026.pdf",
+          "current": "docs/entrega-2026/rubrica-2026.pdf"
+        },
+        {
+          "original": "docs/entrega-2026/rubrica-2026.txt",
+          "current": "docs/entrega-2026/rubrica-2026.txt"
+        },
+        {
+          "original": "docs/entrega-2026/sqlite.md",
+          "current": "docs/history/entrega-anterior.html#fuente-0072cf382aec"
+        },
+        {
+          "original": "docs/entrega-2026/wireframe.md",
+          "current": "docs/history/entrega-anterior.html#fuente-4876cb5964eb"
+        },
+        {
+          "original": "docs/entrega-2026/wireframe.png",
+          "current": "docs/entrega-2026/wireframe.png"
+        },
+        {
+          "original": "docs/entrega-2026/wireframe.svg",
+          "current": "docs/entrega-2026/wireframe.svg"
+        },
+        {
+          "original": "docs/entrega-2026/zip.md",
+          "current": "docs/history/entrega-anterior.html#fuente-336f63226cb4"
+        },
+        {
+          "original": "docs/manual_de_uso.md",
+          "current": "docs/history/entrega-anterior.html#fuente-cfd0f3264302"
+        },
+        {
+          "original": "docs/pseudocodigo.md",
+          "current": "docs/pseudocodigo.md"
+        },
+        {
+          "original": "docs/wireframe.md",
+          "current": "docs/history/entrega-anterior.html#fuente-55a680000831"
+        }
+      ]
+    },
+    {
+      "id": "E08",
+      "name": "Evidencia única, seguridad e históricos",
+      "purpose": "Pruebas locales/remotas, capturas y antecedentes de auditoría/recuperación; no son dependencias del sitio por su mera presencia.",
+      "loss": "Se pierde trazabilidad o evidencia única. Dos pares idénticos conservan procedencias local/remota distintas.",
+      "alternative": "Unificar duplicados sólo preservando ambas procedencias y referencias; resumir evidencia requiere elección explícita.",
+      "recommendation": "Conservar en esta PR; no confundir no exigido por rúbrica con inútil.",
+      "files": [
+        "AUDIT.md",
+        "SECURITY_ADVERSARIAL_2026-09-01.md",
+        "SECURITY_REVIEW_2026-08-29.md",
+        "docs/evidence/admin-audit-20261102/admin-form-oficial.png",
+        "docs/evidence/admin-audit-20261102/inventario.md",
+        "docs/evidence/admin-audit-20261102/matriz-remota.md",
+        "docs/evidence/admin-audit/desktop-cards.png",
+        "docs/evidence/admin-audit/desktop-equal-product-actions.png",
+        "docs/evidence/admin-audit/desktop-header-cards.png",
+        "docs/evidence/admin-audit/desktop-header.png",
+        "docs/evidence/admin-audit/desktop-low-stock-search.png",
+        "docs/evidence/admin-audit/matrix.md",
+        "docs/evidence/admin-audit/mobile-cards.png",
+        "docs/evidence/admin-audit/mobile-equal-product-actions.png",
+        "docs/evidence/admin-audit/mobile-header-cards.png",
+        "docs/evidence/admin-audit/mobile-header.png",
+        "docs/evidence/admin-audit/mobile-low-stock-search.png",
+        "docs/evidence/cierre-tecnico-20261105/README.md",
+        "docs/evidence/cierre-tecnico-20261105/admin-form-publicado.png",
+        "docs/evidence/cierre-tecnico-20261105/carrusel-escritorio-local.png",
+        "docs/evidence/cierre-tecnico-20261105/carrusel-escritorio.png",
+        "docs/evidence/cierre-tecnico-20261105/carrusel-movil-local.png",
+        "docs/evidence/cierre-tecnico-20261105/carrusel-movil.png",
+        "docs/evidence/cierre-tecnico-20261105/inicio-oficial.png",
+        "docs/evidence/collection-filters/desktop-hombre.png",
+        "docs/evidence/collection-filters/desktop-mujer.png",
+        "docs/evidence/collection-filters/desktop-unisex.png",
+        "docs/evidence/collection-filters/local-browser.txt",
+        "docs/evidence/collection-filters/mobile-hombre.png",
+        "docs/evidence/collection-filters/mobile-mujer.png",
+        "docs/evidence/collection-filters/mobile-unisex.png",
+        "docs/evidence/collection-filters/official-desktop-hombre.png",
+        "docs/evidence/collection-filters/official-desktop-mujer.png",
+        "docs/evidence/collection-filters/official-desktop-unisex.png",
+        "docs/evidence/collection-filters/official-final-browser.txt",
+        "docs/evidence/collection-filters/official-full-browser.txt",
+        "docs/evidence/collection-filters/official-http.txt",
+        "docs/evidence/collection-filters/official-mobile-hombre.png",
+        "docs/evidence/collection-filters/official-mobile-mujer.png",
+        "docs/evidence/collection-filters/official-mobile-unisex.png",
+        "docs/evidence/collection-filters/staging-browser.txt",
+        "docs/evidence/coupon-academic-20261103/README.md",
+        "docs/evidence/coupon-academic-20261103/cart-1440.png",
+        "docs/evidence/coupon-academic-20261103/cart-390.png",
+        "docs/evidence/coupon-academic-20261103/form-1440.png",
+        "docs/evidence/coupon-academic-20261103/form-390.png",
+        "docs/evidence/coupon-academic-20261103/official-coupon-1440.png",
+        "docs/evidence/coupon-academic-20261103/official-coupon-390.png",
+        "docs/evidence/coupon-academic-20261103/official-form-1440.png",
+        "docs/evidence/coupon-academic-20261103/official-form-390.png",
+        "docs/evidence/functional-backend-20261027/credential-diagnosis.md",
+        "docs/evidence/functional-backend-20261027/credential-replacement-20261029.md",
+        "docs/evidence/functional-backend-20261027/restored-1440.png",
+        "docs/evidence/functional-backend-20261027/restored-390.png",
+        "docs/evidence/functional-backend-20261027/verification.md",
+        "docs/evidence/home-removal-20261103/README.md",
+        "docs/evidence/home-removal-20261103/local-home-1440.png",
+        "docs/evidence/home-removal-20261103/local-home-390.png",
+        "docs/evidence/home-removal-20261103/official-home-1440.png",
+        "docs/evidence/home-removal-20261103/official-home-390.png",
+        "docs/evidence/inicio-cabeceras-20261105/README.md",
+        "docs/evidence/inicio-cabeceras-20261105/cabecera-hombre-escritorio-local.png",
+        "docs/evidence/inicio-cabeceras-20261105/cabecera-hombre-escritorio.png",
+        "docs/evidence/inicio-cabeceras-20261105/cabecera-hombre-movil-local.png",
+        "docs/evidence/inicio-cabeceras-20261105/cabecera-hombre-movil.png",
+        "docs/evidence/inicio-cabeceras-20261105/cabecera-mujer-escritorio-local.png",
+        "docs/evidence/inicio-cabeceras-20261105/cabecera-mujer-escritorio.png",
+        "docs/evidence/inicio-cabeceras-20261105/cabecera-mujer-movil-local.png",
+        "docs/evidence/inicio-cabeceras-20261105/cabecera-mujer-movil.png",
+        "docs/evidence/inicio-cabeceras-20261105/cabecera-perfumes-escritorio-local.png",
+        "docs/evidence/inicio-cabeceras-20261105/cabecera-perfumes-escritorio.png",
+        "docs/evidence/inicio-cabeceras-20261105/cabecera-perfumes-movil-local.png",
+        "docs/evidence/inicio-cabeceras-20261105/cabecera-perfumes-movil.png",
+        "docs/evidence/inicio-cabeceras-20261105/cabecera-unisex-escritorio-local.png",
+        "docs/evidence/inicio-cabeceras-20261105/cabecera-unisex-escritorio.png",
+        "docs/evidence/inicio-cabeceras-20261105/cabecera-unisex-movil-local.png",
+        "docs/evidence/inicio-cabeceras-20261105/cabecera-unisex-movil.png",
+        "docs/evidence/inicio-cabeceras-20261105/inicio-completo-escritorio.png",
+        "docs/evidence/inicio-cabeceras-20261105/inicio-completo-movil.png",
+        "docs/evidence/inicio-cabeceras-20261105/inicio-escritorio-local.png",
+        "docs/evidence/inicio-cabeceras-20261105/inicio-escritorio.png",
+        "docs/evidence/inicio-cabeceras-20261105/inicio-movil-local.png",
+        "docs/evidence/inicio-cabeceras-20261105/inicio-movil.png",
+        "docs/evidence/navigation/desktop-filters.png",
+        "docs/evidence/navigation/desktop-menu.png",
+        "docs/evidence/navigation/mobile-filters.png",
+        "docs/evidence/navigation/mobile-menu.png",
+        "docs/evidence/navigation/remote-qa.txt",
+        "docs/evidence/official-review-20261027/desktop-academic-official.png",
+        "docs/evidence/official-review-20261027/desktop-admin-local.png",
+        "docs/evidence/official-review-20261027/desktop-cart-local.png",
+        "docs/evidence/official-review-20261027/desktop-cart-official.png",
+        "docs/evidence/official-review-20261027/matrix.md",
+        "docs/evidence/official-review-20261027/mobile-academic-official.png",
+        "docs/evidence/official-review-20261027/mobile-admin-local.png",
+        "docs/evidence/official-review-20261027/mobile-cart-local.png",
+        "docs/evidence/official-review-20261027/mobile-cart-official.png",
+        "docs/evidence/pr56-current-20261028/status.md",
+        "docs/evidence/seo/desktop-product.png",
+        "docs/evidence/seo/isolated-http.txt",
+        "docs/evidence/seo/mobile-catalog.png",
+        "docs/evidence/seo/nojs-product.png",
+        "docs/evidence/seo/official-browser.txt",
+        "docs/evidence/seo/official-http.txt",
+        "docs/history/CURRENT_STATE-hasta-20261105.md",
+        "docs/history/CURRENT_STATE_PR33.md",
+        "docs/history/PLAN-hasta-20261105.md",
+        "docs/history/PLAN_PR33.md",
+        "docs/history/visual-audits/ART_DIRECTION_AUDIT_2026-09-01.md",
+        "docs/history/visual-audits/MOTION_REFERENCE_AUDIT_2026-09-01.md",
+        "docs/history/visual-audits/PREMIUM_EXPANSION_AUDIT.md",
+        "docs/history/visual-audits/README.md"
+      ],
+      "count": 112,
+      "decision": "Resuelto sin borrar archivos necesarios: reubicación en app/docs o consolidación fiel autorizada por el pedido posterior.",
+      "previous_decision": "PENDIENTE: no eliminar antes de respuesta del usuario",
+      "current_locations": [
+        {
+          "original": "AUDIT.md",
+          "current": "docs/history/auditorias.html#fuente-bf8286ac6afb"
+        },
+        {
+          "original": "SECURITY_ADVERSARIAL_2026-09-01.md",
+          "current": "docs/history/auditorias.html#fuente-e80f17c3dc51"
+        },
+        {
+          "original": "SECURITY_REVIEW_2026-08-29.md",
+          "current": "docs/history/auditorias.html#fuente-301155c956ef"
+        },
+        {
+          "original": "docs/evidence/admin-audit-20261102/admin-form-oficial.png",
+          "current": "docs/evidence/admin-audit-20261102/admin-form-oficial.png"
+        },
+        {
+          "original": "docs/evidence/admin-audit-20261102/inventario.md",
+          "current": "docs/evidence/admin-audit-20261102/inventario.md"
+        },
+        {
+          "original": "docs/evidence/admin-audit-20261102/matriz-remota.md",
+          "current": "docs/evidence/admin-audit-20261102/matriz-remota.md"
+        },
+        {
+          "original": "docs/evidence/admin-audit/desktop-cards.png",
+          "current": "docs/evidence/admin-audit/desktop-cards.png"
+        },
+        {
+          "original": "docs/evidence/admin-audit/desktop-equal-product-actions.png",
+          "current": "docs/evidence/admin-audit/desktop-equal-product-actions.png"
+        },
+        {
+          "original": "docs/evidence/admin-audit/desktop-header-cards.png",
+          "current": "docs/evidence/admin-audit/desktop-header-cards.png"
+        },
+        {
+          "original": "docs/evidence/admin-audit/desktop-header.png",
+          "current": "docs/evidence/admin-audit/desktop-header.png"
+        },
+        {
+          "original": "docs/evidence/admin-audit/desktop-low-stock-search.png",
+          "current": "docs/evidence/admin-audit/desktop-low-stock-search.png"
+        },
+        {
+          "original": "docs/evidence/admin-audit/matrix.md",
+          "current": "docs/evidence/admin-audit/matrix.md"
+        },
+        {
+          "original": "docs/evidence/admin-audit/mobile-cards.png",
+          "current": "docs/evidence/admin-audit/mobile-cards.png"
+        },
+        {
+          "original": "docs/evidence/admin-audit/mobile-equal-product-actions.png",
+          "current": "docs/evidence/admin-audit/mobile-equal-product-actions.png"
+        },
+        {
+          "original": "docs/evidence/admin-audit/mobile-header-cards.png",
+          "current": "docs/evidence/admin-audit/mobile-header-cards.png"
+        },
+        {
+          "original": "docs/evidence/admin-audit/mobile-header.png",
+          "current": "docs/evidence/admin-audit/mobile-header.png"
+        },
+        {
+          "original": "docs/evidence/admin-audit/mobile-low-stock-search.png",
+          "current": "docs/evidence/admin-audit/mobile-low-stock-search.png"
+        },
+        {
+          "original": "docs/evidence/cierre-tecnico-20261105/README.md",
+          "current": "docs/evidence/cierre-tecnico-20261105/README.md"
+        },
+        {
+          "original": "docs/evidence/cierre-tecnico-20261105/admin-form-publicado.png",
+          "current": "docs/evidence/cierre-tecnico-20261105/admin-form-publicado.png"
+        },
+        {
+          "original": "docs/evidence/cierre-tecnico-20261105/carrusel-escritorio-local.png",
+          "current": "docs/evidence/cierre-tecnico-20261105/carrusel-escritorio-local.png"
+        },
+        {
+          "original": "docs/evidence/cierre-tecnico-20261105/carrusel-escritorio.png",
+          "current": "docs/evidence/cierre-tecnico-20261105/carrusel-escritorio.png"
+        },
+        {
+          "original": "docs/evidence/cierre-tecnico-20261105/carrusel-movil-local.png",
+          "current": "docs/evidence/cierre-tecnico-20261105/carrusel-movil-local.png"
+        },
+        {
+          "original": "docs/evidence/cierre-tecnico-20261105/carrusel-movil.png",
+          "current": "docs/evidence/cierre-tecnico-20261105/carrusel-movil.png"
+        },
+        {
+          "original": "docs/evidence/cierre-tecnico-20261105/inicio-oficial.png",
+          "current": "docs/evidence/cierre-tecnico-20261105/inicio-oficial.png"
+        },
+        {
+          "original": "docs/evidence/collection-filters/desktop-hombre.png",
+          "current": "docs/evidence/collection-filters/desktop-hombre.png"
+        },
+        {
+          "original": "docs/evidence/collection-filters/desktop-mujer.png",
+          "current": "docs/evidence/collection-filters/desktop-mujer.png"
+        },
+        {
+          "original": "docs/evidence/collection-filters/desktop-unisex.png",
+          "current": "docs/evidence/collection-filters/desktop-unisex.png"
+        },
+        {
+          "original": "docs/evidence/collection-filters/local-browser.txt",
+          "current": "docs/evidence/collection-filters/local-browser.txt"
+        },
+        {
+          "original": "docs/evidence/collection-filters/mobile-hombre.png",
+          "current": "docs/evidence/collection-filters/mobile-hombre.png"
+        },
+        {
+          "original": "docs/evidence/collection-filters/mobile-mujer.png",
+          "current": "docs/evidence/collection-filters/mobile-mujer.png"
+        },
+        {
+          "original": "docs/evidence/collection-filters/mobile-unisex.png",
+          "current": "docs/evidence/collection-filters/mobile-unisex.png"
+        },
+        {
+          "original": "docs/evidence/collection-filters/official-desktop-hombre.png",
+          "current": "docs/evidence/collection-filters/official-desktop-hombre.png"
+        },
+        {
+          "original": "docs/evidence/collection-filters/official-desktop-mujer.png",
+          "current": "docs/evidence/collection-filters/official-desktop-mujer.png"
+        },
+        {
+          "original": "docs/evidence/collection-filters/official-desktop-unisex.png",
+          "current": "docs/evidence/collection-filters/official-desktop-unisex.png"
+        },
+        {
+          "original": "docs/evidence/collection-filters/official-final-browser.txt",
+          "current": "docs/evidence/collection-filters/official-final-browser.txt"
+        },
+        {
+          "original": "docs/evidence/collection-filters/official-full-browser.txt",
+          "current": "docs/evidence/collection-filters/local-browser.txt"
+        },
+        {
+          "original": "docs/evidence/collection-filters/official-http.txt",
+          "current": "docs/evidence/collection-filters/official-http.txt"
+        },
+        {
+          "original": "docs/evidence/collection-filters/official-mobile-hombre.png",
+          "current": "docs/evidence/collection-filters/official-mobile-hombre.png"
+        },
+        {
+          "original": "docs/evidence/collection-filters/official-mobile-mujer.png",
+          "current": "docs/evidence/collection-filters/official-mobile-mujer.png"
+        },
+        {
+          "original": "docs/evidence/collection-filters/official-mobile-unisex.png",
+          "current": "docs/evidence/collection-filters/official-mobile-unisex.png"
+        },
+        {
+          "original": "docs/evidence/collection-filters/staging-browser.txt",
+          "current": "docs/evidence/collection-filters/staging-browser.txt"
+        },
+        {
+          "original": "docs/evidence/coupon-academic-20261103/README.md",
+          "current": "docs/evidence/coupon-academic-20261103/README.md"
+        },
+        {
+          "original": "docs/evidence/coupon-academic-20261103/cart-1440.png",
+          "current": "docs/evidence/coupon-academic-20261103/cart-1440.png"
+        },
+        {
+          "original": "docs/evidence/coupon-academic-20261103/cart-390.png",
+          "current": "docs/evidence/coupon-academic-20261103/cart-390.png"
+        },
+        {
+          "original": "docs/evidence/coupon-academic-20261103/form-1440.png",
+          "current": "docs/evidence/coupon-academic-20261103/form-1440.png"
+        },
+        {
+          "original": "docs/evidence/coupon-academic-20261103/form-390.png",
+          "current": "docs/evidence/coupon-academic-20261103/form-390.png"
+        },
+        {
+          "original": "docs/evidence/coupon-academic-20261103/official-coupon-1440.png",
+          "current": "docs/evidence/coupon-academic-20261103/official-coupon-1440.png"
+        },
+        {
+          "original": "docs/evidence/coupon-academic-20261103/official-coupon-390.png",
+          "current": "docs/evidence/coupon-academic-20261103/official-coupon-390.png"
+        },
+        {
+          "original": "docs/evidence/coupon-academic-20261103/official-form-1440.png",
+          "current": "docs/evidence/coupon-academic-20261103/official-form-1440.png"
+        },
+        {
+          "original": "docs/evidence/coupon-academic-20261103/official-form-390.png",
+          "current": "docs/evidence/coupon-academic-20261103/official-form-390.png"
+        },
+        {
+          "original": "docs/evidence/functional-backend-20261027/credential-diagnosis.md",
+          "current": "docs/evidence/functional-backend-20261027/credential-diagnosis.md"
+        },
+        {
+          "original": "docs/evidence/functional-backend-20261027/credential-replacement-20261029.md",
+          "current": "docs/evidence/functional-backend-20261027/credential-replacement-20261029.md"
+        },
+        {
+          "original": "docs/evidence/functional-backend-20261027/restored-1440.png",
+          "current": "docs/evidence/functional-backend-20261027/restored-1440.png"
+        },
+        {
+          "original": "docs/evidence/functional-backend-20261027/restored-390.png",
+          "current": "docs/evidence/functional-backend-20261027/restored-390.png"
+        },
+        {
+          "original": "docs/evidence/functional-backend-20261027/verification.md",
+          "current": "docs/evidence/functional-backend-20261027/verification.md"
+        },
+        {
+          "original": "docs/evidence/home-removal-20261103/README.md",
+          "current": "docs/evidence/home-removal-20261103/README.md"
+        },
+        {
+          "original": "docs/evidence/home-removal-20261103/local-home-1440.png",
+          "current": "docs/evidence/home-removal-20261103/local-home-1440.png"
+        },
+        {
+          "original": "docs/evidence/home-removal-20261103/local-home-390.png",
+          "current": "docs/evidence/home-removal-20261103/local-home-390.png"
+        },
+        {
+          "original": "docs/evidence/home-removal-20261103/official-home-1440.png",
+          "current": "docs/evidence/home-removal-20261103/official-home-1440.png"
+        },
+        {
+          "original": "docs/evidence/home-removal-20261103/official-home-390.png",
+          "current": "docs/evidence/home-removal-20261103/official-home-390.png"
+        },
+        {
+          "original": "docs/evidence/inicio-cabeceras-20261105/README.md",
+          "current": "docs/evidence/inicio-cabeceras-20261105/README.md"
+        },
+        {
+          "original": "docs/evidence/inicio-cabeceras-20261105/cabecera-hombre-escritorio-local.png",
+          "current": "docs/evidence/inicio-cabeceras-20261105/cabecera-hombre-escritorio-local.png"
+        },
+        {
+          "original": "docs/evidence/inicio-cabeceras-20261105/cabecera-hombre-escritorio.png",
+          "current": "docs/evidence/inicio-cabeceras-20261105/cabecera-hombre-escritorio.png"
+        },
+        {
+          "original": "docs/evidence/inicio-cabeceras-20261105/cabecera-hombre-movil-local.png",
+          "current": "docs/evidence/inicio-cabeceras-20261105/cabecera-hombre-movil-local.png"
+        },
+        {
+          "original": "docs/evidence/inicio-cabeceras-20261105/cabecera-hombre-movil.png",
+          "current": "docs/evidence/inicio-cabeceras-20261105/cabecera-hombre-movil.png"
+        },
+        {
+          "original": "docs/evidence/inicio-cabeceras-20261105/cabecera-mujer-escritorio-local.png",
+          "current": "docs/evidence/inicio-cabeceras-20261105/cabecera-mujer-escritorio-local.png"
+        },
+        {
+          "original": "docs/evidence/inicio-cabeceras-20261105/cabecera-mujer-escritorio.png",
+          "current": "docs/evidence/inicio-cabeceras-20261105/cabecera-mujer-escritorio.png"
+        },
+        {
+          "original": "docs/evidence/inicio-cabeceras-20261105/cabecera-mujer-movil-local.png",
+          "current": "docs/evidence/inicio-cabeceras-20261105/cabecera-mujer-movil-local.png"
+        },
+        {
+          "original": "docs/evidence/inicio-cabeceras-20261105/cabecera-mujer-movil.png",
+          "current": "docs/evidence/inicio-cabeceras-20261105/cabecera-mujer-movil.png"
+        },
+        {
+          "original": "docs/evidence/inicio-cabeceras-20261105/cabecera-perfumes-escritorio-local.png",
+          "current": "docs/evidence/inicio-cabeceras-20261105/cabecera-perfumes-escritorio-local.png"
+        },
+        {
+          "original": "docs/evidence/inicio-cabeceras-20261105/cabecera-perfumes-escritorio.png",
+          "current": "docs/evidence/inicio-cabeceras-20261105/cabecera-perfumes-escritorio.png"
+        },
+        {
+          "original": "docs/evidence/inicio-cabeceras-20261105/cabecera-perfumes-movil-local.png",
+          "current": "docs/evidence/inicio-cabeceras-20261105/cabecera-perfumes-movil-local.png"
+        },
+        {
+          "original": "docs/evidence/inicio-cabeceras-20261105/cabecera-perfumes-movil.png",
+          "current": "docs/evidence/inicio-cabeceras-20261105/cabecera-perfumes-movil.png"
+        },
+        {
+          "original": "docs/evidence/inicio-cabeceras-20261105/cabecera-unisex-escritorio-local.png",
+          "current": "docs/evidence/inicio-cabeceras-20261105/cabecera-unisex-escritorio-local.png"
+        },
+        {
+          "original": "docs/evidence/inicio-cabeceras-20261105/cabecera-unisex-escritorio.png",
+          "current": "docs/evidence/inicio-cabeceras-20261105/cabecera-unisex-escritorio.png"
+        },
+        {
+          "original": "docs/evidence/inicio-cabeceras-20261105/cabecera-unisex-movil-local.png",
+          "current": "docs/evidence/inicio-cabeceras-20261105/cabecera-unisex-movil-local.png"
+        },
+        {
+          "original": "docs/evidence/inicio-cabeceras-20261105/cabecera-unisex-movil.png",
+          "current": "docs/evidence/inicio-cabeceras-20261105/cabecera-unisex-movil.png"
+        },
+        {
+          "original": "docs/evidence/inicio-cabeceras-20261105/inicio-completo-escritorio.png",
+          "current": "docs/evidence/inicio-cabeceras-20261105/inicio-completo-escritorio.png"
+        },
+        {
+          "original": "docs/evidence/inicio-cabeceras-20261105/inicio-completo-movil.png",
+          "current": "docs/evidence/inicio-cabeceras-20261105/inicio-completo-movil.png"
+        },
+        {
+          "original": "docs/evidence/inicio-cabeceras-20261105/inicio-escritorio-local.png",
+          "current": "docs/evidence/inicio-cabeceras-20261105/inicio-escritorio.png"
+        },
+        {
+          "original": "docs/evidence/inicio-cabeceras-20261105/inicio-escritorio.png",
+          "current": "docs/evidence/inicio-cabeceras-20261105/inicio-escritorio.png"
+        },
+        {
+          "original": "docs/evidence/inicio-cabeceras-20261105/inicio-movil-local.png",
+          "current": "docs/evidence/inicio-cabeceras-20261105/inicio-movil-local.png"
+        },
+        {
+          "original": "docs/evidence/inicio-cabeceras-20261105/inicio-movil.png",
+          "current": "docs/evidence/inicio-cabeceras-20261105/inicio-movil.png"
+        },
+        {
+          "original": "docs/evidence/navigation/desktop-filters.png",
+          "current": "docs/evidence/navigation/desktop-filters.png"
+        },
+        {
+          "original": "docs/evidence/navigation/desktop-menu.png",
+          "current": "docs/evidence/navigation/desktop-menu.png"
+        },
+        {
+          "original": "docs/evidence/navigation/mobile-filters.png",
+          "current": "docs/evidence/navigation/mobile-filters.png"
+        },
+        {
+          "original": "docs/evidence/navigation/mobile-menu.png",
+          "current": "docs/evidence/navigation/mobile-menu.png"
+        },
+        {
+          "original": "docs/evidence/navigation/remote-qa.txt",
+          "current": "docs/evidence/navigation/remote-qa.txt"
+        },
+        {
+          "original": "docs/evidence/official-review-20261027/desktop-academic-official.png",
+          "current": "docs/evidence/official-review-20261027/desktop-academic-official.png"
+        },
+        {
+          "original": "docs/evidence/official-review-20261027/desktop-admin-local.png",
+          "current": "docs/evidence/official-review-20261027/desktop-admin-local.png"
+        },
+        {
+          "original": "docs/evidence/official-review-20261027/desktop-cart-local.png",
+          "current": "docs/evidence/official-review-20261027/desktop-cart-local.png"
+        },
+        {
+          "original": "docs/evidence/official-review-20261027/desktop-cart-official.png",
+          "current": "docs/evidence/official-review-20261027/desktop-cart-official.png"
+        },
+        {
+          "original": "docs/evidence/official-review-20261027/matrix.md",
+          "current": "docs/evidence/official-review-20261027/matrix.md"
+        },
+        {
+          "original": "docs/evidence/official-review-20261027/mobile-academic-official.png",
+          "current": "docs/evidence/official-review-20261027/mobile-academic-official.png"
+        },
+        {
+          "original": "docs/evidence/official-review-20261027/mobile-admin-local.png",
+          "current": "docs/evidence/official-review-20261027/mobile-admin-local.png"
+        },
+        {
+          "original": "docs/evidence/official-review-20261027/mobile-cart-local.png",
+          "current": "docs/evidence/official-review-20261027/mobile-cart-local.png"
+        },
+        {
+          "original": "docs/evidence/official-review-20261027/mobile-cart-official.png",
+          "current": "docs/evidence/official-review-20261027/mobile-cart-official.png"
+        },
+        {
+          "original": "docs/evidence/pr56-current-20261028/status.md",
+          "current": "docs/history/continuidad.html#fuente-9e6f4181dcca"
+        },
+        {
+          "original": "docs/evidence/seo/desktop-product.png",
+          "current": "docs/evidence/seo/desktop-product.png"
+        },
+        {
+          "original": "docs/evidence/seo/isolated-http.txt",
+          "current": "docs/evidence/seo/isolated-http.txt"
+        },
+        {
+          "original": "docs/evidence/seo/mobile-catalog.png",
+          "current": "docs/evidence/seo/mobile-catalog.png"
+        },
+        {
+          "original": "docs/evidence/seo/nojs-product.png",
+          "current": "docs/evidence/seo/nojs-product.png"
+        },
+        {
+          "original": "docs/evidence/seo/official-browser.txt",
+          "current": "docs/evidence/seo/official-browser.txt"
+        },
+        {
+          "original": "docs/evidence/seo/official-http.txt",
+          "current": "docs/evidence/seo/official-http.txt"
+        },
+        {
+          "original": "docs/history/CURRENT_STATE-hasta-20261105.md",
+          "current": "docs/history/continuidad.html#fuente-93b67dc6404f"
+        },
+        {
+          "original": "docs/history/CURRENT_STATE_PR33.md",
+          "current": "docs/history/continuidad.html#fuente-cb2bbc2f5851"
+        },
+        {
+          "original": "docs/history/PLAN-hasta-20261105.md",
+          "current": "docs/history/continuidad.html#fuente-d906ba3e3900"
+        },
+        {
+          "original": "docs/history/PLAN_PR33.md",
+          "current": "docs/history/continuidad.html#fuente-e9c6d009309f"
+        },
+        {
+          "original": "docs/history/visual-audits/ART_DIRECTION_AUDIT_2026-09-01.md",
+          "current": "docs/history/auditorias.html#fuente-8157bbf74f26"
+        },
+        {
+          "original": "docs/history/visual-audits/MOTION_REFERENCE_AUDIT_2026-09-01.md",
+          "current": "docs/history/auditorias.html#fuente-196d47a7b57d"
+        },
+        {
+          "original": "docs/history/visual-audits/PREMIUM_EXPANSION_AUDIT.md",
+          "current": "docs/history/auditorias.html#fuente-f42d42634e11"
+        },
+        {
+          "original": "docs/history/visual-audits/README.md",
+          "current": "docs/history/auditorias.html#fuente-b442e463712d"
+        }
+      ]
+    },
+    {
+      "id": "E09",
+      "name": "Instrucciones de agentes y continuidad vigente",
+      "purpose": "AGENTS.md define reglas y exige CURRENT_STATE.md, PLAN.md y CHANGELOG.md; estos últimos aún son referenciados por instrucciones y runbooks.",
+      "loss": "Quitarlos solos deja instrucciones y enlaces rotos. No son requisitos de ejecución del servidor.",
+      "alternative": "Autorizar un AGENTS mínimo y reemplazar sus referencias por README/registro, preservando evidencia única antes de retirar continuidad.",
+      "recommendation": "Decidir el alcance de la simplificación de este grupo. Permanecen hasta la respuesta; no se interpreta AGENTS como permiso adicional para bloquear la limpieza autorizada.",
+      "files": [
+        "AGENTS.md",
+        "CHANGELOG.md",
+        "CURRENT_STATE.md",
+        "PLAN.md"
+      ],
+      "count": 4,
+      "decision": "Resuelto sin borrar archivos necesarios: reubicación en app/docs o consolidación fiel autorizada por el pedido posterior.",
+      "previous_decision": "PENDIENTE: no eliminar antes de respuesta del usuario",
+      "current_locations": [
+        {
+          "original": "AGENTS.md",
+          "current": "docs/history/continuidad.html#fuente-a54ff182c7e8"
+        },
+        {
+          "original": "CHANGELOG.md",
+          "current": "docs/history/continuidad.html#fuente-06572a96a58d"
+        },
+        {
+          "original": "CURRENT_STATE.md",
+          "current": "docs/history/continuidad.html#fuente-73eb8b983651"
+        },
+        {
+          "original": "PLAN.md",
+          "current": "docs/history/continuidad.html#fuente-1d972b4ac04c"
+        }
+      ]
+    },
+    {
+      "id": "E10",
+      "name": "Configuración histórica Railway",
+      "purpose": "railway.toml conserva un destino anterior; no es el hosting oficial vigente y no se ejecuta en esta tarea.",
+      "loss": "Se pierde la receta de despliegue histórica, aunque no rompe por sí sola la oficial de Cloudflare.",
+      "alternative": "Referir al commit histórico, después de aprobación y búsqueda de dependencias; no activar Railway.",
+      "recommendation": "Puede retirarse con autorización específica; se conserva pendiente de decisión.",
+      "files": [
+        "railway.toml"
+      ],
+      "count": 1,
+      "decision": "Resuelto sin borrar archivos necesarios: reubicación en app/docs o consolidación fiel autorizada por el pedido posterior.",
+      "previous_decision": "PENDIENTE: no eliminar antes de respuesta del usuario",
+      "current_locations": [
+        {
+          "original": "railway.toml",
+          "current": "docs/history/operacion.html#fuente-eb56cd74597c"
+        }
+      ]
+    },
+    {
+      "id": "E11",
+      "name": "Atribuciones y fuentes de imágenes",
+      "purpose": "docs/image_sources.md conserva referencias visuales y advierte que no se acreditaron todas las licencias.",
+      "loss": "Se pierde trazabilidad de imágenes; borrar el archivo no resuelve permisos de uso.",
+      "alternative": "Consolidar atribuciones comprobadas en README conservando la incertidumbre, con revisión del usuario.",
+      "recommendation": "Conservar. No hay archivo LICENSE independiente en esta base: no se inventa una licencia.",
+      "files": [
+        "docs/image_sources.md"
+      ],
+      "count": 1,
+      "decision": "Resuelto sin borrar archivos necesarios: reubicación en app/docs o consolidación fiel autorizada por el pedido posterior.",
+      "previous_decision": "PENDIENTE: no eliminar antes de respuesta del usuario",
+      "current_locations": [
+        {
+          "original": "docs/image_sources.md",
+          "current": "docs/image_sources.md"
+        }
+      ]
+    },
+    {
+      "id": "E12",
+      "name": "Guías técnicas de operación",
+      "purpose": "Runbooks de publicación/rollback, arquitectura, recuperación y cambios históricos; se distinguen de prompts de IA.",
+      "loss": "Puede perderse conocimiento único o referencias de mantenimiento. Su antigüedad sola no prueba que sobren.",
+      "alternative": "Consolidar las partes vigentes en README antes de retirar cada guía, preservando antecedentes de seguridad.",
+      "recommendation": "Conservar pendientes de selección; no ejecutar instrucciones históricas como actuales.",
+      "files": [
+        "docs/academic_preview.md",
+        "docs/access_language_refinement.md",
+        "docs/admin_audit.md",
+        "docs/admin_search_images.md",
+        "docs/checkout_sandbox.md",
+        "docs/cloudflare_migration.md",
+        "docs/cloudflare_validation.md",
+        "docs/collection_filters.md",
+        "docs/continuity-functional-backend-20261027.md",
+        "docs/navigation_filters.md",
+        "docs/official_academic_release.md",
+        "docs/official_direct_checkout.md",
+        "docs/official_navigation_footer.md",
+        "docs/official_review_20261027.md",
+        "docs/pages_frontdoor.md",
+        "docs/railway_deploy.md",
+        "docs/recovery_runbook.md",
+        "docs/seo_y_metadatos.md",
+        "docs/static_home_pages.md",
+        "docs/supabase_railway_github.md"
+      ],
+      "count": 20,
+      "decision": "Resuelto sin borrar archivos necesarios: reubicación en app/docs o consolidación fiel autorizada por el pedido posterior.",
+      "previous_decision": "PENDIENTE: no eliminar antes de respuesta del usuario",
+      "current_locations": [
+        {
+          "original": "docs/academic_preview.md",
+          "current": "docs/history/operacion.html#fuente-964bd7148b2c"
+        },
+        {
+          "original": "docs/access_language_refinement.md",
+          "current": "docs/history/operacion.html#fuente-9fbcef50a545"
+        },
+        {
+          "original": "docs/admin_audit.md",
+          "current": "docs/history/auditorias.html#fuente-d287747ba0cb"
+        },
+        {
+          "original": "docs/admin_search_images.md",
+          "current": "docs/history/auditorias.html#fuente-f5385572a172"
+        },
+        {
+          "original": "docs/checkout_sandbox.md",
+          "current": "docs/history/operacion.html#fuente-0c340a566a1c"
+        },
+        {
+          "original": "docs/cloudflare_migration.md",
+          "current": "docs/history/operacion.html#fuente-63541cfd2cb0"
+        },
+        {
+          "original": "docs/cloudflare_validation.md",
+          "current": "docs/history/operacion.html#fuente-b62f8b32a046"
+        },
+        {
+          "original": "docs/collection_filters.md",
+          "current": "docs/history/operacion.html#fuente-9ec586eea78f"
+        },
+        {
+          "original": "docs/continuity-functional-backend-20261027.md",
+          "current": "docs/history/continuidad.html#fuente-3976eae40a73"
+        },
+        {
+          "original": "docs/navigation_filters.md",
+          "current": "docs/history/operacion.html#fuente-2842a59edcc0"
+        },
+        {
+          "original": "docs/official_academic_release.md",
+          "current": "docs/history/operacion.html#fuente-7d9f1484843d"
+        },
+        {
+          "original": "docs/official_direct_checkout.md",
+          "current": "docs/history/operacion.html#fuente-759c90f933e4"
+        },
+        {
+          "original": "docs/official_navigation_footer.md",
+          "current": "docs/history/operacion.html#fuente-3025aa571c23"
+        },
+        {
+          "original": "docs/official_review_20261027.md",
+          "current": "docs/history/operacion.html#fuente-1f48f46dcb92"
+        },
+        {
+          "original": "docs/pages_frontdoor.md",
+          "current": "docs/history/operacion.html#fuente-65d6e7100dc6"
+        },
+        {
+          "original": "docs/railway_deploy.md",
+          "current": "docs/history/operacion.html#fuente-37b3beca12bc"
+        },
+        {
+          "original": "docs/recovery_runbook.md",
+          "current": "docs/history/operacion.html#fuente-8d5b8e75512a"
+        },
+        {
+          "original": "docs/seo_y_metadatos.md",
+          "current": "docs/history/operacion.html#fuente-62a69767f68b"
+        },
+        {
+          "original": "docs/static_home_pages.md",
+          "current": "docs/history/operacion.html#fuente-269f22b4b558"
+        },
+        {
+          "original": "docs/supabase_railway_github.md",
+          "current": "docs/history/operacion.html#fuente-6ef62c91c1a9"
+        }
+      ]
+    }
+  ],
+  "removed": [
+    {
+      "path": "docs/entrega-2026/bitacora-ia.md",
+      "reason": "Cuerpo de bitácora preservado en la sección F del único registro de prompts; referencias vivas actualizadas.",
+      "runtime_or_build_consumers": [],
+      "references_before": [
+        {
+          "file": "docs/auditoria-2025/archivos-versionados-commit-auditado.txt",
+          "match": "ruta completa",
+          "kind": "snapshot histórico"
+        },
+        {
+          "file": "docs/auditoria-2025/criterios-preliminares.json",
+          "match": "ruta completa",
+          "kind": "snapshot histórico"
+        },
+        {
+          "file": "docs/auditoria-2025/matriz-preliminar.md",
+          "match": "ruta completa",
+          "kind": "documentación"
+        },
+        {
+          "file": "docs/entrega-2025/INDICE.md",
+          "match": "nombre; revisar contexto",
+          "kind": "documentación"
+        },
+        {
+          "file": "docs/entrega-2025/inventario-archivos.csv",
+          "match": "ruta completa",
+          "kind": "snapshot histórico"
+        },
+        {
+          "file": "docs/entrega-2025/inventario-archivos.json",
+          "match": "ruta completa",
+          "kind": "snapshot histórico"
+        },
+        {
+          "file": "docs/entrega-2025/registro-prompts.md",
+          "match": "nombre; revisar contexto",
+          "kind": "documentación"
+        },
+        {
+          "file": "docs/entrega-2026/INDICE.md",
+          "match": "nombre; revisar contexto",
+          "kind": "documentación"
+        },
+        {
+          "file": "docs/entrega-2026/matriz-rubrica.md",
+          "match": "nombre; revisar contexto",
+          "kind": "documentación"
+        }
+      ],
+      "preserved_information": "docs/entrega-2025/registro-prompts.md#f-bitácora-histórica-consolidada"
+    },
+    {
+      "path": "docs/README.md",
+      "reason": "Índice y advertencias de vigencia consolidados en README raíz; índice académico detallado se conserva.",
+      "runtime_or_build_consumers": [],
+      "references_before": [
+        {
+          "file": "CURRENT_STATE.md",
+          "match": "nombre; revisar contexto",
+          "kind": "nombre ambiguo; no prueba dependencia"
+        },
+        {
+          "file": "README.md",
+          "match": "nombre; revisar contexto",
+          "kind": "nombre ambiguo; no prueba dependencia"
+        },
+        {
+          "file": "docs/auditoria-2025/archivos-versionados-commit-auditado.txt",
+          "match": "ruta completa",
+          "kind": "snapshot histórico"
+        },
+        {
+          "file": "docs/auditoria-2025/base-de-datos.md",
+          "match": "nombre; revisar contexto",
+          "kind": "nombre ambiguo; no prueba dependencia"
+        },
+        {
+          "file": "docs/auditoria-2025/criterios-preliminares.json",
+          "match": "nombre; revisar contexto",
+          "kind": "nombre ambiguo; no prueba dependencia"
+        },
+        {
+          "file": "docs/auditoria-2025/matriz-preliminar.md",
+          "match": "nombre; revisar contexto",
+          "kind": "nombre ambiguo; no prueba dependencia"
+        },
+        {
+          "file": "docs/entrega-2025/INDICE.md",
+          "match": "nombre; revisar contexto",
+          "kind": "nombre ambiguo; no prueba dependencia"
+        },
+        {
+          "file": "docs/entrega-2025/defensa.md",
+          "match": "nombre; revisar contexto",
+          "kind": "nombre ambiguo; no prueba dependencia"
+        },
+        {
+          "file": "docs/entrega-2025/informe.md",
+          "match": "nombre; revisar contexto",
+          "kind": "nombre ambiguo; no prueba dependencia"
+        },
+        {
+          "file": "docs/entrega-2025/inventario-archivos.csv",
+          "match": "ruta completa",
+          "kind": "snapshot histórico"
+        },
+        {
+          "file": "docs/entrega-2025/inventario-archivos.json",
+          "match": "ruta completa",
+          "kind": "snapshot histórico"
+        },
+        {
+          "file": "docs/entrega-2025/matriz-rubrica.md",
+          "match": "nombre; revisar contexto",
+          "kind": "nombre ambiguo; no prueba dependencia"
+        },
+        {
+          "file": "docs/entrega-2025/pruebas.json",
+          "match": "nombre; revisar contexto",
+          "kind": "nombre ambiguo; no prueba dependencia"
+        },
+        {
+          "file": "docs/entrega-2025/registro-prompts.md",
+          "match": "nombre; revisar contexto",
+          "kind": "nombre ambiguo; no prueba dependencia"
+        },
+        {
+          "file": "docs/entrega-2026/INDICE.md",
+          "match": "nombre; revisar contexto",
+          "kind": "nombre ambiguo; no prueba dependencia"
+        },
+        {
+          "file": "docs/entrega-2026/manual.md",
+          "match": "nombre; revisar contexto",
+          "kind": "nombre ambiguo; no prueba dependencia"
+        },
+        {
+          "file": "docs/entrega-2026/pruebas.md",
+          "match": "nombre; revisar contexto",
+          "kind": "nombre ambiguo; no prueba dependencia"
+        },
+        {
+          "file": "pages/official-release.json",
+          "match": "nombre; revisar contexto",
+          "kind": "nombre ambiguo; no prueba dependencia"
+        },
+        {
+          "file": "scripts/install_and_run.txt",
+          "match": "nombre; revisar contexto",
+          "kind": "nombre ambiguo; no prueba dependencia"
+        }
+      ],
+      "preserved_information": "README.md"
+    },
+    {
+      "path": "scripts/install_and_run.txt",
+      "reason": "Comandos, arranque y advertencias ya cubiertos/consolidados en README; sin consumidores de código/CI/build.",
+      "runtime_or_build_consumers": [],
+      "references_before": [
+        {
+          "file": "docs/auditoria-2025/archivos-versionados-commit-auditado.txt",
+          "match": "ruta completa",
+          "kind": "snapshot histórico"
+        },
+        {
+          "file": "docs/entrega-2025/inventario-archivos.csv",
+          "match": "ruta completa",
+          "kind": "snapshot histórico"
+        },
+        {
+          "file": "docs/entrega-2025/inventario-archivos.json",
+          "match": "ruta completa",
+          "kind": "snapshot histórico"
+        }
+      ],
+      "preserved_information": "README.md"
+    }
+  ],
+  "consolidation": {
+    "canonical_ai_markdown": "docs/entrega-2025/registro-prompts.md",
+    "source": "docs/entrega-2026/bitacora-ia.md",
+    "source_sha256": "5820af024fb83a510c6c97103951c507840b271a1a18cfa2020e7ade5f362db5",
+    "preserves_original_body": true,
+    "history_is_complete": false,
+    "historical_reference_policy": "Manifiestos CSV/JSON/TXT fechados conservan nombres originales; no son enlaces de navegación vivos. La equivalencia queda en removed y consolidation."
+  },
+  "unchanged_duplicate_groups": [
+    [
+      "docs/evidence/collection-filters/local-browser.txt",
+      "docs/evidence/collection-filters/official-full-browser.txt"
+    ],
+    [
+      "docs/evidence/inicio-cabeceras-20261105/inicio-escritorio-local.png",
+      "docs/evidence/inicio-cabeceras-20261105/inicio-escritorio.png"
+    ]
+  ],
+  "updated_live_references": [
+    "docs/auditoria-2025/matriz-preliminar.md",
+    "docs/entrega-2025/INDICE.md",
+    "docs/entrega-2026/INDICE.md",
+    "docs/entrega-2026/matriz-rubrica.md"
+  ],
+  "proposed_tree": [
+    "README.md",
+    "AGENTS.md + continuidad (E09: pendiente)",
+    "docs/entrega-2025/registro-prompts.md (única declaración/registro de IA)",
+    "docs/entrega-2025/ + docs/auditoria-2025/ + manual y fuentes reutilizadas (E07)",
+    "docs/evidence/ + docs/history/ + auditorías de seguridad (E08)",
+    "docs/limpieza-20261111.json (inventario, decisiones y validaciones de esta PR)",
+    "public/ + server/ + worker/ + pages/ + views/ + templates/",
+    "scripts/ + test/ (conservar tests)",
+    "supabase/ (E02)",
+    "package.json + pnpm-lock.yaml + pnpm-workspace.yaml (E03)",
+    "Wrangler JSONC + .github/workflows/ + herramientas y SEO (E03–E06)",
+    "railway.toml (E10: pendiente)"
+  ],
+  "post_change_checks": {
+    "state": "APROBADO",
+    "documentary": {
+      "links_checked_in_modified_markdown": 108,
+      "broken_links": 0,
+      "historical_body_preserved": true,
+      "source_hash_matches_git": true,
+      "all_exception_files_preserved": 254,
+      "code_config_and_assets_diff": "empty",
+      "new_sensitive_patterns": 0,
+      "tree_after_proposal_files": 455,
+      "no_python_added": true,
+      "deleted_files": [
+        "docs/entrega-2026/bitacora-ia.md",
+        "docs/README.md",
+        "scripts/install_and_run.txt"
+      ]
+    },
+    "clean_install_and_checks": [
+      {
+        "command": "corepack pnpm install --frozen-lockfile",
+        "exit_code": 0,
+        "seconds": 6.1,
+        "scope": "Carpeta nueva sin .git, sin node_modules previo y sin secretos de producción; fixtures locales, no deploy"
+      },
+      {
+        "command": "corepack pnpm run check",
+        "exit_code": 0,
+        "seconds": 4.36,
+        "scope": "Carpeta nueva sin .git, sin node_modules previo y sin secretos de producción; fixtures locales, no deploy"
+      },
+      {
+        "command": "corepack pnpm run check:functions",
+        "exit_code": 0,
+        "seconds": 1.19,
+        "scope": "Carpeta nueva sin .git, sin node_modules previo y sin secretos de producción; fixtures locales, no deploy"
+      },
+      {
+        "command": "corepack pnpm test",
+        "exit_code": 0,
+        "seconds": 20.13,
+        "scope": "Carpeta nueva sin .git, sin node_modules previo y sin secretos de producción; fixtures locales, no deploy",
+        "summary": {
+          "tests": 497,
+          "pass": 493,
+          "fail": 0,
+          "skipped": 4
+        }
+      },
+      {
+        "command": "corepack pnpm run build:cloudflare",
+        "exit_code": 0,
+        "seconds": 7.63,
+        "scope": "Carpeta nueva sin .git, sin node_modules previo y sin secretos de producción; fixtures locales, no deploy"
+      },
+      {
+        "command": "corepack pnpm run build:pages",
+        "exit_code": 0,
+        "seconds": 0.72,
+        "scope": "Carpeta nueva sin .git, sin node_modules previo y sin secretos de producción; fixtures locales, no deploy"
+      },
+      {
+        "command": "corepack pnpm run build:admin-review",
+        "exit_code": 0,
+        "seconds": 7.47,
+        "scope": "Carpeta nueva sin .git, sin node_modules previo y sin secretos de producción; fixtures locales, no deploy"
+      },
+      {
+        "command": "corepack pnpm run build:official",
+        "exit_code": 0,
+        "seconds": 7.42,
+        "scope": "Carpeta nueva sin .git, sin node_modules previo y sin secretos de producción; fixtures locales, no deploy"
+      }
+    ],
+    "no_git": true,
+    "production_secrets_passed": false,
+    "pages_worker_sha256": "d5d2d5acb5bac9785d675e2a335f0438bc7a5035bf2cbe8848c24f4499a5b1b8",
+    "pages_artifact_comparison": {
+      "base_commit": "8ad5401fe0f2d0c3e501ab203f6ab37b27ff7db1",
+      "baseline_worker_sha256": "d5d2d5acb5bac9785d675e2a335f0438bc7a5035bf2cbe8848c24f4499a5b1b8",
+      "clean_copy_worker_sha256": "d5d2d5acb5bac9785d675e2a335f0438bc7a5035bf2cbe8848c24f4499a5b1b8",
+      "byte_identical": true,
+      "published": false
+    },
+    "documentation_review": "Cuerpo de bitácora preservado y procedencia documentada; índices/matrices sólo cambian referencias, sin inventar resultados.",
+    "changed_paths": [
+      "CHANGELOG.md",
+      "CURRENT_STATE.md",
+      "PLAN.md",
+      "README.md",
+      "docs/README.md",
+      "docs/auditoria-2025/matriz-preliminar.md",
+      "docs/entrega-2025/INDICE.md",
+      "docs/entrega-2025/registro-prompts.md",
+      "docs/entrega-2026/INDICE.md",
+      "docs/entrega-2026/bitacora-ia.md",
+      "docs/entrega-2026/matriz-rubrica.md",
+      "scripts/install_and_run.txt",
+      "docs/limpieza-20261111.json"
+    ],
+    "import_audit": {
+      "parser": "Acorn 8.15.0",
+      "files": 108,
+      "relative_imports": 105,
+      "missing": 0,
+      "deleted_module_dependencies": 0,
+      "limits": "Imports/require estáticos; dependencias dinámicas y lecturas de archivos se contrastan adicionalmente con búsquedas literales, scripts/configuración y builds/tests."
+    },
+    "ci": {
+      "state": "Consultar resultado vigente en GitHub; el CI aprobado no autoriza merge mientras falten decisiones",
+      "checks_url": "https://github.com/facumartea/dreams/actions?query=branch%3Adocs%2Fsimplificacion-repositorio-20261111"
+    },
+    "phase_note": "Pruebas de la fase inicial antes de mover a app/. El resultado vigente de esta reorganización está en second_phase.checks."
+  },
+  "inventory": {
+    "files": [
+      ".env.example",
+      ".gitattributes",
+      ".github/workflows/ci.yml",
+      ".gitignore",
+      "AGENTS.md",
+      "AUDIT.md",
+      "CHANGELOG.md",
+      "CURRENT_STATE.md",
+      "PLAN.md",
+      "README.md",
+      "SECURITY_ADVERSARIAL_2026-09-01.md",
+      "SECURITY_REVIEW_2026-08-29.md",
+      "docs/README.md",
+      "docs/academic_preview.md",
+      "docs/access_language_refinement.md",
+      "docs/admin_audit.md",
+      "docs/admin_search_images.md",
+      "docs/auditoria-2025/INDICE.md",
+      "docs/auditoria-2025/alcance.json",
+      "docs/auditoria-2025/archivos-versionados-commit-auditado.txt",
+      "docs/auditoria-2025/base-de-datos.md",
+      "docs/auditoria-2025/checkout-oficial-inventario.json",
+      "docs/auditoria-2025/contraste-oficial.json",
+      "docs/auditoria-2025/control-40-lineas.md",
+      "docs/auditoria-2025/criterios-preliminares.json",
+      "docs/auditoria-2025/fuentes/01-inicio.svg",
+      "docs/auditoria-2025/fuentes/02-catalogo.svg",
+      "docs/auditoria-2025/fuentes/03-filtros.svg",
+      "docs/auditoria-2025/fuentes/04-detalle.svg",
+      "docs/auditoria-2025/fuentes/05-login.svg",
+      "docs/auditoria-2025/fuentes/06-registro.svg",
+      "docs/auditoria-2025/fuentes/07-carrito.svg",
+      "docs/auditoria-2025/fuentes/08-checkout.svg",
+      "docs/auditoria-2025/fuentes/09-confirmacion.svg",
+      "docs/auditoria-2025/fuentes/10-nosotros.svg",
+      "docs/auditoria-2025/fuentes/11-admin-productos.svg",
+      "docs/auditoria-2025/fuentes/12-admin-disponibilidad-baja.svg",
+      "docs/auditoria-2025/fuentes/13-admin-cupones.svg",
+      "docs/auditoria-2025/fuentes/14-admin-pedidos.svg",
+      "docs/auditoria-2025/fuentes/15-admin-usuarios.svg",
+      "docs/auditoria-2025/fuentes/16-admin-consultas.svg",
+      "docs/auditoria-2025/fuentes/17-admin-opiniones.svg",
+      "docs/auditoria-2025/fuentes/der.dot",
+      "docs/auditoria-2025/fuentes/der.svg",
+      "docs/auditoria-2025/fuentes/mapa-navegacion.dot",
+      "docs/auditoria-2025/fuentes/mapa-navegacion.svg",
+      "docs/auditoria-2025/fuentes/pantallas.json",
+      "docs/auditoria-2025/graficos/der.pdf",
+      "docs/auditoria-2025/graficos/der.png",
+      "docs/auditoria-2025/graficos/mapa-navegacion.pdf",
+      "docs/auditoria-2025/graficos/mapa-navegacion.png",
+      "docs/auditoria-2025/graficos/wireframe-01.png",
+      "docs/auditoria-2025/graficos/wireframe-02.png",
+      "docs/auditoria-2025/graficos/wireframe-03.png",
+      "docs/auditoria-2025/graficos/wireframe-04.png",
+      "docs/auditoria-2025/graficos/wireframe-05.png",
+      "docs/auditoria-2025/graficos/wireframe-06.png",
+      "docs/auditoria-2025/graficos/wireframe-07.png",
+      "docs/auditoria-2025/graficos/wireframe-08.png",
+      "docs/auditoria-2025/graficos/wireframe-09.png",
+      "docs/auditoria-2025/graficos/wireframe-10.png",
+      "docs/auditoria-2025/graficos/wireframe-11.png",
+      "docs/auditoria-2025/graficos/wireframe-12.png",
+      "docs/auditoria-2025/graficos/wireframe-13.png",
+      "docs/auditoria-2025/graficos/wireframe-14.png",
+      "docs/auditoria-2025/graficos/wireframe-15.png",
+      "docs/auditoria-2025/graficos/wireframe-16.png",
+      "docs/auditoria-2025/graficos/wireframe-17.png",
+      "docs/auditoria-2025/graficos/wireframes.pdf",
+      "docs/auditoria-2025/indices-bd-remota.json",
+      "docs/auditoria-2025/informe.md",
+      "docs/auditoria-2025/inventario-funciones.json",
+      "docs/auditoria-2025/inventario-sql.json",
+      "docs/auditoria-2025/matriz-preliminar.md",
+      "docs/auditoria-2025/metadatos-bd-remota.json",
+      "docs/auditoria-2025/pruebas.json",
+      "docs/checkout_sandbox.md",
+      "docs/cloudflare_migration.md",
+      "docs/cloudflare_validation.md",
+      "docs/collection_filters.md",
+      "docs/continuity-functional-backend-20261027.md",
+      "docs/documentacion.md",
+      "docs/entrega-2025/INDICE.md",
+      "docs/entrega-2025/defensa.docx",
+      "docs/entrega-2025/defensa.md",
+      "docs/entrega-2025/defensa.pdf",
+      "docs/entrega-2025/endpoints-verificados.json",
+      "docs/entrega-2025/equivalencia-ast.json",
+      "docs/entrega-2025/informe.md",
+      "docs/entrega-2025/inventario-archivos.csv",
+      "docs/entrega-2025/inventario-archivos.json",
+      "docs/entrega-2025/inventario-funciones.json",
+      "docs/entrega-2025/limpieza.json",
+      "docs/entrega-2025/matriz-rubrica.md",
+      "docs/entrega-2025/prs-pendientes.json",
+      "docs/entrega-2025/pruebas.json",
+      "docs/entrega-2025/registro-prompts.md",
+      "docs/entrega-2025/revision-limpieza-20261110.md",
+      "docs/entrega-2025/rubrica-2025.pdf",
+      "docs/entrega-2025/rubrica-2025.txt",
+      "docs/entrega-2025/verificacion-defensa-20261110.md",
+      "docs/entrega-2026/INDICE.md",
+      "docs/entrega-2026/api.md",
+      "docs/entrega-2026/base-de-datos.md",
+      "docs/entrega-2026/base-de-datos.mmd",
+      "docs/entrega-2026/bitacora-ia.md",
+      "docs/entrega-2026/capturas/admin-local.png",
+      "docs/entrega-2026/capturas/cuenta-local.png",
+      "docs/entrega-2026/capturas/cuenta-oficial.png",
+      "docs/entrega-2026/capturas/inicio-local.png",
+      "docs/entrega-2026/defensa.md",
+      "docs/entrega-2026/diseno.md",
+      "docs/entrega-2026/esquema-columnas-real.json",
+      "docs/entrega-2026/extraccion-limpia.json",
+      "docs/entrega-2026/funciones.md",
+      "docs/entrega-2026/inventario-funciones.json",
+      "docs/entrega-2026/manual.md",
+      "docs/entrega-2026/manual.pdf",
+      "docs/entrega-2026/matriz-rubrica.md",
+      "docs/entrega-2026/pruebas-browser-local.json",
+      "docs/entrega-2026/pruebas.md",
+      "docs/entrega-2026/rubrica-2026.pdf",
+      "docs/entrega-2026/rubrica-2026.txt",
+      "docs/entrega-2026/sqlite.md",
+      "docs/entrega-2026/verificacion-zip.json",
+      "docs/entrega-2026/wireframe.md",
+      "docs/entrega-2026/wireframe.png",
+      "docs/entrega-2026/wireframe.svg",
+      "docs/entrega-2026/zip.md",
+      "docs/evidence/admin-audit-20261102/admin-form-oficial.png",
+      "docs/evidence/admin-audit-20261102/browser-results.json",
+      "docs/evidence/admin-audit-20261102/candidate-deployment.json",
+      "docs/evidence/admin-audit-20261102/final-state.json",
+      "docs/evidence/admin-audit-20261102/harness-interruption.json",
+      "docs/evidence/admin-audit-20261102/input-type-regression.json",
+      "docs/evidence/admin-audit-20261102/inventario.md",
+      "docs/evidence/admin-audit-20261102/matriz-remota.md",
+      "docs/evidence/admin-audit-20261102/private-qa-types.json",
+      "docs/evidence/admin-audit-20261102/private-qa.json",
+      "docs/evidence/admin-audit/action-buttons-matrix.json",
+      "docs/evidence/admin-audit/browser-matrix.json",
+      "docs/evidence/admin-audit/coupon-browser-matrix.json",
+      "docs/evidence/admin-audit/dashboard-retry-matrix.json",
+      "docs/evidence/admin-audit/desktop-cards.png",
+      "docs/evidence/admin-audit/desktop-equal-product-actions.png",
+      "docs/evidence/admin-audit/desktop-header-cards.png",
+      "docs/evidence/admin-audit/desktop-header.png",
+      "docs/evidence/admin-audit/desktop-low-stock-search.png",
+      "docs/evidence/admin-audit/extra-browser-matrix.json",
+      "docs/evidence/admin-audit/matrix.md",
+      "docs/evidence/admin-audit/mobile-cards.png",
+      "docs/evidence/admin-audit/mobile-equal-product-actions.png",
+      "docs/evidence/admin-audit/mobile-header-cards.png",
+      "docs/evidence/admin-audit/mobile-header.png",
+      "docs/evidence/admin-audit/mobile-low-stock-search.png",
+      "docs/evidence/admin-audit/node-matrix.json",
+      "docs/evidence/admin-audit/remote-matrix.json",
+      "docs/evidence/cierre-tecnico-20261105/README.md",
+      "docs/evidence/cierre-tecnico-20261105/admin-estadisticas.json",
+      "docs/evidence/cierre-tecnico-20261105/admin-form-publicado.png",
+      "docs/evidence/cierre-tecnico-20261105/admin-intento-previo.json",
+      "docs/evidence/cierre-tecnico-20261105/admin-post-intento.json",
+      "docs/evidence/cierre-tecnico-20261105/admin-post-publicacion.json",
+      "docs/evidence/cierre-tecnico-20261105/admin-remoto.json",
+      "docs/evidence/cierre-tecnico-20261105/browser-local.json",
+      "docs/evidence/cierre-tecnico-20261105/browser-oficial.json",
+      "docs/evidence/cierre-tecnico-20261105/carrito-remoto.json",
+      "docs/evidence/cierre-tecnico-20261105/carrusel-escritorio-local.png",
+      "docs/evidence/cierre-tecnico-20261105/carrusel-escritorio.png",
+      "docs/evidence/cierre-tecnico-20261105/carrusel-movil-local.png",
+      "docs/evidence/cierre-tecnico-20261105/carrusel-movil.png",
+      "docs/evidence/cierre-tecnico-20261105/inicio-oficial.png",
+      "docs/evidence/cierre-tecnico-20261105/publicacion.json",
+      "docs/evidence/cierre-tecnico-20261105/scripts-oficiales.json",
+      "docs/evidence/cierre-tecnico-20261105/sql-local.json",
+      "docs/evidence/collection-filters/desktop-hombre.png",
+      "docs/evidence/collection-filters/desktop-mujer.png",
+      "docs/evidence/collection-filters/desktop-unisex.png",
+      "docs/evidence/collection-filters/local-browser.txt",
+      "docs/evidence/collection-filters/mobile-hombre.png",
+      "docs/evidence/collection-filters/mobile-mujer.png",
+      "docs/evidence/collection-filters/mobile-unisex.png",
+      "docs/evidence/collection-filters/official-desktop-hombre.png",
+      "docs/evidence/collection-filters/official-desktop-mujer.png",
+      "docs/evidence/collection-filters/official-desktop-unisex.png",
+      "docs/evidence/collection-filters/official-final-browser.txt",
+      "docs/evidence/collection-filters/official-full-browser.txt",
+      "docs/evidence/collection-filters/official-http.txt",
+      "docs/evidence/collection-filters/official-mobile-hombre.png",
+      "docs/evidence/collection-filters/official-mobile-mujer.png",
+      "docs/evidence/collection-filters/official-mobile-unisex.png",
+      "docs/evidence/collection-filters/staging-browser.txt",
+      "docs/evidence/coupon-academic-20261103/README.md",
+      "docs/evidence/coupon-academic-20261103/business-comparison.json",
+      "docs/evidence/coupon-academic-20261103/cart-1440.png",
+      "docs/evidence/coupon-academic-20261103/cart-390.png",
+      "docs/evidence/coupon-academic-20261103/form-1440.png",
+      "docs/evidence/coupon-academic-20261103/form-390.png",
+      "docs/evidence/coupon-academic-20261103/local-browser.json",
+      "docs/evidence/coupon-academic-20261103/official-coupon-1440.png",
+      "docs/evidence/coupon-academic-20261103/official-coupon-390.png",
+      "docs/evidence/coupon-academic-20261103/official-form-1440.png",
+      "docs/evidence/coupon-academic-20261103/official-form-390.png",
+      "docs/evidence/coupon-academic-20261103/remote-browser.json",
+      "docs/evidence/coupon-academic-20261103/remote-input-edges.json",
+      "docs/evidence/functional-backend-20261027/credential-diagnosis.md",
+      "docs/evidence/functional-backend-20261027/credential-diagnostic-result.json",
+      "docs/evidence/functional-backend-20261027/credential-replacement-20261029.json",
+      "docs/evidence/functional-backend-20261027/credential-replacement-20261029.md",
+      "docs/evidence/functional-backend-20261027/local-browser.json",
+      "docs/evidence/functional-backend-20261027/new-secret-read-20261029.json",
+      "docs/evidence/functional-backend-20261027/phased-qa-deployment-20261029.json",
+      "docs/evidence/functional-backend-20261027/real-auth-cart-partial-20261029.json",
+      "docs/evidence/functional-backend-20261027/recovered-nine-phases-20261029.json",
+      "docs/evidence/functional-backend-20261027/remote-smoke.json",
+      "docs/evidence/functional-backend-20261027/restored-1440.png",
+      "docs/evidence/functional-backend-20261027/restored-390.png",
+      "docs/evidence/functional-backend-20261027/verification.md",
+      "docs/evidence/home-removal-20261103/README.md",
+      "docs/evidence/home-removal-20261103/local-browser.json",
+      "docs/evidence/home-removal-20261103/local-home-1440.png",
+      "docs/evidence/home-removal-20261103/local-home-390.png",
+      "docs/evidence/home-removal-20261103/official-home-1440.png",
+      "docs/evidence/home-removal-20261103/official-home-390.png",
+      "docs/evidence/home-removal-20261103/remote-browser.json",
+      "docs/evidence/inicio-cabeceras-20261105/README.md",
+      "docs/evidence/inicio-cabeceras-20261105/cabecera-hombre-escritorio-local.png",
+      "docs/evidence/inicio-cabeceras-20261105/cabecera-hombre-escritorio.png",
+      "docs/evidence/inicio-cabeceras-20261105/cabecera-hombre-movil-local.png",
+      "docs/evidence/inicio-cabeceras-20261105/cabecera-hombre-movil.png",
+      "docs/evidence/inicio-cabeceras-20261105/cabecera-mujer-escritorio-local.png",
+      "docs/evidence/inicio-cabeceras-20261105/cabecera-mujer-escritorio.png",
+      "docs/evidence/inicio-cabeceras-20261105/cabecera-mujer-movil-local.png",
+      "docs/evidence/inicio-cabeceras-20261105/cabecera-mujer-movil.png",
+      "docs/evidence/inicio-cabeceras-20261105/cabecera-perfumes-escritorio-local.png",
+      "docs/evidence/inicio-cabeceras-20261105/cabecera-perfumes-escritorio.png",
+      "docs/evidence/inicio-cabeceras-20261105/cabecera-perfumes-movil-local.png",
+      "docs/evidence/inicio-cabeceras-20261105/cabecera-perfumes-movil.png",
+      "docs/evidence/inicio-cabeceras-20261105/cabecera-unisex-escritorio-local.png",
+      "docs/evidence/inicio-cabeceras-20261105/cabecera-unisex-escritorio.png",
+      "docs/evidence/inicio-cabeceras-20261105/cabecera-unisex-movil-local.png",
+      "docs/evidence/inicio-cabeceras-20261105/cabecera-unisex-movil.png",
+      "docs/evidence/inicio-cabeceras-20261105/inicio-completo-escritorio.png",
+      "docs/evidence/inicio-cabeceras-20261105/inicio-completo-movil.png",
+      "docs/evidence/inicio-cabeceras-20261105/inicio-escritorio-local.png",
+      "docs/evidence/inicio-cabeceras-20261105/inicio-escritorio.png",
+      "docs/evidence/inicio-cabeceras-20261105/inicio-movil-local.png",
+      "docs/evidence/inicio-cabeceras-20261105/inicio-movil.png",
+      "docs/evidence/inicio-cabeceras-20261105/local-intento.json",
+      "docs/evidence/inicio-cabeceras-20261105/local.json",
+      "docs/evidence/inicio-cabeceras-20261105/oficial.json",
+      "docs/evidence/inicio-cabeceras-20261105/publicacion.json",
+      "docs/evidence/inicio-cabeceras-20261105/scripts-oficiales.json",
+      "docs/evidence/navigation/desktop-filters.png",
+      "docs/evidence/navigation/desktop-menu.png",
+      "docs/evidence/navigation/mobile-filters.png",
+      "docs/evidence/navigation/mobile-menu.png",
+      "docs/evidence/navigation/remote-qa.txt",
+      "docs/evidence/official-review-20261027/academic-official-matrix.json",
+      "docs/evidence/official-review-20261027/after-http-matrix.json",
+      "docs/evidence/official-review-20261027/before-http.json",
+      "docs/evidence/official-review-20261027/desktop-academic-official.png",
+      "docs/evidence/official-review-20261027/desktop-admin-local.png",
+      "docs/evidence/official-review-20261027/desktop-cart-local.png",
+      "docs/evidence/official-review-20261027/desktop-cart-official.png",
+      "docs/evidence/official-review-20261027/feature-status.json",
+      "docs/evidence/official-review-20261027/local-browser-matrix.json",
+      "docs/evidence/official-review-20261027/matrix.md",
+      "docs/evidence/official-review-20261027/mobile-academic-official.png",
+      "docs/evidence/official-review-20261027/mobile-admin-local.png",
+      "docs/evidence/official-review-20261027/mobile-cart-local.png",
+      "docs/evidence/official-review-20261027/mobile-cart-official.png",
+      "docs/evidence/official-review-20261027/official-browser-matrix.json",
+      "docs/evidence/pr56-current-20261028/status.md",
+      "docs/evidence/seo/desktop-product.png",
+      "docs/evidence/seo/isolated-http.txt",
+      "docs/evidence/seo/mobile-catalog.png",
+      "docs/evidence/seo/nojs-product.png",
+      "docs/evidence/seo/official-browser.txt",
+      "docs/evidence/seo/official-http.txt",
+      "docs/evidence/seo/product-initial-head.html",
+      "docs/evidence/seo/validator-home.json",
+      "docs/evidence/seo/validator-product.json",
+      "docs/history/CURRENT_STATE-hasta-20261105.md",
+      "docs/history/CURRENT_STATE_PR33.md",
+      "docs/history/PLAN-hasta-20261105.md",
+      "docs/history/PLAN_PR33.md",
+      "docs/history/visual-audits/ART_DIRECTION_AUDIT_2026-09-01.md",
+      "docs/history/visual-audits/MOTION_REFERENCE_AUDIT_2026-09-01.md",
+      "docs/history/visual-audits/PREMIUM_EXPANSION_AUDIT.md",
+      "docs/history/visual-audits/README.md",
+      "docs/image_sources.md",
+      "docs/manual_de_uso.md",
+      "docs/navigation_filters.md",
+      "docs/official_academic_release.md",
+      "docs/official_direct_checkout.md",
+      "docs/official_navigation_footer.md",
+      "docs/official_review_20261027.md",
+      "docs/pages_frontdoor.md",
+      "docs/pseudocodigo.md",
+      "docs/railway_deploy.md",
+      "docs/recovery_runbook.md",
+      "docs/seo_y_metadatos.md",
+      "docs/static_home_pages.md",
+      "docs/supabase_railway_github.md",
+      "docs/wireframe.md",
+      "package.json",
+      "pages/catalog.mjs",
+      "pages/official-backend.mjs",
+      "pages/official-release.json",
+      "pages/proxy.mjs",
+      "pages/seo.mjs",
+      "pages/wrangler.jsonc",
+      "pnpm-lock.yaml",
+      "pnpm-workspace.yaml",
+      "public/404.html",
+      "public/assets/dreams-bottle.png",
+      "public/assets/dreams-hero-1024.webp",
+      "public/assets/dreams-hero-640.webp",
+      "public/assets/dreams-isologo-clean.png",
+      "public/assets/dreams-isotype.png",
+      "public/assets/dreams-social.png",
+      "public/assets/isotipo-dreams.png",
+      "public/assets/logo-dreams.png",
+      "public/carrito.html",
+      "public/catalogo.html",
+      "public/checkout-resultado.html",
+      "public/checkout.html",
+      "public/css/style.css",
+      "public/cuenta.html",
+      "public/index.html",
+      "public/js/academic-inputs.js",
+      "public/js/account-cart.js",
+      "public/js/admin-image-url.js",
+      "public/js/admin-product-search.js",
+      "public/js/admin.js",
+      "public/js/app.js",
+      "public/js/carrito.js",
+      "public/js/catalog-filter-state.js",
+      "public/js/catalogo.js",
+      "public/js/checkout-result.js",
+      "public/js/checkout.js",
+      "public/js/cuenta.js",
+      "public/js/featured-carousel.js",
+      "public/js/motion.js",
+      "public/js/navigation.js",
+      "public/js/presentation.js",
+      "public/js/producto.js",
+      "public/js/reviews.js",
+      "public/js/safe.js",
+      "public/nosotros.html",
+      "public/producto.html",
+      "public/robots.txt",
+      "public/sitemap.xml",
+      "railway.toml",
+      "scripts/audit-served-scripts.mjs",
+      "scripts/build-pages.mjs",
+      "scripts/check.js",
+      "scripts/deploy-pages.mjs",
+      "scripts/function-inventory.mjs",
+      "scripts/grant-google-admin.js",
+      "scripts/install_and_run.txt",
+      "scripts/official-release-gate.mjs",
+      "scripts/repair-official-secret.mjs",
+      "scripts/sync-public-footer.mjs",
+      "server/account-cart.js",
+      "server/app.js",
+      "server/auth-cookies.js",
+      "server/auth-limits.js",
+      "server/contacts.js",
+      "server/customer-registration.js",
+      "server/google-auth.js",
+      "server/official-policy.js",
+      "server/payments/demo.js",
+      "server/payments/mercado-pago.js",
+      "server/presentation-checkout.js",
+      "server/preview-write-guard.js",
+      "server/product-schema.js",
+      "server/reviews.js",
+      "server/seed.js",
+      "server/server.js",
+      "supabase/migrations/20260828144944_production_baseline.sql",
+      "supabase/migrations/20260831024826_checkout_orders_and_coupons.sql",
+      "supabase/migrations/20260831040000_enable_demo_checkout_provider.sql",
+      "supabase/migrations/20260901090000_admin_authenticated_policies.sql",
+      "supabase/migrations/20260902090000_admin_orders_coupons_grants.sql",
+      "supabase/migrations/20261013032746_account_carts.sql",
+      "supabase/migrations/20261021004927_customer_review_ownership.sql",
+      "supabase/migrations/20261105160613_modularize_account_cart.sql",
+      "supabase/rollback/20261105_account_cart_rpc.sql",
+      "supabase/schema.sql",
+      "templates/public-footer.html",
+      "templates/social-card.html",
+      "test/academic-client.test.js",
+      "test/academic-coupon.test.js",
+      "test/academic.integration.test.js",
+      "test/account-cart.test.js",
+      "test/admin-audit-matrix.test.js",
+      "test/admin-image-client.test.js",
+      "test/admin-persistence.test.js",
+      "test/admin-product-search.test.js",
+      "test/admin-product-types.test.js",
+      "test/admin-proxy.test.mjs",
+      "test/admin-recovery.test.js",
+      "test/admin.integration.test.js",
+      "test/app.integration.test.js",
+      "test/cart-browser.test.js",
+      "test/catalog-filter-state.test.js",
+      "test/catalog-multiselect.test.mjs",
+      "test/catalog-request-order.test.js",
+      "test/cloudflare.integration.test.mjs",
+      "test/coupon.test.js",
+      "test/customer-registration.integration.test.js",
+      "test/demo-payment.test.js",
+      "test/design-system.test.js",
+      "test/featured-carousel.test.js",
+      "test/fixtures/cart-postgres.sql",
+      "test/function-inventory.test.mjs",
+      "test/helpers/admin-fixture.cjs",
+      "test/home-catalog-copy.test.js",
+      "test/home-collections-removal.test.js",
+      "test/migration.test.js",
+      "test/navigation.test.js",
+      "test/official-binding.test.mjs",
+      "test/official-policy.test.js",
+      "test/official-qa.test.mjs",
+      "test/official-release-gate.test.mjs",
+      "test/official-release.test.mjs",
+      "test/official-scheduled.integration.test.mjs",
+      "test/pages-proxy.test.mjs",
+      "test/payment.test.js",
+      "test/private-browser-qa.test.mjs",
+      "test/product-schema.integration.test.js",
+      "test/product-schema.test.js",
+      "test/registration-browser.test.js",
+      "test/repair-official-secret.test.mjs",
+      "test/review-ownership.test.js",
+      "test/safe.test.js",
+      "test/seed.test.js",
+      "test/seo.test.mjs",
+      "test/server.test.js",
+      "test/sql-cart-postgres.test.mjs",
+      "test/supabase-diagnostic.test.mjs",
+      "test/whatsapp.test.js",
+      "views/admin.html",
+      "worker/admin-review.mjs",
+      "worker/index.mjs",
+      "worker/official-client.mjs",
+      "worker/official-legacy.mjs",
+      "worker/official-qa.mjs",
+      "worker/official.mjs",
+      "worker/private-browser-qa.mjs",
+      "worker/supabase-diagnostic.mjs",
+      "worker/test-fixtures/private-browser-session.mjs",
+      "worker/test-fixtures/synthetic-registration.mjs",
+      "wrangler.jsonc",
+      "wrangler.official.jsonc"
+    ],
+    "classification": "Cada archivo se identifica en exceptions.files o removed; los restantes son código, configuración JSON, datos de evidencia o el README/registro de IA preservados. El contenido y consumidores de los candidatos retirados están en removed; no se repiten 457 fichas de auditoría.",
+    "reference_review": {
+      "areas_checked": [
+        "imports/require estáticos",
+        "HTML/CSS/JS",
+        "package.json y scripts",
+        "CI",
+        "Wrangler y build Pages",
+        "SQL/migraciones y tests",
+        "documentación/índices",
+        "Word/PDF: sin enlaces a los archivos retirados"
+      ],
+      "literal_matches_caveat": "Un nombre como README.md puede referirse a varios archivos. Se separaron coincidencias ambiguas de las rutas concretas antes de concluir que no existen consumidores.",
+      "detailed_removed_candidates": "removed[].references_before",
+      "historical_snapshots": "No se reescriben inventarios CSV/JSON/TXT de commits anteriores."
+    }
+  },
+  "second_phase": {
+    "requested_at_local": "2026-11-10 America/Buenos_Aires",
+    "base_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+    "root_goal": "Sólo README.md como archivo versionado raíz; carpetas .github/, app/ y docs/.",
+    "archive_format": "HTML offline sin JavaScript: textos originales completos escapados en pre, con SHA-256 y procedencia; no código de aplicación convertido a otro lenguaje.",
+    "archived_sources": [
+      {
+        "source": "AGENTS.md",
+        "destination": "docs/history/continuidad.html",
+        "fragment": "fuente-a54ff182c7e8",
+        "sha256": "e85a1b96193756bf91c14b95d5a16852b955b12e171eef0b246720356f7bc301",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "CURRENT_STATE.md",
+        "destination": "docs/history/continuidad.html",
+        "fragment": "fuente-73eb8b983651",
+        "sha256": "5da2387e23c7e61f0c2aff639153229f6baf1e0eab851f1be18726d32811cdce",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "PLAN.md",
+        "destination": "docs/history/continuidad.html",
+        "fragment": "fuente-1d972b4ac04c",
+        "sha256": "a39ce8cf1c3a2bcfb0dcb5d789d09b95198889c66ec240a798e71cf485c81ea3",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "CHANGELOG.md",
+        "destination": "docs/history/continuidad.html",
+        "fragment": "fuente-06572a96a58d",
+        "sha256": "fc0aef820b158f5f0e8f64e1d47afc64b2cfa36cb6c24ed38b891f0c4429e90b",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "docs/history/CURRENT_STATE-hasta-20261105.md",
+        "destination": "docs/history/continuidad.html",
+        "fragment": "fuente-93b67dc6404f",
+        "sha256": "23ea9dfc4683d4aa9d7f508a3bdae9c067f734012d717a38afb3632fb3098013",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "docs/history/CURRENT_STATE_PR33.md",
+        "destination": "docs/history/continuidad.html",
+        "fragment": "fuente-cb2bbc2f5851",
+        "sha256": "dc654e3e79d4f587eef0898ebe1726727605225657750463048e36466f6f8343",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "docs/history/PLAN-hasta-20261105.md",
+        "destination": "docs/history/continuidad.html",
+        "fragment": "fuente-d906ba3e3900",
+        "sha256": "7a0236c9bdffe4d7ed08baf4fb9409a0e8c2c9fedd8848206e40f6cbad82eda8",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "docs/history/PLAN_PR33.md",
+        "destination": "docs/history/continuidad.html",
+        "fragment": "fuente-e9c6d009309f",
+        "sha256": "a30c8dcc580e8866a8c2ff20791e3c5138980e40f7492141ccc9dc878036166d",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "docs/continuity-functional-backend-20261027.md",
+        "destination": "docs/history/continuidad.html",
+        "fragment": "fuente-3976eae40a73",
+        "sha256": "8da191eb420b5a0c143eae3b1fbbb93d5f0079143de80849c89bcf5921826671",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "docs/evidence/pr56-current-20261028/status.md",
+        "destination": "docs/history/continuidad.html",
+        "fragment": "fuente-9e6f4181dcca",
+        "sha256": "2cab1a18dba38686fd4db64a9f1b73003c0ba6f405593c7293b25396a08eeadc",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "AUDIT.md",
+        "destination": "docs/history/auditorias.html",
+        "fragment": "fuente-bf8286ac6afb",
+        "sha256": "055e798fee4431b3eb175a9498a274786cfe4179f031df1de6ce087efbf3a7a7",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "SECURITY_ADVERSARIAL_2026-09-01.md",
+        "destination": "docs/history/auditorias.html",
+        "fragment": "fuente-e80f17c3dc51",
+        "sha256": "1b7e0cdcc6c5b881ff6b59264eec349bc7cee3af85604b300f4180dbda38099d",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "SECURITY_REVIEW_2026-08-29.md",
+        "destination": "docs/history/auditorias.html",
+        "fragment": "fuente-301155c956ef",
+        "sha256": "345c7e21d8fb3694dee9bd901451d8b084bb74db0a396885991a7bb303916004",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "docs/admin_audit.md",
+        "destination": "docs/history/auditorias.html",
+        "fragment": "fuente-d287747ba0cb",
+        "sha256": "53f49f83eaa9d031796ad3785b825245679a267b0e266314ac1a52ded7f482a9",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "docs/admin_search_images.md",
+        "destination": "docs/history/auditorias.html",
+        "fragment": "fuente-f5385572a172",
+        "sha256": "bd0b5a842871142304d64934cbe92e422133d1ebd8554d7e1fa04a3283bea8c3",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "docs/history/visual-audits/ART_DIRECTION_AUDIT_2026-09-01.md",
+        "destination": "docs/history/auditorias.html",
+        "fragment": "fuente-8157bbf74f26",
+        "sha256": "4b5c4af34b35fd0eafd2598f1bcbbcbf43cbd18343e69b90181cd510f9da1033",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "docs/history/visual-audits/MOTION_REFERENCE_AUDIT_2026-09-01.md",
+        "destination": "docs/history/auditorias.html",
+        "fragment": "fuente-196d47a7b57d",
+        "sha256": "0b653316c170374b94e9c4963b43e41a135bfd2d7dfd21e1983c5069f530b8ce",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "docs/history/visual-audits/PREMIUM_EXPANSION_AUDIT.md",
+        "destination": "docs/history/auditorias.html",
+        "fragment": "fuente-f42d42634e11",
+        "sha256": "2efae580c6a5ab9d32bf821c68118aa0ddb603061ec16423d6899f86b58871e7",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "docs/history/visual-audits/README.md",
+        "destination": "docs/history/auditorias.html",
+        "fragment": "fuente-b442e463712d",
+        "sha256": "53042ed19186dae9dc99268008bcf62d02d7ec9cc0dcc00664317979cd65dd31",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "docs/academic_preview.md",
+        "destination": "docs/history/operacion.html",
+        "fragment": "fuente-964bd7148b2c",
+        "sha256": "f75776dfb838e5583f97f047fff3eb980bfc7d8fd2b2004540988bdbb8831c30",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "docs/access_language_refinement.md",
+        "destination": "docs/history/operacion.html",
+        "fragment": "fuente-9fbcef50a545",
+        "sha256": "e7d80c418700a76aa9b93a18396c9b32f5d7c2c9b20008755f51dd552f9b9a0d",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "docs/checkout_sandbox.md",
+        "destination": "docs/history/operacion.html",
+        "fragment": "fuente-0c340a566a1c",
+        "sha256": "1b93c7c9ee959e7bbebb036d40327aa0ff7676c00679cefee01ee7eeb2a2eacd",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "docs/cloudflare_migration.md",
+        "destination": "docs/history/operacion.html",
+        "fragment": "fuente-63541cfd2cb0",
+        "sha256": "426ab57d6a8067ae3a7781621a541c5e2d0f0280e3c20c4c75896618f08dddf7",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "docs/cloudflare_validation.md",
+        "destination": "docs/history/operacion.html",
+        "fragment": "fuente-b62f8b32a046",
+        "sha256": "82378616fda13df5604aad5f2eaa545c82da1183612b7a0ddcbcbcc80b455560",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "docs/collection_filters.md",
+        "destination": "docs/history/operacion.html",
+        "fragment": "fuente-9ec586eea78f",
+        "sha256": "e371d46b3bc3ee333c1c513a1f6207ab3da826b13428cd5fce4e237069c66540",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "docs/navigation_filters.md",
+        "destination": "docs/history/operacion.html",
+        "fragment": "fuente-2842a59edcc0",
+        "sha256": "22c8e21832506dcf40ce2719b14b4a76685df4e60b2d96c9efe1ecbc58f78dac",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "docs/official_academic_release.md",
+        "destination": "docs/history/operacion.html",
+        "fragment": "fuente-7d9f1484843d",
+        "sha256": "6ccf0ac31fac231be0d6d99f7a522b6be137f459dc1bf4cd48b2dffdcfae46a6",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "docs/official_direct_checkout.md",
+        "destination": "docs/history/operacion.html",
+        "fragment": "fuente-759c90f933e4",
+        "sha256": "966225ab3fc9c48fdc51b6f8060413d1de9114fac81537a6a2fca5064998e3fb",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "docs/official_navigation_footer.md",
+        "destination": "docs/history/operacion.html",
+        "fragment": "fuente-3025aa571c23",
+        "sha256": "3968785c6b4e93c6628ed59a6f87239d57edc44fea8c8e08858c679e48079c55",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "docs/official_review_20261027.md",
+        "destination": "docs/history/operacion.html",
+        "fragment": "fuente-1f48f46dcb92",
+        "sha256": "be4ce9e6ae47d075bff95dc09f4a57e5560ebdb56166fc87e3ba0febe21472b8",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "docs/pages_frontdoor.md",
+        "destination": "docs/history/operacion.html",
+        "fragment": "fuente-65d6e7100dc6",
+        "sha256": "99db083ae84b60f59262f9c65eaf1989be2196a3095cf8bd11cf3191cd8d4e2d",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "docs/railway_deploy.md",
+        "destination": "docs/history/operacion.html",
+        "fragment": "fuente-37b3beca12bc",
+        "sha256": "51e985d36cec073c349d7b60f60691833312e58cfb9c3936ad2c88144b18a0fa",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "docs/recovery_runbook.md",
+        "destination": "docs/history/operacion.html",
+        "fragment": "fuente-8d5b8e75512a",
+        "sha256": "8b1e749b41b38777c371083598f29d147d83a954a546e6591b3030846632204f",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "docs/seo_y_metadatos.md",
+        "destination": "docs/history/operacion.html",
+        "fragment": "fuente-62a69767f68b",
+        "sha256": "0d24c053aaeaecc07b5cc2e93c1807a343ca7b7e6448176465e24072bea78a21",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "docs/static_home_pages.md",
+        "destination": "docs/history/operacion.html",
+        "fragment": "fuente-269f22b4b558",
+        "sha256": "6ed505d3c061c2ab46b51fefb899633774d13118b03474967ca2e93de02c209d",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "docs/supabase_railway_github.md",
+        "destination": "docs/history/operacion.html",
+        "fragment": "fuente-6ef62c91c1a9",
+        "sha256": "d57208c2eb5bc741ce47b3b9ea9fe28dc20cc0bdcaa8bddac6657c816cab7536",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "railway.toml",
+        "destination": "docs/history/operacion.html",
+        "fragment": "fuente-eb56cd74597c",
+        "sha256": "18ad25194f3bdbfe0c0c4038363f85fbbf4a88976c7a8218dc7adffc7367efc0",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "docs/entrega-2026/INDICE.md",
+        "destination": "docs/history/entrega-anterior.html",
+        "fragment": "fuente-d5b290203a60",
+        "sha256": "44eecd4c97480718238b08676762a32269bf88461f664a729e829a4db54699da",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "docs/entrega-2026/base-de-datos.md",
+        "destination": "docs/history/entrega-anterior.html",
+        "fragment": "fuente-061c89ad8f04",
+        "sha256": "da20aba25a12888b68a44deb65ff40e6e33e743c14ace0f10ba97b6e796c85ec",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "docs/entrega-2026/defensa.md",
+        "destination": "docs/history/entrega-anterior.html",
+        "fragment": "fuente-52a8ebcdf461",
+        "sha256": "d3107f07b369e7debbaaff36172399b99faad7fe248e91ffb482d539a9fd6021",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "docs/entrega-2026/diseno.md",
+        "destination": "docs/history/entrega-anterior.html",
+        "fragment": "fuente-ddc85a42fb4c",
+        "sha256": "b46d0b29089353d6829f7d2f5a6edbfbff5a487fcbadbab8783f5ab6e7e96924",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "docs/entrega-2026/funciones.md",
+        "destination": "docs/history/entrega-anterior.html",
+        "fragment": "fuente-b6f43acf04ee",
+        "sha256": "3282f9e0abc757910c57ddd605bc53f8d9549b633289cd727b6f20b7030e1b55",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "docs/entrega-2026/matriz-rubrica.md",
+        "destination": "docs/history/entrega-anterior.html",
+        "fragment": "fuente-b1f7d49a35b5",
+        "sha256": "2a8e15b80afa3799534522dc12d50af42f6c7ea575328058ba90808a6fabc0b6",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "docs/entrega-2026/pruebas.md",
+        "destination": "docs/history/entrega-anterior.html",
+        "fragment": "fuente-0a164ff09539",
+        "sha256": "1a38745f7c37cbeb82b277f826c809b21d4b7eb9e4a2e98418fb7bad8a45835a",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "docs/entrega-2026/sqlite.md",
+        "destination": "docs/history/entrega-anterior.html",
+        "fragment": "fuente-0072cf382aec",
+        "sha256": "3168e672ff85e318216b39f28d0e0e795f5e2101cc70b28d66c4fed916749968",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "docs/entrega-2026/wireframe.md",
+        "destination": "docs/history/entrega-anterior.html",
+        "fragment": "fuente-4876cb5964eb",
+        "sha256": "536dc5e2798f2eacb9f274872cebbfc77dbbe6f1e5f511f4d930f89c89c3b118",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "docs/entrega-2026/zip.md",
+        "destination": "docs/history/entrega-anterior.html",
+        "fragment": "fuente-336f63226cb4",
+        "sha256": "d7912bfadb90976249d89851fbedb7754d22b9d3cd7db1c475fdadd4b97e3659",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "docs/documentacion.md",
+        "destination": "docs/history/entrega-anterior.html",
+        "fragment": "fuente-6e4b647eb62e",
+        "sha256": "25b629f6512d5d08e8b344e19e481936498e252fdd366a05c9dfc325dc52d2c9",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "docs/manual_de_uso.md",
+        "destination": "docs/history/entrega-anterior.html",
+        "fragment": "fuente-cfd0f3264302",
+        "sha256": "8cb8d8f11cbcf98403080d0942304879a2de84abe55a524abfa025e486c07e65",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "docs/wireframe.md",
+        "destination": "docs/history/entrega-anterior.html",
+        "fragment": "fuente-55a680000831",
+        "sha256": "e5d4c70b11347678fde0c2172942acf18ee5202f87938287f06d7bfea94487f8",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "docs/auditoria-2025/informe.md",
+        "destination": "docs/history/entrega-anterior.html",
+        "fragment": "fuente-2c00c100ff25",
+        "sha256": "2bdd53d8c9d95bcaaa15dbbea784d049b1a28844bb0cd7d4a867384467eff745",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "docs/auditoria-2025/matriz-preliminar.md",
+        "destination": "docs/history/entrega-anterior.html",
+        "fragment": "fuente-b6ed615626db",
+        "sha256": "bc18e82ae8e511dc2ccf9728c7751372ab386b85e522d35a8c003d9db76c6826",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "docs/entrega-2025/revision-limpieza-20261110.md",
+        "destination": "docs/history/entrega-anterior.html",
+        "fragment": "fuente-d56b99927e5a",
+        "sha256": "f8a6f3748b7c2473da21aff102bff9dbb67b8563d4fd8d05e2a28268981c4673",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      },
+      {
+        "source": "docs/entrega-2025/verificacion-defensa-20261110.md",
+        "destination": "docs/history/entrega-anterior.html",
+        "fragment": "fuente-45dc9355a04f",
+        "sha256": "b42742a6fc7f0eb2a84aedd036f02169eadcfd6d5c1c17029f95abde075d76e4",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "original_text_preserved": true
+      }
+    ],
+    "duplicate_aliases": [
+      {
+        "removed_copy": "docs/evidence/collection-filters/official-full-browser.txt",
+        "canonical": "docs/evidence/collection-filters/local-browser.txt",
+        "sha256": "045ae105743a8b9a1e30239dc0ec1e66ed2d5880517d10c0662bd56a8d85d269",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "provenance": "Se conservan los nombres/procedencias local y oficial como alias del mismo contenido; no se infieren fechas nuevas ni una prueba adicional."
+      },
+      {
+        "removed_copy": "docs/evidence/inicio-cabeceras-20261105/inicio-escritorio-local.png",
+        "canonical": "docs/evidence/inicio-cabeceras-20261105/inicio-escritorio.png",
+        "sha256": "ffb65bd8aad35f83b0822a28fc7717d699c4b192bc40628a9b6e8821d4661328",
+        "source_commit": "6167f35c69ef83b680b8188349a51bd95af3e05a",
+        "provenance": "Se conservan los nombres/procedencias local y oficial como alias del mismo contenido; no se infieren fechas nuevas ni una prueba adicional."
+      }
+    ],
+    "app_moved_directories": [
+      "public",
+      "server",
+      "worker",
+      "pages",
+      "views",
+      "templates",
+      "scripts",
+      "test",
+      "supabase"
+    ],
+    "app_moved_files": [
+      "package.json",
+      "pnpm-lock.yaml",
+      "pnpm-workspace.yaml",
+      "wrangler.jsonc",
+      "wrangler.official.jsonc",
+      ".env.example",
+      ".gitignore"
+    ],
+    "git_attributes_moved_to": "docs/.gitattributes",
+    "functional_changes": false,
+    "tool_adjustments": [
+      "CI ejecuta en app/ y lee packageManager/lockfile desde app/",
+      "check:functions analiza .. desde app/ para conservar alcance completo y --write sobre docs/"
+    ],
+    "exceptions_preserved": "Recursos, SQL, lock/workspace, CI, Wrangler, SEO, licencias/atribuciones, gráficos, fuentes y documentos académicos siguen presentes. No se pide borrarlos por su extensión.",
+    "production_config_values_changed": false,
+    "deployment": "NO",
+    "integration": "Integración de PR64 tras revisión y CI; sin deployment.",
+    "checks": {
+      "state": "APROBADO",
+      "document_integrity": {
+        "root_files": [
+          "README.md"
+        ],
+        "tracked_files": 404,
+        "markdown_files": 24,
+        "archive_sources_preserved": 54,
+        "archive_files": 4,
+        "duplicate_aliases_verified": 2,
+        "moved_application_files_unchanged": 150,
+        "package_change": "Sólo comando de inventario: analizar .. desde app/",
+        "relative_markdown_links": 208,
+        "broken_links": 0,
+        "new_sensitive_patterns": 0,
+        "production_config_values_changed": false,
+        "python_files_added": 0
+      },
+      "clean_install": [
+        {
+          "command": "cd app && corepack pnpm install --frozen-lockfile",
+          "exit_code": 0,
+          "seconds": 9.54,
+          "scope": "Copia limpia sin .git ni dependencias previas; entorno sin secretos de producción; no deploy"
+        },
+        {
+          "command": "cd app && corepack pnpm run check",
+          "exit_code": 0,
+          "seconds": 4.87,
+          "scope": "Copia limpia sin .git ni dependencias previas; entorno sin secretos de producción; no deploy"
+        },
+        {
+          "command": "cd app && corepack pnpm run check:functions",
+          "exit_code": 0,
+          "seconds": 1.03,
+          "scope": "Copia limpia sin .git ni dependencias previas; entorno sin secretos de producción; no deploy",
+          "files": 126,
+          "records": 2203,
+          "violations": []
+        },
+        {
+          "command": "cd app && corepack pnpm test",
+          "exit_code": 0,
+          "seconds": 22.76,
+          "scope": "Copia limpia sin .git ni dependencias previas; entorno sin secretos de producción; no deploy",
+          "summary": {
+            "tests": 498,
+            "pass": 494,
+            "fail": 0,
+            "skipped": 4
+          }
+        },
+        {
+          "command": "cd app && corepack pnpm run build:cloudflare",
+          "exit_code": 0,
+          "seconds": 2.78,
+          "scope": "Copia limpia sin .git ni dependencias previas; entorno sin secretos de producción; no deploy"
+        },
+        {
+          "command": "cd app && corepack pnpm run build:pages",
+          "exit_code": 0,
+          "seconds": 0.81,
+          "scope": "Copia limpia sin .git ni dependencias previas; entorno sin secretos de producción; no deploy"
+        },
+        {
+          "command": "cd app && corepack pnpm run build:admin-review",
+          "exit_code": 0,
+          "seconds": 7.53,
+          "scope": "Copia limpia sin .git ni dependencias previas; entorno sin secretos de producción; no deploy"
+        },
+        {
+          "command": "cd app && corepack pnpm run build:official",
+          "exit_code": 0,
+          "seconds": 7.6,
+          "scope": "Copia limpia sin .git ni dependencias previas; entorno sin secretos de producción; no deploy"
+        }
+      ],
+      "pages_comparison": {
+        "original_sha256": "d5d2d5acb5bac9785d675e2a335f0438bc7a5035bf2cbe8848c24f4499a5b1b8",
+        "app_sha256": "d5d2d5acb5bac9785d675e2a335f0438bc7a5035bf2cbe8848c24f4499a5b1b8",
+        "byte_identical": true
+      },
+      "pdf_review": {
+        "defense_pages": 25,
+        "manual_pages": 8,
+        "reviewed": "Guía: primera página y tabla de endpoints; manual: ocho páginas y captura Admin ajustada/revisada. Se muestra íntegro el recorte histórico original del formulario, sin recorte adicional del PDF. Rutas app/ y enlaces actualizados."
+      },
+      "ci": "Resultado vigente en PR64; integrar sólo con CI aprobado. No hay deployment."
+    }
+  },
+  "phase_one_scope": {
+    "base_branch": "main",
+    "base_commit": "8ad5401fe0f2d0c3e501ab203f6ab37b27ff7db1",
+    "branch": "docs/simplificacion-repositorio-20261111",
+    "status": "PR revisable, SIN MERGE mientras existan excepciones pendientes",
+    "official": "https://dreams-perfumes.pages.dev/",
+    "deployment": "NO: documentación únicamente",
+    "baseline_tracked_files": 457,
+    "baseline_tracked_bytes": 31071078,
+    "python_tracked_files": 0,
+    "new_python_files": 0,
+    "inventory_limits": "Se reusa la auditoría anterior; las coincidencias por nombre no prueban dependencia. Referencias de snapshots se mantienen como historial.",
+    "open_prs_at_start_excluded": [
+      32,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55
+    ],
+    "final_integration": "NO: esperando decisión explícita sobre E01–E12",
+    "proposed_files_after_phase_one": 455
+  }
+}

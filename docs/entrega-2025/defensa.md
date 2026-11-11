@@ -1,6 +1,6 @@
 # DREAMS · Guía final de defensa oral
 
-Base contrastada: `main`, commit `60451cabe5ff9b78f97777d64120e5ff9a3238b2`. Revisión documental: 10/11/2026. No se detectaron cambios entre esa base de la guía adjunta y main al iniciar esta tarea.
+Base contrastada: `main`, commit `60451cabe5ff9b78f97777d64120e5ff9a3238b2`. Revisión documental: 10/11/2026. Las ubicaciones se actualizan a la reorganización app/ de PR64; la lógica explicada conserva la base 60451ca, sin cambios funcionales ni nueva QA remota. No se detectaron cambios entre esa base de la guía adjunta y main al iniciar esta tarea.
 
 Esta guía es material de estudio con asistencia de IA, contrastado con archivos reales. No acredita programación, participación, revisión o dominio de los integrantes. No garantiza las preguntas ni la aprobación. No modifica ni despliega la oficial.
 
@@ -18,30 +18,30 @@ Express → Supabase Auth (identidad y sesiones)
 Express → Supabase Data API/PostgreSQL (datos)
 ```
 
-Entrada Node local: `pnpm start` → `server/server.js:start()` → Express → `listen` en puerto 8080 por defecto. Entrada del backend oficial: `worker/official.mjs:fetch_official()`; Cloudflare invoca fetch y el adaptador conecta con Express. Pages es la entrada pública/proxy; `index.html` es una página, no el arranque del backend.
+Entrada Node local: `pnpm start` → `app/server/server.js:start()` → Express → `listen` en puerto 8080 por defecto. Entrada del backend oficial: `app/worker/official.mjs:fetch_official()`; Cloudflare invoca fetch y el adaptador conecta con Express. Pages es la entrada pública/proxy; `index.html` es una página, no el arranque del backend.
 
 ## Carpetas y archivos para mostrar
 
 | Carpeta/archivo | Función real |
 |---|---|
-| public/*.html | Pantallas públicas; catálogo, cuenta, carrito, checkout y demás páginas. |
-| public/js/ | Controladores del navegador. No guardan la clave de servidor. |
-| public/css/style.css | Paletas, composición y responsive. |
-| public/assets/ | Recursos visuales compartidos. |
-| server/server.js | Arranque Node local y configuración de servicios. |
-| server/app.js | Construcción Express, instaladores de rutas, validaciones, sesión, permisos y errores. |
-| server/customer-registration.js | Registro normal y perfil customer. |
-| server/account-cart.js / reviews.js / presentation-checkout.js | Reglas de carrito, opiniones y simulación académica. |
-| views/admin.html | Vista Admin servida después de autorización. |
-| templates/ | Footer compartido y plantilla gráfica social; sin Jinja. |
-| pages/ | Proxy, assets aprobados y SEO. No es la base de datos. |
-| worker/official.mjs / official-client.mjs | Entrada del backend oficial y cliente Supabase. |
-| supabase/migrations/ | Historial SQL; no se reescribe lo aplicado. |
-| supabase/rollback/ | Recuperación compatible, no para ejecutar por rutina. |
-| test/ | Regresiones y fixtures; no equivalen a pruebas remotas nuevas. |
-| scripts/ | Builds, checks y mantenimiento. Herramientas históricas no se ejecutan por su nombre. |
+| app/public/*.html | Pantallas públicas; catálogo, cuenta, carrito, checkout y demás páginas. |
+| app/public/js/ | Controladores del navegador. No guardan la clave de servidor. |
+| app/public/css/style.css | Paletas, composición y responsive. |
+| app/public/assets/ | Recursos visuales compartidos. |
+| app/server/server.js | Arranque Node local y configuración de servicios. |
+| app/server/app.js | Construcción Express, instaladores de rutas, validaciones, sesión, permisos y errores. |
+| app/server/customer-registration.js | Registro normal y perfil customer. |
+| app/server/account-cart.js / reviews.js / presentation-checkout.js | Reglas de carrito, opiniones y simulación académica. |
+| app/views/admin.html | Vista Admin servida después de autorización. |
+| app/templates/ | Footer compartido y plantilla gráfica social; sin Jinja. |
+| app/pages/ | Proxy, assets aprobados y SEO. No es la base de datos. |
+| app/worker/official.mjs / official-client.mjs | Entrada del backend oficial y cliente Supabase. |
+| app/supabase/migrations/ | Historial SQL; no se reescribe lo aplicado. |
+| app/supabase/rollback/ | Recuperación compatible, no para ejecutar por rutina. |
+| app/test/ | Regresiones y fixtures; no equivalen a pruebas remotas nuevas. |
+| app/scripts/ | Builds, checks y mantenimiento. Herramientas históricas no se ejecutan por su nombre. |
 | docs/ | Guías, rúbrica, manual, wireframes, D.E.R., evidencia y registro de IA. |
-| .github/ / package.json / pnpm-lock.yaml | CI, comandos y dependencias reproducibles. Railway/previews son antecedentes, no nuevos destinos autorizados. |
+| .github/ / app/package.json / app/pnpm-lock.yaml | CI, comandos y dependencias reproducibles. Railway/previews son antecedentes, no nuevos destinos autorizados. |
 
 ## Temas y repreguntas para el oral
 
@@ -51,7 +51,7 @@ Entrada Node local: `pnpm start` → `server/server.js:start()` → Express → 
 
 **Desde cero y ejemplo de DREAMS:** No lo presentes como un sistema de cobros reales. La interfaz permite demostrar la compra, pero el flujo académico no inserta pedidos comerciales ni descuenta stock. La descripción tiene que coincidir con la versión que efectivamente mostrás.
 
-**Archivo y función:** `README.md; public/index.html; server/presentation-checkout.js`.
+**Archivo y función:** `README.md; app/public/index.html; app/server/presentation-checkout.js`.
 
 **Repregunta posible:** ¿Qué parte corre en el navegador y cuál en el servidor?
 
@@ -59,23 +59,23 @@ Entrada Node local: `pnpm start` → `server/server.js:start()` → Express → 
 
 ### 02. ¿Cuál es el archivo principal que corre el proyecto?
 
-**Respuesta breve:** Para arrancar con Node, el comando pnpm start ejecuta server/server.js. Allí se leen variables de entorno, se crea el cliente de Supabase, se configura la aplicación Express y se escucha en un puerto. En el despliegue oficial de Cloudflare, la entrada es worker/official.mjs.
+**Respuesta breve:** Para arrancar con Node, el comando pnpm start ejecuta app/server/server.js. Allí se leen variables de entorno, se crea el cliente de Supabase, se configura la aplicación Express y se escucha en un puerto. En el despliegue oficial de Cloudflare, la entrada es app/worker/official.mjs.
 
-**Desde cero y ejemplo de DREAMS:** Hay dos contextos y no hay que confundirlos. package.json define start como node server/server.js; el puerto por defecto del arranque Node es 8080. server/app.js exporta la construcción de la aplicación, pero por sí solo no es el comando de arranque. Cloudflare invoca el handler fetch del Worker oficial y este adapta Express con handleAsNodeRequest; Pages hace de entrada pública/proxy. No digas que todo se ejecuta desde index.html.
+**Desde cero y ejemplo de DREAMS:** Hay dos contextos y no hay que confundirlos. app/package.json define start como node app/server/server.js; el puerto por defecto del arranque Node es 8080. app/server/app.js exporta la construcción de la aplicación, pero por sí solo no es el comando de arranque. Cloudflare invoca el handler fetch del Worker oficial y este adapta Express con handleAsNodeRequest; Pages hace de entrada pública/proxy. No digas que todo se ejecuta desde index.html.
 
-**Archivo y función:** `package.json; server/server.js; server/app.js; worker/official.mjs; pages/proxy.mjs`.
+**Archivo y función:** `app/package.json; app/server/server.js; app/server/app.js; app/worker/official.mjs; app/pages/proxy.mjs`.
 
 **Repregunta posible:** ¿Qué ejecuta pnpm start y qué ejecuta Cloudflare?
 
-**Error frecuente:** index.html no arranca el backend; server/app.js construye la app y no es por sí solo el comando de inicio.
+**Error frecuente:** index.html no arranca el backend; app/server/app.js construye la app y no es por sí solo el comando de inicio.
 
 ### 03. ¿Cómo están organizadas las carpetas?
 
 **Respuesta breve:** public contiene las páginas y los archivos que usa el navegador; server contiene lógica de backend; views incluye el HTML privado del Admin; supabase guarda esquema y migraciones; worker y pages corresponden al despliegue; test y scripts reúnen pruebas y herramientas; docs contiene la documentación.
 
-**Desde cero y ejemplo de DREAMS:** public/js/cuenta.js maneja el formulario en el navegador; server/customer-registration.js valida y procesa el registro en el servidor. El HTML del Admin está en views/admin.html para servirse después de la autorización. Estar en una carpeta privada no sustituye el middleware que controla el acceso. Los secretos no deben estar en public ni versionados.
+**Desde cero y ejemplo de DREAMS:** app/public/js/cuenta.js maneja el formulario en el navegador; app/server/customer-registration.js valida y procesa el registro en el servidor. El HTML del Admin está en app/views/admin.html para servirse después de la autorización. Estar en una carpeta privada no sustituye el middleware que controla el acceso. Los secretos no deben estar en public ni versionados.
 
-**Archivo y función:** `public/; server/; views/admin.html; supabase/; worker/; pages/; test/; scripts/; docs/`.
+**Archivo y función:** `app/public/; app/server/; app/views/admin.html; app/supabase/; app/worker/; app/pages/; app/test/; app/scripts/; docs/`.
 
 **Repregunta posible:** ¿Por qué admin.html está en views y no basta con esconder su enlace?
 
@@ -85,9 +85,9 @@ Entrada Node local: `pnpm start` → `server/server.js:start()` → Express → 
 
 **Respuesta breve:** HTML define la estructura y el contenido, CSS la presentación y adaptación a pantallas, y JavaScript la interacción y las peticiones. En DREAMS hay JavaScript tanto en navegador como en servidor.
 
-**Desde cero y ejemplo de DREAMS:** En public/index.html están header, nav, main, secciones y footer; public/css/style.css determina aspecto y layout. public/js/app.js carga productos y actualiza la interfaz. El JavaScript de server usa APIs de Node y no debe enviarse como código cliente con secretos. Compartir lenguaje no significa compartir permisos.
+**Desde cero y ejemplo de DREAMS:** En app/public/index.html están header, nav, main, secciones y footer; app/public/css/style.css determina aspecto y layout. app/public/js/app.js carga productos y actualiza la interfaz. El JavaScript de server usa APIs de Node y no debe enviarse como código cliente con secretos. Compartir lenguaje no significa compartir permisos.
 
-**Archivo y función:** `public/index.html; public/css/style.css; public/js/app.js; server/app.js`.
+**Archivo y función:** `app/public/index.html; app/public/css/style.css; app/public/js/app.js; app/server/app.js`.
 
 **Repregunta posible:** ¿Qué diferencia hay entre HTML semántico y estilos CSS?
 
@@ -99,7 +99,7 @@ Entrada Node local: `pnpm start` → `server/server.js:start()` → Express → 
 
 **Desde cero y ejemplo de DREAMS:** Un evento como submit captura el envío de un formulario. fetch envía una petición HTTP. Una respuesta JSON se transforma en datos que la interfaz utiliza. DOMContentLoaded permite inicializar cuando el documento está listo. JavaScript no es Java.
 
-**Archivo y función:** `public/js/cuenta.js; public/js/catalogo.js; public/js/app.js`.
+**Archivo y función:** `app/public/js/cuenta.js; app/public/js/catalogo.js; app/public/js/app.js`.
 
 **Repregunta posible:** ¿Un mismo archivo JavaScript puede ejecutarse sin cambios en cualquier entorno?
 
@@ -109,9 +109,9 @@ Entrada Node local: `pnpm start` → `server/server.js:start()` → Express → 
 
 **Respuesta breve:** Es un entorno de ejecución de JavaScript fuera del navegador. En DREAMS permite ejecutar el backend, usar módulos, configurar Express y comunicarse con Supabase.
 
-**Desde cero y ejemplo de DREAMS:** Node no es el lenguaje ni la base de datos ni Express. package.json pide Node 24.x para reproducir este proyecto. require importa módulos CommonJS; los archivos .mjs usan módulos ESM. Las operaciones de red son asíncronas. No hace falta ejecutar un servidor Node con listen en tu computadora para visitar la oficial ya desplegada.
+**Desde cero y ejemplo de DREAMS:** Node no es el lenguaje ni la base de datos ni Express. app/package.json pide Node 24.x para reproducir este proyecto. require importa módulos CommonJS; los archivos .mjs usan módulos ESM. Las operaciones de red son asíncronas. No hace falta ejecutar un servidor Node con listen en tu computadora para visitar la oficial ya desplegada.
 
-**Archivo y función:** `package.json; server/server.js; worker/official.mjs`.
+**Archivo y función:** `app/package.json; app/server/server.js; app/worker/official.mjs`.
 
 **Repregunta posible:** ¿Node necesita una pestaña de navegador para atender peticiones?
 
@@ -121,9 +121,9 @@ Entrada Node local: `pnpm start` → `server/server.js:start()` → Express → 
 
 **Respuesta breve:** Express es un framework web para Node.js. Permite definir rutas HTTP, encadenar middlewares y manejar request y response. En DREAMS organiza la API y sus controles de validación, sesión y permisos.
 
-**Desde cero y ejemplo de DREAMS:** Express se instala como dependencia y se importa en server/app.js. Una ruta como GET /api/products obtiene productos; un middleware puede verificar la sesión antes de llegar al handler. Una justificación técnica es que simplifica esas tareas sin programarlas desde cero con node:http. Eso no acredita por sí solo quién eligió la tecnología: explicá sus ventajas sin inventar una decisión personal.
+**Desde cero y ejemplo de DREAMS:** Express se instala como dependencia y se importa en app/server/app.js. Una ruta como GET /api/products obtiene productos; un middleware puede verificar la sesión antes de llegar al handler. Una justificación técnica es que simplifica esas tareas sin programarlas desde cero con node:http. Eso no acredita por sí solo quién eligió la tecnología: explicá sus ventajas sin inventar una decisión personal.
 
-**Archivo y función:** `package.json; server/app.js: require(express), configure_router e install_get_api_products`.
+**Archivo y función:** `app/package.json; app/server/app.js: require(express), configure_router e install_get_api_products`.
 
 **Repregunta posible:** ¿Podría hacerse sin Express?
 
@@ -135,7 +135,7 @@ Entrada Node local: `pnpm start` → `server/server.js:start()` → Express → 
 
 **Desde cero y ejemplo de DREAMS:** https://dreams-perfumes.pages.dev/catalogo.html es una página; GET /api/products devuelve datos. En /api/products/12, el 12 es un parámetro de ruta. En /api/products?limit=8, limit es un parámetro de consulta. localhost significa tu propia computadora; no es el dominio de la página pública. El ejemplo /api/productos del audio no es el nombre real de la ruta de DREAMS.
 
-**Archivo y función:** `server/app.js; public/catalogo.html; pages/proxy.mjs`.
+**Archivo y función:** `app/server/app.js; app/public/catalogo.html; app/pages/proxy.mjs`.
 
 **Repregunta posible:** ¿/producto.html y /api/products/:id devuelven lo mismo?
 
@@ -147,7 +147,7 @@ Entrada Node local: `pnpm start` → `server/server.js:start()` → Express → 
 
 **Desde cero y ejemplo de DREAMS:** GET /api/products lista; POST /api/auth/login procesa credenciales; POST /api/admin/products crea; PUT /api/admin/products/:id actualiza; DELETE /api/admin/products/:id elimina. Una ruta GET no debería efectuar una modificación de negocio. El método no vuelve una operación segura por sí mismo: hacen falta HTTPS, validaciones y permisos.
 
-**Archivo y función:** `server/app.js; server/official-policy.js`.
+**Archivo y función:** `app/server/app.js; app/server/official-policy.js`.
 
 **Repregunta posible:** ¿PUT y DELETE están protegidos sólo por su nombre?
 
@@ -159,7 +159,7 @@ Entrada Node local: `pnpm start` → `server/server.js:start()` → Express → 
 
 **Desde cero y ejemplo de DREAMS:** POST no cifra el contenido: HTTPS protege el transporte. El servidor debe evitar logs del cuerpo con contraseñas y validar las entradas. En DREAMS, POST /api/auth/login llama a signInWithPassword y, si la autenticación es válida, establece cookies de sesión.
 
-**Archivo y función:** `public/js/cuenta.js; server/app.js: install_post_api_auth_login; server/auth-cookies.js`.
+**Archivo y función:** `app/public/js/cuenta.js; app/server/app.js: install_post_api_auth_login; app/server/auth-cookies.js`.
 
 **Repregunta posible:** ¿POST cifra el cuerpo o evita que el servidor lo registre?
 
@@ -171,7 +171,7 @@ Entrada Node local: `pnpm start` → `server/server.js:start()` → Express → 
 
 **Desde cero y ejemplo de DREAMS:** WhatsApp abre un enlace wa.me con un mensaje preparado; no hay que describirlo como una API de mensajería integrada. Mercado Pago tiene código histórico/preparado, pero no se debe decir que procesa los cobros de la entrega. Una biblioteca cliente como supabase-js facilita llamadas a servicios; no es en sí toda la base de datos.
 
-**Archivo y función:** `docs/entrega-2026/api.md; worker/official-client.mjs; server/app.js; public/js/app.js`.
+**Archivo y función:** `docs/entrega-2026/api.md; app/worker/official-client.mjs; app/server/app.js; app/public/js/app.js`.
 
 **Repregunta posible:** ¿WhatsApp es una API consumida por DREAMS?
 
@@ -183,7 +183,7 @@ Entrada Node local: `pnpm start` → `server/server.js:start()` → Express → 
 
 **Desde cero y ejemplo de DREAMS:** La arquitectura tiene lógica de catálogo también en Pages para los filtros; no todo se reduce a una única función Express. Para una explicación inicial alcanza el recorrido navegador → API → datos → JSON → interfaz; si preguntan por el despliegue, mostrás el proxy y las rutas que realmente intervienen. No se envía la Secret key al navegador.
 
-**Archivo y función:** `public/js/catalogo.js; public/js/app.js; pages/proxy.mjs; server/app.js; worker/official-client.mjs`.
+**Archivo y función:** `app/public/js/catalogo.js; app/public/js/app.js; app/pages/proxy.mjs; app/server/app.js; app/worker/official-client.mjs`.
 
 **Repregunta posible:** ¿Cómo se actualiza la pantalla cuando termina fetch?
 
@@ -195,7 +195,7 @@ Entrada Node local: `pnpm start` → `server/server.js:start()` → Express → 
 
 **Desde cero y ejemplo de DREAMS:** No alcanza con decir que hay muchas para cumplir la rúbrica. Debés poder explicar qué entra, qué sale, quién la llama, qué modifica y qué pasa si falla. El límite de 40 líneas es un criterio académico; dividir sin criterio en funciones difíciles de seguir no mejora el diseño.
 
-**Archivo y función:** `scripts/function-inventory.mjs; docs/entrega-2025/defensa.md`.
+**Archivo y función:** `app/scripts/function-inventory.mjs; docs/entrega-2025/defensa.md`.
 
 **Repregunta posible:** ¿Una función que devuelve una Promise ya terminó su trabajo?
 
@@ -207,7 +207,7 @@ Entrada Node local: `pnpm start` → `server/server.js:start()` → Express → 
 
 **Desde cero y ejemplo de DREAMS:** String(value ?? "") evita tratar null como texto de búsqueda. normalize("NFD") separa letras y marcas; replace elimina esas marcas; toLowerCase unifica mayúsculas y trim limpia extremos. No modifica productos ni la base. Ejemplo didáctico: "  CHANÉL  " pasa a "chanel".
 
-**Archivo y función:** `public/js/admin-product-search.js: normalize_search`.
+**Archivo y función:** `app/public/js/admin-product-search.js: normalize_search`.
 
 **Repregunta posible:** ¿Qué pasa con un valor null o un nombre con tilde?
 
@@ -219,7 +219,7 @@ Entrada Node local: `pnpm start` → `server/server.js:start()` → Express → 
 
 **Desde cero y ejemplo de DREAMS:** filter conserva elementos cuyo predicado es verdadero; some comprueba si coincide al menos uno de los campos nombre/marca; includes busca una parte del texto. Combina coincidencia de texto con low_stock cuando low_only está activo. Los productos que desaparecen de pantalla no se eliminan de la base.
 
-**Archivo y función:** `public/js/admin-product-search.js: filter_products`.
+**Archivo y función:** `app/public/js/admin-product-search.js: filter_products`.
 
 **Repregunta posible:** ¿filter modifica la lista original? ¿Qué diferencia hay con map y some?
 
@@ -231,7 +231,7 @@ Entrada Node local: `pnpm start` → `server/server.js:start()` → Express → 
 
 **Desde cero y ejemplo de DREAMS:** valid_stock rechaza null, strings y valores inválidos. low_stock combina esa validación con <= 2. stock_label distingue sin stock, stock bajo, disponible y stock no válido. Number(null) daría cero, por eso convertir antes de validar puede inventar disponibilidad.
 
-**Archivo y función:** `public/js/admin-product-search.js: valid_stock, low_stock y stock_label`.
+**Archivo y función:** `app/public/js/admin-product-search.js: valid_stock, low_stock y stock_label`.
 
 **Repregunta posible:** ¿Por qué null o un texto no se toman como stock cero?
 
@@ -243,7 +243,7 @@ Entrada Node local: `pnpm start` → `server/server.js:start()` → Express → 
 
 **Desde cero y ejemplo de DREAMS:** fetch devuelve una promesa; await espera la respuesta dentro de una función async. response.json convierte el cuerpo JSON. Se valida response.ok y que sea un array. filter/findIndex quita IDs repetidos y forEach agrega tarjetas al DOM. El código actual limita a ocho, pero no afirma que esos ocho sean todos los productos de la tienda.
 
-**Archivo y función:** `public/js/app.js: load_featured_products; public/js/featured-carousel.js`.
+**Archivo y función:** `app/public/js/app.js: load_featured_products; app/public/js/featured-carousel.js`.
 
 **Repregunta posible:** ¿Qué productos se muestran y por qué el carrusel no avanza solo?
 
@@ -255,7 +255,7 @@ Entrada Node local: `pnpm start` → `server/server.js:start()` → Express → 
 
 **Desde cero y ejemplo de DREAMS:** await no convierte toda la aplicación en bloqueante ni vuelve inmediato Internet. En load_featured_products se espera fetch y la lectura JSON; si la red o la validación fallan, catch informa el problema. Se deben distinguir error de transporte, respuesta HTTP y validación de negocio.
 
-**Archivo y función:** `public/js/app.js: load_featured_products; server/app.js`.
+**Archivo y función:** `app/public/js/app.js: load_featured_products; app/server/app.js`.
 
 **Repregunta posible:** ¿try/catch captura una Promise rechazada si no se espera?
 
@@ -267,7 +267,7 @@ Entrada Node local: `pnpm start` → `server/server.js:start()` → Express → 
 
 **Desde cero y ejemplo de DREAMS:** En DREAMS se restauran sesiones y después se verifica el rol. configure_router define login y admin. login usa next si existe request.user y responde 401 si falta; admin permite solo request.user.is_admin y responde 403 en caso contrario. El orden de middleware importa.
 
-**Archivo y función:** `server/app.js: install_session_middleware y configure_router`.
+**Archivo y función:** `app/server/app.js: install_session_middleware y configure_router`.
 
 **Repregunta posible:** ¿Qué ocurre si un middleware no responde ni llama next?
 
@@ -279,7 +279,7 @@ Entrada Node local: `pnpm start` → `server/server.js:start()` → Express → 
 
 **Desde cero y ejemplo de DREAMS:** Nombrar medidas no equivale a demostrar una auditoría integral. En el código hay cookies HttpOnly/SameSite/Secure, middleware de origen, límites de Auth y comprobación de perfil. Se deben mantener dependencias, configuración, backups y controles de acceso. Los tests locales no acreditan por sí solos producción.
 
-**Archivo y función:** `server/auth-cookies.js; server/auth-limits.js; server/app.js; server/official-policy.js; supabase/migrations/`.
+**Archivo y función:** `app/server/auth-cookies.js; app/server/auth-limits.js; app/server/app.js; app/server/official-policy.js; app/supabase/migrations/`.
 
 **Repregunta posible:** ¿Alcanza con validar el formulario del navegador?
 
@@ -291,7 +291,7 @@ Entrada Node local: `pnpm start` → `server/server.js:start()` → Express → 
 
 **Desde cero y ejemplo de DREAMS:** No digas que escribiste una función bcrypt en DREAMS: la responsabilidad es de Supabase Auth. Un salt evita que dos contraseñas iguales produzcan necesariamente el mismo hash; bcrypt incorpora un costo de cálculo. En el login el proveedor verifica la contraseña frente al hash almacenado. Este material no consulta hashes reales ni fija un costo bcrypt que no se haya verificado.
 
-**Archivo y función:** `server/customer-registration.js; server/app.js: signInWithPassword; https://supabase.com/docs/guides/auth/password-security`.
+**Archivo y función:** `app/server/customer-registration.js; app/server/app.js: signInWithPassword; https://supabase.com/docs/guides/auth/password-security`.
 
 **Repregunta posible:** ¿Qué aporta el salt y dónde se usa bcrypt?
 
@@ -303,7 +303,7 @@ Entrada Node local: `pnpm start` → `server/server.js:start()` → Express → 
 
 **Desde cero y ejemplo de DREAMS:** Base64 es codificación, no cifrado ni hash de contraseña. Un JWT firmado no debe tratarse como contenido secreto por estar codificado. Los tickets HMAC de DREAMS sirven para integridad/autenticidad, no para esconder toda la información ni para almacenar contraseñas.
 
-**Archivo y función:** `server/account-cart.js; server/presentation-checkout.js; server/auth-cookies.js`.
+**Archivo y función:** `app/server/account-cart.js; app/server/presentation-checkout.js; app/server/auth-cookies.js`.
 
 **Repregunta posible:** ¿Un JWT firmado o Base64 esconden su contenido?
 
@@ -313,9 +313,9 @@ Entrada Node local: `pnpm start` → `server/server.js:start()` → Express → 
 
 **Respuesta breve:** CORS es un mecanismo del navegador para controlar qué respuestas puede leer una página desde otro origen. DREAMS usa normalmente /api en el mismo origen; además verifica el origen de solicitudes que modifican datos.
 
-**Desde cero y ejemplo de DREAMS:** No aparece la dependencia cors en package.json. Hay un mutation_origin_guard que comprueba Origin/Referer y otras señales en escrituras, además de la allowlist oficial. No es lo mismo que habilitar Access-Control-Allow-Origin para compartir respuestas. CORS no autentica usuarios, no sustituye permisos y no impide a un cliente externo llamar a una API. Las cookies y la protección frente a solicitudes de otros sitios requieren atención propia.
+**Desde cero y ejemplo de DREAMS:** No aparece la dependencia cors en app/package.json. Hay un mutation_origin_guard que comprueba Origin/Referer y otras señales en escrituras, además de la allowlist oficial. No es lo mismo que habilitar Access-Control-Allow-Origin para compartir respuestas. CORS no autentica usuarios, no sustituye permisos y no impide a un cliente externo llamar a una API. Las cookies y la protección frente a solicitudes de otros sitios requieren atención propia.
 
-**Archivo y función:** `package.json; server/app.js: mutation_origin_guard; pages/proxy.mjs; server/official-policy.js`.
+**Archivo y función:** `app/package.json; app/server/app.js: mutation_origin_guard; app/pages/proxy.mjs; app/server/official-policy.js`.
 
 **Repregunta posible:** ¿Una herramienta externa puede llamar a la API aunque el navegador aplique CORS?
 
@@ -327,7 +327,7 @@ Entrada Node local: `pnpm start` → `server/server.js:start()` → Express → 
 
 **Desde cero y ejemplo de DREAMS:** La cuenta se identifica por un UUID, no por el texto del nombre ni por un correo escrito en el formulario. customer_registration rechaza campos como role o is_admin y crea perfil customer. Ocultar un botón no protege el endpoint: el servidor debe rechazar la operación y las políticas de datos deben acompañar.
 
-**Archivo y función:** `server/customer-registration.js; server/app.js: profile_loader y configure_router`.
+**Archivo y función:** `app/server/customer-registration.js; app/server/app.js: profile_loader y configure_router`.
 
 **Repregunta posible:** ¿Un usuario autenticado puede entrar siempre al Admin?
 
@@ -339,7 +339,7 @@ Entrada Node local: `pnpm start` → `server/server.js:start()` → Express → 
 
 **Desde cero y ejemplo de DREAMS:** auth-cookies.js configura HttpOnly, SameSite=Lax y Secure en producción. HttpOnly impide leer la cookie desde JavaScript, pero no elimina todos los riesgos de XSS ni de solicitudes inducidas. El middleware usa getUser y refreshSession, después consulta el perfil. No debe confiarse en un valor is_admin guardado por el navegador.
 
-**Archivo y función:** `server/auth-cookies.js; server/app.js: install_session_middleware, logout y clear_session`.
+**Archivo y función:** `app/server/auth-cookies.js; app/server/app.js: install_session_middleware, logout y clear_session`.
 
 **Repregunta posible:** ¿Un 200 de logout garantiza que todo JWT quedó invalidado?
 
@@ -351,7 +351,7 @@ Entrada Node local: `pnpm start` → `server/server.js:start()` → Express → 
 
 **Desde cero y ejemplo de DREAMS:** El significado general no garantiza que todos los endpoints devuelvan siempre el código ideal. En DREAMS, el middleware login devuelve 401 sin usuario y el guard admin devuelve 403 si no es administrador, incluso si es anónimo. Los errores concretos deben leerse junto con el cuerpo y la ruta, no adivinarse por el número solamente.
 
-**Archivo y función:** `server/app.js: configure_router; server/account-cart.js; server/auth-limits.js`.
+**Archivo y función:** `app/server/app.js: configure_router; app/server/account-cart.js; app/server/auth-limits.js`.
 
 **Repregunta posible:** ¿Qué diferencia hay entre credenciales inválidas y proveedor caído?
 
@@ -363,7 +363,7 @@ Entrada Node local: `pnpm start` → `server/server.js:start()` → Express → 
 
 **Desde cero y ejemplo de DREAMS:** La documentación del D.E.R. identifica nueve tablas públicas y auth.users.id como frontera de Auth. No copies a producción un schema histórico sin revisar migraciones: el baseline usa brand y la tabla remota documentada usa marca; el contrato HTTP expone brand. No se verificó la base remota de nuevo para este Word.
 
-**Archivo y función:** `docs/auditoria-2025/base-de-datos.md; supabase/migrations/; server/product-schema.js`.
+**Archivo y función:** `docs/auditoria-2025/base-de-datos.md; app/supabase/migrations/; app/server/product-schema.js`.
 
 **Repregunta posible:** ¿Supabase y PostgreSQL son lo mismo?
 
@@ -387,7 +387,7 @@ Entrada Node local: `pnpm start` → `server/server.js:start()` → Express → 
 
 **Desde cero y ejemplo de DREAMS:** DREAMS debe verificar la sesión y el rol en el servidor y utilizar el JWT donde corresponde para que las políticas se apliquen. Una clave privilegiada puede saltar políticas; por eso se conserva solo en servidor y no se usa indiscriminadamente. RLS no se demuestra ocultando botones ni por la sola existencia de una tabla.
 
-**Archivo y función:** `supabase/migrations/; server/app.js: admin_database; server/reviews.js`.
+**Archivo y función:** `app/supabase/migrations/; app/server/app.js: admin_database; app/server/reviews.js`.
 
 **Repregunta posible:** ¿La credencial privilegiada obedece siempre las mismas políticas que un customer?
 
@@ -399,7 +399,7 @@ Entrada Node local: `pnpm start` → `server/server.js:start()` → Express → 
 
 **Desde cero y ejemplo de DREAMS:** GET y POST /api/cart/account requieren login. AccountCartService valida un contexto firmado que corresponde a la cuenta y llama a la RPC dreams_cart_operation con un operation_id. La selección guardada contiene IDs y cantidades; hydrate reconstruye información desde catálogo. Al cambiar de cuenta hay que evitar aplicar una operación pendiente de A a B.
 
-**Archivo y función:** `server/account-cart.js; public/js/account-cart.js; public/js/app.js; supabase/migrations/`.
+**Archivo y función:** `app/server/account-cart.js; app/public/js/account-cart.js; app/public/js/app.js; app/supabase/migrations/`.
 
 **Repregunta posible:** ¿Qué pasa si cambia la sesión mientras hay una operación pendiente?
 
@@ -411,7 +411,7 @@ Entrada Node local: `pnpm start` → `server/server.js:start()` → Express → 
 
 **Desde cero y ejemplo de DREAMS:** delete_own_review no acepta que el navegador elija otro propietario. Si la consulta no devuelve una opinión propia, responde que no se encontró. El administrador conserva una ruta de moderación diferente. operation_id también ayuda a evitar duplicados al publicar opiniones.
 
-**Archivo y función:** `server/reviews.js: publish_review, replay_review y delete_own_review`.
+**Archivo y función:** `app/server/reviews.js: publish_review, replay_review y delete_own_review`.
 
 **Repregunta posible:** ¿Basta con ocultar el botón Eliminar de otra opinión?
 
@@ -423,7 +423,7 @@ Entrada Node local: `pnpm start` → `server/server.js:start()` → Express → 
 
 **Desde cero y ejemplo de DREAMS:** Si se pierde la respuesta de un alta, repetirla sin comprobar podría crear un duplicado. Las validaciones de imagen en navegador ayudan a la experiencia, pero el backend también valida los datos y la autorización. Las pruebas de escritura deben hacerse sobre un producto de prueba autorizado, no sobre stock comercial.
 
-**Archivo y función:** `public/js/admin.js; public/js/admin-image-url.js; server/app.js: rutas /api/admin/products`.
+**Archivo y función:** `app/public/js/admin.js; app/public/js/admin-image-url.js; app/server/app.js: rutas /api/admin/products`.
 
 **Repregunta posible:** ¿Qué pasa si la escritura se hizo pero se perdió su respuesta?
 
@@ -435,7 +435,7 @@ Entrada Node local: `pnpm start` → `server/server.js:start()` → Express → 
 
 **Desde cero y ejemplo de DREAMS:** En low_stock, valid_stock(value) && value <= 2 exige ambas condiciones. filter_products usa coincidencia en nombre O marca y además aplica stock bajo cuando corresponde. Un return devuelve un valor o termina una rama; un throw produce un error para manejarlo en otro nivel. Explicá valores falsy y ?? sin afirmar que || y ?? son idénticos.
 
-**Archivo y función:** `public/js/admin-product-search.js; server/account-cart.js; server/app.js: normalize_cart_items`.
+**Archivo y función:** `app/public/js/admin-product-search.js; app/server/account-cart.js; app/server/app.js: normalize_cart_items`.
 
 **Repregunta posible:** ¿Qué diferencia hay entre filter, some y map?
 
@@ -447,7 +447,7 @@ Entrada Node local: `pnpm start` → `server/server.js:start()` → Express → 
 
 **Desde cero y ejemplo de DREAMS:** Responsive no significa simplemente achicar todo. Hay que conservar lectura, controles táctiles y ausencia de desbordes. featured-carousel.js responde a teclado y prefiere movimiento inmediato cuando el usuario solicita reducir animaciones. Su indicador puede existir solo para lectores de pantalla aunque no se vea.
 
-**Archivo y función:** `public/index.html; public/css/style.css; public/js/featured-carousel.js; public/js/navigation.js`.
+**Archivo y función:** `app/public/index.html; app/public/css/style.css; app/public/js/featured-carousel.js; app/public/js/navigation.js`.
 
 **Repregunta posible:** ¿Cómo se usa el carrusel sin mouse o con movimiento reducido?
 
@@ -457,9 +457,9 @@ Entrada Node local: `pnpm start` → `server/server.js:start()` → Express → 
 
 **Respuesta breve:** Git registra versiones; GitHub aloja el repositorio y facilita revisión. Los tests comprueban casos y regresiones. El build prepara el bundle o archivos de publicación. Son pasos distintos de desplegar.
 
-**Desde cero y ejemplo de DREAMS:** Un test con fixtures puede pasar aunque falte una clave de producción. No confundas CI verde, push y sitio actualizado. package.json define check, test, build:pages y build:official. Hay archivos de evidencia histórica; este documento no volvió a ejecutar la suite ni auditó el runtime oficial.
+**Desde cero y ejemplo de DREAMS:** Un test con fixtures puede pasar aunque falte una clave de producción. No confundas CI verde, push y sitio actualizado. app/package.json define check, test, build:pages y build:official. Hay archivos de evidencia histórica; este documento no volvió a ejecutar la suite ni auditó el runtime oficial.
 
-**Archivo y función:** `package.json; .github/; scripts/; docs/evidence/`.
+**Archivo y función:** `app/package.json; .github/; app/scripts/; docs/evidence/`.
 
 **Repregunta posible:** ¿Un build aprobado demuestra que login remoto funciona?
 
@@ -483,7 +483,7 @@ Entrada Node local: `pnpm start` → `server/server.js:start()` → Express → 
 
 **Desde cero y ejemplo de DREAMS:** En JavaScript una función puede recibir otra y devolver una nueva. async_route devuelve un handler que ejecuta el original y deriva errores con catch(next). login y admin comprueban permisos; route registra las rutas. Es útil distinguir el patrón de envoltorio de la sintaxis de decoradores, que no usamos aquí.
 
-**Archivo y función:** `server/app.js: application_context (async_route), configure_router (login, admin, route)`.
+**Archivo y función:** `app/server/app.js: application_context (async_route), configure_router (login, admin, route)`.
 
 **Repregunta posible:** ¿Qué pasa si un handler async rechaza su Promise?
 
@@ -491,11 +491,11 @@ Entrada Node local: `pnpm start` → `server/server.js:start()` → Express → 
 
 ### 38. ¿Qué son los templates de DREAMS?
 
-**Respuesta breve:** Son estructuras reutilizables. El footer compartido está en templates/public-footer.html y se incorpora al preparar las páginas. No usamos Jinja ni un motor de templates de Flask.
+**Respuesta breve:** Son estructuras reutilizables. El footer compartido está en app/templates/public-footer.html y se incorpora al preparar las páginas. No usamos Jinja ni un motor de templates de Flask.
 
-**Desde cero y ejemplo de DREAMS:** La plantilla evita repetir a mano el mismo footer. scripts/sync-public-footer.mjs reemplaza ese fragmento en HTML y build-pages.mjs también lo incorpora. templates/social-card.html es fuente gráfica; views/admin.html es la vista HTML protegida. Una carpeta no protege por sí sola: lo hace la autorización del servidor.
+**Desde cero y ejemplo de DREAMS:** La plantilla evita repetir a mano el mismo footer. app/scripts/sync-public-footer.mjs reemplaza ese fragmento en HTML y build-pages.mjs también lo incorpora. app/templates/social-card.html es fuente gráfica; app/views/admin.html es la vista HTML protegida. Una carpeta no protege por sí sola: lo hace la autorización del servidor.
 
-**Archivo y función:** `templates/public-footer.html; templates/social-card.html; scripts/sync-public-footer.mjs; scripts/build-pages.mjs; views/admin.html`.
+**Archivo y función:** `app/templates/public-footer.html; app/templates/social-card.html; app/scripts/sync-public-footer.mjs; app/scripts/build-pages.mjs; app/views/admin.html`.
 
 **Repregunta posible:** ¿Se procesa el footer en cada petición o durante la preparación de los recursos?
 
@@ -507,7 +507,7 @@ Entrada Node local: `pnpm start` → `server/server.js:start()` → Express → 
 
 **Desde cero y ejemplo de DREAMS:** Node ejecuta el JavaScript del hilo principal y delega distintas operaciones al entorno. Una Promise representa un resultado futuro; await suspende esa función hasta resolverlo, no todo el servidor. Una tarea de CPU larga y sin ceder puede bloquear el hilo. No es correcto resumirlo como que todo corre en paralelo.
 
-**Archivo y función:** `server/app.js: handlers async; server/server.js: start; public/js/catalogo.js: load_catalog`.
+**Archivo y función:** `app/server/app.js: handlers async; app/server/server.js: start; app/public/js/catalogo.js: load_catalog`.
 
 **Repregunta posible:** ¿Qué diferencia hay entre esperar fetch y hacer un cálculo muy pesado dentro de un bucle?
 
@@ -517,11 +517,11 @@ Entrada Node local: `pnpm start` → `server/server.js:start()` → Express → 
 
 **Respuesta breve:** Los módulos separan responsabilidades en archivos. Las dependencias son paquetes instalados. Las variables de entorno aportan configuración sin escribir secretos en el código.
 
-**Desde cero y ejemplo de DREAMS:** CommonJS usa require/module.exports; los .mjs usan import/export. package.json define scripts y dependencias; pnpm-lock.yaml fija versiones. dotenv carga configuración local; Cloudflare entrega bindings al Worker. pnpm start usa Node 24 y el puerto local predeterminado es 8080. No se copian claves reales para estudiar.
+**Desde cero y ejemplo de DREAMS:** CommonJS usa require/module.exports; los .mjs usan import/export. app/package.json define scripts y dependencias; app/pnpm-lock.yaml fija versiones. dotenv carga configuración local; Cloudflare entrega bindings al Worker. pnpm start usa Node 24 y el puerto local predeterminado es 8080. No se copian claves reales para estudiar.
 
-**Archivo y función:** `package.json; pnpm-lock.yaml; server/server.js: start; worker/official-client.mjs: create_official_database`.
+**Archivo y función:** `app/package.json; app/pnpm-lock.yaml; app/server/server.js: start; app/worker/official-client.mjs: create_official_database`.
 
-**Repregunta posible:** ¿Node, Express, pnpm y package.json cumplen la misma función?
+**Repregunta posible:** ¿Node, Express, pnpm y app/package.json cumplen la misma función?
 
 **Error frecuente:** No subir .env reales, node_modules ni claves al frontend.
 
@@ -531,7 +531,7 @@ Entrada Node local: `pnpm start` → `server/server.js:start()` → Express → 
 
 **Desde cero y ejemplo de DREAMS:** El formulario envía POST /api/auth/register; registration_values valida y rechaza campos de rol. normal_registration usa signUp y registered_response entrega la sesión que realmente exista. Login usa signInWithPassword. Borrar una cuenta de prueba requiere gestión autorizada en Supabase Auth, revisando sesiones y relaciones; borrar profiles no borra auth.users. No se practica con Admin o clientes.
 
-**Archivo y función:** `server/customer-registration.js: registration_values, normal_registration; server/app.js: install_post_api_auth_login, install_post_api_auth_logout`.
+**Archivo y función:** `app/server/customer-registration.js: registration_values, normal_registration; app/server/app.js: install_post_api_auth_login, install_post_api_auth_logout`.
 
 **Repregunta posible:** ¿El cliente puede enviar is_admin:true? ¿Cerrar sesión elimina la cuenta?
 
@@ -543,7 +543,7 @@ Entrada Node local: `pnpm start` → `server/server.js:start()` → Express → 
 
 **Desde cero y ejemplo de DREAMS:** Una consulta como .from("products").update(datos).eq("id", id) modifica sólo las filas seleccionadas. SELECT lee, INSERT agrega, UPDATE cambia y DELETE borra; no son métodos HTTP. No se reescribe una migración aplicada. La RPC del carrito está modularizada por una migración nueva y su histórico se conserva. No se ejecutan seeds, resets ni migraciones reales para estudiar.
 
-**Archivo y función:** `supabase/migrations/20261105160613_modularize_account_cart.sql; server/app.js: install_put_api_admin_products_id; supabase/rollback/`.
+**Archivo y función:** `app/supabase/migrations/20261105160613_modularize_account_cart.sql; app/server/app.js: install_put_api_admin_products_id; app/supabase/rollback/`.
 
 **Repregunta posible:** ¿Qué cambia entre editar un precio y agregar una columna? ¿Qué protege una transacción?
 
@@ -553,7 +553,7 @@ Entrada Node local: `pnpm start` → `server/server.js:start()` → Express → 
 
 **Respuesta breve:** El backend crea un cliente del SDK de Supabase con la URL del proyecto y una clave de servidor del mismo proyecto. El navegador pide datos a nuestra API; nunca recibe esa clave.
 
-**Desde cero y ejemplo de DREAMS:** En local, dotenv carga la configuración del entorno y start comprueba SUPABASE_URL y SUPABASE_SECRET_KEY antes de crear el cliente. La configuración se toma como referencia de .env.example, sin completar ni subir valores reales. En la oficial esos valores llegan como bindings secretos/configuración al Worker y create_official_database crea el cliente. No se usan claves de capturas ni se corrigen claves borrando caracteres. Se conecta a la Data API por HTTPS mediante el SDK; no es una conexión SQL directa del navegador.
+**Desde cero y ejemplo de DREAMS:** En local, dotenv carga la configuración del entorno y start comprueba SUPABASE_URL y SUPABASE_SECRET_KEY antes de crear el cliente. La configuración se toma como referencia de app/.env.example, sin completar ni subir valores reales. En la oficial esos valores llegan como bindings secretos/configuración al Worker y create_official_database crea el cliente. No se usan claves de capturas ni se corrigen claves borrando caracteres. Se conecta a la Data API por HTTPS mediante el SDK; no es una conexión SQL directa del navegador.
 
 Ejemplo explicativo equivalente al patrón del servidor, con configuración ya disponible en un entorno de desarrollo aislado:
 
@@ -568,7 +568,7 @@ const database = createClient(
 
 El cliente compartido no mantiene la sesión de un usuario. Donde se requieren permisos por usuario se crea un cliente con su JWT, tomado de la sesión verificada. Una URL incorrecta, una clave de otro proyecto o un fallo de red no se arreglan cambiando la contraseña Admin. Para estudiar se usan fixtures o un proyecto de desarrollo autorizado; no se conecta un experimento a producción.
 
-**Archivo y función:** `server/server.js: start` (línea 36); `worker/official-client.mjs: create_official_database` (línea 4); `.env.example`; `server/app.js: configure_router`.
+**Archivo y función:** `app/server/server.js: start` (línea 36); `app/worker/official-client.mjs: create_official_database` (línea 4); `app/.env.example`; `app/server/app.js: configure_router`.
 
 **Repregunta posible:** ¿Por qué no se pone la clave de servidor dentro del JavaScript público? ¿Qué cambia entre el cliente compartido y uno con JWT?
 
@@ -653,7 +653,7 @@ Las páginas públicas son `/`, `/catalogo.html`, `/producto.html`, `/nosotros.h
 
 **Para decir:** Normaliza parámetros, actualiza historial/tema y espera load_catalog. Promise sin datos de retorno de negocio; cambia URL, contador, clases y contenido.
 
-**Ubicación:** `public/js/catalogo.js:84`; `apply_catalog_filters`.
+**Ubicación:** `app/public/js/catalogo.js:84`; `apply_catalog_filters`.
 
 **Entradas:** Estado aplicado y opción sync_url.
 
@@ -673,7 +673,7 @@ Las páginas públicas son `/`, `/catalogo.html`, `/producto.html`, `/nosotros.h
 
 **Para decir:** Muestra loading, hace GET /api/products, valida array y acepta sólo la respuesta vigente. Actualiza catalog_products y renderiza; en finally ajusta aria-busy si sigue vigente.
 
-**Ubicación:** `public/js/catalogo.js:90`; `load_catalog`.
+**Ubicación:** `app/public/js/catalogo.js:90`; `load_catalog`.
 
 **Entradas:** Filtros actuales e ID de la petición.
 
@@ -693,7 +693,7 @@ Las páginas públicas son `/`, `/catalogo.html`, `/producto.html`, `/nosotros.h
 
 **Para decir:** Llama signUp; guarda perfil customer; consulta confirmación si no hay sesión. Respuesta HTTP con sesión real si existe; crea identidad/perfil, no Admin.
 
-**Ubicación:** `server/customer-registration.js:32`; `normal_registration`.
+**Ubicación:** `app/server/customer-registration.js:32`; `normal_registration`.
 
 **Entradas:** Contexto de servicios, valores ya validados y response.
 
@@ -713,7 +713,7 @@ Las páginas públicas son `/`, `/catalogo.html`, `/producto.html`, `/nosotros.h
 
 **Para decir:** Normaliza/valida correo, llama signInWithPassword, obtiene perfil y escribe cookies. Registra POST /api/auth/login; el handler devuelve JSON con usuario y efectos de sesión.
 
-**Ubicación:** `server/app.js:472`; `install_post_api_auth_login`.
+**Ubicación:** `app/server/app.js:472`; `install_post_api_auth_login`.
 
 **Entradas:** Contexto; el handler recibe body.email/body.password.
 
@@ -733,7 +733,7 @@ Las páginas públicas son `/`, `/catalogo.html`, `/producto.html`, `/nosotros.h
 
 **Para decir:** Crea login, admin, route y admin_database basado en token de sesión. Agrega helpers al contexto y registra rutas a través de route. admin llama next o responde 403.
 
-**Ubicación:** `server/app.js:367`; `configure_router`.
+**Ubicación:** `app/server/app.js:367`; `configure_router`.
 
 **Entradas:** Aplicación, cliente Auth y envoltorio async.
 
@@ -753,7 +753,7 @@ Las páginas públicas son `/`, `/catalogo.html`, `/producto.html`, `/nosotros.h
 
 **Para decir:** Bloquea doble envío, revisa alta incierta, escribe, confirma todos los campos con readback y actualiza listados/conteos. Promise; sólo anuncia creado/actualizado después de confirmar persistencia. No sube una imagen: guarda su URL.
 
-**Ubicación:** `public/js/admin.js:276`; `commit_product`.
+**Ubicación:** `app/public/js/admin.js:276`; `commit_product`.
 
 **Entradas:** ID opcional y datos del formulario validados.
 
@@ -773,7 +773,7 @@ Las páginas públicas son `/`, `/catalogo.html`, `/producto.html`, `/nosotros.h
 
 **Para decir:** Verifica ID válido, relee /api/admin/products y compara cada campo normalizado. Resuelve sin valor si coincide; rechaza con error si no puede confirmar. Sólo lee.
 
-**Ubicación:** `public/js/admin.js:246`; `confirm_product_persistence`.
+**Ubicación:** `app/public/js/admin.js:246`; `confirm_product_persistence`.
 
 **Entradas:** Producto devuelto y valores esperados.
 
@@ -793,7 +793,7 @@ Las páginas públicas son `/`, `/catalogo.html`, `/producto.html`, `/nosotros.h
 
 **Para decir:** normalize_search quita marcas diacríticas; filter combina stock válido y coincidencia en nombre o marca con some/includes. Devuelve lista filtrada; no escribe en DB ni borra filas. Sin filtros puede devolver la misma lista.
 
-**Ubicación:** `public/js/admin-product-search.js:3`; `filter_products`.
+**Ubicación:** `app/public/js/admin-product-search.js:3`; `filter_products`.
 
 **Entradas:** Array de productos, texto y low_only.
 
@@ -813,7 +813,7 @@ Las páginas públicas son `/`, `/catalogo.html`, `/producto.html`, `/nosotros.h
 
 **Para decir:** Valida forma/UUID, compara scope con HMAC de la cuenta, llama dreams_cart_operation y luego hydrate. Devuelve JSON con revisión e items/precios actuales; la RPC guarda carrito y registro idempotente en transacción.
 
-**Ubicación:** `server/account-cart.js:43`; `async write`.
+**Ubicación:** `app/server/account-cart.js:43`; `async write`.
 
 **Entradas:** req.body con scope, operation_id y operation; usuario restaurado en req.user.
 
@@ -833,7 +833,7 @@ Las páginas públicas son `/`, `/catalogo.html`, `/producto.html`, `/nosotros.h
 
 **Para decir:** Valida ID, usa cliente con JWT y aplica id + user_id en delete. JSON de éxito; elimina sólo una fila propia que realmente coincida.
 
-**Ubicación:** `server/reviews.js:33`; `delete_own_review`.
+**Ubicación:** `app/server/reviews.js:33`; `delete_own_review`.
 
 **Entradas:** params.id y sesión verificada; cuerpo vacío.
 
@@ -853,7 +853,7 @@ Las páginas públicas son `/`, `/catalogo.html`, `/producto.html`, `/nosotros.h
 
 **Para decir:** Valida nombre/formato, bloquea envío, comprueba carrito, recupera intención y espera presentation_complete. Promise; guarda sólo intención/ticket/recibo, limpia formulario y navega al resultado tras confirmar.
 
-**Ubicación:** `public/js/presentation.js:80`; `presentation_submit`.
+**Ubicación:** `app/public/js/presentation.js:80`; `presentation_submit`.
 
 **Entradas:** Botón, estado, formulario y snapshot inicial.
 
@@ -873,7 +873,7 @@ Las páginas públicas son `/`, `/catalogo.html`, `/producto.html`, `/nosotros.h
 
 **Para decir:** Instala session/payment/result; valida campos, dueño y vencimiento, revalida cupón/importes y firma ticket o recibo. Respuestas JSON firmadas; no inserta orders ni descuenta stock ni consume usos de una compra pagada.
 
-**Ubicación:** `server/presentation-checkout.js:31`; `install_presentation`.
+**Ubicación:** `app/server/presentation-checkout.js:31`; `install_presentation`.
 
 **Entradas:** Servicios de firma/lectura, quote_cart, configuración y registrador de rutas.
 
@@ -893,7 +893,7 @@ Las páginas públicas son `/`, `/catalogo.html`, `/producto.html`, `/nosotros.h
 
 **Para decir:** Sólo actúa sobre escrituras. Considera Origin/Referer y, sin ellos, contexto cross-site y cookies; normaliza y compara allowlist. Devuelve middleware; permite next o corta con 403. No concede rol ni configura ACAO.
 
-**Ubicación:** `server/app.js:47`; `mutation_origin_guard`.
+**Ubicación:** `app/server/app.js:47`; `mutation_origin_guard`.
 
 **Entradas:** Orígenes configurados; luego request/response/next.
 
@@ -912,6 +912,7 @@ Las páginas públicas son `/`, `/catalogo.html`, `/producto.html`, `/nosotros.h
 Los ejercicios son propuestas, no actividades ya realizadas por los integrantes. Usar una copia local, fixtures o una DB aislada. No ejecutar scripts de alta de Admin, reparadores de Secrets, seeds, resets, borrados reales ni publicación para estudiar.
 
 ```bash
+cd app
 pnpm run check
 pnpm run check:functions
 node --test test/home-catalog-copy.test.js
@@ -935,7 +936,7 @@ La documentación oficial de Supabase sobre seguridad de contraseñas, consultad
 - Código revisado: https://github.com/facumartea/dreams/tree/60451cabe5ff9b78f97777d64120e5ff9a3238b2
 - [Inventario verificado de endpoints](endpoints-verificados.json).
 - [Registro consolidado parcial de prompts](registro-prompts.md).
-- [Limpieza y archivos preservados](revision-limpieza-20261110.md).
+- [Limpieza y archivos preservados](../history/entrega-anterior.html#fuente-d56b99927e5a).
 - [Índice de entrega](INDICE.md).
 
 Esta tanda no ejecuta nuevamente QA de navegador, Auth, Admin, base remota ni despliegues. Reutiliza evidencia anterior con su fecha/código y valida documentos, rutas y referencias estáticamente. El CI obligatorio de GitHub puede ejecutar sus checks automáticos al abrir/integrar la PR. Participación, preentregas y defensa individual necesitan evidencia humana; no se garantizan notas.

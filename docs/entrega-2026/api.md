@@ -1,5 +1,7 @@
 # API externa y recorrido
 
+> Reorganización del repositorio: código y configuración están en `app/`; instalación y comandos desde esa carpeta. No cambia la interfaz ni acredita una QA remota nueva. Los enlaces de históricos se actualizan a su archivo consolidado.
+
 API externa consumida: **Supabase Data API y Auth**, documentación pública:
 
 - https://supabase.com/docs/guides/api
@@ -22,7 +24,7 @@ Respuesta ilustrativa, no un precio ni un resultado remoto certificado:
 [{"id":1,"brand":"Marca de prueba","name":"Producto QA","price":100,"stock":2}]
 ```
 
-Registro normal: formulario → `POST /api/auth/register` → `auth.signUp` → perfil customer → cookies si Supabase devuelve sesión. Login usa `signInWithPassword`; recarga valida `getUser`, refresh renueva y logout revoca sesión/cookies. No se utiliza `createUser` administrativo como bypass en el candidato oficial. La existencia de estas rutas no acredita QA remota exitosa: ver [pruebas](pruebas.md).
+Registro normal: formulario → `POST /api/auth/register` → `auth.signUp` → perfil customer → cookies si Supabase devuelve sesión. Login usa `signInWithPassword`; recarga valida `getUser`, refresh renueva y logout revoca sesión/cookies. No se utiliza `createUser` administrativo como bypass en el candidato oficial. La existencia de estas rutas no acredita QA remota exitosa: ver [pruebas](../history/entrega-anterior.html#fuente-0a164ff09539).
 
 Admin: `GET /api/admin/{stats,products,users,inquiries,reviews,orders,coupons}`. Productos y cupones permiten alta/edición/borrado; opiniones permiten moderación. Usuarios, consultas y pedidos son de lectura: no inventar botones de modificar roles o pedidos. Antes de anunciar guardado, se confirma respuesta y una lectura de todos los campos del producto.
 

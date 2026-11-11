@@ -1,14 +1,16 @@
-# Registro consolidado parcial de prompts de DREAMS
+# Declaración de uso de IA y registro parcial de prompts de DREAMS
 
-**ESTADO: PARCIAL. No es una exportación completa ni un historial exhaustivo.** Consolidación documental del 10/11/2026. Base de evidencia revisada: main `60451cabe5ff9b78f97777d64120e5ff9a3238b2`.
+**ESTADO: PARCIAL. No es una exportación completa ni un historial exhaustivo.** Preparación inicial 10/11/2026; consolidación de declaración/bitácora 11/11/2026. Base histórica revisada: main `60451cabe5ff9b78f97777d64120e5ff9a3238b2`; esta limpieza parte de `8ad5401fe0f2d0c3e501ab203f6ab37b27ff7db1`.
 
-## Alcance y procedencia
+## Declaración y alcance
+
+Las entradas disponibles documentan asistencia de IA en análisis, correcciones de código, pruebas y documentación. No permiten atribuir programación manual, revisión o participación a un integrante sin evidencia. La limpieza conserva ese reconocimiento y no presenta el historial parcial como si fuera completo.
 
 Integra el adjunto PROMPTS_DREAMS_PARCIAL.md, referencias a la bitácora ya existente, algunos mensajes originales completos visibles en esta conversación y resúmenes de fases verificadas en Git. La transcripción privada sólo orienta la guía: no se publica el relato, nombres ni archivos de audio. No se copian valores de claves, cookies, contraseñas ni datos personales. Cuando aparece un valor sensible debe reemplazarse por [SECRETO OMITIDO]. Los nombres de variables de configuración no son sus valores.
 
 Las fechas de commits/PR acreditan implementación, no prueban cuándo se escribió un prompt ni quién programó o revisó. Una autorización o preferencia expresada por el usuario no acredita revisión de código de un integrante. Cada entrada identifica cita, extracto o resumen. No se reconstruyen originales ausentes.
 
-No se duplica el archivo adjunto como otro registro independiente. Sus ocho extractos se conservan aquí. La [bitácora previa](../entrega-2026/bitacora-ia.md) permanece como fuente histórica, con un enlace de actualización. Sus entradas no se convierten en citas literales por estar en una tabla.
+No se duplica el archivo adjunto como otro registro independiente. Sus ocho extractos se conservan aquí. La [bitácora previa está consolidada abajo](#f-bitácora-histórica-consolidada) con su procedencia y límites; ya no se mantiene un segundo registro independiente. Sus entradas no se convierten en citas literales por estar en una tabla.
 
 ## A. Extractos del adjunto parcial
 
@@ -20,7 +22,7 @@ No se duplica el archivo adjunto como otro registro independiente. Sus ocho extr
 > necesito revisar y corregir toda la pagina https://dreams-perfumes.pages.dev/admin revisarla muchas veces absolutamente todas las funciones y botones que se pueda hacer toda
 
 - Objetivo: Auditar y corregir controles Admin.
-- Resultado/evidencia: Coincidencia temática con PR56, merge 5236ef6 del 03/11/2026; no demuestra fecha ni relación causal exacta de este extracto. [Fuente](../entrega-2026/bitacora-ia.md).
+- Resultado/evidencia: Coincidencia temática con PR56, merge 5236ef6 del 03/11/2026; no demuestra fecha ni relación causal exacta de este extracto. [Fuente](#f-bitácora-histórica-consolidada).
 - Pruebas del agente: Bitácora y evidencia Admin acreditan pruebas del agente en fases locales/remotas; no se repiten ahora.
 - Revisión humana: no acreditada en el adjunto.
 
@@ -92,7 +94,7 @@ No se duplica el archivo adjunto como otro registro independiente. Sus ocho extr
 > si tambien necesito hacer una declaracion de prompts o similar ayudame a cranear eso
 
 - Objetivo: Preparar declaración/registro de prompts.
-- Resultado/evidencia: Bitácora existente y consolidación actual; no hay un resultado histórico exacto vinculado al mensaje. [Fuente](../entrega-2026/bitacora-ia.md).
+- Resultado/evidencia: Bitácora existente y consolidación actual; no hay un resultado histórico exacto vinculado al mensaje. [Fuente](#f-bitácora-histórica-consolidada).
 - Pruebas del agente: En esta tanda se comprueban fuentes, sanitización y enlaces; no se acreditan revisiones humanas por esto.
 - Revisión humana: no acreditada en el adjunto.
 
@@ -117,7 +119,7 @@ Estas entradas son **resúmenes**, no prompts originales ni nuevas ejecuciones. 
 - Fecha del prompt: **sin fecha confirmada**. Fecha de evidencia: La bitácora etiqueta una etapa 28/08/2026.
 - Tipo: resumen identificado; texto original completo no incorporado como cita.
 - Objetivo: Auditar arquitectura/seguridad y preparar despliegue.
-- Resultado: CHANGELOG y auditorías preservadas; no se reconstruye el mensaje inicial. [Fuente](../entrega-2026/bitacora-ia.md).
+- Resultado: CHANGELOG y auditorías preservadas; no se reconstruye el mensaje inicial. [Fuente](#f-bitácora-histórica-consolidada).
 - Pruebas del agente: Pruebas declaradas en las fuentes históricas; no repetidas ahora.
 - Revisión humana: no hay evidencia suficiente para atribuir a un integrante la revisión de esos cambios. Las declaraciones del usuario que la fuente registra se mantienen como declaraciones, no como revisión de código.
 
@@ -126,7 +128,7 @@ Estas entradas son **resúmenes**, no prompts originales ni nuevas ejecuciones. 
 - Fecha del prompt: **sin fecha confirmada**. Fecha de evidencia: Git: 29ee9ea del 27/10/2026, 6f54b08 y 2b8dcc1 del 28/10; be57610 del 29/10.
 - Tipo: resumen identificado; texto original completo no incorporado como cita.
 - Objetivo: Conservar la oficial y diagnosticar el candidato sin exponer valores.
-- Resultado: La bitácora etiqueta 29ee9ea bajo 28/10, pero Git fecha ese commit 27/10. Se conserva la discrepancia; no se inventa la fecha del prompt. [Fuente](../entrega-2026/bitacora-ia.md).
+- Resultado: La bitácora etiqueta 29ee9ea bajo 28/10, pero Git fecha ese commit 27/10. Se conserva la discrepancia; no se inventa la fecha del prompt. [Fuente](#f-bitácora-histórica-consolidada).
 - Pruebas del agente: Sondas y tests reportados por el agente en la bitácora; un 401 inicial no se presenta como conexión resuelta.
 - Revisión humana: no hay evidencia suficiente para atribuir a un integrante la revisión de esos cambios. Las declaraciones del usuario que la fuente registra se mantienen como declaraciones, no como revisión de código.
 
@@ -135,7 +137,7 @@ Estas entradas son **resúmenes**, no prompts originales ni nuevas ejecuciones. 
 - Fecha del prompt: **sin fecha confirmada**. Fecha de evidencia: PR56: merge 5236ef6, 03/11/2026.
 - Tipo: resumen identificado; texto original completo no incorporado como cita.
 - Objetivo: Cerrar registro, sesión, Admin y documentación funcional.
-- Resultado: El cierre histórico documenta QA real y retirada del mecanismo temporal; no hay nueva ejecución en esta tanda. [Fuente](../entrega-2026/bitacora-ia.md).
+- Resultado: El cierre histórico documenta QA real y retirada del mecanismo temporal; no hay nueva ejecución en esta tanda. [Fuente](#f-bitácora-histórica-consolidada).
 - Pruebas del agente: 476 tests y 89 casos remotos según bitácora de cierre; leer su alcance y fecha.
 - Revisión humana: no hay evidencia suficiente para atribuir a un integrante la revisión de esos cambios. Las declaraciones del usuario que la fuente registra se mantienen como declaraciones, no como revisión de código.
 
@@ -632,3 +634,201 @@ Entregá URL, commit publicado y capturas de Inicio y cabeceras corregidas.
 4. Evidencia humana de revisión o cambios de integrantes si quieren acreditarlos. Una captura de aprobación o un pedido de continuar no demuestra revisión de código.
 
 No se necesitan credenciales, cookies, audios privados ni datos de clientes para completar el registro. Si una exportación contiene esos valores, deben omitirse. Esta tarea continúa y entrega material útil sin bloquearse por esos faltantes.
+
+## F. Bitácora histórica consolidada
+
+Procedencia: `docs/entrega-2026/bitacora-ia.md`, [base 8ad5401](https://github.com/facumartea/dreams/blob/8ad5401fe0f2d0c3e501ab203f6ab37b27ff7db1/docs/entrega-2026/bitacora-ia.md). SHA-256 original: `5820af024fb83a510c6c97103951c507840b271a1a18cfa2020e7ade5f362db5`. Se integra su cuerpo, sin el título/banner de reenvío. Los encabezados se subordinan para mantener un único índice. No se transforman resúmenes en prompts literales.
+
+**Lectura histórica:** las referencias a la rúbrica 2026, preentregas, fallos y mecanismos temporales describen esa etapa, no requisitos vigentes de 2025 ni instrucciones para repetirla. Las rutas de archivo que aparecen como texto pertenecen a su carpeta original. La discrepancia de fecha de 29ee9ea se explica en B02; no se corrige silenciosamente el antecedente. No hay revisión humana acreditada por añadir este registro.
+
+Este registro identifica trabajo asistido por IA; no atribuye a los alumnos programación, revisión manual o dominio del código sin evidencia. Las fechas son las documentadas en commits y continuidad, no una reconstrucción de entregas de clase.
+
+| Fecha acreditada | Prompt o resumen fiel | Resultado y evidencia | Revisión / cambios humanos acreditados |
+|---|---|---|---|
+| 2026-08-28 | Auditoría de arquitectura, seguridad y preparación de deploy | Entradas de `CHANGELOG.md`, separación de app y validaciones | No hay evidencia adjunta que permita atribuir cada cambio a un integrante. |
+| 2026-10-27 | Continuar PR56, recuperar backend funcional y conservar oficial | Reconstrucción, pruebas locales/CI; deploy falló 401, rollback documentado | Usuario informó ajustes de Auth y carga de Secret. Resultado del Secret luego rechazado en uso; no equivale a una reparación exitosa. |
+| 2026-10-28 | Diagnosticar bad_length sin exponer claves ni volver a configurar Auth | Sonda privada: espacios internos; HEAD directo/SDK401. `29ee9ea`, evidencia de credencial | Usuario autorizó reparación. No se acreditó reemplazo posterior. |
+| 2026-10-28 | Continuar CI y minimizar intervención | `6f54b08` corrige qs; `2b8dcc1` prepara reparador y extracción de registro; CI209/360 PASS | No atribuir esos cambios de código a los alumnos. |
+| 2026-10-29 | Priorizar conexiones existentes y una sola carga directa de Secret | `be57610`: continuidad; no dos tokens, no nueva publicación | Usuario pidió menor intervención. Carga directa todavía pendiente al inicio de esta tanda. |
+| 2026-10-29 | Cerrar funcionamiento y preparar entrega según PDF2026, máximo40 líneas, wireframe, manual, BD, ZIP | Lectura del PDF original; inventario AST completo, refactorización, carrusel manual, confirmación de persistencia Admin y documentación de entrega | Trabajo de IA sujeto a pruebas; ver commit y resultados finales en `pruebas.md`. Integrantes deben revisar, corregir y defenderlo. |
+
+### Historial que falta
+
+La rúbrica pide bitácora **en cada preentrega** (previa el 2 de octubre). No se dispone de los prompts originales completos ni de una entrega fechada de esa preentrega. `CHANGELOG.md` y Git sirven como evidencia técnica parcial, no prueban asistencia, entrega en Classroom, participación ni revisión individual. Quedan pendientes los registros propios que posean los integrantes y la validación docente.
+
+Para cada revisión futura registrar fecha, prompt fiel, salida aprovechada/descartada, defecto encontrado, prueba y cambio realizado, con autoría acreditada. No completar retrospectivamente como si hubiera ocurrido en clase.
+
+### Aclaraciones recibidas el29/10/2026
+
+El usuario respondió que el profesor aceptó Supabase, confirmó los apellidos **Martearena y Ruas** y pidió continuar las correcciones y subirlas a GitHub sin generar otro ZIP final. La IA actualiza documentación, matriz y footer con esa información. Se conserva la evidencia de extracción anterior y no se atribuye a los integrantes programación o revisión manual no acreditada.
+
+### Reemplazo de clave informado y verificado ·29/10/2026
+
+El usuario informó haber cambiado la clave servidor. La IA verificó la versión actualizada y ejecutó sonda privada acotada heredando ese Secret, sin leerlo: el nuevo valor todavía incluye espacios internos/controlASCII y no permite obtener respuesta HTTP válida; se retiró el Cron y se conservó la oficial restaurada. Se prepararon QA interna opt-in y guardas para no iniciar altas antes de lectura200. No se atribuye este código al alumnado ni se declara reparación o QA remota completada.
+
+### Nueva copia válida y QA real · 29/10/2026
+
+El usuario volvió a copiar la Secret key con el botón Copy y desplegó el Worker. La IA verificó el origen exacto de los bindings heredados y acreditó lectura directa/SDK200 sin transformar el valor ni mostrarlo. Una petición sintética del harness falló por faltar Content-Length; se reprodujo en workerd con fixture, se corrigió sólo el transporte y se aprobaron 398 tests/CI216. Registro, sesiones y parte del carrito pasaron realmente contra Supabase; la invocación larga alcanzó el límite Free de 50 subrequests. La IA dividió la QA en fases cortas con marcadores exclusivos de cuentas QA, sin cambiar el plan, Auth ni la cuenta Admin. Fuente `f2efb1d`, CI217/400 tests. La publicación y las fases restantes todavía no se acreditan en esta entrada. No hay revisión manual de alumnos acreditada para estos cambios.
+
+### Auditoría real del Admin y regresión — 02/11 local, 03/11/2026 UTC
+
+Solicitud: auditar y reparar todos los controles del Admin, conservar la oficial y no repetir pruebas acreditadas. La IA reprodujo el403 de guardado del backend legado y verificó ausencia de alta; corrigió el enrutamiento específico, readback y recuperación sin duplicados. Publicó únicamente la oficial. Detectó con un producto exclusivo QA la coerción stock:null→0 y la corrigió validando tipos antes de convertir;30 regresiones de tipos y476 tests totales pasaron. Prueba remota posterior400 conserva stockQA3. Registro y sesión web, renovación, errores recuperables, carrito, WhatsApp sin envío y checkout académico real pasan en Chromium oficial.
+
+La contraseña Admin aportada como Secret se usa sólo dentro del Worker para login normal; sesión cifrada por KV privado y descifrada sóloRAM. Los incidentes del arnés se identifican como tales, no como defectos de Auth. La retirada del mecanismo/Secret y el resultado del resto de casos se documentan al cierre; no se anticipan aquí. No hay revisión manual ni programación de los alumnos acreditada para estas correcciones.
+
+Cierre acreditado:89casos remotos distintos PASS, nueve fases privadas PASS/281assertions y476tests. Retirados SecretAdmin/Cron/KV/mecanismo; logout real y guardado/imágenes comprobados sobre backend final limpio. Documentación final/manualPDF actualizados por IA. Usuario pidió continuar hasta terminar sin repetir procesos; no se ejecutó de nuevo la QA ya aprobada ni se generó ZIP final.
+
+## G. Simplificación del repositorio · 11/11/2026
+
+- Fecha comprobable: 11/11/2026, solicitud actual y fecha de esta ejecución.
+- Tipo: prompt original completo disponible; no es una reconstrucción de etapas anteriores.
+- Objetivo: conservar ejecución y entrega académica, consolidar el registro y preparar una lista de excepciones antes de borrar archivos necesarios.
+- Resultado: bitácora histórica consolidada en F; navegación e instalación repetidas trasladadas a README. Inventario y decisiones en `docs/limpieza-20261111.json`. PR de esta branch, sin integrar ni desplegar mientras falte decisión sobre excepciones.
+- Pruebas del agente: base CI254 reutilizada; sintaxis e inventario antes de cambiar. Instalación limpia, tests, builds y enlaces posteriores se acreditan en el JSON con sus resultados reales, sin asumirlos por anticipado.
+- Revisión humana: decisiones de excepciones pendientes. No se atribuye al alumnado revisión de código o dominio del proyecto.
+
+```text
+Quiero simplificar al máximo el repositorio de DREAMS sin romper la aplicación
+ni perder documentos necesarios para la entrega.
+
+REPOSITORIO
+https://github.com/facumartea/dreams
+
+OFICIAL
+https://dreams-perfumes.pages.dev/
+
+ESTRUCTURA DESEADA
+Conservar principalmente:
+- Código JS/MJS/CJS, JSON, HTML, CSS y Python si realmente existe y se utiliza.
+- README.md.
+- Un único Markdown de declaración y registro de prompts.
+
+Quiero retirar documentación operativa de IA, prompts de continuidad,
+planes obsoletos, duplicados y archivos innecesarios.
+
+IMPORTANTE
+No uses la extensión como único criterio.
+Si un archivo fuera de esa lista es necesario para ejecutar, instalar,
+probar, publicar, conservar datos o cumplir la rúbrica, NO lo borres:
+explicame su función y pedime una decisión.
+
+1. ANALIZAR ANTES DE BORRAR
+Leé las instrucciones aplicables y revisá Git, PRs y cambios locales.
+Partí de la versión vigente, preservando trabajo ajeno.
+Creá una branch específica de limpieza.
+
+Inventariá archivos y comprobá referencias en:
+- Imports.
+- HTML, CSS y JavaScript.
+- package.json y scripts.
+- CI de GitHub.
+- Configuración y build de Cloudflare.
+- Migraciones y esquema.
+- Tests.
+- Documentación e índices.
+
+No borres carpetas enteras sin revisar su contenido.
+No incluyas archivos nuevos de otras tareas en la limpieza.
+
+2. DECLARACIÓN DE PROMPTS
+Consolidá en un único Markdown la declaración de uso de IA y el registro
+de prompts disponibles.
+
+Preservá contenido único de las bitácoras antes de retirar duplicados.
+Identificá extractos, resúmenes y datos faltantes.
+No inventes prompts, fechas, resultados o revisión humana.
+No incluyas secretos ni datos privados.
+
+La limpieza debe mejorar organización, no ocultar el uso de IA.
+
+3. ELIMINACIONES AUTORIZADAS
+Podés retirar, después de comprobar que no tienen dependencias ni información
+única necesaria:
+- Prompts operativos de continuidad ya obsoletos.
+- Planes descartados.
+- Archivos temporales o generados innecesariamente versionados.
+- Duplicados exactos.
+- Documentación repetida cuyo contenido vigente ya esté consolidado.
+
+No reescribas el historial de Git.
+No elimines evidencia única o documentos exigidos por la rúbrica.
+
+4. EXCEPCIONES: CONSULTARME ANTES
+Prepará una única lista agrupada con los archivos que no cumplen mi lista
+de extensiones pero conviene conservar.
+
+Revisá especialmente:
+- Imágenes, logos, iconos y fuentes utilizados.
+- SQL y migraciones.
+- pnpm-lock.yaml y pnpm-workspace.yaml.
+- Workflows YAML.
+- Configuraciones Wrangler JSONC/TOML.
+- .gitignore y otros archivos de herramientas.
+- AGENTS.md y su alcance.
+- robots.txt y sitemap.xml.
+- Manual, wireframe, D.E.R., rúbrica y documentos académicos.
+- Licencias y atribuciones.
+- Configuración histórica cuya necesidad no esté clara.
+
+Para cada excepción indicá:
+- Archivo o grupo.
+- Para qué sirve.
+- Qué se rompería o perdería al retirarlo.
+- Si existe una alternativa segura.
+- Recomendación.
+
+No borres estos archivos hasta que responda.
+Diferenciá “no lo exige la rúbrica” de “no lo necesita la aplicación”.
+
+No agregues Python ni conviertas código a otro lenguaje para cumplir
+una lista de extensiones.
+No renombres archivos de configuración a extensiones incorrectas.
+
+5. VALIDAR LA LIMPIEZA
+Establecé una base de checks antes de cambiar, reutilizando evidencia vigente.
+Después:
+- Actualizá referencias de archivos retirados.
+- Comprobá enlaces del README.
+- Ejecutá sintaxis, tests pertinentes y builds.
+- Verificá instalación reproducible.
+- Conservá el límite de 40 líneas por función.
+- Revisá ausencia de secretos.
+
+No retires tests para que el proyecto parezca más pequeño.
+Si una eliminación produce un fallo, restaurá el archivo e informá la causa.
+
+6. GITHUB Y OFICIAL
+Prepará commit, push y PR revisable.
+No hagas merge mientras haya excepciones pendientes de mi decisión.
+
+Esta tarea no autoriza modificar funcionalidades, datos, Auth, credenciales
+ni configuración de producción.
+
+Si solo se elimina documentación, no despliegues la web.
+Si una modificación afecta al artefacto publicado, explicá su impacto
+y las verificaciones necesarias antes de publicar.
+
+No modifiques otros sitios ni previews.
+
+ENTREGA
+- Árbol propuesto del repositorio.
+- Archivos eliminados y justificación.
+- Archivos consolidados.
+- Lista de excepciones que necesitan mi decisión.
+- Resultado de checks y builds.
+- Branch y PR.
+- Confirmación de que no se modificó la oficial.
+
+El objetivo no es borrar la mayor cantidad posible:
+es dejar únicamente lo necesario, con las excepciones que yo apruebe.
+```
+
+## H. Raíz con sólo README y reducción de carpetas · 10/11/2026 local
+
+- Fecha: 10/11/2026, contexto horario del usuario en Buenos Aires. La branch usa 20261111 por la fecha UTC inicial; no se cambia ese nombre para aparentar otra etapa.
+- Prompt original completo disponible: «reduci todo lo  mas posible de esta imagen tiene que quedar solo el reedme y de las carpetas reduci lo mas posible». La captura muestra archivos de la raíz; no se inventa contenido adicional de ella.
+- Objetivo: reducir archivos visibles en la raíz y documentación repetida sin romper instalación, publicación futura ni entrega.
+- Resultado: proyecto ejecutable en app/; raíz con README y carpetas app/, docs/, .github/. Históricos consolidados en cuatro HTML sin JavaScript, con contenido original verificable. Dos duplicados exactos unificados preservando sus procedencias como alias. Configuración necesaria, tests, migraciones, material académico, capturas únicas y fuentes editables conservados.
+- Evidencia: PR64 y second_phase de docs/limpieza-20261111.json. No se modifica la oficial ni se ejecuta publicación por la reorganización.
+- Pruebas del agente: registrar instalación limpia, regresiones, límite40, builds, integridad de archivos movidos y contenido histórico en second_phase.checks; no atribuir QA remota nueva a estas pruebas.
+- Revisión humana: esta solicitud autoriza la reducción. No acredita revisión de código ni dominio de los integrantes.

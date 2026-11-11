@@ -1,5 +1,7 @@
 # Manual de uso DREAMS
 
+> Reorganización del repositorio: código y configuración están en `app/`; instalación y comandos desde esa carpeta. No cambia la interfaz ni acredita una QA remota nueva. Los enlaces de históricos se actualizan a su archivo consolidado.
+
 **Versión documentada: continuidad de main `e6d60bf`, actualizada por PR #62 para https://dreams-perfumes.pages.dev/.** Se reutiliza esta ubicación del manual sin trasladar requisitos de la rúbrica 2026: la evaluación vigente usa el PDF 2025. Las pruebas de los ajustes de Inicio/cabeceras y su publicación se registran en [evidencia actual](../evidence/inicio-cabeceras-20261105/README.md). La QA funcional anterior se conserva con su procedencia. Capturas anteriores conservan su procedencia; las nuevas muestran el carrusel publicado. No se atribuyen trabajo ni dominio a los integrantes.
 
 ## Inicio, catálogo y detalle

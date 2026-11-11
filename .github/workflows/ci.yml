@@ -16,18 +16,25 @@ jobs:
   verify:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: app
     steps:
       - name: Checkout
         uses: actions/checkout@v7
 
       - name: Set up pnpm
         uses: pnpm/action-setup@v6
+        with:
+          package_json_file: app/package.json
+          cache_dependency_path: app/pnpm-lock.yaml
 
       - name: Set up Node.js
         uses: actions/setup-node@v7
         with:
           node-version: 24
           cache: pnpm
+          cache-dependency-path: app/pnpm-lock.yaml
 
       - name: Install locked dependencies
         run: pnpm install --frozen-lockfile
