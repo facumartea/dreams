@@ -2,7 +2,7 @@
 
 La aplicación y su configuración se encuentran en `app/`; consultar el README raíz para instalar. Los documentos históricos consolidados conservan su procedencia y no sustituyen la matriz vigente.
 
-Fuente actual: **[rúbrica 2025 original](rubrica-2025.pdf)** y [texto completo](rubrica-2025.txt). No es equivalente a la edición 2026. Fechas literales: 30 de octubre y 12 de noviembre; el profesor debe aclarar calendario aplicable. La aprobación y la defensa no se garantizan.
+Fuente de la auditoría: «Rubrica 2025 - Integracion Diseño Programación.docx.pdf», suministrada por el usuario y leída en la revisión anterior. Las copias PDF/TXT de las rúbricas se retiraron del repositorio por pedido del usuario; no se genera otra copia. No se toma la edición 2026 como equivalente. Fechas literales: 30 de octubre y 12 de noviembre; el profesor debe aclarar calendario aplicable. La aprobación y la defensa no se garantizan.
 
 - [Ajustes visuales actuales: PR #62](../evidence/inicio-cabeceras-20261105/README.md).
 - [Cierre técnico previo: PR #61 y evidencia](../evidence/cierre-tecnico-20261105/README.md).

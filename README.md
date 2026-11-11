@@ -2,7 +2,7 @@
 
 Sitio académico con HTML, CSS, JavaScript, Node.js/Express y Supabase Auth/PostgreSQL. Catálogo, cuentas, carrito por usuario, opiniones, panel Admin y checkout académico. La portada es estática; no se realizan cobros comerciales y el envío sigue costando $0.
 
-**Oficial:** https://dreams-perfumes.pages.dev/ · **[Entrega y rúbrica 2025](docs/entrega-2025/INDICE.md)** · **[Declaración y registro parcial de IA](docs/entrega-2025/registro-prompts.md)**
+**Oficial:** https://dreams-perfumes.pages.dev/ · **[Documentación de entrega](docs/entrega-2025/INDICE.md)** · **[Declaración y registro parcial de IA](docs/entrega-2025/registro-prompts.md)**
 
 ## Estructura
 
