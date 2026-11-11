@@ -1329,3 +1329,16 @@ Antes de implementar S3 sólo hace falta confirmar una decisión de producto: si
 - Uso de IA: análisis, organización y comprobaciones asistidos por IA; sin atribuir trabajo manual o revisión de los integrantes. Registro parcial; conversaciones ausentes no reconstruidas.
 
 - Resultado local comprobado: enlaces relativos y contenido completo del manual/API verificados; 19 PNG válidos, 17 SVG legibles y fuentes DOT compiladas; PDFs de wireframe (17 páginas), mapa y D.E.R. abiertos y revisados. Instalación congelada sin .git ni secretos, sintaxis, inventario de 40 líneas, test de estructura, build:pages y build:official aprobados. No se modifica el código ejecutable, las migraciones ni la configuración; sólo se actualiza la expectativa de archivos raíz del test para incluir esta declaración obligatoria.
+
+
+## Icono de acceso en iPhone · 11/11/2026
+
+- Tipo: resumen identificado del pedido actual y su captura; no es una transcripción literal reconstruida.
+- Solicitud: corregir el icono de DREAMS agregado desde Chrome al inicio del iPhone, sin texto de rotulado ni descentrado.
+- Causa: apple-touch-icon utilizaba dreams-isotype.png, rectangular (141 × 110) y con la palabra ISOTIPO dentro de la imagen.
+- Cambio: icono PNG cuadrado dedicado, opaco y con el monograma centrado, generado con asistencia de IA a partir de las marcas existentes. Se conserva el logo dentro de la web y los originales. Los HTML apuntan al icono nuevo y declaran el título DREAMS. Pages incluye sus bytes y mantiene las rutas y permisos del backend.
+- Verificación: pruebas de referencias y dimensiones, entrega binaria/HEAD/ETag del icono y regresiones existentes; resultados y publicación se registran en la PR. El icono ya guardado por iOS puede requerir quitar y volver a agregar sólo ese acceso.
+- Alcance: sólo la oficial autorizada; sin cambios de Auth, base de datos, credenciales Admin, DNS o pagos. QA autenticada previa se reutiliza únicamente si la versión del backend sigue coincidiendo; no se presenta como una nueva prueba autenticada.
+- Revisión humana del código y resultado en un iPhone físico: no acreditadas en esta ejecución.
+
+- Resultado local: copia limpia sin .git ni secretos, sintaxis e inventario aprobados (119 archivos, 2207 registros, ningún exceso de 40 líneas). 497 pruebas aprobadas y 4 SQL omitidas; builds Pages y backend oficial en seco aprobados. Se añaden dos regresiones específicas del icono y su entrega HTTP. Sin cambios en funciones de negocio.
