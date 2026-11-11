@@ -1342,3 +1342,5 @@ Antes de implementar S3 sólo hace falta confirmar una decisión de producto: si
 - Revisión humana del código y resultado en un iPhone físico: no acreditadas en esta ejecución.
 
 - Resultado local: copia limpia sin .git ni secretos, sintaxis e inventario aprobados (119 archivos, 2207 registros, ningún exceso de 40 líneas). 497 pruebas aprobadas y 4 SQL omitidas; builds Pages y backend oficial en seco aprobados. Se añaden dos regresiones específicas del icono y su entrega HTTP. Sin cambios en funciones de negocio.
+
+- Publicación comprobada: Pages production cb0d0913-fd07-4ee2-a7e8-5751889888bb, artefacto de be9cacf3d00e5703b5cf08bd93193732a1bd89e4; rollback 3ad69579 conservado. Inicio y PNG responden 200; SHA-256 del PNG remoto idéntico al aprobado. La versión del backend permanece ef043065 y no se desplegó otro Worker. Gate renovado mediante health SDK y cerrado tras publicar. Resultado en iPhone físico pendiente de volver a agregar el acceso; no se afirma verificación en el dispositivo.

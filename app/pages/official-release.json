@@ -2,7 +2,7 @@
   "source_commit": "ec04a35812d044e57196c6a1ca55232e723ff60c",
   "backend_url": "https://d5df723d-dreams-perfumes.dreams-perfumes.workers.dev",
   "backend_deployment": "d5df723d-e1f1-4889-ae5b-e79ebfd131cd",
-  "previous_pages_deployment": "b60383af-2676-4781-b7df-339f300cafd1",
+  "previous_pages_deployment": "3ad69579-9e5e-450a-abe8-f28faec44c42",
   "hero": "static",
   "checkout": "academic-only",
   "writes": "protected",
@@ -17,7 +17,8 @@
     "status": 200,
     "backend_version": "ef043065-5d28-45c7-906b-b9e1edb6a5ab",
     "project_url": "https://nwsmbemwtexmrtpkgxrz.supabase.co",
-    "checked_at": "2026-11-06T01:03:39.525Z"
+    "checked_at": "2026-11-11T18:59:11.864829+00:00",
+    "checked_via": "GET /api/health: SDK HEAD de esquema; misma versión ef043065, sin leer filas personales"
   },
   "authenticated_qa": {
     "backend_version": "ef043065-5d28-45c7-906b-b9e1edb6a5ab",
@@ -29,20 +30,27 @@
     "academic_compatibility": true
   },
   "qa_evidence": "https://github.com/facumartea/dreams/blob/305c5fd6ca0f5a72792c4f5e64fa60ac13a70828/docs/evidence/cierre-tecnico-20261105/README.md",
-  "next_deployment_note": "PR62 publicada y contrastada: 52 checks UI y 20 hashes coincidentes. Cambios finales de documentos no requieren deployment. Renovar gate sólo para otra publicación autorizada.",
+  "next_deployment_note": "PR69 publicada sólo en la oficial: icono iPhone centrado y sin rótulo. Gate cerrado tras publicación; conservar rollback 3ad69579. Otra publicación requiere sus verificaciones.",
   "active_backend": {
     "backend_version": "ef043065-5d28-45c7-906b-b9e1edb6a5ab",
     "backend_deployment": "2479eec0-5831-4284-8b7c-0ae8069884a7",
     "backend_commit": "08635cdc5c1706ae520cbeec6c9a1b403c4df483"
   },
   "live_evidence": "https://github.com/facumartea/dreams/blob/305c5fd6ca0f5a72792c4f5e64fa60ac13a70828/docs/evidence/inicio-cabeceras-20261105/README.md",
-  "current_pages_deployment": "3ad69579-9e5e-450a-abe8-f28faec44c42",
-  "current_pages_commit": "85147d83eecd868179c03e7b48d826b656c2d3b9",
+  "current_pages_deployment": "cb0d0913-fd07-4ee2-a7e8-5751889888bb",
+  "current_pages_commit": "be9cacf3d00e5703b5cf08bd93193732a1bd89e4",
   "review_ownership_evidence": "Misma versión de backend ef043065; evidencia remota previa de PR56/57 reutilizada, sin cambio de esas rutas.",
   "frontend_review": {
-    "scope": "PR62: indicador accesible, retiro de recientes y cabeceras sin párrafo",
-    "local_qa": "https://github.com/facumartea/dreams/blob/305c5fd6ca0f5a72792c4f5e64fa60ac13a70828/docs/evidence/inicio-cabeceras-20261105/local.json",
-    "checks": 52,
-    "backend_qa_reused": "Misma versión ef043065 de PR61, sin cambios de Auth, API o DB"
+    "scope": "PR69: icono apple-touch-icon cuadrado, título DREAMS y entrega PNG por Pages; sin cambios de negocio",
+    "local_qa": "https://github.com/facumartea/dreams/actions/runs/43082649216",
+    "local_tests": {
+      "total": 501,
+      "passed": 497,
+      "skipped_sql": 4,
+      "failed": 0
+    },
+    "worker_sha256": "7e1d080b2f52ae632eba07c448890b0d0b1aa28dc20d7e79281f1c517713b60c",
+    "icon_sha256": "0d9c787a31afbf768ac27c2ecc7aa6e47bcbcf932dfb1ca1df3082b1e9469894",
+    "backend_qa_reused": "Misma versión ef043065; QA autenticada previamente acreditada reutilizada, sin ejecutar nuevos cambios de Auth, API o DB."
   }
 }
