@@ -1344,3 +1344,17 @@ Antes de implementar S3 sólo hace falta confirmar una decisión de producto: si
 - Resultado local: copia limpia sin .git ni secretos, sintaxis e inventario aprobados (119 archivos, 2207 registros, ningún exceso de 40 líneas). 497 pruebas aprobadas y 4 SQL omitidas; builds Pages y backend oficial en seco aprobados. Se añaden dos regresiones específicas del icono y su entrega HTTP. Sin cambios en funciones de negocio.
 
 - Publicación comprobada: Pages production cb0d0913-fd07-4ee2-a7e8-5751889888bb, artefacto de be9cacf3d00e5703b5cf08bd93193732a1bd89e4; rollback 3ad69579 conservado. Inicio y PNG responden 200; SHA-256 del PNG remoto idéntico al aprobado. La versión del backend permanece ef043065 y no se desplegó otro Worker. Gate renovado mediante health SDK y cerrado tras publicar. Resultado en iPhone físico pendiente de volver a agregar el acceso; no se afirma verificación en el dispositivo.
+
+
+## Consolidación de diseños e inventario exhaustivo · 11/11/2026
+
+- Tipo: resumen identificado de la solicitud actual, no una cita literal reconstruida.
+- Base revisada: main `6e4647c9c6f44708a4e39a3b26e183718f2314e6`, 198 archivos versionados. La PR67 y demás trabajos pendientes no se incorporan.
+- Objetivo: un solo PDF en wireframe y otro en base de datos; preservar aplicación, manual/API, declaración, SQL y archivos necesarios; inventario por cada carpeta con decisiones explícitas.
+- Resultado documental: wireframe de 20 páginas (17 pantallas, introducción y dos mapas) y base de datos de 15 páginas (D.E.R., alcance, relaciones, 76 columnas, 48 restricciones y 32 índices). Fuentes y exportaciones auxiliares se retiran al quedar consolidada la información, sin crear otra carpeta para archivarlas. Se corrigen notas de evidencia Admin obsoletas sin inventar QA nueva.
+- Revisión del resto: proveedores demo y Mercado Pago siguen importados por arranque Node, Worker general y tests; no se eliminan ni se activan cobros. Workflow CI activo conservado. Dos imágenes antiguas sin consumidores internos pero incluidas en assets quedan conservadas, pendientes de decidir el retiro de sus URLs.
+- Límites: la consulta de protección de rama devolvió 403; rulesets accesibles devolvió lista vacía. No se afirma que no haya protección. Los metadatos de BD siguen teniendo el alcance histórico documentado; no se consulta producción ni datos personales.
+- Evidencia y validaciones: inventario exhaustivo y resultados comprobados se entregan en la PR. No se modifica código, configuración, tests, Auth, datos o credenciales; no se despliega la oficial ni otra web.
+- Uso de IA: análisis y consolidación asistidos por IA, sin atribuir autoría manual, participación o revisión de integrantes que no esté acreditada. El historial de prompts sigue siendo parcial.
+
+- Validación final local: instalación con lockfile en copia limpia sin .git; sintaxis y límite de 40 líneas aprobados; 497 tests aprobados, 4 SQL omitidos y 0 fallos; cuatro builds en seco aprobados. El artefacto Pages conserva el SHA-256 publicado. PDF de 20 y 15 páginas renderizados y revisados visualmente; texto sin recortes y metadatos documentados conservados. Enlaces relativos válidos y manual/API del README sin pérdida de contenido.
