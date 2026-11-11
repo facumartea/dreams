@@ -19,8 +19,8 @@ DREAMS/
 │   ├── scripts/ y test/        Herramientas, fixtures y regresiones
 │   └── package.json, pnpm y Wrangler
 ├── docs/                       Índice, wireframe, mapa y diseño de base de datos
-│   ├── wireframe/              Láminas y mapa, con fuentes editables
-│   └── base-de-datos/          D.E.R. y esquema estructural
+│   ├── wireframe/              Pantallas y navegación reunidas en un PDF
+│   └── base-de-datos/          D.E.R., diccionario y estructura en un PDF
 └── .github/workflows/          CI; GitHub exige esta ubicación
 ```
 
