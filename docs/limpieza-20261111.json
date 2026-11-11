@@ -677,7 +677,7 @@
   "post_change_checks": {
     "state": "APROBADO",
     "documentary": {
-      "links_checked_in_modified_markdown": 25,
+      "links_checked_in_modified_markdown": 108,
       "broken_links": 0,
       "historical_body_preserved": true,
       "source_hash_matches_git": true,
