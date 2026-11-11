@@ -8,7 +8,7 @@ Estado técnico: **COMPLETO** en la oficial; pruebas y limpieza acreditadas. Có
 - [Manual Markdown](manual.md) y [manual PDF](manual.pdf).
 - [Diseño de base de datos](base-de-datos.md), [diagrama editable](base-de-datos.mmd) y [excepción docente para Supabase](sqlite.md).
 - [API y recorrido de datos](api.md).
-- [Bitácora de IA](bitacora-ia.md).
+- [Bitácora de IA](../entrega-2025/registro-prompts.md#f-bitácora-histórica-consolidada).
 - [Guía para practicar la defensa](defensa.md).
 - [Inventario de funciones y alcance](funciones.md) y [detalle JSON](inventario-funciones.json).
 - [Resultados y bloqueos de pruebas](pruebas.md).

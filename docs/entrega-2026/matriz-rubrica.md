@@ -16,8 +16,8 @@ Fuente: [PDF 2026 adjunto](rubrica-2026.pdf), 3 páginas; [texto extraído](rubr
 | P01 | «Leer y escribir código adecuadamente» | Guía de defensa y ejercicios | NO VERIFICABLE | Debe demostrarlo cada integrante. |
 | P02 | «Utilizar adecuadamente la documentación» | API, BD, manual, índice, referencias | PARCIAL | Material preparado; uso por alumnos pendiente. |
 | P03 | «resolución y autonomía» | Git/continuidad técnica; defensa.md | NO VERIFICABLE | No atribuir al grupo las resoluciones hechas por IA. |
-| P04 | «continuidad y proceso de trabajo» | Git, CHANGELOG, bitacora-ia.md | PARCIAL | Hay historia técnica; faltan registros completos de clase/preentrega. |
-| P05 | «en cada etapa… uso de IA… complementario» | bitacora-ia.md distingue autoría | NO VERIFICABLE | No hay evidencia de agregados propios y defensa por etapa. |
+| P04 | «continuidad y proceso de trabajo» | Git, CHANGELOG, ../entrega-2025/registro-prompts.md (bitácora consolidada) | PARCIAL | Hay historia técnica; faltan registros completos de clase/preentrega. |
+| P05 | «en cada etapa… uso de IA… complementario» | ../entrega-2025/registro-prompts.md (bitácora consolidada) distingue autoría | NO VERIFICABLE | No hay evidencia de agregados propios y defensa por etapa. |
 | R01 | «grupo… no… mayor a 2 alumnos»; «Los grupos NO pueden rotar» | Dos integrantes confirmados por usuario: Martearena y Ruas | PARCIAL | Apellidos resueltos; permanencia del grupo y participación histórica no verificadas. |
 | R02 | «Fecha de entrega previa 2 de octubre» | No hay comprobante de entrega adjunto | NO VERIFICABLE | Solicitar evidencia que conserven los alumnos; no inventar fecha. |
 | R03 | «Fecha de entrega final 6 de noviembre» | Preparación actualizada al03/11UTC; no envío | PARCIAL | Falta cierre y entrega por usuario antes de fecha. |
@@ -33,7 +33,7 @@ Fuente: [PDF 2026 adjunto](rubrica-2026.pdf), 3 páginas; [texto extraído](rubr
 | O01 | «Wireframe… conexiones de las páginas… herramienta ad-hoc» | wireframe.png y SVG editable, wireframe.md | CUMPLE | Adaptado de propuesta suministrada, realmente versionado. |
 | O02 | «Manual de uso» | manual.md/PDF, capturas con procedencia | CUMPLE | ManualMD/PDF actualizado con capturas oficiales identificadas; formularioAdmin sin datos personales. |
 | O03 | «Diseño de base de datos» | base-de-datos.md/.mmd, columnas reales JSON | CUMPLE | Real vs histórico separados; reproducción en proyecto nuevo no ejecutada. |
-| O04 | «Bitácora… en cada preentrega… fecha, prompts, resultado» | bitacora-ia.md y CHANGELOG | PARCIAL | Registro técnico honesto; faltan prompts/comprobantes de preentrega. |
+| O04 | «Bitácora… en cada preentrega… fecha, prompts, resultado» | ../entrega-2025/registro-prompts.md (bitácora consolidada) y CHANGELOG | PARCIAL | Registro técnico honesto; faltan prompts/comprobantes de preentrega. |
 | O05 | «Link a la API. Explicación de su uso» | api.md con documentación pública, recorrido y ejemplo | CUMPLE | WhatsApp identificado como enlace, no API. |
 | M01 | «programa principal y… funciones no supera las 40 líneas… modularizado» | Inventario AST y comando sin.git, funciones.md | CUMPLE | Refactorización con callbacks/métodos; alcance e interpretación de main explícitos. |
 | M02 | «Indentado correctamente… comentarios… claro y legible… Frontend / Backend» | Módulos, validación y comentarios de responsabilidades | PARCIAL | Refactorizaciones nuevas legibles; tests históricos compactos no reescritos por estética. Revisión docente pendiente. |

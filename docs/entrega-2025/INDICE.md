@@ -19,7 +19,7 @@ Fuente actual: **[rúbrica 2025 original](rubrica-2025.pdf)** y [texto completo]
 - [Mapa PDF](../auditoria-2025/graficos/mapa-navegacion.pdf) / [PNG](../auditoria-2025/graficos/mapa-navegacion.png) / [DOT](../auditoria-2025/fuentes/mapa-navegacion.dot).
 - [D.E.R. PDF](../auditoria-2025/graficos/der.pdf) / [PNG](../auditoria-2025/graficos/der.png) / [DOT](../auditoria-2025/fuentes/der.dot) / [diccionario](../auditoria-2025/base-de-datos.md).
 - [API y recorrido](../entrega-2026/api.md).
-- [Bitácora de IA existente](../entrega-2026/bitacora-ia.md) / [cambios reales](../../CHANGELOG.md). Este PDF 2025 no exige una bitácora de IA específica; se conserva como evidencia adicional y no se borra para aparentar trabajo manual.
+- [Bitácora de IA existente](registro-prompts.md#f-bitácora-histórica-consolidada) / [cambios reales](../../CHANGELOG.md). Este PDF 2025 no exige una bitácora de IA específica; se conserva como evidencia adicional y no se borra para aparentar trabajo manual.
 - [Históricos visuales](../history/visual-audits/README.md) / [README de instalación](../../README.md).
 
 Los gráficos son **documentación retrospectiva del diseño implementado**. PDF, PNG y fuentes están versionados, con enlaces relativos y sin depender de workspace o servicios temporales. No se generan copias innecesarias. La descarga de GitHub incorpora estos cambios sólo después de integrar la PR; el commit y estado final están en GitHub.

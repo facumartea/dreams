@@ -1,3 +1,11 @@
+## 2026-11-11 — Simplificación documental propuesta, sin integración automática
+
+- Inventario de 457 archivos sobre main 8ad5401 con referencias y 12 grupos de excepción; los archivos que necesitan decisión permanecen.
+- Declaración/registro IA único en docs/entrega-2025/registro-prompts.md, con cuerpo de bitácora preservado, procedencia, resúmenes/extractos y límites. Referencias vivas actualizadas; snapshots históricos conservados.
+- Retirados docs/entrega-2026/bitacora-ia.md, docs/README.md y scripts/install_and_run.txt tras consolidar sus contenidos vigentes. No se borra evidencia única, tests, SQL, assets o documentos académicos.
+- Validación limpia sin .git ni secretos: instalación, sintaxis, inventario, 493 tests aprobados/4 SQL omitidos y cuatro builds; Pages byte a byte idéntico a la base. Enlaces/privacidad y diff comprobados.
+- README reúne instalación/navegación y la única lista agrupada de decisiones. Sin cambios de aplicación/configuración y sin merge mientras existan excepciones pendientes. Sin deployment, ZIP ni Python nuevo.
+
 ## 2026-11-10 — Material de defensa oral y registro de prompts
 
 - Guía ampliada desde el Word aportado y main 60451ca: Node/Worker, Express/JavaScript, rutas y métodos, funciones, conexión y seguridad sin afirmar bcrypt propio ni biblioteca CORS.

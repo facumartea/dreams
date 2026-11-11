@@ -1,3 +1,17 @@
+# Simplificación del repositorio · PR pendiente de decisiones
+
+SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.
+
+Base main `8ad5401fe0f2d0c3e501ab203f6ab37b27ff7db1`, PR63 integrada. Branch `docs/simplificacion-repositorio-20261111`. No incorporar PRs anteriores abiertas ni otras tareas. Sólo documentos y retirada de tres instrucciones/registro redundantes después de consolidar contenido.
+
+**NO MERGE mientras el usuario no resuelva las excepciones. NO DEPLOY.** [README: lista de decisiones](README.md#excepciones-agrupadas-requieren-decisión-antes-de-eliminar) e [inventario por archivo](docs/limpieza-20261111.json). 254 archivos fuera de la lista preferida, agrupados en 12 excepciones; todos preservados. AGENTS/CURRENT_STATE/PLAN/CHANGELOG permanecen: una eventual retirada de continuidad requiere simplificar también sus referencias de forma explícita, sin perder evidencia única.
+
+Único registro/declaración IA: docs/entrega-2025/registro-prompts.md; histórico PARCIAL y bitácora completa preservada como sección F. Retirados únicamente docs/entrega-2026/bitacora-ia.md, docs/README.md y scripts/install_and_run.txt, ya consolidados. No se cambian aplicación, datos, Auth, credenciales, configuración ni assets publicados. No ZIP ni Python nuevo.
+
+Base verificada: main/CI254 aprobado; sintaxis 107 JS e inventario 121 archivos/2200 registros sin excesos antes de cambiar. Validación posterior en carpeta limpia sin .git ni secretos: instalación congelada, sintaxis/inventario, 493 tests aprobados/4 SQL omitidos y cuatro builds sin deployment. 108 enlaces revisados; Pages byte a byte idéntico al build base. PR/commit y decisiones en el JSON. Oficial conserva la publicación ya acreditada en la continuidad anterior; no se vuelve a desplegar por documentos.
+
+## Estado anterior conservado
+
 # Defensa oral y registro de prompts · documentación
 
 SEGUÍ EXACTAMENTE DESDE CURRENT_STATE.md.

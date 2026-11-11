@@ -1,22 +1,10 @@
-# Plan documental · defensa oral 10/11/2026
+# Plan de simplificación · 11/11/2026
 
-1. Base main, adjuntos y bitácora: contrastados, sin cambios funcionales posteriores a 60451ca.
-2. Guía y registro: fuentes Markdown preparadas, 43 temas y 46 rutas; historial declarado parcial.
-3. Limpieza: un duplicado documental comprobado; preservados históricos y evidencia de fases.
-4. Word/PDF: completos; 25 páginas, inspección visual, 60 enlaces y privacidad verificados.
-5. GitHub: checkpoint 2cf4eb4 y PR63 subidos, CI252 aprobado. Cierre documental con evidencia; integrar únicamente con CI final aprobado. Estado/SHA final en PR63. Sin deploy.
-6. Oral: una pregunta por vez, esperar respuesta y corregir con explicación.
+1. Continuidad: main 8ad5401, limpio, CI254 válido; PRs anteriores abiertas excluidas.
+2. Inventario: 457 archivos de la base, referencias y contenido; 12 grupos de excepción con archivos concretos. No hay Python versionado.
+3. Consolidación: una declaración/registro IA; README reúne instalación/navegación. Tres documentos redundantes retirados, información preservada.
+4. Validación aprobada: instalación limpia sin .git ni secretos, sintaxis, inventario40, 493 tests/4 SQL omitidos y cuatro builds; 108 enlaces, privacidad y diff. Pages idéntico al build base. Resultados en docs/limpieza-20261111.json.
+5. GitHub: commit/push y PR revisable SIN MERGE. Esperar decisiones sobre las excepciones; no realizar borrados adicionales por silencio.
+6. Oficial: no publicación ni cambios de configuración, Auth, datos o credenciales. No ZIP.
 
-No repetir el plan técnico anterior ni desplegar por documentación.
-
-## Plan anterior (PR62, antecedente)
-
-# Plan PR #62
-
-1. Continuidad y diagnóstico: completos; cambios acotados a frontend.
-2. Retirada de recientes, contador sólo accesible y cabeceras: implementados.
-3. Pruebas locales: 52 checks escritorio/móvil y suite aprobados; sin repetir QA backend vigente.
-4. Manual, wireframes y auditoría: actualizados; CI249 aprobado y publicación oficial completa.
-5. Contraste remoto completo: 52 checks y 20 hashes coincidentes. Integrar PR62 con CI final, sin repetir deployment documental; rollback conservado.
-
-No modificar portada, backend, cuentas/carrito, Auth, credenciales, DNS ni otras webs. Sin ZIP.
+La planificación anterior está conservada en Git y CURRENT_STATE; no se reinicia la tarea técnica ni el simulacro oral durante esta limpieza.
