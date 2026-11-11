@@ -1,3 +1,4 @@
+// pruebas de official scheduled: usan datos ficticios para detectar cambios en respuestas, permisos y errores.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createTestHarness } from 'wrangler';
@@ -5,7 +6,7 @@ import { readFile } from 'node:fs/promises';
 
 test('backend oficial conserva HTTP y retira QA/diagnóstico incluso con variables antiguas', { timeout: 60000 }, async t => {
     const config = JSON.parse(await readFile(new URL('../wrangler.official.jsonc', import.meta.url), 'utf8'));
-    // Sólo el runtime local está limitado a esta fecha; producción conserva27/10.
+    // solo el runtime local esta limitado a esta fecha; produccion conserva27/10.
     config.compatibility_date = '2026-10-08';
     config.main = new URL('../worker/official.mjs', import.meta.url).pathname;
     config.vars.SUPABASE_SECRET_KEY = 'sb_secret_OFFICIAL_LOCAL_FIXTURE_ONLY';

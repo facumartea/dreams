@@ -1,8 +1,9 @@
+// pruebas de app: usan datos ficticios para detectar cambios en respuestas, permisos y errores.
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { create_app, GENERIC_ERROR } = require('../server/app');
+const { create_app: crear_aplicacion, GENERIC_ERROR } = require('../server/app');
 
-function query(result) {
+function consulta(result) {
     const builder = {};
     for (const method of ['select', 'eq', 'lte', 'or', 'order', 'in', 'insert', 'upsert', 'update', 'delete', 'limit', 'single', 'maybeSingle']) {
         builder[method] = () => builder;
@@ -11,7 +12,7 @@ function query(result) {
     return builder;
 }
 
-function database_with(handler) {
+function base_de_datos_con(handler) {
     return {
         auth: {
             getUser: async () => ({ data: { user: null } }),
@@ -22,7 +23,7 @@ function database_with(handler) {
                 createUser: async () => ({ data: { user: { id: 'demo-user' } }, error: null })
             }
         },
-        from(table) { return query(() => handler(table)); }
+        from(table) { return consulta(() => handler(table)); }
     };
 }
 
@@ -37,7 +38,7 @@ async function serve(app, callback) {
 }
 
 test('create_app exige una dependencia de base explícita', () => {
-    assert.throws(() => create_app(), /requiere una base de datos/);
+    assert.throws(() => crear_aplicacion(), /requiere una base de datos/);
 });
 
 test('la app usa una DB inyectada y transforma productos', async () => {
@@ -45,11 +46,11 @@ test('la app usa una DB inyectada y transforma productos', async () => {
         id: 4, brand: 'DREAMS', name: 'Noche', featured: 1, stock: '3',
         top_notes: 'bergamota, limón', heart_notes: 'iris', base_notes: 'cedro'
     };
-    const database = database_with(table => {
+    const database = base_de_datos_con(table => {
         assert.equal(table, 'products');
         return { data: [row], error: null };
     });
-    const app = create_app({ database, disable_request_log: true });
+    const app = crear_aplicacion({ database, disable_request_log: true });
     await serve(app, async base => {
         const response = await fetch(`${base}/api/products`);
         assert.equal(response.status, 200);
@@ -62,8 +63,8 @@ test('la app usa una DB inyectada y transforma productos', async () => {
 
 test('errores de DB responden JSON uniforme sin filtrar detalles', async () => {
     const logs = [];
-    const database = database_with(() => ({ data: null, error: new Error('SUPABASE_SECRET_INTERNAL') }));
-    const app = create_app({ database, disable_request_log: true, logger: { error: (...values) => logs.push(values), warn() {} } });
+    const database = base_de_datos_con(() => ({ data: null, error: new Error('SUPABASE_SECRET_INTERNAL') }));
+    const app = crear_aplicacion({ database, disable_request_log: true, logger: { error: (...values) => logs.push(values), warn() {} } });
     await serve(app, async base => {
         const response = await fetch(`${base}/api/products`);
         assert.equal(response.status, 500);
@@ -77,8 +78,8 @@ test('errores de DB responden JSON uniforme sin filtrar detalles', async () => {
 });
 
 test('rechazos inesperados de una consulta llegan al middleware central', async () => {
-    const database = database_with(() => Promise.reject(new Error('network detail')));
-    const app = create_app({ database, disable_request_log: true, logger: { error() {}, warn() {} } });
+    const database = base_de_datos_con(() => Promise.reject(new Error('network detail')));
+    const app = crear_aplicacion({ database, disable_request_log: true, logger: { error() {}, warn() {} } });
     await serve(app, async base => {
         const response = await fetch(`${base}/api/reviews`);
         assert.equal(response.status, 500);
@@ -87,8 +88,8 @@ test('rechazos inesperados de una consulta llegan al middleware central', async 
 });
 
 test('readiness mantiene 503 específico cuando la DB falla', async () => {
-    const database = database_with(() => ({ data: null, error: new Error('offline') }));
-    const app = create_app({ database, disable_request_log: true, logger: { error() {}, warn() {} } });
+    const database = base_de_datos_con(() => ({ data: null, error: new Error('offline') }));
+    const app = crear_aplicacion({ database, disable_request_log: true, logger: { error() {}, warn() {} } });
     await serve(app, async base => {
         const response = await fetch(`${base}/api/health`);
         assert.equal(response.status, 503);
@@ -97,8 +98,8 @@ test('readiness mantiene 503 específico cuando la DB falla', async () => {
 });
 
 test('la CSP se conserva en la app creada por factory', async () => {
-    const database = database_with(() => ({ data: [], error: null }));
-    const app = create_app({ database, disable_request_log: true });
+    const database = base_de_datos_con(() => ({ data: [], error: null }));
+    const app = crear_aplicacion({ database, disable_request_log: true });
     await serve(app, async base => {
         const response = await fetch(`${base}/`);
         assert.equal(response.status, 200);
@@ -109,8 +110,8 @@ test('la CSP se conserva en la app creada por factory', async () => {
 });
 
 test('auth no se cachea y valida credenciales antes de consultar Supabase', async () => {
-    const database = database_with(() => ({ data: [], error: null }));
-    const app = create_app({ database, disable_request_log: true });
+    const database = base_de_datos_con(() => ({ data: [], error: null }));
+    const app = crear_aplicacion({ database, disable_request_log: true });
     await serve(app, async base => {
         const response = await fetch(`${base}/api/auth/login`, {
             method: 'POST', headers: { 'Content-Type': 'application/json' },
@@ -123,8 +124,8 @@ test('auth no se cachea y valida credenciales antes de consultar Supabase', asyn
 });
 
 test('config pública expone contacto pero nunca el identificador Admin', async () => {
-    const database = database_with(() => ({ data: [], error: null }));
-    const app = create_app({
+    const database = base_de_datos_con(() => ({ data: [], error: null }));
+    const app = crear_aplicacion({
         database,
         disable_request_log: true,
         admin_email: 'private-admin@example.com',
@@ -141,8 +142,8 @@ test('config pública expone contacto pero nunca el identificador Admin', async 
 });
 
 test('checkout permanece cerrado si faltan esquema o credenciales Sandbox', async () => {
-    const database = database_with(() => ({ data: [], error: null }));
-    const app = create_app({ database, disable_request_log: true });
+    const database = base_de_datos_con(() => ({ data: [], error: null }));
+    const app = crear_aplicacion({ database, disable_request_log: true });
     await serve(app, async base => {
         const response = await fetch(`${base}/api/checkout/config`);
         assert.equal(response.status, 200);
@@ -151,8 +152,8 @@ test('checkout permanece cerrado si faltan esquema o credenciales Sandbox', asyn
 });
 
 test('mutaciones rechazan orígenes cruzados y aceptan el mismo origen', async () => {
-    const database = database_with(() => ({ data: [], error: null }));
-    const app = create_app({ database, disable_request_log: true });
+    const database = base_de_datos_con(() => ({ data: [], error: null }));
+    const app = crear_aplicacion({ database, disable_request_log: true });
     await serve(app, async base => {
         const cross_site = await fetch(`${base}/api/auth/login`, {
             method: 'POST',
@@ -179,8 +180,8 @@ test('mutaciones rechazan orígenes cruzados y aceptan el mismo origen', async (
 });
 
 test('una allowlist configurada no confía en un Host dinámico', async () => {
-    const database = database_with(() => ({ data: [], error: null }));
-    const app = create_app({ database, disable_request_log: true, allowed_origins: 'https://dreams.example' });
+    const database = base_de_datos_con(() => ({ data: [], error: null }));
+    const app = crear_aplicacion({ database, disable_request_log: true, allowed_origins: 'https://dreams.example' });
     await serve(app, async base => {
         const dynamic_host = await fetch(`${base}/api/auth/login`, {
             method: 'POST',
@@ -198,9 +199,9 @@ test('una allowlist configurada no confía en un Host dinámico', async () => {
     });
 });
 
-function persisted_reviews_fixture() {
+function persisted_opiniones_fixture() {
     const reviews = [];
-    const database = database_with(table => {
+    const database = base_de_datos_con(table => {
         if (table === 'profiles') return { data: { name: 'Ana', role: 'customer' }, error: null };
         if (table === 'reviews') return { data: reviews, error: null };
         return { data: [], error: null };
@@ -209,7 +210,7 @@ function persisted_reviews_fixture() {
         data: { user: token === 'valid-token' ? { id: 'user-1', email: 'ana@example.com', user_metadata: {} } : null }
     });
     database.from = table => {
-        if (table === 'profiles') return query({ data: { name: 'Ana', role: 'customer' }, error: null });
+        if (table === 'profiles') return consulta({ data: { name: 'Ana', role: 'customer' }, error: null });
         if (table === 'reviews') {
             return {
                 select() { return { order: async () => ({ data: reviews, error: null }) }; },
@@ -219,15 +220,15 @@ function persisted_reviews_fixture() {
                 }
             };
         }
-        return query({ data: [], error: null });
+        return consulta({ data: [], error: null });
     };
 
     return { database, reviews };
 }
 
 test('una opinión autenticada se persiste y reaparece al recargar la lista', async () => {
-    const { database, reviews } = persisted_reviews_fixture();
-    const app = create_app({ database, disable_request_log: true });
+    const { database, reviews } = persisted_opiniones_fixture();
+    const app = crear_aplicacion({ database, disable_request_log: true });
     await serve(app, async base => {
         const created = await fetch(`${base}/api/reviews`, {
             method: 'POST',
@@ -248,9 +249,9 @@ test('una opinión autenticada se persiste y reaparece al recargar la lista', as
 });
 
 test('registro pendiente distingue confirmación de correo de una sesión activa', async () => {
-    const database = database_with(() => ({ data: [], error: null }));
+    const database = base_de_datos_con(() => ({ data: [], error: null }));
     database.auth.signUp = async () => ({ data: { user: { id: 'new-user' }, session: null }, error: null });
-    const app = create_app({ database, disable_request_log: true });
+    const app = crear_aplicacion({ database, disable_request_log: true });
     await serve(app, async base => {
         const response = await fetch(`${base}/api/auth/register`, {
             method: 'POST', headers: { 'Content-Type': 'application/json' },
@@ -266,7 +267,7 @@ test('registro pendiente distingue confirmación de correo de una sesión activa
 });
 
 test('modo demo confirma el alta en servidor e inicia sesión sin correo', async () => {
-    const database = database_with(() => ({ data: null, error: null }));
+    const database = base_de_datos_con(() => ({ data: null, error: null }));
     let created_payload;
     database.auth.admin.createUser = async value => {
         created_payload = value;
@@ -279,7 +280,7 @@ test('modo demo confirma el alta en servidor e inicia sesión sin correo', async
         },
         error: null
     }) } };
-    const app = create_app({ database, create_auth_client: () => auth, demo_auto_confirm_email: true, disable_request_log: true });
+    const app = crear_aplicacion({ database, create_auth_client: () => auth, demo_auto_confirm_email: true, disable_request_log: true });
     await serve(app, async base => {
         const response = await fetch(`${base}/api/auth/register`, {
             method: 'POST', headers: { 'Content-Type': 'application/json', Origin: base },
@@ -298,9 +299,9 @@ test('modo demo confirma el alta en servidor e inicia sesión sin correo', async
 });
 
 test('modo demo no enumera usuarios mediante errores de confirmación', async () => {
-    const database = database_with(() => ({ data: [], error: null }));
+    const database = base_de_datos_con(() => ({ data: [], error: null }));
     database.auth.signInWithPassword = async () => ({ data: {}, error: { code: 'email_not_confirmed' } });
-    const app = create_app({ database, demo_auto_confirm_email: true, disable_request_log: true });
+    const app = crear_aplicacion({ database, demo_auto_confirm_email: true, disable_request_log: true });
     await serve(app, async base => {
         const response = await fetch(`${base}/api/auth/login`, {
             method: 'POST', headers: { 'Content-Type': 'application/json', Origin: base },
@@ -314,8 +315,8 @@ test('modo demo no enumera usuarios mediante errores de confirmación', async ()
 });
 
 test('una mutación autenticada sin Origin ni Referer se rechaza', async () => {
-    const database = database_with(() => ({ data: [], error: null }));
-    const app = create_app({ database, disable_request_log: true });
+    const database = base_de_datos_con(() => ({ data: [], error: null }));
+    const app = crear_aplicacion({ database, disable_request_log: true });
     await serve(app, async base => {
         const response = await fetch(`${base}/api/reviews`, {
             method: 'POST', headers: { 'Content-Type': 'application/json', Cookie: 'dreams_access_token=token' },
@@ -327,8 +328,8 @@ test('una mutación autenticada sin Origin ni Referer se rechaza', async () => {
 });
 
 test('cabeceras defensivas bloquean framing, sniffing y downgrade HTTPS', async () => {
-    const database = database_with(() => ({ data: [], error: null }));
-    const app = create_app({ database, production: true, disable_request_log: true });
+    const database = base_de_datos_con(() => ({ data: [], error: null }));
+    const app = crear_aplicacion({ database, production: true, disable_request_log: true });
     await serve(app, async base => {
         const response = await fetch(`${base}/`);
         assert.equal(response.status, 200);
@@ -341,7 +342,7 @@ test('cabeceras defensivas bloquean framing, sniffing y downgrade HTTPS', async 
 
 test('login válido crea cookies y devuelve una redirección explícita', async () => {
     let profile_reads = 0;
-    const database = database_with(table => {
+    const database = base_de_datos_con(table => {
         assert.equal(table, 'profiles');
         profile_reads += 1;
         return { data: { name: 'Administración', role: 'admin' }, error: null };
@@ -353,7 +354,7 @@ test('login válido crea cookies y devuelve una redirección explícita', async 
         },
         error: null
     });
-    const app = create_app({ database, disable_request_log: true });
+    const app = crear_aplicacion({ database, disable_request_log: true });
     await serve(app, async base => {
         const response = await fetch(`${base}/api/auth/login`, {
             method: 'POST', headers: { 'Content-Type': 'application/json' },
@@ -370,8 +371,8 @@ test('login válido crea cookies y devuelve una redirección explícita', async 
 });
 
 test('favoritos retirados devuelve 404 en API y redirige la página histórica', async () => {
-    const database = database_with(() => ({ data: [], error: null }));
-    const app = create_app({ database, disable_request_log: true });
+    const database = base_de_datos_con(() => ({ data: [], error: null }));
+    const app = crear_aplicacion({ database, disable_request_log: true });
     await serve(app, async base => {
         const api = await fetch(`${base}/api/favorites`, { redirect: 'manual' });
         assert.equal(api.status, 404);
@@ -382,8 +383,8 @@ test('favoritos retirados devuelve 404 en API y redirige la página histórica',
 });
 
 test('rutas web inexistentes responden una página 404 real', async () => {
-    const database = database_with(() => ({ data: [], error: null }));
-    const app = create_app({ database, disable_request_log: true });
+    const database = base_de_datos_con(() => ({ data: [], error: null }));
+    const app = crear_aplicacion({ database, disable_request_log: true });
     await serve(app, async base => {
         const response = await fetch(`${base}/pagina-que-no-existe`);
         assert.equal(response.status, 404);
@@ -392,47 +393,47 @@ test('rutas web inexistentes responden una página 404 real', async () => {
 });
 
 test('login y registro aíslan dos sesiones del cliente privilegiado', async () => {
-    const database = database_with(() => ({ data: { name: 'Cliente', role: 'customer' }, error: null }));
+    const database = base_de_datos_con(() => ({ data: { name: 'Cliente', role: 'customer' }, error: null }));
     database.auth.signInWithPassword = database.auth.signUp = async () => assert.fail('no autenticar en el cliente privilegiado');
     const clients = [];
-    const create_auth_client = () => {
+    const crear_cliente_de_autenticacion = () => {
         const client = { session: null, auth: {} };
-        const sign = async ({ email }) => {
+        const firmar_datos = async ({ email }) => {
             client.session = email;
             return { data: { user: { id: email, email }, session: { access_token: email, refresh_token: `refresh-${email}`, expires_in: 3600 } }, error: null };
         };
-        client.auth.signInWithPassword = client.auth.signUp = sign;
+        client.auth.signInWithPassword = client.auth.signUp = firmar_datos;
         clients.push(client);
         return client;
     };
-    await serve(create_app({ database, create_auth_client, disable_request_log: true }), async base => {
+    await serve(crear_aplicacion({ database, create_auth_client: crear_cliente_de_autenticacion, disable_request_log: true }), async base => {
         const responses = await Promise.all(['ana', 'bea'].map(name => fetch(base + '/api/auth/login', {
             method: 'POST', headers: { 'Content-Type': 'application/json', Origin: base }, body: JSON.stringify({ email: `${name}@example.com`, password: 'test-password' })
         })));
-        assert.deepEqual(responses.map(response => response.status), [200, 200]);
+        assert.deepEqual(responses.map(respuesta => respuesta.status), [200, 200]);
         assert.match(responses[0].headers.get('set-cookie'), /ana%40example.com/);
         assert.match(responses[1].headers.get('set-cookie'), /bea%40example.com/);
         const registered = await fetch(base + '/api/auth/register', { method: 'POST', headers: { 'Content-Type': 'application/json', Origin: base }, body: JSON.stringify({ name: 'Cris', email: 'cris@example.com', password: 'test-password' }) });
         assert.equal(registered.status, 200);
         assert.equal(new Set(clients).size, 3);
         assert.deepEqual(clients.map(client => client.session), ['ana@example.com', 'bea@example.com', 'cris@example.com']);
-        assert.equal((await fetch(base + '/api/auth/me').then(response => response.json())).user, null);
+        assert.equal((await fetch(base + '/api/auth/me').then(respuesta => respuesta.json())).user, null);
     });
 });
 
 test('refresh usa cliente aislado; logout revoca local y borra ambas cookies', async () => {
-    const database = database_with(() => ({ data: { name: 'Ana', role: 'customer' }, error: null }));
+    const database = base_de_datos_con(() => ({ data: { name: 'Ana', role: 'customer' }, error: null }));
     database.auth.getUser = async token => ({ data: { user: token === 'new-access' ? { id: 'ana', email: 'ana@example.com' } : null } });
     database.auth.admin.signOut = async () => assert.fail('logout no usa cliente global');
     let refreshes = 0, revokes = 0;
-    const create_auth_client = () => ({ auth: {
+    const crear_cliente_de_autenticacion = () => ({ auth: {
         refreshSession: async input => {
             assert.equal(input.refresh_token, 'old-refresh'); refreshes++;
             return { data: { user: { id: 'ana', email: 'ana@example.com' }, session: { access_token: 'new-access', refresh_token: 'new-refresh', expires_in: 3600 } }, error: null };
         },
         admin: { signOut: async (token, scope) => { assert.equal(token, 'new-access'); assert.equal(scope, 'local'); revokes++; return { error: null }; } }
     } });
-    await serve(create_app({ database, create_auth_client, disable_request_log: true }), async base => {
+    await serve(crear_aplicacion({ database, create_auth_client: crear_cliente_de_autenticacion, disable_request_log: true }), async base => {
         const restored = await fetch(base + '/api/auth/me', { headers: { Cookie: 'dreams_access_token=expired; dreams_refresh_token=old-refresh' } });
         assert.equal((await restored.json()).user.id, 'ana');
         assert.match(restored.headers.get('set-cookie'), /new-access/);
@@ -446,10 +447,10 @@ test('refresh usa cliente aislado; logout revoca local y borra ambas cookies', a
 
 test('health detecta esquema incompleto, incluye checkout cuando está habilitado', async () => {
     const calls = [];
-    const database = database_with(table => ({ data: [], error: table === 'coupons' ? { code: '42703', message: 'private details' } : null }));
+    const database = base_de_datos_con(table => ({ data: [], error: table === 'coupons' ? { code: '42703', message: 'private details' } : null }));
     const original = database.from;
     database.from = table => { calls.push(table); return original(table); };
-    await serve(create_app({ database, checkout_schema_ready: true, product_brand_column: 'marca', disable_request_log: true, logger: { error() {} } }), async base => {
+    await serve(crear_aplicacion({ database, checkout_schema_ready: true, product_brand_column: 'marca', disable_request_log: true, logger: { error() {} } }), async base => {
         const response = await fetch(base + '/api/health');
         assert.equal(response.status, 503);
         assert.ok(calls.includes('orders') && calls.includes('coupons') && calls.includes('profiles'));
@@ -459,9 +460,9 @@ test('health detecta esquema incompleto, incluye checkout cuando está habilitad
 
 test('home puede limitar productos en servidor sin recortar catálogo completo', async () => {
     let requested;
-    const database = database_with(() => ({ data: [], error: null }));
-    database.from = () => { const q = query({ data: [], error: null }); q.limit = n => { requested = n; return q; }; return q; };
-    await serve(create_app({ database, disable_request_log: true }), async base => {
+    const database = base_de_datos_con(() => ({ data: [], error: null }));
+    database.from = () => { const q = consulta({ data: [], error: null }); q.limit = n => { requested = n; return q; }; return q; };
+    await serve(crear_aplicacion({ database, disable_request_log: true }), async base => {
         assert.equal((await fetch(base + '/api/products?limit=8')).status, 200);
         assert.equal(requested, 8);
         requested = undefined;
@@ -471,9 +472,9 @@ test('home puede limitar productos en servidor sin recortar catálogo completo',
 });
 
 test('un fallo del proveedor al restaurar sesión no aparenta logout ni borra cookies', async () => {
-    const database = database_with(() => ({ data: null, error: null }));
+    const database = base_de_datos_con(() => ({ data: null, error: null }));
     database.auth.getUser = async () => { throw new Error('private provider failure'); };
-    await serve(create_app({ database, disable_request_log: true, logger: { warn() {} } }), async base => {
+    await serve(crear_aplicacion({ database, disable_request_log: true, logger: { warn() {} } }), async base => {
         const response = await fetch(base + '/api/auth/me', { headers: { Cookie: 'dreams_access_token=fixture' } });
         assert.equal(response.status, 503);
         assert.match((await response.json()).error, /comprobar tu sesión/);
@@ -482,9 +483,9 @@ test('un fallo del proveedor al restaurar sesión no aparenta logout ni borra co
 });
 
 test('refresh expirado borra ambas cookies y mantiene Admin cerrado', async () => {
-    const database = database_with(() => ({ data: null, error: null }));
-    const create_auth_client = () => ({ auth: { refreshSession: async () => ({ data: { session: null }, error: { code: 'refresh_token_not_found' } }) } });
-    await serve(create_app({ database, create_auth_client, production: true, disable_request_log: true }), async base => {
+    const database = base_de_datos_con(() => ({ data: null, error: null }));
+    const crear_cliente_de_autenticacion = () => ({ auth: { refreshSession: async () => ({ data: { session: null }, error: { code: 'refresh_token_not_found' } }) } });
+    await serve(crear_aplicacion({ database, create_auth_client: crear_cliente_de_autenticacion, production: true, disable_request_log: true }), async base => {
         const headers = { Cookie: 'dreams_refresh_token=expired-fixture' };
         const response = await fetch(base + '/api/auth/me', { headers });
         assert.equal((await response.json()).user, null);
@@ -496,11 +497,11 @@ test('refresh expirado borra ambas cookies y mantiene Admin cerrado', async () =
 
 test('errores transitorios devueltos por el SDK no destruyen la sesión ni el refresh', async () => {
     for (const operation of ['getUser', 'refreshSession']) {
-        const database = database_with(() => ({ data: null, error: null }));
-        const transient = async () => ({ data: { user: null, session: null }, error: { status: 503, name: 'AuthRetryableFetchError' } });
-        if (operation === 'getUser') database.auth.getUser = transient;
-        const create_auth_client = () => ({ auth: { refreshSession: transient } });
-        await serve(create_app({ database, create_auth_client, disable_request_log: true, logger: { warn() {} } }), async base => {
+        const database = base_de_datos_con(() => ({ data: null, error: null }));
+        const temporal = async () => ({ data: { user: null, session: null }, error: { status: 503, name: 'AuthRetryableFetchError' } });
+        if (operation === 'getUser') database.auth.getUser = temporal;
+        const crear_cliente_de_autenticacion = () => ({ auth: { refreshSession: temporal } });
+        await serve(crear_aplicacion({ database, create_auth_client: crear_cliente_de_autenticacion, disable_request_log: true, logger: { warn() {} } }), async base => {
             const response = await fetch(base + '/api/auth/me', { headers: { Cookie: operation === 'getUser' ? 'dreams_access_token=fixture' : 'dreams_refresh_token=fixture' } });
             assert.equal(response.status, 503); assert.equal(response.headers.getSetCookie().length, 0);
         });

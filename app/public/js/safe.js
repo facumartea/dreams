@@ -1,7 +1,8 @@
-// Helpers compartidos por navegador y pruebas Node.
+// escapa texto antes de insertarlo en html y descarta urls de imagen no permitidas.
+// helpers compartidos por navegador y pruebas node.
 const fallback_image = '/assets/dreams-bottle.png';
 
-function escape_html(value) {
+function escapar_texto_html(value) {
     return String(value ?? '').replace(/[&<>'"]/g, character => ({
         '&': '&amp;',
         '<': '&lt;',
@@ -11,7 +12,7 @@ function escape_html(value) {
     })[character]);
 }
 
-function safe_image_url(value) {
+function elegir_url_de_imagen_segura(value) {
     const candidate = String(value ?? '').trim();
     if (candidate.startsWith('/') && !candidate.startsWith('//')) return candidate;
     try {
@@ -22,7 +23,7 @@ function safe_image_url(value) {
     }
 }
 
-function attach_image_fallback(image) {
+function preparar_imagen_alternativa(image) {
     image.addEventListener('error', () => {
         image.dataset.imageError = 'true';
         image.alt = 'Imagen no disponible';
@@ -37,12 +38,12 @@ function attach_image_fallback(image) {
     }, { once: true });
 }
 
-function interface_error(error) {
+function explicar_error_de_conexion(error) {
     if (error?.name === 'TypeError' || error?.name === 'SyntaxError') return 'No pudimos completar la solicitud. Revisá tu conexión e intentá nuevamente.';
     return error?.message || 'No se pudo completar la operación. Volvé a intentarlo.';
 }
 
-function validation_message(field) {
+function explicar_error_de_validacion(field) {
     const validity = field.validity;
     if (validity.valueMissing) return 'Completá este campo.';
     if (validity.typeMismatch) return field.type === 'email' ? 'Ingresá un correo electrónico válido.' : 'Ingresá un valor válido.';
@@ -56,13 +57,13 @@ function validation_message(field) {
 
 if (typeof document !== 'undefined') {
     document.addEventListener('invalid', event => {
-        if (typeof event.target.setCustomValidity === 'function') event.target.setCustomValidity(validation_message(event.target));
+        if (typeof event.target.setCustomValidity === 'function') event.target.setCustomValidity(explicar_error_de_validacion(event.target));
     }, true);
     for (const type of ['input', 'change']) document.addEventListener(type, event => {
         if (typeof event.target.setCustomValidity === 'function') event.target.setCustomValidity('');
     });
 }
 
-const helpers = { escape_html, safe_image_url, attach_image_fallback, fallback_image, interface_error, validation_message };
+const helpers = { escapar_texto_html, elegir_url_de_imagen_segura, preparar_imagen_alternativa, fallback_image, explicar_error_de_conexion, explicar_error_de_validacion };
 Object.assign(typeof window === 'undefined' ? globalThis : window, helpers);
 if (typeof module !== 'undefined' && module.exports) module.exports = helpers;

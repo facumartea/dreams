@@ -1,6 +1,7 @@
+// pruebas de panel: usan datos ficticios para detectar cambios en respuestas, permisos y errores.
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { create_app } = require('../server/app');
+const { create_app: crear_aplicacion } = require('../server/app');
 
 class Query {
     constructor(table, state) { this.state = state; this.table = table; this.action = 'select'; this.filters = []; this.value = null; this.count = false; }
@@ -18,8 +19,8 @@ class Query {
     then(resolve, reject) { return Promise.resolve(this.execute(false)).then(resolve, reject); }
     execute(single) {
         const rows = this.state[this.table] || [];
-        const matches = row => this.filters.every(filter => filter(row));
-        if (this.count) return { data: null, count: rows.filter(matches).length, error: null };
+        const coincide = row => this.filters.every(filter => filter(row));
+        if (this.count) return { data: null, count: rows.filter(coincide).length, error: null };
         if (this.action === 'insert') {
             const values = Array.isArray(this.value) ? this.value : [this.value];
             const created = values.map(value => ({ id: Math.max(0, ...rows.map(row => Number(row.id) || 0)) + 1, ...value }));
@@ -27,21 +28,21 @@ class Query {
             return { data: single ? created[0] : created, error: null };
         }
         if (this.action === 'update') {
-            const found = rows.filter(matches);
+            const found = rows.filter(coincide);
             found.forEach(row => Object.assign(row, this.value));
             return { data: single ? (found[0] || null) : found, error: null };
         }
         if (this.action === 'delete') {
-            const found = rows.filter(matches);
-            this.state[this.table] = rows.filter(row => !matches(row));
+            const found = rows.filter(coincide);
+            this.state[this.table] = rows.filter(row => !coincide(row));
             return { data: single ? (found[0] || null) : found, error: null };
         }
-        const found = rows.filter(matches);
+        const found = rows.filter(coincide);
         return { data: single ? (found[0] || null) : found, error: null };
     }
 }
 
-function memory_database({ role = 'admin' } = {}) {
+function memory_base_de_datos({ role = 'admin' } = {}) {
     const state = {
         products: [{ id: 7, brand: 'DREAMS', name: 'Original', gender: 'unisex', category: 'nicho', size_ml: 50, price: 100, stock: 2, intensity: 3, family: 'Ámbar', top_notes: 'bergamota', heart_notes: 'iris', base_notes: 'cedro', description: 'Descripción', image_url: '/assets/perfume.jpg', featured: false }],
         profiles: [{ id: 'user-1', name: 'Admin', role, created_at: '2026-09-01T00:00:00Z' }],
@@ -66,59 +67,59 @@ async function serve(app, callback) {
     finally { await new Promise(resolve => server.close(resolve)); }
 }
 
-const product_data = name => ({ brand: 'DREAMS', name, gender: 'hombre', category: 'nicho', size_ml: 100, price: 250, stock: 4, intensity: 4, family: 'Amaderada', top_notes: 'bergamota', heart_notes: 'cedro', base_notes: 'ámbar', description: 'Producto de prueba', image_url: '/assets/perfume.jpg', featured: false });
-const admin_options = base => ({ method: 'GET', headers: { Cookie: 'dreams_access_token=valid-token', Origin: base } });
+const perfume_datos = name => ({ brand: 'DREAMS', name, gender: 'hombre', category: 'nicho', size_ml: 100, price: 250, stock: 4, intensity: 4, family: 'Amaderada', top_notes: 'bergamota', heart_notes: 'cedro', base_notes: 'ámbar', description: 'Producto de prueba', image_url: '/assets/perfume.jpg', featured: false });
+const panel_opciones = base => ({ method: 'GET', headers: { Cookie: 'dreams_access_token=valid-token', Origin: base } });
 
 test('Admin carga, crea, edita y elimina productos válidos con persistencia', async () => {
-    const database = memory_database();
-    const app = create_app({ database, create_auth_client: () => database, disable_request_log: true });
+    const database = memory_base_de_datos();
+    const app = crear_aplicacion({ database, create_auth_client: () => database, disable_request_log: true });
     await serve(app, async base => {
-        const initial = await fetch(`${base}/api/admin/products`, admin_options(base));
+        const initial = await fetch(`${base}/api/admin/products`, panel_opciones(base));
         assert.equal(initial.status, 200);
         assert.equal((await initial.json())[0].id, 7);
 
-        const updated = await fetch(`${base}/api/admin/products/7`, { ...admin_options(base), method: 'PUT', headers: { ...admin_options(base).headers, 'Content-Type': 'application/json' }, body: JSON.stringify(product_data('Editado')) });
+        const updated = await fetch(`${base}/api/admin/products/7`, { ...panel_opciones(base), method: 'PUT', headers: { ...panel_opciones(base).headers, 'Content-Type': 'application/json' }, body: JSON.stringify(perfume_datos('Editado')) });
         assert.equal(updated.status, 200);
         assert.equal((await updated.json()).name, 'Editado');
 
         const public_product = await fetch(`${base}/api/products/7`);
         assert.equal((await public_product.json()).name, 'Editado');
 
-        const created = await fetch(`${base}/api/admin/products`, { ...admin_options(base), method: 'POST', headers: { ...admin_options(base).headers, 'Content-Type': 'application/json' }, body: JSON.stringify(product_data('Temporal')) });
+        const created = await fetch(`${base}/api/admin/products`, { ...panel_opciones(base), method: 'POST', headers: { ...panel_opciones(base).headers, 'Content-Type': 'application/json' }, body: JSON.stringify(perfume_datos('Temporal')) });
         assert.equal(created.status, 201);
         const created_id = (await created.json()).id;
 
-        const deleted = await fetch(`${base}/api/admin/products/${created_id}`, { ...admin_options(base), method: 'DELETE' });
+        const deleted = await fetch(`${base}/api/admin/products/${created_id}`, { ...panel_opciones(base), method: 'DELETE' });
         assert.equal(deleted.status, 200);
         assert.equal(database.state.products.some(item => item.id === created_id), false);
     });
 });
 
 test('Admin distingue ID inexistente y un usuario normal no puede mutar', async () => {
-    const admin_db = memory_database();
-    await serve(create_app({ database: admin_db, create_auth_client: () => admin_db, disable_request_log: true }), async base => {
-        const missing = await fetch(`${base}/api/admin/products/999`, { ...admin_options(base), method: 'PUT', headers: { ...admin_options(base).headers, 'Content-Type': 'application/json' }, body: JSON.stringify(product_data('No existe')) });
+    const admin_db = memory_base_de_datos();
+    await serve(crear_aplicacion({ database: admin_db, create_auth_client: () => admin_db, disable_request_log: true }), async base => {
+        const missing = await fetch(`${base}/api/admin/products/999`, { ...panel_opciones(base), method: 'PUT', headers: { ...panel_opciones(base).headers, 'Content-Type': 'application/json' }, body: JSON.stringify(perfume_datos('No existe')) });
         assert.equal(missing.status, 404);
         assert.match((await missing.json()).error, /no encontrado/i);
     });
 
-    const customer_db = memory_database({ role: 'customer' });
-    await serve(create_app({ database: customer_db, create_auth_client: () => customer_db, disable_request_log: true }), async base => {
-        const denied = await fetch(`${base}/api/admin/products`, admin_options(base));
+    const customer_db = memory_base_de_datos({ role: 'customer' });
+    await serve(crear_aplicacion({ database: customer_db, create_auth_client: () => customer_db, disable_request_log: true }), async base => {
+        const denied = await fetch(`${base}/api/admin/products`, panel_opciones(base));
         assert.equal(denied.status, 403);
     });
 });
 
 test('Admin edita y elimina opiniones persistentes', async () => {
-    const database = memory_database();
-    const app = create_app({ database, create_auth_client: () => database, disable_request_log: true });
+    const database = memory_base_de_datos();
+    const app = crear_aplicacion({ database, create_auth_client: () => database, disable_request_log: true });
     await serve(app, async base => {
-        const updated = await fetch(`${base}/api/admin/reviews/3`, { ...admin_options(base), method: 'PUT', headers: { ...admin_options(base).headers, 'Content-Type': 'application/json' }, body: JSON.stringify({ rating: 5, comment: 'Excelente experiencia' }) });
+        const updated = await fetch(`${base}/api/admin/reviews/3`, { ...panel_opciones(base), method: 'PUT', headers: { ...panel_opciones(base).headers, 'Content-Type': 'application/json' }, body: JSON.stringify({ rating: 5, comment: 'Excelente experiencia' }) });
         assert.equal(updated.status, 200);
         assert.equal((await updated.json()).rating, 5);
         assert.equal(database.state.reviews[0].comment, 'Excelente experiencia');
 
-        const deleted = await fetch(`${base}/api/admin/reviews/3`, { ...admin_options(base), method: 'DELETE' });
+        const deleted = await fetch(`${base}/api/admin/reviews/3`, { ...panel_opciones(base), method: 'DELETE' });
         assert.equal(deleted.status, 200);
         assert.equal(database.state.reviews.length, 0);
     });
@@ -126,16 +127,16 @@ test('Admin edita y elimina opiniones persistentes', async () => {
 
 
 test('Pedidos y cupones Admin usan el cliente JWT y no la conexión global', async () => {
-    const server_database = memory_database();
+    const server_database = memory_base_de_datos();
     const original_from = server_database.from.bind(server_database);
     server_database.from = table => {
         if (table === 'orders' || table === 'coupons') throw new Error('La conexión global no debe consultar tablas Admin.');
         return original_from(table);
     };
-    const authenticated_database = memory_database();
-    await serve(create_app({ database: server_database, create_auth_client: () => authenticated_database, disable_request_log: true }), async base => {
-        const orders = await fetch(`${base}/api/admin/orders`, admin_options(base));
-        const coupons = await fetch(`${base}/api/admin/coupons`, admin_options(base));
+    const authenticated_database = memory_base_de_datos();
+    await serve(crear_aplicacion({ database: server_database, create_auth_client: () => authenticated_database, disable_request_log: true }), async base => {
+        const orders = await fetch(`${base}/api/admin/orders`, panel_opciones(base));
+        const coupons = await fetch(`${base}/api/admin/coupons`, panel_opciones(base));
         assert.equal(orders.status, 200);
         assert.equal(coupons.status, 200);
         assert.deepEqual(await orders.json(), []);
@@ -145,15 +146,15 @@ test('Pedidos y cupones Admin usan el cliente JWT y no la conexión global', asy
 
 
 test('Admin conserva URLs HTTPS directas y rechaza páginas de resultados de Google', async () => {
-    const database = memory_database();
-    const app = create_app({ database, create_auth_client: () => database, disable_request_log: true });
+    const database = memory_base_de_datos();
+    const app = crear_aplicacion({ database, create_auth_client: () => database, disable_request_log: true });
     await serve(app, async base => {
         const direct_url = 'https://cdn.example.com/perfumes/dreams.webp';
-        const valid = { ...product_data('Imagen externa'), image_url: direct_url };
+        const valid = { ...perfume_datos('Imagen externa'), image_url: direct_url };
         const updated = await fetch(`${base}/api/admin/products/7`, {
-            ...admin_options(base),
+            ...panel_opciones(base),
             method: 'PUT',
-            headers: { ...admin_options(base).headers, 'Content-Type': 'application/json' },
+            headers: { ...panel_opciones(base).headers, 'Content-Type': 'application/json' },
             body: JSON.stringify(valid)
         });
         assert.equal(updated.status, 200);
@@ -162,9 +163,9 @@ test('Admin conserva URLs HTTPS directas y rechaza páginas de resultados de Goo
 
         const invalid = { ...valid, image_url: 'https://www.google.com/imgres?imgurl=https%3A%2F%2Fcdn.example.com%2Fperfume.jpg' };
         const rejected = await fetch(`${base}/api/admin/products/7`, {
-            ...admin_options(base),
+            ...panel_opciones(base),
             method: 'PUT',
-            headers: { ...admin_options(base).headers, 'Content-Type': 'application/json' },
+            headers: { ...panel_opciones(base).headers, 'Content-Type': 'application/json' },
             body: JSON.stringify(invalid)
         });
         assert.equal(rejected.status, 400);

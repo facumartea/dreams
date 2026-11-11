@@ -1,31 +1,32 @@
+// pruebas de cloudflare: usan datos ficticios para detectar cambios en respuestas, permisos y errores.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createServer } from 'node:http';
 import { createTestHarness } from 'wrangler';
 
 function supabase_fixture(calls, tokens) {
-    return createServer(async (req, res) => {
-        const url = new URL(req.url, 'http://fixture');
-        calls.push({ path: url.pathname, authorization: req.headers.authorization, query: url.search });
-        res.setHeader('Content-Type', 'application/json');
-        if (url.pathname.endsWith('/settings')) return res.end(JSON.stringify({ external: { google: true } }));
+    return createServer(async (solicitud, respuesta) => {
+        const url = new URL(solicitud.url, 'http://fixture');
+        calls.push({ path: url.pathname, authorization: solicitud.headers.authorization, query: url.search });
+        respuesta.setHeader('Content-Type', 'application/json');
+        if (url.pathname.endsWith('/settings')) return respuesta.end(JSON.stringify({ external: { google: true } }));
         if (url.pathname.endsWith('/token')) {
-            let body = ''; for await (const chunk of req) body += chunk;
+            let body = ''; for await (const chunk of solicitud) body += chunk;
             const { email } = JSON.parse(body);
             const user = { id: email, email, aud: 'authenticated', role: 'authenticated', user_metadata: {} };
             const token = `${Buffer.from('{}').toString('base64url')}.${Buffer.from(JSON.stringify({ sub: email, exp: Math.floor(Date.now() / 1000) + 3600 })).toString('base64url')}.fixture`;
             tokens.set(token, user);
-            return res.end(JSON.stringify({ access_token: token, refresh_token: `refresh-${email}`, expires_in: 3600, token_type: 'bearer', user }));
+            return respuesta.end(JSON.stringify({ access_token: token, refresh_token: `refresh-${email}`, expires_in: 3600, token_type: 'bearer', user }));
         }
-        if (url.pathname.endsWith('/user')) return res.end(JSON.stringify(tokens.get(req.headers.authorization?.slice(7)) || { id: null }));
-        if (url.pathname.endsWith('/logout')) return res.end('{}');
-        if (url.pathname.endsWith('/profiles')) return res.end(JSON.stringify({ name: 'Fixture', role: url.search.includes('admin%40') || url.search.includes('admin@') ? 'admin' : 'customer' }));
-        if (url.pathname.endsWith('/products')) return res.end(JSON.stringify([{ id: 1, marca: 'Fixture', name: 'Fixture', price: 10, stock: 1, size_ml: 50 }]));
-        return res.end('[]');
+        if (url.pathname.endsWith('/user')) return respuesta.end(JSON.stringify(tokens.get(solicitud.headers.authorization?.slice(7)) || { id: null }));
+        if (url.pathname.endsWith('/logout')) return respuesta.end('{}');
+        if (url.pathname.endsWith('/profiles')) return respuesta.end(JSON.stringify({ name: 'Fixture', role: url.search.includes('admin%40') || url.search.includes('admin@') ? 'admin' : 'customer' }));
+        if (url.pathname.endsWith('/products')) return respuesta.end(JSON.stringify([{ id: 1, marca: 'Fixture', name: 'Fixture', price: 10, stock: 1, size_ml: 50 }]));
+        return respuesta.end('[]');
     });
 }
 
-async function verify_public_worker_routes(harness) {
+async function verificar_publico_worker_rutas(harness) {
     for (const [path, status] of [['/', 200], ['/catalogo.html', 200], ['/js/admin-console-v3.js', 200], ['/admin', 403], ['/api/missing', 404], ['/missing', 404], ['/favoritos.html', 301]]) {
         const response = await harness.fetch(path, { redirect: 'manual' });
         assert.equal(response.status, status, path);
@@ -38,7 +39,7 @@ async function verify_public_worker_routes(harness) {
     assert.match(google.headers.getSetCookie()[0], /dreams_google_pkce=.*HttpOnly.*Secure/);
 }
 
-function worker_login(harness) {
+function worker_sesion(harness) {
     return async email => {
         const response = await harness.fetch('/api/auth/login', { method: 'POST', headers: { 'Content-Type': 'application/json', Origin: 'https://preview.example' }, body: JSON.stringify({ email, password: 'fixture-password' }) });
         assert.equal(response.status, 200);
@@ -49,8 +50,8 @@ function worker_login(harness) {
     };
 }
 
-// HTTP fixtures only: the real Worker, Express and Supabase SDK run in workerd.
-// No credentials or requests to the real Supabase project are used here.
+// usa respuestas http ficticias; worker, express y sdk reales se ejecutan en workerd.
+// no usa credenciales ni envia solicitudes al proyecto real de supabase.
 test('Workers preserva rutas, sesiones aisladas, Admin, errores y caché privada', { timeout: 60000 }, async t => {
     const calls = [];
     const tokens = new Map();
@@ -61,8 +62,8 @@ test('Workers preserva rutas, sesiones aisladas, Admin, errores y caché privada
     const harness = createTestHarness({ workers: [{ configPath: './wrangler.jsonc', vars: { NODE_ENV: 'production', APP_BASE_URL: 'https://preview.example', APP_ORIGINS: 'https://preview.example', GOOGLE_ACCESS_READY: 'true' }, secrets: { SUPABASE_URL: `http://127.0.0.1:${fixture.address().port}`, SUPABASE_SECRET_KEY: 'sb_secret_WORKER_FIXTURE' } }] });
     t.after(() => harness.close());
     const { url } = await harness.listen();
-    await verify_public_worker_routes(harness);
-    const login = worker_login(harness);
+    await verificar_publico_worker_rutas(harness);
+    const login = worker_sesion(harness);
     const cookie = await login('ana@example.com');
     await login('bea@example.com');
     const products = await harness.fetch('/api/products?limit=8');

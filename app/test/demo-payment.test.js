@@ -1,6 +1,7 @@
+// pruebas de demo pago: usan datos ficticios para detectar cambios en respuestas, permisos y errores.
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { DemoPaymentProvider, normalize_demo_scenario } = require('../server/payments/demo');
+const { DemoPaymentProvider, normalize_demo_scenario: normalizar_escenario_ficticio } = require('../server/payments/demo');
 
 test('checkout demo está configurado sin secretos y no genera una URL externa', async () => {
     const provider = new DemoPaymentProvider();
@@ -16,7 +17,7 @@ test('checkout demo está configurado sin secretos y no genera una URL externa',
 test('checkout demo contempla aprobado, rechazado, pendiente y error', async () => {
     const provider = new DemoPaymentProvider();
     for (const status of ['approved', 'rejected', 'pending', 'error']) {
-        assert.equal(normalize_demo_scenario(status.toUpperCase()), status);
+        assert.equal(normalizar_escenario_ficticio(status.toUpperCase()), status);
         const payment = await provider.process_payment({ order_id: '22222222-2222-4222-8222-222222222222', scenario: status });
         assert.equal(payment.status, status);
         assert.equal(payment.order_id, '22222222-2222-4222-8222-222222222222');
@@ -27,7 +28,7 @@ test('checkout demo contempla aprobado, rechazado, pendiente y error', async () 
 
 test('checkout demo rechaza escenarios fuera de la lista permitida', async () => {
     const provider = new DemoPaymentProvider();
-    assert.equal(normalize_demo_scenario('inventado'), null);
+    assert.equal(normalizar_escenario_ficticio('inventado'), null);
     await assert.rejects(
         () => provider.process_payment({ order_id: '33333333-3333-4333-8333-333333333333', scenario: 'inventado' }),
         error => error.code === 'DEMO_SCENARIO_INVALID'

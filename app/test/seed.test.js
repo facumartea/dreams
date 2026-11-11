@@ -1,6 +1,7 @@
+// pruebas de datos de desarrollo: usan datos ficticios para detectar cambios en respuestas, permisos y errores.
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { seed_database } = require('../server/seed');
+const { seed_database: inicializar_base_de_datos } = require('../server/seed');
 
 test('el seed no sobrescribe un catálogo existente', async () => {
     delete process.env.ADMIN_PASSWORD;
@@ -14,7 +15,7 @@ test('el seed no sobrescribe un catálogo existente', async () => {
             };
         }
     };
-    await seed_database(database);
+    await inicializar_base_de_datos(database);
     assert.equal(upsert_calls, 0);
 });
 
@@ -35,7 +36,7 @@ test('el seed carga el catálogo sólo cuando está vacío', async () => {
             };
         }
     };
-    await seed_database(database);
+    await inicializar_base_de_datos(database);
     assert.equal(inserted_rows.length, 31);
     assert.deepEqual(inserted_options, { onConflict: 'brand,name', ignoreDuplicates: true });
 });

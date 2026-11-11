@@ -1,3 +1,4 @@
+// pruebas de function inventory: usan datos ficticios para detectar cambios en respuestas, permisos y errores.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtemp, mkdir, writeFile, rm, readFile } from 'node:fs/promises';
@@ -34,7 +35,7 @@ test('inventario distingue módulo, main explícito y scripts inline de HTML', a
     assert.equal(result.records.find(row => row.name === 'inline').start, 3);
 });
 
-// Exportar el inventario no debe recrear las antiguas carpetas de entrega ni necesitar Git.
+// exportar el inventario no debe recrear las antiguas carpetas de entrega ni necesitar git.
 test('el reporte opcional se genera fuera de la documentación sin requerir .git', async t => {
     const root = await mkdtemp(join(tmpdir(), 'dreams-inventory-output-'));
     t.after(() => rm(root, { recursive: true, force: true }));

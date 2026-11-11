@@ -1,3 +1,4 @@
+// pruebas de catalogo filter state: usan datos ficticios para detectar cambios en respuestas, permisos y errores.
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const model = require('../public/js/catalog-filter-state');
@@ -41,7 +42,7 @@ test('varias marcas y géneros sobreviven URL/recarga sin parámetros duplicados
     assert.equal(params.getAll('gender').length, 1);
     assert.equal(params.has('page'), false);
     assert.deepEqual(model.parse(params.toString()), model.normalize(value));
-    assert.equal(model.count(value), 3); // Grupos activos: marcas, géneros y orden.
+    assert.equal(model.count(value), 3); // grupos activos: marcas, generos y orden.
     assert.equal(params.get('utm_source'), 'prueba');
 });
 

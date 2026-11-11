@@ -1,3 +1,4 @@
+// adapta express al worker y evita compartir el cliente autenticado entre solicitudes.
 import { createServer } from 'node:http';
 import { handleAsNodeRequest } from 'cloudflare:node';
 import { createClient } from '@supabase/supabase-js';
@@ -10,7 +11,7 @@ import adminScript from '../public/js/admin.js';
 
 let server;
 
-function databaseFactory(env) {
+function crear_cliente_de_prueba(env) {
     return (accessToken, authOptions = {}) => createClient(env.SUPABASE_URL, env.SUPABASE_SECRET_KEY, {
         auth: { autoRefreshToken: false, persistSession: false, detectSessionInUrl: false, ...authOptions },
         global: {
@@ -24,25 +25,25 @@ function databaseFactory(env) {
     });
 }
 
-function staticMiddleware(env) {
-    return async (request, response, next) => {
-            if (!['GET', 'HEAD'].includes(request.method) || request.path.startsWith('/api/') || ['/admin', '/admin.html', '/favoritos', '/favoritos.html'].includes(request.path)) return next();
+function servir_archivos_estaticos(env) {
+    return async (solicitud, respuesta, siguiente) => {
+            if (!['GET', 'HEAD'].includes(solicitud.method) || solicitud.path.startsWith('/api/') || ['/admin', '/admin.html', '/favoritos', '/favoritos.html'].includes(solicitud.path)) return siguiente();
             try {
-                const assetUrl = new URL(request.originalUrl, 'https://assets.internal');
+                const assetUrl = new URL(solicitud.originalUrl, 'https://assets.internal');
                 if (assetUrl.pathname === '/') assetUrl.pathname = '/index.html';
-                const asset = await env.ASSETS.fetch(new Request(assetUrl, { method: request.method }));
-                if (asset.status === 404) return next();
-                response.status(asset.status);
+                const asset = await env.ASSETS.fetch(new Request(assetUrl, { method: solicitud.method }));
+                if (asset.status === 404) return siguiente();
+                respuesta.status(asset.status);
                 for (const [name, value] of asset.headers) {
-                    if (name === 'cache-control' && response.getHeader('Cache-Control') === 'no-store') continue;
-                    if (!['content-security-policy', 'set-cookie'].includes(name)) response.setHeader(name, value);
+                    if (name === 'cache-control' && respuesta.getHeader('Cache-Control') === 'no-store') continue;
+                    if (!['content-security-policy', 'set-cookie'].includes(name)) respuesta.setHeader(name, value);
                 }
-                response.send(request.method === 'HEAD' ? undefined : Buffer.from(await asset.arrayBuffer()));
-            } catch (error) { next(error); }
+                respuesta.send(solicitud.method === 'HEAD' ? undefined : Buffer.from(await asset.arrayBuffer()));
+            } catch (error) { siguiente(error); }
         };
 }
 
-function workerOptions(env, createDatabase, paymentProvider) {
+function preparar_opciones_del_worker(env, createDatabase, paymentProvider) {
     return {
         database: createDatabase(), create_auth_client: createDatabase,
         preview_read_only: env.PREVIEW_READ_ONLY === 'true',
@@ -68,11 +69,11 @@ function workerOptions(env, createDatabase, paymentProvider) {
         payment_provider: paymentProvider,
         public_directory: '/virtual/public', views_directory: '/virtual/views',
         admin_html: adminHtml, not_found_html: notFoundHtml, admin_script: adminScript,
-        static_middleware: staticMiddleware(env)
+        static_middleware: servir_archivos_estaticos(env)
     };
 }
 
-function createWorkerApp(env) {
+function crear_aplicacion_del_worker(env) {
     if (env.NODE_ENV !== 'development') {
         const base = appModule.normalize_origin(env.APP_BASE_URL);
         const origins = appModule.allowed_origin_set(env.APP_ORIGINS);
@@ -80,29 +81,29 @@ function createWorkerApp(env) {
         if (!base?.startsWith('https://') || !origins.has(base) || !entries.length || entries.some(value => !appModule.normalize_origin(value)?.startsWith('https://'))) throw new Error('Missing exact HTTPS application origins');
     }
     if (!env.SUPABASE_URL || !env.SUPABASE_SECRET_KEY) throw new Error('Missing server Supabase configuration');
-    const createDatabase = databaseFactory(env);
+    const createDatabase = crear_cliente_de_prueba(env);
     const paymentProvider = env.CHECKOUT_PROVIDER === 'demo'
         ? new demoPayments.DemoPaymentProvider()
         : new payments.MercadoPagoProvider({ access_token: env.MERCADO_PAGO_ACCESS_TOKEN, webhook_secret: env.MERCADO_PAGO_WEBHOOK_SECRET, mode: env.MERCADO_PAGO_MODE });
-    return appModule.create_app(workerOptions(env, createDatabase, paymentProvider));
+    return appModule.create_app(preparar_opciones_del_worker(env, createDatabase, paymentProvider));
 }
 
 export default {
-    async fetch(request, env) {
+    async fetch(solicitud, env) {
         try {
             if (!server) {
-                server = createServer(createWorkerApp(env));
+                server = createServer(crear_aplicacion_del_worker(env));
                 server.listen(8080);
             }
-            // Only the Cloudflare-provided client IP participates in Express limits.
-            const headers = new Headers(request.headers);
+            // los limites usan solo la ip de cliente informada por cloudflare.
+            const headers = new Headers(solicitud.headers);
             headers.delete('x-forwarded-for');
             headers.delete('x-forwarded-host');
             headers.delete('x-forwarded-proto');
-            const clientIp = request.headers.get('cf-connecting-ip');
+            const clientIp = solicitud.headers.get('cf-connecting-ip');
             if (clientIp) headers.set('x-forwarded-for', clientIp);
-            headers.set('x-forwarded-proto', new URL(request.url).protocol.slice(0, -1));
-            return await handleAsNodeRequest(8080, new Request(request, { headers }));
+            headers.set('x-forwarded-proto', new URL(solicitud.url).protocol.slice(0, -1));
+            return await handleAsNodeRequest(8080, new Request(solicitud, { headers }));
         } catch (error) {
             console.error('DREAMS Worker request failed', { kind: error?.name, code: error?.code});
             return Response.json({ error: 'El servicio no está disponible temporalmente.' }, { status: 503, headers: { 'Cache-Control': 'no-store' } });

@@ -1,5 +1,6 @@
-// Factories separadas conservan el ámbito privado de la inicialización.
-function motion_reveals(reduced) {
+// agrega movimiento a elementos presentes y respeta la preferencia de movimiento reducido.
+// factories separadas conservan el ambito privado de la inicializacion.
+function preparar_apariciones_de_secciones(reduced) {
     return function setup_reveals(root = document) {
         const elements = root.querySelectorAll('.section-heading,.about-preview>*,.page-intro>*,.checkout-layout>*,.review-compose>*,.product-card,.review-card,.detail-layout>*,.scent-trail-header,.scent-step');
         if (reduced.matches || !('IntersectionObserver' in window)) {
@@ -24,13 +25,13 @@ function motion_reveals(reduced) {
     };
 }
 
-function motion_scroll(reduced, clamp) {
+function preparar_movimiento_al_desplazarse(reduced, clamp) {
     return function setup_scroll_depth() {
         if (reduced.matches) return;
         const editorial = [...document.querySelectorAll('.detail-layout')];
         if (!editorial.length) return;
         let frame = 0;
-        const render = () => {
+        const mostrar_contenido = () => {
             frame = 0;
             editorial.forEach(section => {
                 const box = section.getBoundingClientRect();
@@ -40,24 +41,24 @@ function motion_scroll(reduced, clamp) {
                 section.style.setProperty('--section-scale', (1.055 - progress * 0.035).toFixed(4));
             });
         };
-        const queue = () => {
+        const cola = () => {
             if (frame) return;
-            frame = requestAnimationFrame(render);
+            frame = requestAnimationFrame(mostrar_contenido);
         };
-        render();
-        window.addEventListener('scroll', queue, { passive: true });
-        window.addEventListener('resize', queue, { passive: true });
+        mostrar_contenido();
+        window.addEventListener('scroll', cola, { passive: true });
+        window.addEventListener('resize', cola, { passive: true });
     };
 }
 
 (() => {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
+    const limitar_valor = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
 
-    const setup_reveals = motion_reveals(reduced);
-    const setup_scroll_depth = motion_scroll(reduced, clamp);
+    const setup_reveals = preparar_apariciones_de_secciones(reduced);
+    const setup_scroll_depth = preparar_movimiento_al_desplazarse(reduced, limitar_valor);
 
-    function setup_dynamic_content() {
+    function preparar_contenido_dinamico() {
         if (!('MutationObserver' in window)) return;
         const observer = new MutationObserver(records => {
             if (records.some(record => record.addedNodes.length)) setup_reveals(document);
@@ -65,13 +66,13 @@ function motion_scroll(reduced, clamp) {
         observer.observe(document.body, { childList: true, subtree: true });
     }
 
-    function initialize_motion() {
+    function preparar_movimiento() {
         document.documentElement.classList.add('motion-ready');
         setup_reveals();
         setup_scroll_depth();
-        setup_dynamic_content();
+        preparar_contenido_dinamico();
     }
 
-    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initialize_motion, { once: true });
-    else initialize_motion();
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', preparar_movimiento, { once: true });
+    else preparar_movimiento();
 })();

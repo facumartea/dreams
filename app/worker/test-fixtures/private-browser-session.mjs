@@ -1,3 +1,4 @@
+// fixture aislado para probar una sesion cifrada; no contiene credenciales reales.
 import { prepare_browser_qa } from '../private-browser-qa.mjs';
 import { fetch_official } from '../official.mjs';
 const id = 'a88d8d4e-ada3-4bfa-a6f5-db39d2dc9c19';
@@ -16,8 +17,8 @@ globalThis.fetch = async (input) => {
     throw new Error('Unexpected fixture path');
 };
 export default {
-    async fetch(request, env) {
-        if (new URL(request.url).searchParams.has('types')) return invalid_stock_call(env);
+    async fetch(solicitud, env) {
+        if (new URL(solicitud.url).searchParams.has('types')) return invalido_stock_llamar(env);
         let stored;
         const configured = { ...env, QA_RUN_ID: 'pr56-local-browser-grant', QA_EXPIRES_AT: String(Date.now() + 600000),
             QA_BROWSER_VAULT: { get: async () => null, put: async (_key, value) => { stored = value; } } };
@@ -31,7 +32,7 @@ export default {
     }
 };
 
-async function invalid_stock_call(env) {
+async function invalido_stock_llamar(env) {
     const body = JSON.stringify({ brand: 'DREAMS QA', name: 'QA type', gender: 'unisex', category: 'nicho', size_ml: 50, price: 125, stock: null,
         intensity: 3, family: 'QA', top_notes: 'QA', heart_notes: 'QA', base_notes: 'QA', description: 'QA', image_url: '/assets/dreams-bottle.png', featured: false });
     const headers = { Origin: 'https://dreams-perfumes.pages.dev', 'Content-Type': 'application/json', Cookie: 'dreams_access_token=fixture-access', 'Content-Length': String(new TextEncoder().encode(body).length) };

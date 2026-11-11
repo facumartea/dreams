@@ -1,24 +1,25 @@
+// pruebas de registro de clientes: usan datos ficticios para detectar cambios en respuestas, permisos y errores.
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { create_app } = require('../server/app');
+const { create_app: crear_aplicacion } = require('../server/app');
 
 const input = { name: 'Prueba', email: 'fixture@example.invalid', password: 'fixture-password' };
 
-function fixture(options = {}) {
+function crear_datos_de_prueba(options = {}) {
     const state = { calls: 0, profiles: [], signed: false };
     const user = { id: 'customer-fixture', email: input.email, user_metadata: { role: 'admin' } };
     const auth = {
         signUp: async values => signup_fixture(state, user, values, options),
         refreshSession: async () => ({ data: { user: null, session: null }, error: { code: 'refresh_token_not_found' } }),
         getUser: async token => ({ data: { user: state.signed && token === 'fixture-access' ? user : null } }),
-        signInWithPassword: async () => { state.signed = true; return { data: { user, session: fixture_session() }, error: null }; },
+        signInWithPassword: async () => { state.signed = true; return { data: { user, session: fixture_sesion() }, error: null }; },
         admin: { createUser() { throw new Error('Administrative signup forbidden'); }, signOut: async () => { state.signed = false; return { error: null }; } }
     };
-    const database = { auth, from: table => profile_query(table, state, options) };
+    const database = { auth, from: table => perfil_consulta(table, state, options) };
     return { state, database, create_auth_client: () => ({ auth }) };
 }
 
-function fixture_session() {
+function fixture_sesion() {
     return { access_token: 'fixture-access', refresh_token: 'fixture-refresh', expires_in: 3600 };
 }
 
@@ -28,10 +29,10 @@ function signup_fixture(state, user, values, options) {
     if (options.provider_error) return { data: {}, error: options.provider_error };
     if (options.auth_error) return { data: {}, error: { code: 'user_already_exists', message: 'private provider detail' } };
     state.signed = !options.no_session;
-    return { data: { user, session: options.no_session ? null : fixture_session() }, error: null };
+    return { data: { user, session: options.no_session ? null : fixture_sesion() }, error: null };
 }
 
-function profile_query(table, state, options) {
+function perfil_consulta(table, state, options) {
     assert.equal(table, 'profiles');
     const query = { select() { return query; }, eq() { return query; }, maybeSingle() { return query; } };
     query.upsert = (value, config) => {
@@ -43,8 +44,8 @@ function profile_query(table, state, options) {
 }
 
 async function serve(options, callback) {
-    const f = fixture(options);
-    const app = create_app({ ...f, preview_read_only: true, production: true, disable_request_log: true, ...options });
+    const f = crear_datos_de_prueba(options);
+    const app = crear_aplicacion({ ...f, preview_read_only: true, production: true, disable_request_log: true, ...options });
     const server = app.listen(0, '127.0.0.1');
     await new Promise(resolve => server.once('listening', resolve));
     try { await callback('http://127.0.0.1:' + server.address().port, f.state); }
@@ -55,18 +56,18 @@ function send(base, path, body = input, method = 'POST', cookie = '', origin = b
     return fetch(base + path, { method, headers: { 'Content-Type': 'application/json', Origin: origin, Cookie: cookie }, body: JSON.stringify(body) });
 }
 
-function assert_session_cookies(response) {
-    const cookies = response.headers.getSetCookie();
+function assert_sesion_cookies(respuesta) {
+    const cookies = respuesta.headers.getSetCookie();
     assert.equal(cookies.length, 2);
     for (const cookie of cookies) assert.match(cookie, /HttpOnly; SameSite=Lax;.*Secure/);
-    assert.equal(response.headers.get('cache-control'), 'no-store');
+    assert.equal(respuesta.headers.get('cache-control'), 'no-store');
     return cookies.map(value => value.split(';')[0]).join('; ');
 }
 
-async function assert_customer_lifecycle(base, state) {
+async function assert_cliente_lifecycle(base, state) {
     const registered = await send(base, '/api/auth/register');
     assert.equal(registered.status, 200);
-    const cookie = assert_session_cookies(registered);
+    const cookie = assert_sesion_cookies(registered);
     assert.equal((await registered.json()).authenticated, true);
     assert.deepEqual(state.values.options.data, { name: input.name });
     assert.deepEqual(state.profiles, [{ id: 'customer-fixture', name: input.name, role: 'customer' }]);
@@ -78,13 +79,13 @@ async function assert_customer_lifecycle(base, state) {
     assert.equal(logout.status, 200);
     assert.match(logout.headers.getSetCookie()[0], /Max-Age=0/);
     assert.equal((await (await fetch(base + '/api/auth/me', { headers: { Cookie: cookie } })).json()).user, null);
-    await assert_new_login(base);
+    await assert_new_sesion(base);
 }
 
-async function assert_new_login(base) {
+async function assert_new_sesion(base) {
     const login = await send(base, '/api/auth/login', input);
     assert.equal(login.status, 200);
-    const cookie = assert_session_cookies(login);
+    const cookie = assert_sesion_cookies(login);
     assert.equal((await login.json()).user.is_admin, false);
     const me = await (await fetch(base + '/api/auth/me', { headers: { Cookie: cookie } })).json();
     assert.equal(me.user.is_admin, false);
@@ -92,7 +93,7 @@ async function assert_new_login(base) {
 }
 
 test('preview admite signup normal, cookies, customer, logout y login sin bypass Admin', async () => {
-    await serve({}, assert_customer_lifecycle);
+    await serve({}, assert_cliente_lifecycle);
 });
 
 test('solo POST exacto de registro se exceptúa; las escrituras comerciales y Admin siguen cerradas', async () => {

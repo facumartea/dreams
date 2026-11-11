@@ -1,12 +1,13 @@
+// arranca express en node con las variables del entorno; no incluye secretos en el codigo.
 require('dotenv').config({ quiet: true });
 const { createClient } = require('@supabase/supabase-js');
 global.WebSocket = require('ws');
-const { resolve_product_brand_column } = require('./product-schema');
+const { resolve_product_brand_column: detectar_columna_de_marca } = require('./product-schema');
 const app_module = require('./app');
 const { MercadoPagoProvider } = require('./payments/mercado-pago');
 const { DemoPaymentProvider } = require('./payments/demo');
 
-function application_options(create_database, database, payment_provider, product_brand_column) {
+function preparar_opciones_de_la_aplicacion(create_database, database, payment_provider, product_brand_column) {
     return {
         preview_read_only: process.env.PREVIEW_READ_ONLY === 'true',
         presentation_checkout: process.env.PRESENTATION_CHECKOUT_ENABLED === 'true',
@@ -33,16 +34,17 @@ function application_options(create_database, database, payment_provider, produc
     };
 }
 
-async function start() {
+// exige las variables necesarias y detecta la columna de marca antes de escuchar conexiones.
+async function iniciar_servidor() {
     const needed = ['SUPABASE_URL', 'SUPABASE_SECRET_KEY'].filter(key => !process.env[key]);
     if (needed.length) throw new Error(`Faltan variables obligatorias: ${needed.join(', ')}`);
 
     const client_options = { auth: { autoRefreshToken: false, persistSession: false } };
-    const create_database = (access_token, auth_options = {}) => createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SECRET_KEY, {
+    const crear_cliente_de_datos = (access_token, auth_options = {}) => createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SECRET_KEY, {
         ...client_options, auth: { ...client_options.auth, ...auth_options },
         ...(access_token ? { global: { headers: { Authorization: `Bearer ${access_token}` } } } : {})
     });
-    const database = create_database();
+    const database = crear_cliente_de_datos();
     const checkout_provider = String(process.env.CHECKOUT_PROVIDER || 'mercado_pago').trim().toLowerCase();
     const payment_provider = checkout_provider === 'demo'
         ? new DemoPaymentProvider()
@@ -52,16 +54,16 @@ async function start() {
             mode: process.env.MERCADO_PAGO_MODE
         });
     const port = Number(process.env.PORT || 8080);
-    const product_brand_column = await resolve_product_brand_column(database);
-    const app = app_module.create_app(application_options(create_database, database, payment_provider, product_brand_column));
+    const product_brand_column = await detectar_columna_de_marca(database);
+    const app = app_module.create_app(preparar_opciones_de_la_aplicacion(crear_cliente_de_datos, database, payment_provider, product_brand_column));
 
     return app.listen(port, '0.0.0.0', () => {
         console.log(`DREAMS funcionando en el puerto ${port} con Supabase.`);
     });
 }
 
-if (require.main === module) start().catch(error => {
+if (require.main === module) iniciar_servidor().catch(error => {
     console.error('No se pudo iniciar DREAMS.', { kind: String(error?.code || error?.name || 'unknown').slice(0, 80) });
     process.exitCode = 1;
 });
-module.exports = { ...app_module, start };
+module.exports = { ...app_module, start: iniciar_servidor };

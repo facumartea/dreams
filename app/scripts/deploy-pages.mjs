@@ -1,3 +1,4 @@
+// publica solo si pasan las guardas de la oficial; no se ejecuta como parte de los builds.
 import { official_release_ready } from './official-release-gate.mjs';
 import { readFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';

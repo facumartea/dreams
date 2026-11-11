@@ -1,3 +1,4 @@
+// fixture aislado de registro para pruebas de workerd; no escribe en supabase real.
 import { fetch_official } from '../official.mjs';
 let auth_calls = 0, profile_writes = 0;
 const native_fetch = globalThis.fetch;
@@ -18,11 +19,11 @@ globalThis.fetch = async (input, init) => {
 };
 
 export default {
-    async fetch(request, env) {
+    async fetch(solicitud, env) {
         auth_calls = 0; profile_writes = 0;
         const body = JSON.stringify({ name: 'QA', email: 'qa@example.com', password: 'fixture-Aa12345!' });
         const headers = new Headers({ Origin: 'https://dreams-perfumes.pages.dev', 'Content-Type': 'application/json', 'cf-connecting-ip': '192.0.2.90' });
-        if (new URL(request.url).searchParams.has('length')) headers.set('Content-Length', String(new TextEncoder().encode(body).length));
+        if (new URL(solicitud.url).searchParams.has('length')) headers.set('Content-Length', String(new TextEncoder().encode(body).length));
         const response = await fetch_official(new Request('https://dreams-perfumes.pages.dev/api/auth/register', { method: 'POST', headers, body }), env);
         const data = await response.json();
         return Response.json({ status: response.status, auth_calls, profile_writes, authenticated: data.authenticated === true,

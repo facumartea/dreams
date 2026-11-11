@@ -1,4 +1,5 @@
-// Public contact data approved for DREAMS. Never used for authorization.
+// contiene contactos publicos aprobados; nunca se usan para decidir permisos.
+// contactos publicos aprobados para dreams; no determinan autorizacion.
 module.exports = Object.freeze({
     emails: ['joaquin.ruas.grane@dantebariloche.edu.ar', 'facundo.martearena@dantebariloche.edu.ar'],
     phone: '+54 294 4160065',

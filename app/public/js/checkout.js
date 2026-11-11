@@ -1,3 +1,4 @@
+// prepara el resumen y el formulario; mantiene separadas la simulacion y las rutas comerciales.
 let checkout_quote = null;
 let applied_coupon = null;
 let checkout_config = null;
@@ -10,22 +11,22 @@ const DEMO_CARD_SCENARIOS = {
     '4000000000009995': 'error'
 };
 
-function digits(value) { return String(value || '').replace(/\D/g, ''); }
+function extraer_digitos(value) { return String(value || '').replace(/\D/g, ''); }
 
-function format_demo_card_number(value) {
-    return digits(value).slice(0, 16).replace(/(.{4})/g, '$1 ').trim();
+function formatear_numero_de_tarjeta_ficticia(value) {
+    return extraer_digitos(value).slice(0, 16).replace(/(.{4})/g, '$1 ').trim();
 }
 
-function demo_card_scenario() {
-    const number = digits(document.getElementById('demo-card-number').value);
+function obtener_escenario_de_tarjeta_ficticia() {
+    const number = extraer_digitos(document.getElementById('demo-card-number').value);
     const holder = String(document.getElementById('demo-card-holder').value || '').trim();
     const expiry = String(document.getElementById('demo-card-expiry').value || '').trim();
-    const cvv = digits(document.getElementById('demo-card-cvv').value);
+    const cvv = extraer_digitos(document.getElementById('demo-card-cvv').value);
     if (!holder || !/^\d{2}\/\d{2}$/.test(expiry) || cvv.length !== 3 || !DEMO_CARD_SCENARIOS[number]) return null;
     return DEMO_CARD_SCENARIOS[number];
 }
 
-function configure_payment_ui(config) {
+function preparar_formulario_de_compra(config) {
     const is_demo = config.provider === 'demo';
     document.getElementById('demo-card-form').hidden = !is_demo;
     document.getElementById('payment-title').textContent = is_demo ? 'Tarjeta de prueba' : 'Mercado Pago';
@@ -41,11 +42,11 @@ function configure_payment_ui(config) {
     document.getElementById('checkout-submit').textContent = is_demo ? 'Pagar de prueba' : 'Continuar a Mercado Pago';
 }
 
-function checkout_items_payload() {
-    return get_cart().map(item => ({ id: item.id, quantity: item.quantity }));
+function preparar_productos_para_la_compra() {
+    return leer_carrito().map(item => ({ id: item.id, quantity: item.quantity }));
 }
 
-async function process_demo_order(order_id, scenario) {
+async function procesar_pedido_ficticio(order_id, scenario) {
     const payment_response = await fetch('/api/checkout/demo-payment', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -65,43 +66,43 @@ async function process_demo_order(order_id, scenario) {
     return true;
 }
 
-function render_checkout(items, subtotal, discount, total) {
+function mostrar_compra(items, subtotal, discount, total) {
     const container = document.getElementById('checkout-items');
     container.innerHTML = '';
     items.forEach(item => {
         const row = document.createElement('article');
         row.className = 'checkout-item';
-        row.innerHTML = `<img src="${escape_html(safe_image_url(item.image_url))}" alt=""><div><span>${escape_html(item.brand)}</span><h3>${escape_html(item.name)}</h3><p>${item.quantity} × ${format_price(item.price)}</p></div><strong>${format_price(item.price * item.quantity)}</strong>`;
-        attach_image_fallback(row.querySelector('img'));
+        row.innerHTML = `<img src="${escapar_texto_html(elegir_url_de_imagen_segura(item.image_url))}" alt=""><div><span>${escapar_texto_html(item.brand)}</span><h3>${escapar_texto_html(item.name)}</h3><p>${item.quantity} × ${formatear_precio(item.price)}</p></div><strong>${formatear_precio(item.price * item.quantity)}</strong>`;
+        preparar_imagen_alternativa(row.querySelector('img'));
         container.appendChild(row);
     });
-    document.querySelector('#checkout-subtotal strong').textContent = format_price(subtotal);
+    document.querySelector('#checkout-subtotal strong').textContent = formatear_precio(subtotal);
     const discount_row = document.getElementById('checkout-discount');
     discount_row.hidden = !(discount > 0);
-    discount_row.querySelector('strong').textContent = `−${format_price(discount)}`;
-    document.querySelector('#checkout-total strong').textContent = format_price(total);
+    discount_row.querySelector('strong').textContent = `−${formatear_precio(discount)}`;
+    document.querySelector('#checkout-total strong').textContent = formatear_precio(total);
 }
 
-function coupon_code() { return String(document.getElementById('coupon-code').value || '').trim().toUpperCase(); }
+function leer_codigo_de_cupon() { return String(document.getElementById('coupon-code').value || '').trim().toUpperCase(); }
 
-async function apply_coupon() {
+async function aplicar_cupon() {
     const input = document.getElementById('coupon-code');
     const button = document.getElementById('coupon-apply');
     const status = document.getElementById('coupon-status');
-    const code = coupon_code();
+    const code = leer_codigo_de_cupon();
     input.value = code;
     if (!code) { status.textContent = 'Ingresá un código.'; return; }
     button.disabled = true;
     button.textContent = 'Aplicando…';
     status.textContent = 'Verificando cupón…';
     try {
-        const response = await fetch('/api/coupons/validate', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ code, items: checkout_items_payload() }) });
+        const response = await fetch('/api/coupons/validate', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ code, items: preparar_productos_para_la_compra() }) });
         const data = await response.json();
         if (!response.ok || !data.coupon) throw new Error('Cupón inválido.');
         applied_coupon = data.coupon;
         sessionStorage.setItem('dreams_coupon', data.coupon.code);
         checkout_quote = { ...checkout_quote, ...data };
-        render_checkout(checkout_quote.items, data.subtotal, data.discount, data.total);
+        mostrar_compra(checkout_quote.items, data.subtotal, data.discount, data.total);
         status.textContent = `${data.coupon.code} aplicado: ${data.coupon.discount_percent}% de descuento.`;
         status.classList.add('is-valid');
         document.getElementById('coupon-remove').hidden = false;
@@ -111,14 +112,14 @@ async function apply_coupon() {
         status.classList.remove('is-valid');
         status.textContent = 'Cupón inválido.';
         document.getElementById('coupon-remove').hidden = true;
-        if (checkout_quote) render_checkout(checkout_quote.items, checkout_quote.subtotal, 0, checkout_quote.subtotal);
+        if (checkout_quote) mostrar_compra(checkout_quote.items, checkout_quote.subtotal, 0, checkout_quote.subtotal);
     } finally {
         button.disabled = false;
         button.textContent = 'Aplicar';
     }
 }
 
-function remove_coupon() {
+function quitar_cupon() {
     applied_coupon = null;
     sessionStorage.removeItem('dreams_coupon');
     document.getElementById('coupon-code').value = '';
@@ -127,11 +128,11 @@ function remove_coupon() {
     document.getElementById('coupon-remove').hidden = true;
     if (checkout_quote) {
         checkout_quote = { ...checkout_quote, discount: 0, total: checkout_quote.subtotal, coupon: null };
-        render_checkout(checkout_quote.items, checkout_quote.subtotal, 0, checkout_quote.subtotal);
+        mostrar_compra(checkout_quote.items, checkout_quote.subtotal, 0, checkout_quote.subtotal);
     }
 }
 
-function render_initial_coupon(quote) {
+function mostrar_cupon_guardado(quote) {
     if (applied_coupon) {
         document.getElementById('coupon-code').value = applied_coupon.code;
         document.getElementById('coupon-status').textContent = `${applied_coupon.code} aplicado: ${applied_coupon.discount_percent}% de descuento.`;
@@ -140,44 +141,44 @@ function render_initial_coupon(quote) {
     } else if (quote.coupon_error) sessionStorage.removeItem('dreams_coupon');
 }
 
-async function load_checkout(button, status) {
+async function cargar_compra(button, status) {
     try {
         const [config_response, user_response, quote_response] = await Promise.all([
             fetch('/api/checkout/config'),
             fetch('/api/auth/me'),
-            fetch('/api/cart/quote', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ items: checkout_items_payload(), coupon_code: sessionStorage.getItem('dreams_coupon') || '' }) })
+            fetch('/api/cart/quote', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ items: preparar_productos_para_la_compra(), coupon_code: sessionStorage.getItem('dreams_coupon') || '' }) })
         ]);
         const config = await config_response.json();
         checkout_config = config;
         const user = await user_response.json();
         const quote = await quote_response.json();
         if (!config_response.ok || !config.enabled) throw new Error('El pago online todavía no está disponible. Podés continuar por WhatsApp.');
-        configure_payment_ui(config);
+        preparar_formulario_de_compra(config);
         if (!user_response.ok || !user.user) {
             status.innerHTML = 'Para pagar necesitás <a href="/cuenta.html">iniciar sesión o crear una cuenta</a>.';
             return;
         }
         if (!quote_response.ok || !quote.items?.length) throw new Error(quote.error || 'El carrito no tiene productos disponibles.');
         checkout_quote = quote;
-        save_cart(quote.items);
+        guardar_carrito(quote.items);
         applied_coupon = quote.coupon || null;
-        render_checkout(quote.items, quote.subtotal, quote.discount, quote.total);
-        render_initial_coupon(quote);
+        mostrar_compra(quote.items, quote.subtotal, quote.discount, quote.total);
+        mostrar_cupon_guardado(quote);
         document.getElementById('sandbox-banner').hidden = !['sandbox', 'demo'].includes(config.mode);
         document.getElementById('sandbox-help').hidden = !config.show_test_data;
         button.disabled = false;
         if (quote.warnings.length) status.textContent = quote.warnings.join(' ');
     } catch (error) {
-        status.textContent = interface_error(error);
+        status.textContent = explicar_error_de_conexion(error);
         button.disabled = true;
     }
 }
 
-function checkout_payment_handler(button, status) {
+function preparar_respuesta_del_pago(button, status) {
     return async () => {
         if (!checkout_quote || button.disabled) return;
         const is_demo = checkout_config?.provider === 'demo';
-        const scenario = is_demo ? demo_card_scenario() : null;
+        const scenario = is_demo ? obtener_escenario_de_tarjeta_ficticia() : null;
         if (is_demo && !scenario) {
             status.textContent = 'Completá los datos ficticios y usá uno de los números de prueba.';
             document.getElementById('demo-card-number').focus();
@@ -190,33 +191,33 @@ function checkout_payment_handler(button, status) {
             const pending_demo_order = is_demo ? sessionStorage.getItem(DEMO_ORDER_STORAGE_KEY) : null;
             if (pending_demo_order) {
                 status.textContent = 'Retomando el pedido sin duplicarlo…';
-                await process_demo_order(pending_demo_order, scenario);
+                await procesar_pedido_ficticio(pending_demo_order, scenario);
                 return;
             }
-            const response = await fetch('/api/checkout/session', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ items: checkout_items_payload(), coupon_code: applied_coupon?.code || '' }) });
+            const response = await fetch('/api/checkout/session', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ items: preparar_productos_para_la_compra(), coupon_code: applied_coupon?.code || '' }) });
             const data = await response.json();
             if (!response.ok) throw new Error(data.error || 'No se pudo iniciar el pago.');
             if (is_demo && data.requires_demo_payment === true) {
                 sessionStorage.setItem(DEMO_ORDER_STORAGE_KEY, data.order_id);
                 status.textContent = 'Procesando el resultado de prueba…';
-                await process_demo_order(data.order_id, scenario);
+                await procesar_pedido_ficticio(data.order_id, scenario);
                 return;
             }
             if (!/^https:\/\//.test(data.checkout_url || '')) throw new Error('No se pudo iniciar el pago.');
             window.location.assign(data.checkout_url);
         } catch (error) {
-            status.textContent = interface_error(error);
+            status.textContent = explicar_error_de_conexion(error);
             button.disabled = false;
             button.textContent = is_demo ? 'Pagar de prueba' : 'Continuar a Mercado Pago';
         }
     };
 }
 
-function install_checkout_fields(button) {
+function preparar_campos_de_compra(button) {
     document.querySelectorAll('.copy-test-data').forEach(copy => copy.addEventListener('click', async () => {
         const card_input = document.getElementById('demo-card-number');
         if (checkout_config?.provider === 'demo') {
-            card_input.value = format_demo_card_number(copy.dataset.copy);
+            card_input.value = formatear_numero_de_tarjeta_ficticia(copy.dataset.copy);
             document.getElementById('demo-card-expiry').value = '12/30';
             document.getElementById('demo-card-cvv').value = '123';
             document.getElementById('demo-card-preview-number').textContent = card_input.value;
@@ -227,28 +228,28 @@ function install_checkout_fields(button) {
     }));
     const card_number = document.getElementById('demo-card-number');
     card_number.addEventListener('input', () => {
-        card_number.value = format_demo_card_number(card_number.value);
+        card_number.value = formatear_numero_de_tarjeta_ficticia(card_number.value);
         document.getElementById('demo-card-preview-number').textContent = card_number.value || '•••• •••• •••• ••••';
     });
     const expiry = document.getElementById('demo-card-expiry');
     expiry.addEventListener('input', () => {
-        const value = digits(expiry.value).slice(0, 4);
+        const value = extraer_digitos(expiry.value).slice(0, 4);
         expiry.value = value.length > 2 ? `${value.slice(0, 2)}/${value.slice(2)}` : value;
     });
     const cvv = document.getElementById('demo-card-cvv');
-    cvv.addEventListener('input', () => { cvv.value = digits(cvv.value).slice(0, 3); });
+    cvv.addEventListener('input', () => { cvv.value = extraer_digitos(cvv.value).slice(0, 3); });
     document.getElementById('demo-card-form').addEventListener('submit', event => {
         event.preventDefault();
         if (!button.disabled) button.click();
     });
     const coupon_input = document.getElementById('coupon-code');
     coupon_input.addEventListener('input', () => { coupon_input.value = coupon_input.value.toUpperCase(); });
-    coupon_input.addEventListener('keydown', event => { if (event.key === 'Enter') { event.preventDefault(); apply_coupon(); } });
-    document.getElementById('coupon-apply').addEventListener('click', apply_coupon);
-    document.getElementById('coupon-remove').addEventListener('click', remove_coupon);
+    coupon_input.addEventListener('keydown', event => { if (event.key === 'Enter') { event.preventDefault(); aplicar_cupon(); } });
+    document.getElementById('coupon-apply').addEventListener('click', aplicar_cupon);
+    document.getElementById('coupon-remove').addEventListener('click', quitar_cupon);
 }
 
-async function setup_checkout() {
+async function preparar_compra() {
     const button = document.getElementById('checkout-submit');
     const status = document.getElementById('checkout-status');
     try {
@@ -258,13 +259,13 @@ async function setup_checkout() {
             if (config.enabled && config.provider === 'presentation_demo') return PresentationCheckout.setup(config);
         }
     } catch (error) {
-        status.textContent = interface_error(error);
+        status.textContent = explicar_error_de_conexion(error);
         button.disabled = true;
         return;
     }
-    await load_checkout(button, status);
-    button.addEventListener('click', checkout_payment_handler(button, status));
-    install_checkout_fields(button);
+    await cargar_compra(button, status);
+    button.addEventListener('click', preparar_respuesta_del_pago(button, status));
+    preparar_campos_de_compra(button);
 }
 
-document.addEventListener('DOMContentLoaded', setup_checkout);
+document.addEventListener('DOMContentLoaded', preparar_compra);

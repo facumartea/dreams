@@ -1,3 +1,4 @@
+// utilidad historica para preparar datos de desarrollo; no se ejecuta al iniciar ni para probar produccion.
 require('dotenv').config({quiet:true});
 
 const image_urls = [
@@ -43,7 +44,7 @@ const products = [
     ['Montale', 'Arabians Tonka', 'unisex', 'nicho', 100, 495000, 5, 5, 'ambarado especiado', 'Azafrán, cardamomo', 'Rosa, oud', 'Haba tonka, caña de azúcar, ámbar, almizcle', 'Potente, dulce y de gran duración.', 1]
 ];
 
-async function seed_database(database) {
+async function inicializar_base_de_datos(database) {
     const rows = products.map((product, index) => {
         const [brand, name, gender, category, size_ml, price, stock, intensity, family, top_notes, heart_notes, base_notes, description, featured] = product;
         const image_url = brand === 'Chanel' && name.startsWith('Coco') ? '/assets/dreams-bottle.png' : image_urls[index % image_urls.length];
@@ -70,4 +71,4 @@ async function seed_database(database) {
     if (profile_result.error) throw profile_result.error;
 }
 
-module.exports = { seed_database };
+module.exports = { seed_database: inicializar_base_de_datos };

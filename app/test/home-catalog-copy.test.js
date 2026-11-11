@@ -1,10 +1,11 @@
+// pruebas de home catalogo copy: usan datos ficticios para detectar cambios en respuestas, permisos y errores.
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const vm = require('node:vm');
 const { readFileSync } = require('node:fs');
 const filters = require('../public/js/catalog-filter-state.js');
 
-function catalog_without_description() {
+function catalogo_without_description() {
     const elements = new Map();
     const element = id => {
         if (id === 'catalog-description') throw new Error('El párrafo retirado no debe consultarse');
@@ -20,9 +21,9 @@ function catalog_without_description() {
 }
 
 test('cabeceras sin párrafo conservan descripción SEO, OG, Twitter, canonical y paleta', () => {
-    const { context, element } = catalog_without_description();
+    const { context, element } = catalogo_without_description();
     for (const gender of ['', 'hombre', 'mujer', 'unisex']) {
-        assert.doesNotThrow(() => context.update_catalog_context(gender));
+        assert.doesNotThrow(() => context.actualizar_contexto_del_catalogo(gender));
         const meta = element('meta[name="description"]').content;
         assert.ok(meta.length > 30);
         assert.equal(element('meta[property="og:description"]').content, meta);

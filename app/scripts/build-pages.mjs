@@ -1,3 +1,4 @@
+// construye el artefacto de pages localmente; valida la version aprobada antes de generarlo.
 import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 

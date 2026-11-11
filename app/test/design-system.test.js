@@ -1,3 +1,4 @@
+// pruebas de design system: usan datos ficticios para detectar cambios en respuestas, permisos y errores.
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
@@ -31,7 +32,7 @@ test('SEO técnico publica canonical, metadatos, sitemap, robots y 404 real', ()
     assert.match(catalog, /id="canonical-url" rel="canonical"/);
     assert.match(product_page, /property="og:type" content="website"/);
     assert.match(catalog_script, /canonical\.href/);
-    assert.match(product_script, /function update_product_metadata/);
+    assert.match(product_script, /function actualizar_metadatos_del_perfume/);
     assert.match(robots, /Sitemap: https:\/\/dreams-perfumes\.pages\.dev\/sitemap\.xml/);
     assert.match(sitemap, /<urlset xmlns="http:\/\/www\.sitemaps\.org\/schemas\/sitemap\/0\.9">/);
     assert.match(not_found, /<meta name="robots" content="noindex,follow">/);
@@ -149,7 +150,7 @@ test('el detalle presenta las notas reales como un Scent Trail accesible', () =>
     const vm = require('node:vm'), context = vm.createContext({ document: { addEventListener() {} } });
     vm.runInContext(fs.readFileSync(path.join(root, 'public/js/safe.js'), 'utf8'), context);
     vm.runInContext(product, context);
-    const rendered = vm.runInContext("product_scent_trail({notes:{salida:['Salida real'],corazon:['Corazón real'],fondo:['<Fondo real>']}})", context);
+    const rendered = vm.runInContext("crear_detalle_de_notas_aromaticas({notes:{salida:['Salida real'],corazon:['Corazón real'],fondo:['<Fondo real>']}})", context);
     assert.match(rendered, /<h3>Salida<\/h3><p>Salida real<\/p>/);
     assert.match(rendered, /<h3>Corazón<\/h3><p>Corazón real<\/p>/);
     assert.match(rendered, /<h3>Fondo<\/h3><p>&lt;Fondo real&gt;<\/p>/);
@@ -187,9 +188,9 @@ test('Admin expone pedidos y gestión persistente de opiniones', () => {
     assert.match(admin, /id="tab-pedidos"/);
     assert.match(admin, /id="review-search"/);
     assert.match(script, /\/api\/admin\/reviews\/\$\{id\}/);
-    assert.match(script, /with_pending/);
+    assert.match(script, /ejecutar_con_boton_bloqueado/);
     assert.match(script, /let editing_product_id = ''/);
-    assert.match(script, /function show_toast\(message\)/);
+    assert.match(script, /function mostrar_aviso\(message\)/);
 });
 
 test('Hombre, Mujer y Unisex reutilizan tokens de card con paletas propias', () => {
@@ -212,11 +213,11 @@ test('Admin valida y previsualiza la URL directa antes de guardar', () => {
     assert.match(admin, /id="image-preview-image"/);
     assert.match(admin, /referrerpolicy="no-referrer"/);
     assert.match(admin, /\/js\/admin-console-v3\.js/);
-    assert.match(script, /function reset_form\(force = false\)[\s\S]*editing_product_id = ''[\s\S]*product-form'\)\.reset\(\)[\s\S]*product-id'\)\.value = ''[\s\S]*form-label'\)\.textContent = 'NUEVO PRODUCTO'/);
-    assert.match(script, /preview_product_image/);
+    assert.match(script, /function limpiar_formulario_del_perfume\(force = false\)[\s\S]*editing_product_id = ''[\s\S]*product-form'\)\.reset\(\)[\s\S]*product-id'\)\.value = ''[\s\S]*form-label'\)\.textContent = 'NUEVO PRODUCTO'/);
+    assert.match(script, /comprobar_vista_previa_de_imagen/);
     assert.match(script, /probe\.onload/);
     assert.match(script, /probe\.onerror/);
-    assert.match(script, /!is_current_product_image\(\)/);
+    assert.match(script, /!es_la_imagen_actual\(\)/);
     assert.match(script, /product_image_load_timer/);
     assert.match(script, /, 6000\);/);
     assert.match(script, /La URL ingresada no apunta a una imagen válida/);

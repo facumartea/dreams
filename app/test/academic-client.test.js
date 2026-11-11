@@ -1,3 +1,4 @@
+// pruebas de compra academica client: usan datos ficticios para detectar cambios en respuestas, permisos y errores.
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const vm = require('node:vm');
@@ -14,18 +15,18 @@ function harness(fetch_session) {
         });
         return nodes.get(key);
     };
-    // Any read of a financial value fails this behavioral test.
+    // la prueba falla si el flujo intenta leer un dato financiero del formulario.
     for (const id of ['demo-card-number', 'demo-card-expiry', 'demo-card-cvv']) Object.defineProperty(node(id), 'value', { get() { throw new Error('Financial field must not be read'); } });
     const stored = new Map();
     const calls = [];
     const items = [{ id: 7, quantity: 2, price: 120, brand: 'Fixture', name: 'Test product' }];
     const sandbox = {
-        academic_input_valid: () => true, // Formato cubierto por pruebas del módulo de máscaras.
+        son_validos_los_campos_academicos: () => true, // formato cubierto por pruebas del modulo de mascaras.
         document: { getElementById: node, querySelector: node, createElement: node },
         sessionStorage: { getItem: k => stored.get(k) || null, setItem: (k, v) => stored.set(k, v), removeItem: k => stored.delete(k) },
-        get_cart: () => sandbox.cart,
-        checkout_items_payload: () => sandbox.cart.map(({ id, quantity }) => ({ id, quantity })),
-        cart: items, save_cart() {}, render_checkout() {}, format_price: String, interface_error: e => e.message,
+        leer_carrito: () => sandbox.cart,
+        preparar_productos_para_la_compra: () => sandbox.cart.map(({ id, quantity }) => ({ id, quantity })),
+        cart: items, guardar_carrito() {}, mostrar_compra() {}, formatear_precio: String, explicar_error_de_conexion: e => e.message,
         crypto: { randomUUID }, window: { location: { assign: route => { sandbox.redirect = route; } } },
         fetch: async (url, options) => {
             const body = JSON.parse(options.body); calls.push({ url, body });

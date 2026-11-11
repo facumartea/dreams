@@ -1,3 +1,4 @@
+// sincroniza el pie compartido de los html desde su plantilla unica.
 import { readFile, writeFile } from 'node:fs/promises';
 const root = new URL('../', import.meta.url);
 const footer = (await readFile(new URL('templates/public-footer.html', root), 'utf8')).trim();
