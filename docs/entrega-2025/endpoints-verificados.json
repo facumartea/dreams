@@ -417,5 +417,7 @@
       "state": "Histórica/preparada; bloqueada por política oficial",
       "purpose": "Recibir notificación histórica del proveedor"
     }
-  ]
+  ],
+  "current_location_prefix": "app/",
+  "location_note": "Las rutas/funciones conservan su lógica; anteponer app/ al campo source para la ubicación de PR64. base_commit identifica la fuente histórica original."
 }

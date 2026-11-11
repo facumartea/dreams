@@ -1,0 +1,751 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>DREAMS · Archivo histórico entrega-anterior</title><style>body{max-width:980px;margin:2rem auto;padding:0 1rem;font:17px/1.55 system-ui,sans-serif;color:#202020;background:#faf9f6}h1,h2{line-height:1.2}pre{white-space:pre-wrap;overflow-wrap:anywhere;font:14px/1.55 ui-monospace,monospace;background:white;border:1px solid #bbb;padding:1rem}section{margin:2rem 0;border-top:2px solid #ccc}a{color:#174a72}code{overflow-wrap:anywhere}</style></head><body><h1>DREAMS · Archivo histórico: entrega-anterior</h1><p>Documentación histórica consolidada. No son instrucciones vigentes ni prueba de nuevos resultados. Se preservan los textos originales con sus fechas, límites y contradicciones, sin atribuir trabajo o revisión humana. Los enlaces escritos dentro del texto pertenecen a su ubicación original. Consultar el README y el índice de entrega para el estado actual.</p><p><a href="../../README.md">README vigente</a> · <a href="../entrega-2025/INDICE.md">Entrega actual</a></p><p>Fuente Git: <code>6167f35c69ef83b680b8188349a51bd95af3e05a</code>. Consolidación solicitada el 10/11/2026 (hora de Buenos Aires).</p><nav><ul>
+<li><a href="#fuente-d5b290203a60">docs/entrega-2026/INDICE.md</a></li>
+<li><a href="#fuente-061c89ad8f04">docs/entrega-2026/base-de-datos.md</a></li>
+<li><a href="#fuente-52a8ebcdf461">docs/entrega-2026/defensa.md</a></li>
+<li><a href="#fuente-ddc85a42fb4c">docs/entrega-2026/diseno.md</a></li>
+<li><a href="#fuente-b6f43acf04ee">docs/entrega-2026/funciones.md</a></li>
+<li><a href="#fuente-b1f7d49a35b5">docs/entrega-2026/matriz-rubrica.md</a></li>
+<li><a href="#fuente-0a164ff09539">docs/entrega-2026/pruebas.md</a></li>
+<li><a href="#fuente-0072cf382aec">docs/entrega-2026/sqlite.md</a></li>
+<li><a href="#fuente-4876cb5964eb">docs/entrega-2026/wireframe.md</a></li>
+<li><a href="#fuente-336f63226cb4">docs/entrega-2026/zip.md</a></li>
+<li><a href="#fuente-6e4b647eb62e">docs/documentacion.md</a></li>
+<li><a href="#fuente-cfd0f3264302">docs/manual_de_uso.md</a></li>
+<li><a href="#fuente-55a680000831">docs/wireframe.md</a></li>
+<li><a href="#fuente-2c00c100ff25">docs/auditoria-2025/informe.md</a></li>
+<li><a href="#fuente-b6ed615626db">docs/auditoria-2025/matriz-preliminar.md</a></li>
+<li><a href="#fuente-d56b99927e5a">docs/entrega-2025/revision-limpieza-20261110.md</a></li>
+<li><a href="#fuente-45dc9355a04f">docs/entrega-2025/verificacion-defensa-20261110.md</a></li>
+</ul></nav>
+<section id="fuente-d5b290203a60"><h2>docs/entrega-2026/INDICE.md</h2><p>SHA-256 original: <code>44eecd4c97480718238b08676762a32269bf88461f664a729e829a4db54699da</code>. Contenido íntegro; no se reconstruyen prompts ni se consideran vigentes estas instrucciones.</p><pre># Entrega DREAMS · Integración Diseño y Programación 2026
+
+Estado técnico: **COMPLETO** en la oficial; pruebas y limpieza acreditadas. Código y documentos en PR56 dirigida a main; la ficha de GitHub registra el merge y su SHA exacto. La rúbrica conserva aspectos académicos parciales/no verificables (participación, preentregas, defensa y licencias); no certifica aprobación.
+
+- [Rúbrica 2026 original](rubrica-2026.pdf) y [extracción de texto](rubrica-2026.txt).
+- [Matriz completa de requisitos](matriz-rubrica.md).
+- [Wireframe PNG](wireframe.png), [fuente SVG editable](wireframe.svg) y [navegación y cambios](wireframe.md).
+- [Manual Markdown](manual.md) y [manual PDF](manual.pdf).
+- [Diseño de base de datos](base-de-datos.md), [diagrama editable](base-de-datos.mmd) y [excepción docente para Supabase](sqlite.md).
+- [API y recorrido de datos](api.md).
+- [Bitácora de IA](../entrega-2025/registro-prompts.md#f-bitácora-histórica-consolidada).
+- [Guía para practicar la defensa](defensa.md).
+- [Inventario de funciones y alcance](funciones.md) y [detalle JSON](inventario-funciones.json).
+- [Resultados y bloqueos de pruebas](pruebas.md).
+- [Identidad visual](diseno.md).
+- [Entrega y extracción](zip.md), [extracción limpia vigente sin secretos ni .git](extraccion-limpia.json) y [ZIP histórico](verificacion-zip.json).
+- [README de instalación](../../README.md), [dependencias](../../package.json), [lockfile](../../pnpm-lock.yaml) y [variables de ejemplo](../../.env.example).
+
+Sólo está autorizada la publicación en https://dreams-perfumes.pages.dev/. No se entrega automáticamente en Classroom. Integrantes confirmados por el usuario: **Martearena y Ruas**. El usuario pidió subir todo a GitHub y no generar otro ZIP final; se conservan las comprobaciones de extracción anteriores como evidencia histórica.
+
+- [Matriz remota final](../evidence/admin-audit-20261102/matriz-remota.md), [estado y limpieza](../evidence/admin-audit-20261102/final-state.json), [nueve fases privadas](../evidence/admin-audit-20261102/private-qa-types.json).
+
+- [Actualización de cupón y formulario académico, con capturas oficiales](../evidence/coupon-academic-20261103/README.md).
+
+Actualización03/11/2026 posterior a PR57: [retirada autorizada del carrusel de Inicio](../evidence/home-removal-20261103/README.md). R10 queda NO CUMPLE/PENDIENTE; no hay otro carrusel ni reemplazo. Documentación y capturas describen la versión resultante.
+</pre></section>
+<section id="fuente-061c89ad8f04"><h2>docs/entrega-2026/base-de-datos.md</h2><p>SHA-256 original: <code>da20aba25a12888b68a44deb65ff40e6e33e743c14ace0f10ba97b6e796c85ec</code>. Contenido íntegro; no se reconstruyen prompts ni se consideran vigentes estas instrucciones.</p><pre># Base de datos real e histórico
+
+Motor real: **PostgreSQL en Supabase**, proyecto `nwsmbemwtexmrtpkgxrz`. Auth es un servicio del proveedor, no una tabla de contraseñas propia. La excepción docente para usar Supabase, confirmada por el usuario, está en [sqlite.md](sqlite.md). No se incluyen datos personales, hashes de contraseñas ni filas de clientes.
+
+El 29/10/2026 se consultó sólo `information_schema.columns` mediante la integración autorizada. [Metadatos de columnas reales](esquema-columnas-real.json) contiene nombres, tipos y nulabilidad, sin filas de negocio. Las relaciones y permisos siguientes se contrastan con las migraciones versionadas; esta lectura no certifica por sí sola todos los grants remotos actuales. No hubo DDL ni escritura de datos.
+
+```mermaid
+ erDiagram
+    auth_users ||--|| profiles : id
+    auth_users ||--o| account_carts : user_id
+    account_carts ||--o{ account_cart_operations : user_id
+    profiles ||--o{ reviews : user_id
+    profiles o|--o{ inquiries : user_id
+    products o|--o{ inquiries : product_id
+    profiles ||--o{ orders : user_id
+    coupons o|--o{ orders : coupon_id
+```
+
+[Fuente Mermaid completa](base-de-datos.mmd). Las flechas representan claves foráneas declaradas; `account_carts.items` y `orders.items` son JSON y no claves foráneas a cada producto.
+
+| Tabla | Clave y campos principales | Uso y restricciones |
+|---|---|---|
+| `auth.users` | UUID gestionado por proveedor | Registro/login normal; no exportar datos ni modificar credenciales. |
+| `profiles` | PK/FK `id`, `name`, `role`, `created_at` | customer/admin, perfil derivado de Auth. Nunca aceptar rol solicitado por navegador. |
+| `products` | PK bigint `id`, **`marca`**, name, gender, category, size_ml, price, stock, intensity, family, top/heart/base_notes, description, image_url, featured, timestamps | API devuelve `brand`; el adaptador traduce `marca` real. Precio/stock/tamaño e intensidad validados. |
+| `reviews` | PK bigint; FK nullable user_id; user_name, rating 1–5, comment, created_at, operation_id UUID nullable | Autoría verificada en servidor, borrado propio y moderación Admin. operation_id aporta deduplicación. |
+| `inquiries` | PK bigint; FK nullable user_id/product_id; snapshots product_name/user_name/user_email, created_at | Acceso Admin; información personal, nunca parte del ZIP. |
+| `coupons` | PK bigint; code, discount_percent, active, expires_at, max_uses, per_user_limit, minimum_purchase, conditions, timestamps | Admin UI administra código, porcentaje y activo. Otros campos reales no tienen edición completa en UI. |
+| `orders` | PK UUID; FK user_id/coupon_id; provider, referencias proveedor, status/detail, currency, subtotal/discount/total, snapshots cupón/items, paid_at, timestamps | Historial comercial/legacy. Simulación académica usa tickets firmados, no inserta aquí. |
+| `account_carts` | PK/FK UUID user_id; items JSONB, revision, updated_at | Aislamiento por UUID, cantidades canónicas del servidor, máximo 30 entradas. |
+| `account_cart_operations` | PK compuesta user_id/operation_id; operation JSONB, created_at | Operaciones idempotentes y comparación de repetición. |
+| `favorites` | PK user_id/product_id, FKs, created_at | Histórico conservado; función retirada del sitio. No presentarla como activa. |
+
+Permisos previstos en migraciones: RLS en tablas públicas; catálogo/opiniones públicos de lectura; perfil propio y lectura del carrito por dueño; writes administrativos mediante JWT y políticas de Admin. RPC `dreams_cart_operation` es `SECURITY INVOKER`, ejecución sólo service_role y el backend vincula UUID a sesión verificada. El servidor conserva la clave privilegiada; el navegador sólo usa `/api`.
+
+## Reproducir estructura sin datos privados
+
+1. Crear un proyecto de desarrollo vacío controlado, sin conectar producción.
+2. Revisar y aplicar en orden los SQL de [supabase/migrations](../../supabase/migrations), mediante Supabase CLI o SQL editor de ese proyecto. Conservar historial y ejecutar advisors después. No ejecutar `db reset` sobre remoto ni seeds.
+3. Las migraciones históricas de catálogo usan `brand`; el proyecto real heredado usa `marca`. Node detecta ambos mediante `server/product-schema.js`; el Worker oficial está fijado a `marca` para el proyecto esperado. No reutilizar sin adaptar esa configuración en un proyecto nuevo. Esta diferencia está documentada, no se oculta como dump idéntico de producción.
+4. Verificar tablas, grants, RLS y operaciones con cuentas de desarrollo. Crear datos sintéticos manualmente por el flujo normal/Admin, sin exportar clientes ni promover cuentas desde el navegador.
+
+`supabase/schema.sql` es un esquema histórico, no la fuente canónica completa actual. El esquema real de columnas y las migraciones posteriores tienen prioridad. La reproducción conectada en proyecto nuevo no fue ejecutada en esta tanda y figura pendiente en la matriz.
+</pre></section>
+<section id="fuente-52a8ebcdf461"><h2>docs/entrega-2026/defensa.md</h2><p>SHA-256 original: <code>d3107f07b369e7debbaaff36172399b99faad7fe248e91ffb482d539a9fd6021</code>. Contenido íntegro; no se reconstruyen prompts ni se consideran vigentes estas instrucciones.</p><pre># Guía para practicar la defensa
+
+&gt; Guía ampliada vigente: [Markdown](../entrega-2025/defensa.md), [Word](../entrega-2025/defensa.docx) y [PDF](../entrega-2025/defensa.pdf). Este resumen histórico se conserva como antecedente de práctica.
+
+Material de estudio; no demuestra que los integrantes ya comprendan o puedan defender el código. Cada uno debe tener su copia de documentación y practicar sin IA.
+
+1. Dibujar navegador → Pages → Worker privado → Express → Supabase. Ubicar HTML/CSS/JS, proxy, SDK, cookies, RLS y clave exclusivamente servidor. Explicar por qué el 200 de la oficial restaurada no prueba el candidato.
+2. Seguir registro normal desde `public/js/cuenta.js` a `server/customer-registration.js`: validación, rate limiting, signUp, perfil customer y sesión real. Explicar por qué no se inventa una sesión si Supabase no devuelve una.
+3. En `server/app.js`, explicar contexto por aplicación e instaladores ordenados. Identificar guard de origen, restauración de sesión y guard de rol. Cambiar localmente una validación y demostrar su test.
+4. Editar un producto de prueba: distinguir preview de imagen, escritura, lectura posterior de todos los campos y mensaje de éxito. Simular fallo de red posterior y explicar por qué no repetir un alta automáticamente.
+5. Explicar `marca` real vs `brand` HTTP. Mostrar esquema, claves, relaciones y diferencia entre constraints y RLS. Explicar que PostgreSQL no es SQLite y que el usuario confirmó la aceptación docente de Supabase; distinguir esa declaración de un documento docente adjunto.
+6. Dibujar el cambio de cuenta A→B del carrito. Explicar UUID, revisión, operation_id, merge de visitante e idempotencia. Mostrar por qué el precio se calcula en servidor.
+7. Demostrar autoría de opinión y rechazo de borrado ajeno por API. Explicar por qué ocultar un botón no protege una ruta.
+8. Checkout académico: tarjeta ficticia sólo navegador, ticket/receipt firmados y referencia estable. Distinguir simulación de un cobro y de una orden comercial. WhatsApp sólo abre un enlace con resumen.
+9. Explicar semántica HTML, labels, foco, responsive y navegación por colecciones. Navegar con Tab/Enter y explicar que el carrusel fue retirado por pedido del usuario y queda pendiente en la rúbrica.
+10. Extraer ZIP, instalar con lockfile, ejecutar checks/tests/build sin `.git`. Localizar inventario40 y mostrar cómo falla una función de41 líneas con comentarios. Explicar limitaciones de la medición de programa principal.
+
+Ejercicios individuales: localizar y corregir una URL HTTP inválida; agregar un caso límite de stock; explicar un 401 frente a un 403; restaurar un cambio local mediante Git; leer un test sin ejecutarlo y predecir su resultado; detectar una interpolación HTML insegura y usar escape. Registrar qué resolvió cada integrante, sólo después de hacerlo.
+
+No memorizar una promesa de cumplimiento: llevar la matriz con pendientes reales, pruebas y rollback. No exponer contraseñas, headers, tokens o datos personales al proyectar la pantalla.
+</pre></section>
+<section id="fuente-ddc85a42fb4c"><h2>docs/entrega-2026/diseno.md</h2><p>SHA-256 original: <code>b46d0b29089353d6829f7d2f5a6edbfbff5a487fcbadbab8783f5ab6e7e96924</code>. Contenido íntegro; no se reconstruyen prompts ni se consideran vigentes estas instrucciones.</p><pre># Diseño, contenido y límites de evidencia
+
+DREAMS es la marca de fantasía del proyecto, con una tienda de perfumería multimarca. No se afirma ser fabricante autorizado de las marcas del catálogo. Identidad: negros, marfil y dorado cálido; tipografía editorial para títulos y sans serif legible para interfaz. Las variables y reglas están en `public/css/style.css`.
+
+El isologo limpio existente [PNG](../../public/assets/dreams-isologo-clean.png) conserva una D y un frasco simplificados en dorado sobre transparencia, con negro según el fondo. Se inspeccionó visualmente y no se sustituyó ni deformó. El criterio de máximo tres **colores de diseño** se evalúa por tintas de la marca (dorado/negro/marfil), no contando cada píxel antialias de un raster. La valoración de simplicidad y fidelidad corresponde al docente; no se generó una variante arbitraria.
+
+La navegación incluye botones/enlaces visibles; HTML usa header/nav/main/section/article/footer, formularios con labels y mensajes de estado. El único carrusel de Inicio fue eliminado por solicitud expresa del usuario03/11/2026, incluidos controles, contador y espacio. Mujer/Hombre/Unisex conservan acceso desde el menú. El requisito de carrusel queda pendiente; no hay reemplazo oculto. La portada continúa estática. Los textos no prometen promociones o propiedades nuevas del perfume.
+
+Las imágenes de producto se guardan como URL, con preview y fallback. [Fuentes históricas](../image_sources.md) son una lista de procedencia orientativa, no licencias verificadas por imagen. La licencia individual y derechos de fotos externas siguen **NO VERIFICABLES**; no se declara autorización comercial por ser un trabajo académico.
+
+Las capturas de la entrega provienen del candidato local y datos sintéticos. La matriz anterior conserva pruebas de móvil/escritorio de Admin; las verificaciones de eliminación del bloque y las regresiones se separan en `pruebas.md`. No se afirma accesibilidad completa WCAG ni performance avanzada sólo por pasar tests o tener diseño responsive.
+
+Integrantes confirmados por el usuario el29/10/2026: **Martearena y Ruas**. Se usa esa identificación en el footer compartido, sin deducir nombres de pila de variantes históricas. Esto identifica el grupo; no atribuye automáticamente a sus integrantes los cambios de código realizados por IA.
+</pre></section>
+<section id="fuente-b6f43acf04ee"><h2>docs/entrega-2026/funciones.md</h2><p>SHA-256 original: <code>3282f9e0abc757910c57ddd605bc53f8d9549b633289cd727b6f20b7030e1b55</code>. Contenido íntegro; no se reconstruyen prompts ni se consideran vigentes estas instrucciones.</p><pre># Límite de 40 líneas
+
+El límite vigente es **40**, no 20. Se usa Acorn 8.15.0 fijado en desarrollo y el lockfile. Ejecutar desde la raíz, también dentro de una extracción sin `.git`:
+
+```sh
+corepack pnpm install --frozen-lockfile
+corepack pnpm run check:functions
+node scripts/function-inventory.mjs . --write
+```
+
+El [JSON](inventario-funciones.json) incluye archivo, nombre inferido, tipo, línea inicial/final y cantidad. Se cuentan líneas físicas inclusivas de declaración a cierre: comentarios y blancos internos incluidos. Las funciones anónimas, callbacks, métodos, getters, setters y constructores se identifican por AST, sin comprimir instrucciones para bajar el conteo. HTML inline JavaScript también se analiza; JSON-LD se excluye por ser datos.
+
+Alcance: todos los JS/MJS/CJS y HTML propios encontrados recursivamente, incluidos servidor, navegador, Workers, Pages, scripts y tests. Se excluyen dependencias y salidas generadas: `node_modules`, `.git`, `dist`, `.wrangler`, `coverage`, `.pnpm-store`; no se siguen symlinks. No se utiliza `git ls-files`. SQL y CSS no contienen funciones JavaScript y no forman parte de este contador; sus estructuras se documentan aparte.
+
+Programa principal: `start` en Node, `fetch` del Worker y los inicializadores de navegador se cuentan como funciones. Cada bloque ejecutable superior explícito (`if`, bucles, `try` y bloques) se cuenta también con su rango físico. Un módulo con muchas declaraciones no es un único bloque principal: imports, clases, constantes de datos y registros de callbacks se mantienen como declaraciones y sus funciones se cuentan individualmente. No se atribuye al archivo entero una función ficticia. Esta interpretación está explicitada para revisión del profesor, no como aceptación acreditada.
+
+Refactorizaciones: construcción de Express dividida en contexto e instaladores ordenados de middleware/rutas; perfil y sesión conservan autorización; configuración Node y Workers separada del arranque; checkout separado en carga, cupón, pago y eventos; instalación de simulación académica separada de firma; wrappers de helpers convertidos en declaraciones con API pública conservada. Se ajustaron también fixtures extensos sin quitar assertions.
+
+Pruebas del contador acreditan 41 líneas con comentarios, métodos/callbacks, main explícito, offset HTML y ejecución sin `.git`. El estado final y el total se registran en [pruebas.md](pruebas.md); no usar el inventario histórico de 19 archivos como si cubriera todo el repositorio.
+</pre></section>
+<section id="fuente-b1f7d49a35b5"><h2>docs/entrega-2026/matriz-rubrica.md</h2><p>SHA-256 original: <code>2a8e15b80afa3799534522dc12d50af42f6c7ea575328058ba90808a6fabc0b6</code>. Contenido íntegro; no se reconstruyen prompts ni se consideran vigentes estas instrucciones.</p><pre># Matriz completa · Rúbrica 2026
+
+Fuente: [PDF 2026 adjunto](rubrica-2026.pdf), 3 páginas; [texto extraído](rubrica-2026.txt). No se sustituyó por una rúbrica 2025. Fecha de actualización técnica: 03/11/2026 UTC; conserva evidencia histórica de octubre. Estados: CUMPLE = evidencia suficiente del alcance indicado; PARCIAL = evidencia o implementación incompleta; NO CUMPLE = discrepancia conocida; NO VERIFICABLE = depende de evidencia no disponible. Un CUMPLE local/documental no certifica funcionamiento publicado ni nota.
+
+| ID | Requisito exacto o fragmento literal del PDF | Evidencia en archivos y funcionamiento | Estado | Corrección realizada o pendiente |
+|---|---|---|---|---|
+| G01 | «sitio y la imagen corporativa de una marca de producto»; «la marca debe ser de fantasía» | DREAMS; `public/index.html`, PNG y CSS, diseno.md | CUMPLE | Identidad conservada; valoración creativa docente. |
+| G02 | «presentar los productos de forma que estos sean vendibles»; «atractivo y funcional» | Catálogo/detalle/carrito; candidato con lectura directa y SDK200 | CUMPLE | Catálogo/detalle/carrito oficiales y pruebas remotas; valoración estética docente. |
+| G03 | «Javascript, API y SQL»; «ciclos, funciones, condicionales, operadores lógicos» | `public/js`, `server`, migraciones, api.md y defensa.md | CUMPLE | Código y explicación técnica; comprensión individual no acreditada. |
+| D01 | «Diseño de un logo: Simple, como máximo 3 colores en PNG» | `public/assets/dreams-isologo-clean.png`, inspección, diseno.md | CUMPLE | Isologo existente sin modificar; tintas de diseño distinguidas del antialias. |
+| D02 | «paleta cromática definida y constante» | `public/css/style.css`, diseno.md, capturas locales | CUMPLE | Negro/marfil/dorado conservados. |
+| D03 | «jerarquías tipográficas claras» y fuentes acordes | CSS y encabezados semánticos | CUMPLE | Diseño existente conservado, valoración estética docente. |
+| D04 | «Navegación clara: botones y enlaces visibles, menús» | Navegación compartida y wireframe real | CUMPLE | Wireframe histórico reemplazado para entrega2026. |
+| D05 | «el diseño debe reflejar el tema… atractiva y creativa» | Perfumería, portada estática, tarjetas e imágenes | PARCIAL | Evidencia visual disponible; juicio creativo docente. |
+| D06 | «imágenes, íconos, o ilustraciones con criterio estético y funcional» | Imagen de detalle, preview, fallback, iconografía | PARCIAL | Función implementada; licencias individuales no acreditadas, sin inventarlas. |
+| P01 | «Leer y escribir código adecuadamente» | Guía de defensa y ejercicios | NO VERIFICABLE | Debe demostrarlo cada integrante. |
+| P02 | «Utilizar adecuadamente la documentación» | API, BD, manual, índice, referencias | PARCIAL | Material preparado; uso por alumnos pendiente. |
+| P03 | «resolución y autonomía» | Git/continuidad técnica; defensa.md | NO VERIFICABLE | No atribuir al grupo las resoluciones hechas por IA. |
+| P04 | «continuidad y proceso de trabajo» | Git, CHANGELOG, ../entrega-2025/registro-prompts.md (bitácora consolidada) | PARCIAL | Hay historia técnica; faltan registros completos de clase/preentrega. |
+| P05 | «en cada etapa… uso de IA… complementario» | ../entrega-2025/registro-prompts.md (bitácora consolidada) distingue autoría | NO VERIFICABLE | No hay evidencia de agregados propios y defensa por etapa. |
+| R01 | «grupo… no… mayor a 2 alumnos»; «Los grupos NO pueden rotar» | Dos integrantes confirmados por usuario: Martearena y Ruas | PARCIAL | Apellidos resueltos; permanencia del grupo y participación histórica no verificadas. |
+| R02 | «Fecha de entrega previa 2 de octubre» | No hay comprobante de entrega adjunto | NO VERIFICABLE | Solicitar evidencia que conserven los alumnos; no inventar fecha. |
+| R03 | «Fecha de entrega final 6 de noviembre» | Preparación actualizada al03/11UTC; no envío | PARCIAL | Falta cierre y entrega por usuario antes de fecha. |
+| R04 | «app web o sitio HTML/CSS/JS aplicando/consumiendo una API» | HTML/CSS/JS y Supabase; api.md | CUMPLE | Recorrido documentado y lectura directa/SDK200 en backend efectivo. |
+| R05 | «Mostrar productos… de una base de datos… backend… SQLlite… Flask… Node.js» | Real: Supabase/PostgreSQL; el usuario confirmó aceptación docente el29/10/2026, registrada en sqlite.md | CUMPLE | BackendNode/Supabase operativo; excepción SQLite aceptada según usuario, sin equivalencia técnica ni comprobante docente inventado. |
+| R06 | «Node.js… registro de las versiones usando Git (github)» | Historial de facumartea/dreams, PR56 | CUMPLE | Checkpoints sin reescritura; Los commits identifican versiones; usuario pidió actualizar GitHub sin generar ZIP final. |
+| R07 | «pantalla de login… y de registro» | `public/cuenta.html`, `cuenta.js`, registro/signIn | CUMPLE | PASS en navegador oficial: registro normal sin confirmación, doble envío, sesión, login/logout, renovación, contraseña incorrecta y recuperación de fallo de red. |
+| R08 | «productos… editarse… interfaz específica… usuario autorizado» | Admin, guard rol, JWT, readback de persistencia | CUMPLE | Admin real: todos los módulos, alta/edición/imagen/persistencia, cupones y moderación PASS; origen/rol protegidos. |
+| R09 | «si o si Javascript» | Código propio de navegador y servidor | CUMPLE | Uso real, no sólo librería. |
+| R10 | «carousel» | Único carrusel de Inicio eliminado íntegramente por instrucción expresa del usuario03/11/2026 | NO CUMPLE | Requisito pendiente: no queda otro carrusel funcional; no se oculta ni se agrega reemplazo. |
+| R11 | «web semántica» | HTML header/nav/main/section/article/footer y labels | CUMPLE | Evidencia de fuente; auditoría WCAG completa no realizada. |
+| R12 | «diseño adaptable… (responsive)» | CSS media queries, matriz previa y capturas oficiales | CUMPLE | Portada sin overflow en390/1440px; otros tamaños y Admin se distinguen en pruebas.md. |
+| O01 | «Wireframe… conexiones de las páginas… herramienta ad-hoc» | wireframe.png y SVG editable, wireframe.md | CUMPLE | Adaptado de propuesta suministrada, realmente versionado. |
+| O02 | «Manual de uso» | manual.md/PDF, capturas con procedencia | CUMPLE | ManualMD/PDF actualizado con capturas oficiales identificadas; formularioAdmin sin datos personales. |
+| O03 | «Diseño de base de datos» | base-de-datos.md/.mmd, columnas reales JSON | CUMPLE | Real vs histórico separados; reproducción en proyecto nuevo no ejecutada. |
+| O04 | «Bitácora… en cada preentrega… fecha, prompts, resultado» | ../entrega-2025/registro-prompts.md (bitácora consolidada) y CHANGELOG | PARCIAL | Registro técnico honesto; faltan prompts/comprobantes de preentrega. |
+| O05 | «Link a la API. Explicación de su uso» | api.md con documentación pública, recorrido y ejemplo | CUMPLE | WhatsApp identificado como enlace, no API. |
+| M01 | «programa principal y… funciones no supera las 40 líneas… modularizado» | Inventario AST y comando sin.git, funciones.md | CUMPLE | Refactorización con callbacks/métodos; alcance e interpretación de main explícitos. |
+| M02 | «Indentado correctamente… comentarios… claro y legible… Frontend / Backend» | Módulos, validación y comentarios de responsabilidades | PARCIAL | Refactorizaciones nuevas legibles; tests históricos compactos no reescritos por estética. Revisión docente pendiente. |
+| E01 | «Correcto funcionamiento sin errores… conecta correctamente» | Lecturas directa/SDK200, Auth/carrito/checkout yAdmin oficiales comprobados | CUMPLE | 89casos remotos distintos PASS y nueve fases privadas PASS; cierre sobre backend limpio y limpieza acreditados. No garantiza ausencia universal de defectos. |
+| E02 | «Todos los integrantes poseen… documentación… justificar y explicar» | Carpeta descargable y defensa.md | NO VERIFICABLE | Accesibilidad del repositorio no demuestra posesión ni dominio individual. |
+| E03 | «IA… complemento… registro completo… muchos agregados…» | Bitácora parcial, autoría no inventada | PARCIAL | Faltan registros e intervención propia acreditada; no se asigna puntaje. |
+| E04 | «Se entrega en tiempo y forma sin mayores correcciones» | ZIP candidato y bloqueos | NO VERIFICABLE | No hay entrega Classroom realizada por el agente. |
+| E05 | «Trabajo en clase… todos… aportan… constantemente» | Sin evidencia de asistencia/participación | NO VERIFICABLE | Evidencia de integrantes/profesor, fuera de inferencia técnica. |
+| E06 | «Autonomía… una o dos consultas por clase… vías alternativas» | Sin observación de clase | NO VERIFICABLE | No inferir autonomía de alumnos a partir de trabajo IA. |
+| E07 | «Todos los documentos… accesibles… al momento de la corrección» | INDICE, relativos, Markdown/PDF/PNG/JSON en PR | PARCIAL | Documentos completos en PR56; integración a main mediante checks aprobados. Consultar ficha del merge, sin inferirlo de una PR abierta. |
+| E08 | «Nombre archivo… formato solicitado» | Apellidos confirmados: Martearena y Ruas | PARCIAL | Nombre previsto Martearena-Ruas-DREAMS.zip; usuario pidió no generar otro ZIP final. No se afirma entrega de un archivo con ese nombre. |
+| F01 | «Carpeta comprimida… [apellido1-apellido2-apellido3-nombreproducto].zip» | zip.md y extracción sin.git | PARCIAL | Usuario prioriza actualización de GitHub y no generar otro ZIP final; extracción anterior acreditada. Ejemplo del PDF no obliga a tres integrantes contra límite2. |
+| F02 | «solo… aula virtual (classroom) de INFORMÁTICA» | No se envía nada automáticamente | NO VERIFICABLE | Entrega final debe realizarla usuario; conservar comprobante. |
+| A01 | «puntaje… superar los 30… criterios fundamentales» | Esta matriz no asigna nota | NO VERIFICABLE | Sólo el profesor puede evaluar; funcionamiento remoto acreditado, SQLite resuelto por excepción comunicada por usuario. |
+| A02 | «nota grupal y… individual… puede coincidir o no» | Defensa/participación individual pendiente | NO VERIFICABLE | No garantizar aprobación ni puntaje. |
+| A03 | «no… completar… período de diciembre» | Condición docente, sin resultado anticipado | NO VERIFICABLE | Registrar si se aplica; no anticipar decisión. |
+
+La escala completa 5/3/2/1 y sus descriptores quedan preservados literalmente en el PDF y el texto adjuntos, incluidos Diseño visual, Modularidad, Documentación, Uso de IA, Programa/Sitio, Codificación, Entregas, Trabajo en clase, Autonomía, Presentación y Nombre de archivo. Esta matriz audita requisitos; no transforma esas escalas en una calificación automática.
+
+Aclaración vigente del29/10/2026: el usuario confirmó aceptación docente de Supabase y los apellidos Martearena/Ruas. No se solicita otra prueba de aceptación para continuar ni se migra la base. La referencia al comprobante no adjunto describe la procedencia de la evidencia, no un nuevo bloqueo.
+</pre></section>
+<section id="fuente-0a164ff09539"><h2>docs/entrega-2026/pruebas.md</h2><p>SHA-256 original: <code>1a38745f7c37cbeb82b277f826c809b21d4b7eb9e4a2e98418fb7bad8a45835a</code>. Contenido íntegro; no se reconstruyen prompts ni se consideran vigentes estas instrucciones.</p><pre># Cambio posterior: Inicio sin carrusel —03/11/2026
+
+El usuario autorizó retirar íntegramente el único carrusel después de cerrar PR57. Los resultados históricos del carrusel que siguen describen versiones previas. R10 ahoraNO CUMPLE/PENDIENTE, sin reemplazo. [Auditoría de retirada](../evidence/home-removal-20261103/README.md):489tests y Chromiumlocal390/1440PASS, menúcolecciones intacto; publicación/QAoficial390/1440PASS acreditadas en esa carpeta (gap0, sin consola/overflow, tres colecciones accesibles).
+
+# Cierre comprobado — 03/11/2026 UTC
+
+**89 casos remotos distintos PASS** (92 registros históricos), nueve fases privadas PASS/281 assertions,476tests locales PASS y extracción limpia sin.git/secretos PASS. [Matriz por caso](../evidence/admin-audit-20261102/matriz-remota.md). Backend final29b843a0/e86f434: Admin alta/edición/imagen/borrado/logout y cliente login/recarga/logout PASS después de retirar QA. SecretAdmin, Cron y KV retirados; recursosQA0, sesionescustomerQA0. Sin stock/pedidos comerciales cambiados. [Estado final](../evidence/admin-audit-20261102/final-state.json).
+
+La evidencia privada completa corresponde a11477c4f/0368f65; la versión final conserva HTTP y elimina únicamente la ejecución QA. No atribuir las nueve fases a una versión que no las ejecutó. El navegador sí verificó la versión final limpia. Inventario final115archivos/2111registros/0&gt;40. CI224SUCCESS. Los apartados siguientes conservan las etapas anteriores y sus pendientes históricos.
+
+# Pruebas vigentes — 03/11/2026 UTC
+
+La oficial está publicada: Pages b169918f/e544c6c y backend11477c4f/0368f65. La cabecera no secreta X-Dreams-Backend-Version identifica el backend efectivo. Lectura directa y SDK200 en el proyecto esperado, sin fallback ni transformación de Secret. El401 histórico y el403 de guardado legacy no describen la versión vigente.
+
+Regresión real corregida: stock:null era200/stock0; ahora400 y stockQA219 conserva3. Regresiones locales de tipos30PASS; suite476PASS/0fallos/0omitidos, CI223 y224SUCCESS. Código preparado e86f434 retira QA del entrypoint; la activación limpia y sus pruebas posteriores se registrarán al cerrar.
+
+Chromium oficial: registro sin confirmación y doble envío único, sesión inmediata, recarga/navegación, cookies seguras, renovación, logout/login, contraseña incorrecta, fallo de red/reintento, rechazoAdmincustomer/anónimo, carrito persistente, WhatsApp sin envío y checkout académico (referencia estable, doble envío único, sin stock/pedidos comerciales). PASS. Formato legacy firmado aceptado por verificador oficial; no se afirma que sea el ticket anterior al despliegue perdido.
+
+Evidencia estructurada: [casos remotos](../evidence/admin-audit-20261102/browser-results.json), [regresión de tipos](../evidence/admin-audit-20261102/input-type-regression.json), [fases privadas actuales](../evidence/admin-audit-20261102/private-qa-types.json). Se mantienen los fallos históricos y se toma el último resultado por ID; assertions privadas no equivalen a casos distintos.
+
+Extracción limpia e86f434 sin.git ni secretos: instalación frozen, checks, inventario,476tests y builds oficial/Pages PASS. [Resultado](extraccion-limpia.json). No se generó ZIP final. Inventario:115archivos/2111registros/0exceden40. La evidencia histórica de abajo conserva sus versiones y no representa el estado vigente.
+
+# Estado vigente de pruebas — 29/10/2026
+
+La clave cargada por el usuario en `8fcb56e1` funciona: lectura directa y SDK200, URL esperada y clave sin transformación. La versión privada `4862a658`, fuente `09ee61a`, acreditó registro normal A/B sin confirmación, perfiles customer, sesiones, login, refresh, logout, contraseña incorrecta y rechazo Admin de anónimo/customer. Carrito: combinación idempotente, persistencia y aislamiento A/B pasaron hasta agotar el límite Free. [Reporte parcial real](../evidence/functional-backend-20261027/real-auth-cart-partial-20261029.json). No acredita QA Admin ni limpieza final.
+
+La versión `fb7d3c95-c638-4c04-9e41-93c31fac8aaf`, fuente `f2efb1d`, divide la QA en nueve fases de Cron privado y reutiliza A/B; las fases pendientes no se anuncian como aprobadas. CI217 aprobada: 400 tests, sintaxis, inventario sin funciones &gt;40 y cuatro builds. Las cuentas y recursos son exclusivos de QA; no se ejecutan compras ni cambios de stock comercial. Oficial restaurada `a3184576` conservada hasta resultados completos. No se requiere intervención del usuario ahora.
+
+## Evidencia histórica local y remota
+
+Los resultados que siguen conservan su fecha/versión. Los bloqueos de clave mencionados debajo son históricos y fueron superados por la copia nueva; no corresponden al binding actual.
+
+# Conexión Supabase acreditada tras nueva copia ·29/10/2026
+
+El Secret nuevo8fcb56e1 ya está verificado desde4d32d704: directo200,SDK200,clave íntegra,sinwhitespace/controles yproyecto esperado. [Evidencia](../evidence/functional-backend-20261027/new-secret-read-20261029.json). La primeraQA se detuvo en400porJSON no parseado de la invocaciónsintética sinContent-Length; reproducciónlocal exacta confirmó la causa yeltransporte delharness se corrigió sin cambiarAuth. No hubo peticionesAuth ni cuentasQA creadas enese intento. Stock/órdenes sin cambios. Lectura resuelta NO equivale a QAautenticada completada; reintento pendiente.
+
+# Actualización posterior al reemplazo del Secret
+
+El29/10/2026 el usuario reemplazó el Secret y se confirmó0968d006. La sonda36319df7 todavía encontró valor malformado con espacios internos/controlASCII: lectura directa sin respuesta HTTP válida ySDKstatus0. No confundirlo con el401 histórico de la versión anterior. Ver [evidencia nueva](../evidence/functional-backend-20261027/credential-replacement-20261029.md). Cron retirado; candidato aislado, ninguna cuentaQAremota creada. El usuario cargó luego el SecretAdmin en4e3d734f; presencia verificada, aún no usado. Retirarlo junto con el mecanismo temporal al terminar QA, según autorización expresa. El runner deQA está preparado localmente y NO acredita un resultado real hasta ejecutarse con lectura200.
+
+# Pruebas reales y pendientes · 29/10/2026
+
+## Identidad remota observada, sin nueva publicación
+
+- Oficial https://dreams-perfumes.pages.dev/: Pages canónico `a3184576-4390-4a71-9205-d9269bd7dfe7`, frontend `7b302cf6b1896cfe500a0643290646b3086cb082`, binding efectivo `DREAMS → dreams-perfumes`, entorno vacío/default. GET de configuración Cloudflare200 en esta tanda.
+- Backend legacy fijado por el release del frontend servido: `ec04a35812d044e57196c6a1ca55232e723ff60c`, URL inmutable con pin `d5df723d-e1f1-4889-ae5b-e79ebfd131cd`. Es evidencia de pin del frontend; no una nueva verificación independiente del bundle histórico.
+- Candidato privado `dreams-official-backend`: `62f6bd7c-52a0-4ebb-861d-cfc9116b6286`, deployment `82492c72-295f-412e-82c0-11285034bd67`,100%. No cambió respecto del diagnóstico.
+- Binding `SUPABASE_SECRET_KEY`, tipo secret_text, Production/default; `SUPABASE_URL=https://nwsmbemwtexmrtpkgxrz.supabase.co`. Inspección sólo de nombres/tipos/URL pública. Ningún valor de clave o header se imprimió.
+- Evidencia de la MISMA versión conservada: [directo401 y SDK401, espacios internos, clave no truncada por SDK](../evidence/functional-backend-20261027/credential-diagnostic-result.json). No se repitió esa sonda sin cambio de versión. La URL corresponde al proyecto esperado; pertenencia de la clave opaca no verificada porque fue rechazada.
+- Constructor `worker/official-client.mjs` usa únicamente el Secret recibido y la URL; no fallback a claves antiguas. El candidato oficial exige origen/proyecto exactos y desactiva bypass administrativo de registro. Ningún cambio Auth, Admin o credenciales.
+
+## Regresión local de esta tanda
+
+- Suite completa inicial387PASS y carrusel3PASS; ejecución conjunta final desde ZIP limpio: **390/390 PASS**,0fallos/0skips, sin.git ni secretos reales. Ver verificacion-zip.json. CI #211 /40903937335 del commit633aec3SUCCESS en instalación, audit, sintaxis, inventario, tests y cuatrobuilds.
+- Sintaxis final desde extracción: **92 archivos JS** PASS.
+- Inventario final: **106 archivos JS/MJS/CJS/HTML**, **1873 registros** de funciones/callbacks/métodos/bloques, **0 exceden40**. Alcance en funciones.md y detalle JSON; no se requiere `.git`.
+- Audit producción: sin vulnerabilidades conocidas.
+- Cuatro builds locales PASS: Pages, oficial privado, Worker y Admin read-only dry-run. Ninguno publica un sitio.
+- Error detectado durante refactorización de fixture Admin: una referencia de estado quedó fuera de ámbito, causando dos fallos; corregida a `this.state` y suite verde. No se omitieron tests.
+- Browser detectó riesgo de doble carga de motion durante parseo; factories conservan ámbito y cargador espera HTML completo. La ejecución final registra cero pageerrors. No se atribuye este chequeo a una publicación remota.
+
+## Matriz Admin existente y ampliación
+
+La [matriz previa](../evidence/admin-audit/matrix.md) de201 ejecuciones locales conserva A28/B25/C25/D27/E30/F24, cada área≥20 casos distintos; no se reinició. La modificación nueva es confirmación de persistencia de productos, áreaD. `test/admin-persistence.test.js` agrega **25 casos PASS**:
+
+| Casos nuevos | Resultado real |
+|---|---|
+| Discrepancias independientes en brand, name, gender, category, size_ml, price, stock, intensity, family, top_notes, heart_notes, base_notes, description, image_url y featured (15) | Cada discrepancia rechazada sin anunciar éxito. |
+| Todos los campos coinciden; normalización de números/texto (2) | Confirmación de lectura aceptada. |
+| Producto ausente, respuesta no array, otro ID (3) | Confirmación rechazada. |
+| ID ausente, cero, negativo, fraccionario (4) | Rechazo antes de lectura. |
+| Red interrumpida después de escribir (1) | Formulario conservado, sin éxito, una sola escritura, aviso de revisar listado. |
+
+Las otras áreas no se modificaron. No presentar estos fixtures como prueba de escritura Supabase real.
+
+## Chromium nuevo:15 comprobaciones PASS
+
+[Resultado estructurado](pruebas-browser-local.json). Entorno: Chromium instalado, HTTP Express local, Auth/BD de memoria con datos exclusivos de prueba; sin proyecto Supabase real.
+
+- Carrusel en390/430/768/1024/1440/1920: controles, contenidos distintos, flechas, vuelta circular y ausencia de overflow.
+- Guardado de nombre/precio/imagen por HTTP local; lectura posterior antes del mensaje; recarga conserva imagen; catálogo y detalle reflejan cambio. Editar/Eliminar iguales104×44px (tolerancia de rasterización subpíxel0,1px).
+- Sin JS: tres colecciones visibles. Cero pageerrors. Captura de Cuenta sólo documenta la pantalla, no registro real. SVG editable convertido a PNG.
+
+Se inspeccionaron visualmente PNG de wireframe, isologo, captura Admin y primera página del manual PDF; texto del manual legible,4 páginas. No se certifica WCAG completo, performance avanzada ni licencias de fotos externas.
+
+## QA autenticada real: BLOQUEADA
+
+Registro normal sin confirmación, perfil customer, login, persistencia/refresh/logout, customer/anónimo rechazados de Admin, carrito A/B y merge, opiniones propias/ajenas, Admin persistente e imágenes, checkout académico y WhatsApp de la versión final: **pendientes desde el candidato válido**. Existe evidencia histórica de checkout/WhatsApp y matrices locales, pero no la reemplazan. No se crearon cuentas QA remotas ni productos ni se alteraron datos comerciales en esta tanda.
+
+Intervención mínima ya solicitada: reemplazar únicamente `SUPABASE_SECRET_KEY` del candidato privado desde el panel con una Secret API key de servidor existente del proyecto indicado. No tokens de gestión adicionales ni claves por chat. Después continuar sin nueva autorización. Primero lectura directa y SDK desde nueva versión; sólo después cuentas normales de prueba y sesiones. No crear Admin ni cambiar contraseña/rol existente. No afirmar disponible una sesión Admin que todavía no se obtuvo.
+
+## Publicación y entrega
+
+No hubo deployment, conexión del candidato a la oficial, DNS ni otros sitios. Rollback canónico conservado. PR56 sigue draft sobre `codex/collection-multiselect`; no se integró `main` porque las dependencias funcionales siguen abiertas. SQLite deja de ser bloqueo: el usuario confirmó aceptación docente de Supabase. Los apellidos son Martearena y Ruas; no generar otro ZIP final, por instrucción vigente. Los archivos de entrega están en `codex/admin-cards-audit`, no aún en el ZIP predeterminado de GitHub. Ver [ZIP](zip.md) para commit y comprobación de extracción.
+
+## Aclaraciones y footer posteriores al checkpoint
+
+Tras confirmar el usuario aceptación docente de Supabase y apellidos Martearena/Ruas, se actualizaron documentos, wireframe y footer compartido. Pasaron22tests pertinentes de navegación/diseño y buildPageslocal. No cambió JavaScript ni el inventario; no se repitieron las matrices o la sonda remota y no se generó otro ZIP. El pipeline del commit nuevo acredita sus propios checks.
+
+## Guardas del runner privado preparadas
+
+Nuevo código aún no desplegado: runner scheduled con opt-in y vencimiento≤30min, sin rutaQA pública. Requiere lectura directa/SDK200 y clave de servidor antes de crear dos cuentas por signUp normal. Prepara sesiones/refresh/logout, aislamiento y mergecart, autoría de opiniones, checkoutacadémico/WhatsApp, Adminexistente y recursosQA de productos/cupones con limpieza. Los snapshots comparan stock comercial y cantidad de pedidos antes/después. Todo ello es preparación, no resultados remotos.
+
+Guardas probadas: opt-in/caducidad, bloqueo ante lectura fallida, rechazo de clave pública aunque lea catálogo, errores de proveedor/constructor sin credenciales en reporte y rutaQA bloqueada. Runtime local usa fecha compatible08/10, producción conserva27/10. Inventario actual109archivos/1936registros/cero&gt;40. Los resultados finales de suite y CI se acreditan por SHA en la PR.
+</pre></section>
+<section id="fuente-0072cf382aec"><h2>docs/entrega-2026/sqlite.md</h2><p>SHA-256 original: <code>3168e672ff85e318216b39f28d0e0e795f5e2101cc70b28d66c4fed916749968</code>. Contenido íntegro; no se reconstruyen prompts ni se consideran vigentes estas instrucciones.</p><pre># SQLite y excepción docente comunicada
+
+La rúbrica 2026 exige literalmente un backend donde se implemente **SQLlite** y permite Node.js. El almacenamiento actual es Supabase/PostgreSQL. No son equivalentes. El 29/10/2026 el usuario confirmó expresamente en respuesta a la consulta: **«sisi acepto supabase»**, referido a la aceptación del profesor. Se registra como excepción docente comunicada por el usuario; no como cumplimiento literal de SQLite ni como un comprobante emitido directamente por el profesor. No hay un documento docente adjunto. Esta aclaración resuelve la decisión de motor: se conserva Supabase y no se necesita implementar una base SQLite alternativa.
+
+## Alternativas históricas, ya no pendientes de implementación
+
+Se conservan como análisis previo a la confirmación; no se ejecutarán como sustituto de la decisión aceptada:
+
+| Alternativa | Implementación real necesaria | Alcance y limitación |
+|---|---|---|
+| Excepción explícita | Conservar Supabase y adjuntar aceptación fechada del profesor | No cumple literalmente SQLite; sólo sería defendible con aceptación acreditada. |
+| Adaptador SQLite académico local | Node 24 `node:sqlite`, repositorio de productos con esquema/migraciones/validación, consultas parametrizadas y transacciones; catálogo lee SQLite y Admin escribe esa misma base. Auth sigue en Supabase con token validado en servidor y autorización de perfil existente. Tests HTTP reales de alta, edición, persistencia y rechazo customer. | Cumplimiento funcional local demostrable; no sustituiría automáticamente la base productiva. Datos exclusivamente ficticios o exportación pública revisada, nunca clientes, contraseñas ni tokens. Documentar la diferencia de entornos. |
+| SQLite/D1 en backend privado de la misma oficial | Definir repositorio de catálogo sobre SQLite/D1, conservar Auth Supabase, políticas de rol verificadas y migración controlada de datos públicos, reconciliación de relaciones y plan de rollback sin escrituras dobles ambiguas | Requiere diseño y validación de compatibilidad, no un cambio urgente de producción. No crear sitios nuevos. La aceptación de D1 como SQLite también se debe acreditar. |
+
+No se agregó una base vacía ni desconectada, no se migró producción ni se reemplazó Auth. **SQLite deja de ser un bloqueo de implementación por la excepción confirmada por el usuario.** La conexión del candidato ya pasó lectura directa y SDK; el resto de la QA y publicación se evalúan por separado. La aceptación docente no sustituye las pruebas funcionales.
+</pre></section>
+<section id="fuente-4876cb5964eb"><h2>docs/entrega-2026/wireframe.md</h2><p>SHA-256 original: <code>536dc5e2798f2eacb9f274872cebbfc77dbbe6f1e5f511f4d930f89c89c3b118</code>. Contenido íntegro; no se reconstruyen prompts ni se consideran vigentes estas instrucciones.</p><pre># Wireframe y conexiones vigentes
+
+La propuesta del usuario se adapta en [SVG editable](wireframe.svg) y [PNG](wireframe.png), ambos versionados. Inicio conserva portada estática, destacados, Sobre DREAMS, opiniones, recientes y footer. El bloque «Explorá la selección / Tres formas de empezar» se eliminó completamente por solicitud expresa del03/11/2026, sin reemplazo ni contenido oculto.
+
+Mujer/Hombre/Unisex siguen accesibles desde el menú y son filtros de /catalogo.html. Se conservan producto.html?id=…, cuenta.html, carrito.html, checkout.html, checkout-resultado.html y /admin. Cuenta controla sesión, carrito porUUID y opiniones propias. El cupón se valida en servidor; el checkout permanece académico con Envío$0 y no crea pedidos comerciales ni descuenta stock. WhatsApp es un enlace externo sin envío automático.
+
+Este era el único carrusel implementado; el requisito de carrusel queda PENDIENTE/NO CUMPLE en la matriz. No se agregó un reemplazo. El dibujo describe la navegación, no acredita por sí mismo pruebas ni autoría manual de alumnos.
+</pre></section>
+<section id="fuente-336f63226cb4"><h2>docs/entrega-2026/zip.md</h2><p>SHA-256 original: <code>d7912bfadb90976249d89851fbedb7754d22b9d3cd7db1c475fdadd4b97e3659</code>. Contenido íntegro; no se reconstruyen prompts ni se consideran vigentes estas instrucciones.</p><pre># Entrega en GitHub y reproducción histórica
+
+Branch de trabajo: **`codex/admin-cards-audit`**, entrega mediante PR https://github.com/facumartea/dreams/pull/56 hacia **main**, branch predeterminada. La ficha de esa PR identifica el estado del merge y su SHA exacto. Las instrucciones del ZIP de GitHub sólo incluyen esta entrega después de la integración aprobada; no se genera un ZIP final por pedido del usuario.
+
+**Instrucción vigente:** el usuario confirmó **Martearena y Ruas** y pidió «no me generes un zip final subilo al github todo lo que falte y arregla lo que no va». Por tanto, se actualiza el repositorio y no se genera otro ZIP final. Si el usuario decide descargarlo después, el nombre acorde a los apellidos será `Martearena-Ruas-DREAMS.zip`. No se envió nada a Classroom.
+
+La comprobación histórica del ZIP se hizo con `git archive` del commit exacto, prefijo `dreams/`. Así incluye sólo archivos versionados: código, rúbrica2026, wireframe PNG y SVG, manual MD/PDF con capturas locales, BD y Mermaid, bitácora, matrices, tests, scripts, package y lockfile, `.env.example`. No incluye `.git`, node_modules, `.env` real ni credenciales de ejecución. La extracción limpia del commit `633aec35ce0bb05ad24e29d3c954b6d59b3ff651` pasó instalación frozen, sintaxis92 archivosJS, inventario106/1873 sin exceder40,390 tests y cuatro builds. [Resultado versionado](verificacion-zip.json). Las credenciales reales se excluyeron del entorno de ejecución de esa comprobación. El checkpoint posterior `df70b9c01a01af7ccb6ed9565a8fde657b2678c9` también pasó extracción limpia,390tests y cuatrobuilds; CI212SUCCESS. No regenerar estos archivos por rutina ni crear un ZIP nuevo sin un pedido posterior.
+
+Después de extraer en carpeta nueva, sin `.git` ni secretos:
+
+```sh
+cd dreams
+corepack pnpm install --frozen-lockfile
+corepack pnpm run check
+corepack pnpm run check:functions
+corepack pnpm test
+corepack pnpm run build:pages
+corepack pnpm run build:official
+```
+
+Los builds son locales/dry-run, no despliegues. También se validan los otros dos builds de CI. No se necesita clave productiva ni se promete arranque conectado sin un proyecto de desarrollo configurado. El manual explica uso, mientras README separa reproducción offline de conexión real.
+
+Para descargar desde GitHub con un SHA exacto, usar `https://github.com/facumartea/dreams/archive/&lt;SHA&gt;.zip` sustituyendo SHA por el checkpoint verificado. El botón Code/Download ZIP de la portada utiliza la branch seleccionada/predeterminada; no equivale automáticamente al contenido de una PR. El nombre definitivo debe respetar los apellidos confirmados y producto.
+
+## Extracción vigente sin ZIP final
+
+El código e86f4343851d9810623996d2b7d13504163340c0 se extrajo por `git archive HEAD | tar -x`, sin generar ZIP, sin `.git` y con entorno que excluye credenciales. Instalación frozen, sintaxis, inventario,476 tests y builds oficial/Pages aprobaron. [Resultado actual](extraccion-limpia.json). Los documentos posteriores no requieren secretos para descargarse.
+</pre></section>
+<section id="fuente-6e4b647eb62e"><h2>docs/documentacion.md</h2><p>SHA-256 original: <code>25b629f6512d5d08e8b344e19e481936498e252fdd366a05c9dfc325dc52d2c9</code>. Contenido íntegro; no se reconstruyen prompts ni se consideran vigentes estas instrucciones.</p><pre># Documentación técnica DREAMS
+
+## Arquitectura
+
+El frontend multipágina vive en `public/` y consume una API REST Express bajo `/api`. El servidor usa `@supabase/supabase-js` para Postgres y Supabase Auth. Las sesiones se mantienen en cookies HTTP-only de acceso y renovación; el carrito permanece en `localStorage` y no es una orden ni un pago.
+
+La definición versionada de datos está en `supabase/migrations/`. `supabase/schema.sql` es sólo un snapshot legacy y no debe usarse como fuente de despliegue.
+
+## Datos y seguridad
+
+Las tablas activas son `profiles`, `products`, `reviews` e `inquiries`. `favorites` se conserva vacía como estructura histórica protegida por RLS, pero ya no tiene interfaz ni API. La baseline declara claves foráneas, índices, triggers y RLS. La aplicación de servidor usa una clave secreta de Supabase; esa clave jamás debe exponerse al navegador.
+
+Helmet aplica CSP, las escrituras sensibles requieren sesión/rol, auth y consultas tienen rate limit, y los datos dinámicos se escapan antes de insertarse en HTML. Los roles se leen de `profiles.role`, no de metadata controlable por el usuario.
+
+## API
+
+### Catálogo
+
+- `GET /api/products` — filtros `search`, `brand`, `gender`, `category`, `max_price` y `sort`.
+- `GET /api/products/:id`
+- `GET /api/brands`
+
+### Autenticación
+
+- `POST /api/auth/register`
+- `POST /api/auth/login`
+- `POST /api/auth/logout`
+- `GET /api/auth/me`
+
+### Opiniones y consultas
+
+- `GET /api/reviews`
+- `POST /api/reviews` — requiere sesión.
+- `POST /api/inquiries`
+
+### Carrito
+
+- `POST /api/cart/quote` — valida IDs/cantidades, reconcilia precio y stock y genera la consulta con datos actuales.
+
+### Administración
+
+- `GET /api/admin/stats`
+- CRUD en `/api/admin/products`
+- `GET /api/admin/users`
+- `GET /api/admin/inquiries`
+- `GET /api/admin/reviews`
+
+Estas rutas exigen un perfil con `role = &#x27;admin&#x27;`.
+
+### Operación
+
+- `GET /api/config` — configuración pública permitida.
+- `GET /api/health` — readiness de API y Supabase.
+
+## Límites actuales
+
+No existen pagos, órdenes, recuperación de contraseña, uploads ni observabilidad completa. La baseline fue aplicada y verificada en el proyecto Supabase el 2026-08-28; persisten avisos no bloqueantes documentados en `CURRENT_STATE.md`. Consultar ese archivo y `AUDIT.md` para el detalle vigente.
+</pre></section>
+<section id="fuente-cfd0f3264302"><h2>docs/manual_de_uso.md</h2><p>SHA-256 original: <code>8cb8d8f11cbcf98403080d0942304879a2de84abe55a524abfa025e486c07e65</code>. Contenido íntegro; no se reconstruyen prompts ni se consideran vigentes estas instrucciones.</p><pre>&gt; Entrega2026 vigente: [índice completo](entrega-2026/INDICE.md). Este documento anterior es histórico y puede contener rutas, versiones o funciones retiradas.
+
+# Manual de uso DREAMS
+
+## Usuario
+
+1. Abrir la URL del entorno (en local, `http://localhost:3000`).
+2. Entrar a `Perfumes`.
+3. Buscar por nombre, marca o familia.
+4. Filtrar por marca, género o tipo.
+5. Abrir cualquier perfume.
+6. Revisar notas de salida, corazón y fondo.
+7. Revisar intensidad.
+8. Agregar el producto al carrito.
+9. Iniciar sesión para publicar opiniones o acceder al panel si la cuenta es administradora.
+10. Abrir el carrito para modificar cantidades o eliminar productos.
+11. Consultar el carrito o un perfume por WhatsApp.
+
+## Registro
+
+En `Mi cuenta`, seleccionar `Registrarme`, completar nombre, correo y contraseña.
+
+## Administrador
+
+1. Iniciar sesión con el correo administrador.
+2. Desde la cuenta aparecerá `Entrar al panel de administrador`.
+3. El panel permite crear, editar y eliminar productos.
+4. Las modificaciones se guardan en Supabase mediante la API del servidor.
+5. Volver a la tienda para comprobar el cambio.
+
+## WhatsApp
+
+Cada perfume tiene un botón de consulta que abre WhatsApp con un mensaje ya preparado. El número se configura de forma privada mediante `WHATSAPP_NUMBER` en Railway y no se versiona.
+</pre></section>
+<section id="fuente-55a680000831"><h2>docs/wireframe.md</h2><p>SHA-256 original: <code>e5d4c70b11347678fde0c2172942acf18ee5202f87938287f06d7bfea94487f8</code>. Contenido íntegro; no se reconstruyen prompts ni se consideran vigentes estas instrucciones.</p><pre>&gt; Entrega2026 vigente: [índice completo](entrega-2026/INDICE.md). Este documento anterior es histórico y puede contener rutas, versiones o funciones retiradas.
+
+# Wireframe general
+
+INICIO
+│
+├── Header
+│   ├── DREAMS
+│   ├── Navegación
+│   ├── Login
+│   ├── Favoritos
+│   └── Carrito
+│
+├── Hero
+│
+├── Selección destacada
+│
+├── Banner editorial
+│
+├── Sobre DREAMS
+│
+├── Opiniones
+│
+└── Footer
+
+CATÁLOGO
+│
+├── Título
+├── Buscador
+├── Filtros
+├── Ordenamiento
+└── Grilla de perfumes
+
+PRODUCTO
+│
+├── Imagen
+├── Marca
+├── Nombre
+├── Precio
+├── Intensidad
+├── Notas de salida
+├── Notas de corazón
+├── Notas de fondo
+├── Agregar al carrito
+├── Favorito
+└── Consultar por WhatsApp
+
+CARRITO
+│
+├── Productos agregados
+├── Cantidades
+├── Eliminar
+├── Subtotal
+├── Total
+└── Consultar por WhatsApp
+
+CUENTA
+│
+├── Login
+├── Registro
+├── Sesión
+└── Panel admin si corresponde
+
+ADMIN
+│
+├── Lista de productos
+├── Crear
+├── Editar
+├── Eliminar
+└── Guardar en Supabase mediante API
+</pre></section>
+<section id="fuente-2c00c100ff25"><h2>docs/auditoria-2025/informe.md</h2><p>SHA-256 original: <code>2bdd53d8c9d95bcaaa15dbbea784d049b1a28844bb0cd7d4a867384467eff745</code>. Contenido íntegro; no se reconstruyen prompts ni se consideran vigentes estas instrucciones.</p><pre># Auditoría de entrega: informe provisional para la rúbrica 2025
+
+**ESTADO: BLOQUEADO para cerrar la auditoría del PDF 2025.** El archivo solicitado no está entre los adjuntos disponibles ni en el repositorio auditado; sólo se encontró la rúbrica 2026 anterior. Se pidió el PDF 2025 al usuario al iniciar. No se utilizó otra edición como equivalente ni se inventaron sus fechas, orden o condiciones de aprobación.
+
+La auditoría técnica independiente y los gráficos sí están preparados. La [matriz provisional](matriz-preliminar.md) sigue el listado del pedido, **no el orden de un PDF que no se pudo leer**. Sus estados no constituyen una certificación definitiva de la rúbrica.
+
+## 1. Alcance de la descarga
+
+- Repositorio: `facumartea/dreams`.
+- Branch predeterminada verificada por la API de GitHub: `main`.
+- Commit auditado: `b60e33db5d9c3925808f889f6581a75dc1738ac0`.
+- Árbol local limpio antes de crear la branch documental `docs/auditoria-rubrica-2025`.
+- El commit contiene 325 archivos versionados: [manifiesto completo](archivos-versionados-commit-auditado.txt).
+- No se incluyeron archivos temporales, carpetas de trabajo externas ni contenido de PRs por el mero hecho de existir. No se generó ningún ZIP.
+
+Había 22 PRs abiertas antes de esta auditoría. Nueve HEAD ya son ancestros del commit auditado; las otras 13 no lo son. Una PR abierta no equivale siempre a código excluido: algunas tienen otra base o sus cambios se incorporaron antes. Ser ancestro tampoco garantiza que todos sus archivos sigan idénticos. [Listado con ramas, SHA y comprobación](alcance.json). La descarga de GitHub incluye el árbol de la rama seleccionada, no todos los archivos locales ni todas las PRs.
+
+## 2. Contraste con la oficial
+
+La oficial es https://dreams-perfumes.pages.dev/. Su frontend publicado `d366551` está incluido en el commit auditado; el backend sigue en `ef043065`, fuente `08635cd`.
+
+En esta ejecución se observaron Inicio, catálogo, detalle, Nosotros, Cuenta, carrito y checkout en Chromium de 390 y 1440 px: respuestas 200, sin desbordamiento horizontal ni errores JavaScript observados. El diálogo de filtros abrió correctamente. Se bloquearon las peticiones del navegador distintas de GET/HEAD antes de llegar a red. No se enviaron formularios, mensajes ni pagos.
+
+GET `/admin` devolvió 403. La inspección remota autenticada de sus módulos queda **BLOQUEADA por falta de una sesión autorizada disponible**. Las láminas Admin se basan en `views/admin.html`, sus controladores y evidencia previa identificada; no presentan una sesión nueva ni eluden autorización.
+
+Cinco assets comparados coinciden con `main`: `app.js`, `carrito.js`, `presentation.js`, `academic-inputs.js` y `style.css`. **`checkout.js` no coincide**: la oficial sirve el archivo legado de `ec04a358`; su SHA coincide con ese commit y contiene `setup_checkout` de 113 líneas, entre 134 y 246. Este archivo remoto no se suma al inventario del código descargable. [Hashes y observaciones](contraste-oficial.json) · [conteo remoto](checkout-oficial-inventario.json).
+
+La evidencia de registro/login/sesión/logout/checkout de PR #57 se conserva como prueba previa sobre el mismo backend `ef043065`, diferenciada de las lecturas actuales. No se convierte evidencia Admin de otra versión en una prueba remota nueva. No se corrigió el proxy ni se desplegó nada durante esta auditoría.
+
+## 3. Diseño
+
+DREAMS tiene marca de fantasía, símbolo PNG, fotografías de producto, iconos, tokens de color y jerarquías tipográficas. Las variantes de Mujer, Hombre y Unisex usan una misma estructura con paletas específicas; coherencia no significa que todas las páginas tengan los mismos colores de píxel.
+
+El PNG limpio de 56 × 79 fue inspeccionado visualmente. Se observa intención de diseño dorada con transparencia y suavizado. **No se declara incumplimiento contando tonos de antialias como tintas adicionales.** Falta un original vectorial o apropiado y evidencia de autoría/procedencia para una valoración completa. Las licencias individuales de imágenes tampoco están acreditadas. No se inventan derechos de uso.
+
+Navegación, enlaces, etiquetas y jerarquías están presentes. La revisión no equivale a una auditoría completa WCAG ni a una calificación estética docente. Véanse D01–D06 de la matriz.
+
+## 4. Programación y funcionamiento
+
+La arquitectura es compatible con la opción de sitio HTML/CSS/JS que consume una API: hay más de cuatro páginas distintas y JavaScript propio. Los filtros Mujer/Hombre/Unisex no se cuentan como tres HTML adicionales. Falta contrastar la modalidad elegida con el PDF 2025 y la evidencia de elección del grupo.
+
+El recorrido real es navegador → API propia → backend → Supabase Auth/Data API. La documentación explica ese uso y enlaza al proveedor. WhatsApp se identifica como enlace externo, no como API de mensajería. **No se exige SQLite a la opción de sitio web ni se traslada esa exigencia de la rúbrica 2026.**
+
+**Carrusel: NO CUMPLE frente al requisito mencionado en el pedido.** El único carrusel fue retirado por solicitud expresa en PR #58. No queda otro, ni se mantiene oculto ni se agrega un reemplazo en esta auditoría.
+
+HTML semántico y responsive están presentes; las rutas observadas pasaron en 390/1440 px. Hay módulos y comentarios útiles, junto con estilo compacto y archivos históricos heterogéneos. La valoración de legibilidad es parcial; no se refactorizó ni se comprimió código.
+
+El [control de 40 líneas](control-40-lineas.md) distingue tres alcances:
+
+1. **Repositorio JavaScript:** 117 archivos, 2.147 registros de funciones/callbacks/métodos/bloques, máximo 40 y cero excesos.
+2. **SQL/PLpgSQL propio:** cuatro funciones; `public.dreams_cart_operation` tiene 53 líneas, de 23 a 75, en la migración del carrito.
+3. **Asset remoto distinto:** `setup_checkout` tiene 113 líneas en el `checkout.js` servido por la oficial.
+
+No se ocultan los dos últimos hallazgos con el PASS JavaScript. La aplicación pedagógica del límite a SQL y al programa principal requiere el literal del PDF y criterio del profesor.
+
+## 5. Documentación
+
+En el commit auditado había manual Markdown/PDF, mapa de navegación SVG/PNG, descripción de BD con Mermaid y explicación de API. Su presencia no demuestra por sí sola que sean completos o fieles.
+
+El wireframe anterior era principalmente un mapa general. Esta tarea agrega **17 láminas por pantalla, con escritorio y móvil**, mapa de navegación y fuentes editables. Se rotulan «Documentación retrospectiva del diseño implementado»: no son una preentrega anterior ni un trabajo manual atribuido a los integrantes.
+
+El nuevo D.E.R. se contrastó con columnas, restricciones e índices remotos de las nueve tablas públicas. Incluye PK, FK, claves compuestas y nulabilidad; separa `auth.users`, tablas activas y las históricas. Los snapshots JSON no se dibujan como FK a productos. Se corrige documentalmente la cardinalidad Auth → perfil, sin borrar el diagrama histórico. El alcance no es el esquema interno completo de Supabase. [Diccionario y diferencias](base-de-datos.md).
+
+La documentación nueva sólo entra en la descarga de `main` después de integrar su PR; no se afirma que ya existiera en `b60e33d`.
+
+## 6. Aspectos académicos
+
+El usuario confirmó los apellidos Martearena y Ruas; el footer y README los reflejan. No hay acta oficial del grupo ni evidencia suficiente de permanencia, asistencia, participación o autonomía.
+
+Fechas, entregas previas/final, formato y nombre del archivo, y condiciones de aprobación quedan **NO VERIFICABLE** hasta disponer del PDF 2025 y los comprobantes necesarios. No se toman las fechas de 2026 ni se supone que el calendario 2025 aplique a otra edición.
+
+La guía de defensa ayuda a practicar, pero no prueba dominio individual. Git y la bitácora de IA no demuestran trabajo en clase. No se atribuyen a los alumnos cambios realizados por IA, no se garantiza una nota y no se envía nada a Classroom.
+
+## 7. Qué falta y qué conviene revisar
+
+**A. Incumplimiento confirmado frente al listado del pedido:** carrusel ausente. Hallazgos técnicos confirmados: función SQL de 53 líneas y función del asset remoto de 113 líneas. Su valoración exacta bajo la rúbrica queda pendiente de su fuente original.
+
+**B. Cumplimientos parciales:** alineación de runtime y repositorio; revisión Admin autenticada; interpretación del límite sobre SQL; reproducción del Worker fijado a `marca` frente al baseline que crea `brand`.
+
+**C. Evidencia faltante:** PDF 2025, comprobantes de entregas, nómina y aportes individuales, participación y defensa. Una nueva revisión Admin, si se requiere, debe hacerse con una sesión supervisada, sin pedir secretos por chat.
+
+**D. Documentación contradictoria u obsoleta:** la carpeta `entrega-2026` no sustituye esta consigna; bloques históricos de CURRENT_STATE/PLAN/CHANGELOG y PRs abiertas describen Auth bloqueada, carrusel y hosting de versiones anteriores. El contador documentado en `funciones.md` revisa JavaScript, no SQL. El D.E.R. anterior hacía obligatorio el perfil para todo usuario Auth. `schema.sql` es histórico y usa `brand`; el remoto usa `marca`. Todo se conserva y se señala.
+
+**E. Elementos útiles adicionales:** tests, CI, seguridad, RLS, rollback, guía de defensa, bitácora transparente y documentación de procedencia/licencias. No se exige un original vectorial para dar por válido un logo cuyo formato requerido es PNG. No se convierten en prueba de asistencia ni en requisitos inventados.
+
+**F. Elementos para revisar al preparar la entrega, sin eliminarlos aquí:** capturas históricas redundantes, matrices de distintas ediciones, configuraciones de preview/Railway y módulos preparados o retirados de Mercado Pago/demo/favorites. «No exigido» no significa «hay que borrarlo». No hay `node_modules` ni `.env` real versionados; el escaneo acotado de patrones PEM no encontró claves privadas. Esto no certifica toda la historia Git libre de secretos.
+
+## 8. Pendientes priorizados
+
+1. **P0:** adjuntar y leer completo el PDF 2025; ordenar la matriz según sus criterios y transcribir sus fechas y condiciones literalmente.
+2. **P1:** resolver con el profesor el carrusel ausente y el alcance del límite de 40 sobre SQL. Cualquier cambio funcional correspondería a otra tarea autorizada.
+3. **P1:** alinear en otra tarea el `checkout.js` publicado con el código revisado, con pruebas y rollback. No se modificó aquí.
+4. **P1:** aportar comprobantes y realizar defensa individual; decidir si hace falta una inspección Admin supervisada.
+5. **P2:** aportar originales/licencias y usar un índice que distinga vigente, histórico y ediciones, sin borrar evidencia.
+
+## 9. Pruebas ejecutadas
+
+- `corepack pnpm check`: 103 archivos, PASS.
+- `corepack pnpm test`: 489 PASS, cero fallos/omitidos, fixtures aislados.
+- `corepack pnpm build:pages` y `corepack pnpm build:official`: PASS; sólo build/dry-run, sin publicación.
+- Instalación frozen e inventario desde extracción TAR sin `.git`: PASS, 117/2147/cero excesos. No se generó ZIP.
+- Navegador oficial: GET/HEAD; peticiones de otro tipo abortadas antes de red. Esquema remoto: sólo metadatos.
+
+[Resultados estructurados](pruebas.json). No se prometió arranque conectado sin configuración de desarrollo. No se realizaron cambios de aplicación, datos, Auth, credenciales, esquema, configuración ni despliegues.
+
+## 10. Límite del cierre
+
+La parte gráfica y técnica independiente está completa. **La auditoría definitiva, en el orden del PDF 2025, permanece BLOQUEADA por falta del archivo.** La matriz actual es provisional y sigue el pedido, sin fingir haber leído la fuente.
+
+El commit de documentación y la integración se registran en la PR de GitHub. No alteran el commit auditado `b60e33d`. Los aspectos académicos sólo pueden acreditarlos los integrantes y el profesor.
+</pre></section>
+<section id="fuente-b6ed615626db"><h2>docs/auditoria-2025/matriz-preliminar.md</h2><p>SHA-256 original: <code>bc18e82ae8e511dc2ccf9728c7751372ab386b85e522d35a8c003d9db76c6826</code>. Contenido íntegro; no se reconstruyen prompts ni se consideran vigentes estas instrucciones.</p><pre># Matriz PRELIMINAR — fuente2025 pendiente
+
+**NO es una transcripción ni sigue un orden2025 verificado.** Se organiza únicamente según el listado del pedido: Diseño→Programación→Documentación→Académico. El PDF «Rubrica2025-IntegracionDiseñoProgramación.docx.pdf» no está entre los adjuntos accesibles ni en el commit auditado. No se usó el PDF 2026 como sustituto. No se inventan criterios adicionales, fechas o condiciones de aprobación.
+
+Estados referidos a b60e33d y a la evidencia indicada. CUMPLE significa evidencia técnica acotada respecto del punto solicitado, no cumplimiento definitivo de un PDF no leído. Las mejoras documentales de esta tarea se distinguen de lo que ya estaba en el commit auditado.
+
+| ID | Requisito del pedido (literal2025 pendiente) | Dónde/evidencia | Estado | Qué tiene / límite | Qué falta / acción | Prioridad | Requiere |
+|---|---|---|---|---|---|---|---|
+| D01 | Marca de fantasía e identidad propia | public/index.html:43; docs/entrega-2026/diseno.md | CUMPLE | DREAMS identifica perfumería; isologo/textos propios de la propuesta. No se acredita registro legal ni autoría individual. | Aportar original/proceso si el profesor lo exige. | P2 | Integrantes |
+| D02 | Logo simple PNG, máximo3colores de diseño | public/assets/dreams-isologo-clean.png; public/cuenta.html | CUMPLE | PNG56×79 inspeccionado: símbolo simple dorado con transparencia y antialias; intención cromática compatible con máximo3colores. No contar tonos de suavizado como tintas distintas. | Original de mayor resolución y proceso de autoría son recomendaciones; no se exige vector como requisito inventado. Aclarar sólo si el docente interpreta distinto las tintas del raster. | P3 | Integrantes/profesor |
+| D03 | Paleta coherente | public/css/style.css:1–23,99–113 | CUMPLE | Tokens negro/marfil/dorado y variantes Mujer/Hombre/Unisex coherentes por colección. | Valoración estética corresponde al profesor; no exigir todos los píxeles iguales. | P3 | Profesor |
+| D04 | Jerarquías tipográficas | public/css/style.css:20–26; public/index.html:43 | CUMPLE | H1/H2/H3, display/UI, tamaños y eyebrow diferenciados. | Sin corrección funcional autorizada; revisar originalidad en defensa. | P3 | Profesor |
+| D05 | Navegación clara | public/index.html:31–40; public/js/navigation.js; contraste-oficial.json | CUMPLE | Menú/colecciones/cuenta/carrito/footer presentes; filtros visibles;390/1440 sin overflow ni pageerror en las rutas observadas. | WCAG completa y dispositivos físicos no auditados. | P3 | — |
+| D06 | Imágenes e íconos pertinentes | public/index.html:53–62; public/producto.html; public/assets | CUMPLE | Fotografía de frasco y SVG de cuenta/carrito pertinentes. La licencia individual no está acreditada, pero no se convierte en un requisito de rúbrica no leído. | Como recomendación adicional, documentar procedencia y licencias si están disponibles, sin inventarlas. | P3 | Integrantes |
+| P01 | Modalidad del proyecto | README.md; package.json; public/*.html; server/app.js | PARCIAL | Arquitectura compatible con sitioHTML/CSS/JS consumiendoAPI y backendNode. Falta el PDF2025 y acta de modalidad elegida. | Confirmar opción del PDF y elección del grupo. No trasladar SQLite de2026 a esta opción. | P1 | Usuario/profesor |
+| P02 | Consumo real de una API | worker/official-client.mjs; server/app.js; docs/entrega-2026/api.md | CUMPLE | Frontend→/api→backend→SupabaseAuth/DataAPI. GETproductos real y metadatos remotos verifican dependencia externa; sin enviar formularios nuevos. | El alcance exacto del requisitoAPI debe contrastarse con PDF faltante. | P2 | Profesor |
+| P03 | Mínimo4páginas si modalidad sitio | public/index.html,catalogo.html,producto.html,nosotros.html,cuenta.html,carrito.html,checkout.html,checkout-resultado.html | CUMPLE | Más de4documentos públicos distintos; los filtros Mujer/Hombre/Unisex no se cuentan como tresHTML adicionales. | Confirmar literal y modalidad del PDF; no confundir rutas con páginas independientes. | P2 | Profesor |
+| P04 | JavaScript | public/js; server; worker; pages | CUMPLE | Lógica propia de UI, API, sesiones, carrito, filtros y checkout.489testsPASS. | Comprensión individual requiere defensa. | P2 | Integrantes |
+| P05 | Carrusel | public/index.html; public/js/app.js; public/css/style.css; PR58 | NO CUMPLE | Único carrusel eliminado por solicitud expresa anterior. No queda otro; no se conserva oculto. | Aclarar con profesor o autorizar un reemplazo en otra tarea; no se implementa en esta auditoría. | P1 | Usuario/profesor |
+| P06 | HTML semántico | public/index.html:31–115; public/catalogo.html; views/admin.html | CUMPLE | Header/nav/main/section/article/footer, labels, status y diálogo de filtros. | No equivale a certificado WCAG; revisión completa fuera de alcance. | P3 | — |
+| P07 | Responsive | public/css/style.css; contraste-oficial.json | CUMPLE | 390/1440 emulados: siete rutas, filtros visibles, sin overflow y sin erroresJS observados. | Safari/celular físico y todos los estados no verificados hoy. | P3 | — |
+| P08 | Funcionamiento/conexión | contraste-oficial.json; docs/evidence/coupon-academic-20261103/remote-browser.json | PARCIAL | Lecturas actualesPASS y evidencia previa de Auth/checkout sobre mismo backendef043065. En esta tarea no se escriben datos. AdminautenticadoBLOQUEADO, no hay sesión disponible. | Habilitar revisión supervisada de Admin si se necesita evidencia nueva, sin pedir secretos por chat. | P1 | Integrantes |
+| P09 | Indentación/organización/comentarios | server/app.js; public/js; worker; scripts; tests | PARCIAL | Módulos y comentarios útiles presentes; mezcla de archivos legibles y código compacto/varias instrucciones por línea en históricos y tests. | Revisión cualitativa docente; no se refactoriza ni comprime aquí. | P2 | Integrantes/profesor |
+| P10 | Funciones y principal≤40líneas | scripts/function-inventory.mjs; control-40-lineas.md | PARCIAL | RepositorioJS:117archivos/2147registros/máximo40/0excesos. SQLpropio: dreams_cart_operation53líneas. Oficialcheckout.js distinto consetup_checkout113líneas. | Confirmar alcance docente sobreSQL y runtime; planificar correcciones/versionado fuera de esta tarea. | P1 | Profesor/implementación posterior |
+| O01 | Pseudocódigo y/o wireframe | docs/entrega-2026/wireframe.{png,svg,md} | PARCIAL | Enb60e33d existe mapa general, no láminas detalladas por pantalla/móvil. Esta solicitud genera17láminas y mapa nuevos, retrospectivos, sin fingir preentrega. | La documentación nueva queda disponible tras integrar esta PR; no retrofecharla. | P2 | Integrantes |
+| O02 | Manual de uso | docs/entrega-2026/manual.md ymanual.pdf | CUMPLE | Guía5páginasPDF con capturas yMarkdown: cuentas, catálogo, carrito, checkout, cupones, Admin y recuperación. | Los documentos históricos contradictorios deben identificarse al corregir. | P2 | Integrantes |
+| O03 | DiseñoBD porque se usa una | docs/entrega-2026/base-de-datos.md/.mmd; supabase/migrations | PARCIAL | Esquema textual/Mermaid real e histórico separados; no habíaDERPDF/PNG completo. CardinalidadAuth→perfil anterior exageraba obligatoriedad. NuevoDERcontrastaPK/FK/nulabilidad y9tablas remotas. | Entregar nuevosPDF/PNG/DOT/SVG y diccionario sin sustituir el histórico ni afirmar esquema completo internoAuth. | P1 | Documentación de esta PR |
+| O04 | Link API y explicación más allá del código | docs/entrega-2026/api.md:3–31 | CUMPLE | Links aSupabase y recorrido por capas con ejemplos sin secretos. WhatsApp es enlace, noAPI. | Explicación oral por integrantes no acreditada. | P2 | Integrantes |
+| O05 | Documentos accesibles para corrección | docs/entrega-2026/INDICE.md; archivos-versionados-commit-auditado.txt | PARCIAL | Documentos versionados y relativos; carpeta2026 dominante para una auditoría que solicita2025. Nuevos gráficos no estaban enb60e33d. | Usar nuevo índice; verificar merge de laPR documental antes de descargar main. | P1 | Integrantes |
+| A01 | Máximo3integrantes según el pedido | README.md yfooter; confirmación del usuario en conversación | NO VERIFICABLE | Dos apellidos confirmados: Martearena yRuas. No hay acta oficial del grupo ni PDF2025 disponible para verificar el literal. | Aportar nómina/consigna2025; no usar límite2de2026 como equivalente. | P1 | Integrantes/profesor |
+| A02 | Entregas previa/final y fechas literales | PDF2025 no disponible; Git/CHANGELOG no son comprobantes | NO VERIFICABLE | No se conocen las fechas textuales2025 y no se trasladan las de2026. No hay recibosClassroom. | AdjuntarPDF2025 y comprobantes de entregas reales. No asumir calendario2025 aplicable a2026. | P0 | Usuario/integrantes |
+| A03 | Participación y trabajo en clase | docs/entrega-2025/registro-prompts.md (bitácora consolidada); historialGit | NO VERIFICABLE | Git y trabajoIA no prueban asistencia ni aporte individual. | Aportar evidencia propia y validación docente. | P1 | Integrantes/profesor |
+| A04 | Autonomía | Bitácora/historial técnico | NO VERIFICABLE | No observación de clase ni registro independiente; no atribuir al grupo resolución hecha porIA. | Evidencia de proceso y evaluación docente. | P1 | Integrantes/profesor |
+| A05 | Explicar código y documentación individualmente | docs/entrega-2026/defensa.md | NO VERIFICABLE | Hay guía y ejercicios, no prueba de dominio. | Practicar y realizar defensa individual; no declarar competencia por tener una guía. | P1 | Cada integrante/profesor |
+| A06 | Formato/nombre del archivo de entrega | docs/entrega-2026/zip.md; pedido actual noZIP | NO VERIFICABLE | SinZIPgenerado, conforme a autorización. PDF2025 y su patrón literal de nombre faltan. | Confirmar formato/nombre exactos conPDF y verificar archivo que entreguen los integrantes; no enviarlo automáticamente. | P0 | Usuario/integrantes |
+| A07 | Condiciones de aprobación | PDF2025 no disponible | NO VERIFICABLE | No se infieren umbrales ni puntajes de2026. | Leer literal2025 y dejar la calificación al profesor. | P0 | Usuario/profesor |
+</pre></section>
+<section id="fuente-d56b99927e5a"><h2>docs/entrega-2025/revision-limpieza-20261110.md</h2><p>SHA-256 original: <code>f8a6f3748b7c2473da21aff102bff9dbb67b8563d4fd8d05e2a28268981c4673</code>. Contenido íntegro; no se reconstruyen prompts ni se consideran vigentes estas instrucciones.</p><pre># Revisión acotada de limpieza · 10/11/2026
+
+Base: main `60451cabe5ff9b78f97777d64120e5ff9a3238b2`. Se reutilizan [inventario anterior](inventario-archivos.json) y [limpieza PR60](limpieza.json). No se repite su eliminación de NEXT_CHAT_PROMPT.md ni se mueve nuevamente el histórico.
+
+## Alcance y método
+
+Se enumeraron 452 archivos versionados de la base mediante git ls-files y se compararon sus hashes SHA-256. Esto detecta duplicados exactos; no equivale a volver a auditar el contenido de los 452 archivos. Para los candidatos se buscaron referencias en código/imports, scripts, CI, configuración, documentación y publicación mediante rg, incluyendo coincidencias por nombre y ruta. No se ejecutan reparadores, seeds ni despliegues.
+
+## Retirado
+
+- `docs/entrega-2026/capturas/inicio-oficial.png`: copia binaria exacta de [captura preservada](../evidence/home-removal-20261103/official-home-1440.png). SHA-256 de ambas: `711d98346b5ad4090168e76cda8a5448107a08fe9887df9fe9d04cfa5db1cd53`. No hay referencia activa desde código, scripts, CI, configuración, manual ni índice. La copia conservada mantiene la evidencia visual original. No se elimina ningún recurso servido por la aplicación.
+- Las únicas menciones de la ruta retirada están en los manifiestos históricos `inventario-archivos.csv`, `inventario-archivos.json` y `../auditoria-2025/archivos-versionados-commit-auditado.txt`. Esos archivos describen una instantánea anterior; se conservan sin reescribirla. Esta nota explica la diferencia con el estado actual.
+
+## Conservado
+
+| Grupo o candidato | Motivo |
+|---|---|
+| public/, server/, views/, pages/, worker/ y templates/ | Aplicación y recursos compartidos. No se modifica código ni se retiran assets utilizados. |
+| package.json, lockfile, configuración y ejemplos sin secretos | Instalación, compilación y publicación reproducibles. |
+| test/, scripts/, CI, auditorías de seguridad | Verificación y mantenimiento; una fecha antigua no los vuelve descartables. |
+| supabase/schema.sql, migraciones y rollback | Historia de estructura y recuperación. No reescribir una migración aplicada. |
+| Manual, wireframes, D.E.R., rúbricas e IA | Evidencia académica necesaria; el nombre entrega-2026 no convierte esa rúbrica en fuente de la evaluación 2025. |
+| docs/history/ y evidencia única | Antecedentes ya ordenados en PR60. No se oculta el uso de IA. |
+| collection-filters/local-browser.txt y official-full-browser.txt | Aunque son iguales, distinguen fases local y oficial; su procedencia documentada aporta evidencia. |
+| inicio-cabeceras-20261105/inicio-escritorio-local.png e inicio-escritorio.png | Igual contenido, contexto de captura local/remota distinto; no borrar por hash solamente. |
+| scripts/repair-official-secret.mjs y grant-google-admin.js | Herramientas de mantenimiento o históricas con referencias/pruebas; no se ejecutan ni se elimina una utilidad cuyo propósito sigue acreditado. |
+| Bitácora previa y guía breve de entrega-2026 | Se conserva el histórico y se enlaza la guía ampliada vigente, sin duplicar manual ni gráficos. |
+
+No se encontraron otros temporales versionados inequívocos para retirar en este alcance. No se eliminan archivos dudosos ni se limpia por nombre solamente. No se archivan nuevos documentos: el histórico de PR60 permanece en su ubicación.
+
+## Privacidad y autoría
+
+No se versionan audios, la transcripción privada ni el Word adjunto original, que incluía esa transcripción. La nueva guía resume temas sin identificar al participante. El registro conserva ocho extractos aportados y fuentes disponibles como historial parcial; no inventa textos, fechas, revisión humana ni participación. No se consultan secretos, datos de clientes ni hashes de contraseñas.
+
+## Validación
+
+[Verificación documental de esta entrega](verificacion-defensa-20261110.md). Las rutas API se contrastan estáticamente en [endpoints-verificados.json](endpoints-verificados.json); no se presentan como nuevas pruebas remotas. No hay deployment por documentación.
+</pre></section>
+<section id="fuente-45dc9355a04f"><h2>docs/entrega-2025/verificacion-defensa-20261110.md</h2><p>SHA-256 original: <code>b42742a6fc7f0eb2a84aedd036f02169eadcfd6d5c1c17029f95abde075d76e4</code>. Contenido íntegro; no se reconstruyen prompts ni se consideran vigentes estas instrucciones.</p><pre># Verificación documental · defensa oral 10/11/2026
+
+## Alcance
+
+Base de código auditada: main `60451cabe5ff9b78f97777d64120e5ff9a3238b2`, igual a la referencia de la guía adjunta. Branch documental: `docs/defensa-oral-prompts-20261110`. No se integra trabajo funcional de otras PR. Se observaron PR abiertas anteriores #32, #35–#55 (con saltos); su presencia no las incorpora a esta entrega.
+
+No se accede a filas remotas, contraseñas, hashes, credenciales ni sesiones. No se modifica la aplicación, Auth, configuración o datos. No hay ZIP, seed, reset, migración ni deployment. No se repite QA funcional ya acreditada; la evidencia histórica conserva fecha y código.
+
+## Comprobaciones de esta tanda
+
+| Comprobación | Resultado |
+|---|---|
+| GitHub/main y estado local al inicio | main 60451ca, sin cambios locales; branch propia creada. |
+| Guía adjunta y temas de los tres audios | Contrastados con código; transcripción e identificación del participante excluidas de publicación. |
+| Inventario API con parser Acorn | 46 combinaciones únicas, las 46 coinciden en método, ruta, archivo y línea. Incluye route(...), options.route(...) y app.get/post(...). No es prueba remota de funcionamiento. |
+| Habilitación de rutas | Contrastada con official-policy.js y configuración del Worker: 38 habilitadas por política, 2 Google preparadas y 6 bloqueadas/históricas. Los permisos siguen siendo necesarios. |
+| Fichas de funciones y prácticas | 13 fichas; archivos, símbolos y nombres de tests contrastados. Los ejercicios no se declaran realizados por alumnos. |
+| Seguridad conceptual | No hay dependencia cors/configuración ACAO en server/pages/worker revisados. Bcrypt se atribuye a documentación de Supabase, no a una implementación local. |
+| Fuente Markdown → Word | Pandoc; formato de página A4, texto 11 pt, tablas 9,5 pt, cabecera/pie y encabezados repetidos de tabla. |
+| Word → PDF | LibreOffice headless; 25 páginas con texto seleccionable. Word editable, sin transcripción privada. |
+| Inspección visual | 26 páginas iniciales renderizadas e inspeccionadas mediante 3 láminas de contacto. Se retiró un salto que producía una página casi vacía; versión final de 25 páginas, última revisada a mayor tamaño. Sin recortes ni superposiciones observadas. |
+| Privacidad y enlaces | Escaneo de patrones sensibles sobre documentos nuevos y texto Word/PDF; comprobación de referencias relativas y rutas. No se publican los adjuntos privados originales. |
+| Eliminación | Una captura duplicada exacta sin referencias activas; su copia/evidencia original permanece. Manifiestos históricos no se reescriben. |
+| Diff | Sólo documentación, continuidad, índice y retirada de una imagen documental. Sin cambios en código funcional, configuración, dependencias ni assets de la web. |
+
+## Reproducción de verificaciones documentales
+
+- Abrir `endpoints-verificados.json` y comparar método/ruta con la línea indicada; el cotejo de esta tanda se hizo además con AST Acorn, sin enviar peticiones a la API.
+- Desde esta carpeta: `pandoc defensa.md -f gfm -t docx -o defensa-revisada.docx` genera una copia editable desde la fuente. El Word entregado añade estilos de legibilidad; no necesita generar otro para estudiar.
+- Abrir defensa.docx con Word/LibreOffice y exportar a PDF; verificar enlaces, tablas y páginas antes de sustituir los entregables.
+- `git diff --check` verifica espacios del diff; no acredita por sí solo contenido ni funcionamiento remoto.
+- El CI obligatorio del repositorio ejecuta auditoría de dependencias, sintaxis, inventario de funciones, tests y builds sin publicar. Su resultado se registra en la PR; no se interpreta como nuevo QA remoto de Admin/Auth.
+
+## Estado de GitHub
+
+Entrega por [PR #63](https://github.com/facumartea/dreams/pull/63), branch `docs/defensa-oral-prompts-20261110`. Checkpoint documental `2cf4eb404e17c8ca2843b3d73d1266ce4911792e` subido y cotejado con el remoto. [CI #252](https://github.com/facumartea/dreams/actions/runs/42925703488) **aprobado** sobre ese checkpoint: auditoría de dependencias sin vulnerabilidades conocidas, sintaxis, inventario de 121 archivos/2200 registros sin excesos, 493 tests aprobados, 0 fallidos y 4 SQL omitidos sin PostgreSQL de prueba; cuatro builds sin deployment aprobados.
+
+El commit de cierre sólo añade esta evidencia y enlaces: el Word/PDF y la aplicación no cambian. La integración exige también el CI de ese cierre aprobado; su estado final y SHA de integración se consultan en la PR para no inventar un hash autorreferente. La oficial conserva su deployment anterior; push e integración documental no significan publicación web.
+
+## Límites reales
+
+El registro de prompts sigue siendo PARCIAL: hay extractos sin fecha/contexto y tramos originales anteriores ausentes. La bitácora histórica no equivale a originales literales. No se inventan revisión humana, autoría, fechas de clase, preentregas ni dominio individual. El simulacro empieza después de entregar los archivos y espera respuesta antes de corregir.
+</pre></section>
+</body></html>

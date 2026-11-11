@@ -822,3 +822,13 @@ ENTREGA
 El objetivo no es borrar la mayor cantidad posible:
 es dejar únicamente lo necesario, con las excepciones que yo apruebe.
 ```
+
+## H. Raíz con sólo README y reducción de carpetas · 10/11/2026 local
+
+- Fecha: 10/11/2026, contexto horario del usuario en Buenos Aires. La branch usa 20261111 por la fecha UTC inicial; no se cambia ese nombre para aparentar otra etapa.
+- Prompt original completo disponible: «reduci todo lo  mas posible de esta imagen tiene que quedar solo el reedme y de las carpetas reduci lo mas posible». La captura muestra archivos de la raíz; no se inventa contenido adicional de ella.
+- Objetivo: reducir archivos visibles en la raíz y documentación repetida sin romper instalación, publicación futura ni entrega.
+- Resultado: proyecto ejecutable en app/; raíz con README y carpetas app/, docs/, .github/. Históricos consolidados en cuatro HTML sin JavaScript, con contenido original verificable. Dos duplicados exactos unificados preservando sus procedencias como alias. Configuración necesaria, tests, migraciones, material académico, capturas únicas y fuentes editables conservados.
+- Evidencia: PR64 y second_phase de docs/limpieza-20261111.json. No se modifica la oficial ni se ejecuta publicación por la reorganización.
+- Pruebas del agente: registrar instalación limpia, regresiones, límite40, builds, integridad de archivos movidos y contenido histórico en second_phase.checks; no atribuir QA remota nueva a estas pruebas.
+- Revisión humana: esta solicitud autoriza la reducción. No acredita revisión de código ni dominio de los integrantes.
