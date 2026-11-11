@@ -832,3 +832,13 @@ es dejar únicamente lo necesario, con las excepciones que yo apruebe.
 - Evidencia: PR64 y second_phase de docs/limpieza-20261111.json. No se modifica la oficial ni se ejecuta publicación por la reorganización.
 - Pruebas del agente: registrar instalación limpia, regresiones, límite40, builds, integridad de archivos movidos y contenido histórico en second_phase.checks; no atribuir QA remota nueva a estas pruebas.
 - Revisión humana: esta solicitud autoriza la reducción. No acredita revisión de código ni dominio de los integrantes.
+
+## I. Retirar rúbricas y sobrantes de la carpeta mostrada
+
+- Fuente: solicitud posterior a la integración de PR64, acompañada de capturas de docs/entrega-2026. No se reconstruye una fecha no confirmada del mensaje.
+- Prompt original completo disponible: «aca en esta captuira tambien retirar todo lo que no este en la rubrica los archivos de la rubrica retirarlos tambien solo dejar wireframe y lo que pide la rubrica esos dos de la imagen retirar tambien».
+- Objetivo: dejar en esa carpeta documentación de entrega, sin copias de las consignas ni reportes de control sobrantes.
+- Resultado: se conservan manual Markdown/PDF, API, wireframe PNG/SVG y la captura usada por el manual; se retiran seis reportes/esquemas antiguos, tres capturas sin uso y las cuatro copias PDF/TXT de las rúbricas 2025/2026. El D.E.R. actual, su diccionario y fuentes permanecen en docs/auditoria-2025. Aplicación, SQL, configuración y otros documentos de estudio/entrega no se modifican.
+- Evidencia: branch docs/entrega-sin-reportes-ni-rubricas y PR de esta limpieza. Referencias de navegación actualizadas; inventarios/archivos históricos se mantienen como fotografías de sus commits, sin reescribirlos como si fueran la lista actual.
+- Pruebas del agente: lectura del PDF 2025 antes de retirarlo; revisión de consumidores, enlaces Markdown y Word/PDF, conservación del D.E.R./manual y build Pages comparado con el artefacto anterior. CI según los checks de la PR. No es QA remota nueva y no hay deployment.
+- Revisión humana: el usuario autoriza explícitamente la retirada indicada. No se acredita revisión de código ni participación por esa autorización.

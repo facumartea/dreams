@@ -2,7 +2,7 @@
 
 # Entrega DREAMS según la rúbrica 2025
 
-**Fuente leída íntegramente:** [PDF 2025](rubrica-2025.pdf), tres páginas; [texto completo](rubrica-2025.txt). [Matriz de 40 puntos de revisión](matriz-rubrica.md), en el orden del documento. No se usa la rúbrica 2026 como equivalente.
+**Fuente leída íntegramente en la auditoría anterior:** «Rubrica 2025 - Integracion Diseño Programación.docx.pdf», tres páginas. Sus copias PDF/TXT se retiraron del repositorio por pedido del usuario. [Matriz de 40 puntos de revisión](matriz-rubrica.md), en el orden del documento. No se usa la rúbrica 2026 como equivalente.
 
 Commit de entrada auditado: `f0f38865de1085e85cf7a7c5ebd940510fa4eec5`, branch predeterminada `main`. Branch de trabajo: `codex/entrega-2025-claridad-limpieza`. Árbol limpio al iniciar. Había 22 PRs abiertas anteriores, sin integrar ramas ajenas: [listado actualizado](prs-pendientes.json).
 

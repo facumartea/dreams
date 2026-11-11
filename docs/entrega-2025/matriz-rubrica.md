@@ -1,6 +1,6 @@
 # Matriz definitiva de criterios — PDF 2025
 
-Fuente: [PDF original](rubrica-2025.pdf), leído completo en sus tres páginas, y [texto íntegro](rubrica-2025.txt). Orden: consigna/objetivo → diseño → capacidades → requerimientos → documentación → tabla de descriptores → formato → aprobación. Los niveles 5/3/2/1 se preservan íntegros en la fuente y no se convierten en una nota automática. Las fechas son las del documento 2025, sin asumir su aplicación a 2026.
+Fuente utilizada: «Rubrica 2025 - Integracion Diseño Programación.docx.pdf», leído completo en la auditoría anterior. Las copias PDF/TXT se retiraron por solicitud del usuario; esta matriz conserva el resumen de la auditoría, no otra copia de la consigna. Orden: consigna/objetivo → diseño → capacidades → requerimientos → documentación → tabla de descriptores → formato → aprobación. Los niveles 5/3/2/1 pertenecen al documento fuente y no se convierten en una nota automática. Las fechas son las del documento 2025, sin asumir su aplicación a 2026.
 
 | ID | Orden del PDF | Qué exige | Estado | DREAMS y evidencia | Falta / acción / responsable |
 |---|---|---|---|---|---|
