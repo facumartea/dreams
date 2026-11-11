@@ -1,3 +1,4 @@
+// cookies de sesion: limita su acceso desde scripts y ajusta su seguridad al entorno.
 function auth_cookie(name, value, max_age, production = process.env.NODE_ENV === 'production') {
     return `${name}=${encodeURIComponent(value)}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${max_age}${production ? '; Secure' : ''}`;
 }

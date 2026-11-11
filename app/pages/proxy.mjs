@@ -1,3 +1,4 @@
+// proxy oficial: conserva metodo, cookies y permisos; solo reemplaza los recursos publicos previstos.
 import { official_options, official_target } from './official-backend.mjs';
 import { filtered_catalog } from './catalog.mjs';
 import { enrich_asset, index_response, preserved_headers } from './seo.mjs';
@@ -8,14 +9,14 @@ function unavailable() {
     });
 }
 
-// Sólo se reemplazan assets públicos explícitos; Auth y API conservan su backend.
+// solo se reemplazan assets publicos explicitos; auth y api conservan su backend.
 const visual_paths = new Set(['/', '/index.html', '/nosotros.html', '/catalogo.html', '/producto.html', '/carrito.html', '/cuenta.html', '/checkout.html', '/checkout-resultado.html', '/css/style.css', '/js/motion.js', '/js/app.js', '/js/catalogo.js', '/js/navigation.js', '/js/catalog-filter-state.js', '/js/carrito.js', '/js/presentation.js', '/js/academic-inputs.js', '/js/producto.js', '/js/cuenta.js', '/js/account-cart.js', '/js/reviews.js', '/robots.txt', '/sitemap.xml', '/404.html', '/assets/dreams-social.png', '/assets/dreams-iphone-icon-v1.png', '/admin', '/admin.html', '/js/admin-console-v3.js', '/js/admin-product-search.js', '/js/admin-image-url.js']);
 const admin_target = path => ['/admin', '/admin.html', '/js/admin-console-v3.js', '/api/auth/me', '/api/auth/login', '/api/auth/logout', '/api/config'].includes(path) || path.startsWith('/api/admin/');
 const header_aliases = new Map([['/js/academic-inputs.js', '/js/app.js'], ['/js/admin-product-search.js', '/js/admin-console-v3.js'], ['/js/admin-image-url.js', '/js/admin-console-v3.js'], ['/js/cuenta.js', '/js/app.js'], ['/js/account-cart.js', '/js/app.js'], ['/js/reviews.js', '/js/app.js'], ['/js/navigation.js', '/js/app.js'], ['/js/catalog-filter-state.js', '/js/app.js'], ['/assets/dreams-social.png', '/assets/dreams-hero-1024.webp'], ['/assets/dreams-iphone-icon-v1.png', '/assets/dreams-isotype.png']]);
 
 function visual_request(request, pathname, asset) {
     if (pathname === '/admin' || pathname === '/admin.html') return request;
-    // Los scripts nuevos toman headers del recurso base: no dependen de existir en el legado.
+    // los scripts nuevos toman headers del recurso base: no dependen de existir en el legado.
     const public_script = /^\/js\/[a-z0-9-]+\.js$/.test(pathname) && pathname !== '/js/admin-console-v3.js';
     const alias = header_aliases.get(pathname) || (public_script ? '/js/app.js' : null);
     const upstream = alias && asset ? new Request(new URL(alias, request.url), request) : request;
@@ -35,7 +36,7 @@ async function forward_request(request, env, options) {
     target.port = backend.port;
     const forwarded = new Request(target, request);
     forwarded.headers.delete('Host');
-    // Nunca seguir redirecciones que podrían reenviar cookies o cuerpos privados.
+    // nunca seguir redirecciones que podrian reenviar cookies o cuerpos privados.
     return (options.fetch_backend || fetch)(new Request(forwarded, { redirect: 'manual' }));
 }
 
@@ -61,7 +62,7 @@ async function visual_response(request, upstream, asset) {
 
 const approved = value => /^https:\/\/[a-f0-9]{8}-dreams-perfumes\.dreams-perfumes\.workers\.dev$/.test(value || '');
 
-// La interfaz envía JSON sin compresión; no entregar cuerpos comprimidos al parser legacy.
+// la interfaz envia json sin compresion; no entregar cuerpos comprimidos al parser legacy.
 function compressed_api_request(request, path) {
     const encoding = request.headers.get('Content-Encoding')?.trim().toLowerCase();
     return (path === '/api' || path.startsWith('/api/')) && encoding && encoding !== 'identity'

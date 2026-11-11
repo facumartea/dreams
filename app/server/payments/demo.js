@@ -1,3 +1,4 @@
+// proveedor simulado del flujo preparado; no es el checkout academico firmado de la oficial.
 const { randomUUID } = require('node:crypto');
 
 const DEMO_STATUSES = new Set(['approved', 'rejected', 'pending', 'error']);

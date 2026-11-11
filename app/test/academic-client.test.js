@@ -14,13 +14,13 @@ function harness(fetch_session) {
         });
         return nodes.get(key);
     };
-    // Any read of a financial value fails this behavioral test.
+    // esta prueba falla si se intenta leer un campo de tarjeta.
     for (const id of ['demo-card-number', 'demo-card-expiry', 'demo-card-cvv']) Object.defineProperty(node(id), 'value', { get() { throw new Error('Financial field must not be read'); } });
     const stored = new Map();
     const calls = [];
     const items = [{ id: 7, quantity: 2, price: 120, brand: 'Fixture', name: 'Test product' }];
     const sandbox = {
-        academic_input_valid: () => true, // Formato cubierto por pruebas del módulo de máscaras.
+        academic_input_valid: () => true, // formato cubierto por pruebas del modulo de mascaras.
         document: { getElementById: node, querySelector: node, createElement: node },
         sessionStorage: { getItem: k => stored.get(k) || null, setItem: (k, v) => stored.set(k, v), removeItem: k => stored.delete(k) },
         get_cart: () => sandbox.cart,

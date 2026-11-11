@@ -1,3 +1,4 @@
+// entrada del worker general: adapta las peticiones al servidor y conserva los proveedores preparados.
 import { createServer } from 'node:http';
 import { handleAsNodeRequest } from 'cloudflare:node';
 import { createClient } from '@supabase/supabase-js';
@@ -94,7 +95,7 @@ export default {
                 server = createServer(createWorkerApp(env));
                 server.listen(8080);
             }
-            // Only the Cloudflare-provided client IP participates in Express limits.
+            // solo se usa la ip aportada por cloudflare para limitar peticiones.
             const headers = new Headers(request.headers);
             headers.delete('x-forwarded-for');
             headers.delete('x-forwarded-host');

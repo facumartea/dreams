@@ -1,3 +1,4 @@
+// entrada aislada de revision con guardas; su build no publica ni habilita escrituras por si solo.
 import { createServer } from 'node:http';
 import { handleAsNodeRequest } from 'cloudflare:node';
 import { createClient } from '@supabase/supabase-js';

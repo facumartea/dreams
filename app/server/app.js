@@ -1,3 +1,4 @@
+// api compartida: valida datos, sesion y permisos antes de consultar o cambiar la base.
 const { official_enabled } = require('./official-policy');
 const { install_account_cart } = require('./account-cart');
 const { install_reviews } = require('./reviews');
@@ -43,7 +44,7 @@ function allowed_origin_set(value) {
     return new Set(entries.map(normalize_origin).filter(Boolean));
 }
 
-// Rechaza escrituras de otros orígenes incluso cuando el navegador conserva cookies de sesión.
+// rechaza escrituras de otros origenes incluso cuando el navegador conserva cookies de sesion.
 function mutation_origin_guard(configured_origins) {
     const configured = allowed_origin_set(configured_origins);
     return (request, response, next) => {
@@ -127,7 +128,7 @@ function discounted_totals(subtotal, discount_percent = 0) {
 }
 
 async function coupon_restriction(database, coupon, user_id) {
-    // No interpretar condiciones arbitrarias ni omitir límites ya configurados.
+    // no interpretar condiciones arbitrarias ni omitir limites ya configurados.
     if (coupon.conditions && Object.keys(coupon.conditions).length) return 'Este cupón tiene condiciones especiales y no puede aplicarse en este checkout.';
     if (coupon.per_user_limit && !user_id) return 'Iniciá sesión para validar el límite por cuenta de este cupón.';
     if (!coupon.max_uses && !coupon.per_user_limit) return null;
@@ -177,7 +178,7 @@ function valid_product_field_type(key, value) {
 function validate(value) {
     const fields = ['brand', 'name', 'gender', 'category', 'size_ml', 'price', 'stock', 'intensity', 'family', 'top_notes', 'heart_notes', 'base_notes', 'description', 'image_url'];
     if (!value || typeof value !== 'object' || fields.some(key => !valid_product_field_type(key, value[key]) || String(value[key]).trim() === '')) return 'Completá todos los campos del producto.';
-    // Validar tipos antes de Number(null)/Boolean('false') para no inventar stock ni destacados.
+    // validar tipos antes de convertir para no inventar stock ni destacados.
     if (value.featured !== undefined && typeof value.featured !== 'boolean') return 'La opción de destacado debe ser verdadera o falsa.';
     if (!['hombre', 'mujer', 'unisex'].includes(value.gender)) return 'Género inválido.';
     if (!['diseñador', 'nicho'].includes(value.category)) return 'Categoría inválida.';
@@ -247,7 +248,7 @@ async function database_health(database, product_brand_column = 'brand', checkou
     return true;
 }
 
-// Contexto por aplicación: no comparte sesiones ni clientes entre cuentas.
+// contexto por aplicacion: no comparte sesiones ni clientes entre cuentas.
 function application_context(options) {
     const database = options.database;
     const product_brand_column = brand_column(options.product_brand_column || 'brand');

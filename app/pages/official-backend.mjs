@@ -1,3 +1,4 @@
+// elige el servicio privado aprobado y conserva los limites del recorrido oficial.
 const official_origin = 'https://dreams-perfumes.pages.dev';
 export function official_target(path) {
     return path === '/api' || path.startsWith('/api/') || ['/admin', '/admin.html', '/js/admin-console-v3.js'].includes(path);

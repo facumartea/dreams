@@ -29,7 +29,7 @@ function compare_sequence(operations) {
         const expected = JSON.parse(sql(invoke('baseline_cart_operation', old_user, operation, id)));
         const actual = JSON.parse(sql(invoke('dreams_cart_operation', new_user, operation, id)));
         assert.deepEqual(actual, expected);
-        // La misma operación no vuelve a incrementar revisión ni cantidades.
+        // la misma operacion no vuelve a incrementar revision ni cantidades.
         assert.deepEqual(JSON.parse(sql(invoke('dreams_cart_operation', new_user, operation, id))), actual);
     }
 }

@@ -1,6 +1,7 @@
+// comparte filtros entre la direccion de la pagina y el estado del catalogo.
 const catalog_filter_defaults = Object.freeze({ search: '', brand: Object.freeze([]), gender: Object.freeze([]), category: '', max_price: '', sort: 'featured' });
 
-// Un valor conserva los enlaces históricos; varias opciones usan una lista JSON en un único parámetro.
+// un valor conserva los enlaces historicos; varias opciones usan una lista json en un unico parametro.
 function catalog_filter_list(value) {
     if (typeof value === 'string' && value.startsWith('[')) {
         try { value = JSON.parse(value); } catch { return []; }

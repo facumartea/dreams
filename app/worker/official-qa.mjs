@@ -1,3 +1,4 @@
+// pruebas internas por fases con recursos propios; este modulo no agrega un acceso publico de pruebas.
 import { createHmac, randomUUID } from 'node:crypto';
 import { create_official_database } from './official-client.mjs';
 import { diagnose_supabase } from './supabase-diagnostic.mjs';
@@ -21,7 +22,7 @@ async function call(context, actor, method, path, body) {
     const payload = body === undefined ? undefined : JSON.stringify(body);
     if (payload !== undefined) {
         headers.set('Content-Type', 'application/json');
-        // La llamada interna evita la red: Express necesita esta longitud explícita.
+        // la llamada interna evita la red: express necesita esta longitud explicita.
         headers.set('Content-Length', String(new TextEncoder().encode(payload).length));
     }
     const response = await context.dispatch(new Request(origin + path, { method, headers,
@@ -207,7 +208,7 @@ async function cleanup(context, a, b) {
     for (const actor of [a, b, context.extra, context.admin].filter(Boolean)) {
         const token = actor.cookies.get('dreams_access_token');
         if (!token) continue;
-        // Sólo las cuentas QA: revocar también sesiones de un intento previo interrumpido.
+        // solo las cuentas qa: revocar tambien sesiones de un intento previo interrumpido.
         if (actor.label !== 'admin') {
             const revoked = await context.db.auth.admin.signOut(decodeURIComponent(token), 'global');
             check(context, `${actor.label}-qa-refresh-sessions-revoked`, !revoked.error);
@@ -231,7 +232,7 @@ async function registration_phase(context, env, state) {
         context.extra = actor_for(env, context.run, 'c');
         await register(context, context.extra);
     }
-    // Recuperar sólo carritos QA de un intento que alcanzó el límite de Free.
+    // recuperar solo carritos qa de un intento que alcanzo el limite de free.
     for (const actor of [state.a, state.b]) {
         const result = await context.db.rpc('dreams_cart_operation', { p_user_id: actor.id, p_operation_id: randomUUID(), p_operation: { type: 'clear' } });
         check(context, `${actor.label}-prior-qa-cart-cleared`, !result.error);
@@ -290,7 +291,7 @@ async function execute_phase(context, env, state, phase) {
         else await customer_phase(context, state, phase);
     } finally { await cleanup(context, state.a, state.b); }
     await confirm_business_unchanged(context);
-    // Marcador en operaciones del carrito exclusivo QA; no requiere nueva tabla.
+    // marcador en operaciones del carrito exclusivo qa; no requiere nueva tabla.
     const marked = await context.db.rpc('dreams_cart_operation', { p_user_id: state.a.id,
         p_operation_id: phase_id(context, phase), p_operation: { type: 'clear' } });
     check(context, 'phase-recorded', !marked.error);
@@ -351,7 +352,7 @@ export async function run_official_qa(env, dispatch, services = {}) {
         report.status = state.completed.size === phase_names.length ? 'PASS' : 'PHASE_PASS';
     } catch { report.status = 'FAIL'; report.failed_check = context.checks.find(c => c.result === 'FAIL')?.id || 'runtime_or_provider_failure'; }
     report.completed_at = new Date().toISOString();
-    // Ningún usuario, correo, contraseña, cookie, ticket ni header se registra.
+    // ningun usuario, correo, contrasena, cookie, ticket ni header se registra.
     for (const item of context.checks) (services.log || console.log)('DREAMS private QA check', { type: 'dreams-private-qa-check-v1', run, phase: report.phase, backend_version: context.version, ...item });
     report.totals = { pass: context.checks.filter(item => item.result === 'PASS').length, fail: context.checks.filter(item => item.result === 'FAIL').length };
     (services.log || console.log)('DREAMS private QA', report);

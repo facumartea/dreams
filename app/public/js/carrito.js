@@ -1,3 +1,4 @@
+// muestra cantidades y cupon; cada cambio pide una cotizacion nueva y descarta respuestas anteriores.
 var cart_account = typeof account_cart === 'undefined' ? null : account_cart;
 let cart_request_id = 0;
 let academic_cart_summary = null;

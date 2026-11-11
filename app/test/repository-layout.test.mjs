@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readdir, access, readFile } from 'node:fs/promises';
 
-// La raíz se mantiene clara sin sacrificar instalación, pruebas o publicación futura.
+// la raiz se mantiene clara sin sacrificar instalacion, pruebas o publicacion futura.
 test('la raíz contiene README y la declaración de prompts sin perder archivos de la aplicación', async () => {
     const root = new URL('../../', import.meta.url);
     const entries = await readdir(root, { withFileTypes: true });

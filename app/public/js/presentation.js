@@ -1,4 +1,4 @@
-// Academic-only signed snapshots. Card fields are never read, sent or stored.
+// referencias firmadas para la simulacion: no lee, envia ni guarda campos de tarjeta.
 const PRESENTATION_KEY = 'dreams_presentation_checkout';
 let presentation_expected_totals = null;
 const presentation_totals = value => JSON.stringify([value.subtotal, value.discount || 0, value.total, value.coupon?.code || '']);
@@ -20,7 +20,7 @@ function presentation_layout(form) {
         document.getElementById('sandbox-help').remove();
         form.hidden = false;
         form.noValidate = true;
-        document.querySelector('.coupon-box').hidden = true; // El cupón se administra en el carrito.
+        document.querySelector('.coupon-box').hidden = true; // el cupon se administra en el carrito.
         document.getElementById('payment-title').textContent = 'Tarjeta';
         document.getElementById('payment-description').textContent = 'Simulación académica: usá datos ficticios. No se cobra dinero.';
         document.getElementById('payment-description').hidden = false;
@@ -56,7 +56,7 @@ async function presentation_quote(button, status, initial_snapshot) {
 function presentation_intent(cart) {
                 let saved;
                 try { saved = JSON.parse(sessionStorage.getItem(PRESENTATION_KEY)); } catch { saved = null; }
-                // A v2 intent is persisted BEFORE the first network call, including retries.
+                // guarda el intento antes de llamar a la red para conservar la referencia al reintentar.
                 if (saved && saved.version !== 2) { sessionStorage.removeItem(PRESENTATION_KEY); saved = null; }
                 if (saved && saved.snapshot !== presentation_snapshot(cart)) { sessionStorage.removeItem(PRESENTATION_KEY); saved = null; }
                 if (!saved) {
@@ -79,7 +79,7 @@ async function presentation_complete(saved) {
 }
 async function presentation_submit(button, status, form, initial_snapshot) {
             if (button.disabled) return;
-            // Formato local únicamente; no se incorporan campos financieros a la petición.
+            // formato local unicamente; no se incorporan campos financieros a la peticion.
             if (!document.getElementById('demo-card-holder').value.trim()) { status.textContent = 'Completá tu nombre para continuar.'; return; }
             if (!academic_input_valid()) { status.textContent = 'Usá 16 dígitos de prueba, vencimiento MM/AA con mes01–12 y CVV de3 dígitos.'; return; }
             button.disabled = true; button.setAttribute('aria-busy', 'true'); button.textContent = 'Procesando…'; status.textContent = '';

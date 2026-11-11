@@ -1,8 +1,9 @@
+// funciones compartidas de catalogo, carrito y contacto; los precios finales se verifican en servidor.
 const api = '/api';
 let public_config_promise;
 
 function load_motion_script() {
-    // Esperar el HTML completo evita duplicar el script explícito del footer.
+    // esperar el html completo evita duplicar el script explicito del footer.
     if (document.querySelector('script[src="/js/motion.js"]')) return;
     const motion_script = document.createElement('script');
     motion_script.src = '/js/motion.js';
@@ -265,7 +266,7 @@ function setup_header_scroll() {
     const header = document.querySelector('.site-header');
     if (!header) return;
     const update = () => {
-        // El scroll fijo del diálogo no debe cambiar la altura del menú de fondo.
+        // el scroll fijo del dialogo no debe cambiar la altura del menu de fondo.
         if (document.querySelector('.filter-dialog[open]')) return;
         header.classList.toggle('is-scrolled', window.scrollY > 18);
     };

@@ -1,3 +1,4 @@
+// adaptador de pagos preparado; conservarlo no habilita cobros ni lo conecta al checkout academico.
 const crypto = require('node:crypto');
 
 const PAYMENT_API = 'https://api.mercadopago.com';

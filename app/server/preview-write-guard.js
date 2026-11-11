@@ -16,7 +16,7 @@ function blocked_message(path) {
 
 function preview_write_guard(enabled, customer_data = false, official = false) {
     return (request, response, next) => {
-        // La excepción es POST exacto: no habilitar prefijos ni escrituras administrativas.
+        // la excepcion es post exacto: no habilitar prefijos ni escrituras administrativas.
         if (!enabled || !writes.has(request.method)) return next();
         if (official && official_route(request.method, request.path)) return next();
         if (request.method === 'POST' && allowed_posts.has(request.path)) return next();

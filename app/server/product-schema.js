@@ -1,4 +1,4 @@
-// Preserve the HTTP contract while matching the existing Supabase schema.
+// adapta el campo de marca de la base sin cambiar la respuesta que recibe la pagina.
 function brand_column(value) {
     if (!['brand', 'marca'].includes(value)) throw new TypeError('Columna de marca inválida.');
     return value;
@@ -18,8 +18,8 @@ async function resolve_product_brand_column(database) {
     for (const column of ['marca', 'brand']) {
         const result = await database.from('products').select(column).limit(1);
         if (!result.error) return column;
-        // Only a missing column permits fallback. Connectivity/permission errors
-        // must fail startup rather than silently selecting a different schema.
+        // solo una columna inexistente permite probar el nombre anterior.
+        // los errores de conexion o permisos deben detener el arranque.
         if (!['42703', 'PGRST204'].includes(result.error.code)) throw result.error;
     }
     throw new Error('products no contiene una columna de marca compatible.');

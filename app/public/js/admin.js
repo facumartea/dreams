@@ -1,3 +1,4 @@
+// panel de administracion: espera la escritura y vuelve a leer los datos antes de anunciar que guardo.
 function format_price(value) { return new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 }).format(value); }
 
 let admin_products = [];
@@ -200,7 +201,7 @@ function preview_product_image() {
     if (!candidate) { set_product_image_preview('invalid', 'Ingresá un enlace HTTPS directo a una imagen.'); return; }
     if (!is_supported_image_url(candidate)) { set_product_image_preview('invalid', /^http:/i.test(candidate) ? 'Usá HTTPS: los enlaces HTTP se bloquean en esta página.' : IMAGE_URL_ERROR); return; }
     set_product_image_preview('pending', 'Comprobando imagen…');
-    // Cada intento usa su propia imagen: un evento de una URL vieja no valida la nueva.
+    // cada intento usa su propia imagen: un evento de una url vieja no valida la nueva.
     const probe = new Image(); probe.referrerPolicy = 'no-referrer';
     probe.onload = () => complete_product_image(candidate, token);
     probe.onerror = () => fail_product_image(token, 'El enlace no cargó una imagen. Puede apuntar a una página, haber vencido o bloquear el acceso. Usá un enlace directo y permanente.');

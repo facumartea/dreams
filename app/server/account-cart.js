@@ -1,4 +1,4 @@
-// Carrito por UUID de sesión: valida operaciones y delega su orden e idempotencia a la RPC.
+// carrito por uuid de sesion: valida operaciones y delega su orden e idempotencia a la rpc.
 const { createHmac, timingSafeEqual } = require('node:crypto');
 const { normalize_product_brand } = require('./product-schema');
 const uuid = value => typeof value === 'string' && /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value);
@@ -19,9 +19,9 @@ class AccountCartService {
         this.ready = enabled && typeof signing_key === 'string' && signing_key.length >= 32;
         this.signing_key = signing_key;
     }
-    // El contexto firmado impide reutilizar una operación pendiente en otra cuenta.
+    // el contexto firmado impide reutilizar una operacion pendiente en otra cuenta.
     scope_for(id) { return createHmac('sha256', this.signing_key).update(`dreams-cart-v1:${id}`).digest('hex'); }
-    // Recupera precios y disponibilidad actuales; el JSON persistido sólo contiene IDs y cantidades.
+    // recupera precios y disponibilidad actuales; el json persistido solo contiene ids y cantidades.
     async hydrate(row, user) {
         const stored = Array.isArray(row?.items) ? row.items : [];
         const result = stored.length ? await this.database.from('products').select(`id,${this.product_brand_column},name,price,stock,image_url,size_ml`).in('id', stored.map(i => i.id)) : { data: [] };

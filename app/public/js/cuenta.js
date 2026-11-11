@@ -1,3 +1,4 @@
+// formularios de cuenta: bloquea doble envio y muestra la sesion que realmente devuelve el servidor.
 function notify_account_change() { try { localStorage.setItem('dreams_account_changed', crypto.randomUUID()); } catch {} }
 
 let account_request_id = 0;
@@ -160,7 +161,7 @@ async function submit_registration(form, message, body) {
 async function register(event) {
     event.preventDefault();
     const form = event.currentTarget;
-    // También bloquear envíos programáticos mientras la petición está pendiente.
+    // tambien bloquear envios programaticos mientras la peticion esta pendiente.
     if (form.getAttribute('aria-busy') === 'true') return;
     const message = document.getElementById('register-message');
     const body = registration_body(form, message);

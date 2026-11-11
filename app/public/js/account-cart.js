@@ -1,5 +1,5 @@
-/* El servidor conserva el carrito. La pestaña sólo guarda operaciones pendientes
-   por UUID: nunca precios ni datos del catálogo de una cuenta en localStorage. */
+/* el servidor conserva el carrito. la pestana solo guarda operaciones pendientes
+   por uuid: nunca precios ni datos del catalogo de una cuenta en localstorage. */
 const account_cart_pairs = list => list.map(i => ({ id: Number(i.id), quantity: Number(i.quantity) })).sort((a, b) => a.id - b.id);
 const account_cart_copy = value => JSON.parse(JSON.stringify(value));
 class AccountCart {
@@ -69,7 +69,7 @@ class AccountCart {
     merge_guest() {
         const guest = this.read_guest();
         if (!guest.length) return;
-        // Registrar el identificador antes de consumir el carrito visitante.
+        // registrar el identificador antes de consumir el carrito visitante.
         this.queue.push({ operation_id: this.id(), operation: { type: 'merge', items: account_cart_pairs(guest) }, hints: [] });
         this.persist(); this.write_guest([]);
     }

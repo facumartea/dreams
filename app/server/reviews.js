@@ -1,4 +1,4 @@
-// Opiniones vinculadas a la sesión verificada; el cliente no elige el autor ni su rol.
+// opiniones vinculadas a la sesion verificada; el cliente no elige el autor ni su rol.
 const uuid = value => typeof value === 'string' && /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value);
 const public_name = name => typeof name === 'string' && !name.includes('@') ? name.trim().slice(0, 80) || 'Cliente' : 'Cliente';
 const columns = 'id,user_id,user_name,rating,comment,created_at';
@@ -23,7 +23,7 @@ async function publish_review(request, response, database) {
     if (result.error) throw result.error;
     response.status(201).json({ message: 'Opinión publicada.' });
 }
-// Repetir el mismo UUID devuelve éxito sólo si el contenido coincide; evita duplicados por reintento.
+// repetir el mismo uuid devuelve exito solo si el contenido coincide; evita duplicados por reintento.
 async function replay_review(request, response, database, input) {
     const result = await database.from('reviews').select('rating,comment').eq('user_id', request.user.id).eq('operation_id', input.operation_id).maybeSingle();
     if (result.error) throw result.error;
@@ -33,7 +33,7 @@ async function replay_review(request, response, database, input) {
 async function delete_own_review(request, response, create_auth_client) {
     const id = Number(request.params.id);
     if (!Number.isSafeInteger(id) || id <= 0 || Object.keys(request.body || {}).length) return response.status(400).json({ error: 'Solicitud de eliminación inválida.' });
-    // JWT limitado más predicado de dueño: la clave de servicio nunca elimina aquí.
+    // jwt limitado mas predicado de dueno: la clave de servicio nunca elimina aqui.
     const result = await create_auth_client(request.access_token).from('reviews').delete().eq('id', id).eq('user_id', request.user.id).select('id').maybeSingle();
     if (result.error) throw result.error;
     if (!result.data) return response.status(404).json({ error: 'No encontramos una opinión propia para eliminar.' });
