@@ -2,7 +2,7 @@
 
 Sitio académico con HTML, CSS, JavaScript, Node.js/Express y Supabase Auth/PostgreSQL. Catálogo, cuentas, carrito por usuario, opiniones, panel Admin y checkout académico. La portada es estática; no se realizan cobros comerciales y el envío sigue costando $0.
 
-**Oficial:** https://dreams-perfumes.pages.dev/ · **[Documentación de entrega](docs/entrega-2025/INDICE.md)** · **[Declaración y registro parcial de IA](docs/entrega-2025/registro-prompts.md)**
+**Oficial:** https://dreams-perfumes.pages.dev/ · **[Documentación de entrega](docs/INDICE.md)** · **[Declaración y registro parcial de IA](docs/registro-prompts.md)**
 
 ## Estructura
 
@@ -17,8 +17,9 @@ DREAMS/
 │   ├── supabase/               SQL, migraciones y rollback
 │   ├── scripts/ y test/        Herramientas, fixtures y regresiones
 │   └── package.json, pnpm y Wrangler
-├── docs/                       Entrega, fuentes editables y evidencia
-│   └── history/                Cuatro archivos históricos consolidados
+├── docs/                       Documentación de entrega y estudio
+│   ├── wireframe/              Láminas y mapa, con fuentes editables
+│   └── base-de-datos/          D.E.R. y esquema estructural
 └── .github/workflows/          CI; GitHub exige esta ubicación
 ```
 
@@ -58,16 +59,19 @@ Esta reorganización no cambia rutas, funciones, Auth, datos, credenciales, valo
 
 ## Documentación de entrega
 
-- [Índice de entrega 2025](docs/entrega-2025/INDICE.md) y [matriz de rúbrica](docs/entrega-2025/matriz-rubrica.md).
-- [Manual](docs/entrega-2026/manual.md) / [PDF](docs/entrega-2026/manual.pdf).
-- [Guía de defensa](docs/entrega-2025/defensa.md) / [Word editable](docs/entrega-2025/defensa.docx) / [PDF](docs/entrega-2025/defensa.pdf).
-- [Wireframes y mapa](docs/auditoria-2025/INDICE.md), [D.E.R.](docs/auditoria-2025/base-de-datos.md) y [API](docs/entrega-2026/api.md).
-- [Declaración y prompts: historial parcial](docs/entrega-2025/registro-prompts.md).
-- [Fuentes visuales y límites de atribución](docs/image_sources.md).
-- [Inventario, consolidaciones, alias de duplicados y validaciones](docs/limpieza-20261111.json).
+- [Índice](docs/INDICE.md): manual, wireframe/mapa, D.E.R. y API.
+- [Manual](docs/manual.md) / [PDF](docs/manual.pdf), sin capturas.
+- [Guía de defensa](docs/defensa.md) / [Word](docs/defensa.docx) / [PDF](docs/defensa.pdf).
+- [Declaración y registro parcial de IA](docs/registro-prompts.md).
 
-Manual y gráficos reutilizan sus carpetas para evitar duplicados; el nombre entrega-2026 no cambia la rúbrica vigente. Los gráficos son documentación retrospectiva. Los inventarios anteriores conservan su commit y rutas históricas: para código trasladado, la ubicación actual empieza por `app/`. Martearena y Ruas son los apellidos informados; participación, preentregas y dominio individual requieren evidencia humana. No se garantiza nota ni aprobación. No se genera ZIP.
+La documentación gráfica es retrospectiva. No hay carpetas de capturas, evidence, history ni entregas separadas por año. Se retiraron reportes de trabajo, inventarios generados, copias de consignas y esquemas visuales antiguos redundantes. El registro de IA conserva los prompts disponibles, sus límites y los antecedentes de seguridad; el historial de Git no se reescribe.
 
-## Históricos conservados en menos archivos
+Se conservan código, tests, assets utilizados, SQL/migraciones, lockfile, CI y Wrangler porque son necesarios para ejecutar, verificar o publicar. Se retiraron dos fuentes sin consumidores: la utilidad CLI antigua grant-google-admin.js y el template de tarjeta gráfica social-card.html; la imagen social PNG utilizada sigue presente. No se ejecutó ninguna herramienta de roles ni se cambió la cuenta Admin.
 
-[Continuidad](docs/history/continuidad.html), [auditorías y seguridad](docs/history/auditorias.html), [operación anterior](docs/history/operacion.html) y [entrega anterior](docs/history/entrega-anterior.html). Son HTML sin JavaScript, legibles sin conexión. Cada sección conserva el texto original completo, su ruta, commit y SHA-256; no son instrucciones vigentes ni se oculta el uso de IA. En GitHub se puede descargar el HTML para abrirlo localmente. Railway queda documentado allí como antecedente; no es un hosting activo autorizado.
+Las imágenes y tipografías de la aplicación no son capturas documentales: permanecen en app/ y en los enlaces externos del HTML. El inventario opcional `check:functions --write` genera su reporte en app/dist/, que está excluido de Git, para no volver a llenar la entrega de archivos generados.
+
+## Fuentes visuales y límites
+
+La documentación previa identificaba referencias de Armani Beauty, Dior Argentina, Chanel, Creed y Unsplash. No se acreditó una licencia individual para cada fotografía; esta lista no concede permisos ni declara autoría sobre imágenes de terceros. Los originales de marca utilizados se conservan en app/public/assets/. Martearena y Ruas son los apellidos informados; participación y defensa deben acreditarse individualmente.
+
+Esta limpieza no cambia el funcionamiento ni la configuración efectiva de la oficial y no requiere deployment. Se conservan las guardas de publicación: otra publicación necesita sus propias verificaciones. No se genera ZIP ni se garantizan notas o aprobación.

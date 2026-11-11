@@ -1,4 +1,4 @@
-import { readdir, readFile, writeFile } from 'node:fs/promises';
+import { readdir, readFile, writeFile, mkdir } from 'node:fs/promises';
 import { resolve, relative } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { parse } from 'acorn';
@@ -71,7 +71,11 @@ export async function inventory(root) {
 async function main() {
     const root = resolve(process.argv[2] || '.');
     const result = await inventory(root);
-    if (process.argv.includes('--write')) await writeFile(resolve(root, 'docs/entrega-2026/inventario-funciones.json'), JSON.stringify(result, null, 2) + '\n');
+    if (process.argv.includes('--write')) {
+        // El reporte generado no se mezcla ni se versiona con los documentos de entrega.
+        await mkdir(resolve(root, 'app/dist'), { recursive: true });
+        await writeFile(resolve(root, 'app/dist/inventario-funciones.json'), JSON.stringify(result, null, 2) + '\n');
+    }
     console.log(JSON.stringify({ files: result.files, records: result.records.length, violations: result.violations }, null, 2));
     if (result.violations.length && !process.argv.includes('--report-only')) process.exitCode = 1;
 }
