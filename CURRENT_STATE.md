@@ -8,7 +8,7 @@ Base main `8ad5401fe0f2d0c3e501ab203f6ab37b27ff7db1`, PR63 integrada. Branch `do
 
 Único registro/declaración IA: docs/entrega-2025/registro-prompts.md; histórico PARCIAL y bitácora completa preservada como sección F. Retirados únicamente docs/entrega-2026/bitacora-ia.md, docs/README.md y scripts/install_and_run.txt, ya consolidados. No se cambian aplicación, datos, Auth, credenciales, configuración ni assets publicados. No ZIP ni Python nuevo.
 
-Base verificada: main/CI254 aprobado; sintaxis 107 JS e inventario 121 archivos/2200 registros sin excesos antes de cambiar. Validación posterior en carpeta limpia sin .git ni secretos: instalación congelada, sintaxis/inventario, 493 tests aprobados/4 SQL omitidos y cuatro builds sin deployment. 108 enlaces revisados; Pages byte a byte idéntico al build base. PR/commit y decisiones en el JSON. Oficial conserva la publicación ya acreditada en la continuidad anterior; no se vuelve a desplegar por documentos.
+Base verificada: main/CI254 aprobado; sintaxis 107 JS e inventario 121 archivos/2200 registros sin excesos antes de cambiar. Validación posterior en carpeta limpia sin .git ni secretos: instalación congelada, sintaxis/inventario, 493 tests aprobados/4 SQL omitidos y cuatro builds sin deployment. 108 enlaces revisados; Pages byte a byte idéntico al build base. Inventario y decisiones en el JSON; SHA y estado de la PR se consultan en GitHub. Oficial conserva la publicación ya acreditada en la continuidad anterior; no se vuelve a desplegar por documentos.
 
 ## Estado anterior conservado
 
