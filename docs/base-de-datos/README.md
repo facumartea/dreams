@@ -2,7 +2,7 @@
 
 Consulta de metadatos de sólo lectura del03/11/2026, proyecto Supabase esperado. Incluye las nueve tablas de `public` y únicamente `auth.users.id` como frontera del servicio Auth. **No es el esquema interno completo de Supabase ni un dump de producción.** No se consultaron filas, correos, contraseñas, hashes ni sesiones. RLS figura habilitado en las nueve tablas; no se revalidaron todas sus políticas/grants en esta tarea.
 
-[Diagrama PDF](base-de-datos/der.pdf) · [PNG](base-de-datos/der.png) · [DOT editable](base-de-datos/der.dot) · [Esquema e índices estructurales](base-de-datos/esquema.json).
+[Diagrama PDF](der.pdf) · [PNG](der.png) · [DOT editable](der.dot) · [Esquema e índices estructurales](esquema.json).
 
 ## Lectura de las relaciones
 

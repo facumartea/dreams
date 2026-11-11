@@ -106,7 +106,7 @@ No se duplica el archivo adjunto como otro registro independiente. Sus ocho extr
 > traducilos estos son auidos de un amigo que hizo la defensa oral y le tomo eso necesito tambien subir un archivo .md con todos los prompts que hice para la pagina hace uno para work y que me ayude a estudiar haciendome un word con las respuesta de todo absolutamente me dijo mi ammigo pero ocn mi pagina y hay que sacar muchisimos archivos del github
 
 - Objetivo: Preparar estudio con temas de audios, registro de prompts y revisión de archivos.
-- Resultado/evidencia: Guía adjunta preparada según su texto el 10/11/2026 sobre 60451ca. Esta tarea la contrasta y amplía; no hubo commit previo de ese Word en main. [Fuente](defensa.md).
+- Resultado/evidencia: Guía adjunta preparada según su texto el 10/11/2026 sobre 60451ca. Esta tarea la contrasta y amplía; no hubo commit previo de ese Word en main. Fuente: guía de estudio aportada; retirada en esta limpieza por indicación del usuario..
 - Pruebas del agente: Lectura estática, cotejo de endpoints y revisión de Word/PDF en esta tanda; no nueva QA funcional.
 - Revisión humana: no acreditada en el adjunto.
 
@@ -146,7 +146,7 @@ Estas entradas son **resúmenes**, no prompts originales ni nuevas ejecuciones. 
 - Fecha del prompt: **sin fecha confirmada**. Fecha de evidencia: PR59: f0f3886, 03/11/2026.
 - Tipo: resumen identificado; texto original completo no incorporado como cita.
 - Objetivo: Auditar fuente descargable y preparar gráficos.
-- Resultado: El PDF2025 faltaba entonces; la matriz provisional no se convierte retrospectivamente en auditoría del PDF recibido luego. [Fuente](INDICE.md).
+- Resultado: El PDF2025 faltaba entonces; la matriz provisional no se convierte retrospectivamente en auditoría del PDF recibido luego. Fuente: índice documental anterior, reemplazado por docs/README.md..
 - Pruebas del agente: Checks y evidencia en auditoria-2025/pruebas.json; no nueva QA por esta consolidación.
 - Revisión humana: no hay evidencia suficiente para atribuir a un integrante la revisión de esos cambios. Las declaraciones del usuario que la fuente registra se mantienen como declaraciones, no como revisión de código.
 
@@ -860,7 +860,7 @@ Los tres textos siguientes son resultados técnicos históricos que acompañan e
 Fuente: [archivo consolidado anterior](https://github.com/facumartea/dreams/blob/305c5fd6ca0f5a72792c4f5e64fa60ac13a70828/docs/history/auditorias.html). Cuerpo de informe, no cita de un prompt; datos personales, si existían, se omiten.
 
 ````text
-> Actualización verificada 2026-10-06: estado vigente en CURRENT_STATE.md; evidencias y límites nuevos en [docs/cloudflare_validation.md](docs/cloudflare_validation.md), arquitectura/publicación/rollback en [docs/cloudflare_migration.md](docs/cloudflare_migration.md). Destino actualizado a Cloudflare por instrucción del usuario; no deploy remoto ni cambio DNS. El contenido siguiente conserva historia y no reemplaza las verificaciones nuevas.
+> Actualización verificada 2026-10-06: estado vigente en CURRENT_STATE.md; evidencias y límites nuevos en [docs/cloudflare_validation.md](https://github.com/facumartea/dreams/blob/6167f35c69ef83b680b8188349a51bd95af3e05a/docs/cloudflare_validation.md), arquitectura/publicación/rollback en [docs/cloudflare_migration.md](https://github.com/facumartea/dreams/blob/6167f35c69ef83b680b8188349a51bd95af3e05a/docs/cloudflare_migration.md). Destino actualizado a Cloudflare por instrucción del usuario; no deploy remoto ni cambio DNS. El contenido siguiente conserva historia y no reemplaza las verificaciones nuevas.
 
 ## Revalidación de continuidad — 2026-10-05
 
@@ -1301,3 +1301,31 @@ Antes de implementar S3 sólo hace falta confirmar una decisión de producto: si
 - Supabase: Product Security, Row Level Security, Sessions, Password Security, Rate Limits, Security Testing y Production Checklist.
 - Railway: `railway domain update old-name.up.railway.app --domain new-name` para renombrar un dominio proporcionado por Railway.
 ````
+
+
+> Procedencia de la entrada siguiente: PR #67, commit `2ade1033d89110d220e65f564d5eb5de3aa3360c`, todavía sin integrar. Se conserva como antecedente de trabajo y pruebas de esa branch; no describe cambios funcionales incorporados por esta limpieza documental.
+
+## Simplificacion y lectura del codigo · 11/11/2026
+
+- Tipo: resumen identificado del mensaje actual; no es una cita literal reconstruida.
+- Solicitud: reducir archivos sin romper la aplicacion; conservar README, base de datos, wireframe y declaracion de prompts; explicar el codigo en comentarios simples y nombres propios en espanol, con minusculas y sin tildes.
+- Base comprobada: main `03a0ee1498040b98ddb7ca4126d24631a37b88ed`, despues de la limpieza ya integrada en PR66.
+- Cambios: manual, API e indice se consolidan en README; se retiran sus copias separadas y la guia de estudio del repositorio. Los documentos anteriores siguen en el commit citado. Se conservan configuracion necesaria, SQL, tests, imagenes, diagramas y fuentes editables.
+- Uso de IA: los renombres, comentarios y documentos reciben asistencia de IA. Redactar de forma natural no acredita trabajo manual ni cambia la procedencia registrada. No se modifica el historial de Git.
+- Pruebas: se registraran en la PR las comprobaciones de sintaxis, limite de funciones, regresiones y builds realmente ejecutadas. No se atribuye QA remota nueva a estas pruebas locales.
+- Revision humana: no acreditada; la solicitud y autorizacion del usuario no prueban una revision del codigo por los integrantes.
+- Estado del registro: parcial; faltan conversaciones originales no aportadas y evidencia de revision humana. No se inventan mensajes ni fechas.
+
+- Resultado local final: instalacion congelada y sin .git, sintaxis, inventario de 119 archivos y 2202 registros sin excesos; 495 pruebas aprobadas, 4 SQL omitidas por falta de PostgreSQL aislado; builds cloudflare, pages, admin-review y official en modo local aprobados. Comparacion estructural con parser de los 57 archivos JS/MJS/CJS de produccion: cambios limitados a nombres, comentarios y alias de exportacion, sin alterar instrucciones ni datos de negocio. No se desplego la oficial.
+
+## Organización documental de docs/ · 11/11/2026
+
+- Tipo: resumen identificado de la solicitud actual y su aclaración; no es una cita literal reconstruida.
+- Base comprobada: main `03a0ee1498040b98ddb7ca4126d24631a37b88ed`. La PR67 sigue separada; esta tarea no incorpora sus cambios de código.
+- Objetivo: dejar docs/ sólo con índice, wireframe, mapa y D.E.R.; trasladar esta declaración a la raíz y preservar el contenido académico requerido.
+- Decisión comunicada por el usuario: eliminar la guía de defensa en Markdown, Word y PDF, sin trasladarla; integrar íntegramente manual y API en README antes de eliminar sus copias separadas; integrar la limpieza verificada sin publicar la web.
+- Cambios: declaración trasladada a DECLARACION_PROMPTS.md; diccionario trasladado a docs/base-de-datos/README.md; índice sustituido por docs/README.md; manual y API completos integrados en README; se retiran defensa.md/.docx/.pdf, manual.md/.pdf, api.md y docs/.gitattributes. No se crean copias adicionales de los diseños.
+- Pruebas y revisión: se registrarán los resultados comprobados en la PR. No se presenta esta revisión documental como QA autenticada nueva ni como una lectura nueva del esquema remoto.
+- Uso de IA: análisis, organización y comprobaciones asistidos por IA; sin atribuir trabajo manual o revisión de los integrantes. Registro parcial; conversaciones ausentes no reconstruidas.
+
+- Resultado local comprobado: enlaces relativos y contenido completo del manual/API verificados; 19 PNG válidos, 17 SVG legibles y fuentes DOT compiladas; PDFs de wireframe (17 páginas), mapa y D.E.R. abiertos y revisados. Instalación congelada sin .git ni secretos, sintaxis, inventario de 40 líneas, test de estructura, build:pages y build:official aprobados. No se modifica el código ejecutable, las migraciones ni la configuración; sólo se actualiza la expectativa de archivos raíz del test para incluir esta declaración obligatoria.
