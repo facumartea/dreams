@@ -8,6 +8,8 @@ Esto es un registro de los 21 prompts principales. No pusimos todos porque gener
 - **instrucciones del director:** el usuario confirmo que el chat director amplio los pedidos largos con apartados e indicaciones para WORK. Sus resumenes se identifican como pedidos consolidados, no como mensajes tecnicos escritos integramente por el usuario.
 - **resultado de WORK:** se distingue el trabajo tecnico registrado de lo pedido. Los commits y PR acreditan cambios o verificaciones, no la fecha del mensaje, autoria manual ni revision del alumnado.
 
+Los pedidos consolidados resumen las instrucciones del director disponibles y no sustituyen las consultas breves que falten. No se acredita programacion manual, revision del alumnado ni dominio del codigo por conservar estos resultados.
+
 **El registro sigue siendo parcial.** No hay fechas de mensaje acreditadas para esta seleccion: se conserva "fecha por confirmar". La fecha 11/11/2026 que antes se asignaba al pedido 18 procedia de la ejecucion; se conserva como antecedente, pero no se usa para fechar ese mensaje. Las fechas tecnicas de los anexos permanecen con su alcance original. No se distribuyen pedidos entre martes y jueves.
 
 B01, sobre arquitectura y seguridad, queda fuera de la seleccion porque no se encontro su mensaje original. El registro anterior citaba [f3533d7](https://github.com/facumartea/dreams/commit/f3533d7) como antecedente tecnico, sin acreditar que la funcion de ejemplo existiera alli; esa referencia no se transforma en un prompt original. Se conservan sus antecedentes tecnicos al final, sin reconstruir una cita. El pedido literal de migracion aportado ahora lo reemplaza. Railway aparece en esos antecedentes como hosting anterior, pero falta su pedido original: no se inventa una entrada. Tampoco se encontro una consulta inicial para aprender Node; las consultas de estudio disponibles se mantienen en su etapa posterior y las preguntas de aprendizaje van en el Word personal.
@@ -55,8 +57,6 @@ function databaseFactory(env) {
 
 Evidencia tecnica: [f0d52d6](https://github.com/facumartea/dreams/commit/f0d52d6). Original aportado por el usuario en esta revision; fecha no acreditada.
 
-Revision humana de codigo o dominio del tema: no acreditados por este registro.
-
 ## PROMPT 2 · conexion del backend
 
 Fecha: fecha por confirmar
@@ -68,8 +68,6 @@ No se dispone de la consulta breve original por separado. No se reconstruye como
 ### Instrucciones del director
 
 Pedido consolidado, no literal: revisa por que no conecta el backend y conserva la pagina hasta que funcione.
-
-Resume el alcance de las instrucciones ampliadas disponibles; no sustituye la consulta breve original que pueda faltar.
 
 ### Resultado registrado para WORK
 
@@ -91,8 +89,6 @@ function create_official_database(env, access, fetcher) {
 
 Fuente disponible y evidencia tecnica: mensajes disponibles de continuidad y diagnostico de PR56. Evidencia de cambios: [5236ef6](https://github.com/facumartea/dreams/commit/5236ef6).
 
-Revision humana de codigo o dominio del tema: no acreditados por este registro.
-
 ## PROMPT 3 · registro y sesion
 
 Fecha: fecha por confirmar
@@ -104,8 +100,6 @@ No se dispone de la consulta breve original por separado. No se reconstruye como
 ### Instrucciones del director
 
 Pedido consolidado, no literal: arregla el registro y el login sin cambiar al administrador.
-
-Resume el alcance de las instrucciones ampliadas disponibles; no sustituye la consulta breve original que pueda faltar.
 
 ### Resultado registrado para WORK
 
@@ -128,8 +122,6 @@ async function normal_registration(context, values, response) {
 
 Fuente disponible y evidencia tecnica: pedido disponible de cierre funcional de PR56. Evidencia de cambios: [5236ef6](https://github.com/facumartea/dreams/commit/5236ef6).
 
-Revision humana de codigo o dominio del tema: no acreditados por este registro.
-
 ## PROMPT 4 · guardado del admin
 
 Fecha: fecha por confirmar
@@ -143,8 +135,6 @@ extracto del adjunto parcial A01; no prueba su fecha:
 ### Instrucciones del director
 
 Pedido consolidado, no literal: revisa guardar productos e imagenes en el admin.
-
-Resume el alcance de las instrucciones ampliadas disponibles; no sustituye la consulta breve original que pueda faltar.
 
 ### Resultado registrado para WORK
 
@@ -170,8 +160,6 @@ async function commit_product(id, data) {
 
 Fuente disponible y evidencia tecnica: pedido disponible de panel Admin y extracto A01. Evidencia de cambios: [5236ef6](https://github.com/facumartea/dreams/commit/5236ef6).
 
-Revision humana de codigo o dominio del tema: no acreditados por este registro.
-
 ## PROMPT 5 · carrito por cuenta
 
 Fecha: fecha por confirmar
@@ -183,8 +171,6 @@ No se dispone de la consulta breve original por separado. No se reconstruye como
 ### Instrucciones del director
 
 Pedido consolidado, no literal: que cada cuenta conserve su carrito y no se mezcle con el de otra.
-
-Resume el alcance de las instrucciones ampliadas disponibles; no sustituye la consulta breve original que pueda faltar.
 
 ### Resultado registrado para WORK
 
@@ -210,8 +196,6 @@ async write(req, res) {
 
 Fuente disponible y evidencia tecnica: pedido disponible de carrito por UUID en PR56. Evidencia de cambios: [5236ef6](https://github.com/facumartea/dreams/commit/5236ef6).
 
-Revision humana de codigo o dominio del tema: no acreditados por este registro.
-
 ## PROMPT 6 · opiniones propias
 
 Fecha: fecha por confirmar
@@ -223,8 +207,6 @@ No se dispone de la consulta breve original por separado. No se reconstruye como
 ### Instrucciones del director
 
 Pedido consolidado, no literal: que cada usuario pueda borrar su opinion, pero no la de otro.
-
-Resume el alcance de las instrucciones ampliadas disponibles; no sustituye la consulta breve original que pueda faltar.
 
 ### Resultado registrado para WORK
 
@@ -246,8 +228,6 @@ async function delete_own_review(request, response, create_auth_client) {
 
 Fuente disponible y evidencia tecnica: pedido disponible de opiniones y eliminacion propia. Evidencia de cambios: [5236ef6](https://github.com/facumartea/dreams/commit/5236ef6).
 
-Revision humana de codigo o dominio del tema: no acreditados por este registro.
-
 ## PROMPT 7 · checkout academico
 
 Fecha: fecha por confirmar
@@ -259,8 +239,6 @@ No se dispone de la consulta breve original por separado. No se reconstruye como
 ### Instrucciones del director
 
 Pedido consolidado, no literal: completa el checkout de la escuela sin cobrar ni guardar datos de tarjeta.
-
-Resume el alcance de las instrucciones ampliadas disponibles; no sustituye la consulta breve original que pueda faltar.
 
 ### Resultado registrado para WORK
 
@@ -289,8 +267,6 @@ function presentation_checkout({ enabled, signing_key, quote_cart, database, pro
 
 Fuente disponible y evidencia tecnica: pedido disponible de checkout academico. Evidencia de cambios: [5236ef6](https://github.com/facumartea/dreams/commit/5236ef6).
 
-Revision humana de codigo o dominio del tema: no acreditados por este registro.
-
 ## PROMPT 8 · cupon en carrito
 
 Fecha: fecha por confirmar
@@ -304,8 +280,6 @@ extracto del adjunto parcial A02; no prueba su fecha:
 ### Instrucciones del director
 
 Pedido consolidado, no literal: pone un lugar para ingresar el cupon antes de comprar.
-
-Resume el alcance de las instrucciones ampliadas disponibles; no sustituye la consulta breve original que pueda faltar.
 
 ### Resultado registrado para WORK
 
@@ -337,8 +311,6 @@ async function resolve_coupon(database, code, subtotal, user_id = null) {
 
 Fuente disponible y evidencia tecnica: pedido disponible de ajustes del carrito y extracto A02. Evidencia de cambios: [6865365](https://github.com/facumartea/dreams/commit/6865365).
 
-Revision humana de codigo o dominio del tema: no acreditados por este registro.
-
 ## PROMPT 9 · campos de tarjeta y envio
 
 Fecha: fecha por confirmar
@@ -354,8 +326,6 @@ extractos del adjunto parcial A03 y A04; agrupados por tema:
 ### Instrucciones del director
 
 Pedido consolidado, no literal: deja el nombre vacio, acepta numeros en tarjeta y cvv, agrega la barra al vencimiento y muestra envio $0.
-
-Resume el alcance de las instrucciones ampliadas disponibles; no sustituye la consulta breve original que pueda faltar.
 
 ### Resultado registrado para WORK
 
@@ -392,8 +362,6 @@ function academic_mask(input, kind) {
 
 Fuente disponible y evidencia tecnica: pedido disponible de formulario y extractos A03/A04. Evidencia de cambios: [6865365](https://github.com/facumartea/dreams/commit/6865365).
 
-Revision humana de codigo o dominio del tema: no acreditados por este registro.
-
 ## PROMPT 10 · retirar bloque de colecciones
 
 Fecha: fecha por confirmar
@@ -405,8 +373,6 @@ No se dispone de la consulta breve original por separado. No se reconstruye como
 ### Instrucciones del director
 
 Pedido consolidado, no literal: saca el bloque tres formas de empezar y deja las colecciones en el menu.
-
-Resume el alcance de las instrucciones ampliadas disponibles; no sustituye la consulta breve original que pueda faltar.
 
 ### Resultado registrado para WORK
 
@@ -424,8 +390,6 @@ test('Inicio retira el bloque completo y mantiene contiguos productos y presenta
 
 Fuente disponible y evidencia tecnica: pedido disponible posterior a los ajustes de carrito. Evidencia de cambios: [b60e33d](https://github.com/facumartea/dreams/commit/b60e33d).
 
-Revision humana de codigo o dominio del tema: no acreditados por este registro.
-
 ## PROMPT 11 · auditoria 2025 y limite de funciones
 
 Fecha: fecha por confirmar
@@ -437,8 +401,6 @@ No se dispone de la consulta breve original por separado. No se reconstruye como
 ### Instrucciones del director
 
 Pedido consolidado, no literal: revisa la rubrica 2025 y el limite de 40 lineas sin mezclarla con la otra.
-
-Resume el alcance de las instrucciones ampliadas disponibles; no sustituye la consulta breve original que pueda faltar.
 
 ### Resultado registrado para WORK
 
@@ -464,8 +426,6 @@ async function inventory(root) {
 
 Fuente disponible y evidencia tecnica: pedido disponible de auditoria y limpieza 2025. Evidencia de cambios: [3e12bc6](https://github.com/facumartea/dreams/commit/3e12bc6).
 
-Revision humana de codigo o dominio del tema: no acreditados por este registro.
-
 ## PROMPT 12 · scripts, carrusel y sql
 
 Fecha: fecha por confirmar
@@ -477,8 +437,6 @@ No se dispone de la consulta breve original por separado. No se reconstruye como
 ### Instrucciones del director
 
 Pedido consolidado, no literal: revisa el checkout que sirve la oficial y agrega el carrusel en destacados.
-
-Resume el alcance de las instrucciones ampliadas disponibles; no sustituye la consulta breve original que pueda faltar.
 
 ### Resultado registrado para WORK
 
@@ -526,8 +484,6 @@ function setup_featured_carousel(track) {
 
 Fuente disponible y evidencia tecnica: pedido disponible de cierre tecnico desde PR60. Evidencia de cambios: [e6d60bf](https://github.com/facumartea/dreams/commit/e6d60bf).
 
-Revision humana de codigo o dominio del tema: no acreditados por este registro.
-
 ## PROMPT 13 · inicio y cabeceras mas simples
 
 Fecha: fecha por confirmar
@@ -539,8 +495,6 @@ No se dispone de la consulta breve original por separado. No se reconstruye como
 ### Instrucciones del director
 
 Pedido consolidado, no literal: saca los vistos recientemente y los parrafos de las cabeceras, pero conserva el carrusel.
-
-Resume el alcance de las instrucciones ampliadas disponibles; no sustituye la consulta breve original que pueda faltar.
 
 ### Resultado registrado para WORK
 
@@ -562,8 +516,6 @@ function update_catalog_context(gender) {
 
 Fuente disponible y evidencia tecnica: pedido disponible de Inicio y colecciones. Evidencia de cambios: [60451ca](https://github.com/facumartea/dreams/commit/60451ca).
 
-Revision humana de codigo o dominio del tema: no acreditados por este registro.
-
 ## PROMPT 14 · material para estudiar
 
 Fecha: fecha por confirmar
@@ -577,8 +529,6 @@ mensaje de estudio disponible en la conversacion; no es una consulta inicial par
 ### Instrucciones del director
 
 Pedido consolidado, no literal: hace un word sencillo para estudiar los archivos, node, express, los metodos y la base de datos.
-
-Resume el alcance de las instrucciones ampliadas disponibles; no sustituye la consulta breve original que pueda faltar.
 
 ### Resultado registrado para WORK
 
@@ -609,8 +559,6 @@ async function start() {
 
 Fuente disponible y evidencia tecnica: mensajes disponibles de estudio C01-C04 y solicitud de guia. Evidencia de cambios: [8ad5401](https://github.com/facumartea/dreams/commit/8ad5401).
 
-Revision humana de codigo o dominio del tema: no acreditados por este registro.
-
 ## PROMPT 15 · ordenar el repositorio y conservar manual y api
 
 Fecha: fecha por confirmar
@@ -624,8 +572,6 @@ mensaje disponible con capturas; la imagen original forma parte de su contexto:
 ### Instrucciones del director
 
 Pedido consolidado, no literal: saca archivos que sobran y deja el manual y la explicacion de la api en el readme.
-
-Resume el alcance de las instrucciones ampliadas disponibles; no sustituye la consulta breve original que pueda faltar.
 
 ### Resultado registrado para WORK
 
@@ -648,8 +594,6 @@ async function source_files(root) {
 
 Fuente disponible y evidencia tecnica: pedidos disponibles de simplificacion y decisiones de docs, PR64-PR68. Evidencia de cambios: [42792c9](https://github.com/facumartea/dreams/commit/42792c9).
 
-Revision humana de codigo o dominio del tema: no acreditados por este registro.
-
 ## PROMPT 16 · icono del iphone
 
 Fecha: fecha por confirmar
@@ -663,8 +607,6 @@ mensaje disponible con captura de iphone:
 ### Instrucciones del director
 
 Pedido consolidado, no literal: ayudame a corregir el icono del iphone que se ve descentrado.
-
-Resume el alcance de las instrucciones ampliadas disponibles; no sustituye la consulta breve original que pueda faltar.
 
 ### Resultado registrado para WORK
 
@@ -682,8 +624,6 @@ for (const name of ['dreams-social.png', 'dreams-iphone-icon-v1.png']) {
 
 Fuente disponible y evidencia tecnica: mensaje disponible con captura del icono de iPhone. Evidencia de cambios: [6e4647c](https://github.com/facumartea/dreams/commit/6e4647c).
 
-Revision humana de codigo o dominio del tema: no acreditados por este registro.
-
 ## PROMPT 17 · dos pdf y limpieza comprobada
 
 Fecha: fecha por confirmar
@@ -695,8 +635,6 @@ No se dispone de la consulta breve original por separado. No se reconstruye como
 ### Instrucciones del director
 
 Pedido consolidado, no literal: deja un pdf para el wireframe y uno para el diseño de la base de datos.
-
-Resume el alcance de las instrucciones ampliadas disponibles; no sustituye la consulta breve original que pueda faltar.
 
 ### Resultado registrado para WORK
 
@@ -715,8 +653,6 @@ Archivo: [docs/README.md](docs/README.md) · documentacion actual en 3e7d2ef, de
 
 Fuente disponible y evidencia tecnica: pedido disponible de consolidacion e integracion de PR70. Evidencia de cambios: [3305d56](https://github.com/facumartea/dreams/commit/3305d56).
 
-Revision humana de codigo o dominio del tema: no acreditados por este registro.
-
 ## PROMPT 18 · ultima revision de entrega
 
 Fecha: fecha por confirmar
@@ -728,8 +664,6 @@ No se dispone de la consulta breve original por separado. No se reconstruye como
 ### Instrucciones del director
 
 Pedido consolidado, no literal: ordena los pedidos reales, deja los dos pdf y aclara los comentarios.
-
-Resume el alcance de las instrucciones ampliadas disponibles; no sustituye la consulta breve original que pueda faltar.
 
 ### Resultado registrado para WORK
 
@@ -751,8 +685,6 @@ function registration_values(body = {}) {
 
 Fuente disponible y evidencia tecnica: instrucciones de revision conservadas; la fecha de ejecucion anterior no acredita la del mensaje. Evidencia de cambios: [checkpoint 4a217d4](https://github.com/facumartea/dreams/commit/4a217d4f573b4a1ec9f6e1a71ca1aeb48c0155fc) y [PR71](https://github.com/facumartea/dreams/pull/71).
 
-Revision humana de codigo o dominio del tema: no acreditados por este registro.
-
 ## PROMPT 19 · prueba local con supabase y docker
 
 Fecha: fecha por confirmar
@@ -764,8 +696,6 @@ No se dispone de la consulta breve original por separado. No se reconstruye como
 ### Instrucciones del director
 
 Pedido consolidado, no literal: proba la aplicacion con supabase local y docker sin tocar produccion.
-
-Resume el alcance de las instrucciones ampliadas disponibles; no sustituye la consulta breve original que pueda faltar.
 
 ### Resultado registrado para WORK
 
@@ -793,8 +723,6 @@ async function database_health(database, product_brand_column = 'brand') {
 
 Fuente: instrucciones de continuacion disponibles en esta conversacion. Resultado: [PR72](https://github.com/facumartea/dreams/pull/72).
 
-Revision humana de codigo o dominio del tema: no acreditados por este registro.
-
 ## PROMPT 20 · simplificacion y readme breve
 
 Fecha: fecha por confirmar
@@ -806,8 +734,6 @@ No se dispone de la consulta breve original por separado. No se reconstruye como
 ### Instrucciones del director
 
 Pedido consolidado, no literal: saca los tests y los pagos que no usamos, conserva lo necesario y deja un readme corto.
-
-Resume el alcance de las instrucciones ampliadas disponibles; no sustituye la consulta breve original que pueda faltar.
 
 ### Resultado registrado para WORK
 
@@ -832,8 +758,6 @@ async function setup_checkout() {
 ```
 
 Fuente: instrucciones de continuacion disponibles en esta conversacion. Resultado: [PR74](https://github.com/facumartea/dreams/pull/74).
-
-Revision humana de codigo o dominio del tema: no acreditados por este registro.
 
 ## PROMPT 21 · carpetas y archivos de configuracion
 
@@ -870,8 +794,6 @@ Archivo: [app/package.json](app/package.json) · ejemplo actual, no cambio produ
 
 Fuente: instrucciones de continuacion disponibles en esta conversacion. Resultado: respuesta explicativa disponible en la conversacion; sin cambio de aplicacion.
 
-Revision humana de codigo o dominio del tema: no acreditados por este registro.
-
 ## Evidencia que falta
 
 Para fechar los 21 pedidos faltan encabezados o metadatos de los mensajes; no se sustituyen por fechas de commits. Sin consulta breve separada: pedidos 2, 3, 5-7, 10-13 y 17-20. En 4, 8 y 9 hay extractos parciales, no mensajes completos. B01 y el pedido de Railway quedan fuera de la seleccion. El pedido de migracion ya tiene original aportado, pero no fecha. Las preguntas para aprender Node se incluyen en estudio, no como un primer pedido inventado.
@@ -881,7 +803,7 @@ Para fechar los 21 pedidos faltan encabezados o metadatos de los mensajes; no se
 
 Contexto aportado en la version anterior: clases martes y jueves de 11:20 a 13:15, con comedor de 12:15 a 12:45, y comienzo aproximado en agosto/septiembre. No acredita fechas de mensajes, asistencia ni participacion. La entrega indicada para el 12/11/2026 no se presenta como realizada. La aceptacion de Supabase y los apellidos Martearena y Ruas fueron informados por el usuario, no son evidencia de defensa individual.
 
-Los textos siguientes se conservan como antecedentes de versiones anteriores. Sus numeros de pedido y referencias a archivos corresponden a aquellas versiones. B01 no integra la seleccion actual. Los mensajes largos con apartados son instrucciones ampliadas por el director segun la aclaracion del usuario; los informes tecnicos son resultados registrados para WORK, no palabras del usuario. Los extractos breves A01-A07 y los mensajes de estudio mantienen la identificacion de sus fuentes parciales. No son fallos o instrucciones vigentes por aparecer aqui.
+Los textos siguientes se conservan como antecedentes de versiones anteriores. Sus numeros de pedido y referencias a archivos corresponden a aquellas versiones. B01 no integra la seleccion actual. Los mensajes largos con apartados son instrucciones ampliadas por el director segun la aclaracion del usuario; los informes tecnicos son resultados registrados para WORK, no palabras del usuario. Los extractos A01-A08 y los mensajes de estudio mantienen la identificacion de sus fuentes parciales. No son fallos o instrucciones vigentes por aparecer aqui.
 
 ## Limites y fuentes conservadas
 
@@ -978,7 +900,7 @@ La declaracion anterior se consolida aqui. Sus textos originales largos, fuentes
 - Pruebas del agente: En esta tanda se comprueban fuentes, sanitización y enlaces; no se acreditan revisiones humanas por esto.
 - Revisión humana: no acreditada en el adjunto.
 
-### A08. Material de defensa · instrucciones ampliadas del director
+### A08. Material de defensa · extracto del pedido del usuario
 
 - Fecha del prompt: **sin fecha confirmada**. El archivo parcial está fechado 10/11/2026; no se transfiere esa fecha al mensaje original.
 - Tipo: **extracto textual**, completo sólo respecto del fragmento aportado; puede faltar el resto del mensaje y sus capturas.
