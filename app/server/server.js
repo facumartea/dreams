@@ -6,6 +6,7 @@ const { resolve_product_brand_column } = require('./product-schema');
 const app_module = require('./app');
 
 // reune las opciones del entorno para crear express; no activa un servicio por el solo hecho de importarlo.
+// el carrito local se habilita de forma expresa; su firma nunca usa una clave copiada de produccion.
 function application_options(create_database, database, product_brand_column) {
     return {
         preview_read_only: process.env.PREVIEW_READ_ONLY === 'true',

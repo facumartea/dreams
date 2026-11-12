@@ -4,6 +4,7 @@ function checkout_items_payload() {
     return get_cart().map(item => ({ id: item.id, quantity: item.quantity }));
 }
 
+// dibuja importes ya cotizados por el servidor; esta funcion no decide el descuento.
 function render_checkout(items, subtotal, discount, total) {
     const container = document.getElementById('checkout-items');
     container.innerHTML = '';

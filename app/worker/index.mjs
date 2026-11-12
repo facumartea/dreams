@@ -41,6 +41,7 @@ function staticMiddleware(env) {
         };
 }
 
+// cada entorno aporta clientes y claves; importar el worker no inicia compras ni prepara datos.
 function workerOptions(env, createDatabase) {
     return {
         database: createDatabase(), create_auth_client: createDatabase,

@@ -426,6 +426,7 @@ function install_get_api_config({
     route('get', '/api/config', async (request, response) => response.json({ whatsapp_number, contact_email, contacts, app_name: 'DREAMS', demo_auto_confirm_email, preview_read_only: options.preview_read_only === true, admin_writes_enabled: official_enabled(options) }));
 }
 
+// informa solo la simulacion vigente; un proveedor comercial no se construye ni se anuncia.
 function install_get_api_checkout_config({
     presentation,
     route,
