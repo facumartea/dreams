@@ -1,3 +1,4 @@
+// registro customer sin bypass admin y proteccion de escrituras heredadas.
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const { create_app } = require('../server/app');

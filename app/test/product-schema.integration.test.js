@@ -1,3 +1,4 @@
+// compatibilidad brand/marca en integracion de consultas.
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const { create_app } = require('../server/app');

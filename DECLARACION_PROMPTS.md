@@ -1237,3 +1237,10 @@ Resultado: 46 comprobaciones PASS de arranque, catalogo, registro normal, perfil
 Los cuatro tests SQL ya aprobados en PostgreSQL aislado se conservan como ejecucion separada; no se repitieron ni se presentan como parte de otra suite nueva. Tampoco se repitieron limpieza, comentarios o builds acreditados. Se preparo una correccion documental del README; no se detecto un fallo de codigo que exigiera cambio funcional en estos recorridos.
 
 Cierre: tres cuentas y nueve productos sinteticos, cero sesiones activas; instancia temporal retirada con sus volumenes y red. Oficial sin deployment ni cambios de configuracion. La evidencia no acredita programacion manual, revision del alumnado, fechas de mensajes o una entrega academica realizada.
+
+
+## Ampliacion de comentarios y material personal de estudio · 12/11/2026
+
+Continuacion de la entrega: se reutilizan los 46 checks locales reales y los cuatro SQL ya acreditados. La PR72 documental se integra antes de ampliar comentarios. La solicitud actual pide explicar responsabilidades, reglas y errores en comentarios simples, revisar descartables de app/ y preparar una guia personal fuera del repositorio. Esta nota no convierte las 17 fechas pendientes en fechas confirmadas ni sustituye el original ausente del pedido1.
+
+Se mantienen intactos identificadores, contratos, textos visibles, migraciones aplicadas y configuracion de produccion. Las explicaciones de SQL activo se agregan en README en vez de editar migraciones. El Word y el PDF se entregan como archivos personales; no se recrean guias de defensa en docs/. No se atribuyen redaccion o programacion manual ni dominio del contenido a los integrantes. Los resultados y el inventario final se registran en la PR correspondiente.

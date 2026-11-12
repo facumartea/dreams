@@ -5,6 +5,7 @@ function academic_format(value, kind) {
     if (kind === 'number') return raw.replace(/(.{4})(?=.)/g, '$1 ');
     return kind === 'expiry' && raw.length > 2 ? raw.slice(0, 2) + '/' + raw.slice(2) : raw;
 }
+// normaliza tambien pegado y edicion intermedia; recoloca el cursor por cantidad de digitos, no por una posicion fija.
 function academic_mask(input, kind) {
     input.addEventListener('paste', event => {
         const pasted = event.clipboardData?.getData('text');
@@ -29,6 +30,7 @@ function academic_mask(input, kind) {
         input.setCustomValidity('');
     });
 }
+// comprueba longitud y mes de datos ficticios; no verifica una tarjeta bancaria ni contacta una pasarela.
 function academic_input_valid() {
     const number = document.getElementById('demo-card-number');
     const expiry = document.getElementById('demo-card-expiry');

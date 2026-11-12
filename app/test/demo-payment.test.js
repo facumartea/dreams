@@ -1,3 +1,4 @@
+// proveedor demo: escenarios y estados.
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const { DemoPaymentProvider, normalize_demo_scenario } = require('../server/payments/demo');

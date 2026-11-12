@@ -1,3 +1,4 @@
+// entradas reales en workerd y retirada de mecanismos temporales.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createTestHarness } from 'wrangler';

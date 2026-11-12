@@ -1,3 +1,4 @@
+// cli de mantenimiento para inventariar scripts servidos y comparar el limite 40.
 import { readdir, readFile, writeFile, mkdtemp, rm } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { tmpdir } from 'node:os';

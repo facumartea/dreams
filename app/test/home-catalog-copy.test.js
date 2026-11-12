@@ -1,3 +1,4 @@
+// textos retirados y composicion de cabeceras sin alterar descripciones de productos.
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const vm = require('node:vm');

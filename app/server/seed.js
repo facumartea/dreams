@@ -44,6 +44,8 @@ const products = [
     ['Montale', 'Arabians Tonka', 'unisex', 'nicho', 100, 495000, 5, 5, 'ambarado especiado', 'Azafrán, cardamomo', 'Rosa, oud', 'Haba tonka, caña de azúcar, ámbar, almizcle', 'Potente, dulce y de gran duración.', 1]
 ];
 
+// no se llama desde el arranque; carga catalogo y puede preparar un admin si recibe sus variables.
+// es una utilidad separada de desarrollo, no el registro normal de usuarios.
 async function seed_database(database) {
     const rows = products.map((product, index) => {
         const [brand, name, gender, category, size_ml, price, stock, intensity, family, top_notes, heart_notes, base_notes, description, featured] = product;

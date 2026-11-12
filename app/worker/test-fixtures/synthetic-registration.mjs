@@ -1,3 +1,4 @@
+// fixture de registro sintetico para workerd.
 import { fetch_official } from '../official.mjs';
 let auth_calls = 0, profile_writes = 0;
 const native_fetch = globalThis.fetch;

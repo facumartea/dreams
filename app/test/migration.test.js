@@ -1,3 +1,4 @@
+// estructura e historial sql, permisos y constraints esperados.
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const { readFileSync } = require('node:fs');

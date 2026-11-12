@@ -1,3 +1,4 @@
+// normalizacion, validacion y calculo servidor de descuentos.
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const { coupon_payload, normalize_coupon_code, discounted_totals, resolve_coupon } = require('../server/app');

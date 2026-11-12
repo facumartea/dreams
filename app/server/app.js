@@ -29,6 +29,7 @@ const IMAGE_URL_ERROR = 'La URL ingresada no apunta a una imagen válida o el se
 
 function validate_product_image_url(value) { return require('../public/js/admin-image-url').supported_image_url(value) ? null : IMAGE_URL_ERROR; }
 
+// acepta solo origenes http o https sin usuario ni contrasena; descarta entradas que no se pueden comparar con seguridad.
 function normalize_origin(value) {
     try {
         const parsed = new URL(String(value || '').trim());
@@ -45,6 +46,8 @@ function allowed_origin_set(value) {
 }
 
 // rechaza escrituras de otros origenes incluso cuando el navegador conserva cookies de sesion.
+// protege escrituras con cookies: compara el origen con la lista permitida antes de ejecutar la ruta.
+// no autentica al usuario ni agrega por si sola cabeceras de cors.
 function mutation_origin_guard(configured_origins) {
     const configured = allowed_origin_set(configured_origins);
     return (request, response, next) => {
@@ -120,6 +123,7 @@ function review_payload(value) {
     return { data: { rating, comment } };
 }
 
+// calcula el descuento con limites y redondeo para que el total no quede negativo.
 function discounted_totals(subtotal, discount_percent = 0) {
     const safe_subtotal = Math.max(0, Number(subtotal) || 0);
     const safe_percent = Math.min(100, Math.max(0, Number(discount_percent) || 0));
@@ -127,6 +131,7 @@ function discounted_totals(subtotal, discount_percent = 0) {
     return { subtotal: safe_subtotal, discount, total: Math.max(0, Math.round((safe_subtotal - discount) * 100) / 100) };
 }
 
+// consulta compras aprobadas solo si hay limites; las condiciones desconocidas se rechazan en vez de ignorarlas.
 async function coupon_restriction(database, coupon, user_id) {
     // no interpretar condiciones arbitrarias ni omitir limites ya configurados.
     if (coupon.conditions && Object.keys(coupon.conditions).length) return 'Este cupón tiene condiciones especiales y no puede aplicarse en este checkout.';
@@ -139,6 +144,7 @@ async function coupon_restriction(database, coupon, user_id) {
     return null;
 }
 
+// busca el codigo normalizado y valida estado, vencimiento, minimo y limites antes de devolver importes.
 async function resolve_coupon(database, code, subtotal, user_id = null) {
     const normalized = normalize_coupon_code(code);
     if (!normalized) return { ...discounted_totals(subtotal), coupon: null, coupon_error: null };
@@ -190,6 +196,7 @@ function validate(value) {
     if (image_error) return image_error;
 }
 
+// valida el formulario de producto antes de convertir valores; evita aceptar datos vacios como numeros validos.
 function payload(value) {
     const validation_error = validate(value);
     if (validation_error) return { e: validation_error };
@@ -211,6 +218,7 @@ function normalize_cart_items(items) {
     return { quantities };
 }
 
+// recibe identificadores y cantidades; vuelve a buscar precios y stock para no confiar en importes del navegador.
 async function quote_cart(database, items, coupon_code = '', product_brand_column = 'brand', user_id = null) {
     const normalized = normalize_cart_items(items);
     if (normalized.error) return normalized;
@@ -231,6 +239,7 @@ async function quote_cart(database, items, coupon_code = '', product_brand_colum
     return { items: quoted, warnings, ...(await resolve_coupon(database, coupon_code, subtotal, user_id)) };
 }
 
+// comprueba acceso a tablas y columnas necesarias; responde al estado de dependencias, no crea datos.
 async function database_health(database, product_brand_column = 'brand', checkout_ready = false) {
     const schemas = {
         products: `id,${brand_column(product_brand_column)},name,price,stock,image_url,gender,category,featured,family,size_ml,top_notes,heart_notes,base_notes`,
@@ -249,6 +258,7 @@ async function database_health(database, product_brand_column = 'brand', checkou
 }
 
 // contexto por aplicacion: no comparte sesiones ni clientes entre cuentas.
+// crea dependencias y opciones por instancia; los clientes de sesion no se comparten entre usuarios.
 function application_context(options) {
     const database = options.database;
     const product_brand_column = brand_column(options.product_brand_column || 'brand');
@@ -311,6 +321,7 @@ function install_limits_and_static({
     app.use(options.static_middleware || express.static(public_directory));
 }
 
+// lee el perfil vinculado al usuario de auth; si falta crea solo un cliente, nunca un administrador.
 function profile_loader(database) {
     async function profile_for(user) {
         let result = await database.from('profiles').select('name,role').eq('id', user.id).maybeSingle();
@@ -327,6 +338,8 @@ function profile_loader(database) {
     return profile_for;
 }
 
+// valida el token con el proveedor y renueva con la cookie de refresh si hace falta.
+// un fallo de red no se interpreta como una sesion confirmada ni como un permiso.
 function install_session_middleware({
     database, production, logger, create_auth_client, app,
     async_route, profile_for,
@@ -365,6 +378,7 @@ function install_session_middleware({
     }));
 }
 
+// envuelve errores asincronos y prepara las guardas de login y admin antes de registrar endpoints.
 function configure_router(context) {
     const { app, create_auth_client, async_route } = context;
     const login = (request, response, next) => request.user ? next() : response.status(401).json({ error: 'Necesitás iniciar sesión.' });
@@ -470,6 +484,7 @@ function install_post_api_auth_register({
     route('post', '/api/auth/register', customer_registration({ database, create_auth_client, production, demo_auto_confirm_email, logger, email_confirmation_required: options.email_confirmation_required }));
 }
 
+// envia credenciales al proveedor, recupera el rol desde profiles y entrega cookies solo si hay sesion real.
 function install_post_api_auth_login({
     production, create_auth_client, demo_auto_confirm_email, profile_for, login,
     admin, route,
@@ -490,6 +505,7 @@ function install_post_api_auth_login({
     });
 }
 
+// revoca la sesion del proveedor cuando existe y limpia las cookies; permite repetir la salida.
 function install_post_api_auth_logout({
     production, logger, create_auth_client, admin, route,
 }) {
@@ -705,6 +721,7 @@ function install_get_api_admin_products({
     route('get', '/api/admin/products', admin, async (request, response) => response.json(fail_if(await admin_database(request).from('products').select('*').order('id', { ascending: false })).map(row => ({ ...product(row), stock: typeof row.stock === 'number' && Number.isSafeInteger(row.stock) && row.stock >= 0 ? row.stock : null }))));
 }
 
+// crea productos solo despues de la guarda admin; usa el jwt de esa sesion para conservar las politicas de la base.
 function install_post_api_admin_products({
     product_brand_column, admin, admin_database, route, fail_if,
 }) {
@@ -715,6 +732,7 @@ function install_post_api_admin_products({
     });
 }
 
+// actualiza el id validado y los campos permitidos; no usa el formulario para decidir permisos.
 function install_put_api_admin_products_id({
     product_brand_column, admin, admin_database, route, fail_if,
 }) {
@@ -935,6 +953,7 @@ const application_installers = [
     install_final_handlers,
 ];
 
+// arma express con las dependencias recibidas; el archivo de arranque decide cuando escuchar peticiones.
 function create_app(options = {}) {
     const context = application_context(options);
     context.profile_for = profile_loader(context.database);

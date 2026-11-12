@@ -1,3 +1,4 @@
+// filtros multiples del catalogo y respuesta de pages.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { filtered_catalog } from '../pages/catalog.mjs';

@@ -1,3 +1,4 @@
+// cupon, totales firmados, limites y formato local del formulario.
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const { create_app, resolve_coupon } = require('../server/app');

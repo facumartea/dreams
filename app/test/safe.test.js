@@ -1,3 +1,4 @@
+// escape html, url segura y errores comprensibles.
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const { escape_html, safe_image_url, fallback_image } = require('../public/js/safe');

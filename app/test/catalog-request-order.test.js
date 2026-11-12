@@ -1,3 +1,4 @@
+// descartar cargas y errores atrasados sin pisar la consulta nueva.
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const vm = require('node:vm');

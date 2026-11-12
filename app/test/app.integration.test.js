@@ -1,3 +1,4 @@
+// integracion express de rutas, sesion y manejo de errores.
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const { create_app, GENERIC_ERROR } = require('../server/app');

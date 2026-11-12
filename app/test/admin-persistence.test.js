@@ -1,3 +1,4 @@
+// no anunciar guardado sin confirmar todos los campos con lectura posterior.
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const vm = require('node:vm');

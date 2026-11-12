@@ -1,3 +1,4 @@
+// qa interna con fixtures y guardas de lecturas y roles.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { run_official_qa } from '../worker/official-qa.mjs';

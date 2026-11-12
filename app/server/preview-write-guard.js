@@ -1,3 +1,4 @@
+// guardas de entornos de lectura y excepciones expresas.
 const { official_route } = require('./official-policy');
 const writes = new Set(['POST', 'PUT', 'PATCH', 'DELETE']);
 const allowed_posts = new Set([

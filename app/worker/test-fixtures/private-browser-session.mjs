@@ -1,3 +1,4 @@
+// fixture de sesion privada en workerd.
 import { prepare_browser_qa } from '../private-browser-qa.mjs';
 import { fetch_official } from '../official.mjs';
 const id = 'a88d8d4e-ada3-4bfa-a6f5-db39d2dc9c19';

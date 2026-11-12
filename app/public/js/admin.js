@@ -35,6 +35,7 @@ function show_toast(message) {
     window.setTimeout(() => toast.remove(), 3200);
 }
 
+// centraliza peticiones y errores; una respuesta http fallida no se toma como un guardado exitoso.
 async function admin_fetch(url, options = {}) {
     let response;
     try { response = await fetch(url, options); }
@@ -44,6 +45,7 @@ async function admin_fetch(url, options = {}) {
     return data;
 }
 
+// deshabilita el boton mientras espera y lo restaura aunque falle la operacion.
 async function with_pending(button, pending_label, action) {
     if (!button || button.disabled) return;
     const label = button.textContent;
@@ -58,6 +60,7 @@ async function with_pending(button, pending_label, action) {
     }
 }
 
+// consulta la sesion al servidor antes de mostrar el panel; la api vuelve a validar permisos en cada ruta.
 async function verify_admin() {
     try {
         const data = await admin_fetch('/api/auth/me');
@@ -100,6 +103,7 @@ function refresh_product_counts() {
         const node = document.querySelector(`[data-module="${module}"] strong`); if (node) node.textContent = count;
     }
 }
+// carga la lista y conserva estados de carga o error; no inventa productos si falla la red.
 async function load_admin_products() {
     const request_id = ++admin_products_request_id;
     admin_products_state = 'loading';
@@ -129,6 +133,7 @@ function admin_product_row(product) {
     row.querySelector('.delete-button').addEventListener('click', event => delete_product(product.id, event.currentTarget));
     return row;
 }
+// aplica busqueda y stock bajo sobre la lista conocida; un dato de stock invalido no se vuelve cero.
 function render_admin_products() {
     const tbody = document.getElementById('admin-products'), status = document.getElementById('admin-products-status');
     document.getElementById('clear-product-search').disabled = !document.getElementById('admin-product-search').value && !applied_product_search;
@@ -146,6 +151,7 @@ function clear_product_search() { document.getElementById('admin-product-search'
 function product_form_dirty() { return product_form_baseline && JSON.stringify(get_form_data()) !== product_form_baseline; }
 function may_replace_product() { return !product_form_dirty() || confirm('Tenés cambios sin guardar. ¿Querés descartarlos?'); }
 
+// copia los campos actuales para editar, incluida la imagen; conserva una base para detectar cambios sin guardar.
 function fill_form(product) {
     if (product_save_pending) { show_toast('Esperá a que termine el guardado.'); return; }
     if (!may_replace_product()) return;
@@ -195,6 +201,7 @@ function fail_product_image(token, message) {
     window.clearTimeout(product_image_load_timer); product_image_preview_token += 1;
     set_product_image_preview('invalid', message);
 }
+// cada url tiene su intento y temporizador; un evento atrasado de otra imagen no valida la actual.
 function preview_product_image() {
     window.clearTimeout(product_image_preview_timer); window.clearTimeout(product_image_load_timer);
     const candidate = document.getElementById('image_url').value.trim(), token = ++product_image_preview_token;
@@ -244,6 +251,7 @@ function product_field_value(key, value) {
     return String(value ?? '').trim();
 }
 
+// vuelve a leer el producto y compara todos los campos enviados antes de anunciar exito.
 async function confirm_product_persistence(saved, expected) {
     if (!Number.isSafeInteger(Number(saved?.id)) || Number(saved.id) < 1) throw new Error('El servidor no confirmó el identificador del producto.');
     const products = await admin_fetch('/api/admin/products');
@@ -257,6 +265,7 @@ async function confirm_product_persistence(saved, expected) {
 function product_matches(stored, expected) {
     return Object.keys(expected).every(key => product_field_value(key, stored[key]) === product_field_value(key, expected[key]));
 }
+// si un alta quedo incierta, busca su identidad y contenido antes de repetir el post; no sobrescribe coincidencias ambiguas.
 async function prepare_product_creation(data) {
     const rows = await admin_fetch('/api/admin/products');
     if (!Array.isArray(rows)) throw new Error('No pudimos revisar el listado antes del alta. Reintentá la consulta.');
@@ -274,6 +283,7 @@ async function write_product_record(id, data) {
     if (id && uncertain_product_create && product_matches(data, uncertain_product_create)) return { id };
     return admin_fetch(id ? `/api/admin/products/${id}` : '/api/admin/products', { method: id ? 'PUT' : 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
 }
+// encadena escritura, lectura de confirmacion y actualizacion de conteos; ante error conserva el formulario.
 async function commit_product(id, data) {
     set_product_save_pending(true);
     try {
@@ -287,6 +297,7 @@ async function commit_product(id, data) {
     } catch (error) { document.getElementById('admin-message').textContent = `${error.message} Revisá el listado antes de repetir un alta si no pudimos confirmar el guardado.`; }
     finally { set_product_save_pending(false); }
 }
+// valida formulario e imagen actual antes de iniciar el guardado; bloquea otro envio mientras esta pendiente.
 async function save_product(event) {
     event.preventDefault();
     if (product_save_pending || !event.currentTarget.reportValidity()) return;
@@ -310,6 +321,7 @@ async function delete_product(id, button) {
     });
 }
 
+// sale de la edicion sin perder cambios por accidente; durante un guardado solo el cierre confirmado puede limpiar.
 function reset_form(force = false) {
     if (product_save_pending && force !== true) return;
     if (force !== true && !may_replace_product()) return;
@@ -362,6 +374,7 @@ function admin_record_value(key, value) {
     if (key === 'active') return value === true;
     return String(value ?? '').trim();
 }
+// comprueba por lectura posterior los campos guardados de cupones u opiniones.
 async function confirm_admin_record(kind, saved, expected) {
     const id = Number(saved?.id);
     if (!['coupons', 'reviews'].includes(kind) || !Number.isSafeInteger(id) || id < 1) throw new Error('No se confirmó el identificador guardado.');
@@ -486,6 +499,7 @@ async function write_coupon_record(id, data) {
     return admin_fetch(resolved ? `/api/admin/coupons/${resolved}` : '/api/admin/coupons', { method: resolved ? 'PUT' : 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
 }
 
+// normaliza el codigo y valida porcentaje antes de escribir; la confirmacion evita anunciar un guardado dudoso.
 async function save_coupon(event) {
     event.preventDefault();
     return with_pending(event.currentTarget.querySelector('[type="submit"]'), 'Guardando…', async () => {
@@ -514,6 +528,7 @@ function module_selected(id) {
     });
     document.querySelectorAll('.admin-tab-content').forEach(section => section.classList.toggle('active', section.id === `tab-${id === 'baja' ? 'productos' : id}`));
 }
+// usa una generacion de carga para que una respuesta atrasada no cambie el modulo seleccionado.
 async function open_admin_module(id, focus = true) {
     if (!admin_modules.some(module => module[0] === id)) return;
     const epoch = ++admin_module_request; module_selected(id);

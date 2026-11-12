@@ -1,3 +1,4 @@
+// adaptacion y error de esquema sin fallbacks silenciosos.
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const { brand_column, normalize_product_brand, product_write_payload, resolve_product_brand_column } = require('../server/product-schema');

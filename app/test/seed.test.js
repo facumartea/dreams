@@ -1,3 +1,4 @@
+// carga inicial de desarrollo solo en catalogo vacio.
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const { seed_database } = require('../server/seed');

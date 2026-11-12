@@ -13,12 +13,15 @@
 <body>
 <header class="site-header"><a class="brand" href="/">DREAMS</a><div class="header-actions"><a href="/" class="icon-link">Volver a la tienda</a></div></header>
 <main class="admin-page">
+<!-- separa los modulos; cada lectura o escritura sigue requiriendo permisos en el servidor. -->
 <div class="admin-header"><div class="admin-brand-lockup"><img class="admin-isotype" src="/assets/dreams-isologo-clean.png" alt="Isologo DREAMS" width="80" height="113"><div><p class="eyebrow">GESTIÓN DREAMS</p><h1>Panel de administración</h1></div></div><button id="logout-admin" class="button">Cerrar sesión</button></div>
 <nav id="admin-stats" class="admin-stats" aria-label="Módulos de administración"></nav><p id="admin-dashboard-status" class="form-message" role="status" aria-live="polite"></p><button id="retry-admin-dashboard" class="button" type="button" hidden>Reintentar conteos</button><div id="admin-module-status" class="form-message" role="status" aria-live="polite"></div><button id="retry-admin-module" type="button" class="button" hidden>Reintentar módulo</button>
 
 <section id="tab-productos" class="admin-tab-content active" tabindex="-1" aria-label="Productos">
+<!-- alta, edicion y listado comparten el estado; cancelar conserva la decision sobre cambios pendientes. -->
 <div class="admin-layout">
 <section class="admin-form"><p class="eyebrow" id="form-label">NUEVO PRODUCTO</p><form id="product-form">
+<!-- datos de producto: la imagen debe estar validada y el servidor debe confirmar el guardado. -->
 <input type="hidden" id="product-id">
 <div class="form-field"><label for="brand">Marca</label><input id="brand" required></div>
 <div class="form-field"><label for="name">Nombre</label><input id="name" required></div>
@@ -53,7 +56,8 @@
 <section id="tab-pedidos" class="admin-tab-content"><div class="section-heading"><div><p class="eyebrow">OPERACIONES</p><h2>Pedidos</h2></div><span id="order-total"></span></div><div class="table-scroll"><table class="admin-table"><thead><tr><th>Pedido</th><th>Fecha</th><th>Estado</th><th>Proveedor</th><th>Cupón</th><th>Total</th><th>Productos</th></tr></thead><tbody id="admin-orders"></tbody></table></div></section>
 <section id="tab-usuarios" class="admin-tab-content"><div class="section-heading"><div><p class="eyebrow">CUENTAS</p><h2>Usuarios registrados</h2></div></div><div class="table-scroll"><table class="admin-table"><thead><tr><th>ID</th><th>Nombre</th><th>Correo</th><th>Rol</th><th>Alta</th></tr></thead><tbody id="admin-users"></tbody></table></div></section>
 <section id="tab-consultas" class="admin-tab-content"><div class="section-heading"><div><p class="eyebrow">WHATSAPP</p><h2>Consultas recientes</h2></div></div><div class="table-scroll"><table class="admin-table"><thead><tr><th>Fecha</th><th>Producto</th><th>Usuario</th><th>Correo</th></tr></thead><tbody id="admin-inquiries"></tbody></table></div></section>
-<section id="tab-opiniones" class="admin-tab-content"><div class="section-heading"><div><p class="eyebrow">COMUNIDAD</p><h2>Opiniones</h2></div><label class="admin-review-search" for="review-search"><span>Buscar</span><input id="review-search" type="search" placeholder="Nombre o comentario"></label></div><p class="muted admin-section-note">El modelo actual permite editar o eliminar. La visibilidad/ocultamiento no existe todavía en el esquema y no se simula.</p><div class="review-grid admin-review-grid" id="admin-reviews"></div></section>
+<section id="tab-opiniones" class="admin-tab-content">
+<!-- moderacion de opiniones existentes; no se inventa un estado de publicacion que la base no tenga. --><div class="section-heading"><div><p class="eyebrow">COMUNIDAD</p><h2>Opiniones</h2></div><label class="admin-review-search" for="review-search"><span>Buscar</span><input id="review-search" type="search" placeholder="Nombre o comentario"></label></div><p class="muted admin-section-note">El modelo actual permite editar o eliminar. La visibilidad/ocultamiento no existe todavía en el esquema y no se simula.</p><div class="review-grid admin-review-grid" id="admin-reviews"></div></section>
 </main>
 <script src="/js/safe.js"></script>
 <script src="/js/admin-product-search.js"></script>

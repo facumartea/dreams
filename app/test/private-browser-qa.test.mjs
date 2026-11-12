@@ -1,3 +1,4 @@
+// sesiones internas, cifrado y limites temporales con fixtures.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { prepare_browser_qa, encrypt_browser_session } from '../worker/private-browser-qa.mjs';

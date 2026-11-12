@@ -1,3 +1,4 @@
+// controles y navegacion real del carrusel sin autoplay.
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const vm = require('node:vm');

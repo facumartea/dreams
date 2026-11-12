@@ -1,6 +1,7 @@
 // registro normal con el proveedor: crea un perfil cliente y nunca acepta un rol enviado por el formulario.
 const { session } = require('./auth-cookies');
 
+// extrae nombre, correo y contrasena; rechaza campos de rol aunque el navegador los agregue.
 function registration_values(body = {}) {
     const name = typeof body.name === 'string' ? body.name.trim() : '';
     const email = typeof body.email === 'string' ? body.email.trim().toLowerCase() : '';
@@ -11,12 +12,14 @@ function registration_values(body = {}) {
     return password.length >= 8 && password.length <= 128 ? { name, email, password } : null;
 }
 
+// vincula el perfil al uuid de auth con rol customer; ignoreduplicates conserva un perfil que ya existe.
 async function save_customer(database, user, values) {
     // nunca aceptar roles del formulario ni reemplazar perfiles existentes.
     const result = await database.from('profiles').upsert({ id: user.id, name: values.name, role: 'customer' }, { onConflict: 'id', ignoreDuplicates: true });
     if (result.error) throw result.error;
 }
 
+// separa cuenta creada de sesion activa; solo escribe cookies cuando el proveedor devuelve una sesion.
 function registered_response(response, data, values, production, demo = false, confirmation_required = true) {
     if (!data?.session) return response.status(202).json({
         message: confirmation_required ? 'No hay una sesión activa. Si recibiste un correo de confirmación, abrilo antes de ingresar.' : 'No hay una sesión activa. Probá ingresar; si no podés, contactanos.',
@@ -30,6 +33,7 @@ function registered_response(response, data, values, production, demo = false, c
     });
 }
 
+// usa el registro normal del proveedor y devuelve la sesion que realmente reciba, sin confirmar mediante admin.
 async function normal_registration(context, values, response) {
     // el registro normal devuelve sesion cuando el proveedor no exige confirmar el correo.
     const result = await context.create_auth_client().auth.signUp({
@@ -41,6 +45,7 @@ async function normal_registration(context, values, response) {
     return registered_response(response, result.data, values, context.production, false, confirmation_required);
 }
 
+// ruta de compatibilidad preparada: usa alta administrativa y no es el registro habilitado de la oficial.
 async function legacy_demo_registration(context, values, response) {
     // compatibilidad historica desactivada en la oficial y en revision; el registro normal no usa este atajo.
     const created = await context.database.auth.admin.createUser({
@@ -70,6 +75,7 @@ function customer_registration(context) {
 module.exports = { customer_registration };
 
 
+// convierte fallos del proveedor en mensajes utiles sin exponer su respuesta interna.
 function registration_failure(response, error) {
     if (error?.code === 'weak_password') return response.status(400).json({ error: 'Elegí una contraseña que cumpla los requisitos de seguridad.', field: 'password' });
     if (error?.status >= 500 || error?.name === 'AuthRetryableFetchError') return response.status(503).json({ error: 'El registro no está disponible temporalmente. Reintentá más tarde.' });

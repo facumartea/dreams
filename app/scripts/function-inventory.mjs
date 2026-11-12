@@ -55,6 +55,8 @@ function main_blocks(tree, file, records, offset) {
     }
 }
 
+// recorre fuentes con un parser y cuenta lineas fisicas, tambien comentarios y vacias dentro de funciones.
+// los bloques ejecutables superiores se revisan aparte; no se confunde cada archivo con el programa principal.
 export async function inventory(root) {
     const records = [];
     const files = await source_files(root);

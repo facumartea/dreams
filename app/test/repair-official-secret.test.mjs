@@ -1,3 +1,4 @@
+// reparacion controlada con mocks, sin usar ni sustituir secretos reales.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { repair_official_secret } from '../scripts/repair-official-secret.mjs';

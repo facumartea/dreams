@@ -1,3 +1,4 @@
+// cliente academico: reintento, doble envio y ausencia de datos financieros en peticiones.
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const vm = require('node:vm');

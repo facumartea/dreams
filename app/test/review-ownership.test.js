@@ -1,3 +1,4 @@
+// opiniones propias, uuid de operacion y rechazo de borrado ajeno.
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const { randomUUID } = require('node:crypto');

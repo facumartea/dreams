@@ -1,3 +1,4 @@
+// concurrencia, reintentos y estados de vista previa de imagenes.
 const test=require('node:test');const assert=require('node:assert/strict');const vm=require('node:vm');const {readFileSync}=require('node:fs');
 const images=require('../public/js/admin-image-url');
 test('image URLs accept extensionless HTTPS/local assets and reject malformed, credentials, HTTP and ambiguous paths',()=>{
