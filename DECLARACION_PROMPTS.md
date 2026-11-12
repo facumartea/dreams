@@ -1224,3 +1224,16 @@ Antes de implementar S3 sólo hace falta confirmar una decisión de producto: si
 
 - Resultado comprobado de esta revision: 18 fragmentos de 5 a 40 lineas coinciden exactamente con sus archivos; 108 archivos JavaScript con el mismo arbol de instrucciones, 123 comentarios revisados. Instalacion, sintaxis, inventario y cuatro builds aprobados; 497 tests aprobados, 4 SQL omitidos, 0 fallos. Doce checks de navegador con fixtures locales en movil/escritorio; no QA remota. El arranque sin variables obligatorias termina con salida 1; conexion de desarrollo BLOQUEADA.
 - Primer ensayo: retirar un bloque CSS comentado y comentar por fuera de la plantilla del pie rompio tres comprobaciones de fuente. Se restauraron esos contenidos y la suite volvio a aprobar, sin cambiar sus aserciones ni habilitar estilos que estaban comentados.
+
+
+## Actualizacion tecnica local · 12/11/2026
+
+Esta nota es evidencia de ejecucion, no un prompt nuevo ni una fecha atribuida a los 17 pedidos pendientes. El usuario autorizo una instancia temporal local aislada; no aporto aun las capturas historicas. La bitacora permanece parcial y el pedido 1 sigue respaldado solo por un resumen.
+
+Se verifico el codigo de da5df12 desde copia limpia con Supabase local real: PostgreSQL 17.11, GoTrue 2.197.0, PostgREST 16.5 y CLI 3.1.0. Las ocho migraciones aplicaron sobre una base inicialmente sin usuarios ni productos. Solo se crearon cuentas y productos sinteticos; las claves locales y contrasenas de prueba se manejaron en memoria. No se copiaron datos, usuarios o secretos de produccion.
+
+Resultado: 46 comprobaciones PASS de arranque, catalogo, registro normal, perfil customer, login, sesion/refresh/logout, permisos Admin, lecturas de modulos, busqueda/stock bajo, alta, imagenes y persistencia. Se conserva el FAIL del arnes que esperaba Cuenta en el logout Admin: el codigo navega a Inicio. Se completo el cierre con la expectativa correcta, sin cambiar la aplicacion. La preparacion tuvo fallos de espacio en vfs y de proxy del healthcheck; se resolvieron en las imagenes temporales, sin omitir el control de salud ni alterar el binario Auth.
+
+Los cuatro tests SQL ya aprobados en PostgreSQL aislado se conservan como ejecucion separada; no se repitieron ni se presentan como parte de otra suite nueva. Tampoco se repitieron limpieza, comentarios o builds acreditados. Se preparo una correccion documental del README; no se detecto un fallo de codigo que exigiera cambio funcional en estos recorridos.
+
+Cierre: tres cuentas y nueve productos sinteticos, cero sesiones activas; instancia temporal retirada con sus volumenes y red. Oficial sin deployment ni cambios de configuracion. La evidencia no acredita programacion manual, revision del alumnado, fechas de mensajes o una entrega academica realizada.
