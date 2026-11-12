@@ -37,10 +37,7 @@
     "PRODUCT_BRAND_COLUMN": "marca",
     "APP_ORIGINS": "http://127.0.0.1:8787,http://localhost:8787",
     "APP_BASE_URL": "http://127.0.0.1:8787",
-    "CHECKOUT_PROVIDER": "demo",
-    "CHECKOUT_SCHEMA_READY": "false",
     "DEMO_AUTO_CONFIRM_EMAIL": "false",
-    "CHECKOUT_SHOW_TEST_DATA": "false"
   },
   "env": {
     "preview": {
@@ -48,10 +45,7 @@
       "vars": {
         "NODE_ENV": "production",
         "PRODUCT_BRAND_COLUMN": "marca",
-        "CHECKOUT_PROVIDER": "demo",
-        "CHECKOUT_SCHEMA_READY": "false",
         "DEMO_AUTO_CONFIRM_EMAIL": "false",
-        "CHECKOUT_SHOW_TEST_DATA": "false"
       },
       "previews": {
         "vars": {
@@ -60,10 +54,7 @@
           "SUPABASE_URL": "https://nwsmbemwtexmrtpkgxrz.supabase.co",
           "APP_BASE_URL": "https://academic-review-dreams-perfumes.dreams-perfumes.workers.dev",
           "APP_ORIGINS": "https://academic-review-dreams-perfumes.dreams-perfumes.workers.dev",
-          "CHECKOUT_PROVIDER": "demo",
-          "CHECKOUT_SCHEMA_READY": "false",
           "DEMO_AUTO_CONFIRM_EMAIL": "false",
-          "CHECKOUT_SHOW_TEST_DATA": "true",
           "PRESENTATION_CHECKOUT_ENABLED": "true",
           "PREVIEW_READ_ONLY": "true",
           "CONTACT_EMAIL": "facundo.martearena@dantebariloche.edu.ar",
@@ -86,10 +77,7 @@
       "vars": {
         "NODE_ENV": "production",
         "PRODUCT_BRAND_COLUMN": "marca",
-        "CHECKOUT_PROVIDER": "mercado_pago",
-        "CHECKOUT_SCHEMA_READY": "false",
         "DEMO_AUTO_CONFIRM_EMAIL": "false",
-        "CHECKOUT_SHOW_TEST_DATA": "false"
       }
     }
   }
