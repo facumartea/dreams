@@ -1,71 +1,82 @@
 # Declaracion de uso de IA y bitacora parcial de DREAMS
 
-Esto es un registro de los 18 prompts principales. No pusimos todos porque generalmente dábamos muchas vueltas hasta conseguir algo útil, así que agrupamos los pedidos sobre una misma tarea y mostramos el resultado principal de cada uno. El código completo está en el proyecto.
+Esto es un registro de los 21 prompts principales. No pusimos todos porque generalmente dábamos muchas vueltas hasta conseguir algo útil, así que agrupamos los pedidos sobre una misma tarea y mostramos el resultado principal de cada uno. El código completo está en el proyecto.
 
-**Estado: parcial.** Los 18 pedidos estan resumidos o consolidados, no son transcripciones literales. El primero procede de un resumen historico sin el mensaje original completo; los demas tienen pedidos disponibles en la conversacion o registros aportados. Hay 17 fechas de prompt por confirmar. Solo el pedido actual tiene fecha contrastada con esta ejecucion: 11/11/2026. El orden sigue las etapas documentadas y la secuencia disponible; no pretende fijar el orden exacto de cada iteracion sin fecha.
+## Como leer este registro
 
-Los fragmentos son copias exactas de la implementacion de esta branch sobre main `3305d56dcf307ee69436d9393adef1b0bd6382b6`, revisadas despues de aclarar comentarios. **No son salidas literales de aquellas conversaciones.** Se indica el commit de evidencia tecnica cuando existe: acredita cambios, no la fecha del prompt ni que lo programo o reviso un integrante. En pedidos documentales se identifica expresamente el ejemplo actual o Markdown, sin fingir una salida de codigo historica. Se revisa tambien la presencia de la funcion en ese commit; no se atribuye a una etapa donde no existia.
+- **pedido del usuario:** se cita solo el texto que esta disponible. Un extracto parcial no se presenta como el mensaje completo.
+- **instrucciones del director:** el usuario confirmo que el chat director amplio los pedidos largos con apartados e indicaciones para WORK. Sus resumenes se identifican como pedidos consolidados, no como mensajes tecnicos escritos integramente por el usuario.
+- **resultado de WORK:** se distingue el trabajo tecnico registrado de lo pedido. Los commits y PR acreditan cambios o verificaciones, no la fecha del mensaje, autoria manual ni revision del alumnado.
 
-Se uso asistencia de IA para analizar, corregir, probar y documentar. No se afirma trabajo integramente manual, autoria personal, revision humana ni dominio del codigo sin evidencia. Los antecedentes conservan los errores y limites, no solo los resultados favorables. No hay secretos ni datos de clientes en los fragmentos; los nombres de variables no son sus valores.
+Los pedidos consolidados resumen las instrucciones del director disponibles y no sustituyen las consultas breves que falten. No se acredita programacion manual, revision del alumnado ni dominio del codigo por conservar estos resultados.
 
-El usuario informa clases martes y jueves, de 11:20 a 13:15, con comedor de 12:15 a 12:45, y un comienzo aproximado en agosto/septiembre. Es contexto, no evidencia de fechas de mensajes o asistencia. Hoy es miercoles 11/11/2026 y manana jueves 12/11/2026: la entrega para ese dia es una indicacion del usuario, no una entrega realizada. No se conoce el dia del primer pedido ni se acredita una preentrega. La aceptacion de Supabase y los apellidos Martearena y Ruas fueron informados por el usuario; no prueban participacion o defensa individual.
+**El registro sigue siendo parcial.** No hay fechas de mensaje acreditadas para esta seleccion: se conserva "fecha por confirmar". La fecha 11/11/2026 que antes se asignaba al pedido 18 procedia de la ejecucion; se conserva como antecedente, pero no se usa para fechar ese mensaje. Las fechas tecnicas de los anexos permanecen con su alcance original. No se distribuyen pedidos entre martes y jueves.
 
-## PROMPT 1 · arquitectura y seguridad
+B01, sobre arquitectura y seguridad, queda fuera de la seleccion porque no se encontro su mensaje original. El registro anterior citaba [f3533d7](https://github.com/facumartea/dreams/commit/f3533d7) como antecedente tecnico, sin acreditar que la funcion de ejemplo existiera alli; esa referencia no se transforma en un prompt original. Se conservan sus antecedentes tecnicos al final, sin reconstruir una cita. El pedido literal de migracion aportado ahora lo reemplaza. Railway aparece en esos antecedentes como hosting anterior, pero falta su pedido original: no se inventa una entrada. Tampoco se encontro una consulta inicial para aprender Node; las consultas de estudio disponibles se mantienen en su etapa posterior y las preguntas de aprendizaje van en el Word personal.
+
+El orden conserva la secuencia relativa documentada: migracion, reparaciones funcionales, diseño, estudio y simplificacion. No fija la fecha exacta de iteraciones sin metadatos. Los resumenes no convierten ordenes de implementar, corregir o publicar en preguntas de aprendizaje.
+
+Los ejemplos actuales se copian exactamente del codigo en main `3e7d2eff30dffe57ad039d22e3bc88f4d2a2bbf3`. **No son salidas literales de las conversaciones antiguas.** Si un archivo fue retirado, se enlaza su version historica y se aclara. Los materiales personales de estudio se entregan fuera del repositorio; docs/ conserva solo el indice y los dos PDF de diseño.
+
+
+## PROMPT 1 · migrar a cloudflare y mantener supabase
 
 Fecha: fecha por confirmar
 
-Prompt (resumen consolidado, no literal): revisa como esta armada la pagina y los problemas de seguridad antes de publicarla
+### Pedido del usuario
 
-Resultado: guardas de origen; ejemplo actual, no salida literal de la primera auditoria.
+texto original aportado por el usuario en esta revision:
 
-Archivo: [app/server/app.js](app/server/app.js)
+> quiero migrarlo a cloudeflare pero mantener supabase
 
-Codigo (implementacion actual):
+### Instrucciones del director
+
+No se conserva aqui el texto original de la ampliacion. Los criterios posteriores de despliegue y seguridad no se atribuyen como palabras literales del usuario.
+
+### Resultado registrado para WORK
+
+El proyecto conserva Supabase y utiliza entradas de Cloudflare. El commit f0d52d6 acredita la adaptacion tecnica; no fecha el pedido. Se muestra la implementacion actual, no la salida original.
+
+Archivo: [app/worker/index.mjs](app/worker/index.mjs) · ejemplo actual en 3e7d2ef, desde linea 12.
 
 ```javascript
-function mutation_origin_guard(configured_origins) {
-    const configured = allowed_origin_set(configured_origins);
-    return (request, response, next) => {
-        if (!unsafe_methods.has(request.method)) return next();
-
-        const origin_header = request.get('origin');
-        const referer_header = request.get('referer');
-        const fetch_site = String(request.get('sec-fetch-site') || '').toLowerCase();
-        if (!origin_header && !referer_header) {
-            const has_session_cookie = /(?:^|;\s*)dreams_(?:access|refresh)_token=/.test(String(request.headers.cookie || ''));
-            return fetch_site === 'cross-site' || has_session_cookie
-                ? response.status(403).json({ error: 'Origen de solicitud no permitido.' })
-                : next();
+function databaseFactory(env) {
+    return (accessToken, authOptions = {}) => createClient(env.SUPABASE_URL, env.SUPABASE_SECRET_KEY, {
+        auth: { autoRefreshToken: false, persistSession: false, detectSessionInUrl: false, ...authOptions },
+        global: {
+            fetch: async (...args) => {
+                const response = await fetch(...args);
+                if (!response.ok) console.error('DREAMS Supabase HTTP failed', { status: response.status });
+                return response;
+            },
+            ...(accessToken ? { headers: { Authorization: `Bearer ${accessToken}` } } : {})
         }
-
-        const supplied_origin = normalize_origin(origin_header || referer_header);
-        const request_origin = normalize_origin(`${request.protocol}://${request.get('host') || ''}`);
-        const trusted = configured.size ? configured : new Set([request_origin].filter(Boolean));
-        return supplied_origin && trusted.has(supplied_origin)
-            ? next()
-            : response.status(403).json({ error: 'Origen de solicitud no permitido.' });
-    };
+    });
 }
 ```
 
-Fuente del pedido: registro previo B01, resumen de etapa sin original completo. Evidencia de cambios: [f3533d7](https://github.com/facumartea/dreams/commit/f3533d7).
-
-La funcion elegida no se acredita en ese commit; se muestra solo como ejemplo de la implementacion actual.
+Evidencia tecnica: [f0d52d6](https://github.com/facumartea/dreams/commit/f0d52d6). Original aportado por el usuario en esta revision; fecha no acreditada.
 
 ## PROMPT 2 · conexion del backend
 
 Fecha: fecha por confirmar
 
-Prompt (resumen consolidado, no literal): segui con la pr 56 y revisa por que falla la clave sin mostrarla ni cambiar auth. conserva la oficial hasta que conecte
+### Pedido del usuario
 
-Resultado: cliente servidor actual; el diagnostico y su cierre historico se distinguen en los antecedentes.
+No se dispone de la consulta breve original por separado. No se reconstruye como cita.
 
-Archivo: [app/worker/official-client.mjs](app/worker/official-client.mjs)
+### Instrucciones del director
 
-Codigo (implementacion actual):
+Pedido consolidado, no literal: revisa por que no conecta el backend y conserva la pagina hasta que funcione.
+
+### Resultado registrado para WORK
+
+cliente servidor actual; el diagnostico y su cierre historico se distinguen en los antecedentes.
+
+Archivo: [app/worker/official-client.mjs](app/worker/official-client.mjs) · ejemplo actual en 3e7d2ef, desde linea 5.
 
 ```javascript
-export function create_official_database(env, access, fetcher) {
+function create_official_database(env, access, fetcher) {
     return createClient(env.SUPABASE_URL, env.SUPABASE_SECRET_KEY, {
         auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false },
         global: {
@@ -76,19 +87,25 @@ export function create_official_database(env, access, fetcher) {
 }
 ```
 
-Fuente del pedido: mensajes disponibles de continuidad y diagnostico de PR56. Evidencia de cambios: [5236ef6](https://github.com/facumartea/dreams/commit/5236ef6).
+Fuente disponible y evidencia tecnica: mensajes disponibles de continuidad y diagnostico de PR56. Evidencia de cambios: [5236ef6](https://github.com/facumartea/dreams/commit/5236ef6).
 
 ## PROMPT 3 · registro y sesion
 
 Fecha: fecha por confirmar
 
-Prompt (resumen consolidado, no literal): arregla el registro y el login de verdad, sin confirmar usuarios por un atajo ni cambiar al administrador
+### Pedido del usuario
 
-Resultado: registro normal y perfil customer, sujeto a la respuesta real del proveedor.
+No se dispone de la consulta breve original por separado. No se reconstruye como cita.
 
-Archivo: [app/server/customer-registration.js](app/server/customer-registration.js)
+### Instrucciones del director
 
-Codigo (implementacion actual):
+Pedido consolidado, no literal: arregla el registro y el login sin cambiar al administrador.
+
+### Resultado registrado para WORK
+
+registro normal y perfil customer, sujeto a la respuesta real del proveedor.
+
+Archivo: [app/server/customer-registration.js](app/server/customer-registration.js) · ejemplo actual en 3e7d2ef, desde linea 37.
 
 ```javascript
 async function normal_registration(context, values, response) {
@@ -103,19 +120,27 @@ async function normal_registration(context, values, response) {
 }
 ```
 
-Fuente del pedido: pedido disponible de cierre funcional de PR56. Evidencia de cambios: [5236ef6](https://github.com/facumartea/dreams/commit/5236ef6).
+Fuente disponible y evidencia tecnica: pedido disponible de cierre funcional de PR56. Evidencia de cambios: [5236ef6](https://github.com/facumartea/dreams/commit/5236ef6).
 
 ## PROMPT 4 · guardado del admin
 
 Fecha: fecha por confirmar
 
-Prompt (resumen consolidado, no literal): revisa todo el admin, sobre todo guardar productos e imagenes. no muestres guardado hasta confirmar que quedo
+### Pedido del usuario
 
-Resultado: guardado con lectura posterior y recuperacion de errores.
+extracto del adjunto parcial A01; no prueba su fecha:
 
-Archivo: [app/public/js/admin.js](app/public/js/admin.js)
+> necesito revisar y corregir toda la pagina https://dreams-perfumes.pages.dev/admin revisarla muchas veces absolutamente todas las funciones y botones que se pueda hacer toda
 
-Codigo (implementacion actual):
+### Instrucciones del director
+
+Pedido consolidado, no literal: revisa guardar productos e imagenes en el admin.
+
+### Resultado registrado para WORK
+
+guardado con lectura posterior y recuperacion de errores.
+
+Archivo: [app/public/js/admin.js](app/public/js/admin.js) · ejemplo actual en 3e7d2ef, desde linea 287.
 
 ```javascript
 async function commit_product(id, data) {
@@ -133,22 +158,28 @@ async function commit_product(id, data) {
 }
 ```
 
-Fuente del pedido: pedido disponible de panel Admin y extracto A01. Evidencia de cambios: [5236ef6](https://github.com/facumartea/dreams/commit/5236ef6).
+Fuente disponible y evidencia tecnica: pedido disponible de panel Admin y extracto A01. Evidencia de cambios: [5236ef6](https://github.com/facumartea/dreams/commit/5236ef6).
 
 ## PROMPT 5 · carrito por cuenta
 
 Fecha: fecha por confirmar
 
-Prompt (resumen consolidado, no literal): comproba que cada cuenta tenga su carrito y que al entrar se junte con el de visitante sin duplicar
+### Pedido del usuario
 
-Resultado: operaciones ligadas a la cuenta verificada; precios recuperados en servidor.
+No se dispone de la consulta breve original por separado. No se reconstruye como cita.
 
-Archivo: [app/server/account-cart.js](app/server/account-cart.js)
+### Instrucciones del director
 
-Codigo (implementacion actual):
+Pedido consolidado, no literal: que cada cuenta conserve su carrito y no se mezcle con el de otra.
+
+### Resultado registrado para WORK
+
+operaciones ligadas a la cuenta verificada; precios recuperados en servidor.
+
+Archivo: [app/server/account-cart.js](app/server/account-cart.js) · ejemplo actual en 3e7d2ef, desde linea 46.
 
 ```javascript
-    async write(req, res) {
+async write(req, res) {
         if (!this.ready) return res.status(503).json({ error: 'El guardado del carrito no está disponible.' });
         const body = req.body;
         if (!exact(body, ['operation_id', 'operation', 'scope']) || !uuid(body.operation_id) || !valid_operation(body.operation)) return res.status(400).json({ error: 'Operación de carrito inválida.' });
@@ -163,19 +194,25 @@ Codigo (implementacion actual):
     }
 ```
 
-Fuente del pedido: pedido disponible de carrito por UUID en PR56. Evidencia de cambios: [5236ef6](https://github.com/facumartea/dreams/commit/5236ef6).
+Fuente disponible y evidencia tecnica: pedido disponible de carrito por UUID en PR56. Evidencia de cambios: [5236ef6](https://github.com/facumartea/dreams/commit/5236ef6).
 
 ## PROMPT 6 · opiniones propias
 
 Fecha: fecha por confirmar
 
-Prompt (resumen consolidado, no literal): deja que cada usuario pueda borrar su opinion pero no la de otro y conserva la moderacion del admin
+### Pedido del usuario
 
-Resultado: borrado propio comprobado tambien en la api.
+No se dispone de la consulta breve original por separado. No se reconstruye como cita.
 
-Archivo: [app/server/reviews.js](app/server/reviews.js)
+### Instrucciones del director
 
-Codigo (implementacion actual):
+Pedido consolidado, no literal: que cada usuario pueda borrar su opinion, pero no la de otro.
+
+### Resultado registrado para WORK
+
+borrado propio comprobado tambien en la api.
+
+Archivo: [app/server/reviews.js](app/server/reviews.js) · ejemplo actual en 3e7d2ef, desde linea 36.
 
 ```javascript
 async function delete_own_review(request, response, create_auth_client) {
@@ -189,19 +226,25 @@ async function delete_own_review(request, response, create_auth_client) {
 }
 ```
 
-Fuente del pedido: pedido disponible de opiniones y eliminacion propia. Evidencia de cambios: [5236ef6](https://github.com/facumartea/dreams/commit/5236ef6).
+Fuente disponible y evidencia tecnica: pedido disponible de opiniones y eliminacion propia. Evidencia de cambios: [5236ef6](https://github.com/facumartea/dreams/commit/5236ef6).
 
 ## PROMPT 7 · checkout academico
 
 Fecha: fecha por confirmar
 
-Prompt (resumen consolidado, no literal): completa el checkout de la escuela sin cobrar, sin cambiar stock y sin guardar los datos de tarjeta
+### Pedido del usuario
 
-Resultado: referencias firmadas, con propietario y vencimiento; no crea pedidos comerciales.
+No se dispone de la consulta breve original por separado. No se reconstruye como cita.
 
-Archivo: [app/server/presentation-checkout.js](app/server/presentation-checkout.js)
+### Instrucciones del director
 
-Codigo (implementacion actual):
+Pedido consolidado, no literal: completa el checkout de la escuela sin cobrar ni guardar datos de tarjeta.
+
+### Resultado registrado para WORK
+
+referencias firmadas, con propietario y vencimiento; no crea pedidos comerciales.
+
+Archivo: [app/server/presentation-checkout.js](app/server/presentation-checkout.js) · ejemplo actual en 3e7d2ef, desde linea 19.
 
 ```javascript
 function presentation_checkout({ enabled, signing_key, quote_cart, database, product_brand_column, production, issuer }) {
@@ -222,19 +265,27 @@ function presentation_checkout({ enabled, signing_key, quote_cart, database, pro
 }
 ```
 
-Fuente del pedido: pedido disponible de checkout academico. Evidencia de cambios: [5236ef6](https://github.com/facumartea/dreams/commit/5236ef6).
+Fuente disponible y evidencia tecnica: pedido disponible de checkout academico. Evidencia de cambios: [5236ef6](https://github.com/facumartea/dreams/commit/5236ef6).
 
 ## PROMPT 8 · cupon en carrito
 
 Fecha: fecha por confirmar
 
-Prompt (resumen consolidado, no literal): pone para ingresar el cupon antes de comprar, con aplicar y quitar. que los totales coincidan hasta el final
+### Pedido del usuario
 
-Resultado: validacion servidor del cupon y de sus condiciones.
+extracto del adjunto parcial A02; no prueba su fecha:
 
-Archivo: [app/server/app.js](app/server/app.js)
+> quiero que aca aparezca para poner el cupon de descuento
 
-Codigo (implementacion actual):
+### Instrucciones del director
+
+Pedido consolidado, no literal: pone un lugar para ingresar el cupon antes de comprar.
+
+### Resultado registrado para WORK
+
+validacion servidor del cupon y de sus condiciones.
+
+Archivo: [app/server/app.js](app/server/app.js) · ejemplo actual en 3e7d2ef, desde linea 147.
 
 ```javascript
 async function resolve_coupon(database, code, subtotal, user_id = null) {
@@ -258,19 +309,29 @@ async function resolve_coupon(database, code, subtotal, user_id = null) {
 }
 ```
 
-Fuente del pedido: pedido disponible de ajustes del carrito y extracto A02. Evidencia de cambios: [6865365](https://github.com/facumartea/dreams/commit/6865365).
+Fuente disponible y evidencia tecnica: pedido disponible de ajustes del carrito y extracto A02. Evidencia de cambios: [6865365](https://github.com/facumartea/dreams/commit/6865365).
 
 ## PROMPT 9 · campos de tarjeta y envio
 
 Fecha: fecha por confirmar
 
-Prompt (resumen consolidado, no literal): deja vacio el nombre y pone cliente dreams como ejemplo. que tarjeta y cvv acepten solo numeros, el vencimiento lleve barra y diga envio $0
+### Pedido del usuario
 
-Resultado: mascaras locales; no se transmiten ni guardan los campos financieros.
+extractos del adjunto parcial A03 y A04; agrupados por tema:
 
-Archivo: [app/public/js/academic-inputs.js](app/public/js/academic-inputs.js)
+> en la parte del vencimiento que sean cuatro numeros y que se ponga la barra en el medio
+>
+> que no dia envio gratis sacale solo la palabra "gratis" que aparezca envio $0
 
-Codigo (implementacion actual):
+### Instrucciones del director
+
+Pedido consolidado, no literal: deja el nombre vacio, acepta numeros en tarjeta y cvv, agrega la barra al vencimiento y muestra envio $0.
+
+### Resultado registrado para WORK
+
+mascaras locales; no se transmiten ni guardan los campos financieros.
+
+Archivo: [app/public/js/academic-inputs.js](app/public/js/academic-inputs.js) · ejemplo actual en 3e7d2ef, desde linea 9.
 
 ```javascript
 function academic_mask(input, kind) {
@@ -299,19 +360,25 @@ function academic_mask(input, kind) {
 }
 ```
 
-Fuente del pedido: pedido disponible de formulario y extractos A03/A04. Evidencia de cambios: [6865365](https://github.com/facumartea/dreams/commit/6865365).
+Fuente disponible y evidencia tecnica: pedido disponible de formulario y extractos A03/A04. Evidencia de cambios: [6865365](https://github.com/facumartea/dreams/commit/6865365).
 
 ## PROMPT 10 · retirar bloque de colecciones
 
 Fecha: fecha por confirmar
 
-Prompt (resumen consolidado, no literal): saca explora la seleccion y tres formas de empezar con sus tarjetas y botones, pero deja mujer, hombre y unisex en el menu
+### Pedido del usuario
 
-Resultado: regresion que comprueba la retirada y los accesos conservados.
+No se dispone de la consulta breve original por separado. No se reconstruye como cita.
 
-Archivo: [app/test/home-collections-removal.test.js](app/test/home-collections-removal.test.js)
+### Instrucciones del director
 
-Codigo (implementacion actual):
+Pedido consolidado, no literal: saca el bloque tres formas de empezar y deja las colecciones en el menu.
+
+### Resultado registrado para WORK
+
+La retirada del bloque se verifico entonces con un test. Ese test ya no pertenece al runtime ni a la version actual: se conserva aqui solo como evidencia historica.
+
+Archivo: [app/test/home-collections-removal.test.js](https://github.com/facumartea/dreams/blob/40b3d68854ec6b444fa807582b5c56b636d76e03/app/test/home-collections-removal.test.js#L6) · historico en 40b3d68; archivo eliminado en PR74, desde linea 6.
 
 ```javascript
 test('Inicio retira el bloque completo y mantiene contiguos productos y presentación', () => {
@@ -321,22 +388,28 @@ test('Inicio retira el bloque completo y mantiene contiguos productos y presenta
 });
 ```
 
-Fuente del pedido: pedido disponible posterior a los ajustes de carrito. Evidencia de cambios: [b60e33d](https://github.com/facumartea/dreams/commit/b60e33d).
+Fuente disponible y evidencia tecnica: pedido disponible posterior a los ajustes de carrito. Evidencia de cambios: [b60e33d](https://github.com/facumartea/dreams/commit/b60e33d).
 
 ## PROMPT 11 · auditoria 2025 y limite de funciones
 
 Fecha: fecha por confirmar
 
-Prompt (resumen consolidado, no literal): revisa la rubrica 2025 completa, no la mezcles con la otra y comproba que las funciones no pasen de 40 lineas, tambien sin git
+### Pedido del usuario
 
-Resultado: inventario reproducible con parser; no demuestra asistencia ni entregas academicas.
+No se dispone de la consulta breve original por separado. No se reconstruye como cita.
 
-Archivo: [app/scripts/function-inventory.mjs](app/scripts/function-inventory.mjs)
+### Instrucciones del director
 
-Codigo (implementacion actual):
+Pedido consolidado, no literal: revisa la rubrica 2025 y el limite de 40 lineas sin mezclarla con la otra.
+
+### Resultado registrado para WORK
+
+inventario reproducible con parser; no demuestra asistencia ni entregas academicas.
+
+Archivo: [app/scripts/function-inventory.mjs](app/scripts/function-inventory.mjs) · ejemplo actual en 3e7d2ef, desde linea 60.
 
 ```javascript
-export async function inventory(root) {
+async function inventory(root) {
     const records = [];
     const files = await source_files(root);
     for (const path of files) {
@@ -351,19 +424,25 @@ export async function inventory(root) {
 }
 ```
 
-Fuente del pedido: pedido disponible de auditoria y limpieza 2025. Evidencia de cambios: [3e12bc6](https://github.com/facumartea/dreams/commit/3e12bc6).
+Fuente disponible y evidencia tecnica: pedido disponible de auditoria y limpieza 2025. Evidencia de cambios: [3e12bc6](https://github.com/facumartea/dreams/commit/3e12bc6).
 
 ## PROMPT 12 · scripts, carrusel y sql
 
 Fecha: fecha por confirmar
 
-Prompt (resumen consolidado, no literal): revisa por que la oficial sirve otro checkout, recupera el carrusel en destacados y aclara la funcion sql vieja sin borrar el historial
+### Pedido del usuario
 
-Resultado: carrusel manual actual; el cierre tecnico y la distincion SQL estan acreditados por su evidencia historica.
+No se dispone de la consulta breve original por separado. No se reconstruye como cita.
 
-Archivo: [app/public/js/featured-carousel.js](app/public/js/featured-carousel.js)
+### Instrucciones del director
 
-Codigo (implementacion actual):
+Pedido consolidado, no literal: revisa el checkout que sirve la oficial y agrega el carrusel en destacados.
+
+### Resultado registrado para WORK
+
+carrusel manual actual; el cierre tecnico y la distincion SQL estan acreditados por su evidencia historica.
+
+Archivo: [app/public/js/featured-carousel.js](app/public/js/featured-carousel.js) · ejemplo actual en 3e7d2ef, desde linea 4.
 
 ```javascript
 function setup_featured_carousel(track) {
@@ -403,19 +482,25 @@ function setup_featured_carousel(track) {
 }
 ```
 
-Fuente del pedido: pedido disponible de cierre tecnico desde PR60. Evidencia de cambios: [e6d60bf](https://github.com/facumartea/dreams/commit/e6d60bf).
+Fuente disponible y evidencia tecnica: pedido disponible de cierre tecnico desde PR60. Evidencia de cambios: [e6d60bf](https://github.com/facumartea/dreams/commit/e6d60bf).
 
 ## PROMPT 13 · inicio y cabeceras mas simples
 
 Fecha: fecha por confirmar
 
-Prompt (resumen consolidado, no literal): oculta el texto de posicion del carrusel solo para que lo lea el lector de pantalla, saca los perfumes vistos y los parrafos de las cabeceras
+### Pedido del usuario
 
-Resultado: cabeceras actuales sin parrafo visible; las descripciones siguen en los metadatos.
+No se dispone de la consulta breve original por separado. No se reconstruye como cita.
 
-Archivo: [app/public/js/catalogo.js](app/public/js/catalogo.js)
+### Instrucciones del director
 
-Codigo (implementacion actual):
+Pedido consolidado, no literal: saca los vistos recientemente y los parrafos de las cabeceras, pero conserva el carrusel.
+
+### Resultado registrado para WORK
+
+cabeceras actuales sin parrafo visible; las descripciones siguen en los metadatos.
+
+Archivo: [app/public/js/catalogo.js](app/public/js/catalogo.js) · ejemplo actual en 3e7d2ef, desde linea 62.
 
 ```javascript
 function update_catalog_context(gender) {
@@ -429,19 +514,27 @@ function update_catalog_context(gender) {
 }
 ```
 
-Fuente del pedido: pedido disponible de Inicio y colecciones. Evidencia de cambios: [60451ca](https://github.com/facumartea/dreams/commit/60451ca).
+Fuente disponible y evidencia tecnica: pedido disponible de Inicio y colecciones. Evidencia de cambios: [60451ca](https://github.com/facumartea/dreams/commit/60451ca).
 
 ## PROMPT 14 · material para estudiar
 
 Fecha: fecha por confirmar
 
-Prompt (resumen consolidado, no literal): hace un resumen sencillo para la defensa con los archivos, node, express, endpoints, metodos, base de datos y seguridad
+### Pedido del usuario
 
-Resultado: ejemplo actual del arranque Node usado para estudiar. La guia se retiro luego por pedido expreso; no se vuelve a crear.
+mensaje de estudio disponible en la conversacion; no es una consulta inicial para aprender node:
 
-Archivo: [app/server/server.js](app/server/server.js)
+> hacemelo todo en un word y con palabras simples de entender en un lenguaje coloquial pero siempre siguiendo las normas del colegio
 
-Codigo (implementacion actual):
+### Instrucciones del director
+
+Pedido consolidado, no literal: hace un word sencillo para estudiar los archivos, node, express, los metodos y la base de datos.
+
+### Resultado registrado para WORK
+
+Se preparo material de estudio en distintas etapas. Las guias retiradas no se recrean en docs/; el Word nuevo se entrega fuera del repositorio y describe la version final.
+
+Archivo: [app/server/server.js](app/server/server.js) · ejemplo actual en 3e7d2ef, desde linea 37.
 
 ```javascript
 async function start() {
@@ -454,17 +547,9 @@ async function start() {
         ...(access_token ? { global: { headers: { Authorization: `Bearer ${access_token}` } } } : {})
     });
     const database = create_database();
-    const checkout_provider = String(process.env.CHECKOUT_PROVIDER || 'mercado_pago').trim().toLowerCase();
-    const payment_provider = checkout_provider === 'demo'
-        ? new DemoPaymentProvider()
-        : new MercadoPagoProvider({
-            access_token: process.env.MERCADO_PAGO_ACCESS_TOKEN,
-            webhook_secret: process.env.MERCADO_PAGO_WEBHOOK_SECRET,
-            mode: process.env.MERCADO_PAGO_MODE
-        });
     const port = Number(process.env.PORT || 8080);
     const product_brand_column = await resolve_product_brand_column(database);
-    const app = app_module.create_app(application_options(create_database, database, payment_provider, product_brand_column));
+    const app = app_module.create_app(application_options(create_database, database, product_brand_column));
 
     return app.listen(port, '0.0.0.0', () => {
         console.log(`DREAMS funcionando en el puerto ${port} con Supabase.`);
@@ -472,22 +557,30 @@ async function start() {
 }
 ```
 
-Fuente del pedido: mensajes disponibles de estudio C01-C04 y solicitud de guia. Evidencia de cambios: [8ad5401](https://github.com/facumartea/dreams/commit/8ad5401).
+Fuente disponible y evidencia tecnica: mensajes disponibles de estudio C01-C04 y solicitud de guia. Evidencia de cambios: [8ad5401](https://github.com/facumartea/dreams/commit/8ad5401).
 
 ## PROMPT 15 · ordenar el repositorio y conservar manual y api
 
 Fecha: fecha por confirmar
 
-Prompt (resumen consolidado, no literal): reduci lo que sobra sin romper la pagina. deja los archivos necesarios y junta el manual y la explicacion de la api en el readme
+### Pedido del usuario
 
-Resultado: recorrido de archivos sin depender de git; manual y API permanecen en README.
+mensaje disponible con capturas; la imagen original forma parte de su contexto:
 
-Archivo: [app/scripts/function-inventory.mjs](app/scripts/function-inventory.mjs)
+> saca este (capturas) y de las otras fotos retirar todos los archivos posibles
 
-Codigo (implementacion actual):
+### Instrucciones del director
+
+Pedido consolidado, no literal: saca archivos que sobran y deja el manual y la explicacion de la api en el readme.
+
+### Resultado registrado para WORK
+
+recorrido de archivos sin depender de git; manual y API permanecen en README.
+
+Archivo: [app/scripts/function-inventory.mjs](app/scripts/function-inventory.mjs) · ejemplo actual en 3e7d2ef, desde linea 10.
 
 ```javascript
-export async function source_files(root) {
+async function source_files(root) {
     const entries = await readdir(root, { withFileTypes: true });
     const groups = await Promise.all(entries.filter(e => !excluded.has(e.name)).map(async entry => {
         const file = resolve(root, entry.name);
@@ -499,19 +592,27 @@ export async function source_files(root) {
 }
 ```
 
-Fuente del pedido: pedidos disponibles de simplificacion y decisiones de docs, PR64-PR68. Evidencia de cambios: [42792c9](https://github.com/facumartea/dreams/commit/42792c9).
+Fuente disponible y evidencia tecnica: pedidos disponibles de simplificacion y decisiones de docs, PR64-PR68. Evidencia de cambios: [42792c9](https://github.com/facumartea/dreams/commit/42792c9).
 
 ## PROMPT 16 · icono del iphone
 
 Fecha: fecha por confirmar
 
-Prompt (resumen consolidado, no literal): el icono se ve descentrado y tiene una palabra arriba, ayudame a dejarlo bien
+### Pedido del usuario
 
-Resultado: icono dedicado incluido en el build; no se cambia la marca dentro del sitio.
+mensaje disponible con captura de iphone:
 
-Archivo: [app/scripts/build-pages.mjs](app/scripts/build-pages.mjs)
+> mira el icono de deams es el de iphone de crhrome y se ve asi de mal descentrado y com la palabra logotipo arriba ayudame a cambiarlo
 
-Codigo (implementacion actual):
+### Instrucciones del director
+
+Pedido consolidado, no literal: ayudame a corregir el icono del iphone que se ve descentrado.
+
+### Resultado registrado para WORK
+
+icono dedicado incluido en el build; no se cambia la marca dentro del sitio.
+
+Archivo: [app/scripts/build-pages.mjs](app/scripts/build-pages.mjs) · ejemplo actual en 3e7d2ef, desde linea 34.
 
 ```javascript
 // incluir el icono local evita depender de que exista en el backend anterior.
@@ -521,19 +622,25 @@ for (const name of ['dreams-social.png', 'dreams-iphone-icon-v1.png']) {
 }
 ```
 
-Fuente del pedido: mensaje disponible con captura del icono de iPhone. Evidencia de cambios: [6e4647c](https://github.com/facumartea/dreams/commit/6e4647c).
+Fuente disponible y evidencia tecnica: mensaje disponible con captura del icono de iPhone. Evidencia de cambios: [6e4647c](https://github.com/facumartea/dreams/commit/6e4647c).
 
 ## PROMPT 17 · dos pdf y limpieza comprobada
 
 Fecha: fecha por confirmar
 
-Prompt (resumen consolidado, no literal): deja un pdf para wireframe y otro para base de datos, revisa archivo por archivo y conserva lo que hace falta para que arranque y pase los tests
+### Pedido del usuario
 
-Resultado: indice actual de los documentos; la version anterior de dos PDF extensos se acredita en PR70.
+No se dispone de la consulta breve original por separado. No se reconstruye como cita.
 
-Archivo: [docs/README.md](docs/README.md)
+### Instrucciones del director
 
-Codigo (implementacion actual; fragmento Markdown documental):
+Pedido consolidado, no literal: deja un pdf para el wireframe y uno para el diseño de la base de datos.
+
+### Resultado registrado para WORK
+
+docs/ conserva un indice y dos PDF: wireframe de 19 paginas y D.E.R. de una lamina. El codigo siguiente es un fragmento documental actual, no una salida historica de programacion.
+
+Archivo: [docs/README.md](docs/README.md) · documentacion actual en 3e7d2ef, desde linea 21.
 
 ```markdown
 ## Manual, API y declaración
@@ -544,19 +651,25 @@ Codigo (implementacion actual; fragmento Markdown documental):
 - [Declaración y bitácora parcial de prompts](../DECLARACION_PROMPTS.md).
 ```
 
-Fuente del pedido: pedido disponible de consolidacion e integracion de PR70. Evidencia de cambios: [3305d56](https://github.com/facumartea/dreams/commit/3305d56).
+Fuente disponible y evidencia tecnica: pedido disponible de consolidacion e integracion de PR70. Evidencia de cambios: [3305d56](https://github.com/facumartea/dreams/commit/3305d56).
 
 ## PROMPT 18 · ultima revision de entrega
 
-Fecha: 11/11/2026
+Fecha: fecha por confirmar
 
-Prompt (resumen consolidado, no literal): junta los pedidos reales en una bitacora con ejemplos del codigo. saca la portada del wireframe, deja solo la lamina del der y aclara los comentarios sin romper nada
+### Pedido del usuario
 
-Resultado: validacion y comentarios actuales; no se cambia el registro ni los permisos.
+No se dispone de la consulta breve original por separado. No se reconstruye como cita.
 
-Archivo: [app/server/customer-registration.js](app/server/customer-registration.js)
+### Instrucciones del director
 
-Codigo (implementacion actual):
+Pedido consolidado, no literal: ordena los pedidos reales, deja los dos pdf y aclara los comentarios.
+
+### Resultado registrado para WORK
+
+validacion y comentarios actuales; no se cambia el registro ni los permisos.
+
+Archivo: [app/server/customer-registration.js](app/server/customer-registration.js) · ejemplo actual en 3e7d2ef, desde linea 5.
 
 ```javascript
 function registration_values(body = {}) {
@@ -570,7 +683,127 @@ function registration_values(body = {}) {
 }
 ```
 
-Fuente del pedido: mensaje actual del 11/11/2026; fecha de esta ejecucion. Evidencia de cambios: [checkpoint 4a217d4](https://github.com/facumartea/dreams/commit/4a217d4f573b4a1ec9f6e1a71ca1aeb48c0155fc) y [PR71](https://github.com/facumartea/dreams/pull/71).
+Fuente disponible y evidencia tecnica: instrucciones de revision conservadas; la fecha de ejecucion anterior no acredita la del mensaje. Evidencia de cambios: [checkpoint 4a217d4](https://github.com/facumartea/dreams/commit/4a217d4f573b4a1ec9f6e1a71ca1aeb48c0155fc) y [PR71](https://github.com/facumartea/dreams/pull/71).
+
+## PROMPT 19 · prueba local con supabase y docker
+
+Fecha: fecha por confirmar
+
+### Pedido del usuario
+
+No se dispone de la consulta breve original por separado. No se reconstruye como cita.
+
+### Instrucciones del director
+
+Pedido consolidado, no literal: proba la aplicacion con supabase local y docker sin tocar produccion.
+
+### Resultado registrado para WORK
+
+La prueba local real se registro en PR72: 46 comprobaciones y estructura sintetica aislada. El ejemplo actual muestra como se comprueba el esquema; esa prueba no creo esta funcion ni cambio produccion.
+
+Archivo: [app/server/app.js](app/server/app.js) · ejemplo actual en 3e7d2ef, desde linea 242.
+
+```javascript
+async function database_health(database, product_brand_column = 'brand') {
+    const schemas = {
+        products: `id,${brand_column(product_brand_column)},name,price,stock,image_url,gender,category,featured,family,size_ml,top_notes,heart_notes,base_notes`,
+        profiles: 'id,name,role', reviews: 'id,user_id,user_name,rating,comment,created_at',
+        inquiries: 'id,product_id,product_name'
+    };
+    await Promise.all(Object.entries(schemas).map(async ([table, columns]) => {
+        const result = await execute_database_query(() => {
+            const query = database.from(table).select(columns, { head: true });
+            return typeof query.abortSignal === 'function' ? query.abortSignal(AbortSignal.timeout(5000)) : query;
+        });
+        if (result.error) throw result.error;
+    }));
+    return true;
+}
+```
+
+Fuente: instrucciones de continuacion disponibles en esta conversacion. Resultado: [PR72](https://github.com/facumartea/dreams/pull/72).
+
+## PROMPT 20 · simplificacion y readme breve
+
+Fecha: fecha por confirmar
+
+### Pedido del usuario
+
+No se dispone de la consulta breve original por separado. No se reconstruye como cita.
+
+### Instrucciones del director
+
+Pedido consolidado, no literal: saca los tests y los pagos que no usamos, conserva lo necesario y deja un readme corto.
+
+### Resultado registrado para WORK
+
+PR74 retiro 62 archivos, proveedores y rutas comerciales preparadas. Conservo el checkout academico, Admin, cuentas, carrito y cupones. El README quedo breve y se explico la perdida de cobertura automatizada al retirar la suite.
+
+Archivo: [app/public/js/checkout.js](app/public/js/checkout.js) · ejemplo actual en 3e7d2ef, desde linea 26.
+
+```javascript
+async function setup_checkout() {
+    const button = document.getElementById('checkout-submit');
+    const status = document.getElementById('checkout-status');
+    try {
+        const response = await fetch('/api/checkout/config');
+        const config = await response.json();
+        if (!response.ok || !config.enabled || config.provider !== 'presentation_demo') throw new Error('El checkout académico no está disponible temporalmente.');
+        await PresentationCheckout.setup(config);
+    } catch (error) {
+        status.textContent = interface_error(error);
+        button.disabled = true;
+    }
+}
+```
+
+Fuente: instrucciones de continuacion disponibles en esta conversacion. Resultado: [PR74](https://github.com/facumartea/dreams/pull/74).
+
+## PROMPT 21 · carpetas y archivos de configuracion
+
+Fecha: fecha por confirmar
+
+### Pedido del usuario
+
+mensaje disponible en esta conversacion:
+
+> porque no eliminas todas las carpetas menos la de public, la de server y supabase?
+>
+> que son los archivos .mjs, y los .yaml?  son eliminables? y los de la imagen?
+
+### Instrucciones del director
+
+No se identifico una ampliacion del director para esta consulta. La explicacion fue una respuesta del chat, no una orden de borrar archivos.
+
+### Resultado registrado para WORK
+
+Se explico que .mjs sigue siendo JavaScript y que YAML guarda configuracion. La consulta no produjo otra limpieza: los archivos necesarios se conservaron. El ejemplo actual muestra los comandos que dependen de esas piezas.
+
+Archivo: [app/package.json](app/package.json) · ejemplo actual, no cambio producido por esta consulta, desde linea 7.
+
+```json
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "nodemon server/server.js",
+    "check": "node scripts/check.js",
+    "ci": "pnpm run check && pnpm run check:functions && pnpm run build:cloudflare && pnpm run build:pages && pnpm run build:official",
+    "build:cloudflare": "wrangler deploy --dry-run --env preview --outdir dist/worker",
+    "build:pages": "node scripts/build-pages.mjs",
+    "deploy:pages": "node scripts/deploy-pages.mjs",
+```
+
+Fuente: instrucciones de continuacion disponibles en esta conversacion. Resultado: respuesta explicativa disponible en la conversacion; sin cambio de aplicacion.
+
+## Evidencia que falta
+
+Para fechar los 21 pedidos faltan encabezados o metadatos de los mensajes; no se sustituyen por fechas de commits. Sin consulta breve separada: pedidos 2, 3, 5-7, 10-13 y 17-20. En 4, 8 y 9 hay extractos parciales, no mensajes completos. B01 y el pedido de Railway quedan fuera de la seleccion. El pedido de migracion ya tiene original aportado, pero no fecha. Las preguntas para aprender Node se incluyen en estudio, no como un primer pedido inventado.
+
+<details>
+<summary>fuentes y resultados historicos conservados</summary>
+
+Contexto aportado en la version anterior: clases martes y jueves de 11:20 a 13:15, con comedor de 12:15 a 12:45, y comienzo aproximado en agosto/septiembre. No acredita fechas de mensajes, asistencia ni participacion. La entrega indicada para el 12/11/2026 no se presenta como realizada. La aceptacion de Supabase y los apellidos Martearena y Ruas fueron informados por el usuario, no son evidencia de defensa individual.
+
+Los textos siguientes se conservan como antecedentes de versiones anteriores. Sus numeros de pedido y referencias a archivos corresponden a aquellas versiones. B01 no integra la seleccion actual. Los mensajes largos con apartados son instrucciones ampliadas por el director segun la aclaracion del usuario; los informes tecnicos son resultados registrados para WORK, no palabras del usuario. Los extractos A01-A08 y los mensajes de estudio mantienen la identificacion de sus fuentes parciales. No son fallos o instrucciones vigentes por aparecer aqui.
 
 ## Limites y fuentes conservadas
 
@@ -667,7 +900,7 @@ La declaracion anterior se consolida aqui. Sus textos originales largos, fuentes
 - Pruebas del agente: En esta tanda se comprueban fuentes, sanitización y enlaces; no se acreditan revisiones humanas por esto.
 - Revisión humana: no acreditada en el adjunto.
 
-### A08. Material de defensa
+### A08. Material de defensa · extracto del pedido del usuario
 
 - Fecha del prompt: **sin fecha confirmada**. El archivo parcial está fechado 10/11/2026; no se transfiere esa fecha al mensaje original.
 - Tipo: **extracto textual**, completo sólo respecto del fragmento aportado; puede faltar el resto del mensaje y sus capturas.
@@ -705,7 +938,7 @@ Procedencia: `docs/entrega-2026/bitacora-ia.md`, [base 8ad5401](https://github.c
 
 Este registro identifica trabajo asistido por IA; no atribuye a los alumnos programación, revisión manual o dominio del código sin evidencia. Las fechas son las documentadas en commits y continuidad, no una reconstrucción de entregas de clase.
 
-| Fecha acreditada | Prompt o resumen fiel | Resultado y evidencia | Revisión / cambios humanos acreditados |
+| Fecha del registro tecnico, no del prompt | Resumen historico | Resultado y evidencia | Revisión / cambios humanos acreditados |
 |---|---|---|---|
 | 2026-08-28 | Auditoría de arquitectura, seguridad y preparación de deploy | Entradas de `CHANGELOG.md`, separación de app y validaciones | No hay evidencia adjunta que permita atribuir cada cambio a un integrante. |
 | 2026-10-27 | Continuar PR56, recuperar backend funcional y conservar oficial | Reconstrucción, pruebas locales/CI; deploy falló 401, rollback documentado | Usuario informó ajustes de Auth y carga de Secret. Resultado del Secret luego rechazado en uso; no equivale a una reparación exitosa. |
@@ -1251,3 +1484,6 @@ Se mantienen intactos identificadores, contratos, textos visibles, migraciones a
 El pedido actual autoriza retirar la suite y sus fixtures tras conservar la verificacion previa, advirtiendo la perdida de cobertura automatizada futura. Tambien pide retirar los proveedores comerciales no usados y conservar el checkout academico, cupones y consulta de pedidos existentes del Admin. La ampliacion posterior solicita un README breve, con instalacion, uso, API, disenos e integrantes, sin trasladar el texto retirado a nuevos informes.
 
 Esta es una consolidacion identificada de las instrucciones disponibles, no una cita literal ni una fecha asignada a pedidos historicos. Las referencias anteriores a tests, QA y proveedores describen versiones recuperables en Git y pueden apuntar a archivos retirados de la version actual. Se conserva su evidencia unica; no se afirma que una suite eliminada siga aprobando. Resultados y rutas exactas se registran en la PR, sin crear otro informe en el repositorio.
+
+
+</details>
