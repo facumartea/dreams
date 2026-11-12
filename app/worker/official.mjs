@@ -22,7 +22,7 @@ function create_official_app(env) {
         official_api: true, preview_read_only: true, customer_data_enabled: true, account_cart_enabled: true,
         account_cart_signing_key: signing_key('DREAMS account cart official v1'),
         presentation_checkout: true, presentation_signing_key: signing_key('DREAMS academic official v1'), presentation_issuer: 'dreams-official-v1',
-        demo_auto_confirm_email: false, checkout_schema_ready: false, google_access_ready: false, disable_request_log: true,
+        demo_auto_confirm_email: false, google_access_ready: false, disable_request_log: true,
         email_confirmation_required: async () => false,
         product_brand_column: 'marca', allowed_origins: env.APP_ORIGINS, app_base_url: env.APP_BASE_URL,
         contact_email: 'facundo.martearena@dantebariloche.edu.ar', whatsapp_number: '542944160065',

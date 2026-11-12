@@ -1,10 +1,8 @@
-// entrada del worker general: adapta las peticiones al servidor y conserva los proveedores preparados.
+// entrada del worker general: adapta peticiones a express y sirve los recursos locales.
 import { createServer } from 'node:http';
 import { handleAsNodeRequest } from 'cloudflare:node';
 import { createClient } from '@supabase/supabase-js';
 import appModule from '../server/app.js';
-import payments from '../server/payments/mercado-pago.js';
-import demoPayments from '../server/payments/demo.js';
 import adminHtml from '../views/admin.html';
 import notFoundHtml from '../public/404.html';
 import adminScript from '../public/js/admin.js';
@@ -43,12 +41,15 @@ function staticMiddleware(env) {
         };
 }
 
-function workerOptions(env, createDatabase, paymentProvider) {
+// cada entorno aporta clientes y claves; importar el worker no inicia compras ni prepara datos.
+function workerOptions(env, createDatabase) {
     return {
         database: createDatabase(), create_auth_client: createDatabase,
         preview_read_only: env.PREVIEW_READ_ONLY === 'true',
         presentation_checkout: env.PRESENTATION_CHECKOUT_ENABLED === 'true',
         presentation_signing_key: env.PRESENTATION_SIGNING_KEY,
+        account_cart_enabled: env.ACCOUNT_CART_ENABLED === 'true',
+        account_cart_signing_key: env.ACCOUNT_CART_SIGNING_KEY || env.PRESENTATION_SIGNING_KEY,
         google_access_ready: env.GOOGLE_ACCESS_READY === 'true',
         create_oauth_client: storage => createDatabase(null, { flowType: 'pkce', storage, storageKey: 'dreams-google', persistSession: true }),
         google_provider_enabled: async () => {
@@ -64,9 +65,6 @@ function workerOptions(env, createDatabase, paymentProvider) {
         app_base_url: env.APP_BASE_URL,
         contact_email: env.CONTACT_EMAIL, whatsapp_number: env.WHATSAPP_NUMBER,
         demo_auto_confirm_email: env.DEMO_AUTO_CONFIRM_EMAIL === 'true',
-        checkout_schema_ready: env.CHECKOUT_SCHEMA_READY === 'true',
-        show_checkout_test_data: env.CHECKOUT_SHOW_TEST_DATA === 'true',
-        payment_provider: paymentProvider,
         public_directory: '/virtual/public', views_directory: '/virtual/views',
         admin_html: adminHtml, not_found_html: notFoundHtml, admin_script: adminScript,
         static_middleware: staticMiddleware(env)
@@ -82,10 +80,7 @@ function createWorkerApp(env) {
     }
     if (!env.SUPABASE_URL || !env.SUPABASE_SECRET_KEY) throw new Error('Missing server Supabase configuration');
     const createDatabase = databaseFactory(env);
-    const paymentProvider = env.CHECKOUT_PROVIDER === 'demo'
-        ? new demoPayments.DemoPaymentProvider()
-        : new payments.MercadoPagoProvider({ access_token: env.MERCADO_PAGO_ACCESS_TOKEN, webhook_secret: env.MERCADO_PAGO_WEBHOOK_SECRET, mode: env.MERCADO_PAGO_MODE });
-    return appModule.create_app(workerOptions(env, createDatabase, paymentProvider));
+    return appModule.create_app(workerOptions(env, createDatabase));
 }
 
 export default {

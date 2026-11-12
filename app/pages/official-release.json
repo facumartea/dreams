@@ -2,55 +2,60 @@
   "source_commit": "ec04a35812d044e57196c6a1ca55232e723ff60c",
   "backend_url": "https://d5df723d-dreams-perfumes.dreams-perfumes.workers.dev",
   "backend_deployment": "d5df723d-e1f1-4889-ae5b-e79ebfd131cd",
-  "previous_pages_deployment": "3ad69579-9e5e-450a-abe8-f28faec44c42",
+  "previous_pages_deployment": "cb0d0913-fd07-4ee2-a7e8-5751889888bb",
   "hero": "static",
   "checkout": "academic-only",
   "writes": "protected",
   "official_service": "dreams-official-backend",
   "official_worker_id": "f4f560d2e4b947c18d8a06b9e4a24961",
   "deployment_ready": false,
-  "official_source_commit": "08635cdc5c1706ae520cbeec6c9a1b403c4df483",
-  "official_version": "ef043065-5d28-45c7-906b-b9e1edb6a5ab",
-  "official_deployment": "2479eec0-5831-4284-8b7c-0ae8069884a7",
+  "official_source_commit": "60a38638fe1407ae0f8f195e76b9c459313cf018",
+  "official_version": "7c2aafca-5c25-49fa-af96-040533c7244a",
+  "official_deployment": "ee3aaf5b-b91a-4c1e-9176-c6fae5ef7dcf",
   "failed_pages_deployment": "1e881ec8-7c32-4a2e-9857-ef63bf091c4f",
   "candidate_read": {
     "status": 200,
-    "backend_version": "ef043065-5d28-45c7-906b-b9e1edb6a5ab",
+    "backend_version": "7c2aafca-5c25-49fa-af96-040533c7244a",
     "project_url": "https://nwsmbemwtexmrtpkgxrz.supabase.co",
-    "checked_at": "2026-11-11T18:59:11.864829+00:00",
-    "checked_via": "GET /api/health: SDK HEAD de esquema; misma versión ef043065, sin leer filas personales"
+    "checked_at": "2026-11-12T02:05:50.064746+00:00",
+    "checked_via": "0 percent candidate, explicit version override, SDK HEAD"
   },
   "authenticated_qa": {
-    "backend_version": "ef043065-5d28-45c7-906b-b9e1edb6a5ab",
+    "backend_version": "7c2aafca-5c25-49fa-af96-040533c7244a",
     "registration": true,
     "sessions": true,
     "cart_isolation": true,
     "review_ownership": true,
     "admin_persistence": true,
-    "academic_compatibility": true
+    "academic_compatibility": true,
+    "scope": "LOCAL Supabase Docker synthetic; not remote authenticated QA",
+    "verified_code_commit": "60a38638fe1407ae0f8f195e76b9c459313cf018"
   },
-  "qa_evidence": "https://github.com/facumartea/dreams/blob/305c5fd6ca0f5a72792c4f5e64fa60ac13a70828/docs/evidence/cierre-tecnico-20261105/README.md",
-  "next_deployment_note": "PR69 publicada sólo en la oficial: icono iPhone centrado y sin rótulo. Gate cerrado tras publicación; conservar rollback 3ad69579. Otra publicación requiere sus verificaciones.",
+  "qa_evidence": "https://github.com/facumartea/dreams/pull/74",
+  "next_deployment_note": "PR74 publicada. Gate cerrado para futuras publicaciones; rollback Pages cb0d0913 y backend ef043065. backend_url/source_commit conservan el fallback inmutable de assets, no el backend privado activo.",
   "active_backend": {
-    "backend_version": "ef043065-5d28-45c7-906b-b9e1edb6a5ab",
-    "backend_deployment": "2479eec0-5831-4284-8b7c-0ae8069884a7",
-    "backend_commit": "08635cdc5c1706ae520cbeec6c9a1b403c4df483"
+    "backend_version": "7c2aafca-5c25-49fa-af96-040533c7244a",
+    "backend_deployment": "ee3aaf5b-b91a-4c1e-9176-c6fae5ef7dcf",
+    "backend_commit": "60a38638fe1407ae0f8f195e76b9c459313cf018"
   },
-  "live_evidence": "https://github.com/facumartea/dreams/blob/305c5fd6ca0f5a72792c4f5e64fa60ac13a70828/docs/evidence/inicio-cabeceras-20261105/README.md",
-  "current_pages_deployment": "cb0d0913-fd07-4ee2-a7e8-5751889888bb",
-  "current_pages_commit": "be9cacf3d00e5703b5cf08bd93193732a1bd89e4",
-  "review_ownership_evidence": "Misma versión de backend ef043065; evidencia remota previa de PR56/57 reutilizada, sin cambio de esas rutas.",
+  "live_evidence": "https://github.com/facumartea/dreams/pull/74",
+  "current_pages_deployment": "ceb5b21f-ee95-40e3-8237-d663c41d6a78",
+  "current_pages_commit": "60a38638fe1407ae0f8f195e76b9c459313cf018",
+  "review_ownership_evidence": "QA local real con datos sinteticos del codigo publicado; no acredita una nueva QA autenticada remota.",
   "frontend_review": {
-    "scope": "PR69: icono apple-touch-icon cuadrado, título DREAMS y entrega PNG por Pages; sin cambios de negocio",
-    "local_qa": "https://github.com/facumartea/dreams/actions/runs/43082649216",
-    "local_tests": {
-      "total": 501,
-      "passed": 497,
-      "skipped_sql": 4,
-      "failed": 0
+    "scope": "PR74: herramientas y proveedores preparados retirados; checkout exclusivamente academico; README breve",
+    "source_commit": "60a38638fe1407ae0f8f195e76b9c459313cf018",
+    "local_qa": "https://github.com/facumartea/dreams/pull/74",
+    "local_checks": {
+      "distinct": 84,
+      "pass": 84,
+      "fail": 0,
+      "scope": "Supabase local Docker, sin fixtures de Auth ni escrituras de produccion"
     },
-    "worker_sha256": "7e1d080b2f52ae632eba07c448890b0d0b1aa28dc20d7e79281f1c517713b60c",
-    "icon_sha256": "0d9c787a31afbf768ac27c2ecc7aa6e47bcbcf932dfb1ca1df3082b1e9469894",
-    "backend_qa_reused": "Misma versión ef043065; QA autenticada previamente acreditada reutilizada, sin ejecutar nuevos cambios de Auth, API o DB."
-  }
+    "automated_suite": "retirada; previa 497 PASS en 40b3d68; no se afirma aprobacion posterior de la suite eliminada",
+    "worker_sha256": "fd8917021b52192166d22237d5d1d1702c548cad5ceceb6fdc56d528a5359aa7",
+    "backend_worker_sha256": "b22f77dc4fc42f7f2393fb2fa9d212027528123f1c38b0557a0529519c208b4d",
+    "backend_qa_scope": "autenticada local; lectura remota exacta del candidato al cero por ciento antes de activarlo"
+  },
+  "previous_official_version": "ef043065-5d28-45c7-906b-b9e1edb6a5ab"
 }
