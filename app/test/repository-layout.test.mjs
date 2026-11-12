@@ -1,3 +1,4 @@
+// estructura raiz y presencia de archivos indispensables.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readdir, access, readFile } from 'node:fs/promises';

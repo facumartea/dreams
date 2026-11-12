@@ -1,3 +1,4 @@
+// normalizacion/busqueda y disponibilidad baja sin inventar valores.
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const vm = require('node:vm');

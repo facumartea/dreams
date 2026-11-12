@@ -1,3 +1,4 @@
+// conversion de filtros entre url, estado y listas.
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const model = require('../public/js/catalog-filter-state');

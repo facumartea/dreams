@@ -15,6 +15,7 @@ const owner_for = request => {
 const valid_body = (body, keys) => body && typeof body === 'object' && !Array.isArray(body) && Object.keys(body).every(key => keys.includes(key));
 
 // simulacion firmada y con vencimiento: no escribe pedidos ni stock ni llama a pagos.
+// prepara firma y verificacion del ticket solo si la simulacion esta habilitada y tiene clave suficiente.
 function presentation_checkout({ enabled, signing_key, quote_cart, database, product_brand_column, production, issuer }) {
     const ready = enabled === true && typeof signing_key === 'string' && signing_key.length >= 32;
     const key = ready ? createHmac('sha256', signing_key).update('DREAMS presentation checkout v2').digest() : null;
@@ -31,6 +32,8 @@ function presentation_checkout({ enabled, signing_key, quote_cart, database, pro
     const install = (app, route) => install_presentation({ ready, quote_cart, database, product_brand_column, production, issuer, sign, read }, app, route);
     return { ready, install };
 }
+// registra cotizacion, confirmacion y lectura de recibo; solo admite los campos previstos y revalida importes.
+// ninguna de estas rutas recibe tarjeta ni crea un pedido comercial.
 function install_presentation({ ready, quote_cart, database, product_brand_column, production, issuer, sign, read }, app, route) {
     const gate = (request, response, next) => ready ? next() : response.status(404).json({ error: 'La presentación no está habilitada.' });
     route('post', '/api/presentation/session', gate, async (request, response) => {

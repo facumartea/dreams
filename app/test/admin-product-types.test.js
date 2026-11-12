@@ -1,3 +1,4 @@
+// rechazo de tipos invalidos en stock, precio y demas campos.
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const { payload } = require('../server/app');

@@ -3,6 +3,7 @@ function notify_account_change() { try { localStorage.setItem('dreams_account_ch
 
 let account_request_id = 0;
 
+// diferencia fallo de red y respuesta http de error para mostrar un mensaje sin fingir una sesion.
 async function request_json(url, options = {}) {
     let response;
     try {
@@ -97,6 +98,7 @@ function switch_account_form(mode, focus_field = true) {
     if (focus_field) requestAnimationFrame(() => document.getElementById(is_login ? 'login-email' : 'register-name').focus());
 }
 
+// espera una sesion confirmada antes de navegar; el destino depende del rol devuelto por el servidor.
 async function submit_login(form, message, body) {
     set_message(message, 'Verificando tus datos…');
     set_form_busy(form, true);
@@ -142,6 +144,7 @@ function complete_registration(message, data) {
     window.location.replace('/cuenta.html');
 }
 
+// bloquea doble envio y deja que auth decida si hay sesion o confirmacion pendiente.
 async function submit_registration(form, message, body) {
     set_message(message, 'Creando tu cuenta…');
     set_form_busy(form, true);
@@ -176,6 +179,7 @@ function logged_account_markup(user) {
         <button id="logout-button" class="text-button" type="button">Cerrar sesión</button><div class="form-message" id="logout-message" role="status" aria-live="polite"></div>`;
 }
 
+// espera la respuesta de salida antes de limpiar el estado de cuenta y volver al formulario.
 async function logout_account(event) {
     const button = event.currentTarget;
     if (button.disabled) return;
@@ -201,6 +205,7 @@ function render_account_error() {
     document.getElementById('retry-account').addEventListener('click', init_account);
 }
 
+// descarta respuestas de una consulta anterior si la vista de cuenta ya cambio.
 async function init_account() {
     const request_id = ++account_request_id;
     try {

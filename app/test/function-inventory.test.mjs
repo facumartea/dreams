@@ -1,3 +1,4 @@
+// inventario con parser, limite y funcionamiento sin git.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtemp, mkdir, writeFile, rm, readFile } from 'node:fs/promises';

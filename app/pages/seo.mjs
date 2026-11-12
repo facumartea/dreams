@@ -1,3 +1,4 @@
+// metadatos publicos, canonical, sitemap y lectura acotada de productos.
 import filter_model from '../public/js/catalog-filter-state.js';
 // seo publico de pages: solo lecturas acotadas al backend inmutable aprobado.
 export const SITE_ORIGIN = 'https://dreams-perfumes.pages.dev';

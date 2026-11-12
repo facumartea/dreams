@@ -1,3 +1,4 @@
+// gate de publicacion no habilitable con solo cambiar un booleano.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

@@ -1,4 +1,6 @@
 // desplazamiento manual: conserva enlaces y botones de las tarjetas, sin autoplay.
+// activa controles solo si hay varios productos; conserva enlaces, teclado y desplazamiento tactil.
+// el movimiento reducido evita animaciones y no hay reproduccion automatica.
 function setup_featured_carousel(track) {
     const region = document.getElementById('featured-carousel');
     if (!region || track.children.length < 2) return;

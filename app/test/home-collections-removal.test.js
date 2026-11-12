@@ -1,3 +1,4 @@
+// ausencia del bloque retirado y conservacion de colecciones accesibles.
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const { readFileSync } = require('node:fs');

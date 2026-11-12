@@ -2,6 +2,7 @@
 const uuid = value => typeof value === 'string' && /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value);
 const public_name = name => typeof name === 'string' && !name.includes('@') ? name.trim().slice(0, 80) || 'Cliente' : 'Cliente';
 const columns = 'id,user_id,user_name,rating,comment,created_at';
+// acepta puntuacion, texto y uuid de operacion; el autor no forma parte del formulario aceptado.
 function review_input(body) {
     if (!body || Object.keys(body).some(key => !['rating', 'comment', 'operation_id'].includes(key))) return null;
     if (!Number.isInteger(body.rating) || body.rating < 1 || body.rating > 5 ||
@@ -14,6 +15,7 @@ async function list_reviews(request, response, database) {
     if (result.error) throw result.error;
     response.json(result.data.map(row => ({ id: row.id, rating: row.rating, comment: row.comment, created_at: row.created_at, user_name: public_name(row.user_name), can_delete: Boolean(request.user && row.user_id === request.user.id) })));
 }
+// agrega el autor desde la sesion; un reintento del mismo uuid se compara para evitar publicar dos veces.
 async function publish_review(request, response, database) {
     const input = review_input(request.body);
     if (!input) return response.status(400).json({ error: 'Elegí una puntuación de 1 a 5 y escribí una opinión de hasta 1000 caracteres.' });
@@ -30,6 +32,7 @@ async function replay_review(request, response, database, input) {
     if (!result.data || result.data.rating !== input.rating || result.data.comment !== input.comment) return response.status(409).json({ error: 'La opinión cambió. Revisala antes de volver a publicar.' });
     response.json({ message: 'Opinión publicada.' });
 }
+// combina el jwt limitado con un filtro por dueno; una opinion ajena no se elimina aunque se conozca su id.
 async function delete_own_review(request, response, create_auth_client) {
     const id = Number(request.params.id);
     if (!Number.isSafeInteger(id) || id <= 0 || Object.keys(request.body || {}).length) return response.status(400).json({ error: 'Solicitud de eliminación inválida.' });

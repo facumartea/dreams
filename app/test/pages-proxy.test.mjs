@@ -1,3 +1,4 @@
+// overlay binario, headers, cache, sesion y rechazo de rutas no aprobadas.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import proxy, { create_proxy } from '../pages/proxy.mjs';

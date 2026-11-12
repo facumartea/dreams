@@ -1,3 +1,4 @@
+// validacion de productos/ids, readiness, csp y errores de api.
 const test = require('node:test');
 const assert = require('node:assert/strict');
 

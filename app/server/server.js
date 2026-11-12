@@ -7,6 +7,7 @@ const app_module = require('./app');
 const { MercadoPagoProvider } = require('./payments/mercado-pago');
 const { DemoPaymentProvider } = require('./payments/demo');
 
+// reune las opciones del entorno para crear express; no activa un servicio por el solo hecho de importarlo.
 function application_options(create_database, database, payment_provider, product_brand_column) {
     return {
         preview_read_only: process.env.PREVIEW_READ_ONLY === 'true',
@@ -34,6 +35,7 @@ function application_options(create_database, database, payment_provider, produc
     };
 }
 
+// exige url y clave del mismo entorno, detecta el campo de marca y abre el puerto; un error impide arrancar.
 async function start() {
     const needed = ['SUPABASE_URL', 'SUPABASE_SECRET_KEY'].filter(key => !process.env[key]);
     if (needed.length) throw new Error(`Faltan variables obligatorias: ${needed.join(', ')}`);

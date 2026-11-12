@@ -137,6 +137,12 @@ Supabase gestiona contraseñas. Carrito vinculado al UUID, operaciones idempoten
 
 Esta edición aclara comentarios sin cambiar instrucciones ejecutables, rutas, Auth, datos, credenciales ni configuración. La web oficial se conserva sin desplegar estos comentarios. No se publica por mover archivos. Los comandos de instalación, mantenimiento y futura publicación se ejecutan desde `app/`. Las guardas de publicación siguen vigentes; ninguna receta histórica autoriza activar previews, video u otros sitios.
 
+### Lectura de la RPC activa del carrito
+
+La entrada activa es dreams_cart_operation de la migración 20261105160613_modularize_account_cart.sql. Recibe usuario, UUID de operación y cambio. Bloquea la fila del carrito durante la transacción, comprueba si esa operación ya se procesó y devuelve items/revision. dreams_cart_sorted ordena para comparar; dreams_cart_adjust aplica cantidades y límites de stock; dreams_cart_desired decide merge, remove, clear o consume. Consume vacía sólo si el contenido sigue coincidiendo, para conservar cambios hechos desde otro dispositivo.
+
+Las auxiliares son SECURITY INVOKER y sólo service_role puede ejecutarlas. La API vincula el usuario a la sesión antes de llamar a la RPC. La definición antigua y el rollback se conservan como historial; no se reescriben para agregar comentarios. No se necesita aplicar una migración nueva para esta explicación.
+
 ## Documentación de entrega
 
 - [Índice de diseños](docs/README.md): wireframe, mapa de navegación y D.E.R.

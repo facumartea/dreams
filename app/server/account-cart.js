@@ -4,6 +4,7 @@ const { normalize_product_brand } = require('./product-schema');
 const uuid = value => typeof value === 'string' && /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value);
 const exact = (value, keys) => value && typeof value === 'object' && !Array.isArray(value) && Object.keys(value).every(key => keys.includes(key));
 const items_valid = items => Array.isArray(items) && items.length <= 30 && new Set(items.map(i => i?.id)).size === items.length && items.every(i => exact(i, ['id', 'quantity']) && Number.isSafeInteger(i.id) && i.id > 0 && Number.isSafeInteger(i.quantity) && i.quantity >= 1 && i.quantity <= 99);
+// admite solo operaciones conocidas y cantidades enteras; el navegador no puede enviar precios para guardarlos.
 function valid_operation(op) {
     if (!op || typeof op !== 'object') return false;
     if (op.type === 'clear') return exact(op, ['type']);
@@ -19,9 +20,9 @@ class AccountCartService {
         this.ready = enabled && typeof signing_key === 'string' && signing_key.length >= 32;
         this.signing_key = signing_key;
     }
-    // el contexto firmado impide reutilizar una operacion pendiente en otra cuenta.
+    // firma el contexto de cuenta; evita aplicar la cola pendiente de una persona a otra sesion.
     scope_for(id) { return createHmac('sha256', this.signing_key).update(`dreams-cart-v1:${id}`).digest('hex'); }
-    // recupera precios y disponibilidad actuales; el json persistido solo contiene ids y cantidades.
+    // combina ids y cantidades guardados con precios y stock actuales; la base del carrito no guarda fichas del catalogo.
     async hydrate(row, user) {
         const stored = Array.isArray(row?.items) ? row.items : [];
         const result = stored.length ? await this.database.from('products').select(`id,${this.product_brand_column},name,price,stock,image_url,size_ml`).in('id', stored.map(i => i.id)) : { data: [] };
@@ -33,6 +34,7 @@ class AccountCartService {
         });
         return { user_id: user.id, scope: this.scope_for(user.id), revision: Number(row?.revision || 0), items };
     }
+    // lee un unico carrito usando el uuid validado de la sesion, no un usuario elegido en la consulta.
     async read(req, res) {
         if (!this.ready) return res.status(503).json({ error: 'El guardado del carrito no está disponible.' });
         if (Object.keys(req.query).length) return res.status(400).json({ error: 'Solicitud de carrito inválida.' });
@@ -40,6 +42,7 @@ class AccountCartService {
         if (result.error) throw result.error;
         res.json(await this.hydrate(result.data, req.user));
     }
+    // valida operacion y contexto de cuenta; la rpc ordena los cambios y evita repetir un uuid ya procesado.
     async write(req, res) {
         if (!this.ready) return res.status(503).json({ error: 'El guardado del carrito no está disponible.' });
         const body = req.body;

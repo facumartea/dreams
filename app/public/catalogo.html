@@ -47,6 +47,7 @@
     </header>
 
     <main class="catalog-page">
+<!-- cabecera y resultados: abrir el dialogo no confirma los filtros hasta enviar. -->
         <section id="catalog-intro" class="page-intro">
             <p id="catalog-eyebrow" class="eyebrow">COLECCIÓN DREAMS</p>
             <h1 id="catalog-title">Perfumes</h1>
@@ -59,6 +60,7 @@
         <dialog id="catalog-filters" class="filter-dialog" aria-labelledby="filter-title">
             <header class="filter-dialog-heading"><h2 id="filter-title">Filtros</h2><button id="close-filters" class="filter-close" type="button" aria-label="Cerrar filtros">×</button></header>
             <form id="catalog-filter-form">
+<!-- estos campos editan filtros pendientes; enviar aplica y limpiar restablece la busqueda. -->
                 <div class="filter-dialog-content">
                     <div class="filter-field filter-wide"><label for="search">Buscar perfume, marca o familia</label><input id="search" name="search" type="search" placeholder="Buscá por perfume, marca o familia…" maxlength="80" autocomplete="off"></div>
                     <fieldset class="filter-group filter-wide"><legend>Marca</legend><label for="brand-search">Buscar marca</label><input id="brand-search" type="search" placeholder="Buscar marca" autocomplete="off" aria-controls="brand-options"><div id="brand-options" class="brand-options" aria-busy="true"><p role="status">Cargando marcas…</p></div><p id="brand-search-status" class="muted" role="status"></p></fieldset>

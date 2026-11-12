@@ -13,6 +13,7 @@ function expected_environment(env) {
     if (env.SUPABASE_URL !== 'https://nwsmbemwtexmrtpkgxrz.supabase.co' || !env.SUPABASE_SECRET_KEY) throw new Error('Missing expected project');
     if (env.APP_BASE_URL !== policy.OFFICIAL_ORIGIN || env.APP_ORIGINS !== policy.OFFICIAL_ORIGIN) throw new Error('Missing exact official origin');
 }
+// compone la entrada del servicio privado con dependencias y rutas oficiales; no arranca un puerto como node local.
 function create_official_app(env) {
     expected_environment(env);
     const client = access => create_official_database(env, access);

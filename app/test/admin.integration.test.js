@@ -1,3 +1,4 @@
+// rutas admin, rechazo de acceso indebido, persistencia y operaciones de prueba.
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const { create_app } = require('../server/app');

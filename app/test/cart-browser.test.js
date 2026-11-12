@@ -1,3 +1,4 @@
+// controlador de carrito con respuestas demoradas y estado de compra.
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const vm = require('node:vm');

@@ -26,6 +26,7 @@ function visual_request(request, pathname, asset) {
     return new Request(upstream, { headers });
 }
 
+// conserva metodo, cuerpo y cookies al reenviar; rechaza redirecciones para no llevar datos privados a otro destino.
 async function forward_request(request, env, options) {
     if (options.official_service && official_target(new URL(request.url).pathname)) return official_options(env, options).fetch_backend(request);
     if (!options.backend_url) return env.DREAMS.fetch(request);
@@ -85,6 +86,7 @@ async function proxy_response(request, env, visual_assets, options) {
     return options.seo ? index_response(request, response) : response;
 }
 
+// elige assets locales aprobados o el backend permitido; la interfaz publica no recibe claves del servidor.
 export function create_proxy(visual_assets = {}, options = {}) {
     return {
         async fetch(request, env) {

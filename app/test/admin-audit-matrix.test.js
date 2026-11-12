@@ -1,3 +1,4 @@
+// matriz de busqueda, stock bajo, url de imagen y casos de validacion.
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const model = require('../public/js/admin-product-search');

@@ -1,3 +1,4 @@
+// recuperacion de altas inciertas y fallos sin duplicar recursos.
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const vm = require('node:vm');

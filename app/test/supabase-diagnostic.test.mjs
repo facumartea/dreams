@@ -1,3 +1,4 @@
+// diagnostico y lecturas minimas con mocks sin mostrar credenciales.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { credential_shape, diagnose_supabase, scheduled_diagnostic } from '../worker/supabase-diagnostic.mjs';

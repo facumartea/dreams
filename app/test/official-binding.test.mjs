@@ -1,3 +1,4 @@
+// bindings privados oficiales y ausencia de credenciales en cliente.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { create_proxy } from '../pages/proxy.mjs';

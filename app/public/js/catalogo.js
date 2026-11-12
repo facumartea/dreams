@@ -42,6 +42,7 @@ function update_catalog_theme(variant) {
     document.body.classList.add('collection-themed', variant.body_class);
 }
 
+// mantiene descripcion y datos para buscadores aunque no se muestre un parrafo en la cabecera.
 function update_catalog_metadata(gender) {
     const canonical = document.getElementById('canonical-url');
     const description = COLLECTION_VARIANTS[gender]?.description || 'Diseñador, algunos nichos seleccionados y una sola idea: encontrar tu firma.';
@@ -82,6 +83,7 @@ function restore_catalog_filters() {
     update_filter_badge();
 }
 
+// confirma el estado de filtros y, cuando corresponde, lo refleja en la direccion para poder recargar.
 async function apply_catalog_filters(sync_url = true) {
     const params = filter_model.params(applied_filters, window.location.search);
     const target = `/catalogo.html${params.size ? '?' + params.toString() : ''}`;
@@ -98,6 +100,7 @@ function show_catalog_loading() {
     document.getElementById('results-count').textContent = '…';
 }
 
+// identifica cada consulta; una carga o error antiguo no reemplaza los resultados mas recientes.
 async function load_catalog() {
     const request_id = ++catalog_request_id;
     show_catalog_loading();
@@ -184,6 +187,7 @@ function setup_filter_viewport() {
     window.addEventListener('resize', size_filter_viewport);
 }
 
+// abre el dialogo y conserva el estado pendiente; el usuario decide aplicar o cancelar.
 function open_catalog_filters() {
     const dialog = document.getElementById('catalog-filters');
     if (dialog.open) return;
@@ -223,6 +227,7 @@ function contain_filter_focus(event) {
     (event.shiftKey ? last : first).focus();
 }
 
+// copia los filtros pendientes a los aplicados y carga sus resultados sin mezclar estados.
 function commit_catalog_filters(event) {
     event.preventDefault();
     if (!document.getElementById('catalog-filter-form').reportValidity()) return;
@@ -283,6 +288,7 @@ function begin_brand_load() {
     render_brand_choices(selected);
 }
 
+// carga las opciones de marca y evita que una respuesta atrasada reemplace otra busqueda.
 async function load_brands() {
     const request_id = ++brand_request_id;
     begin_brand_load();

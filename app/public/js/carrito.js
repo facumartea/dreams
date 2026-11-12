@@ -100,6 +100,7 @@ async function cart_quote_responses(cart) {
             return checkout_config.enabled === true;
         }).catch(() => false)]);
  }
+// solo acepta la respuesta de la ultima carga; usa los importes calculados por el servidor.
 async function accept_cart_quote(request_id, response, checkout_response) {
         const data = await response.json();
         if (request_id !== cart_request_id) return;
@@ -111,6 +112,7 @@ async function accept_cart_quote(request_id, response, checkout_response) {
         render_cart(cart_account?.active() ? get_cart() : data.items, get_cart().some(i=>i.unavailable) ? null : data.whatsapp_url, checkout_response && !get_cart().some(i=>i.unavailable), 'ready');
         if (data.warnings?.length) show_toast(data.warnings.join(' '));
  }
+// espera sincronizacion y cotizacion antes de habilitar comprar; los errores no vacian los productos.
 async function load_cart() {
     const request_id = ++cart_request_id;
     academic_cart_summary = null;
@@ -142,6 +144,7 @@ let cart_coupon_message = '';
 function cart_coupon_markup(state) {
     return `<form id="cart-coupon-form" class="coupon-box"><label for="cart-coupon">Cupón de descuento</label><div class="coupon-control"><input id="cart-coupon" ${state === 'loading' ? 'disabled' : ''} maxlength="40" placeholder="Ingresá tu cupón" value="${escape_html(cart_coupon_code())}"><button type="submit" ${state === 'loading' ? 'disabled aria-busy="true"' : ''}>${state === 'loading' ? 'Verificando…' : 'Aplicar'}</button></div><p role="status" aria-live="polite">${escape_html(cart_coupon_message)}</p>${sessionStorage.getItem('dreams_coupon') ? '<button id="cart-coupon-remove" type="button" class="text-button">Quitar cupón</button>' : ''}</form>`;
 }
+// boton y enter comparten el envio; quitar el codigo pide otra cotizacion para no conservar descuentos viejos.
 function bind_cart_coupon() {
     document.getElementById('cart-coupon-form')?.addEventListener('submit', event => {
         event.preventDefault();

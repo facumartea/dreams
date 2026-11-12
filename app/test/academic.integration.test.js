@@ -1,3 +1,4 @@
+// integracion academica: aislamiento comercial, stock intacto y tickets idempotentes.
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const { create_app } = require('../server/app');

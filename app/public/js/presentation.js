@@ -53,6 +53,7 @@ async function presentation_quote(button, status, initial_snapshot) {
             button.disabled = false; return true;
         } catch (error) { status.textContent = interface_error(error); return false; }
 }
+// guarda un identificador antes de llamar a la red; el mismo carrito puede retomar su intento sin duplicar referencias.
 function presentation_intent(cart) {
                 let saved;
                 try { saved = JSON.parse(sessionStorage.getItem(PRESENTATION_KEY)); } catch { saved = null; }
@@ -65,6 +66,7 @@ function presentation_intent(cart) {
                 }
     return saved;
 }
+// conserva recibo y referencia antes de pasar al resultado; consumir el carrito no equivale a descontar stock comercial.
 async function presentation_complete(saved) {
                 if (!saved.ticket) {
                     const data = await presentation_request('session', { items: checkout_items_payload(), intent_id: saved.intent_id, coupon_code: sessionStorage.getItem('dreams_coupon') || '' });
@@ -77,6 +79,7 @@ async function presentation_complete(saved) {
                 sessionStorage.setItem(PRESENTATION_RECEIPT, operation.receipt);
                 sessionStorage.removeItem(PRESENTATION_KEY);
 }
+// valida formato local y envia solo el ticket; los campos de tarjeta no se agregan a la peticion.
 async function presentation_submit(button, status, form, initial_snapshot) {
             if (button.disabled) return;
             // formato local unicamente; no se incorporan campos financieros a la peticion.

@@ -10,6 +10,7 @@ class AccountCart {
         this.revision = -1; this.items = []; this.queue = []; this.generation = 0;
         this.enabled = false; this.initialized = false; this.flight = null; this.initialization = null;
     }
+    // elimina claves privadas de carrito y checkout de esta pestana sin borrar otras preferencias.
     cleanup() {
         this.storage.removeItem(this.key);
         for (const key of ['dreams_presentation_checkout', 'dreams_presentation_receipt', 'dreams_presentation_completed', 'dreams_checkout_intent', 'dreams_checkout_order', 'dreams_coupon', 'dreams_demo_order_id']) this.storage.removeItem(key);
@@ -29,10 +30,12 @@ class AccountCart {
         return result.filter(i => i.quantity > 0);
     }
     visible() { return this.queue.reduce((list, e) => this.apply(list, e.operation, e.hints), account_cart_copy(this.items)); }
+    // acepta una respuesta solo si pertenece a la cuenta y generacion actuales y no retrocede la revision.
     accept(data, epoch) {
         if (epoch !== this.generation || data.user_id !== this.user || data.revision < this.revision) return false;
         this.items = data.items; this.scope = data.scope; this.revision = data.revision; return true;
     }
+    // envia operaciones de la cola en orden; cada uuid se conserva para reintentar sin sumar dos veces.
     async drain(epoch) {
         while (this.queue.length && epoch === this.generation) {
             const entry = this.queue[0];
@@ -42,18 +45,21 @@ class AccountCart {
             this.accept(data, epoch); this.queue.shift(); this.persist(); this.emit();
         }
     }
+    // comparte la peticion que ya esta en curso para no enviar la misma cola en paralelo.
     async flush() {
         if (!this.user || !this.queue.length) return;
         if (this.flight) return this.flight;
         const job = this.drain(this.generation); this.flight = job;
         try { await job; } finally { if (this.flight === job) this.flight = null; }
     }
+    // guarda primero la operacion pendiente; si falla el almacenamiento revierte la cola antes de continuar.
     enqueue(operation, hints = []) {
         this.queue.push({ operation_id: this.id(), operation, hints: [] });
         try { this.persist(); } catch (error) { this.queue.pop(); throw error; }
         for (const hint of hints) if (!this.items.some(i => i.id === hint.id)) this.items.push({ ...hint, quantity: 0 });
         this.emit(); this.flush().catch(() => this.emit('No se pudo guardar el carrito. Reintentá antes de continuar.'));
     }
+    // cambiar de cuenta invalida respuestas viejas y borra el estado privado de la anterior.
     set_owner(next) {
         if (next === this.user) return;
         this.generation++; this.flight = null; this.items = []; this.queue = []; this.scope = ''; this.revision = -1;
@@ -66,6 +72,7 @@ class AccountCart {
         if (saved?.user_id === this.user && Array.isArray(saved.queue)) this.queue = saved.queue;
         else if (saved) this.cleanup();
     }
+    // registra un uuid antes de consumir el carrito visitante para poder recuperar el cambio si se corta la red.
     merge_guest() {
         const guest = this.read_guest();
         if (!guest.length) return;
@@ -73,6 +80,7 @@ class AccountCart {
         this.queue.push({ operation_id: this.id(), operation: { type: 'merge', items: account_cart_pairs(guest) }, hints: [] });
         this.persist(); this.write_guest([]);
     }
+    // lee configuracion y sesion antes del carrito; restaura pendientes solo para su dueno.
     async load(epoch) {
         const enabled = (await this.request('/api/cart/config')).account_cart === true;
         if (epoch !== this.generation) return;

@@ -1,3 +1,4 @@
+// menu compartido, teclado y controles de navegacion.
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const { readFileSync } = require('node:fs');

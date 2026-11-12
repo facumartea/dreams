@@ -1,3 +1,4 @@
+// rpc, transacciones, permisos y concurrencia sobre postgresql aislado.
 import test, { before } from 'node:test';
 import assert from 'node:assert/strict';
 import { execFileSync, execFile } from 'node:child_process';
