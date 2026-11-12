@@ -10,7 +10,7 @@ Esto es un registro de los 21 prompts principales. No pusimos todos porque gener
 
 **El registro sigue siendo parcial.** No hay fechas de mensaje acreditadas para esta seleccion: se conserva "fecha por confirmar". La fecha 11/11/2026 que antes se asignaba al pedido 18 procedia de la ejecucion; se conserva como antecedente, pero no se usa para fechar ese mensaje. Las fechas tecnicas de los anexos permanecen con su alcance original. No se distribuyen pedidos entre martes y jueves.
 
-B01, sobre arquitectura y seguridad, queda fuera de la seleccion porque no se encontro su mensaje original. Se conservan sus antecedentes tecnicos al final, sin reconstruir una cita. El pedido literal de migracion aportado ahora lo reemplaza. Railway aparece en esos antecedentes como hosting anterior, pero falta su pedido original: no se inventa una entrada. Tampoco se encontro una consulta inicial para aprender Node; las consultas de estudio disponibles se mantienen en su etapa posterior y las preguntas de aprendizaje van en el Word personal.
+B01, sobre arquitectura y seguridad, queda fuera de la seleccion porque no se encontro su mensaje original. El registro anterior citaba [f3533d7](https://github.com/facumartea/dreams/commit/f3533d7) como antecedente tecnico, sin acreditar que la funcion de ejemplo existiera alli; esa referencia no se transforma en un prompt original. Se conservan sus antecedentes tecnicos al final, sin reconstruir una cita. El pedido literal de migracion aportado ahora lo reemplaza. Railway aparece en esos antecedentes como hosting anterior, pero falta su pedido original: no se inventa una entrada. Tampoco se encontro una consulta inicial para aprender Node; las consultas de estudio disponibles se mantienen en su etapa posterior y las preguntas de aprendizaje van en el Word personal.
 
 El orden conserva la secuencia relativa documentada: migracion, reparaciones funcionales, diseño, estudio y simplificacion. No fija la fecha exacta de iteraciones sin metadatos. Los resumenes no convierten ordenes de implementar, corregir o publicar en preguntas de aprendizaje.
 
@@ -878,6 +878,8 @@ Para fechar los 21 pedidos faltan encabezados o metadatos de los mensajes; no se
 
 <details>
 <summary>fuentes y resultados historicos conservados</summary>
+
+Contexto aportado en la version anterior: clases martes y jueves de 11:20 a 13:15, con comedor de 12:15 a 12:45, y comienzo aproximado en agosto/septiembre. No acredita fechas de mensajes, asistencia ni participacion. La entrega indicada para el 12/11/2026 no se presenta como realizada. La aceptacion de Supabase y los apellidos Martearena y Ruas fueron informados por el usuario, no son evidencia de defensa individual.
 
 Los textos siguientes se conservan como antecedentes de versiones anteriores. Sus numeros de pedido y referencias a archivos corresponden a aquellas versiones. B01 no integra la seleccion actual. Los mensajes largos con apartados son instrucciones ampliadas por el director segun la aclaracion del usuario; los informes tecnicos son resultados registrados para WORK, no palabras del usuario. Los extractos breves A01-A07 y los mensajes de estudio mantienen la identificacion de sus fuentes parciales. No son fallos o instrucciones vigentes por aparecer aqui.
 
