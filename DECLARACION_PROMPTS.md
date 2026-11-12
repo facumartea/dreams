@@ -1244,3 +1244,10 @@ Cierre: tres cuentas y nueve productos sinteticos, cero sesiones activas; instan
 Continuacion de la entrega: se reutilizan los 46 checks locales reales y los cuatro SQL ya acreditados. La PR72 documental se integra antes de ampliar comentarios. La solicitud actual pide explicar responsabilidades, reglas y errores en comentarios simples, revisar descartables de app/ y preparar una guia personal fuera del repositorio. Esta nota no convierte las 17 fechas pendientes en fechas confirmadas ni sustituye el original ausente del pedido1.
 
 Se mantienen intactos identificadores, contratos, textos visibles, migraciones aplicadas y configuracion de produccion. Las explicaciones de SQL activo se agregan en README en vez de editar migraciones. El Word y el PDF se entregan como archivos personales; no se recrean guias de defensa en docs/. No se atribuyen redaccion o programacion manual ni dominio del contenido a los integrantes. Los resultados y el inventario final se registran en la PR correspondiente.
+
+
+## Simplificacion autorizada de herramientas y pagos preparados
+
+El pedido actual autoriza retirar la suite y sus fixtures tras conservar la verificacion previa, advirtiendo la perdida de cobertura automatizada futura. Tambien pide retirar los proveedores comerciales no usados y conservar el checkout academico, cupones y consulta de pedidos existentes del Admin. La ampliacion posterior solicita un README breve, con instalacion, uso, API, disenos e integrantes, sin trasladar el texto retirado a nuevos informes.
+
+Esta es una consolidacion identificada de las instrucciones disponibles, no una cita literal ni una fecha asignada a pedidos historicos. Las referencias anteriores a tests, QA y proveedores describen versiones recuperables en Git y pueden apuntar a archivos retirados de la version actual. Se conserva su evidencia unica; no se afirma que una suite eliminada siga aprobando. Resultados y rutas exactas se registran en la PR, sin crear otro informe en el repositorio.
