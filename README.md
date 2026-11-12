@@ -71,6 +71,64 @@ corepack pnpm start
 
 Puerto local predeterminado 8080: `http://localhost:8080`. Admin: `/admin`, con una cuenta autorizada existente. No hay contraseña predeterminada ni alta automática de administradores. No usar claves de capturas, no versionar `.env` y no conectar pruebas a datos comerciales. Revisar la diferencia histórica `brand`/`marca` y las migraciones antes de reproducir la estructura.
 
+## Preparar Supabase local temporal
+
+Este procedimiento usa servicios reales de Supabase en Docker, separados del proyecto oficial. No copia usuarios, claves ni datos comerciales. Requiere Docker operativo, Node.js 24 y espacio para las imágenes y volúmenes. No tiene cargos de Supabase; consume recursos del equipo. El CLI probado es 3.1.0 y PostgreSQL 17.
+
+Trabajar en una copia temporal limpia, sin `.git` ni `.env` reales. Desde app/, instalar con el lockfile como se indica arriba. Luego:
+
+```sh
+npx --yes supabase@3.1.0 init
+```
+
+En el config.toml generado dentro de app/supabase/, asignar un project_id local único para no reutilizar otra instancia. Ajustar sólo esa configuración nueva:
+
+- db.major_version: 17.
+- db.seed.enabled: false. No ejecutar el seed de la aplicación.
+- auth.site_url: http://localhost:8080.
+- auth.email.enable_confirmations: false para el registro normal de esta prueba; no cambiar Auth de producción.
+
+Crear una red local ligada a loopback e iniciar los servicios:
+
+```sh
+docker network create -o 'com.docker.network.bridge.host_binding_ipv4=127.0.0.1' dreams-local-qa
+npx --yes supabase@3.1.0 start --network-id dreams-local-qa --exclude studio,postgres-meta,realtime,storage-api,imgproxy,edge-runtime,logflare,vector,supavisor
+```
+
+El CLI puede descargar imágenes auxiliares para inicializar sus esquemas aunque se excluyan del funcionamiento habitual. Debe terminar con sus controles de salud aprobados; no usar ignore-health-check para aparentar una conexión. Confirmar que las publicaciones de puertos son 127.0.0.1. Documentación del procedimiento: https://supabase.com/docs/guides/local-development/cli/getting-started .
+
+La instancia nueva aplica los ocho archivos de app/supabase/migrations/ en orden. schema.sql es el baseline histórico: no aplicarlo además de esa cadena ni cargar el rollback. Verificar la estructura y que auth.users y public.products estén vacíos antes de preparar datos sintéticos. En esta reproducción el campo de marca es brand; el adaptador del servidor también contempla marca, utilizado por el esquema remoto documentado.
+
+Obtener del CLI la URL y la clave de servidor de esta instancia local y cargarlas sólo en el entorno privado del proceso, como SUPABASE_URL y SUPABASE_SECRET_KEY. No usar la clave de producción ni copiar la salida con claves a logs, capturas, chats o Git. En esta ejecución de prueba se pasaron en memoria, sin guardarlas en el repositorio. Mantener NODE_ENV=development, PORT=8080, APP_BASE_URL y APP_ORIGINS en http://localhost:8080, CHECKOUT_PROVIDER=demo y DEMO_AUTO_CONFIRM_EMAIL=false. Para la presentación académica, usar la opción y clave local indicadas en la tabla de variables.
+
+Con esas variables, arrancar con corepack pnpm start desde app/. El healthcheck está en http://localhost:8080/api/health. El registro debe pasar por el formulario normal y Supabase Auth; no crear ni confirmar cuentas mediante un bypass administrativo.
+
+Para probar Admin, registrar una cuenta ficticia nueva y preparar su perfil administrador exclusivamente dentro de esta base temporal, identificado por su UUID de prueba. No existe una contraseña Admin predeterminada ni se debe cambiar una cuenta del sitio oficial. Crear productos ficticios, usar los assets locales como imágenes y comprobar guardado mediante recarga y lectura posterior. Las sesiones de prueba deben cerrarse al terminar. Para preparar el único perfil Admin de prueba, usar psql del contenedor local exacto (el sufijo corresponde al project_id nuevo):
+
+```sh
+docker exec -it supabase_db_ID_LOCAL_DE_ESTA_PRUEBA psql -U postgres -d postgres
+```
+
+Registrar primero «Admin QA local» mediante el formulario normal, identificar su UUID en esa base nueva y aplicar sólo allí:
+
+```sql
+update public.profiles
+set role = 'admin'
+where id = '<uuid de la cuenta sintetica de esta instancia>'
+  and name = 'Admin QA local'
+  and role = 'customer';
+```
+
+Ese paso prepara un fixture local; no agrega una función para elevar roles desde la aplicación. Nunca ejecutarlo contra el proyecto oficial.
+
+Al retirar la instancia, usar el project_id local exacto; no usar la opción all. La opción no-backup borra sólo los datos temporales de esa instancia y debe reservarse para una prueba descartable como esta:
+
+```sh
+npx --yes supabase@3.1.0 stop --project-id ID_LOCAL_DE_ESTA_PRUEBA --no-backup
+```
+
+En el entorno de esta ejecución, el driver Docker vfs y el proxy requirieron adaptaciones temporales de imágenes: compactar las capas oficiales de PostgreSQL sin cambiar su filesystem/configuración, y permitir loopback en el proxy del healthcheck de Auth. No son cambios de la aplicación ni instrucciones para alterar el daemon o desactivar controles. Una máquina sin recursos suficientes queda BLOQUEADA, no se considera un fallo de DREAMS ni un arranque aprobado.
+
 ## Arquitectura y seguridad
 
 Navegador → `/api` → Pages/proxy → Worker privado → Express → Supabase Auth y Data API/PostgreSQL. El arranque local es `app/server/server.js`; la entrada del backend oficial es `app/worker/official.mjs`. La clave de servidor permanece en backend. Se verifican sesión, rol, origen y datos; los permisos no dependen de ocultar botones.
@@ -203,10 +261,16 @@ La documentación previa identificaba referencias de Armani Beauty, Dior Argenti
 Esta limpieza y revisión de comentarios conserva el funcionamiento y la configuración efectiva de la oficial. No se publica por rutina un cambio de comentarios. Se conservan las guardas de publicación: otra publicación necesita sus propias verificaciones. No se genera ZIP ni se garantizan notas o aprobación.
 
 
-## Alcance de la comprobación local de esta entrega
+## Evidencia de arranque local
 
-Fecha de revisión: 11/11/2026, miércoles; el jueves siguiente es 12/11/2026. La entrega para ese jueves fue indicada por el usuario: no acredita entrega realizada. El comienzo aproximado en agosto/septiembre y los horarios de clase tampoco fijan las fechas de los prompts.
+La revisión inicial del 11/11/2026 estaba bloqueada por falta de un proyecto de desarrollo. Esa revisión ya acreditó instalación, checks, límite de 40 líneas, 497 tests y builds; no se repiten aquí. Los cuatro tests PostgreSQL que habían quedado omitidos se ejecutaron por separado y aprobaron en un contenedor aislado, con evidencia conservada.
 
-Instalación, checks, tests y builds se verifican en una copia limpia sin .git ni secretos. El arranque conectado requiere credenciales de desarrollo; esta ejecución no dispone de un proyecto de desarrollo acreditado y no usa la clave comercial disponible. El intento sin variables obligatorias debe terminar con error y no abrir el puerto: no se presenta como arranque conectado exitoso. Las pruebas con fixtures locales no equivalen a una sesión real en Supabase. No hay una modalidad offline del sitio que este README pueda prometer.
+La continuación del 12/11/2026 verificó una copia limpia del commit da5df12, con instalación congelada y servicios reales locales de Supabase: PostgreSQL 17.11, GoTrue Auth 2.197.0 y PostgREST 16.5, preparados con CLI 3.1.0. Las ocho migraciones aplicaron en una base inicialmente vacía. No se aplicaron también el schema histórico o rollback ni se copiaron datos de producción.
 
-Resultado local de esta revision: instalacion con lockfile, sintaxis, inventario (119 archivos y 2207 registros, sin excesos de 40), 497 tests aprobados, 4 SQL omitidos y cuatro builds en seco aprobados. Navegador con fixtures aislados: 12 comprobaciones en 1440 y 390 px, sin errores JavaScript de pagina. Arranque con `pnpm start` sin variables obligatorias: salida 1, puerto sin abrir; conexion real de desarrollo BLOQUEADA. No es una prueba de registro/login/Admin contra Supabase real.
+Resultado: **46 comprobaciones locales PASS**. Incluyen arranque con pnpm start en localhost:8080 y health 200; catálogo en móvil/escritorio; registro normal sin confirmación, perfil customer, login, cookies HttpOnly, recarga, navegación, refresh real y logout con revocación; acceso Admin, lectura de sus módulos, búsqueda y stock bajo; alta, guardado y cambio de imágenes, conservación de imagen al editar precio, persistencia tras recarga y actualización en catálogo, detalle, destacados y estadísticas. Customer y anónimo no accedieron al Admin.
+
+Se conserva un incidente del arnés: esperaba volver a Cuenta al salir de Admin, mientras el código vuelve a Inicio. Se corrigió la expectativa y se completó sólo el cierre pendiente; no se cambió la aplicación ni se ocultó el resultado original. El primer intento de preparación también encontró límites de vfs y del proxy, resueltos sólo en las imágenes temporales como se explica arriba.
+
+La base tuvo únicamente tres cuentas y nueve productos sintéticos. Se cerraron/revocaron las sesiones de prueba, se detuvieron los procesos y se retiraron contenedores, volúmenes de datos y red de esa instancia. **No quedan recorridos bloqueados de este alcance local.** No es una nueva prueba de la oficial ni de todas las funciones comerciales o de checkout. La oficial, Auth, credenciales y configuración de producción permanecieron intactos; no hubo deployment.
+
+La bitácora sigue siendo parcial: quedan 17 fechas y el mensaje original del pedido 1 por acreditar. La fecha de esta prueba técnica no se asigna a esos prompts ni demuestra una preentrega o participación individual.
